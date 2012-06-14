@@ -11,8 +11,8 @@
 using namespace ebuCore_2011;
 using namespace mxfpp;
 
-void Process() {
-	std::ifstream input("C:\\code\\EBU-SDK\\Documentation\\EBU-Core\\examples\\ITM504483_EBUcore.XML");
+DMFramework* Process(std::string location) {
+	std::ifstream input(location);
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
 
 	DataModel *mDataModel = new DataModel();
@@ -29,6 +29,8 @@ void Process() {
 
 	//ebuCoreMainType::metadataProvider_type 
 	entityType provider = ebuCoreMainElementPtr->metadataProvider().get();
+
+	return framework;
 }
 
 #define	SIMPLE_MAP(source, sourceProperty, dest, destProperty)	\
