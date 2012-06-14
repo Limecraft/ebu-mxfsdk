@@ -42,7 +42,7 @@
 
 #include <bmx/clip_writer/ClipWriterTrack.h>
 
-
+using namespace mxfpp;
 
 namespace bmx
 {
@@ -84,6 +84,11 @@ public:
     void PrepareWrite();
     void WriteSamples(uint32_t track_index, const unsigned char *data, uint32_t size, uint32_t num_samples);
     void CompleteWrite();
+
+public:
+	void InsertEBUCoreFramework(DMFramework *framework);
+	void AppendDMSLabel(HeaderMetadata *header_metadata, mxfUL scheme_label);
+	void InsertFramework(HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, DMFramework *framework);
 
 public:
     Rational GetFrameRate() const;
