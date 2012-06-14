@@ -2927,6 +2927,9 @@ int main(int argc, const char** argv)
             as11_helper.InsertFrameworks(as11_clip);
         }
 
+		// add EBU Core descriptive metadata
+
+		clip->InsertEBUCoreFramework(/* the framework here */ NULL);
 
         // read more than 1 sample to improve efficiency if the input is sound only and the output
         // doesn't require a sample sequence

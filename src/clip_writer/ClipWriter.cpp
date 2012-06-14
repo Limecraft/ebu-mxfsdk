@@ -433,7 +433,7 @@ void ClipWriter::InsertEBUCoreFramework(DMFramework *framework) {
 	BMX_ASSERT(metadata != NULL);
 
 	// Register EBU Core extensions in the metadata data model
-	//...
+	EBUCore::RegisterExtensions(GetDataModel());
 
 	// Append the EBU Core DMS label to the Preface
 	AppendDMSLabel(metadata, MXF_DM_L(EBUCoreDescriptiveScheme));
