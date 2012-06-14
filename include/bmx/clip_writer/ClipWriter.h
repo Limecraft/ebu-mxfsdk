@@ -42,6 +42,8 @@
 
 #include <bmx/clip_writer/ClipWriterTrack.h>
 
+#include <metadata/EBUCoreDMS++.h>
+
 using namespace mxfpp;
 
 namespace bmx
@@ -86,6 +88,9 @@ public:
     void CompleteWrite();
 
 public:
+    mxfpp::HeaderMetadata* GetHeaderMetadata() const;
+    mxfpp::DataModel* GetDataModel() const;
+
 	void InsertEBUCoreFramework(DMFramework *framework);
 	void AppendDMSLabel(HeaderMetadata *header_metadata, mxfUL scheme_label);
 	void InsertFramework(HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, DMFramework *framework);

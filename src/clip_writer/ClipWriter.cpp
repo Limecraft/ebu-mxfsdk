@@ -389,38 +389,54 @@ void ClipWriter::CompleteWrite()
     }
 }
 
-void ClipWriter::InsertEBUCoreFramework(DMFramework *framework) {
-
-	HeaderMetadata *metadata;
-    switch (mType)
+HeaderMetadata* ClipWriter::GetHeaderMetadata() const {
+	switch (mType)
     {
         case CW_AS11_OP1A_CLIP_TYPE:
         case CW_AS11_D10_CLIP_TYPE:
-			metadata = mAS11Clip->GetHeaderMetadata();
-            break;
+			return mAS11Clip->GetHeaderMetadata();
         case CW_OP1A_CLIP_TYPE:
-			metadata = mOP1AClip->GetHeaderMetadata();
-            break;
+			return mOP1AClip->GetHeaderMetadata();
         case CW_AVID_CLIP_TYPE:
-			metadata = mAvidClip->GetHeaderMetadata();
-            break;
+			return mAvidClip->GetHeaderMetadata();
         case CW_D10_CLIP_TYPE:
-			metadata = mD10Clip->GetHeaderMetadata();
-            break;
-		case CW_AS02_CLIP_TYPE:
-        case CW_WAVE_CLIP_TYPE:
-        case CW_UNKNOWN_CLIP_TYPE:
-            BMX_ASSERT(false);
-            break;
+			return mD10Clip->GetHeaderMetadata();
+		//case CW_AS02_CLIP_TYPE:
+        //case CW_WAVE_CLIP_TYPE:
+        //case CW_UNKNOWN_CLIP_TYPE:
 	}
+	BMX_EXCEPTION(("Clip type not supported for EBU Core embedding"));
+}
 
+DataModel* ClipWriter::GetDataModel() const {
+	switch (mType)
+    {
+        case CW_AS11_OP1A_CLIP_TYPE:
+        case CW_AS11_D10_CLIP_TYPE:
+			return mAS11Clip->GetDataModel();
+        case CW_OP1A_CLIP_TYPE:
+			return mOP1AClip->GetDataModel();
+        case CW_AVID_CLIP_TYPE:
+			return mAvidClip->GetDataModel();
+        case CW_D10_CLIP_TYPE:
+			return mD10Clip->GetDataModel();
+		//case CW_AS02_CLIP_TYPE:
+        //case CW_WAVE_CLIP_TYPE:
+        //case CW_UNKNOWN_CLIP_TYPE:
+	}
+	BMX_EXCEPTION(("Clip type not supported for EBU Core embedding"));
+}
+
+void ClipWriter::InsertEBUCoreFramework(DMFramework *framework) {
+
+	HeaderMetadata *metadata = GetHeaderMetadata();
 	BMX_ASSERT(metadata != NULL);
 
 	// Register EBU Core extensions in the metadata data model
 	//...
 
 	// Append the EBU Core DMS label to the Preface
-	AppendDMSLabel(metadata, MXF_DM_L(AS11CoreDescriptiveScheme /* fill in EBU Core DMS Scheme label */));
+	AppendDMSLabel(metadata, MXF_DM_L(EBUCoreDescriptiveScheme));
 	// Insert the framework
     InsertFramework(metadata, 10001, "EBU_Core", framework);
 }
