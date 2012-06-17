@@ -65,6 +65,8 @@
 
 #include <mxf/mxf_avid.h>
 
+#include <EBUCoreProcessor.h>
+
 using namespace std;
 using namespace bmx;
 using namespace mxfpp;
@@ -2919,17 +2921,23 @@ int main(int argc, const char** argv)
         }
 
 
+		// add EBU Core descriptive metadata
+
+		// force prepared header metadata
+		clip->PrepareHeaderMetadata();
+
+		// Register EBU Core extensions in the metadata data model
+		EBUCore::RegisterExtensions(clip->GetDataModel());
+		DMFramework *framework = Process("C:\\code\\EBU-SDK\\Documentation\\EBU-Core\\examples\\ITM504483_EBUcore.XML", clip->GetHeaderMetadata());
+		clip->InsertEBUCoreFramework(framework);
+
         // add AS-11 descriptive metadata
 
         if (clip_type == CW_AS11_OP1A_CLIP_TYPE || clip_type == CW_AS11_D10_CLIP_TYPE) {
             AS11Clip *as11_clip = clip->GetAS11Clip();
-            as11_clip->PrepareHeaderMetadata();
+            //as11_clip->PrepareHeaderMetadata();
             as11_helper.InsertFrameworks(as11_clip);
         }
-
-		// add EBU Core descriptive metadata
-
-		clip->InsertEBUCoreFramework(/* the framework here */ NULL);
 
         // read more than 1 sample to improve efficiency if the input is sound only and the output
         // doesn't require a sample sequence
@@ -2954,6 +2962,7 @@ int main(int argc, const char** argv)
         // create clip file(s) and write samples
 
         clip->PrepareWrite();
+
 
         // write samples
         int64_t total_read = 0;
@@ -3006,7 +3015,6 @@ int main(int argc, const char** argv)
 
         if (clip_type == CW_AS11_OP1A_CLIP_TYPE || clip_type == CW_AS11_D10_CLIP_TYPE)
             as11_helper.Complete();
-
 
         // complete writing
 

@@ -90,6 +90,7 @@ public:
 public:
     mxfpp::HeaderMetadata* GetHeaderMetadata() const;
     mxfpp::DataModel* GetDataModel() const;
+	void PrepareHeaderMetadata();
 
 	void InsertEBUCoreFramework(DMFramework *framework);
 	void AppendDMSLabel(HeaderMetadata *header_metadata, mxfUL scheme_label);

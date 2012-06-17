@@ -427,13 +427,31 @@ DataModel* ClipWriter::GetDataModel() const {
 	BMX_EXCEPTION(("Clip type not supported for EBU Core embedding"));
 }
 
+void ClipWriter::PrepareHeaderMetadata() {
+	switch (mType)
+    {
+        case CW_AS11_OP1A_CLIP_TYPE:
+        case CW_AS11_D10_CLIP_TYPE:
+			mAS11Clip->PrepareHeaderMetadata();
+			return;
+        case CW_OP1A_CLIP_TYPE:
+			mOP1AClip->PrepareHeaderMetadata();
+			return;
+        case CW_D10_CLIP_TYPE:
+			return mD10Clip->PrepareHeaderMetadata();
+			break;
+        //case CW_AVID_CLIP_TYPE:
+		//case CW_AS02_CLIP_TYPE:
+        //case CW_WAVE_CLIP_TYPE:
+        //case CW_UNKNOWN_CLIP_TYPE:
+	}
+	BMX_EXCEPTION(("Clip type not supported for EBU Core embedding"));
+}
+
 void ClipWriter::InsertEBUCoreFramework(DMFramework *framework) {
 
 	HeaderMetadata *metadata = GetHeaderMetadata();
 	BMX_ASSERT(metadata != NULL);
-
-	// Register EBU Core extensions in the metadata data model
-	EBUCore::RegisterExtensions(GetDataModel());
 
 	// Append the EBU Core DMS label to the Preface
 	AppendDMSLabel(metadata, MXF_DM_L(EBUCoreDescriptiveScheme));
