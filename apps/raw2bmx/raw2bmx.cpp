@@ -378,6 +378,9 @@ static void usage(const char *cmd)
     fprintf(stderr, "  wave:\n");
     fprintf(stderr, "    --orig <name>           Set originator in the output Wave bext chunk. Default '%s'\n", DEFAULT_BEXT_ORIGINATOR);
     fprintf(stderr, "\n");
+    fprintf(stderr, "  EBU Core:\n");
+    fprintf(stderr, "    --ebu-core <name>       Parse and set EBU Core metadata from EBU Core XML file <name>\n");
+    fprintf(stderr, "\n");
     fprintf(stderr, "\n");
     fprintf(stderr, "Input Options (must precede the input to which it applies):\n");
     fprintf(stderr, "  -a <n:d>                Image aspect ratio. Either 4:3 or 16:9. Default parsed or 16:9\n");
@@ -513,7 +516,7 @@ int main(int argc, const char** argv)
     int value, num, den;
     unsigned int uvalue;
     int cmdln_index;
-
+	const char *ebucore_filename = 0;
 
     if (argc == 1) {
         usage(argv[0]);
@@ -2007,6 +2010,18 @@ int main(int argc, const char** argv)
             inputs.push_back(input);
             cmdln_index++;
         }
+		else if (strcmp(argv[cmdln_index], "--ebu-core") == 0)
+        {
+			if (cmdln_index + 1 >= argc)
+            {
+                usage(argv[0]);
+                fprintf(stderr, "Missing argument(s) for option '%s'\n", argv[cmdln_index]);
+                return 1;
+            }
+            ebucore_filename = argv[cmdln_index + 1];
+            cmdln_index++;
+        }
+
         else
         {
             break;
@@ -2927,9 +2942,11 @@ int main(int argc, const char** argv)
 		clip->PrepareHeaderMetadata();
 
 		// Register EBU Core extensions in the metadata data model
-		EBUCore::RegisterExtensions(clip->GetDataModel());
-		DMFramework *framework = Process("C:\\code\\EBU-SDK\\Documentation\\EBU-Core\\examples\\ITM504483_EBUcore.XML", clip->GetHeaderMetadata());
-		clip->InsertEBUCoreFramework(framework);
+		if (ebucore_filename) {
+			EBUCore::RegisterExtensions(clip->GetDataModel());
+			DMFramework *framework = Process(ebucore_filename, clip->GetHeaderMetadata());
+			clip->InsertEBUCoreFramework(framework);
+		}
 
         // add AS-11 descriptive metadata
 
