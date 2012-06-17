@@ -321,13 +321,13 @@ std::string convert(xml_schema::gyear& source) {
 
 std::string convert(xml_schema::date& source) {
 	std::stringstream ss;
-	ss << source.day() << '/' << source.month() << '/' << ss << source.year();
+	ss << source.day() << '/' << source.month() << '/' << source.year();
 	return ss.str();
 }
 
 std::string convert(xml_schema::time& source) {
 	std::stringstream ss;
-	ss << source.hours() << ':' << source.minutes() << ':' << ss << source.seconds();
+	ss << source.hours() << ':' << source.minutes() << ':' << source.seconds();
 	return ss.str();
 }
 
