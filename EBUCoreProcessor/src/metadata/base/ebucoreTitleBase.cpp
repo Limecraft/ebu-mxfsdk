@@ -29,61 +29,69 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORETYPEGROUP_BASE_H__
-#define __MXFPP_EBUCORETYPEGROUP_BASE_H__
-
-
-
-#include <libMXF++/metadata/InterchangeObject.h>
-
-
-namespace mxfpp
-{
-
-
-class ebucoreTypeGroupBase : public InterchangeObject
-{
-public:
-    friend class MetadataSetFactory<ebucoreTypeGroupBase>;
-    static const mxfKey setKey;
-
-public:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreTypeGroupBase();
-
-
-   // getters
-
-   bool havetypeGroupThesaurus() const;
-   std::string gettypeGroupThesaurus() const;
-   bool havetypeGroupLabel() const;
-   std::string gettypeGroupLabel() const;
-   bool havetypeGroupLink() const;
-   std::string gettypeGroupLink() const;
-   bool havetypeGroupUL() const;
-   mxfUL gettypeGroupUL() const;
-   bool havetypeGroupDefinition() const;
-   std::string gettypeGroupDefinition() const;
-   bool havetypeGroupLanguage() const;
-   std::string gettypeGroupLanguage() const;
-
-
-   // setters
-
-   void settypeGroupThesaurus(std::string value);
-   void settypeGroupLabel(std::string value);
-   void settypeGroupLink(std::string value);
-   void settypeGroupUL(mxfUL value);
-   void settypeGroupDefinition(std::string value);
-   void settypeGroupLanguage(std::string value);
-
-
-protected:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
-};
-
-
-};
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
+
+#include <memory>
+
+#include <libMXF++/MXF.h>
+#include <metadata/EBUCoreDMS++.h>
+
+
+using namespace std;
+using namespace mxfpp;
+
+
+const mxfKey ebucoreTitleBase::setKey = MXF_SET_K(ebucoreTitle);
+
+
+ebucoreTitleBase::ebucoreTitleBase(HeaderMetadata *headerMetadata)
+: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
+{
+    headerMetadata->add(this);
+}
+
+ebucoreTitleBase::ebucoreTitleBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: InterchangeObject(headerMetadata, cMetadataSet)
+{}
+
+ebucoreTitleBase::~ebucoreTitleBase()
+{}
+
+
+std::string ebucoreTitleBase::gettitleValue() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreTitle, titleValue));
+}
+
+std::string ebucoreTitleBase::gettitleLanguage() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreTitle, titleLanguage));
+}
+
+bool ebucoreTitleBase::havetitleAttributionDate() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTitle, titleAttributionDate));
+}
+
+std::string ebucoreTitleBase::gettitleAttributionDate() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreTitle, titleAttributionDate));
+}
+
+void ebucoreTitleBase::settitleValue(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreTitle, titleValue), value);
+}
+
+void ebucoreTitleBase::settitleLanguage(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreTitle, titleLanguage), value);
+}
+
+void ebucoreTitleBase::settitleAttributionDate(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreTitle, titleAttributionDate), value);
+}
+

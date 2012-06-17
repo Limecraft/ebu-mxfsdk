@@ -43,18 +43,46 @@ namespace mxfpp
 	class ebucoreRole;
 	class ebucoreOrganisation;
 	class ebucoreMetadataSchemeInformation;
-	class ebucoreTypeGroup;
+	//class ebucoreTypeGroup;
 }
 
 #include <metadata/ebucoreTypeGroup.h>
+#include <metadata/ebucoreFormatGroup.h>
+#include <metadata/ebucoreStatusGroup.h>
 #include <metadata/ebucoreRole.h>
 #include <metadata/ebucoreAddress.h>
 #include <metadata/ebucoreContactDetails.h>
 #include <metadata/ebucoreContact.h>
 #include <metadata/ebucoreEntity.h>
+#include <metadata/ebucoreOrganisation.h>
+#include <metadata/ebucoreIdentifier.h>
+#include <metadata/ebucoreAlternativeTitle.h>
+#include <metadata/ebucoreBasicRelation.h>
+#include <metadata/ebucoreCoordinates.h>
+#include <metadata/ebucoreCustomRelation.h>
+#include <metadata/ebucoreDate.h>
+#include <metadata/ebucoreDescription.h>
+#include <metadata/ebucoreGenre.h>
+#include <metadata/ebucoreLanguagePurpose.h>
+#include <metadata/ebucoreLanguage.h>
+#include <metadata/ebucoreLocation.h>
+#include <metadata/ebucoreObjectType.h>
+#include <metadata/ebucorePeriodOfTime.h>
+#include <metadata/ebucorePublicationHistoryEvent.h>
+#include <metadata/ebucoreRating.h>
+#include <metadata/ebucoreSpatial.h>
+#include <metadata/ebucoreSubject.h>
+#include <metadata/ebucoreTargetAudience.h>
+#include <metadata/ebucoreTemporal.h>
+#include <metadata/ebucoreTitle.h>
+#include <metadata/ebucoreType.h>
+#include <metadata/ebucoreVersion.h>
+#include <metadata/ebucoreCoverage.h>
+#include <metadata/ebucoreRights.h>
+#include <metadata/ebucoreCoreMetadata.h>
 #include <metadata/ebucoreMainFramework.h>
 #include <metadata/ebucoreMetadataSchemeInformation.h>
-#include <metadata/ebucoreOrganisation.h>
+
 
 #endif
 

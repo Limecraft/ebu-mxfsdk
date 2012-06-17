@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORETYPEGROUP_BASE_H__
-#define __MXFPP_EBUCORETYPEGROUP_BASE_H__
+#ifndef __MXFPP_EBUCOREDATE_BASE_H__
+#define __MXFPP_EBUCOREDATE_BASE_H__
 
 
 
@@ -41,45 +41,50 @@ namespace mxfpp
 {
 
 
-class ebucoreTypeGroupBase : public InterchangeObject
+class ebucoreDateBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucoreTypeGroupBase>;
+    friend class MetadataSetFactory<ebucoreDateBase>;
     static const mxfKey setKey;
 
 public:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreTypeGroupBase();
+    ebucoreDateBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreDateBase();
 
 
    // getters
 
-   bool havetypeGroupThesaurus() const;
-   std::string gettypeGroupThesaurus() const;
-   bool havetypeGroupLabel() const;
-   std::string gettypeGroupLabel() const;
-   bool havetypeGroupLink() const;
-   std::string gettypeGroupLink() const;
-   bool havetypeGroupUL() const;
-   mxfUL gettypeGroupUL() const;
-   bool havetypeGroupDefinition() const;
-   std::string gettypeGroupDefinition() const;
-   bool havetypeGroupLanguage() const;
-   std::string gettypeGroupLanguage() const;
+   std::string getotherDate() const;
+   std::string getotherYear() const;
+   std::string getdateCreated() const;
+   bool haveyearCreated() const;
+   std::string getyearCreated() const;
+   std::string getdateIssued() const;
+   std::string getyearIssued() const;
+   std::string getdateModified() const;
+   std::string getyearModified() const;
+   std::string getdateDigitized() const;
+   std::string getyearDigitized() const;
+   ebucoreTypeGroup* getdateTypeGroup() const;
 
 
    // setters
 
-   void settypeGroupThesaurus(std::string value);
-   void settypeGroupLabel(std::string value);
-   void settypeGroupLink(std::string value);
-   void settypeGroupUL(mxfUL value);
-   void settypeGroupDefinition(std::string value);
-   void settypeGroupLanguage(std::string value);
+   void setotherDate(std::string value);
+   void setotherYear(std::string value);
+   void setdateCreated(std::string value);
+   void setyearCreated(std::string value);
+   void setdateIssued(std::string value);
+   void setyearIssued(std::string value);
+   void setdateModified(std::string value);
+   void setyearModified(std::string value);
+   void setdateDigitized(std::string value);
+   void setyearDigitized(std::string value);
+   void setdateTypeGroup(ebucoreTypeGroup* value);
 
 
 protected:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreDateBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

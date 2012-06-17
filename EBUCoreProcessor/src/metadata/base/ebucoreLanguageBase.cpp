@@ -29,61 +29,66 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORETYPEGROUP_BASE_H__
-#define __MXFPP_EBUCORETYPEGROUP_BASE_H__
-
-
-
-#include <libMXF++/metadata/InterchangeObject.h>
-
-
-namespace mxfpp
-{
-
-
-class ebucoreTypeGroupBase : public InterchangeObject
-{
-public:
-    friend class MetadataSetFactory<ebucoreTypeGroupBase>;
-    static const mxfKey setKey;
-
-public:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreTypeGroupBase();
-
-
-   // getters
-
-   bool havetypeGroupThesaurus() const;
-   std::string gettypeGroupThesaurus() const;
-   bool havetypeGroupLabel() const;
-   std::string gettypeGroupLabel() const;
-   bool havetypeGroupLink() const;
-   std::string gettypeGroupLink() const;
-   bool havetypeGroupUL() const;
-   mxfUL gettypeGroupUL() const;
-   bool havetypeGroupDefinition() const;
-   std::string gettypeGroupDefinition() const;
-   bool havetypeGroupLanguage() const;
-   std::string gettypeGroupLanguage() const;
-
-
-   // setters
-
-   void settypeGroupThesaurus(std::string value);
-   void settypeGroupLabel(std::string value);
-   void settypeGroupLink(std::string value);
-   void settypeGroupUL(mxfUL value);
-   void settypeGroupDefinition(std::string value);
-   void settypeGroupLanguage(std::string value);
-
-
-protected:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
-};
-
-
-};
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
+
+#include <memory>
+
+#include <libMXF++/MXF.h>
+#include <metadata/EBUCoreDMS++.h>
+
+
+using namespace std;
+using namespace mxfpp;
+
+
+const mxfKey ebucoreLanguageBase::setKey = MXF_SET_K(ebucoreLanguage);
+
+
+ebucoreLanguageBase::ebucoreLanguageBase(HeaderMetadata *headerMetadata)
+: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
+{
+    headerMetadata->add(this);
+}
+
+ebucoreLanguageBase::ebucoreLanguageBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: InterchangeObject(headerMetadata, cMetadataSet)
+{}
+
+ebucoreLanguageBase::~ebucoreLanguageBase()
+{}
+
+
+std::string ebucoreLanguageBase::getlanguageName() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreLanguage, languageName));
+}
+
+std::string ebucoreLanguageBase::getlanguageCode() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreLanguage, languageCode));
+}
+
+ebucoreLanguagePurpose* ebucoreLanguageBase::getlanguagePurposeSet() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreLanguage, languagePurposeSet)));
+    MXFPP_CHECK(dynamic_cast<ebucoreLanguagePurpose*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreLanguagePurpose*>(obj.release());
+}
+
+void ebucoreLanguageBase::setlanguageName(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreLanguage, languageName), value);
+}
+
+void ebucoreLanguageBase::setlanguageCode(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreLanguage, languageCode), value);
+}
+
+void ebucoreLanguageBase::setlanguagePurposeSet(ebucoreLanguagePurpose* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreLanguage, languagePurposeSet), value);
+}
+

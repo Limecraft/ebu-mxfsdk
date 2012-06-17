@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORETYPEGROUP_BASE_H__
-#define __MXFPP_EBUCORETYPEGROUP_BASE_H__
+#ifndef __MXFPP_EBUCORECUSTOMRELATION_BASE_H__
+#define __MXFPP_EBUCORECUSTOMRELATION_BASE_H__
 
 
 
@@ -41,45 +41,48 @@ namespace mxfpp
 {
 
 
-class ebucoreTypeGroupBase : public InterchangeObject
+class ebucoreCustomRelationBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucoreTypeGroupBase>;
+    friend class MetadataSetFactory<ebucoreCustomRelationBase>;
     static const mxfKey setKey;
 
 public:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreTypeGroupBase();
+    ebucoreCustomRelationBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreCustomRelationBase();
 
 
    // getters
 
-   bool havetypeGroupThesaurus() const;
-   std::string gettypeGroupThesaurus() const;
-   bool havetypeGroupLabel() const;
-   std::string gettypeGroupLabel() const;
-   bool havetypeGroupLink() const;
-   std::string gettypeGroupLink() const;
-   bool havetypeGroupUL() const;
-   mxfUL gettypeGroupUL() const;
-   bool havetypeGroupDefinition() const;
-   std::string gettypeGroupDefinition() const;
-   bool havetypeGroupLanguage() const;
-   std::string gettypeGroupLanguage() const;
+   bool haverelationByName() const;
+   std::string getrelationByName() const;
+   bool haverelationIdentifier() const;
+   mxfUMID getrelationIdentifier() const;
+   bool haverelationLink() const;
+   std::string getrelationLink() const;
+   bool haverunningOrderNumber() const;
+   uint32_t getrunningOrderNumber() const;
+   bool havetotalNumberOfGroupMembers() const;
+   uint32_t gettotalNumberOfGroupMembers() const;
+   bool haveorderedGroupFlag() const;
+   bool getorderedGroupFlag() const;
+   bool havecustomRelationTypeGroup() const;
+   ebucoreTypeGroup* getcustomRelationTypeGroup() const;
 
 
    // setters
 
-   void settypeGroupThesaurus(std::string value);
-   void settypeGroupLabel(std::string value);
-   void settypeGroupLink(std::string value);
-   void settypeGroupUL(mxfUL value);
-   void settypeGroupDefinition(std::string value);
-   void settypeGroupLanguage(std::string value);
+   void setrelationByName(std::string value);
+   void setrelationIdentifier(mxfUMID value);
+   void setrelationLink(std::string value);
+   void setrunningOrderNumber(uint32_t value);
+   void settotalNumberOfGroupMembers(uint32_t value);
+   void setorderedGroupFlag(bool value);
+   void setcustomRelationTypeGroup(ebucoreTypeGroup* value);
 
 
 protected:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreCustomRelationBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

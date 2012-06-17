@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORETYPEGROUP_BASE_H__
-#define __MXFPP_EBUCORETYPEGROUP_BASE_H__
+#ifndef __MXFPP_EBUCOREPERIODOFTIME_BASE_H__
+#define __MXFPP_EBUCOREPERIODOFTIME_BASE_H__
 
 
 
@@ -41,45 +41,54 @@ namespace mxfpp
 {
 
 
-class ebucoreTypeGroupBase : public InterchangeObject
+class ebucorePeriodOfTimeBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucoreTypeGroupBase>;
+    friend class MetadataSetFactory<ebucorePeriodOfTimeBase>;
     static const mxfKey setKey;
 
 public:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreTypeGroupBase();
+    ebucorePeriodOfTimeBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucorePeriodOfTimeBase();
 
 
    // getters
 
-   bool havetypeGroupThesaurus() const;
-   std::string gettypeGroupThesaurus() const;
-   bool havetypeGroupLabel() const;
-   std::string gettypeGroupLabel() const;
-   bool havetypeGroupLink() const;
-   std::string gettypeGroupLink() const;
-   bool havetypeGroupUL() const;
-   mxfUL gettypeGroupUL() const;
-   bool havetypeGroupDefinition() const;
-   std::string gettypeGroupDefinition() const;
-   bool havetypeGroupLanguage() const;
-   std::string gettypeGroupLanguage() const;
+   bool haveperiodId() const;
+   std::string getperiodId() const;
+   bool haveperiodName() const;
+   std::string getperiodName() const;
+   bool haveperiodStartYear() const;
+   std::string getperiodStartYear() const;
+   bool haveperiodStartDate() const;
+   std::string getperiodStartDate() const;
+   bool haveperiodStartTime() const;
+   std::string getperiodStartTime() const;
+   bool haveperiodEndYear() const;
+   std::string getperiodEndYear() const;
+   bool haveperiodEndDate() const;
+   std::string getperiodEndDate() const;
+   bool haveperiodEndTime() const;
+   std::string getperiodEndTime() const;
+   bool haveperiodKindGroup() const;
+   ebucoreTypeGroup* getperiodKindGroup() const;
 
 
    // setters
 
-   void settypeGroupThesaurus(std::string value);
-   void settypeGroupLabel(std::string value);
-   void settypeGroupLink(std::string value);
-   void settypeGroupUL(mxfUL value);
-   void settypeGroupDefinition(std::string value);
-   void settypeGroupLanguage(std::string value);
+   void setperiodId(std::string value);
+   void setperiodName(std::string value);
+   void setperiodStartYear(std::string value);
+   void setperiodStartDate(std::string value);
+   void setperiodStartTime(std::string value);
+   void setperiodEndYear(std::string value);
+   void setperiodEndDate(std::string value);
+   void setperiodEndTime(std::string value);
+   void setperiodKindGroup(ebucoreTypeGroup* value);
 
 
 protected:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucorePeriodOfTimeBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORETYPEGROUP_BASE_H__
-#define __MXFPP_EBUCORETYPEGROUP_BASE_H__
+#ifndef __MXFPP_EBUCORERATING_BASE_H__
+#define __MXFPP_EBUCORERATING_BASE_H__
 
 
 
@@ -41,45 +41,41 @@ namespace mxfpp
 {
 
 
-class ebucoreTypeGroupBase : public InterchangeObject
+class ebucoreRatingBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucoreTypeGroupBase>;
+    friend class MetadataSetFactory<ebucoreRatingBase>;
     static const mxfKey setKey;
 
 public:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreTypeGroupBase();
+    ebucoreRatingBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreRatingBase();
 
 
    // getters
 
-   bool havetypeGroupThesaurus() const;
-   std::string gettypeGroupThesaurus() const;
-   bool havetypeGroupLabel() const;
-   std::string gettypeGroupLabel() const;
-   bool havetypeGroupLink() const;
-   std::string gettypeGroupLink() const;
-   bool havetypeGroupUL() const;
-   mxfUL gettypeGroupUL() const;
-   bool havetypeGroupDefinition() const;
-   std::string gettypeGroupDefinition() const;
-   bool havetypeGroupLanguage() const;
-   std::string gettypeGroupLanguage() const;
+   std::string getratingValue() const;
+   std::string getratingScaleMinValue() const;
+   std::string getratingScaleMaxValue() const;
+   std::string getratingLanguage() const;
+   ebucoreTypeGroup* getratingTypeGroup() const;
+   ebucoreFormatGroup* getratingFormatGroup() const;
+   ebucoreEntity* getratingProviderEntity() const;
 
 
    // setters
 
-   void settypeGroupThesaurus(std::string value);
-   void settypeGroupLabel(std::string value);
-   void settypeGroupLink(std::string value);
-   void settypeGroupUL(mxfUL value);
-   void settypeGroupDefinition(std::string value);
-   void settypeGroupLanguage(std::string value);
+   void setratingValue(std::string value);
+   void setratingScaleMinValue(std::string value);
+   void setratingScaleMaxValue(std::string value);
+   void setratingLanguage(std::string value);
+   void setratingTypeGroup(ebucoreTypeGroup* value);
+   void setratingFormatGroup(ebucoreFormatGroup* value);
+   void setratingProviderEntity(ebucoreEntity* value);
 
 
 protected:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreRatingBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

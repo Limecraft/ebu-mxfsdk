@@ -29,61 +29,62 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORETYPEGROUP_BASE_H__
-#define __MXFPP_EBUCORETYPEGROUP_BASE_H__
-
-
-
-#include <libMXF++/metadata/InterchangeObject.h>
-
-
-namespace mxfpp
-{
-
-
-class ebucoreTypeGroupBase : public InterchangeObject
-{
-public:
-    friend class MetadataSetFactory<ebucoreTypeGroupBase>;
-    static const mxfKey setKey;
-
-public:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreTypeGroupBase();
-
-
-   // getters
-
-   bool havetypeGroupThesaurus() const;
-   std::string gettypeGroupThesaurus() const;
-   bool havetypeGroupLabel() const;
-   std::string gettypeGroupLabel() const;
-   bool havetypeGroupLink() const;
-   std::string gettypeGroupLink() const;
-   bool havetypeGroupUL() const;
-   mxfUL gettypeGroupUL() const;
-   bool havetypeGroupDefinition() const;
-   std::string gettypeGroupDefinition() const;
-   bool havetypeGroupLanguage() const;
-   std::string gettypeGroupLanguage() const;
-
-
-   // setters
-
-   void settypeGroupThesaurus(std::string value);
-   void settypeGroupLabel(std::string value);
-   void settypeGroupLink(std::string value);
-   void settypeGroupUL(mxfUL value);
-   void settypeGroupDefinition(std::string value);
-   void settypeGroupLanguage(std::string value);
-
-
-protected:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
-};
-
-
-};
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
+
+#include <memory>
+
+#include <libMXF++/MXF.h>
+#include <metadata/EBUCoreDMS++.h>
+
+
+using namespace std;
+using namespace mxfpp;
+
+
+const mxfKey ebucoreTemporalBase::setKey = MXF_SET_K(ebucoreTemporal);
+
+
+ebucoreTemporalBase::ebucoreTemporalBase(HeaderMetadata *headerMetadata)
+: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
+{
+    headerMetadata->add(this);
+}
+
+ebucoreTemporalBase::ebucoreTemporalBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: InterchangeObject(headerMetadata, cMetadataSet)
+{}
+
+ebucoreTemporalBase::~ebucoreTemporalBase()
+{}
+
+
+bool ebucoreTemporalBase::haveperiodOfTime() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTemporal, periodOfTime));
+}
+
+std::vector<ebucorePeriodOfTime*> ebucoreTemporalBase::getperiodOfTime() const
+{
+    vector<ebucorePeriodOfTime*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreTemporal, periodOfTime)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucorePeriodOfTime*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucorePeriodOfTime*>(iter->get()));
+    }
+    return result;
+}
+
+void ebucoreTemporalBase::setperiodOfTime(const std::vector<ebucorePeriodOfTime*>& value)
+{
+    WrapObjectVectorIterator<ebucorePeriodOfTime> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreTemporal, periodOfTime), &iter);
+}
+
+void ebucoreTemporalBase::appendperiodOfTime(ebucorePeriodOfTime* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreTemporal, periodOfTime), value);
+}
+

@@ -75,6 +75,13 @@ std::string ebucoreMainFrameworkBase::getdocumentId() const
     return getStringItem(&MXF_ITEM_K(ebucoreMainFramework, documentId));
 }
 
+ebucoreCoreMetadata* ebucoreMainFrameworkBase::getcoreMetadata() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreMainFramework, coreMetadata)));
+    MXFPP_CHECK(dynamic_cast<ebucoreCoreMetadata*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreCoreMetadata*>(obj.release());
+}
+
 ebucoreMetadataSchemeInformation* ebucoreMainFrameworkBase::getmetadataSchemeInformation() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreMainFramework, metadataSchemeInformation)));
@@ -90,6 +97,11 @@ void ebucoreMainFrameworkBase::setdocumentLocator(std::string value)
 void ebucoreMainFrameworkBase::setdocumentId(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreMainFramework, documentId), value);
+}
+
+void ebucoreMainFrameworkBase::setcoreMetadata(ebucoreCoreMetadata* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreMainFramework, coreMetadata), value);
 }
 
 void ebucoreMainFrameworkBase::setmetadataSchemeInformation(ebucoreMetadataSchemeInformation* value)

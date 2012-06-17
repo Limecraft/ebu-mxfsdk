@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORETYPEGROUP_BASE_H__
-#define __MXFPP_EBUCORETYPEGROUP_BASE_H__
+#ifndef __MXFPP_EBUCORELANGUAGE_BASE_H__
+#define __MXFPP_EBUCORELANGUAGE_BASE_H__
 
 
 
@@ -41,45 +41,33 @@ namespace mxfpp
 {
 
 
-class ebucoreTypeGroupBase : public InterchangeObject
+class ebucoreLanguageBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucoreTypeGroupBase>;
+    friend class MetadataSetFactory<ebucoreLanguageBase>;
     static const mxfKey setKey;
 
 public:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreTypeGroupBase();
+    ebucoreLanguageBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreLanguageBase();
 
 
    // getters
 
-   bool havetypeGroupThesaurus() const;
-   std::string gettypeGroupThesaurus() const;
-   bool havetypeGroupLabel() const;
-   std::string gettypeGroupLabel() const;
-   bool havetypeGroupLink() const;
-   std::string gettypeGroupLink() const;
-   bool havetypeGroupUL() const;
-   mxfUL gettypeGroupUL() const;
-   bool havetypeGroupDefinition() const;
-   std::string gettypeGroupDefinition() const;
-   bool havetypeGroupLanguage() const;
-   std::string gettypeGroupLanguage() const;
+   std::string getlanguageName() const;
+   std::string getlanguageCode() const;
+   ebucoreLanguagePurpose* getlanguagePurposeSet() const;
 
 
    // setters
 
-   void settypeGroupThesaurus(std::string value);
-   void settypeGroupLabel(std::string value);
-   void settypeGroupLink(std::string value);
-   void settypeGroupUL(mxfUL value);
-   void settypeGroupDefinition(std::string value);
-   void settypeGroupLanguage(std::string value);
+   void setlanguageName(std::string value);
+   void setlanguageCode(std::string value);
+   void setlanguagePurposeSet(ebucoreLanguagePurpose* value);
 
 
 protected:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreLanguageBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

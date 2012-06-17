@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORETYPEGROUP_BASE_H__
-#define __MXFPP_EBUCORETYPEGROUP_BASE_H__
+#ifndef __MXFPP_EBUCORERIGHTS_BASE_H__
+#define __MXFPP_EBUCORERIGHTS_BASE_H__
 
 
 
@@ -41,45 +41,54 @@ namespace mxfpp
 {
 
 
-class ebucoreTypeGroupBase : public InterchangeObject
+class ebucoreRightsBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucoreTypeGroupBase>;
+    friend class MetadataSetFactory<ebucoreRightsBase>;
     static const mxfKey setKey;
 
 public:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreTypeGroupBase();
+    ebucoreRightsBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreRightsBase();
 
 
    // getters
 
-   bool havetypeGroupThesaurus() const;
-   std::string gettypeGroupThesaurus() const;
-   bool havetypeGroupLabel() const;
-   std::string gettypeGroupLabel() const;
-   bool havetypeGroupLink() const;
-   std::string gettypeGroupLink() const;
-   bool havetypeGroupUL() const;
-   mxfUL gettypeGroupUL() const;
-   bool havetypeGroupDefinition() const;
-   std::string gettypeGroupDefinition() const;
-   bool havetypeGroupLanguage() const;
-   std::string gettypeGroupLanguage() const;
+   std::string getrightsId() const;
+   std::string getrightsValue() const;
+   std::string getrightsLanguage() const;
+   std::string getrightsLink() const;
+   bool getrightsClearanceFlag() const;
+   std::string getrightsAttributedID() const;
+   std::string getrightsFormatIDRef() const;
+   std::string getexploitationIssues() const;
+   std::vector<ebucoreCoverage*> getrightsCoverage() const;
+   std::vector<ebucoreEntity*> getrightsHolderEntity() const;
+   std::vector<ebucoreContact*> getrightsContacts() const;
+   ebucoreTypeGroup* getrightsKindGroup() const;
 
 
    // setters
 
-   void settypeGroupThesaurus(std::string value);
-   void settypeGroupLabel(std::string value);
-   void settypeGroupLink(std::string value);
-   void settypeGroupUL(mxfUL value);
-   void settypeGroupDefinition(std::string value);
-   void settypeGroupLanguage(std::string value);
+   void setrightsId(std::string value);
+   void setrightsValue(std::string value);
+   void setrightsLanguage(std::string value);
+   void setrightsLink(std::string value);
+   void setrightsClearanceFlag(bool value);
+   void setrightsAttributedID(std::string value);
+   void setrightsFormatIDRef(std::string value);
+   void setexploitationIssues(std::string value);
+   void setrightsCoverage(const std::vector<ebucoreCoverage*>& value);
+   void appendrightsCoverage(ebucoreCoverage* value);
+   void setrightsHolderEntity(const std::vector<ebucoreEntity*>& value);
+   void appendrightsHolderEntity(ebucoreEntity* value);
+   void setrightsContacts(const std::vector<ebucoreContact*>& value);
+   void appendrightsContacts(ebucoreContact* value);
+   void setrightsKindGroup(ebucoreTypeGroup* value);
 
 
 protected:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreRightsBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

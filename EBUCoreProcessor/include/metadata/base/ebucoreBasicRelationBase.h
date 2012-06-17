@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORETYPEGROUP_BASE_H__
-#define __MXFPP_EBUCORETYPEGROUP_BASE_H__
+#ifndef __MXFPP_EBUCOREBASICRELATION_BASE_H__
+#define __MXFPP_EBUCOREBASICRELATION_BASE_H__
 
 
 
@@ -41,45 +41,55 @@ namespace mxfpp
 {
 
 
-class ebucoreTypeGroupBase : public InterchangeObject
+class ebucoreBasicRelationBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucoreTypeGroupBase>;
+    friend class MetadataSetFactory<ebucoreBasicRelationBase>;
     static const mxfKey setKey;
 
 public:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreTypeGroupBase();
+    ebucoreBasicRelationBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreBasicRelationBase();
 
 
    // getters
 
-   bool havetypeGroupThesaurus() const;
-   std::string gettypeGroupThesaurus() const;
-   bool havetypeGroupLabel() const;
-   std::string gettypeGroupLabel() const;
-   bool havetypeGroupLink() const;
-   std::string gettypeGroupLink() const;
-   bool havetypeGroupUL() const;
-   mxfUL gettypeGroupUL() const;
-   bool havetypeGroupDefinition() const;
-   std::string gettypeGroupDefinition() const;
-   bool havetypeGroupLanguage() const;
-   std::string gettypeGroupLanguage() const;
+   mxfUMID getisVersionOf() const;
+   mxfUMID gethasVersion() const;
+   mxfUMID getisReplacedBy() const;
+   mxfUMID getreplaces() const;
+   mxfUMID getisRequiredBy() const;
+   mxfUMID getrequires() const;
+   mxfUMID getisPartOf() const;
+   mxfUMID gethasPart() const;
+   mxfUMID getisReferencedBy() const;
+   mxfUMID getreferences() const;
+   mxfUMID getisFormatOf() const;
+   mxfUMID gethasFormat() const;
+   mxfUMID getisEpisodeOf() const;
+   mxfUMID getisMemberOf() const;
 
 
    // setters
 
-   void settypeGroupThesaurus(std::string value);
-   void settypeGroupLabel(std::string value);
-   void settypeGroupLink(std::string value);
-   void settypeGroupUL(mxfUL value);
-   void settypeGroupDefinition(std::string value);
-   void settypeGroupLanguage(std::string value);
+   void setisVersionOf(mxfUMID value);
+   void sethasVersion(mxfUMID value);
+   void setisReplacedBy(mxfUMID value);
+   void setreplaces(mxfUMID value);
+   void setisRequiredBy(mxfUMID value);
+   void setrequires(mxfUMID value);
+   void setisPartOf(mxfUMID value);
+   void sethasPart(mxfUMID value);
+   void setisReferencedBy(mxfUMID value);
+   void setreferences(mxfUMID value);
+   void setisFormatOf(mxfUMID value);
+   void sethasFormat(mxfUMID value);
+   void setisEpisodeOf(mxfUMID value);
+   void setisMemberOf(mxfUMID value);
 
 
 protected:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreBasicRelationBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

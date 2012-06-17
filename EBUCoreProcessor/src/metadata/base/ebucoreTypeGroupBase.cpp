@@ -60,14 +60,29 @@ ebucoreTypeGroupBase::~ebucoreTypeGroupBase()
 {}
 
 
+bool ebucoreTypeGroupBase::havetypeGroupThesaurus() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTypeGroup, typeGroupThesaurus));
+}
+
 std::string ebucoreTypeGroupBase::gettypeGroupThesaurus() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreTypeGroup, typeGroupThesaurus));
 }
 
+bool ebucoreTypeGroupBase::havetypeGroupLabel() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTypeGroup, typeGroupLabel));
+}
+
 std::string ebucoreTypeGroupBase::gettypeGroupLabel() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreTypeGroup, typeGroupLabel));
+}
+
+bool ebucoreTypeGroupBase::havetypeGroupLink() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTypeGroup, typeGroupLink));
 }
 
 std::string ebucoreTypeGroupBase::gettypeGroupLink() const
@@ -85,9 +100,19 @@ mxfUL ebucoreTypeGroupBase::gettypeGroupUL() const
     return getULItem(&MXF_ITEM_K(ebucoreTypeGroup, typeGroupUL));
 }
 
+bool ebucoreTypeGroupBase::havetypeGroupDefinition() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTypeGroup, typeGroupDefinition));
+}
+
 std::string ebucoreTypeGroupBase::gettypeGroupDefinition() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreTypeGroup, typeGroupDefinition));
+}
+
+bool ebucoreTypeGroupBase::havetypeGroupLanguage() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTypeGroup, typeGroupLanguage));
 }
 
 std::string ebucoreTypeGroupBase::gettypeGroupLanguage() const

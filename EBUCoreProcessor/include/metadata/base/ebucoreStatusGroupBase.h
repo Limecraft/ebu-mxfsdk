@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORETYPEGROUP_BASE_H__
-#define __MXFPP_EBUCORETYPEGROUP_BASE_H__
+#ifndef __MXFPP_EBUCORESTATUSGROUP_BASE_H__
+#define __MXFPP_EBUCORESTATUSGROUP_BASE_H__
 
 
 
@@ -41,45 +41,45 @@ namespace mxfpp
 {
 
 
-class ebucoreTypeGroupBase : public InterchangeObject
+class ebucoreStatusGroupBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucoreTypeGroupBase>;
+    friend class MetadataSetFactory<ebucoreStatusGroupBase>;
     static const mxfKey setKey;
 
 public:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreTypeGroupBase();
+    ebucoreStatusGroupBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreStatusGroupBase();
 
 
    // getters
 
-   bool havetypeGroupThesaurus() const;
-   std::string gettypeGroupThesaurus() const;
-   bool havetypeGroupLabel() const;
-   std::string gettypeGroupLabel() const;
-   bool havetypeGroupLink() const;
-   std::string gettypeGroupLink() const;
-   bool havetypeGroupUL() const;
-   mxfUL gettypeGroupUL() const;
-   bool havetypeGroupDefinition() const;
-   std::string gettypeGroupDefinition() const;
-   bool havetypeGroupLanguage() const;
-   std::string gettypeGroupLanguage() const;
+   bool havestatusGroupThesaurus() const;
+   std::string getstatusGroupThesaurus() const;
+   bool havestatusGroupLabel() const;
+   std::string getstatusGroupLabel() const;
+   bool havestatusGroupLink() const;
+   std::string getstatusGroupLink() const;
+   bool havestatusGroupUL() const;
+   mxfUL getstatusGroupUL() const;
+   bool havestatusGroupDefinition() const;
+   std::string getstatusGroupDefinition() const;
+   bool havestatusGroupLanguage() const;
+   std::string getstatusGroupLanguage() const;
 
 
    // setters
 
-   void settypeGroupThesaurus(std::string value);
-   void settypeGroupLabel(std::string value);
-   void settypeGroupLink(std::string value);
-   void settypeGroupUL(mxfUL value);
-   void settypeGroupDefinition(std::string value);
-   void settypeGroupLanguage(std::string value);
+   void setstatusGroupThesaurus(std::string value);
+   void setstatusGroupLabel(std::string value);
+   void setstatusGroupLink(std::string value);
+   void setstatusGroupUL(mxfUL value);
+   void setstatusGroupDefinition(std::string value);
+   void setstatusGroupLanguage(std::string value);
 
 
 protected:
-    ebucoreTypeGroupBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreStatusGroupBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 
