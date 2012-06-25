@@ -75,9 +75,9 @@ bool ebucoreAlternativeTitleBase::havealternativeTitleAttributionDate() const
     return haveItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleAttributionDate));
 }
 
-std::string ebucoreAlternativeTitleBase::getalternativeTitleAttributionDate() const
+mxfTimestamp ebucoreAlternativeTitleBase::getalternativeTitleAttributionDate() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleAttributionDate));
+    return getTimestampItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleAttributionDate));
 }
 
 ebucoreTypeGroup* ebucoreAlternativeTitleBase::getalternativeTitleTypeGroup() const
@@ -104,9 +104,9 @@ void ebucoreAlternativeTitleBase::setalternativeTitleLanguage(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleLanguage), value);
 }
 
-void ebucoreAlternativeTitleBase::setalternativeTitleAttributionDate(std::string value)
+void ebucoreAlternativeTitleBase::setalternativeTitleAttributionDate(mxfTimestamp value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleAttributionDate), value);
+    setTimestampItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleAttributionDate), value);
 }
 
 void ebucoreAlternativeTitleBase::setalternativeTitleTypeGroup(ebucoreTypeGroup* value)

@@ -91,8 +91,7 @@ using namespace mxfpp;
 namespace EBUCore
 {
 	void RegisterExtensions(DataModel *dataModel);
-
-
+	void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata);
 };
 
 

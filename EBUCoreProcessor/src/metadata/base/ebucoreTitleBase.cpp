@@ -75,9 +75,9 @@ bool ebucoreTitleBase::havetitleAttributionDate() const
     return haveItem(&MXF_ITEM_K(ebucoreTitle, titleAttributionDate));
 }
 
-std::string ebucoreTitleBase::gettitleAttributionDate() const
+mxfTimestamp ebucoreTitleBase::gettitleAttributionDate() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreTitle, titleAttributionDate));
+    return getTimestampItem(&MXF_ITEM_K(ebucoreTitle, titleAttributionDate));
 }
 
 void ebucoreTitleBase::settitleValue(std::string value)
@@ -90,8 +90,8 @@ void ebucoreTitleBase::settitleLanguage(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreTitle, titleLanguage), value);
 }
 
-void ebucoreTitleBase::settitleAttributionDate(std::string value)
+void ebucoreTitleBase::settitleAttributionDate(mxfTimestamp value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreTitle, titleAttributionDate), value);
+    setTimestampItem(&MXF_ITEM_K(ebucoreTitle, titleAttributionDate), value);
 }
 

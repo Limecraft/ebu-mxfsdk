@@ -508,7 +508,7 @@ MXF_SET_DEFINITION(InterchangeObject, ebucoreTitle,
 	MXF_ITEM_DEFINITION(ebucoreTitle, titleAttributionDate,
 		MXF_LABEL(0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x05,0x01,0x03,0x00),
 		0x0000,
-		MXF_UTF16STRING_TYPE,
+		MXF_TIMESTAMP_TYPE,
 		0
 	);
 MXF_SET_DEFINITION(InterchangeObject, ebucoreAlternativeTitle, 
@@ -529,7 +529,7 @@ MXF_SET_DEFINITION(InterchangeObject, ebucoreAlternativeTitle,
 	MXF_ITEM_DEFINITION(ebucoreAlternativeTitle, alternativeTitleAttributionDate,
 		MXF_LABEL(0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x05,0x02,0x03,0x00),
 		0x0000,
-		MXF_UTF16STRING_TYPE,
+		MXF_TIMESTAMP_TYPE,
 		0
 	);
 	MXF_ITEM_DEFINITION(ebucoreAlternativeTitle, alternativeTitleTypeGroup,

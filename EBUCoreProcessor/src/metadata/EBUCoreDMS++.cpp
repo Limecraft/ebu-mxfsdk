@@ -21,4 +21,14 @@ void RegisterExtensions(DataModel *data_model)
     data_model->finalise();
 }
 
+void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata)
+{
+	header_metadata->registerObjectFactory(&ebucoreMainFramework::setKey, new MetadataSetFactory<ebucoreMainFramework>());
+	header_metadata->registerObjectFactory(&ebucoreCoreMetadata::setKey, new MetadataSetFactory<ebucoreCoreMetadata>());
+	header_metadata->registerObjectFactory(&ebucoreTitle::setKey, new MetadataSetFactory<ebucoreTitle>());
+	header_metadata->registerObjectFactory(&ebucoreAlternativeTitle::setKey, new MetadataSetFactory<ebucoreAlternativeTitle>());
+	header_metadata->registerObjectFactory(&ebucoreTypeGroup::setKey, new MetadataSetFactory<ebucoreTypeGroup>());
+	header_metadata->registerObjectFactory(&ebucoreStatusGroup::setKey, new MetadataSetFactory<ebucoreStatusGroup>());
+}
+
 };

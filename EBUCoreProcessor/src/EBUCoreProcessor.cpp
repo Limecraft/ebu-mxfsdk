@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <memory>
 
 #include "EBUcoreProcessor.h"
 
@@ -99,6 +100,28 @@ using namespace mxfpp;
 	ebucoreFormatGroup *statusGroup = new ebucoreFormatGroup(dest->getHeaderMetadata());	\
 	MAP_FORMAT_GROUP(source, statusGroup)	\
 	dest->destProperty(statusGroup);
+
+#define RMAP_TYPE_GROUP(source, dest, definitionType, labelType, linkType)	\
+	if (source->havetypeGroupDefinition()) {	\
+		dest.typeDefinition().set(std::auto_ptr<definitionType>( new definitionType( source->gettypeGroupDefinition() ) ));	\
+	}	\
+	if (source->havetypeGroupLabel()) {	\
+		dest.typeLabel().set(std::auto_ptr<labelType>( new labelType( source->gettypeGroupLabel() ) ));	\
+	}	\
+	if (source->havetypeGroupLink()) {	\
+		dest.typeLink().set( std::auto_ptr<linkType> ( new linkType( source->gettypeGroupLink() ) ));	\
+	}
+#define RMAP_STATUS_GROUP(source, dest, definitionType, labelType, linkType)	\
+	if (source->havestatusGroupDefinition()) {	\
+		dest.statusDefinition().set(std::auto_ptr<definitionType>( new definitionType( source->getstatusGroupDefinition() ) ));	\
+	}	\
+	if (source->havestatusGroupLabel()) {	\
+		dest.statusLabel().set(std::auto_ptr<labelType>( new labelType( source->getstatusGroupLabel() ) ));	\
+	}	\
+	if (source->havestatusGroupLink()) {	\
+		dest.statusLink().set( std::auto_ptr<linkType> ( new linkType( source->getstatusGroupLink() ) ));	\
+	}
+
 
 void mapRole(role& source, ebucoreRole *dest) {
 	ebucoreTypeGroup *obj = new ebucoreTypeGroup(dest->getHeaderMetadata());
@@ -313,6 +336,18 @@ void mapMetadataSchemeInformation(ebuCoreMainType& source, ebucoreMetadataScheme
 
 }
 
+mxfTimestamp convert_timestamp(xml_schema::date& source) {
+	mxfTimestamp ts = {0,0,0,0,0,0,0};
+	ts.day = source.day();
+	ts.month = source.month();
+	ts.year = source.year();
+	return ts;
+}
+
+xml_schema::date* convert_timestamp(mxfTimestamp source) {
+	return new xml_schema::date(source.year, source.month, source.day);
+}
+
 std::string convert(xml_schema::gyear& source) {
 	std::stringstream ss;
 	ss << source.year();
@@ -355,7 +390,16 @@ void mapTitle(titleType& source, ebucoreTitle *dest) {
 	*/
 	SIMPLE_MAP_NO_GET(source, title, dest, settitleValue)
 	SIMPLE_MAP_NO_GET(source, title().lang, dest, settitleLanguage)
-	SIMPLE_MAP_OPTIONAL_CONVERT(source, attributiondate, dest, settitleAttributionDate, convert)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, attributiondate, dest, settitleAttributionDate, convert_timestamp)
+}
+
+void mapTitle(ebucoreTitle *source, titleType& dest) {
+	dest.title() = source->gettitleValue();
+	dest.title().lang() = source->gettitleLanguage();
+	if (source->havetitleAttributionDate()) {
+		std::auto_ptr<ebuCoreMainType::dateLastModified_type> dp( convert_timestamp(source->gettitleAttributionDate()));
+		dest.attributiondate().set(dp);
+	}
 }
 
 void mapAlternativeTitle(alternativeTitleType& source, ebucoreAlternativeTitle *dest) {
@@ -382,6 +426,16 @@ void mapAlternativeTitle(alternativeTitleType& source, ebucoreAlternativeTitle *
 
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setalternativeTitleTypeGroup)
 	MAP_NEW_STATUS_GROUP_AND_ASSIGN(source, dest, setalternativeTitleStatusGroup)
+}
+
+void mapAlternativeTitle(ebucoreAlternativeTitle *source, alternativeTitleType& dest) {
+	dest.title() = source->getalternativeTitleValue();
+	dest.title().lang() = source->getalternativeTitleLanguage();
+
+	ebucoreTypeGroup* tg = source->getalternativeTitleTypeGroup();
+	ebucoreStatusGroup* sg = source->getalternativeTitleStatusGroup();
+	RMAP_TYPE_GROUP(tg, dest, alternativeTitleType::typeDefinition_type, alternativeTitleType::typeLabel_type, alternativeTitleType::typeLink_type)
+	RMAP_STATUS_GROUP(sg, dest, alternativeTitleType::statusDefinition_type, alternativeTitleType::statusLabel_type, alternativeTitleType::statusLink_type)
 }
 
 void mapIdentifier(identifierType& source, ebucoreIdentifier *dest) {
@@ -972,7 +1026,6 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest) {
 
 	NEW_VECTOR_AND_ASSIGN(source, title, ebucoreTitle, coreMetadataType::title_iterator, mapTitle, dest, settitle)	
 	NEW_VECTOR_AND_ASSIGN(source, alternativeTitle, ebucoreAlternativeTitle, coreMetadataType::alternativeTitle_iterator, mapAlternativeTitle, dest, setalternativeTitle)
-	NEW_VECTOR_AND_ASSIGN(source, alternativeTitle, ebucoreAlternativeTitle, coreMetadataType::alternativeTitle_iterator, mapAlternativeTitle, dest, setalternativeTitle)
 	NEW_VECTOR_AND_ASSIGN(source, creator, ebucoreEntity, coreMetadataType::creator_iterator, mapEntity, dest, setcreator)
 	NEW_VECTOR_AND_ASSIGN(source, subject, ebucoreSubject, coreMetadataType::subject_iterator, mapSubject, dest, setsubject)
 	NEW_VECTOR_AND_ASSIGN(source, description, ebucoreDescription, coreMetadataType::description_iterator, mapDescription, dest, setdescription)
@@ -1016,6 +1069,29 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest) {
 	*/
 }
 
+void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
+
+	coreMetadataType::title_sequence titles;
+	std::vector<ebucoreTitle*> source_titles = source->gettitle();
+	for (std::vector<ebucoreTitle*>::iterator it = source_titles.begin(); it != source_titles.end(); it++) {
+		std::auto_ptr<dc::elementType> dcp( new dc::elementType() );
+		std::auto_ptr<titleType> tp( new titleType(dcp) );
+		mapTitle(*it, *tp);
+		titles.push_back(tp);
+	}
+	dest.title(titles);
+
+	coreMetadataType::alternativeTitle_sequence alttitles;
+	std::vector<ebucoreAlternativeTitle*> source_alt_titles = source->getalternativeTitle();
+	for (std::vector<ebucoreAlternativeTitle*>::iterator it = source_alt_titles.begin(); it != source_alt_titles.end(); it++) {
+		std::auto_ptr<dc::elementType> dcp( new dc::elementType() );
+		std::auto_ptr<alternativeTitleType> tp( new alternativeTitleType(dcp) );
+		mapAlternativeTitle(*it, *tp);
+		alttitles.push_back(tp);
+	}
+	dest.alternativeTitle(alttitles);
+}
+
 DMFramework* Process(std::string location, HeaderMetadata *destination) {
 	std::ifstream input(location);
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
@@ -1039,13 +1115,109 @@ DMFramework* Process(std::string location, HeaderMetadata *destination) {
 	return framework;
 }
 
+void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model)
+{
+	EBUCore::RegisterExtensions(data_model);	
+}
+
 DMFramework* Process(std::string location) {
 
 	DataModel *mDataModel = new DataModel();
-	EBUCore::RegisterExtensions(mDataModel);
+	RegisterMetadataExtensionsforEBUCore(mDataModel);
 
 	HeaderMetadata *md = new HeaderMetadata(mDataModel);
 
 	return Process(location, md);
+}
+
+static std::vector<DMFramework*> ebu_get_static_frameworks(MaterialPackage *mp)
+{
+    std::vector<DMFramework*> frameworks;
+
+    // expect to find Static DM Track -> Sequence -> DM Segment -> DM Framework
+
+    std::vector<GenericTrack*> tracks = mp->getTracks();
+    size_t i;
+    for (i = 0; i < tracks.size(); i++) {
+        StaticTrack *st = dynamic_cast<StaticTrack*>(tracks[i]);
+        if (!st)
+            continue;
+
+        StructuralComponent *sc = st->getSequence();
+        if (!sc || sc->getDataDefinition() != MXF_DDEF_L(DescriptiveMetadata))
+            continue;
+
+        Sequence *seq = dynamic_cast<Sequence*>(sc);
+        DMSegment *seg = dynamic_cast<DMSegment*>(sc);
+        if (!seq && !seg)
+            continue;
+
+        if (seq) {
+            std::vector<StructuralComponent*> scs = seq->getStructuralComponents();
+            if (scs.size() != 1)
+                continue;
+
+            seg = dynamic_cast<DMSegment*>(scs[0]);
+            if (!seg)
+                continue;
+        }
+
+        if (!seg->haveDMFramework())
+            continue;
+
+        DMFramework *framework = seg->getDMFrameworkLight();
+        if (framework)
+            frameworks.push_back(framework);
+    }
+
+    return frameworks;
+}
+
+void ReadAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilename) {
+
+	EBUCore::RegisterFrameworkObjectFactory(metadata);
+
+	MaterialPackage *mp = metadata->getPreface()->findMaterialPackage();
+	if (!mp) {
+        return;
+    }
+
+	ebucoreMainFramework *ebucore = NULL;
+	std::vector<DMFramework*> static_frameworks = ebu_get_static_frameworks(mp);
+	size_t i;
+    for (i = 0; i < static_frameworks.size(); i++) {
+		ebucoreMainFramework *p = dynamic_cast<ebucoreMainFramework*>(static_frameworks[i]);
+        if (p) {
+			ebucore = p;
+			break;
+		}
+    }
+
+	if (ebucore) {
+
+		titleType::title_type dc_title("Berlin Wall 50th");
+		titleType title(dc_title);
+
+		ebuCoreMainType::coreMetadata_type main;
+		//main.title().push_back(title);
+
+		mapCoreMetadata(ebucore->getcoreMetadata(), main);
+
+		// map the EBU Core KLV framework to the XSD-derived counterpart
+		ebuCoreMainType ebuCoreMainElement(main);
+		ebuCoreMainElement.schema(ebuCoreMainElement.schema_default_value());
+		//ebuCoreMainElement.version(ebuCoreMainElement.version_default_value());
+		ebuCoreMainElement.version("1.3");
+
+		xml_schema::namespace_infomap map;
+		map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";
+		map["dc"].name = "http://purl.org/dc/elements/1.1/";
+
+		// open a file output stream
+		std::ofstream out(outputfilename);
+		ebuCoreMain (out, ebuCoreMainElement, map);
+		out.close();
+	}
+
 }
 

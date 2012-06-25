@@ -57,7 +57,7 @@ public:
    std::string getalternativeTitleValue() const;
    std::string getalternativeTitleLanguage() const;
    bool havealternativeTitleAttributionDate() const;
-   std::string getalternativeTitleAttributionDate() const;
+   mxfTimestamp getalternativeTitleAttributionDate() const;
    ebucoreTypeGroup* getalternativeTitleTypeGroup() const;
    ebucoreStatusGroup* getalternativeTitleStatusGroup() const;
 
@@ -66,7 +66,7 @@ public:
 
    void setalternativeTitleValue(std::string value);
    void setalternativeTitleLanguage(std::string value);
-   void setalternativeTitleAttributionDate(std::string value);
+   void setalternativeTitleAttributionDate(mxfTimestamp value);
    void setalternativeTitleTypeGroup(ebucoreTypeGroup* value);
    void setalternativeTitleStatusGroup(ebucoreStatusGroup* value);
 
