@@ -31,8 +31,8 @@
 // in the accompanying FLOSSE file.
 //
 
-#ifndef EBU_CORE_20110915_HXX
-#define EBU_CORE_20110915_HXX
+#ifndef C__CODE_EBU_SDK_DOCUMENTATION_EBU_CORE_XSD_EBU_CORE_20110915_HXX
+#define C__CODE_EBU_SDK_DOCUMENTATION_EBU_CORE_XSD_EBU_CORE_20110915_HXX
 
 // Begin prologue.
 //
@@ -78,6 +78,21 @@
 #include <xsd/cxx/tree/parsing/float.hxx>
 #include <xsd/cxx/tree/parsing/double.hxx>
 #include <xsd/cxx/tree/parsing/decimal.hxx>
+
+#include <xsd/cxx/xml/dom/serialization-header.hxx>
+#include <xsd/cxx/tree/serialization.hxx>
+#include <xsd/cxx/tree/serialization/byte.hxx>
+#include <xsd/cxx/tree/serialization/unsigned-byte.hxx>
+#include <xsd/cxx/tree/serialization/short.hxx>
+#include <xsd/cxx/tree/serialization/unsigned-short.hxx>
+#include <xsd/cxx/tree/serialization/int.hxx>
+#include <xsd/cxx/tree/serialization/unsigned-int.hxx>
+#include <xsd/cxx/tree/serialization/long.hxx>
+#include <xsd/cxx/tree/serialization/unsigned-long.hxx>
+#include <xsd/cxx/tree/serialization/boolean.hxx>
+#include <xsd/cxx/tree/serialization/float.hxx>
+#include <xsd/cxx/tree/serialization/double.hxx>
+#include <xsd/cxx/tree/serialization/decimal.hxx>
 
 namespace xml_schema
 {
@@ -174,6 +189,16 @@ namespace xml_schema
   typedef ::xsd::cxx::tree::entity< char, ncname > entity;
   typedef ::xsd::cxx::tree::entities< char, simple_type, entity > entities;
 
+  // Namespace information and list stream. Used in
+  // serialization functions.
+  //
+  typedef ::xsd::cxx::xml::dom::namespace_info< char > namespace_info;
+  typedef ::xsd::cxx::xml::dom::namespace_infomap< char > namespace_infomap;
+  typedef ::xsd::cxx::tree::list_stream< char > list_stream;
+  typedef ::xsd::cxx::tree::as_double< double_ > as_double;
+  typedef ::xsd::cxx::tree::as_decimal< decimal > as_decimal;
+  typedef ::xsd::cxx::tree::facet facet;
+
   // Flags and properties.
   //
   typedef ::xsd::cxx::tree::flags flags;
@@ -197,6 +222,7 @@ namespace xml_schema
   typedef ::xsd::cxx::tree::unexpected_enumerator< char > unexpected_enumerator;
   typedef ::xsd::cxx::tree::expected_text_content< char > expected_text_content;
   typedef ::xsd::cxx::tree::no_prefix_mapping< char > no_prefix_mapping;
+  typedef ::xsd::cxx::tree::serialization< char > serialization;
 
   // Error handler callback interface.
   //
@@ -14677,6 +14703,358 @@ namespace ebuCore_2011
                const ::xml_schema::properties& p = ::xml_schema::properties ());
 }
 
+#include <iosfwd>
+
+#include <xercesc/dom/DOMDocument.hpp>
+#include <xercesc/dom/DOMErrorHandler.hpp>
+#include <xercesc/framework/XMLFormatter.hpp>
+
+#include <xsd/cxx/xml/dom/auto-ptr.hxx>
+
+namespace ebuCore_2011
+{
+  // Serialize to std::ostream.
+  //
+
+  void
+  ebuCoreMain (::std::ostream& os,
+               const ::ebuCore_2011::ebuCoreMainType& x, 
+               const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
+               const ::std::string& e = "UTF-8",
+               ::xml_schema::flags f = 0);
+
+  void
+  ebuCoreMain (::std::ostream& os,
+               const ::ebuCore_2011::ebuCoreMainType& x, 
+               ::xml_schema::error_handler& eh,
+               const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
+               const ::std::string& e = "UTF-8",
+               ::xml_schema::flags f = 0);
+
+  void
+  ebuCoreMain (::std::ostream& os,
+               const ::ebuCore_2011::ebuCoreMainType& x, 
+               ::xercesc::DOMErrorHandler& eh,
+               const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
+               const ::std::string& e = "UTF-8",
+               ::xml_schema::flags f = 0);
+
+  // Serialize to xercesc::XMLFormatTarget.
+  //
+
+  void
+  ebuCoreMain (::xercesc::XMLFormatTarget& ft,
+               const ::ebuCore_2011::ebuCoreMainType& x, 
+               const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
+               const ::std::string& e = "UTF-8",
+               ::xml_schema::flags f = 0);
+
+  void
+  ebuCoreMain (::xercesc::XMLFormatTarget& ft,
+               const ::ebuCore_2011::ebuCoreMainType& x, 
+               ::xml_schema::error_handler& eh,
+               const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
+               const ::std::string& e = "UTF-8",
+               ::xml_schema::flags f = 0);
+
+  void
+  ebuCoreMain (::xercesc::XMLFormatTarget& ft,
+               const ::ebuCore_2011::ebuCoreMainType& x, 
+               ::xercesc::DOMErrorHandler& eh,
+               const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
+               const ::std::string& e = "UTF-8",
+               ::xml_schema::flags f = 0);
+
+  // Serialize to an existing xercesc::DOMDocument.
+  //
+
+  void
+  ebuCoreMain (::xercesc::DOMDocument& d,
+               const ::ebuCore_2011::ebuCoreMainType& x,
+               ::xml_schema::flags f = 0);
+
+  // Serialize to a new xercesc::DOMDocument.
+  //
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  ebuCoreMain (const ::ebuCore_2011::ebuCoreMainType& x, 
+               const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
+               ::xml_schema::flags f = 0);
+
+  void
+  operator<< (::xercesc::DOMElement&, const ebuCoreMainType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const coreMetadataType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const titleType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const alternativeTitleType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const identifierType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const subjectType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const typeType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const descriptionType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const coverageType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const rightsType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const formatType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const relationType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const languageType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const dateType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const publicationHistoryType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const entityType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const contactDetailsType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const organisationDetailsType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const detailsType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const addressType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const editUnitNumberType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const ratingType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const lengthType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const imageFormatType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const videoFormatType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const audioFormatType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const dataFormatType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const documentFormatType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const timeType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const durationType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const String&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const Boolean&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const Float&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const Int8&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const Int16&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const Int32&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const Int64&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const UInt8&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const UInt16&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const UInt32&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const UInt64&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const technicalAttributeRationalType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const technicalAttributeUriType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const hasTrackPart&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const part&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const genre&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const objectType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const targetAudience&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const temporal&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const spatial&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const medium&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const mimeType&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const containerFormat&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const signingFormat&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const locator&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const dateCreated&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const dateModified&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const created&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const issued&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const modified&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const digitised&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const alternative&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const firstPublicationChannel&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const repeatChannel&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const role&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const organisationDepartment&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const country&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const orientation&);
+
+  void
+  operator<< (::xercesc::DOMAttr&, const orientation&);
+
+  void
+  operator<< (::xml_schema::list_stream&,
+              const orientation&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const imageEncoding&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const aspectRatio&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const videoEncoding&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const videoTrack&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const audioEncoding&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const audioTrackConfiguration&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const audioTrack&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const captioningFormat&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const ancillaryDataFormat&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const timecode&);
+
+  void
+  operator<< (::xercesc::DOMAttr&, const timecode&);
+
+  void
+  operator<< (::xml_schema::list_stream&,
+              const timecode&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const time&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const timecode1&);
+
+  void
+  operator<< (::xercesc::DOMAttr&, const timecode1&);
+
+  void
+  operator<< (::xml_schema::list_stream&,
+              const timecode1&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const time1&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const PeriodOfTime&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const location&);
+
+  void
+  operator<< (::xercesc::DOMElement&, const coordinates&);
+}
+
 #include <xsd/cxx/post.hxx>
 
 // Begin epilogue.
@@ -14684,4 +15062,4 @@ namespace ebuCore_2011
 //
 // End epilogue.
 
-#endif // EBU_CORE_20110915_HXX
+#endif // C__CODE_EBU_SDK_DOCUMENTATION_EBU_CORE_XSD_EBU_CORE_20110915_HXX

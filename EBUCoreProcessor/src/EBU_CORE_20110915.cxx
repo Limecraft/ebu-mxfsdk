@@ -28013,6 +28013,7871 @@ namespace ebuCore_2011
   }
 }
 
+#include <ostream>
+#include <xsd/cxx/tree/error-handler.hxx>
+#include <xsd/cxx/xml/dom/serialization-source.hxx>
+
+namespace ebuCore_2011
+{
+  void
+  ebuCoreMain (::std::ostream& o,
+               const ::ebuCore_2011::ebuCoreMainType& s,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::ebuCore_2011::ebuCoreMain (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  ebuCoreMain (::std::ostream& o,
+               const ::ebuCore_2011::ebuCoreMainType& s,
+               ::xml_schema::error_handler& h,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::ebuCore_2011::ebuCoreMain (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  ebuCoreMain (::std::ostream& o,
+               const ::ebuCore_2011::ebuCoreMainType& s,
+               ::xercesc::DOMErrorHandler& h,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::ebuCore_2011::ebuCoreMain (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  ebuCoreMain (::xercesc::XMLFormatTarget& t,
+               const ::ebuCore_2011::ebuCoreMainType& s,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::ebuCore_2011::ebuCoreMain (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  ebuCoreMain (::xercesc::XMLFormatTarget& t,
+               const ::ebuCore_2011::ebuCoreMainType& s,
+               ::xml_schema::error_handler& h,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::ebuCore_2011::ebuCoreMain (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  ebuCoreMain (::xercesc::XMLFormatTarget& t,
+               const ::ebuCore_2011::ebuCoreMainType& s,
+               ::xercesc::DOMErrorHandler& h,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::ebuCore_2011::ebuCoreMain (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  ebuCoreMain (::xercesc::DOMDocument& d,
+               const ::ebuCore_2011::ebuCoreMainType& s,
+               ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "ebuCoreMain" &&
+        n.namespace_ () == "urn:ebu:metadata-schema:ebuCore_2011")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "ebuCoreMain",
+        "urn:ebu:metadata-schema:ebuCore_2011");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  ebuCoreMain (const ::ebuCore_2011::ebuCoreMainType& s,
+               const ::xml_schema::namespace_infomap& m,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "ebuCoreMain",
+        "urn:ebu:metadata-schema:ebuCore_2011",
+        m, f));
+
+    ::ebuCore_2011::ebuCoreMain (*d, s, f);
+    return d;
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const ebuCoreMainType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // coreMetadata
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "coreMetadata",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << i.coreMetadata ();
+    }
+
+    // metadataProvider
+    //
+    if (i.metadataProvider ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "metadataProvider",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.metadataProvider ();
+    }
+
+    // schema
+    //
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "schema",
+          e));
+
+      a << i.schema ();
+    }
+
+    // version
+    //
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "version",
+          e));
+
+      a << i.version ();
+    }
+
+    // dateLastModified
+    //
+    if (i.dateLastModified ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "dateLastModified",
+          e));
+
+      a << *i.dateLastModified ();
+    }
+
+    // documentId
+    //
+    if (i.documentId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "documentId",
+          e));
+
+      a << *i.documentId ();
+    }
+
+    // lang
+    //
+    if (i.lang ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "lang",
+          "http://www.w3.org/XML/1998/namespace",
+          e));
+
+      a << *i.lang ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const coreMetadataType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // title
+    //
+    for (coreMetadataType::title_const_iterator
+         b (i.title ().begin ()), n (i.title ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "title",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // alternativeTitle
+    //
+    for (coreMetadataType::alternativeTitle_const_iterator
+         b (i.alternativeTitle ().begin ()), n (i.alternativeTitle ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "alternativeTitle",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // creator
+    //
+    for (coreMetadataType::creator_const_iterator
+         b (i.creator ().begin ()), n (i.creator ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "creator",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // subject
+    //
+    for (coreMetadataType::subject_const_iterator
+         b (i.subject ().begin ()), n (i.subject ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "subject",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // description
+    //
+    for (coreMetadataType::description_const_iterator
+         b (i.description ().begin ()), n (i.description ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "description",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // publisher
+    //
+    for (coreMetadataType::publisher_const_iterator
+         b (i.publisher ().begin ()), n (i.publisher ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "publisher",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // contributor
+    //
+    for (coreMetadataType::contributor_const_iterator
+         b (i.contributor ().begin ()), n (i.contributor ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "contributor",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // date
+    //
+    for (coreMetadataType::date_const_iterator
+         b (i.date ().begin ()), n (i.date ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "date",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // type
+    //
+    for (coreMetadataType::type_const_iterator
+         b (i.type ().begin ()), n (i.type ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "type",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // format
+    //
+    for (coreMetadataType::format_const_iterator
+         b (i.format ().begin ()), n (i.format ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "format",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // identifier
+    //
+    for (coreMetadataType::identifier_const_iterator
+         b (i.identifier ().begin ()), n (i.identifier ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "identifier",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // source
+    //
+    for (coreMetadataType::source_const_iterator
+         b (i.source ().begin ()), n (i.source ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "source",
+          "http://purl.org/dc/elements/1.1/",
+          e));
+
+      s << *b;
+    }
+
+    // language
+    //
+    for (coreMetadataType::language_const_iterator
+         b (i.language ().begin ()), n (i.language ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "language",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // relation
+    //
+    for (coreMetadataType::relation_const_iterator
+         b (i.relation ().begin ()), n (i.relation ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "relation",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // isVersionOf
+    //
+    for (coreMetadataType::isVersionOf_const_iterator
+         b (i.isVersionOf ().begin ()), n (i.isVersionOf ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "isVersionOf",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // hasVersion
+    //
+    for (coreMetadataType::hasVersion_const_iterator
+         b (i.hasVersion ().begin ()), n (i.hasVersion ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "hasVersion",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // isReplacedBy
+    //
+    for (coreMetadataType::isReplacedBy_const_iterator
+         b (i.isReplacedBy ().begin ()), n (i.isReplacedBy ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "isReplacedBy",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // replaces
+    //
+    for (coreMetadataType::replaces_const_iterator
+         b (i.replaces ().begin ()), n (i.replaces ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "replaces",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // isRequiredBy
+    //
+    for (coreMetadataType::isRequiredBy_const_iterator
+         b (i.isRequiredBy ().begin ()), n (i.isRequiredBy ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "isRequiredBy",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // requires
+    //
+    for (coreMetadataType::requires_const_iterator
+         b (i.requires ().begin ()), n (i.requires ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "requires",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // isPartOf
+    //
+    for (coreMetadataType::isPartOf_const_iterator
+         b (i.isPartOf ().begin ()), n (i.isPartOf ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "isPartOf",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // hasPart
+    //
+    for (coreMetadataType::hasPart_const_iterator
+         b (i.hasPart ().begin ()), n (i.hasPart ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "hasPart",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // hasTrackPart
+    //
+    for (coreMetadataType::hasTrackPart_const_iterator
+         b (i.hasTrackPart ().begin ()), n (i.hasTrackPart ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "hasTrackPart",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // isReferencedBy
+    //
+    for (coreMetadataType::isReferencedBy_const_iterator
+         b (i.isReferencedBy ().begin ()), n (i.isReferencedBy ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "isReferencedBy",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // references
+    //
+    for (coreMetadataType::references_const_iterator
+         b (i.references ().begin ()), n (i.references ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "references",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // isFormatOf
+    //
+    for (coreMetadataType::isFormatOf_const_iterator
+         b (i.isFormatOf ().begin ()), n (i.isFormatOf ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "isFormatOf",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // hasFormat
+    //
+    for (coreMetadataType::hasFormat_const_iterator
+         b (i.hasFormat ().begin ()), n (i.hasFormat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "hasFormat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // isEpisodeOf
+    //
+    for (coreMetadataType::isEpisodeOf_const_iterator
+         b (i.isEpisodeOf ().begin ()), n (i.isEpisodeOf ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "isEpisodeOf",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // isMemberOf
+    //
+    for (coreMetadataType::isMemberOf_const_iterator
+         b (i.isMemberOf ().begin ()), n (i.isMemberOf ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "isMemberOf",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // coverage
+    //
+    for (coreMetadataType::coverage_const_iterator
+         b (i.coverage ().begin ()), n (i.coverage ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "coverage",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // rights
+    //
+    for (coreMetadataType::rights_const_iterator
+         b (i.rights ().begin ()), n (i.rights ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "rights",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // version
+    //
+    if (i.version ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "version",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.version ();
+    }
+
+    // publicationHistory
+    //
+    if (i.publicationHistory ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "publicationHistory",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.publicationHistory ();
+    }
+
+    // rating
+    //
+    for (coreMetadataType::rating_const_iterator
+         b (i.rating ().begin ()), n (i.rating ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "rating",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // part
+    //
+    for (coreMetadataType::part_const_iterator
+         b (i.part ().begin ()), n (i.part ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "part",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const titleType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // title
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "title",
+          "http://purl.org/dc/elements/1.1/",
+          e));
+
+      s << i.title ();
+    }
+
+    // attributiondate
+    //
+    if (i.attributiondate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "attributiondate",
+          e));
+
+      a << *i.attributiondate ();
+    }
+
+    // note
+    //
+    if (i.note ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "note",
+          e));
+
+      a << *i.note ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const alternativeTitleType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // title
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "title",
+          "http://purl.org/dc/elements/1.1/",
+          e));
+
+      s << i.title ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+
+    // statusLabel
+    //
+    if (i.statusLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "statusLabel",
+          e));
+
+      a << *i.statusLabel ();
+    }
+
+    // statusDefinition
+    //
+    if (i.statusDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "statusDefinition",
+          e));
+
+      a << *i.statusDefinition ();
+    }
+
+    // statusLink
+    //
+    if (i.statusLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "statusLink",
+          e));
+
+      a << *i.statusLink ();
+    }
+
+    // startYear
+    //
+    if (i.startYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startYear",
+          e));
+
+      a << *i.startYear ();
+    }
+
+    // startDate
+    //
+    if (i.startDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startDate",
+          e));
+
+      a << *i.startDate ();
+    }
+
+    // startTime
+    //
+    if (i.startTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startTime",
+          e));
+
+      a << *i.startTime ();
+    }
+
+    // endYear
+    //
+    if (i.endYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endYear",
+          e));
+
+      a << *i.endYear ();
+    }
+
+    // endDate
+    //
+    if (i.endDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endDate",
+          e));
+
+      a << *i.endDate ();
+    }
+
+    // endTime
+    //
+    if (i.endTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endTime",
+          e));
+
+      a << *i.endTime ();
+    }
+
+    // period
+    //
+    if (i.period ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "period",
+          e));
+
+      a << *i.period ();
+    }
+
+    // note
+    //
+    if (i.note ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "note",
+          e));
+
+      a << *i.note ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const identifierType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // identifier
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "identifier",
+          "http://purl.org/dc/elements/1.1/",
+          e));
+
+      s << i.identifier ();
+    }
+
+    // attributor
+    //
+    if (i.attributor ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "attributor",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.attributor ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+
+    // formatLabel
+    //
+    if (i.formatLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLabel",
+          e));
+
+      a << *i.formatLabel ();
+    }
+
+    // formatDefinition
+    //
+    if (i.formatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatDefinition",
+          e));
+
+      a << *i.formatDefinition ();
+    }
+
+    // formatLink
+    //
+    if (i.formatLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLink",
+          e));
+
+      a << *i.formatLink ();
+    }
+
+    // note
+    //
+    if (i.note ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "note",
+          e));
+
+      a << *i.note ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const subjectType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // subject
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "subject",
+          "http://purl.org/dc/elements/1.1/",
+          e));
+
+      s << i.subject ();
+    }
+
+    // subjectCode
+    //
+    if (i.subjectCode ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "subjectCode",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.subjectCode ();
+    }
+
+    // subjectDefinition
+    //
+    if (i.subjectDefinition ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "subjectDefinition",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.subjectDefinition ();
+    }
+
+    // attributor
+    //
+    if (i.attributor ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "attributor",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.attributor ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+
+    // note
+    //
+    if (i.note ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "note",
+          e));
+
+      a << *i.note ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const typeType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // type
+    //
+    for (typeType::type_const_iterator
+         b (i.type ().begin ()), n (i.type ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "type",
+          "http://purl.org/dc/elements/1.1/",
+          e));
+
+      s << *b;
+    }
+
+    // genre
+    //
+    for (typeType::genre_const_iterator
+         b (i.genre ().begin ()), n (i.genre ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "genre",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // objectType
+    //
+    for (typeType::objectType_const_iterator
+         b (i.objectType ().begin ()), n (i.objectType ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "objectType",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // targetAudience
+    //
+    for (typeType::targetAudience_const_iterator
+         b (i.targetAudience ().begin ()), n (i.targetAudience ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "targetAudience",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // note
+    //
+    if (i.note ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "note",
+          e));
+
+      a << *i.note ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const descriptionType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // description
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "description",
+          "http://purl.org/dc/elements/1.1/",
+          e));
+
+      s << i.description ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+
+    // note
+    //
+    if (i.note ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "note",
+          e));
+
+      a << *i.note ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const coverageType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // coverage
+    //
+    if (i.coverage ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "coverage",
+          "http://purl.org/dc/elements/1.1/",
+          e));
+
+      s << *i.coverage ();
+    }
+
+    // temporal
+    //
+    if (i.temporal ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "temporal",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.temporal ();
+    }
+
+    // spatial
+    //
+    if (i.spatial ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "spatial",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.spatial ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const rightsType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // rights
+    //
+    if (i.rights ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "rights",
+          "http://purl.org/dc/elements/1.1/",
+          e));
+
+      s << *i.rights ();
+    }
+
+    // rightsLink
+    //
+    if (i.rightsLink ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "rightsLink",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.rightsLink ();
+    }
+
+    // rightsHolder
+    //
+    if (i.rightsHolder ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "rightsHolder",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.rightsHolder ();
+    }
+
+    // exploitationIssues
+    //
+    if (i.exploitationIssues ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "exploitationIssues",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.exploitationIssues ();
+    }
+
+    // coverage
+    //
+    if (i.coverage ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "coverage",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.coverage ();
+    }
+
+    // rightsClearanceFlag
+    //
+    if (i.rightsClearanceFlag ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "rightsClearanceFlag",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.rightsClearanceFlag ();
+    }
+
+    // disclaimer
+    //
+    for (rightsType::disclaimer_const_iterator
+         b (i.disclaimer ().begin ()), n (i.disclaimer ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "disclaimer",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // rightsId
+    //
+    for (rightsType::rightsId_const_iterator
+         b (i.rightsId ().begin ()), n (i.rightsId ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "rightsId",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // contactDetails
+    //
+    for (rightsType::contactDetails_const_iterator
+         b (i.contactDetails ().begin ()), n (i.contactDetails ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "contactDetails",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+
+    // note
+    //
+    if (i.note ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "note",
+          e));
+
+      a << *i.note ();
+    }
+
+    // formatIDRefs
+    //
+    if (i.formatIDRefs ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatIDRefs",
+          e));
+
+      a << *i.formatIDRefs ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const formatType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // format
+    //
+    if (i.format ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "format",
+          "http://purl.org/dc/elements/1.1/",
+          e));
+
+      s << *i.format ();
+    }
+
+    // regionDelimX
+    //
+    if (i.regionDelimX ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "regionDelimX",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.regionDelimX ();
+    }
+
+    // regionDelimY
+    //
+    if (i.regionDelimY ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "regionDelimY",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.regionDelimY ();
+    }
+
+    // width
+    //
+    if (i.width ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "width",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.width ();
+    }
+
+    // height
+    //
+    if (i.height ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "height",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.height ();
+    }
+
+    // medium
+    //
+    for (formatType::medium_const_iterator
+         b (i.medium ().begin ()), n (i.medium ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "medium",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // mimeType
+    //
+    for (formatType::mimeType_const_iterator
+         b (i.mimeType ().begin ()), n (i.mimeType ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "mimeType",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // imageFormat
+    //
+    for (formatType::imageFormat_const_iterator
+         b (i.imageFormat ().begin ()), n (i.imageFormat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "imageFormat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // videoFormat
+    //
+    for (formatType::videoFormat_const_iterator
+         b (i.videoFormat ().begin ()), n (i.videoFormat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "videoFormat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // audioFormat
+    //
+    for (formatType::audioFormat_const_iterator
+         b (i.audioFormat ().begin ()), n (i.audioFormat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "audioFormat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // containerFormat
+    //
+    for (formatType::containerFormat_const_iterator
+         b (i.containerFormat ().begin ()), n (i.containerFormat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "containerFormat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // dataFormat
+    //
+    for (formatType::dataFormat_const_iterator
+         b (i.dataFormat ().begin ()), n (i.dataFormat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "dataFormat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // signingFormat
+    //
+    for (formatType::signingFormat_const_iterator
+         b (i.signingFormat ().begin ()), n (i.signingFormat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "signingFormat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // start
+    //
+    if (i.start ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "start",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.start ();
+    }
+
+    // end
+    //
+    if (i.end ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "end",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.end ();
+    }
+
+    // duration
+    //
+    if (i.duration ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "duration",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.duration ();
+    }
+
+    // fileSize
+    //
+    if (i.fileSize ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "fileSize",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.fileSize ();
+    }
+
+    // filename
+    //
+    if (i.filename ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "filename",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.filename ();
+    }
+
+    // locator
+    //
+    if (i.locator ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "locator",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.locator ();
+    }
+
+    // documentFormat
+    //
+    if (i.documentFormat ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "documentFormat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.documentFormat ();
+    }
+
+    // technicalAttributeString
+    //
+    for (formatType::technicalAttributeString_const_iterator
+         b (i.technicalAttributeString ().begin ()), n (i.technicalAttributeString ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeString",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeByte
+    //
+    for (formatType::technicalAttributeByte_const_iterator
+         b (i.technicalAttributeByte ().begin ()), n (i.technicalAttributeByte ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeByte",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeShort
+    //
+    for (formatType::technicalAttributeShort_const_iterator
+         b (i.technicalAttributeShort ().begin ()), n (i.technicalAttributeShort ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeShort",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeInteger
+    //
+    for (formatType::technicalAttributeInteger_const_iterator
+         b (i.technicalAttributeInteger ().begin ()), n (i.technicalAttributeInteger ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeInteger",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeLong
+    //
+    for (formatType::technicalAttributeLong_const_iterator
+         b (i.technicalAttributeLong ().begin ()), n (i.technicalAttributeLong ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeLong",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedByte
+    //
+    for (formatType::technicalAttributeUnsignedByte_const_iterator
+         b (i.technicalAttributeUnsignedByte ().begin ()), n (i.technicalAttributeUnsignedByte ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedByte",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedShort
+    //
+    for (formatType::technicalAttributeUnsignedShort_const_iterator
+         b (i.technicalAttributeUnsignedShort ().begin ()), n (i.technicalAttributeUnsignedShort ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedShort",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedInteger
+    //
+    for (formatType::technicalAttributeUnsignedInteger_const_iterator
+         b (i.technicalAttributeUnsignedInteger ().begin ()), n (i.technicalAttributeUnsignedInteger ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedInteger",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedLong
+    //
+    for (formatType::technicalAttributeUnsignedLong_const_iterator
+         b (i.technicalAttributeUnsignedLong ().begin ()), n (i.technicalAttributeUnsignedLong ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedLong",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeBoolean
+    //
+    for (formatType::technicalAttributeBoolean_const_iterator
+         b (i.technicalAttributeBoolean ().begin ()), n (i.technicalAttributeBoolean ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeBoolean",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeFloat
+    //
+    for (formatType::technicalAttributeFloat_const_iterator
+         b (i.technicalAttributeFloat ().begin ()), n (i.technicalAttributeFloat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeFloat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeRational
+    //
+    for (formatType::technicalAttributeRational_const_iterator
+         b (i.technicalAttributeRational ().begin ()), n (i.technicalAttributeRational ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeRational",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUri
+    //
+    for (formatType::technicalAttributeUri_const_iterator
+         b (i.technicalAttributeUri ().begin ()), n (i.technicalAttributeUri ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUri",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // dateCreated
+    //
+    if (i.dateCreated ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "dateCreated",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.dateCreated ();
+    }
+
+    // dateModified
+    //
+    if (i.dateModified ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "dateModified",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.dateModified ();
+    }
+
+    // formatId
+    //
+    if (i.formatId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatId",
+          e));
+
+      a << *i.formatId ();
+    }
+
+    // formatName
+    //
+    if (i.formatName ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatName",
+          e));
+
+      a << *i.formatName ();
+    }
+
+    // formatDefinition
+    //
+    if (i.formatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatDefinition",
+          e));
+
+      a << *i.formatDefinition ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const relationType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // relation
+    //
+    if (i.relation ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "relation",
+          "http://purl.org/dc/elements/1.1/",
+          e));
+
+      s << *i.relation ();
+    }
+
+    // relationIdentifier
+    //
+    if (i.relationIdentifier ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "relationIdentifier",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.relationIdentifier ();
+    }
+
+    // relationLink
+    //
+    if (i.relationLink ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "relationLink",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.relationLink ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+
+    // runningOrderNumber
+    //
+    if (i.runningOrderNumber ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "runningOrderNumber",
+          e));
+
+      a << *i.runningOrderNumber ();
+    }
+
+    // note
+    //
+    if (i.note ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "note",
+          e));
+
+      a << *i.note ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const languageType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // language
+    //
+    if (i.language ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "language",
+          "http://purl.org/dc/elements/1.1/",
+          e));
+
+      s << *i.language ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+
+    // note
+    //
+    if (i.note ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "note",
+          e));
+
+      a << *i.note ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const dateType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // date
+    //
+    for (dateType::date_const_iterator
+         b (i.date ().begin ()), n (i.date ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "date",
+          "http://purl.org/dc/elements/1.1/",
+          e));
+
+      s << *b;
+    }
+
+    // created
+    //
+    if (i.created ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "created",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.created ();
+    }
+
+    // issued
+    //
+    if (i.issued ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "issued",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.issued ();
+    }
+
+    // modified
+    //
+    if (i.modified ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "modified",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.modified ();
+    }
+
+    // digitised
+    //
+    if (i.digitised ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "digitised",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.digitised ();
+    }
+
+    // alternative
+    //
+    for (dateType::alternative_const_iterator
+         b (i.alternative ().begin ()), n (i.alternative ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "alternative",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const publicationHistoryType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // firstPublicationDate
+    //
+    if (i.firstPublicationDate ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "firstPublicationDate",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.firstPublicationDate ();
+    }
+
+    // firstPublicationTime
+    //
+    if (i.firstPublicationTime ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "firstPublicationTime",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.firstPublicationTime ();
+    }
+
+    // firstPublicationChannel
+    //
+    if (i.firstPublicationChannel ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "firstPublicationChannel",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.firstPublicationChannel ();
+    }
+
+    // repeatDate
+    //
+    for (publicationHistoryType::repeatDate_const_iterator
+         b (i.repeatDate ().begin ()), n (i.repeatDate ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "repeatDate",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // repeatTime
+    //
+    for (publicationHistoryType::repeatTime_const_iterator
+         b (i.repeatTime ().begin ()), n (i.repeatTime ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "repeatTime",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // repeatChannel
+    //
+    for (publicationHistoryType::repeatChannel_const_iterator
+         b (i.repeatChannel ().begin ()), n (i.repeatChannel ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "repeatChannel",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const entityType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // contactDetails
+    //
+    for (entityType::contactDetails_const_iterator
+         b (i.contactDetails ().begin ()), n (i.contactDetails ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "contactDetails",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // organisationDetails
+    //
+    if (i.organisationDetails ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "organisationDetails",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.organisationDetails ();
+    }
+
+    // role
+    //
+    for (entityType::role_const_iterator
+         b (i.role ().begin ()), n (i.role ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "role",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // entityId
+    //
+    if (i.entityId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "entityId",
+          e));
+
+      a << *i.entityId ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const contactDetailsType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // name
+    //
+    if (i.name ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "name",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.name ();
+    }
+
+    // givenName
+    //
+    if (i.givenName ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "givenName",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.givenName ();
+    }
+
+    // familyName
+    //
+    if (i.familyName ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "familyName",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.familyName ();
+    }
+
+    // username
+    //
+    if (i.username ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "username",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.username ();
+    }
+
+    // occupation
+    //
+    if (i.occupation ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "occupation",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.occupation ();
+    }
+
+    // details
+    //
+    for (contactDetailsType::details_const_iterator
+         b (i.details ().begin ()), n (i.details ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "details",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // stageName
+    //
+    for (contactDetailsType::stageName_const_iterator
+         b (i.stageName ().begin ()), n (i.stageName ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "stageName",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // relatedContacts
+    //
+    for (contactDetailsType::relatedContacts_const_iterator
+         b (i.relatedContacts ().begin ()), n (i.relatedContacts ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "relatedContacts",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // contactId
+    //
+    if (i.contactId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "contactId",
+          e));
+
+      a << *i.contactId ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const organisationDetailsType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // organisationName
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "organisationName",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << i.organisationName ();
+    }
+
+    // organisationDepartment
+    //
+    if (i.organisationDepartment ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "organisationDepartment",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.organisationDepartment ();
+    }
+
+    // details
+    //
+    for (organisationDetailsType::details_const_iterator
+         b (i.details ().begin ()), n (i.details ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "details",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // contacts
+    //
+    for (organisationDetailsType::contacts_const_iterator
+         b (i.contacts ().begin ()), n (i.contacts ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "contacts",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // organisationId
+    //
+    if (i.organisationId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "organisationId",
+          e));
+
+      a << *i.organisationId ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const detailsType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // emailAddress
+    //
+    if (i.emailAddress ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "emailAddress",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.emailAddress ();
+    }
+
+    // webAddress
+    //
+    if (i.webAddress ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "webAddress",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.webAddress ();
+    }
+
+    // address
+    //
+    if (i.address ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "address",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.address ();
+    }
+
+    // telephoneNumber
+    //
+    if (i.telephoneNumber ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "telephoneNumber",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.telephoneNumber ();
+    }
+
+    // mobileTelephoneNumber
+    //
+    if (i.mobileTelephoneNumber ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "mobileTelephoneNumber",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.mobileTelephoneNumber ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const addressType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // addressLine
+    //
+    for (addressType::addressLine_const_iterator
+         b (i.addressLine ().begin ()), n (i.addressLine ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "addressLine",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // addressTownCity
+    //
+    if (i.addressTownCity ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "addressTownCity",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.addressTownCity ();
+    }
+
+    // addressCountyState
+    //
+    if (i.addressCountyState ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "addressCountyState",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.addressCountyState ();
+    }
+
+    // addressDeliveryCode
+    //
+    if (i.addressDeliveryCode ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "addressDeliveryCode",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.addressDeliveryCode ();
+    }
+
+    // country
+    //
+    if (i.country ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "country",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.country ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const editUnitNumberType& i)
+  {
+    e << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::long_, char, ::xml_schema::simple_type >& > (i);
+
+    // editRate
+    //
+    if (i.editRate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "editRate",
+          e));
+
+      a << *i.editRate ();
+    }
+
+    // factorNumerator
+    //
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "factorNumerator",
+          e));
+
+      a << i.factorNumerator ();
+    }
+
+    // factorDenominator
+    //
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "factorDenominator",
+          e));
+
+      a << i.factorDenominator ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const ratingType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // ratingValue
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "ratingValue",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << i.ratingValue ();
+    }
+
+    // ratingScaleMaxValue
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "ratingScaleMaxValue",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << i.ratingScaleMaxValue ();
+    }
+
+    // ratingScaleMinValue
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "ratingScaleMinValue",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << i.ratingScaleMinValue ();
+    }
+
+    // ratingProvider
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "ratingProvider",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << i.ratingProvider ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+
+    // formatLabel
+    //
+    if (i.formatLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLabel",
+          e));
+
+      a << *i.formatLabel ();
+    }
+
+    // formatDefinition
+    //
+    if (i.formatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatDefinition",
+          e));
+
+      a << *i.formatDefinition ();
+    }
+
+    // formatLink
+    //
+    if (i.formatLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLink",
+          e));
+
+      a << *i.formatLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const lengthType& i)
+  {
+    e << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::non_negative_integer, char, ::xml_schema::simple_type >& > (i);
+
+    // unit
+    //
+    if (i.unit ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "unit",
+          e));
+
+      a << *i.unit ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const imageFormatType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // regionDelimX
+    //
+    if (i.regionDelimX ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "regionDelimX",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.regionDelimX ();
+    }
+
+    // regionDelimY
+    //
+    if (i.regionDelimY ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "regionDelimY",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.regionDelimY ();
+    }
+
+    // width
+    //
+    if (i.width ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "width",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.width ();
+    }
+
+    // height
+    //
+    if (i.height ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "height",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.height ();
+    }
+
+    // orientation
+    //
+    if (i.orientation ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "orientation",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.orientation ();
+    }
+
+    // imageEncoding
+    //
+    for (imageFormatType::imageEncoding_const_iterator
+         b (i.imageEncoding ().begin ()), n (i.imageEncoding ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "imageEncoding",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeString
+    //
+    for (imageFormatType::technicalAttributeString_const_iterator
+         b (i.technicalAttributeString ().begin ()), n (i.technicalAttributeString ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeString",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeByte
+    //
+    for (imageFormatType::technicalAttributeByte_const_iterator
+         b (i.technicalAttributeByte ().begin ()), n (i.technicalAttributeByte ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeByte",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeShort
+    //
+    for (imageFormatType::technicalAttributeShort_const_iterator
+         b (i.technicalAttributeShort ().begin ()), n (i.technicalAttributeShort ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeShort",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeInteger
+    //
+    for (imageFormatType::technicalAttributeInteger_const_iterator
+         b (i.technicalAttributeInteger ().begin ()), n (i.technicalAttributeInteger ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeInteger",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeLong
+    //
+    for (imageFormatType::technicalAttributeLong_const_iterator
+         b (i.technicalAttributeLong ().begin ()), n (i.technicalAttributeLong ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeLong",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedByte
+    //
+    for (imageFormatType::technicalAttributeUnsignedByte_const_iterator
+         b (i.technicalAttributeUnsignedByte ().begin ()), n (i.technicalAttributeUnsignedByte ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedByte",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedShort
+    //
+    for (imageFormatType::technicalAttributeUnsignedShort_const_iterator
+         b (i.technicalAttributeUnsignedShort ().begin ()), n (i.technicalAttributeUnsignedShort ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedShort",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedInteger
+    //
+    for (imageFormatType::technicalAttributeUnsignedInteger_const_iterator
+         b (i.technicalAttributeUnsignedInteger ().begin ()), n (i.technicalAttributeUnsignedInteger ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedInteger",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedLong
+    //
+    for (imageFormatType::technicalAttributeUnsignedLong_const_iterator
+         b (i.technicalAttributeUnsignedLong ().begin ()), n (i.technicalAttributeUnsignedLong ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedLong",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeBoolean
+    //
+    for (imageFormatType::technicalAttributeBoolean_const_iterator
+         b (i.technicalAttributeBoolean ().begin ()), n (i.technicalAttributeBoolean ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeBoolean",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeFloat
+    //
+    for (imageFormatType::technicalAttributeFloat_const_iterator
+         b (i.technicalAttributeFloat ().begin ()), n (i.technicalAttributeFloat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeFloat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeRational
+    //
+    for (imageFormatType::technicalAttributeRational_const_iterator
+         b (i.technicalAttributeRational ().begin ()), n (i.technicalAttributeRational ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeRational",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUri
+    //
+    for (imageFormatType::technicalAttributeUri_const_iterator
+         b (i.technicalAttributeUri ().begin ()), n (i.technicalAttributeUri ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUri",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // imageFormatId
+    //
+    if (i.imageFormatId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "imageFormatId",
+          e));
+
+      a << *i.imageFormatId ();
+    }
+
+    // imageFormatName
+    //
+    if (i.imageFormatName ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "imageFormatName",
+          e));
+
+      a << *i.imageFormatName ();
+    }
+
+    // imageFormatDefinition
+    //
+    if (i.imageFormatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "imageFormatDefinition",
+          e));
+
+      a << *i.imageFormatDefinition ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const videoFormatType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // regionDelimX
+    //
+    if (i.regionDelimX ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "regionDelimX",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.regionDelimX ();
+    }
+
+    // regionDelimY
+    //
+    if (i.regionDelimY ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "regionDelimY",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.regionDelimY ();
+    }
+
+    // width
+    //
+    if (i.width ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "width",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.width ();
+    }
+
+    // height
+    //
+    if (i.height ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "height",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.height ();
+    }
+
+    // aspectRatio
+    //
+    if (i.aspectRatio ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "aspectRatio",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.aspectRatio ();
+    }
+
+    // videoEncoding
+    //
+    for (videoFormatType::videoEncoding_const_iterator
+         b (i.videoEncoding ().begin ()), n (i.videoEncoding ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "videoEncoding",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // videoTrack
+    //
+    for (videoFormatType::videoTrack_const_iterator
+         b (i.videoTrack ().begin ()), n (i.videoTrack ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "videoTrack",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeString
+    //
+    for (videoFormatType::technicalAttributeString_const_iterator
+         b (i.technicalAttributeString ().begin ()), n (i.technicalAttributeString ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeString",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeByte
+    //
+    for (videoFormatType::technicalAttributeByte_const_iterator
+         b (i.technicalAttributeByte ().begin ()), n (i.technicalAttributeByte ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeByte",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeShort
+    //
+    for (videoFormatType::technicalAttributeShort_const_iterator
+         b (i.technicalAttributeShort ().begin ()), n (i.technicalAttributeShort ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeShort",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeInteger
+    //
+    for (videoFormatType::technicalAttributeInteger_const_iterator
+         b (i.technicalAttributeInteger ().begin ()), n (i.technicalAttributeInteger ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeInteger",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeLong
+    //
+    for (videoFormatType::technicalAttributeLong_const_iterator
+         b (i.technicalAttributeLong ().begin ()), n (i.technicalAttributeLong ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeLong",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedByte
+    //
+    for (videoFormatType::technicalAttributeUnsignedByte_const_iterator
+         b (i.technicalAttributeUnsignedByte ().begin ()), n (i.technicalAttributeUnsignedByte ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedByte",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedShort
+    //
+    for (videoFormatType::technicalAttributeUnsignedShort_const_iterator
+         b (i.technicalAttributeUnsignedShort ().begin ()), n (i.technicalAttributeUnsignedShort ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedShort",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedInteger
+    //
+    for (videoFormatType::technicalAttributeUnsignedInteger_const_iterator
+         b (i.technicalAttributeUnsignedInteger ().begin ()), n (i.technicalAttributeUnsignedInteger ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedInteger",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedLong
+    //
+    for (videoFormatType::technicalAttributeUnsignedLong_const_iterator
+         b (i.technicalAttributeUnsignedLong ().begin ()), n (i.technicalAttributeUnsignedLong ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedLong",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeBoolean
+    //
+    for (videoFormatType::technicalAttributeBoolean_const_iterator
+         b (i.technicalAttributeBoolean ().begin ()), n (i.technicalAttributeBoolean ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeBoolean",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeFloat
+    //
+    for (videoFormatType::technicalAttributeFloat_const_iterator
+         b (i.technicalAttributeFloat ().begin ()), n (i.technicalAttributeFloat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeFloat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeRational
+    //
+    for (videoFormatType::technicalAttributeRational_const_iterator
+         b (i.technicalAttributeRational ().begin ()), n (i.technicalAttributeRational ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeRational",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUri
+    //
+    for (videoFormatType::technicalAttributeUri_const_iterator
+         b (i.technicalAttributeUri ().begin ()), n (i.technicalAttributeUri ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUri",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // videoFormatId
+    //
+    if (i.videoFormatId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "videoFormatId",
+          e));
+
+      a << *i.videoFormatId ();
+    }
+
+    // videoFormatName
+    //
+    if (i.videoFormatName ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "videoFormatName",
+          e));
+
+      a << *i.videoFormatName ();
+    }
+
+    // videoFormatDefinition
+    //
+    if (i.videoFormatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "videoFormatDefinition",
+          e));
+
+      a << *i.videoFormatDefinition ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const audioFormatType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // audioEncoding
+    //
+    for (audioFormatType::audioEncoding_const_iterator
+         b (i.audioEncoding ().begin ()), n (i.audioEncoding ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "audioEncoding",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // audioTrackConfiguration
+    //
+    if (i.audioTrackConfiguration ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "audioTrackConfiguration",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.audioTrackConfiguration ();
+    }
+
+    // audioTrack
+    //
+    for (audioFormatType::audioTrack_const_iterator
+         b (i.audioTrack ().begin ()), n (i.audioTrack ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "audioTrack",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeString
+    //
+    for (audioFormatType::technicalAttributeString_const_iterator
+         b (i.technicalAttributeString ().begin ()), n (i.technicalAttributeString ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeString",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeByte
+    //
+    for (audioFormatType::technicalAttributeByte_const_iterator
+         b (i.technicalAttributeByte ().begin ()), n (i.technicalAttributeByte ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeByte",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeShort
+    //
+    for (audioFormatType::technicalAttributeShort_const_iterator
+         b (i.technicalAttributeShort ().begin ()), n (i.technicalAttributeShort ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeShort",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeInteger
+    //
+    for (audioFormatType::technicalAttributeInteger_const_iterator
+         b (i.technicalAttributeInteger ().begin ()), n (i.technicalAttributeInteger ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeInteger",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeLong
+    //
+    for (audioFormatType::technicalAttributeLong_const_iterator
+         b (i.technicalAttributeLong ().begin ()), n (i.technicalAttributeLong ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeLong",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedByte
+    //
+    for (audioFormatType::technicalAttributeUnsignedByte_const_iterator
+         b (i.technicalAttributeUnsignedByte ().begin ()), n (i.technicalAttributeUnsignedByte ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedByte",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedShort
+    //
+    for (audioFormatType::technicalAttributeUnsignedShort_const_iterator
+         b (i.technicalAttributeUnsignedShort ().begin ()), n (i.technicalAttributeUnsignedShort ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedShort",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedInteger
+    //
+    for (audioFormatType::technicalAttributeUnsignedInteger_const_iterator
+         b (i.technicalAttributeUnsignedInteger ().begin ()), n (i.technicalAttributeUnsignedInteger ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedInteger",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedLong
+    //
+    for (audioFormatType::technicalAttributeUnsignedLong_const_iterator
+         b (i.technicalAttributeUnsignedLong ().begin ()), n (i.technicalAttributeUnsignedLong ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedLong",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeBoolean
+    //
+    for (audioFormatType::technicalAttributeBoolean_const_iterator
+         b (i.technicalAttributeBoolean ().begin ()), n (i.technicalAttributeBoolean ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeBoolean",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeFloat
+    //
+    for (audioFormatType::technicalAttributeFloat_const_iterator
+         b (i.technicalAttributeFloat ().begin ()), n (i.technicalAttributeFloat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeFloat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeRational
+    //
+    for (audioFormatType::technicalAttributeRational_const_iterator
+         b (i.technicalAttributeRational ().begin ()), n (i.technicalAttributeRational ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeRational",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUri
+    //
+    for (audioFormatType::technicalAttributeUri_const_iterator
+         b (i.technicalAttributeUri ().begin ()), n (i.technicalAttributeUri ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUri",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // audioFormatId
+    //
+    if (i.audioFormatId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "audioFormatId",
+          e));
+
+      a << *i.audioFormatId ();
+    }
+
+    // audioFormatName
+    //
+    if (i.audioFormatName ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "audioFormatName",
+          e));
+
+      a << *i.audioFormatName ();
+    }
+
+    // audioFormatDefinition
+    //
+    if (i.audioFormatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "audioFormatDefinition",
+          e));
+
+      a << *i.audioFormatDefinition ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const dataFormatType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // captioningFormat
+    //
+    for (dataFormatType::captioningFormat_const_iterator
+         b (i.captioningFormat ().begin ()), n (i.captioningFormat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "captioningFormat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // ancillaryDataFormat
+    //
+    for (dataFormatType::ancillaryDataFormat_const_iterator
+         b (i.ancillaryDataFormat ().begin ()), n (i.ancillaryDataFormat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "ancillaryDataFormat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeString
+    //
+    for (dataFormatType::technicalAttributeString_const_iterator
+         b (i.technicalAttributeString ().begin ()), n (i.technicalAttributeString ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeString",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeByte
+    //
+    for (dataFormatType::technicalAttributeByte_const_iterator
+         b (i.technicalAttributeByte ().begin ()), n (i.technicalAttributeByte ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeByte",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeShort
+    //
+    for (dataFormatType::technicalAttributeShort_const_iterator
+         b (i.technicalAttributeShort ().begin ()), n (i.technicalAttributeShort ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeShort",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeInteger
+    //
+    for (dataFormatType::technicalAttributeInteger_const_iterator
+         b (i.technicalAttributeInteger ().begin ()), n (i.technicalAttributeInteger ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeInteger",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeLong
+    //
+    for (dataFormatType::technicalAttributeLong_const_iterator
+         b (i.technicalAttributeLong ().begin ()), n (i.technicalAttributeLong ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeLong",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedByte
+    //
+    for (dataFormatType::technicalAttributeUnsignedByte_const_iterator
+         b (i.technicalAttributeUnsignedByte ().begin ()), n (i.technicalAttributeUnsignedByte ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedByte",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedShort
+    //
+    for (dataFormatType::technicalAttributeUnsignedShort_const_iterator
+         b (i.technicalAttributeUnsignedShort ().begin ()), n (i.technicalAttributeUnsignedShort ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedShort",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedInteger
+    //
+    for (dataFormatType::technicalAttributeUnsignedInteger_const_iterator
+         b (i.technicalAttributeUnsignedInteger ().begin ()), n (i.technicalAttributeUnsignedInteger ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedInteger",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedLong
+    //
+    for (dataFormatType::technicalAttributeUnsignedLong_const_iterator
+         b (i.technicalAttributeUnsignedLong ().begin ()), n (i.technicalAttributeUnsignedLong ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedLong",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeBoolean
+    //
+    for (dataFormatType::technicalAttributeBoolean_const_iterator
+         b (i.technicalAttributeBoolean ().begin ()), n (i.technicalAttributeBoolean ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeBoolean",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeFloat
+    //
+    for (dataFormatType::technicalAttributeFloat_const_iterator
+         b (i.technicalAttributeFloat ().begin ()), n (i.technicalAttributeFloat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeFloat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeRational
+    //
+    for (dataFormatType::technicalAttributeRational_const_iterator
+         b (i.technicalAttributeRational ().begin ()), n (i.technicalAttributeRational ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeRational",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUri
+    //
+    for (dataFormatType::technicalAttributeUri_const_iterator
+         b (i.technicalAttributeUri ().begin ()), n (i.technicalAttributeUri ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUri",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // dataFormatId
+    //
+    if (i.dataFormatId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "dataFormatId",
+          e));
+
+      a << *i.dataFormatId ();
+    }
+
+    // dataFormatName
+    //
+    if (i.dataFormatName ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "dataFormatName",
+          e));
+
+      a << *i.dataFormatName ();
+    }
+
+    // dataFormatDefinition
+    //
+    if (i.dataFormatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "dataFormatDefinition",
+          e));
+
+      a << *i.dataFormatDefinition ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const documentFormatType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // wordCount
+    //
+    if (i.wordCount ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "wordCount",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.wordCount ();
+    }
+
+    // regionDelimX
+    //
+    if (i.regionDelimX ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "regionDelimX",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.regionDelimX ();
+    }
+
+    // regionDelimY
+    //
+    if (i.regionDelimY ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "regionDelimY",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.regionDelimY ();
+    }
+
+    // width
+    //
+    if (i.width ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "width",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.width ();
+    }
+
+    // height
+    //
+    if (i.height ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "height",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.height ();
+    }
+
+    // technicalAttributeString
+    //
+    for (documentFormatType::technicalAttributeString_const_iterator
+         b (i.technicalAttributeString ().begin ()), n (i.technicalAttributeString ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeString",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeByte
+    //
+    for (documentFormatType::technicalAttributeByte_const_iterator
+         b (i.technicalAttributeByte ().begin ()), n (i.technicalAttributeByte ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeByte",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeShort
+    //
+    for (documentFormatType::technicalAttributeShort_const_iterator
+         b (i.technicalAttributeShort ().begin ()), n (i.technicalAttributeShort ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeShort",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeInteger
+    //
+    for (documentFormatType::technicalAttributeInteger_const_iterator
+         b (i.technicalAttributeInteger ().begin ()), n (i.technicalAttributeInteger ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeInteger",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeLong
+    //
+    for (documentFormatType::technicalAttributeLong_const_iterator
+         b (i.technicalAttributeLong ().begin ()), n (i.technicalAttributeLong ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeLong",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedByte
+    //
+    for (documentFormatType::technicalAttributeUnsignedByte_const_iterator
+         b (i.technicalAttributeUnsignedByte ().begin ()), n (i.technicalAttributeUnsignedByte ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedByte",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedShort
+    //
+    for (documentFormatType::technicalAttributeUnsignedShort_const_iterator
+         b (i.technicalAttributeUnsignedShort ().begin ()), n (i.technicalAttributeUnsignedShort ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedShort",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedInteger
+    //
+    for (documentFormatType::technicalAttributeUnsignedInteger_const_iterator
+         b (i.technicalAttributeUnsignedInteger ().begin ()), n (i.technicalAttributeUnsignedInteger ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedInteger",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUnsignedLong
+    //
+    for (documentFormatType::technicalAttributeUnsignedLong_const_iterator
+         b (i.technicalAttributeUnsignedLong ().begin ()), n (i.technicalAttributeUnsignedLong ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUnsignedLong",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeBoolean
+    //
+    for (documentFormatType::technicalAttributeBoolean_const_iterator
+         b (i.technicalAttributeBoolean ().begin ()), n (i.technicalAttributeBoolean ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeBoolean",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeFloat
+    //
+    for (documentFormatType::technicalAttributeFloat_const_iterator
+         b (i.technicalAttributeFloat ().begin ()), n (i.technicalAttributeFloat ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeFloat",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeRational
+    //
+    for (documentFormatType::technicalAttributeRational_const_iterator
+         b (i.technicalAttributeRational ().begin ()), n (i.technicalAttributeRational ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeRational",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // technicalAttributeUri
+    //
+    for (documentFormatType::technicalAttributeUri_const_iterator
+         b (i.technicalAttributeUri ().begin ()), n (i.technicalAttributeUri ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "technicalAttributeUri",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // formatLabel
+    //
+    if (i.formatLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLabel",
+          e));
+
+      a << *i.formatLabel ();
+    }
+
+    // formatDefinition
+    //
+    if (i.formatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatDefinition",
+          e));
+
+      a << *i.formatDefinition ();
+    }
+
+    // formatLink
+    //
+    if (i.formatLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLink",
+          e));
+
+      a << *i.formatLink ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+
+    // documentFormatId
+    //
+    if (i.documentFormatId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "documentFormatId",
+          e));
+
+      a << *i.documentFormatId ();
+    }
+
+    // documentFormatName
+    //
+    if (i.documentFormatName ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "documentFormatName",
+          e));
+
+      a << *i.documentFormatName ();
+    }
+
+    // documentFormatDefinition
+    //
+    if (i.documentFormatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "documentFormatDefinition",
+          e));
+
+      a << *i.documentFormatDefinition ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const timeType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // timecode
+    //
+    if (i.timecode ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "timecode",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.timecode ();
+    }
+
+    // normalPlayTime
+    //
+    if (i.normalPlayTime ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "normalPlayTime",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.normalPlayTime ();
+    }
+
+    // editUnitNumber
+    //
+    if (i.editUnitNumber ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "editUnitNumber",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.editUnitNumber ();
+    }
+
+    // time
+    //
+    if (i.time ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "time",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.time ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const durationType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // timecode
+    //
+    if (i.timecode ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "timecode",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.timecode ();
+    }
+
+    // normalPlayTime
+    //
+    if (i.normalPlayTime ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "normalPlayTime",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.normalPlayTime ();
+    }
+
+    // editUnitNumber
+    //
+    if (i.editUnitNumber ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "editUnitNumber",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.editUnitNumber ();
+    }
+
+    // time
+    //
+    if (i.time ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "time",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.time ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const String& i)
+  {
+    e << static_cast< const ::xml_schema::string& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+
+    // formatLabel
+    //
+    if (i.formatLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLabel",
+          e));
+
+      a << *i.formatLabel ();
+    }
+
+    // formatDefinition
+    //
+    if (i.formatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatDefinition",
+          e));
+
+      a << *i.formatDefinition ();
+    }
+
+    // formatLink
+    //
+    if (i.formatLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLink",
+          e));
+
+      a << *i.formatLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const Boolean& i)
+  {
+    e << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::boolean, char, ::xml_schema::simple_type >& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const Float& i)
+  {
+    e << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::double_, char, ::xml_schema::simple_type, ::xsd::cxx::tree::schema_type::double_ >& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const Int8& i)
+  {
+    e << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::byte, char, ::xml_schema::simple_type >& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const Int16& i)
+  {
+    e << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::short_, char, ::xml_schema::simple_type >& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const Int32& i)
+  {
+    e << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::integer, char, ::xml_schema::simple_type >& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const Int64& i)
+  {
+    e << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::long_, char, ::xml_schema::simple_type >& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const UInt8& i)
+  {
+    e << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::unsigned_byte, char, ::xml_schema::simple_type >& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const UInt16& i)
+  {
+    e << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::unsigned_short, char, ::xml_schema::simple_type >& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const UInt32& i)
+  {
+    e << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::unsigned_int, char, ::xml_schema::simple_type >& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const UInt64& i)
+  {
+    e << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::unsigned_long, char, ::xml_schema::simple_type >& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const technicalAttributeRationalType& i)
+  {
+    e << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::long_, char, ::xml_schema::simple_type >& > (i);
+
+    // factorNumerator
+    //
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "factorNumerator",
+          e));
+
+      a << i.factorNumerator ();
+    }
+
+    // factorDenominator
+    //
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "factorDenominator",
+          e));
+
+      a << i.factorDenominator ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const technicalAttributeUriType& i)
+  {
+    e << static_cast< const ::xml_schema::uri& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const hasTrackPart& i)
+  {
+    e << static_cast< const ::ebuCore_2011::relationType& > (i);
+
+    // trackPartTitle
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "trackPartTitle",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << i.trackPartTitle ();
+    }
+
+    // destinationStart
+    //
+    if (i.destinationStart ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "destinationStart",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.destinationStart ();
+    }
+
+    // destinationEnd
+    //
+    if (i.destinationEnd ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "destinationEnd",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.destinationEnd ();
+    }
+
+    // sourceStart
+    //
+    if (i.sourceStart ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "sourceStart",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.sourceStart ();
+    }
+
+    // sourceEnd
+    //
+    if (i.sourceEnd ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "sourceEnd",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.sourceEnd ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const part& i)
+  {
+    e << static_cast< const ::ebuCore_2011::coreMetadataType& > (i);
+
+    // partId
+    //
+    if (i.partId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "partId",
+          e));
+
+      a << *i.partId ();
+    }
+
+    // partName
+    //
+    if (i.partName ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "partName",
+          e));
+
+      a << *i.partName ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const genre& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const objectType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const targetAudience& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const temporal& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // PeriodOfTime
+    //
+    if (i.PeriodOfTime ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "PeriodOfTime",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.PeriodOfTime ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+
+    // note
+    //
+    if (i.note ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "note",
+          e));
+
+      a << *i.note ();
+    }
+
+    // periodId
+    //
+    if (i.periodId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "periodId",
+          e));
+
+      a << *i.periodId ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const spatial& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // location
+    //
+    for (spatial::location_const_iterator
+         b (i.location ().begin ()), n (i.location ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "location",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const medium& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const mimeType& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const containerFormat& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // formatLabel
+    //
+    if (i.formatLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLabel",
+          e));
+
+      a << *i.formatLabel ();
+    }
+
+    // formatDefinition
+    //
+    if (i.formatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatDefinition",
+          e));
+
+      a << *i.formatDefinition ();
+    }
+
+    // formatLink
+    //
+    if (i.formatLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLink",
+          e));
+
+      a << *i.formatLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const signingFormat& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // trackId
+    //
+    if (i.trackId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "trackId",
+          e));
+
+      a << *i.trackId ();
+    }
+
+    // trackName
+    //
+    if (i.trackName ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "trackName",
+          e));
+
+      a << *i.trackName ();
+    }
+
+    // language
+    //
+    if (i.language ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "language",
+          e));
+
+      a << *i.language ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+
+    // formatLabel
+    //
+    if (i.formatLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLabel",
+          e));
+
+      a << *i.formatLabel ();
+    }
+
+    // formatDefinition
+    //
+    if (i.formatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatDefinition",
+          e));
+
+      a << *i.formatDefinition ();
+    }
+
+    // formatLink
+    //
+    if (i.formatLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLink",
+          e));
+
+      a << *i.formatLink ();
+    }
+
+    // signingSourceUri
+    //
+    if (i.signingSourceUri ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "signingSourceUri",
+          e));
+
+      a << *i.signingSourceUri ();
+    }
+
+    // signingFormatId
+    //
+    if (i.signingFormatId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "signingFormatId",
+          e));
+
+      a << *i.signingFormatId ();
+    }
+
+    // signingFormatName
+    //
+    if (i.signingFormatName ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "signingFormatName",
+          e));
+
+      a << *i.signingFormatName ();
+    }
+
+    // signingFormatDefinition
+    //
+    if (i.signingFormatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "signingFormatDefinition",
+          e));
+
+      a << *i.signingFormatDefinition ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const locator& i)
+  {
+    e << static_cast< const ::xml_schema::string& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const dateCreated& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // startYear
+    //
+    if (i.startYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startYear",
+          e));
+
+      a << *i.startYear ();
+    }
+
+    // startDate
+    //
+    if (i.startDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startDate",
+          e));
+
+      a << *i.startDate ();
+    }
+
+    // startTime
+    //
+    if (i.startTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startTime",
+          e));
+
+      a << *i.startTime ();
+    }
+
+    // endYear
+    //
+    if (i.endYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endYear",
+          e));
+
+      a << *i.endYear ();
+    }
+
+    // endDate
+    //
+    if (i.endDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endDate",
+          e));
+
+      a << *i.endDate ();
+    }
+
+    // endTime
+    //
+    if (i.endTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endTime",
+          e));
+
+      a << *i.endTime ();
+    }
+
+    // period
+    //
+    if (i.period ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "period",
+          e));
+
+      a << *i.period ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const dateModified& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // startYear
+    //
+    if (i.startYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startYear",
+          e));
+
+      a << *i.startYear ();
+    }
+
+    // startDate
+    //
+    if (i.startDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startDate",
+          e));
+
+      a << *i.startDate ();
+    }
+
+    // startTime
+    //
+    if (i.startTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startTime",
+          e));
+
+      a << *i.startTime ();
+    }
+
+    // endYear
+    //
+    if (i.endYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endYear",
+          e));
+
+      a << *i.endYear ();
+    }
+
+    // endDate
+    //
+    if (i.endDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endDate",
+          e));
+
+      a << *i.endDate ();
+    }
+
+    // endTime
+    //
+    if (i.endTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endTime",
+          e));
+
+      a << *i.endTime ();
+    }
+
+    // period
+    //
+    if (i.period ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "period",
+          e));
+
+      a << *i.period ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const created& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // startYear
+    //
+    if (i.startYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startYear",
+          e));
+
+      a << *i.startYear ();
+    }
+
+    // startDate
+    //
+    if (i.startDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startDate",
+          e));
+
+      a << *i.startDate ();
+    }
+
+    // startTime
+    //
+    if (i.startTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startTime",
+          e));
+
+      a << *i.startTime ();
+    }
+
+    // endYear
+    //
+    if (i.endYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endYear",
+          e));
+
+      a << *i.endYear ();
+    }
+
+    // endDate
+    //
+    if (i.endDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endDate",
+          e));
+
+      a << *i.endDate ();
+    }
+
+    // endTime
+    //
+    if (i.endTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endTime",
+          e));
+
+      a << *i.endTime ();
+    }
+
+    // period
+    //
+    if (i.period ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "period",
+          e));
+
+      a << *i.period ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const issued& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // startYear
+    //
+    if (i.startYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startYear",
+          e));
+
+      a << *i.startYear ();
+    }
+
+    // startDate
+    //
+    if (i.startDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startDate",
+          e));
+
+      a << *i.startDate ();
+    }
+
+    // startTime
+    //
+    if (i.startTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startTime",
+          e));
+
+      a << *i.startTime ();
+    }
+
+    // endYear
+    //
+    if (i.endYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endYear",
+          e));
+
+      a << *i.endYear ();
+    }
+
+    // endDate
+    //
+    if (i.endDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endDate",
+          e));
+
+      a << *i.endDate ();
+    }
+
+    // endTime
+    //
+    if (i.endTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endTime",
+          e));
+
+      a << *i.endTime ();
+    }
+
+    // period
+    //
+    if (i.period ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "period",
+          e));
+
+      a << *i.period ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const modified& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // startYear
+    //
+    if (i.startYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startYear",
+          e));
+
+      a << *i.startYear ();
+    }
+
+    // startDate
+    //
+    if (i.startDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startDate",
+          e));
+
+      a << *i.startDate ();
+    }
+
+    // startTime
+    //
+    if (i.startTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startTime",
+          e));
+
+      a << *i.startTime ();
+    }
+
+    // endYear
+    //
+    if (i.endYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endYear",
+          e));
+
+      a << *i.endYear ();
+    }
+
+    // endDate
+    //
+    if (i.endDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endDate",
+          e));
+
+      a << *i.endDate ();
+    }
+
+    // endTime
+    //
+    if (i.endTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endTime",
+          e));
+
+      a << *i.endTime ();
+    }
+
+    // period
+    //
+    if (i.period ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "period",
+          e));
+
+      a << *i.period ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const digitised& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // startYear
+    //
+    if (i.startYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startYear",
+          e));
+
+      a << *i.startYear ();
+    }
+
+    // startDate
+    //
+    if (i.startDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startDate",
+          e));
+
+      a << *i.startDate ();
+    }
+
+    // startTime
+    //
+    if (i.startTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startTime",
+          e));
+
+      a << *i.startTime ();
+    }
+
+    // endYear
+    //
+    if (i.endYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endYear",
+          e));
+
+      a << *i.endYear ();
+    }
+
+    // endDate
+    //
+    if (i.endDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endDate",
+          e));
+
+      a << *i.endDate ();
+    }
+
+    // endTime
+    //
+    if (i.endTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endTime",
+          e));
+
+      a << *i.endTime ();
+    }
+
+    // period
+    //
+    if (i.period ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "period",
+          e));
+
+      a << *i.period ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const alternative& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // startYear
+    //
+    if (i.startYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startYear",
+          e));
+
+      a << *i.startYear ();
+    }
+
+    // startDate
+    //
+    if (i.startDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startDate",
+          e));
+
+      a << *i.startDate ();
+    }
+
+    // startTime
+    //
+    if (i.startTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startTime",
+          e));
+
+      a << *i.startTime ();
+    }
+
+    // endYear
+    //
+    if (i.endYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endYear",
+          e));
+
+      a << *i.endYear ();
+    }
+
+    // endDate
+    //
+    if (i.endDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endDate",
+          e));
+
+      a << *i.endDate ();
+    }
+
+    // endTime
+    //
+    if (i.endTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endTime",
+          e));
+
+      a << *i.endTime ();
+    }
+
+    // period
+    //
+    if (i.period ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "period",
+          e));
+
+      a << *i.period ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const firstPublicationChannel& i)
+  {
+    e << static_cast< const ::xml_schema::string& > (i);
+
+    // formatIdRef
+    //
+    if (i.formatIdRef ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatIdRef",
+          e));
+
+      a << *i.formatIdRef ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const repeatChannel& i)
+  {
+    e << static_cast< const ::xml_schema::string& > (i);
+
+    // formatIdRef
+    //
+    if (i.formatIdRef ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatIdRef",
+          e));
+
+      a << *i.formatIdRef ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const role& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const organisationDepartment& i)
+  {
+    e << static_cast< const ::dc::elementType& > (i);
+
+    // departmentId
+    //
+    if (i.departmentId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "departmentId",
+          e));
+
+      a << *i.departmentId ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const country& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const orientation& i)
+  {
+    e << static_cast< const ::xml_schema::string& > (i);
+  }
+
+  void
+  operator<< (::xercesc::DOMAttr& a, const orientation& i)
+  {
+    a << static_cast< const ::xml_schema::string& > (i);
+  }
+
+  void
+  operator<< (::xml_schema::list_stream& l,
+              const orientation& i)
+  {
+    l << static_cast< const ::xml_schema::string& > (i);
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const imageEncoding& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const aspectRatio& i)
+  {
+    e << static_cast< const ::xml_schema::string& > (i);
+
+    // formatLabel
+    //
+    if (i.formatLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLabel",
+          e));
+
+      a << *i.formatLabel ();
+    }
+
+    // formatDefinition
+    //
+    if (i.formatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatDefinition",
+          e));
+
+      a << *i.formatDefinition ();
+    }
+
+    // formatLink
+    //
+    if (i.formatLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLink",
+          e));
+
+      a << *i.formatLink ();
+    }
+
+    // note
+    //
+    if (i.note ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "note",
+          e));
+
+      a << *i.note ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const videoEncoding& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const videoTrack& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // trackId
+    //
+    if (i.trackId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "trackId",
+          e));
+
+      a << *i.trackId ();
+    }
+
+    // trackName
+    //
+    if (i.trackName ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "trackName",
+          e));
+
+      a << *i.trackName ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const audioEncoding& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const audioTrackConfiguration& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const audioTrack& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // trackLanguage
+    //
+    if (i.trackLanguage ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "trackLanguage",
+          e));
+
+      a << *i.trackLanguage ();
+    }
+
+    // trackId
+    //
+    if (i.trackId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "trackId",
+          e));
+
+      a << *i.trackId ();
+    }
+
+    // trackName
+    //
+    if (i.trackName ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "trackName",
+          e));
+
+      a << *i.trackName ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const captioningFormat& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // trackId
+    //
+    if (i.trackId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "trackId",
+          e));
+
+      a << *i.trackId ();
+    }
+
+    // trackName
+    //
+    if (i.trackName ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "trackName",
+          e));
+
+      a << *i.trackName ();
+    }
+
+    // language
+    //
+    if (i.language ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "language",
+          e));
+
+      a << *i.language ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+
+    // formatLabel
+    //
+    if (i.formatLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLabel",
+          e));
+
+      a << *i.formatLabel ();
+    }
+
+    // formatDefinition
+    //
+    if (i.formatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatDefinition",
+          e));
+
+      a << *i.formatDefinition ();
+    }
+
+    // formatLink
+    //
+    if (i.formatLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLink",
+          e));
+
+      a << *i.formatLink ();
+    }
+
+    // captioningSourceUri
+    //
+    if (i.captioningSourceUri ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "captioningSourceUri",
+          e));
+
+      a << *i.captioningSourceUri ();
+    }
+
+    // captioningFormatId
+    //
+    if (i.captioningFormatId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "captioningFormatId",
+          e));
+
+      a << *i.captioningFormatId ();
+    }
+
+    // captioningFormatName
+    //
+    if (i.captioningFormatName ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "captioningFormatName",
+          e));
+
+      a << *i.captioningFormatName ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const ancillaryDataFormat& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // DID
+    //
+    if (i.DID ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "DID",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.DID ();
+    }
+
+    // SDID
+    //
+    if (i.SDID ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "SDID",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.SDID ();
+    }
+
+    // lineNumber
+    //
+    for (ancillaryDataFormat::lineNumber_const_iterator
+         b (i.lineNumber ().begin ()), n (i.lineNumber ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "lineNumber",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *b;
+    }
+
+    // wrappingType
+    //
+    if (i.wrappingType ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "wrappingType",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.wrappingType ();
+    }
+
+    // ancillaryDataFormatId
+    //
+    if (i.ancillaryDataFormatId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "ancillaryDataFormatId",
+          e));
+
+      a << *i.ancillaryDataFormatId ();
+    }
+
+    // ancillaryDataFormatName
+    //
+    if (i.ancillaryDataFormatName ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "ancillaryDataFormatName",
+          e));
+
+      a << *i.ancillaryDataFormatName ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const timecode& i)
+  {
+    e << static_cast< const ::xml_schema::string& > (i);
+  }
+
+  void
+  operator<< (::xercesc::DOMAttr& a, const timecode& i)
+  {
+    a << static_cast< const ::xml_schema::string& > (i);
+  }
+
+  void
+  operator<< (::xml_schema::list_stream& l,
+              const timecode& i)
+  {
+    l << static_cast< const ::xml_schema::string& > (i);
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const time& i)
+  {
+    e << static_cast< const ::xml_schema::string& > (i);
+
+    // formatLabel
+    //
+    if (i.formatLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLabel",
+          e));
+
+      a << *i.formatLabel ();
+    }
+
+    // formatDefinition
+    //
+    if (i.formatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatDefinition",
+          e));
+
+      a << *i.formatDefinition ();
+    }
+
+    // formatLink
+    //
+    if (i.formatLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLink",
+          e));
+
+      a << *i.formatLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const timecode1& i)
+  {
+    e << static_cast< const ::xml_schema::string& > (i);
+  }
+
+  void
+  operator<< (::xercesc::DOMAttr& a, const timecode1& i)
+  {
+    a << static_cast< const ::xml_schema::string& > (i);
+  }
+
+  void
+  operator<< (::xml_schema::list_stream& l,
+              const timecode1& i)
+  {
+    l << static_cast< const ::xml_schema::string& > (i);
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const time1& i)
+  {
+    e << static_cast< const ::xml_schema::string& > (i);
+
+    // formatLabel
+    //
+    if (i.formatLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLabel",
+          e));
+
+      a << *i.formatLabel ();
+    }
+
+    // formatDefinition
+    //
+    if (i.formatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatDefinition",
+          e));
+
+      a << *i.formatDefinition ();
+    }
+
+    // formatLink
+    //
+    if (i.formatLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLink",
+          e));
+
+      a << *i.formatLink ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const PeriodOfTime& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // startYear
+    //
+    if (i.startYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startYear",
+          e));
+
+      a << *i.startYear ();
+    }
+
+    // startDate
+    //
+    if (i.startDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startDate",
+          e));
+
+      a << *i.startDate ();
+    }
+
+    // startTime
+    //
+    if (i.startTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "startTime",
+          e));
+
+      a << *i.startTime ();
+    }
+
+    // endYear
+    //
+    if (i.endYear ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endYear",
+          e));
+
+      a << *i.endYear ();
+    }
+
+    // endDate
+    //
+    if (i.endDate ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endDate",
+          e));
+
+      a << *i.endDate ();
+    }
+
+    // endTime
+    //
+    if (i.endTime ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "endTime",
+          e));
+
+      a << *i.endTime ();
+    }
+
+    // period
+    //
+    if (i.period ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "period",
+          e));
+
+      a << *i.period ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const location& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // name
+    //
+    if (i.name ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "name",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.name ();
+    }
+
+    // coordinates
+    //
+    if (i.coordinates ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "coordinates",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.coordinates ();
+    }
+
+    // code
+    //
+    if (i.code ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "code",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << *i.code ();
+    }
+
+    // typeLabel
+    //
+    if (i.typeLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLabel",
+          e));
+
+      a << *i.typeLabel ();
+    }
+
+    // typeDefinition
+    //
+    if (i.typeDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeDefinition",
+          e));
+
+      a << *i.typeDefinition ();
+    }
+
+    // typeLink
+    //
+    if (i.typeLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "typeLink",
+          e));
+
+      a << *i.typeLink ();
+    }
+
+    // note
+    //
+    if (i.note ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "note",
+          e));
+
+      a << *i.note ();
+    }
+
+    // locationId
+    //
+    if (i.locationId ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "locationId",
+          e));
+
+      a << *i.locationId ();
+    }
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const coordinates& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // posy
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "posy",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << i.posy ();
+    }
+
+    // posx
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "posx",
+          "urn:ebu:metadata-schema:ebuCore_2011",
+          e));
+
+      s << i.posx ();
+    }
+
+    // formatLabel
+    //
+    if (i.formatLabel ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLabel",
+          e));
+
+      a << *i.formatLabel ();
+    }
+
+    // formatDefinition
+    //
+    if (i.formatDefinition ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatDefinition",
+          e));
+
+      a << *i.formatDefinition ();
+    }
+
+    // formatLink
+    //
+    if (i.formatLink ())
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "formatLink",
+          e));
+
+      a << *i.formatLink ();
+    }
+  }
+}
+
 #include <xsd/cxx/post.hxx>
 
 // Begin epilogue.

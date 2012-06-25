@@ -4383,6 +4383,2251 @@ namespace dc
   }
 }
 
+#include <ostream>
+#include <xsd/cxx/tree/error-handler.hxx>
+#include <xsd/cxx/xml/dom/serialization-source.hxx>
+
+namespace dc
+{
+  void
+  title (::std::ostream& o,
+         const ::dc::elementType& s,
+         const ::xml_schema::namespace_infomap& m,
+         const ::std::string& e,
+         ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::title (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  title (::std::ostream& o,
+         const ::dc::elementType& s,
+         ::xml_schema::error_handler& h,
+         const ::xml_schema::namespace_infomap& m,
+         const ::std::string& e,
+         ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::title (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  title (::std::ostream& o,
+         const ::dc::elementType& s,
+         ::xercesc::DOMErrorHandler& h,
+         const ::xml_schema::namespace_infomap& m,
+         const ::std::string& e,
+         ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::title (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  title (::xercesc::XMLFormatTarget& t,
+         const ::dc::elementType& s,
+         const ::xml_schema::namespace_infomap& m,
+         const ::std::string& e,
+         ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::title (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  title (::xercesc::XMLFormatTarget& t,
+         const ::dc::elementType& s,
+         ::xml_schema::error_handler& h,
+         const ::xml_schema::namespace_infomap& m,
+         const ::std::string& e,
+         ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::title (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  title (::xercesc::XMLFormatTarget& t,
+         const ::dc::elementType& s,
+         ::xercesc::DOMErrorHandler& h,
+         const ::xml_schema::namespace_infomap& m,
+         const ::std::string& e,
+         ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::title (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  title (::xercesc::DOMDocument& d,
+         const ::dc::elementType& s,
+         ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "title" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "title",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  title (const ::dc::elementType& s,
+         const ::xml_schema::namespace_infomap& m,
+         ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "title",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::title (*d, s, f);
+    return d;
+  }
+
+  void
+  identifier (::std::ostream& o,
+              const ::dc::elementType& s,
+              const ::xml_schema::namespace_infomap& m,
+              const ::std::string& e,
+              ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::identifier (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  identifier (::std::ostream& o,
+              const ::dc::elementType& s,
+              ::xml_schema::error_handler& h,
+              const ::xml_schema::namespace_infomap& m,
+              const ::std::string& e,
+              ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::identifier (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  identifier (::std::ostream& o,
+              const ::dc::elementType& s,
+              ::xercesc::DOMErrorHandler& h,
+              const ::xml_schema::namespace_infomap& m,
+              const ::std::string& e,
+              ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::identifier (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  identifier (::xercesc::XMLFormatTarget& t,
+              const ::dc::elementType& s,
+              const ::xml_schema::namespace_infomap& m,
+              const ::std::string& e,
+              ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::identifier (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  identifier (::xercesc::XMLFormatTarget& t,
+              const ::dc::elementType& s,
+              ::xml_schema::error_handler& h,
+              const ::xml_schema::namespace_infomap& m,
+              const ::std::string& e,
+              ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::identifier (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  identifier (::xercesc::XMLFormatTarget& t,
+              const ::dc::elementType& s,
+              ::xercesc::DOMErrorHandler& h,
+              const ::xml_schema::namespace_infomap& m,
+              const ::std::string& e,
+              ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::identifier (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  identifier (::xercesc::DOMDocument& d,
+              const ::dc::elementType& s,
+              ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "identifier" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "identifier",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  identifier (const ::dc::elementType& s,
+              const ::xml_schema::namespace_infomap& m,
+              ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "identifier",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::identifier (*d, s, f);
+    return d;
+  }
+
+  void
+  subject (::std::ostream& o,
+           const ::dc::elementType& s,
+           const ::xml_schema::namespace_infomap& m,
+           const ::std::string& e,
+           ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::subject (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  subject (::std::ostream& o,
+           const ::dc::elementType& s,
+           ::xml_schema::error_handler& h,
+           const ::xml_schema::namespace_infomap& m,
+           const ::std::string& e,
+           ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::subject (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  subject (::std::ostream& o,
+           const ::dc::elementType& s,
+           ::xercesc::DOMErrorHandler& h,
+           const ::xml_schema::namespace_infomap& m,
+           const ::std::string& e,
+           ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::subject (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  subject (::xercesc::XMLFormatTarget& t,
+           const ::dc::elementType& s,
+           const ::xml_schema::namespace_infomap& m,
+           const ::std::string& e,
+           ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::subject (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  subject (::xercesc::XMLFormatTarget& t,
+           const ::dc::elementType& s,
+           ::xml_schema::error_handler& h,
+           const ::xml_schema::namespace_infomap& m,
+           const ::std::string& e,
+           ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::subject (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  subject (::xercesc::XMLFormatTarget& t,
+           const ::dc::elementType& s,
+           ::xercesc::DOMErrorHandler& h,
+           const ::xml_schema::namespace_infomap& m,
+           const ::std::string& e,
+           ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::subject (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  subject (::xercesc::DOMDocument& d,
+           const ::dc::elementType& s,
+           ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "subject" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "subject",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  subject (const ::dc::elementType& s,
+           const ::xml_schema::namespace_infomap& m,
+           ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "subject",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::subject (*d, s, f);
+    return d;
+  }
+
+  void
+  type (::std::ostream& o,
+        const ::dc::elementType& s,
+        const ::xml_schema::namespace_infomap& m,
+        const ::std::string& e,
+        ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::type (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  type (::std::ostream& o,
+        const ::dc::elementType& s,
+        ::xml_schema::error_handler& h,
+        const ::xml_schema::namespace_infomap& m,
+        const ::std::string& e,
+        ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::type (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  type (::std::ostream& o,
+        const ::dc::elementType& s,
+        ::xercesc::DOMErrorHandler& h,
+        const ::xml_schema::namespace_infomap& m,
+        const ::std::string& e,
+        ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::type (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  type (::xercesc::XMLFormatTarget& t,
+        const ::dc::elementType& s,
+        const ::xml_schema::namespace_infomap& m,
+        const ::std::string& e,
+        ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::type (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  type (::xercesc::XMLFormatTarget& t,
+        const ::dc::elementType& s,
+        ::xml_schema::error_handler& h,
+        const ::xml_schema::namespace_infomap& m,
+        const ::std::string& e,
+        ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::type (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  type (::xercesc::XMLFormatTarget& t,
+        const ::dc::elementType& s,
+        ::xercesc::DOMErrorHandler& h,
+        const ::xml_schema::namespace_infomap& m,
+        const ::std::string& e,
+        ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::type (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  type (::xercesc::DOMDocument& d,
+        const ::dc::elementType& s,
+        ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "type" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "type",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  type (const ::dc::elementType& s,
+        const ::xml_schema::namespace_infomap& m,
+        ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "type",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::type (*d, s, f);
+    return d;
+  }
+
+  void
+  description (::std::ostream& o,
+               const ::dc::elementType& s,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::description (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  description (::std::ostream& o,
+               const ::dc::elementType& s,
+               ::xml_schema::error_handler& h,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::description (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  description (::std::ostream& o,
+               const ::dc::elementType& s,
+               ::xercesc::DOMErrorHandler& h,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::description (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  description (::xercesc::XMLFormatTarget& t,
+               const ::dc::elementType& s,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::description (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  description (::xercesc::XMLFormatTarget& t,
+               const ::dc::elementType& s,
+               ::xml_schema::error_handler& h,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::description (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  description (::xercesc::XMLFormatTarget& t,
+               const ::dc::elementType& s,
+               ::xercesc::DOMErrorHandler& h,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::description (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  description (::xercesc::DOMDocument& d,
+               const ::dc::elementType& s,
+               ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "description" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "description",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  description (const ::dc::elementType& s,
+               const ::xml_schema::namespace_infomap& m,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "description",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::description (*d, s, f);
+    return d;
+  }
+
+  void
+  coverage (::std::ostream& o,
+            const ::dc::elementType& s,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::coverage (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  coverage (::std::ostream& o,
+            const ::dc::elementType& s,
+            ::xml_schema::error_handler& h,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::coverage (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  coverage (::std::ostream& o,
+            const ::dc::elementType& s,
+            ::xercesc::DOMErrorHandler& h,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::coverage (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  coverage (::xercesc::XMLFormatTarget& t,
+            const ::dc::elementType& s,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::coverage (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  coverage (::xercesc::XMLFormatTarget& t,
+            const ::dc::elementType& s,
+            ::xml_schema::error_handler& h,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::coverage (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  coverage (::xercesc::XMLFormatTarget& t,
+            const ::dc::elementType& s,
+            ::xercesc::DOMErrorHandler& h,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::coverage (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  coverage (::xercesc::DOMDocument& d,
+            const ::dc::elementType& s,
+            ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "coverage" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "coverage",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  coverage (const ::dc::elementType& s,
+            const ::xml_schema::namespace_infomap& m,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "coverage",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::coverage (*d, s, f);
+    return d;
+  }
+
+  void
+  creator (::std::ostream& o,
+           const ::dc::elementType& s,
+           const ::xml_schema::namespace_infomap& m,
+           const ::std::string& e,
+           ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::creator (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  creator (::std::ostream& o,
+           const ::dc::elementType& s,
+           ::xml_schema::error_handler& h,
+           const ::xml_schema::namespace_infomap& m,
+           const ::std::string& e,
+           ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::creator (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  creator (::std::ostream& o,
+           const ::dc::elementType& s,
+           ::xercesc::DOMErrorHandler& h,
+           const ::xml_schema::namespace_infomap& m,
+           const ::std::string& e,
+           ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::creator (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  creator (::xercesc::XMLFormatTarget& t,
+           const ::dc::elementType& s,
+           const ::xml_schema::namespace_infomap& m,
+           const ::std::string& e,
+           ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::creator (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  creator (::xercesc::XMLFormatTarget& t,
+           const ::dc::elementType& s,
+           ::xml_schema::error_handler& h,
+           const ::xml_schema::namespace_infomap& m,
+           const ::std::string& e,
+           ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::creator (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  creator (::xercesc::XMLFormatTarget& t,
+           const ::dc::elementType& s,
+           ::xercesc::DOMErrorHandler& h,
+           const ::xml_schema::namespace_infomap& m,
+           const ::std::string& e,
+           ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::creator (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  creator (::xercesc::DOMDocument& d,
+           const ::dc::elementType& s,
+           ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "creator" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "creator",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  creator (const ::dc::elementType& s,
+           const ::xml_schema::namespace_infomap& m,
+           ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "creator",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::creator (*d, s, f);
+    return d;
+  }
+
+  void
+  contributor (::std::ostream& o,
+               const ::dc::elementType& s,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::contributor (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  contributor (::std::ostream& o,
+               const ::dc::elementType& s,
+               ::xml_schema::error_handler& h,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::contributor (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  contributor (::std::ostream& o,
+               const ::dc::elementType& s,
+               ::xercesc::DOMErrorHandler& h,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::contributor (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  contributor (::xercesc::XMLFormatTarget& t,
+               const ::dc::elementType& s,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::contributor (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  contributor (::xercesc::XMLFormatTarget& t,
+               const ::dc::elementType& s,
+               ::xml_schema::error_handler& h,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::contributor (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  contributor (::xercesc::XMLFormatTarget& t,
+               const ::dc::elementType& s,
+               ::xercesc::DOMErrorHandler& h,
+               const ::xml_schema::namespace_infomap& m,
+               const ::std::string& e,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::contributor (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  contributor (::xercesc::DOMDocument& d,
+               const ::dc::elementType& s,
+               ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "contributor" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "contributor",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  contributor (const ::dc::elementType& s,
+               const ::xml_schema::namespace_infomap& m,
+               ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "contributor",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::contributor (*d, s, f);
+    return d;
+  }
+
+  void
+  publisher (::std::ostream& o,
+             const ::dc::elementType& s,
+             const ::xml_schema::namespace_infomap& m,
+             const ::std::string& e,
+             ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::publisher (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  publisher (::std::ostream& o,
+             const ::dc::elementType& s,
+             ::xml_schema::error_handler& h,
+             const ::xml_schema::namespace_infomap& m,
+             const ::std::string& e,
+             ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::publisher (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  publisher (::std::ostream& o,
+             const ::dc::elementType& s,
+             ::xercesc::DOMErrorHandler& h,
+             const ::xml_schema::namespace_infomap& m,
+             const ::std::string& e,
+             ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::publisher (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  publisher (::xercesc::XMLFormatTarget& t,
+             const ::dc::elementType& s,
+             const ::xml_schema::namespace_infomap& m,
+             const ::std::string& e,
+             ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::publisher (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  publisher (::xercesc::XMLFormatTarget& t,
+             const ::dc::elementType& s,
+             ::xml_schema::error_handler& h,
+             const ::xml_schema::namespace_infomap& m,
+             const ::std::string& e,
+             ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::publisher (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  publisher (::xercesc::XMLFormatTarget& t,
+             const ::dc::elementType& s,
+             ::xercesc::DOMErrorHandler& h,
+             const ::xml_schema::namespace_infomap& m,
+             const ::std::string& e,
+             ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::publisher (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  publisher (::xercesc::DOMDocument& d,
+             const ::dc::elementType& s,
+             ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "publisher" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "publisher",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  publisher (const ::dc::elementType& s,
+             const ::xml_schema::namespace_infomap& m,
+             ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "publisher",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::publisher (*d, s, f);
+    return d;
+  }
+
+  void
+  rights (::std::ostream& o,
+          const ::dc::elementType& s,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::rights (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  rights (::std::ostream& o,
+          const ::dc::elementType& s,
+          ::xml_schema::error_handler& h,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::rights (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  rights (::std::ostream& o,
+          const ::dc::elementType& s,
+          ::xercesc::DOMErrorHandler& h,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::rights (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  rights (::xercesc::XMLFormatTarget& t,
+          const ::dc::elementType& s,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::rights (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  rights (::xercesc::XMLFormatTarget& t,
+          const ::dc::elementType& s,
+          ::xml_schema::error_handler& h,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::rights (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  rights (::xercesc::XMLFormatTarget& t,
+          const ::dc::elementType& s,
+          ::xercesc::DOMErrorHandler& h,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::rights (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  rights (::xercesc::DOMDocument& d,
+          const ::dc::elementType& s,
+          ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "rights" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "rights",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  rights (const ::dc::elementType& s,
+          const ::xml_schema::namespace_infomap& m,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "rights",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::rights (*d, s, f);
+    return d;
+  }
+
+  void
+  format (::std::ostream& o,
+          const ::dc::elementType& s,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::format (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  format (::std::ostream& o,
+          const ::dc::elementType& s,
+          ::xml_schema::error_handler& h,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::format (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  format (::std::ostream& o,
+          const ::dc::elementType& s,
+          ::xercesc::DOMErrorHandler& h,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::format (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  format (::xercesc::XMLFormatTarget& t,
+          const ::dc::elementType& s,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::format (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  format (::xercesc::XMLFormatTarget& t,
+          const ::dc::elementType& s,
+          ::xml_schema::error_handler& h,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::format (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  format (::xercesc::XMLFormatTarget& t,
+          const ::dc::elementType& s,
+          ::xercesc::DOMErrorHandler& h,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::format (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  format (::xercesc::DOMDocument& d,
+          const ::dc::elementType& s,
+          ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "format" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "format",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  format (const ::dc::elementType& s,
+          const ::xml_schema::namespace_infomap& m,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "format",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::format (*d, s, f);
+    return d;
+  }
+
+  void
+  source (::std::ostream& o,
+          const ::dc::elementType& s,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::source (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  source (::std::ostream& o,
+          const ::dc::elementType& s,
+          ::xml_schema::error_handler& h,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::source (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  source (::std::ostream& o,
+          const ::dc::elementType& s,
+          ::xercesc::DOMErrorHandler& h,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::source (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  source (::xercesc::XMLFormatTarget& t,
+          const ::dc::elementType& s,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::source (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  source (::xercesc::XMLFormatTarget& t,
+          const ::dc::elementType& s,
+          ::xml_schema::error_handler& h,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::source (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  source (::xercesc::XMLFormatTarget& t,
+          const ::dc::elementType& s,
+          ::xercesc::DOMErrorHandler& h,
+          const ::xml_schema::namespace_infomap& m,
+          const ::std::string& e,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::source (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  source (::xercesc::DOMDocument& d,
+          const ::dc::elementType& s,
+          ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "source" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "source",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  source (const ::dc::elementType& s,
+          const ::xml_schema::namespace_infomap& m,
+          ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "source",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::source (*d, s, f);
+    return d;
+  }
+
+  void
+  relation (::std::ostream& o,
+            const ::dc::elementType& s,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::relation (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  relation (::std::ostream& o,
+            const ::dc::elementType& s,
+            ::xml_schema::error_handler& h,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::relation (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  relation (::std::ostream& o,
+            const ::dc::elementType& s,
+            ::xercesc::DOMErrorHandler& h,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::relation (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  relation (::xercesc::XMLFormatTarget& t,
+            const ::dc::elementType& s,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::relation (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  relation (::xercesc::XMLFormatTarget& t,
+            const ::dc::elementType& s,
+            ::xml_schema::error_handler& h,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::relation (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  relation (::xercesc::XMLFormatTarget& t,
+            const ::dc::elementType& s,
+            ::xercesc::DOMErrorHandler& h,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::relation (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  relation (::xercesc::DOMDocument& d,
+            const ::dc::elementType& s,
+            ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "relation" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "relation",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  relation (const ::dc::elementType& s,
+            const ::xml_schema::namespace_infomap& m,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "relation",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::relation (*d, s, f);
+    return d;
+  }
+
+  void
+  language (::std::ostream& o,
+            const ::dc::elementType& s,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::language (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  language (::std::ostream& o,
+            const ::dc::elementType& s,
+            ::xml_schema::error_handler& h,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::language (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  language (::std::ostream& o,
+            const ::dc::elementType& s,
+            ::xercesc::DOMErrorHandler& h,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::language (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  language (::xercesc::XMLFormatTarget& t,
+            const ::dc::elementType& s,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::language (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  language (::xercesc::XMLFormatTarget& t,
+            const ::dc::elementType& s,
+            ::xml_schema::error_handler& h,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::language (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  language (::xercesc::XMLFormatTarget& t,
+            const ::dc::elementType& s,
+            ::xercesc::DOMErrorHandler& h,
+            const ::xml_schema::namespace_infomap& m,
+            const ::std::string& e,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::language (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  language (::xercesc::DOMDocument& d,
+            const ::dc::elementType& s,
+            ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "language" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "language",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  language (const ::dc::elementType& s,
+            const ::xml_schema::namespace_infomap& m,
+            ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "language",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::language (*d, s, f);
+    return d;
+  }
+
+  void
+  date (::std::ostream& o,
+        const ::dc::elementType& s,
+        const ::xml_schema::namespace_infomap& m,
+        const ::std::string& e,
+        ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::date (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  date (::std::ostream& o,
+        const ::dc::elementType& s,
+        ::xml_schema::error_handler& h,
+        const ::xml_schema::namespace_infomap& m,
+        const ::std::string& e,
+        ::xml_schema::flags f)
+  {
+    ::xsd::cxx::xml::auto_initializer i (
+      (f & ::xml_schema::flags::dont_initialize) == 0);
+
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::date (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  date (::std::ostream& o,
+        const ::dc::elementType& s,
+        ::xercesc::DOMErrorHandler& h,
+        const ::xml_schema::namespace_infomap& m,
+        const ::std::string& e,
+        ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::date (s, m, f));
+    ::xsd::cxx::xml::dom::ostream_format_target t (o);
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  date (::xercesc::XMLFormatTarget& t,
+        const ::dc::elementType& s,
+        const ::xml_schema::namespace_infomap& m,
+        const ::std::string& e,
+        ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::date (s, m, f));
+
+    ::xsd::cxx::tree::error_handler< char > h;
+
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      h.throw_if_failed< ::xsd::cxx::tree::serialization< char > > ();
+    }
+  }
+
+  void
+  date (::xercesc::XMLFormatTarget& t,
+        const ::dc::elementType& s,
+        ::xml_schema::error_handler& h,
+        const ::xml_schema::namespace_infomap& m,
+        const ::std::string& e,
+        ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::date (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  date (::xercesc::XMLFormatTarget& t,
+        const ::dc::elementType& s,
+        ::xercesc::DOMErrorHandler& h,
+        const ::xml_schema::namespace_infomap& m,
+        const ::std::string& e,
+        ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::dc::date (s, m, f));
+    if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
+    {
+      throw ::xsd::cxx::tree::serialization< char > ();
+    }
+  }
+
+  void
+  date (::xercesc::DOMDocument& d,
+        const ::dc::elementType& s,
+        ::xml_schema::flags)
+  {
+    ::xercesc::DOMElement& e (*d.getDocumentElement ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (e));
+
+    if (n.name () == "date" &&
+        n.namespace_ () == "http://purl.org/dc/elements/1.1/")
+    {
+      e << s;
+    }
+    else
+    {
+      throw ::xsd::cxx::tree::unexpected_element < char > (
+        n.name (),
+        n.namespace_ (),
+        "date",
+        "http://purl.org/dc/elements/1.1/");
+    }
+  }
+
+  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  date (const ::dc::elementType& s,
+        const ::xml_schema::namespace_infomap& m,
+        ::xml_schema::flags f)
+  {
+    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xsd::cxx::xml::dom::serialize< char > (
+        "date",
+        "http://purl.org/dc/elements/1.1/",
+        m, f));
+
+    ::dc::date (*d, s, f);
+    return d;
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const elementType& i)
+  {
+    e << static_cast< const ::xml_schema::string& > (i);
+
+    // lang
+    //
+    {
+      ::xercesc::DOMAttr& a (
+        ::xsd::cxx::xml::dom::create_attribute (
+          "lang",
+          "http://www.w3.org/XML/1998/namespace",
+          e));
+
+      a << i.lang ();
+    }
+  }
+}
+
 #include <xsd/cxx/post.hxx>
 
 // Begin epilogue.
