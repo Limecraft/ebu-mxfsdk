@@ -1015,6 +1015,17 @@ int main(int argc, const char** argv)
         {
             BMX_REGRESSION_TEST = true;
         }
+		else if (strcmp(argv[cmdln_index], "--ebu-core") == 0)
+        {
+			if (cmdln_index + 1 >= argc)
+            {
+                usage(argv[0]);
+                fprintf(stderr, "Missing argument for option '%s'\n", argv[cmdln_index]);
+                return 1;
+            }
+            ebucore_filename = argv[cmdln_index + 1];
+            cmdln_index++;
+        }
         else
         {
             break;
@@ -2010,18 +2021,6 @@ int main(int argc, const char** argv)
             inputs.push_back(input);
             cmdln_index++;
         }
-		else if (strcmp(argv[cmdln_index], "--ebu-core") == 0)
-        {
-			if (cmdln_index + 1 >= argc)
-            {
-                usage(argv[0]);
-                fprintf(stderr, "Missing argument(s) for option '%s'\n", argv[cmdln_index]);
-                return 1;
-            }
-            ebucore_filename = argv[cmdln_index + 1];
-            cmdln_index++;
-        }
-
         else
         {
             break;
