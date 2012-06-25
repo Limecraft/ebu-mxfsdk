@@ -56,6 +56,8 @@
 #include <mxf/mxf_win32_file.h>
 #endif
 
+#include <EBUCoreProcessor.h>
+
 using namespace std;
 using namespace bmx;
 using namespace mxfpp;
@@ -396,6 +398,7 @@ static void usage(const char *cmd)
     fprintf(stderr, " --no-reorder          Don't attempt to order the inputs in a sequence\n");
     fprintf(stderr, "                       Use this option for files with broken timecode\n");
     fprintf(stderr, " --as11                Print AS-11 and UK DPP metadata to stdout (single file only)\n");
+    fprintf(stderr, " --ebu-core <file>     Write embedded EBU Core metadata to file\n");
 #if defined(_WIN32)
     fprintf(stderr, " --no-seq-scan         Do not set the sequential scan hint for optimizing file caching\n");
 #endif
@@ -421,6 +424,7 @@ int main(int argc, const char** argv)
     bool keep_input_order = false;
     bool do_print_version = false;
     bool do_print_as11 = false;
+    const char *ebucore_filename = 0;
 #if defined(_WIN32)
     int file_flags = MXF_WIN32_FLAG_SEQUENTIAL_SCAN;
 #endif
@@ -561,6 +565,17 @@ int main(int argc, const char** argv)
             check_crc32 = true;
             do_read = true;
         }
+		else if (strcmp(argv[cmdln_index], "--ebu-core") == 0)
+        {
+            if (cmdln_index + 1 >= argc)
+            {
+                usage(argv[0]);
+                fprintf(stderr, "Missing argument for option '%s'\n", argv[cmdln_index]);
+                return 1;
+            }
+			ebucore_filename = argv[cmdln_index + 1];
+            cmdln_index++;
+        }
         else
         {
             break;
@@ -697,6 +712,8 @@ int main(int argc, const char** argv)
             file_reader = new MXFFileReader();
             if (do_print_as11)
                 as11_register_extensions(file_reader);
+			if (ebucore_filename)
+				RegisterMetadataExtensionsforEBUCore(file_reader->GetDataModel());
             OPEN_FILE(file_reader, 0)
 
             reader = file_reader;
@@ -785,6 +802,10 @@ int main(int argc, const char** argv)
         if (do_print_as11 && file_reader)
             as11_print_info(file_reader);
 
+		if (ebucore_filename) {
+			// write EBU Core metadata to ebucore_filename
+			ReadAndSerializeEBUCore(file_reader->GetHeaderMetadata(), ebucore_filename);
+		}
 
         // read data
 
