@@ -75,6 +75,11 @@ std::string ebucoreOrganisationBase::getorganisationCode() const
     return getStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationCode));
 }
 
+bool ebucoreOrganisationBase::haveorganisationDepartment() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreOrganisation, organisationDepartment));
+}
+
 std::string ebucoreOrganisationBase::getorganisationDepartment() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationDepartment));

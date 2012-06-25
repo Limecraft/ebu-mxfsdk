@@ -60,9 +60,19 @@ ebucoreAddressBase::~ebucoreAddressBase()
 {}
 
 
+bool ebucoreAddressBase::haveaddressLine() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreAddress, addressLine));
+}
+
 std::string ebucoreAddressBase::getaddressLine() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreAddress, addressLine));
+}
+
+bool ebucoreAddressBase::havetownCity() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreAddress, townCity));
 }
 
 std::string ebucoreAddressBase::gettownCity() const
@@ -80,14 +90,29 @@ std::string ebucoreAddressBase::getcountyState() const
     return getStringItem(&MXF_ITEM_K(ebucoreAddress, countyState));
 }
 
+bool ebucoreAddressBase::havedeliveryCode() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreAddress, deliveryCode));
+}
+
 std::string ebucoreAddressBase::getdeliveryCode() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreAddress, deliveryCode));
 }
 
+bool ebucoreAddressBase::havecountryName() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreAddress, countryName));
+}
+
 std::string ebucoreAddressBase::getcountryName() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreAddress, countryName));
+}
+
+bool ebucoreAddressBase::havecountryCode() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreAddress, countryCode));
 }
 
 std::string ebucoreAddressBase::getcountryCode() const

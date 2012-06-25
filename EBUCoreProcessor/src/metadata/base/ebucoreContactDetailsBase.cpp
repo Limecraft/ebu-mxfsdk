@@ -107,6 +107,11 @@ ebucoreTypeGroup* ebucoreContactDetailsBase::getdetailsType() const
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
+bool ebucoreContactDetailsBase::haveaddress() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContactDetails, address));
+}
+
 ebucoreAddress* ebucoreContactDetailsBase::getaddress() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreContactDetails, address)));

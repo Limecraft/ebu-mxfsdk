@@ -57,6 +57,7 @@ public:
    mxfUUID getorganisationId() const;
    std::string getorganisationName() const;
    std::string getorganisationCode() const;
+   bool haveorganisationDepartment() const;
    std::string getorganisationDepartment() const;
    ebucoreTypeGroup* getorganisationType() const;
    std::vector<ebucoreContactDetails*> getorganisationDetails() const;

@@ -60,9 +60,19 @@ ebucoreContactBase::~ebucoreContactBase()
 {}
 
 
+bool ebucoreContactBase::havecontactId() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContact, contactId));
+}
+
 mxfUUID ebucoreContactBase::getcontactId() const
 {
     return getUUIDItem(&MXF_ITEM_K(ebucoreContact, contactId));
+}
+
+bool ebucoreContactBase::havefamilyName() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContact, familyName));
 }
 
 std::string ebucoreContactBase::getfamilyName() const
@@ -75,9 +85,19 @@ std::string ebucoreContactBase::getgivenName() const
     return getStringItem(&MXF_ITEM_K(ebucoreContact, givenName));
 }
 
+bool ebucoreContactBase::haveotherGivenName() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContact, otherGivenName));
+}
+
 std::string ebucoreContactBase::getotherGivenName() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreContact, otherGivenName));
+}
+
+bool ebucoreContactBase::havesaluation() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContact, saluation));
 }
 
 std::string ebucoreContactBase::getsaluation() const
@@ -85,14 +105,29 @@ std::string ebucoreContactBase::getsaluation() const
     return getStringItem(&MXF_ITEM_K(ebucoreContact, saluation));
 }
 
+bool ebucoreContactBase::havesuffix() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContact, suffix));
+}
+
 std::string ebucoreContactBase::getsuffix() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreContact, suffix));
 }
 
+bool ebucoreContactBase::havestageName() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContact, stageName));
+}
+
 std::string ebucoreContactBase::getstageName() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreContact, stageName));
+}
+
+bool ebucoreContactBase::haveoccupation() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContact, occupation));
 }
 
 std::string ebucoreContactBase::getoccupation() const

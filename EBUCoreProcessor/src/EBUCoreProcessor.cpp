@@ -161,6 +161,32 @@ void mapAddress(addressType& source, ebucoreAddress *dest) {
 	}
 }
 
+void mapAddress(ebucoreAddress *source, addressType& dest) {
+	// atm, only a single address line is defined in KLV mapping
+	if (source->haveaddressLine()) {
+		addressType::addressLine_sequence lines;
+		lines.push_back(source->getaddressLine());
+		dest.addressLine(lines);
+	}
+
+	if (source->havetownCity())
+		dest.addressTownCity() = source->gettownCity();
+	if (source->havecountyState())
+		dest.addressCountyState() = source->getcountyState();
+	if (source->havedeliveryCode())
+		dest.addressDeliveryCode() = source->getdeliveryCode();
+
+	// special treatment for country, current KLV mapping is not via a typeGroup!
+	if (source->havecountryCode() || source->havecountryName()) {
+		std::auto_ptr<addressType::country_type> p( new addressType::country_type() );
+		if (source->havecountryCode())
+			p->typeLink() = source->getcountryCode();
+		if (source->havecountryName())
+			p->typeLabel() = source->getcountryName();
+		dest.country(p);
+	}
+}
+
 void mapDetails(detailsType& source, ebucoreContactDetails *dest) {
 	/*
 		<sequence>
@@ -184,6 +210,28 @@ void mapDetails(detailsType& source, ebucoreContactDetails *dest) {
 	SIMPLE_MAP_OPTIONAL(source, mobileTelephoneNumber, dest, setmobileTelephoneNumber)
 
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setdetailsType)
+}
+
+void mapDetails(ebucoreContactDetails *source, detailsType& dest) {
+
+	if (source->haveemailAddress())
+		dest.emailAddress() = source->getemailAddress();
+	if (source->havewebAddress())
+		dest.webAddress() = source->getwebAddress();
+
+	// map address
+	if (source->haveaddress()) {
+		std::auto_ptr<addressType> p( new addressType() );
+		mapAddress(source->getaddress(), *(p.get()) );
+		dest.address(p);
+	}
+	
+	if (source->havetelephoneNumber())
+		dest.telephoneNumber() = source->gettelephoneNumber();
+	if (source->havemobileTelephoneNumber())
+		dest.mobileTelephoneNumber() = source->getmobileTelephoneNumber();
+
+	RMAP_TYPE_GROUP(source->getdetailsType(), dest, detailsType::typeDefinition_type, detailsType::typeLabel_type, detailsType::typeLink_type)
 }
 
 void mapContact(contactDetailsType& source, ebucoreContact *dest) {
@@ -238,6 +286,51 @@ void mapContact(contactDetailsType& source, ebucoreContact *dest) {
 
 }
 
+void mapContact(ebucoreContact *source, contactDetailsType& dest) {
+
+	if (source->havefamilyName()) {
+		// both givenname and familyname are present
+		dest.familyName() = source->getfamilyName();
+		dest.givenName() = source->getgivenName();
+	} else {
+		dest.name() = source->getgivenName();
+	}
+	if (source->haveotherGivenName())
+		dest.username() = source->getotherGivenName();
+	if (source->haveoccupation())
+		dest.occupation() = source->getoccupation();
+
+	//dest.details()
+
+	// map contactdetails
+	contactDetailsType::details_sequence details;
+	std::vector<ebucoreContactDetails*> source_vec = source->getcontactDetails();
+	for (std::vector<ebucoreContactDetails*>::iterator it = source_vec.begin(); it != source_vec.end(); it++) {
+		std::auto_ptr<detailsType> p( new detailsType() );
+		mapDetails(*it, *(p.get()));
+		details.push_back(p);
+	}
+	dest.details(details);
+
+	if (source->havestageName()) {
+		contactDetailsType::stageName_sequence seq;
+		seq.push_back( source->getstageName() );
+		dest.stageName(seq);
+	}
+
+	// [TODO] We skip RelatedContacts for now, KLV mapping refers to Contacts, while the XSD refers to entities
+	/*std::vector<ebucoreContact*> relatedContacts;
+	for (contactDetailsType::relatedContacts_sequence::iterator it = source.relatedContacts().begin(); it != source.details().end(); it++) {
+		ebucoreContact *obj = new ebucoreContact(dest->getHeaderMetadata());
+		mapContact(*it, obj);
+		relatedContacts.push_back(obj);
+	}
+	dest->setcontactRelatedContacts(relatedContacts);*/
+	
+	// [TODO] We skip contactId for now, KLV mapping refers to an UID, while the XSD refers to anyURI type
+
+}
+
 void mapOrganisation(organisationDetailsType& source, ebucoreOrganisation *dest) {
 /*
 	<sequence>
@@ -267,6 +360,46 @@ void mapOrganisation(organisationDetailsType& source, ebucoreOrganisation *dest)
 	dest->setorganisationName(source.organisationName());
 	SIMPLE_MAP_OPTIONAL(source, organisationDepartment, dest, setorganisationDepartment)	
 	NEW_VECTOR_AND_ASSIGN(source, details, ebucoreContactDetails, contactDetailsType::details_sequence::iterator, mapDetails, dest, setorganisationDetails)
+}
+
+void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest) {
+/*
+	<sequence>
+		<element name="organisationName" type="dc:elementType"/>
+		<element name="organisationDepartment" minOccurs="0">
+			<complexType>
+				<complexContent>
+					<extension base="dc:elementType">
+						<attribute name="departmentId" type="anyURI"/>
+					</extension>
+				</complexContent>
+			</complexType>
+		</element>
+		<element name="details" type="ebucore:detailsType" minOccurs="0" maxOccurs="unbounded"/>
+		<element name="contacts" type="ebucore:entityType" minOccurs="0" maxOccurs="unbounded">
+		</element>
+	</sequence>
+	<attribute name="organisationId" type="anyURI"/>
+*/
+	// [TODO] The KLV mapping is somewhat inconsistent at this point with the XSD:
+	//		- KLV organizationID is UID, XSD is anyURI
+	//		- XSD does not define an organisationCode
+	//		- XSD departmentId is not present in KLV
+	//		- KLV defines a typegroup, which is not present in XSD
+	//		- KLV organizationRelatedContacts refers to contacts, XSD refers to entities
+
+	source->setorganisationName(dest.organisationName());
+	if (source->haveorganisationDepartment())
+		dest.organisationDepartment() = source->getorganisationDepartment();
+
+	organisationDetailsType::details_sequence seq;
+	std::vector<ebucoreContactDetails*> source_vec = source->getorganisationDetails();
+	for (std::vector<ebucoreContactDetails*>::iterator it = source_vec.begin(); it != source_vec.end(); it++) {
+		std::auto_ptr<detailsType> p( new detailsType() );
+		mapDetails(*it, *(p.get()));
+		seq.push_back(p);
+	}
+	dest.details(seq);
 }
 
 void mapEntity(entityType& source, ebucoreEntity *dest) {

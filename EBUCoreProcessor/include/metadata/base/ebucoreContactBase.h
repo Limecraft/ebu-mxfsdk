@@ -54,13 +54,20 @@ public:
 
    // getters
 
+   bool havecontactId() const;
    mxfUUID getcontactId() const;
+   bool havefamilyName() const;
    std::string getfamilyName() const;
    std::string getgivenName() const;
+   bool haveotherGivenName() const;
    std::string getotherGivenName() const;
+   bool havesaluation() const;
    std::string getsaluation() const;
+   bool havesuffix() const;
    std::string getsuffix() const;
+   bool havestageName() const;
    std::string getstageName() const;
+   bool haveoccupation() const;
    std::string getoccupation() const;
    ebucoreTypeGroup* getcontactType() const;
    std::vector<ebucoreContactDetails*> getcontactDetails() const;

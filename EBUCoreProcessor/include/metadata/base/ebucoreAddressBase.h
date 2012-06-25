@@ -54,12 +54,17 @@ public:
 
    // getters
 
+   bool haveaddressLine() const;
    std::string getaddressLine() const;
+   bool havetownCity() const;
    std::string gettownCity() const;
    bool havecountyState() const;
    std::string getcountyState() const;
+   bool havedeliveryCode() const;
    std::string getdeliveryCode() const;
+   bool havecountryName() const;
    std::string getcountryName() const;
+   bool havecountryCode() const;
    std::string getcountryCode() const;
 
 

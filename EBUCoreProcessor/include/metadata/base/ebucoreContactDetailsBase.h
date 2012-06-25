@@ -63,6 +63,7 @@ public:
    bool havemobileTelephoneNumber() const;
    std::string getmobileTelephoneNumber() const;
    ebucoreTypeGroup* getdetailsType() const;
+   bool haveaddress() const;
    ebucoreAddress* getaddress() const;
 
 
