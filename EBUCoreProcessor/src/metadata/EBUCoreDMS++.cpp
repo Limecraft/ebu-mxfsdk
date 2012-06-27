@@ -29,6 +29,14 @@ void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata)
 	header_metadata->registerObjectFactory(&ebucoreAlternativeTitle::setKey, new MetadataSetFactory<ebucoreAlternativeTitle>());
 	header_metadata->registerObjectFactory(&ebucoreTypeGroup::setKey, new MetadataSetFactory<ebucoreTypeGroup>());
 	header_metadata->registerObjectFactory(&ebucoreStatusGroup::setKey, new MetadataSetFactory<ebucoreStatusGroup>());
+	header_metadata->registerObjectFactory(&ebucoreEntity::setKey, new MetadataSetFactory<ebucoreEntity>());
+	header_metadata->registerObjectFactory(&ebucoreAddressLine::setKey, new MetadataSetFactory<ebucoreAddressLine>());
+	header_metadata->registerObjectFactory(&ebucoreAddress::setKey, new MetadataSetFactory<ebucoreAddress>());
+	header_metadata->registerObjectFactory(&ebucoreContact::setKey, new MetadataSetFactory<ebucoreContact>());
+	header_metadata->registerObjectFactory(&ebucoreContactDetails::setKey, new MetadataSetFactory<ebucoreContactDetails>());
+	header_metadata->registerObjectFactory(&ebucoreOrganisation::setKey, new MetadataSetFactory<ebucoreOrganisation>());
+	header_metadata->registerObjectFactory(&ebucoreRole::setKey, new MetadataSetFactory<ebucoreRole>());
+	header_metadata->registerObjectFactory(&ebucoreMetadataSchemeInformation::setKey, new MetadataSetFactory<ebucoreMetadataSchemeInformation>());
 }
 
 };

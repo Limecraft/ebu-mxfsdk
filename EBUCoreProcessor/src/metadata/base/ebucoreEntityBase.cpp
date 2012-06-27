@@ -65,6 +65,11 @@ mxfUUID ebucoreEntityBase::getentityId() const
     return getUUIDItem(&MXF_ITEM_K(ebucoreEntity, entityId));
 }
 
+bool ebucoreEntityBase::haveentityContact() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreEntity, entityContact));
+}
+
 ebucoreContact* ebucoreEntityBase::getentityContact() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreEntity, entityContact)));
@@ -72,11 +77,21 @@ ebucoreContact* ebucoreEntityBase::getentityContact() const
     return dynamic_cast<ebucoreContact*>(obj.release());
 }
 
+bool ebucoreEntityBase::haveentityOrganisation() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreEntity, entityOrganisation));
+}
+
 ebucoreOrganisation* ebucoreEntityBase::getentityOrganisation() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreEntity, entityOrganisation)));
     MXFPP_CHECK(dynamic_cast<ebucoreOrganisation*>(obj.get()) != 0);
     return dynamic_cast<ebucoreOrganisation*>(obj.release());
+}
+
+bool ebucoreEntityBase::haveentityRole() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreEntity, entityRole));
 }
 
 ebucoreRole* ebucoreEntityBase::getentityRole() const

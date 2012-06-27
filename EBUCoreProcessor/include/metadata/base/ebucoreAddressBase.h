@@ -54,8 +54,8 @@ public:
 
    // getters
 
-   bool haveaddressLine() const;
-   std::string getaddressLine() const;
+   bool haveaddressLines() const;
+   std::vector<ebucoreAddressLine*> getaddressLines() const;
    bool havetownCity() const;
    std::string gettownCity() const;
    bool havecountyState() const;
@@ -70,7 +70,8 @@ public:
 
    // setters
 
-   void setaddressLine(std::string value);
+   void setaddressLines(const std::vector<ebucoreAddressLine*>& value);
+   void appendaddressLines(ebucoreAddressLine* value);
    void settownCity(std::string value);
    void setcountyState(std::string value);
    void setdeliveryCode(std::string value);

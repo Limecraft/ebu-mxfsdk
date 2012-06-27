@@ -50,6 +50,7 @@ namespace mxfpp
 #include <metadata/ebucoreFormatGroup.h>
 #include <metadata/ebucoreStatusGroup.h>
 #include <metadata/ebucoreRole.h>
+#include <metadata/ebucoreAddressLine.h>
 #include <metadata/ebucoreAddress.h>
 #include <metadata/ebucoreContactDetails.h>
 #include <metadata/ebucoreContact.h>

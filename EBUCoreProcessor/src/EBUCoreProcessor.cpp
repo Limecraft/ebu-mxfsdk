@@ -129,6 +129,10 @@ void mapRole(role& source, ebucoreRole *dest) {
 	dest->setroleType(obj);
 }
 
+void mapAddressLine(std::string source, ebucoreAddressLine *dest) {
+	dest->setaddressLine(source);
+}
+
 void mapAddress(addressType& source, ebucoreAddress *dest) {
 	/*
 	<sequence>
@@ -144,9 +148,8 @@ void mapAddress(addressType& source, ebucoreAddress *dest) {
 	</sequence>
 	*/
 
-	// atm, only a single address line is defined in KLV mapping
 	if (source.addressLine().size() > 0) {
-		dest->setaddressLine(source.addressLine().front());
+		NEW_VECTOR_AND_ASSIGN(source, addressLine, ebucoreAddressLine, addressType::addressLine_iterator, mapAddressLine, dest, setaddressLines)
 	}
 	
 	SIMPLE_MAP_OPTIONAL(source, addressTownCity, dest, settownCity)
@@ -163,9 +166,13 @@ void mapAddress(addressType& source, ebucoreAddress *dest) {
 
 void mapAddress(ebucoreAddress *source, addressType& dest) {
 	// atm, only a single address line is defined in KLV mapping
-	if (source->haveaddressLine()) {
+	if (source->haveaddressLines()) {
 		addressType::addressLine_sequence lines;
-		lines.push_back(source->getaddressLine());
+		std::vector<ebucoreAddressLine*> source_vec = source->getaddressLines();
+		for (std::vector<ebucoreAddressLine*>::iterator it = source_vec.begin(); it != source_vec.end(); it++) {
+			std::auto_ptr<detailsType> p( new detailsType() );
+			lines.push_back((*it)->getaddressLine());
+		}
 		dest.addressLine(lines);
 	}
 
@@ -363,30 +370,6 @@ void mapOrganisation(organisationDetailsType& source, ebucoreOrganisation *dest)
 }
 
 void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest) {
-/*
-	<sequence>
-		<element name="organisationName" type="dc:elementType"/>
-		<element name="organisationDepartment" minOccurs="0">
-			<complexType>
-				<complexContent>
-					<extension base="dc:elementType">
-						<attribute name="departmentId" type="anyURI"/>
-					</extension>
-				</complexContent>
-			</complexType>
-		</element>
-		<element name="details" type="ebucore:detailsType" minOccurs="0" maxOccurs="unbounded"/>
-		<element name="contacts" type="ebucore:entityType" minOccurs="0" maxOccurs="unbounded">
-		</element>
-	</sequence>
-	<attribute name="organisationId" type="anyURI"/>
-*/
-	// [TODO] The KLV mapping is somewhat inconsistent at this point with the XSD:
-	//		- KLV organizationID is UID, XSD is anyURI
-	//		- XSD does not define an organisationCode
-	//		- XSD departmentId is not present in KLV
-	//		- KLV defines a typegroup, which is not present in XSD
-	//		- KLV organizationRelatedContacts refers to contacts, XSD refers to entities
 
 	source->setorganisationName(dest.organisationName());
 	if (source->haveorganisationDepartment())
@@ -400,6 +383,7 @@ void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest)
 		seq.push_back(p);
 	}
 	dest.details(seq);
+
 }
 
 void mapEntity(entityType& source, ebucoreEntity *dest) {
@@ -442,6 +426,58 @@ void mapEntity(entityType& source, ebucoreEntity *dest) {
 
 	// [TODO] We skip entityId for now, KLV mapping refers to an UID, while the XSD refers to anyURI type
 }
+
+void mapEntity(ebucoreEntity *source, entityType& dest) {
+	/*
+	<sequence>
+		<element name="contactDetails" type="ebucore:contactDetailsType" minOccurs="0" maxOccurs="unbounded">
+		</element>
+		<element name="organisationDetails" type="ebucore:organisationDetailsType" minOccurs="0">
+		</element>
+		<element name="role" minOccurs="0" maxOccurs="unbounded">
+			<complexType>
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</complexType>
+		</element>
+	</sequence>
+	<attribute name="entityId" type="anyURI"/>
+	*/
+
+	// [TODO] The KLV mapping lists a single contact, while the XSD specifies a sequence
+	/*std::vector<ebucoreContact*> contacts;
+	for (entityType::contactDetails_sequence::iterator it = source.contactDetails().begin(); it != source.contactDetails().end(); it++) {
+		ebucoreContact *obj = new ebucoreContact(dest->getHeaderMetadata());
+		mapContact(*it, obj);
+		contacts.push_back(obj);
+	}*/
+	if (source->haveentityContact()) {
+		entityType::contactDetails_sequence seq;
+		std::auto_ptr<entityType::contactDetails_type> p( new entityType::contactDetails_type() );
+		mapContact(source->getentityContact(), *(p.get()));
+		seq.push_back(p);
+		dest.contactDetails(seq);
+	}
+
+	if (source->haveentityOrganisation()) {
+		std::auto_ptr<entityType::organisationDetails_type> p( new entityType::organisationDetails_type("") );
+		mapOrganisation(source->getentityOrganisation(), *(p.get()) );
+		dest.organisationDetails(p);
+	}
+
+	// [TODO] The KLV mapping lists a single role, while the XSD specifies a sequence
+	if (source->haveentityRole()) {
+		ebucoreRole *role = source->getentityRole();
+		ebucoreTypeGroup *tg = role->getroleType();
+		std::auto_ptr<entityType::role_type> p( new entityType::role_type() );
+		RMAP_TYPE_GROUP(tg, (*(p.get())), role::typeDefinition_type, role::typeLabel_type, role::typeLink_type)
+		entityType::role_sequence seq;
+		seq.push_back(p);
+		dest.role(seq);
+	}
+
+	// [TODO] We skip entityId for now, KLV mapping refers to an UID, while the XSD refers to anyURI type
+}
+
 
 void mapMetadataSchemeInformation(ebuCoreMainType& source, ebucoreMetadataSchemeInformation *dest) {
 	/*
@@ -1223,6 +1259,16 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 		alttitles.push_back(tp);
 	}
 	dest.alternativeTitle(alttitles);
+
+	coreMetadataType::publisher_sequence publ;
+	std::vector<ebucoreEntity*> source_publ = source->getpublisher();
+	for (std::vector<ebucoreEntity*>::iterator it = source_publ.begin(); it != source_publ.end(); it++) {
+		std::auto_ptr<entityType> p( new entityType() );
+		mapEntity(*it, *p);
+		publ.push_back(p);
+	}
+	dest.publisher(publ);
+
 }
 
 DMFramework* Process(std::string location, HeaderMetadata *destination) {
@@ -1341,6 +1387,11 @@ void ReadAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilenam
 		ebuCoreMainElement.schema(ebuCoreMainElement.schema_default_value());
 		//ebuCoreMainElement.version(ebuCoreMainElement.version_default_value());
 		ebuCoreMainElement.version("1.3");
+
+		std::auto_ptr<entityType> p( new entityType() );
+		ebucoreMetadataSchemeInformation *info = ebucore->getmetadataSchemeInformation();
+		mapEntity(info->getebucoreMetadataProvider(), *(p.get()));
+		ebuCoreMainElement.metadataProvider(p);
 
 		xml_schema::namespace_infomap map;
 		map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";

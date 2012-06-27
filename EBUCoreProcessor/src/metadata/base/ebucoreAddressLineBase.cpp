@@ -29,54 +29,44 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCOREENTITY_BASE_H__
-#define __MXFPP_EBUCOREENTITY_BASE_H__
-
-
-
-#include <libMXF++/metadata/InterchangeObject.h>
-
-
-namespace mxfpp
-{
-
-
-class ebucoreEntityBase : public InterchangeObject
-{
-public:
-    friend class MetadataSetFactory<ebucoreEntityBase>;
-    static const mxfKey setKey;
-
-public:
-    ebucoreEntityBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreEntityBase();
-
-
-   // getters
-
-   mxfUUID getentityId() const;
-   bool haveentityContact() const;
-   ebucoreContact* getentityContact() const;
-   bool haveentityOrganisation() const;
-   ebucoreOrganisation* getentityOrganisation() const;
-   bool haveentityRole() const;
-   ebucoreRole* getentityRole() const;
-
-
-   // setters
-
-   void setentityId(mxfUUID value);
-   void setentityContact(ebucoreContact* value);
-   void setentityOrganisation(ebucoreOrganisation* value);
-   void setentityRole(ebucoreRole* value);
-
-
-protected:
-    ebucoreEntityBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
-};
-
-
-};
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
+
+#include <memory>
+
+#include <libMXF++/MXF.h>
+#include <metadata/EBUCoreDMS++.h>
+
+
+using namespace std;
+using namespace mxfpp;
+
+
+const mxfKey ebucoreAddressLineBase::setKey = MXF_SET_K(ebucoreAddressLine);
+
+
+ebucoreAddressLineBase::ebucoreAddressLineBase(HeaderMetadata *headerMetadata)
+: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
+{
+    headerMetadata->add(this);
+}
+
+ebucoreAddressLineBase::ebucoreAddressLineBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: InterchangeObject(headerMetadata, cMetadataSet)
+{}
+
+ebucoreAddressLineBase::~ebucoreAddressLineBase()
+{}
+
+
+std::string ebucoreAddressLineBase::getaddressLine() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreAddressLine, addressLine));
+}
+
+void ebucoreAddressLineBase::setaddressLine(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreAddressLine, addressLine), value);
+}
+

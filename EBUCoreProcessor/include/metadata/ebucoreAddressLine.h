@@ -29,50 +29,32 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCOREENTITY_BASE_H__
-#define __MXFPP_EBUCOREENTITY_BASE_H__
+#ifndef __MXFPP_EBUCOREADDRESSLINE_H__
+#define __MXFPP_EBUCOREADDRESSLINE_H__
 
 
 
-#include <libMXF++/metadata/InterchangeObject.h>
+#include <metadata/base/ebucoreAddressLineBase.h>
 
 
 namespace mxfpp
 {
 
 
-class ebucoreEntityBase : public InterchangeObject
+class ebucoreAddressLine : public ebucoreAddressLineBase
 {
 public:
-    friend class MetadataSetFactory<ebucoreEntityBase>;
-    static const mxfKey setKey;
+    friend class MetadataSetFactory<ebucoreAddressLine>;
 
 public:
-    ebucoreEntityBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreEntityBase();
+    ebucoreAddressLine(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreAddressLine();
 
 
-   // getters
-
-   mxfUUID getentityId() const;
-   bool haveentityContact() const;
-   ebucoreContact* getentityContact() const;
-   bool haveentityOrganisation() const;
-   ebucoreOrganisation* getentityOrganisation() const;
-   bool haveentityRole() const;
-   ebucoreRole* getentityRole() const;
-
-
-   // setters
-
-   void setentityId(mxfUUID value);
-   void setentityContact(ebucoreContact* value);
-   void setentityOrganisation(ebucoreOrganisation* value);
-   void setentityRole(ebucoreRole* value);
 
 
 protected:
-    ebucoreEntityBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreAddressLine(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 
