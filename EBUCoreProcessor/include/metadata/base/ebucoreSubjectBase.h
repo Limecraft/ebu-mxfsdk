@@ -56,9 +56,12 @@ public:
 
    std::string getsubjectValue() const;
    std::string getsubjectLanguage() const;
+   bool havesubjectCode() const;
    std::string getsubjectCode() const;
+   bool havesubjectDefinition() const;
    std::string getsubjectDefinition() const;
    ebucoreTypeGroup* getsubjectTypeGroup() const;
+   bool havesubjectAttributorEntity() const;
    ebucoreEntity* getsubjectAttributorEntity() const;
 
 

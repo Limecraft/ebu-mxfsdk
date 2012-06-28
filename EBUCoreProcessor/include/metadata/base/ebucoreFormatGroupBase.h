@@ -54,12 +54,17 @@ public:
 
    // getters
 
+   bool haveformatGroupThesaurus() const;
    std::string getformatGroupThesaurus() const;
+   bool haveformatGroupLabel() const;
    std::string getformatGroupLabel() const;
+   bool haveformatGroupLink() const;
    std::string getformatGroupLink() const;
    bool haveformatGroupUL() const;
    mxfUL getformatGroupUL() const;
+   bool haveformatGroupDefinition() const;
    std::string getformatGroupDefinition() const;
+   bool haveformatGroupLanguage() const;
    std::string getformatGroupLanguage() const;
 
 

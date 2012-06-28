@@ -70,9 +70,19 @@ std::string ebucoreSubjectBase::getsubjectLanguage() const
     return getStringItem(&MXF_ITEM_K(ebucoreSubject, subjectLanguage));
 }
 
+bool ebucoreSubjectBase::havesubjectCode() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreSubject, subjectCode));
+}
+
 std::string ebucoreSubjectBase::getsubjectCode() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreSubject, subjectCode));
+}
+
+bool ebucoreSubjectBase::havesubjectDefinition() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreSubject, subjectDefinition));
 }
 
 std::string ebucoreSubjectBase::getsubjectDefinition() const
@@ -85,6 +95,11 @@ ebucoreTypeGroup* ebucoreSubjectBase::getsubjectTypeGroup() const
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreSubject, subjectTypeGroup)));
     MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+}
+
+bool ebucoreSubjectBase::havesubjectAttributorEntity() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreSubject, subjectAttributorEntity));
 }
 
 ebucoreEntity* ebucoreSubjectBase::getsubjectAttributorEntity() const

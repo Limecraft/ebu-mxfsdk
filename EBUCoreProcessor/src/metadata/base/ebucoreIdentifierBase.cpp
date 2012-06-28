@@ -79,6 +79,11 @@ ebucoreFormatGroup* ebucoreIdentifierBase::getidentifierFormatGroup() const
     return dynamic_cast<ebucoreFormatGroup*>(obj.release());
 }
 
+bool ebucoreIdentifierBase::haveidentifierAttributorEntity() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreIdentifier, identifierAttributorEntity));
+}
+
 ebucoreEntity* ebucoreIdentifierBase::getidentifierAttributorEntity() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreIdentifier, identifierAttributorEntity)));

@@ -55,19 +55,25 @@ public:
    // getters
 
    bool getfirstPublicationFlag() const;
-   std::string getpublicationDate() const;
-   std::string getpublicationTime() const;
+   bool havepublicationDate() const;
+   mxfTimestamp getpublicationDate() const;
+   bool havepublicationTime() const;
+   mxfTimestamp getpublicationTime() const;
+   bool havepublicationService() const;
    std::string getpublicationService() const;
+   bool havepublicationMedium() const;
    std::string getpublicationMedium() const;
+   bool havepublicationChannel() const;
    std::string getpublicationChannel() const;
+   bool havepublicationFormatIDRef() const;
    std::string getpublicationFormatIDRef() const;
 
 
    // setters
 
    void setfirstPublicationFlag(bool value);
-   void setpublicationDate(std::string value);
-   void setpublicationTime(std::string value);
+   void setpublicationDate(mxfTimestamp value);
+   void setpublicationTime(mxfTimestamp value);
    void setpublicationService(std::string value);
    void setpublicationMedium(std::string value);
    void setpublicationChannel(std::string value);

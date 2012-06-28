@@ -54,32 +54,42 @@ public:
 
    // getters
 
-   std::string getotherDate() const;
-   std::string getotherYear() const;
-   std::string getdateCreated() const;
+   bool haveotherDate() const;
+   mxfTimestamp getotherDate() const;
+   bool haveotherYear() const;
+   mxfTimestamp getotherYear() const;
+   bool havedateCreated() const;
+   mxfTimestamp getdateCreated() const;
    bool haveyearCreated() const;
-   std::string getyearCreated() const;
-   std::string getdateIssued() const;
-   std::string getyearIssued() const;
-   std::string getdateModified() const;
-   std::string getyearModified() const;
-   std::string getdateDigitized() const;
-   std::string getyearDigitized() const;
+   mxfTimestamp getyearCreated() const;
+   bool havedateIssued() const;
+   mxfTimestamp getdateIssued() const;
+   bool haveyearIssued() const;
+   mxfTimestamp getyearIssued() const;
+   bool havedateModified() const;
+   mxfTimestamp getdateModified() const;
+   bool haveyearModified() const;
+   mxfTimestamp getyearModified() const;
+   bool havedateDigitized() const;
+   mxfTimestamp getdateDigitized() const;
+   bool haveyearDigitized() const;
+   mxfTimestamp getyearDigitized() const;
+   bool havedateTypeGroup() const;
    ebucoreTypeGroup* getdateTypeGroup() const;
 
 
    // setters
 
-   void setotherDate(std::string value);
-   void setotherYear(std::string value);
-   void setdateCreated(std::string value);
-   void setyearCreated(std::string value);
-   void setdateIssued(std::string value);
-   void setyearIssued(std::string value);
-   void setdateModified(std::string value);
-   void setyearModified(std::string value);
-   void setdateDigitized(std::string value);
-   void setyearDigitized(std::string value);
+   void setotherDate(mxfTimestamp value);
+   void setotherYear(mxfTimestamp value);
+   void setdateCreated(mxfTimestamp value);
+   void setyearCreated(mxfTimestamp value);
+   void setdateIssued(mxfTimestamp value);
+   void setyearIssued(mxfTimestamp value);
+   void setdateModified(mxfTimestamp value);
+   void setyearModified(mxfTimestamp value);
+   void setdateDigitized(mxfTimestamp value);
+   void setyearDigitized(mxfTimestamp value);
    void setdateTypeGroup(ebucoreTypeGroup* value);
 
 

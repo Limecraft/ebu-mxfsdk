@@ -60,14 +60,29 @@ ebucoreFormatGroupBase::~ebucoreFormatGroupBase()
 {}
 
 
+bool ebucoreFormatGroupBase::haveformatGroupThesaurus() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreFormatGroup, formatGroupThesaurus));
+}
+
 std::string ebucoreFormatGroupBase::getformatGroupThesaurus() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreFormatGroup, formatGroupThesaurus));
 }
 
+bool ebucoreFormatGroupBase::haveformatGroupLabel() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreFormatGroup, formatGroupLabel));
+}
+
 std::string ebucoreFormatGroupBase::getformatGroupLabel() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreFormatGroup, formatGroupLabel));
+}
+
+bool ebucoreFormatGroupBase::haveformatGroupLink() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreFormatGroup, formatGroupLink));
 }
 
 std::string ebucoreFormatGroupBase::getformatGroupLink() const
@@ -85,9 +100,19 @@ mxfUL ebucoreFormatGroupBase::getformatGroupUL() const
     return getULItem(&MXF_ITEM_K(ebucoreFormatGroup, formatGroupUL));
 }
 
+bool ebucoreFormatGroupBase::haveformatGroupDefinition() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreFormatGroup, formatGroupDefinition));
+}
+
 std::string ebucoreFormatGroupBase::getformatGroupDefinition() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreFormatGroup, formatGroupDefinition));
+}
+
+bool ebucoreFormatGroupBase::haveformatGroupLanguage() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreFormatGroup, formatGroupLanguage));
 }
 
 std::string ebucoreFormatGroupBase::getformatGroupLanguage() const

@@ -121,7 +121,16 @@ using namespace mxfpp;
 	if (source->havestatusGroupLink()) {	\
 		dest.statusLink().set( std::auto_ptr<linkType> ( new linkType( source->getstatusGroupLink() ) ));	\
 	}
-
+#define RMAP_FORMAT_GROUP(source, dest, definitionType, labelType, linkType)	\
+	if (source->haveformatGroupDefinition()) {	\
+		dest.formatDefinition().set(std::auto_ptr<definitionType>( new definitionType( source->getformatGroupDefinition() ) ));	\
+	}	\
+	if (source->haveformatGroupLabel()) {	\
+		dest.formatLabel().set(std::auto_ptr<labelType>( new labelType( source->getformatGroupLabel() ) ));	\
+	}	\
+	if (source->haveformatGroupLink()) {	\
+		dest.formatLink().set( std::auto_ptr<linkType> ( new linkType( source->getformatGroupLink() ) ));	\
+	}
 
 void mapRole(role& source, ebucoreRole *dest) {
 	ebucoreTypeGroup *obj = new ebucoreTypeGroup(dest->getHeaderMetadata());
@@ -513,8 +522,22 @@ mxfTimestamp convert_timestamp(xml_schema::date& source) {
 	return ts;
 }
 
-xml_schema::date* convert_timestamp(mxfTimestamp source) {
+mxfTimestamp convert_timestamp(xml_schema::gyear& source) {
+	mxfTimestamp ts = {0,0,0,0,0,0,0};
+	ts.year = source.year();
+	return ts;
+}
+
+xml_schema::date* convert_timestamp_date(mxfTimestamp source) {
 	return new xml_schema::date(source.year, source.month, source.day);
+}
+
+xml_schema::time* convert_timestamp_time(mxfTimestamp source) {
+	return new xml_schema::time(source.hour, source.min, source.sec);
+}
+
+xml_schema::gyear* convert_timestamp_year(mxfTimestamp source) {
+	return new xml_schema::gyear(source.year);
 }
 
 std::string convert(xml_schema::gyear& source) {
@@ -533,6 +556,14 @@ std::string convert(xml_schema::time& source) {
 	std::stringstream ss;
 	ss << source.hours() << ':' << source.minutes() << ':' << source.seconds();
 	return ss.str();
+}
+
+mxfTimestamp convert_timestamp(xml_schema::time& source) {
+	mxfTimestamp ts = {0,0,0,0,0,0,0};
+	ts.hour = source.hours();
+	ts.min = source.minutes();
+	ts.sec = source.seconds();
+	return ts;
 }
 
 std::string convert(xml_schema::idrefs& source) {
@@ -566,7 +597,7 @@ void mapTitle(ebucoreTitle *source, titleType& dest) {
 	dest.title() = source->gettitleValue();
 	dest.title().lang() = source->gettitleLanguage();
 	if (source->havetitleAttributionDate()) {
-		std::auto_ptr<ebuCoreMainType::dateLastModified_type> dp( convert_timestamp(source->gettitleAttributionDate()));
+		std::auto_ptr<ebuCoreMainType::dateLastModified_type> dp( convert_timestamp_date(source->gettitleAttributionDate()));
 		dest.attributiondate().set(dp);
 	}
 }
@@ -637,6 +668,36 @@ void mapIdentifier(identifierType& source, ebucoreIdentifier *dest) {
 	}
 }
 
+
+void mapIdentifier(ebucoreIdentifier *source, identifierType& dest) {
+	/*
+		<sequence>
+			<element ref="dc:identifier">
+			</element>
+			<element name="attributor" type="ebucore:entityType" minOccurs="0">
+			</element>
+		</sequence>
+		<attributeGroup ref="ebucore:typeGroup">
+		</attributeGroup>
+		<attributeGroup ref="ebucore:formatGroup">
+		</attributeGroup>
+		<attribute name="note" type="string">
+		</attribute>
+	*/
+
+	std::auto_ptr<dc::elementType> dcp( new dc::elementType( source->getidentifierValue() ) );
+	dest.identifier(dcp);
+
+	RMAP_FORMAT_GROUP(source->getidentifierFormatGroup(), dest, identifierType::formatDefinition_type, identifierType::formatLabel_type, identifierType::formatLink_type)
+	RMAP_TYPE_GROUP(source->getidentifierTypeGroup(), dest, identifierType::typeDefinition_type, identifierType::typeLabel_type, identifierType::typeLink_type)
+
+	if (source->haveidentifierAttributorEntity()) {
+		std::auto_ptr<entityType> tp( new entityType() );
+		mapEntity(source->getidentifierAttributorEntity(), *tp);
+		dest.attributor(tp);
+	}
+}
+
 void mapDescription(descriptionType& source, ebucoreDescription *dest) {
 	/*
 		<sequence>
@@ -652,6 +713,12 @@ void mapDescription(descriptionType& source, ebucoreDescription *dest) {
 	SIMPLE_MAP_NO_GET(source, description, dest, setdescriptionValue)
 	SIMPLE_MAP_NO_GET(source, description().lang, dest, setdescriptionLanguage)
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setdescriptionTypeGroup)
+}
+
+void mapDescription(ebucoreDescription *source, descriptionType& dest) {
+	dest.description() = source->getdescriptionValue();
+	dest.description().lang() = source->getdescriptionLanguage();
+	RMAP_TYPE_GROUP(source->getdescriptionTypeGroup(), dest, descriptionType::typeDefinition_type, descriptionType::typeLabel_type, descriptionType::typeLink_type)
 }
 
 void mapSubject(subjectType& source, ebucoreSubject *dest) {
@@ -688,6 +755,30 @@ void mapSubject(subjectType& source, ebucoreSubject *dest) {
 	}
 }
 
+void mapSubject(ebucoreSubject *source, subjectType& dest) {
+	// [TODO] KLV Subject defines batch multiple attributors, XSD (0..1), used a single one in dictionary
+
+	dest.subject() = source->getsubjectValue();
+	dest.subject().lang() = source->getsubjectLanguage();
+
+	if (source->havesubjectCode()) {
+		dest.subjectCode(source->getsubjectCode());
+	}
+
+	if (source->havesubjectDefinition()) {
+		dest.subjectDefinition(source->getsubjectDefinition());
+	}
+
+	RMAP_TYPE_GROUP(source->getsubjectTypeGroup(), dest, subjectType::typeDefinition_type, subjectType::typeLabel_type, subjectType::typeLink_type)
+
+	if (source->havesubjectAttributorEntity()) {
+		std::auto_ptr<entityType> tp( new entityType() );
+		mapEntity(source->getsubjectAttributorEntity(), *tp);
+		dest.attributor(tp);
+	}
+
+}
+
 void mapRating(ratingType& source, ebucoreRating *dest) {
 	/*
 		<sequence>
@@ -709,6 +800,19 @@ void mapRating(ratingType& source, ebucoreRating *dest) {
 
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setratingTypeGroup)
 	MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, setratingFormatGroup)
+}
+
+void mapRating(ebucoreRating *source, ratingType& dest) {
+	dest.ratingValue() = source->getratingValue();
+	dest.ratingScaleMinValue() = source->getratingScaleMinValue();
+	dest.ratingScaleMaxValue() = source->getratingScaleMaxValue();
+
+	std::auto_ptr<entityType> tp( new entityType() );
+	mapEntity(source->getratingProviderEntity(), *tp);
+	dest.ratingProvider(tp);
+
+	RMAP_TYPE_GROUP(source->getratingTypeGroup(), dest, ratingType::typeDefinition_type, ratingType::typeLabel_type, ratingType::typeLink_type)
+	RMAP_FORMAT_GROUP(source->getratingFormatGroup(), dest, ratingType::formatDefinition_type, ratingType::formatLabel_type, ratingType::formatLink_type)
 }
 
 void mapVersion(coreMetadataType::version_type& source, ebucoreVersion *dest) {
@@ -736,12 +840,23 @@ void mapLanguage(languageType& source, ebucoreLanguage *dest) {
 		<attribute name="note" type="string">
 		</attribute>
 	*/
+
+	// TODO: KLV Language has an indirection for languagepurpose via a languagepurposeset which contains
+	// only a reference to the typegroup, required?
 	SIMPLE_MAP_OPTIONAL(source, language, dest, setlanguageName)
 	dest->setlanguageCode(source.language().get().lang());
 	
 	ebucoreLanguagePurpose *obj = new ebucoreLanguagePurpose(dest->getHeaderMetadata());
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, obj, setlanguagePurposeTypeGroup)
 	dest->setlanguagePurposeSet(obj);
+}
+
+void mapLanguage(ebucoreLanguage *source, languageType& dest) {
+	dest.language() = source->getlanguageName();
+	dest.language().get().lang() = source->getlanguageCode();
+
+	RMAP_TYPE_GROUP( source->getlanguagePurposeSet()->getlanguagePurposeTypeGroup(), 
+		dest, languageType::typeDefinition_type, languageType::typeLabel_type, languageType::typeLink_type)
 }
 
 void mapType(typeType& source, ebucoreType *dest) {
@@ -798,6 +913,32 @@ void mapType(typeType& source, ebucoreType *dest) {
 	dest->setgenre(v2);
 }
 
+void mapType(ebucoreType *source, typeType& dest) {
+	if (source->haveobjectType()) {
+		std::auto_ptr<objectType> p( new objectType() );
+		RMAP_TYPE_GROUP(source->getobjectType()->getobjectTypeGroup(), (*p), objectType::typeDefinition_type, objectType::typeLabel_type, objectType::typeLink_type)
+		dest.objectType().push_back(p);
+	}
+
+	typeType::targetAudience_sequence tauds;
+	std::vector<ebucoreTargetAudience*> source_tauds = source->gettargetAudience();
+	for (std::vector<ebucoreTargetAudience*>::iterator it = source_tauds.begin(); it != source_tauds.end(); it++) {
+		std::auto_ptr<targetAudience> p( new targetAudience() );
+		RMAP_TYPE_GROUP((*it)->gettargetAudienceKindGroup(), (*p), targetAudience::typeDefinition_type, targetAudience::typeLabel_type, targetAudience::typeLink_type)
+		tauds.push_back(p);
+	}
+	dest.targetAudience(tauds);
+
+	typeType::genre_sequence gens;
+	std::vector<ebucoreGenre*> source_gens = source->getgenre();
+	for (std::vector<ebucoreGenre*>::iterator it = source_gens.begin(); it != source_gens.end(); it++) {
+		std::auto_ptr<genre> p( new genre() );
+		RMAP_TYPE_GROUP((*it)->getgenreKindGroup(), (*p), genre::typeDefinition_type, genre::typeLabel_type, genre::typeLink_type)
+		gens.push_back(p);
+	}
+	dest.genre(gens);
+}
+
 void mapDate(dateType& source, std::vector<ebucoreDate*>& dest, mxfpp::HeaderMetadata *header_metadata) {
 	/*
 		<sequence>
@@ -838,33 +979,85 @@ void mapDate(dateType& source, std::vector<ebucoreDate*>& dest, mxfpp::HeaderMet
 	ebucoreDate *obj = new ebucoreDate(header_metadata);
 	if (source.created().present()) {
 		dateType::created_type& date = source.created().get();
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setyearCreated, convert)
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setdateCreated, convert)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setyearCreated, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setdateCreated, convert_timestamp)
 	}
 	if (source.issued().present()) {
 		dateType::issued_type& date = source.issued().get();
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setyearIssued, convert)
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setdateIssued, convert)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setyearIssued, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setdateIssued, convert_timestamp)
 	}
 	if (source.modified().present()) {
 		dateType::modified_type& date = source.modified().get();
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setyearModified, convert)
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setdateModified, convert)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setyearModified, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setdateModified, convert_timestamp)
 	}
 	if (source.digitised().present()) {
 		dateType::digitised_type& date = source.digitised().get();
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setyearDigitized, convert)
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setdateDigitized, convert)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setyearDigitized, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setdateDigitized, convert_timestamp)
 	}
 	dest.push_back(obj);
 
 	for (dateType::alternative_iterator it = source.alternative().begin(); it != source.alternative().end(); it++) {
 		ebucoreDate *obj = new ebucoreDate(header_metadata);
 		dateType::alternative_type& date = (*it);
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setotherYear, convert)
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setotherDate, convert)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setotherYear, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setotherDate, convert_timestamp)
 		MAP_NEW_TYPE_GROUP_AND_ASSIGN(date, obj, setdateTypeGroup)
 		dest.push_back(obj);
+	}
+}
+
+void mapDate(ebucoreDate* source, dateType& dest) {
+	// Reserve mapping operation of date:
+	// Map each of the regular dates to their counterpart in XSD,
+	if (source->haveotherDate() || source->haveotherYear()) {
+		dateType::alternative_sequence alts;
+		std::auto_ptr<dateType::alternative_type> p ( new dateType::alternative_type() );
+		if (source->haveotherDate())
+			p->startDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(source->getotherDate()) ) );
+		if (source->haveotherYear())
+			p->startYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(source->getotherYear()) ) );
+		RMAP_TYPE_GROUP( source->getdateTypeGroup(), (*p), dateType::alternative_type::typeDefinition_type, dateType::alternative_type::typeLabel_type, dateType::alternative_type::typeLink_type)
+		dest.alternative(alts);
+	}
+
+	if (source->havedateCreated() || source->haveyearCreated()) {
+		std::auto_ptr<dateType::created_type> p ( new dateType::created_type() );
+		if (source->havedateCreated()) {
+			p->startDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(source->getdateCreated()) ) );
+		if (source->haveyearCreated())
+			p->startYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(source->getyearCreated()) ) );		
+		}
+		dest.created(p);
+	}
+	if (source->havedateIssued() || source->haveyearIssued()) {
+		std::auto_ptr<dateType::issued_type> p ( new dateType::issued_type() );
+		if (source->havedateIssued()) {
+			p->startDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(source->getdateIssued()) ) );
+		if (source->haveyearIssued())
+			p->startYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(source->getyearIssued()) ) );		
+		}
+		dest.issued(p);
+	}
+	if (source->havedateModified() || source->haveyearModified()) {
+		std::auto_ptr<dateType::modified_type> p ( new dateType::modified_type() );
+		if (source->havedateModified()) {
+			p->startDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(source->getdateModified()) ) );
+		if (source->haveyearModified())
+			p->startYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(source->getyearModified()) ) );		
+		}
+		dest.modified(p);
+	}
+	if (source->havedateDigitized() || source->haveyearDigitized()) {
+		std::auto_ptr<dateType::digitised_type> p ( new dateType::digitised_type() );
+		if (source->havedateDigitized()) {
+			p->startDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(source->getdateDigitized()) ) );
+		if (source->haveyearDigitized())
+			p->startYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(source->getyearDigitized()) ) );		
+		}
+		dest.digitised(p);
 	}
 }
 
@@ -1092,8 +1285,8 @@ void mapPublicationHistory(publicationHistoryType& source, std::vector<ebucorePu
 	if (source.firstPublicationDate().present() || source.firstPublicationTime().present() || source.firstPublicationChannel().present()) {
 		// have a first publication event
 		ebucorePublicationHistoryEvent *obj = new ebucorePublicationHistoryEvent(header_metadata);
-		SIMPLE_MAP_OPTIONAL_CONVERT(source, firstPublicationDate, obj, setpublicationDate, convert)
-		SIMPLE_MAP_OPTIONAL_CONVERT(source, firstPublicationTime, obj, setpublicationTime, convert)
+		SIMPLE_MAP_OPTIONAL_CONVERT(source, firstPublicationDate, obj, setpublicationDate, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(source, firstPublicationTime, obj, setpublicationTime, convert_timestamp)
 		SIMPLE_MAP_OPTIONAL(source, firstPublicationChannel, obj, setpublicationChannel)
 		obj->setfirstPublicationFlag(true);
 		if (source.firstPublicationChannel().present() && source.firstPublicationChannel().get().formatIdRef().present()) {
@@ -1148,9 +1341,9 @@ void mapPublicationHistory(publicationHistoryType& source, std::vector<ebucorePu
 			obj = new ebucorePublicationHistoryEvent(header_metadata);
 		}
 		if (date) {
-			obj->setpublicationDate(convert(*date));
+			obj->setpublicationDate(convert_timestamp(*date));
 		} else if (time) {
-			obj->setpublicationTime(convert(*time));
+			obj->setpublicationTime(convert_timestamp(*time));
 		} else {
 			obj->setpublicationChannel(*channel);
 			if (channel->formatIdRef().present()) {
@@ -1161,6 +1354,39 @@ void mapPublicationHistory(publicationHistoryType& source, std::vector<ebucorePu
 	// push the last object into the destination list (if the object is valid)
 	if (obj)
 		dest.push_back(obj);
+}
+
+void mapPublicationHistory(std::vector<ebucorePublicationHistoryEvent*>& source, publicationHistoryType& dest) {
+	for (std::vector<ebucorePublicationHistoryEvent*>::iterator it = source.begin(); it != source.end(); it++) {
+		ebucorePublicationHistoryEvent *event = *it;
+		if (event->getfirstPublicationFlag()) {
+			if (event->havepublicationDate()) {
+				dest.firstPublicationDate( std::auto_ptr<publicationHistoryType::firstPublicationDate_type>( convert_timestamp_date(event->getpublicationDate()) ));
+			}
+			if (event->havepublicationTime()) {
+				dest.firstPublicationTime( std::auto_ptr<publicationHistoryType::firstPublicationTime_type>( convert_timestamp_time(event->getpublicationTime()) ));
+			}
+			if (event->havepublicationChannel()) {
+				dest.firstPublicationChannel() = event->getpublicationChannel();
+				if (event->havepublicationFormatIDRef())
+					dest.firstPublicationChannel().get().formatIdRef() = event->getpublicationFormatIDRef();
+			}
+		} else {
+			if (event->havepublicationDate()) {
+				dest.repeatDate().push_back( std::auto_ptr<publicationHistoryType::repeatDate_type>( convert_timestamp_date(event->getpublicationDate())) );
+			}
+			if (event->havepublicationTime()) {
+				dest.repeatTime().push_back( std::auto_ptr<publicationHistoryType::repeatTime_type>( convert_timestamp_time(event->getpublicationTime())) );
+			}
+			if (event->havepublicationChannel()) {
+				std::auto_ptr<repeatChannel> p (new repeatChannel());
+				(*p) = event->getpublicationChannel();
+				if (event->havepublicationFormatIDRef())
+					p->formatIdRef() = event->getpublicationFormatIDRef();
+				dest.repeatChannel().push_back(p);
+			}
+		}
+	}
 }
 
 void mapCustomRelation(relationType& source, ebucoreCustomRelation *dest) {
@@ -1260,6 +1486,16 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 	}
 	dest.alternativeTitle(alttitles);
 
+	coreMetadataType::description_sequence descs;
+	std::vector<ebucoreDescription*> source_descs = source->getdescription();
+	for (std::vector<ebucoreDescription*>::iterator it = source_descs.begin(); it != source_descs.end(); it++) {
+		std::auto_ptr<dc::elementType> dcp( new dc::elementType() );
+		std::auto_ptr<descriptionType> tp( new descriptionType(dcp) );
+		mapDescription(*it, *tp);
+		descs.push_back(tp);
+	}
+	dest.description(descs);
+
 	coreMetadataType::publisher_sequence publ;
 	std::vector<ebucoreEntity*> source_publ = source->getpublisher();
 	for (std::vector<ebucoreEntity*>::iterator it = source_publ.begin(); it != source_publ.end(); it++) {
@@ -1269,6 +1505,59 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 	}
 	dest.publisher(publ);
 
+	coreMetadataType::identifier_sequence idents;
+	std::vector<ebucoreIdentifier*> source_ident = source->getidentifier();
+	for (std::vector<ebucoreIdentifier*>::iterator it = source_ident.begin(); it != source_ident.end(); it++) {
+		std::auto_ptr<dc::elementType> dcp( new dc::elementType() );
+		std::auto_ptr<identifierType> p( new identifierType( dcp ) );
+		mapIdentifier(*it, *p);
+		idents.push_back(p);
+	}
+	dest.identifier(idents);
+
+	coreMetadataType::subject_sequence subjs;
+	std::vector<ebucoreSubject*> source_subj = source->getsubject();
+	for (std::vector<ebucoreSubject*>::iterator it = source_subj.begin(); it != source_subj.end(); it++) {
+		std::auto_ptr<dc::elementType> dcp( new dc::elementType() );
+		std::auto_ptr<subjectType> p( new subjectType(dcp) );
+		mapSubject(*it, *p);
+		subjs.push_back(p);
+	}
+	dest.subject(subjs);
+
+	coreMetadataType::type_sequence types;
+	std::vector<ebucoreType*> source_types = source->gettype();
+	for (std::vector<ebucoreType*>::iterator it = source_types.begin(); it != source_types.end(); it++) {
+		std::auto_ptr<typeType> p( new typeType() );
+		mapType(*it, *p);
+		types.push_back(p);
+	}
+	dest.type(types);
+
+	std::vector<ebucorePublicationHistoryEvent*> source_events = source->getpublicationHistoryEvent();
+	if (source_events.size() > 0) {
+		std::auto_ptr<publicationHistoryType> p( new publicationHistoryType() );
+		mapPublicationHistory(source_events, *p);
+		dest.publicationHistory(p);
+	}
+
+	coreMetadataType::date_sequence dates;
+	std::vector<ebucoreDate*> source_dates = source->getdate();
+	for (std::vector<ebucoreDate*>::iterator it = source_dates.begin(); it != source_dates.end(); it++) {
+		std::auto_ptr<dateType> p( new dateType() );
+		mapDate(*it, *p);
+		dates.push_back(p);
+	}
+	dest.date(dates);
+
+	coreMetadataType::language_sequence langs;
+	std::vector<ebucoreLanguage*> source_langs = source->getlanguage();
+	for (std::vector<ebucoreLanguage*>::iterator it = source_langs.begin(); it != source_langs.end(); it++) {
+		std::auto_ptr<languageType> p( new languageType() );
+		mapLanguage(*it, *p);
+		langs.push_back(p);
+	}
+	dest.language(langs);
 }
 
 DMFramework* Process(std::string location, HeaderMetadata *destination) {
