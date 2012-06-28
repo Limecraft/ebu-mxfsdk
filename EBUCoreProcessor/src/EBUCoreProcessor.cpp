@@ -1097,12 +1097,12 @@ void mapTemporal(temporal& source, ebucoreTemporal *dest) {
 		}
 		if (source.PeriodOfTime().present()) {
 			PeriodOfTime &pot = source.PeriodOfTime().get();
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, startYear, obj, setperiodStartYear, convert)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, startDate, obj, setperiodStartDate, convert)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, startTime, obj, setperiodStartTime, convert)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, endYear, obj, setperiodEndYear, convert)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, endDate, obj, setperiodEndDate, convert)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, endTime, obj, setperiodEndTime, convert)
+			SIMPLE_MAP_OPTIONAL_CONVERT(pot, startYear, obj, setperiodStartYear, convert_timestamp)
+			SIMPLE_MAP_OPTIONAL_CONVERT(pot, startDate, obj, setperiodStartDate, convert_timestamp)
+			SIMPLE_MAP_OPTIONAL_CONVERT(pot, startTime, obj, setperiodStartTime, convert_timestamp)
+			SIMPLE_MAP_OPTIONAL_CONVERT(pot, endYear, obj, setperiodEndYear, convert_timestamp)
+			SIMPLE_MAP_OPTIONAL_CONVERT(pot, endDate, obj, setperiodEndDate, convert_timestamp)
+			SIMPLE_MAP_OPTIONAL_CONVERT(pot, endTime, obj, setperiodEndTime, convert_timestamp)
 			SIMPLE_MAP_OPTIONAL(pot, period, obj, setperiodName)
 
 			MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, obj, setperiodKindGroup)
@@ -1111,6 +1111,35 @@ void mapTemporal(temporal& source, ebucoreTemporal *dest) {
 		std::vector<ebucorePeriodOfTime*> v;
 		v.push_back(obj);
 		dest->setperiodOfTime(v);
+	}
+}
+
+void mapTemporal(ebucoreTemporal *source, temporal& dest) {
+	// if there is more that a single period of time, we only use the first one
+	std::vector<ebucorePeriodOfTime*> pots = source->getperiodOfTime();
+	if (pots.size() > 0) {
+		// pick the first to work with
+		ebucorePeriodOfTime *pot = pots[0];
+		std::auto_ptr<PeriodOfTime> p(new PeriodOfTime());
+
+		if (pot->haveperiodId())
+			dest.periodId() = pot->getperiodId();
+		if (pot->haveperiodName())
+			p->period() = pot->getperiodName();
+		if (pot->haveperiodStartYear())
+			p->startYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(pot->getperiodStartYear()) ) );
+		if (pot->haveperiodStartDate())
+			p->startDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(pot->getperiodStartDate()) ) );
+		if (pot->haveperiodStartTime())
+			p->startTime( std::auto_ptr<xml_schema::time>( convert_timestamp_time(pot->getperiodStartTime()) ) );
+		if (pot->haveperiodEndYear())
+			p->endYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(pot->getperiodEndYear()) ) );
+		if (pot->haveperiodEndDate())
+			p->endDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(pot->getperiodEndDate()) ) );
+		if (pot->haveperiodEndTime())
+			p->endTime( std::auto_ptr<xml_schema::time>( convert_timestamp_time(pot->getperiodEndTime()) ) );
+
+		RMAP_TYPE_GROUP(pot->getperiodKindGroup(), dest, temporal::typeDefinition_type, temporal::typeLabel_type, temporal::typeLink_type)		
 	}
 }
 
@@ -1164,6 +1193,24 @@ void mapSpatial(spatial& source, ebucoreSpatial *dest) {
 	}
 }
 
+void mapSpatial(ebucoreSpatial *source, spatial& dest) {
+	std::vector<ebucoreLocation*> locs = source->getlocation();
+	for (std::vector<ebucoreLocation*>::iterator it = locs.begin(); it != locs.end(); it++) {
+		std::auto_ptr<location> p( new location() );
+		ebucoreLocation* loc = *it;
+		
+		if (loc->havelocationId())
+			p->locationId() = loc->getlocationId();
+		if (loc->havelocationName())
+			p->name() = loc->getlocationName();
+		if (loc->havelocationCode())
+			p->code() = loc->getlocationCode();
+		RMAP_TYPE_GROUP(loc->getlocationKindGroup(), (*p), location::typeDefinition_type, location::typeLabel_type, location::typeLink_type)
+
+		dest.location().push_back(p);
+	}
+}
+
 void mapMetadataCoverage(coverageType& source, ebucoreCoverage *dest) {
 	/*
 		<sequence>
@@ -1179,6 +1226,21 @@ void mapMetadataCoverage(coverageType& source, ebucoreCoverage *dest) {
 	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, temporal, ebucoreTemporal, mapTemporal, dest, settemporal)
 	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, spatial, ebucoreSpatial, mapSpatial, dest, setspatial)
 
+}
+
+void mapMetadataCoverage(ebucoreCoverage *source, coverageType& dest) {
+	if (source->havespatial() && source->getspatial().size() > 0) {
+		std::auto_ptr<spatial> lp( new spatial() );
+		ebucoreSpatial *s = source->getspatial()[0];
+		mapSpatial(s, *lp);
+		dest.spatial(lp);
+	}
+	if (source->havetemporal() && source->gettemporal().size() > 0) {
+		std::auto_ptr<temporal> tp( new temporal() );
+		ebucoreTemporal *s = source->gettemporal()[0];
+		mapTemporal(s, *tp);
+		dest.temporal(tp);
+	}
 }
 
 void mapRights(rightsType& source, ebucoreRights *dest) {
@@ -1558,6 +1620,15 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 		langs.push_back(p);
 	}
 	dest.language(langs);
+
+	coreMetadataType::coverage_sequence covers;
+	std::vector<ebucoreCoverage*> source_covers = source->getcoverage();
+	for (std::vector<ebucoreCoverage*>::iterator it = source_covers.begin(); it != source_covers.end(); it++) {
+		std::auto_ptr<coverageType> p( new coverageType() );
+		mapMetadataCoverage(*it, *p);
+		covers.push_back(p);
+	}
+	dest.coverage(covers);
 }
 
 DMFramework* Process(std::string location, HeaderMetadata *destination) {

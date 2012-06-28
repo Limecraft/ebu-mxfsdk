@@ -59,18 +59,17 @@ public:
    bool haveperiodName() const;
    std::string getperiodName() const;
    bool haveperiodStartYear() const;
-   std::string getperiodStartYear() const;
+   mxfTimestamp getperiodStartYear() const;
    bool haveperiodStartDate() const;
-   std::string getperiodStartDate() const;
+   mxfTimestamp getperiodStartDate() const;
    bool haveperiodStartTime() const;
-   std::string getperiodStartTime() const;
+   mxfTimestamp getperiodStartTime() const;
    bool haveperiodEndYear() const;
-   std::string getperiodEndYear() const;
+   mxfTimestamp getperiodEndYear() const;
    bool haveperiodEndDate() const;
-   std::string getperiodEndDate() const;
+   mxfTimestamp getperiodEndDate() const;
    bool haveperiodEndTime() const;
-   std::string getperiodEndTime() const;
-   bool haveperiodKindGroup() const;
+   mxfTimestamp getperiodEndTime() const;
    ebucoreTypeGroup* getperiodKindGroup() const;
 
 
@@ -78,12 +77,12 @@ public:
 
    void setperiodId(std::string value);
    void setperiodName(std::string value);
-   void setperiodStartYear(std::string value);
-   void setperiodStartDate(std::string value);
-   void setperiodStartTime(std::string value);
-   void setperiodEndYear(std::string value);
-   void setperiodEndDate(std::string value);
-   void setperiodEndTime(std::string value);
+   void setperiodStartYear(mxfTimestamp value);
+   void setperiodStartDate(mxfTimestamp value);
+   void setperiodStartTime(mxfTimestamp value);
+   void setperiodEndYear(mxfTimestamp value);
+   void setperiodEndDate(mxfTimestamp value);
+   void setperiodEndTime(mxfTimestamp value);
    void setperiodKindGroup(ebucoreTypeGroup* value);
 
 

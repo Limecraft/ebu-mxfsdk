@@ -85,9 +85,9 @@ bool ebucorePeriodOfTimeBase::haveperiodStartYear() const
     return haveItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartYear));
 }
 
-std::string ebucorePeriodOfTimeBase::getperiodStartYear() const
+mxfTimestamp ebucorePeriodOfTimeBase::getperiodStartYear() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartYear));
+    return getTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartYear));
 }
 
 bool ebucorePeriodOfTimeBase::haveperiodStartDate() const
@@ -95,9 +95,9 @@ bool ebucorePeriodOfTimeBase::haveperiodStartDate() const
     return haveItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartDate));
 }
 
-std::string ebucorePeriodOfTimeBase::getperiodStartDate() const
+mxfTimestamp ebucorePeriodOfTimeBase::getperiodStartDate() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartDate));
+    return getTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartDate));
 }
 
 bool ebucorePeriodOfTimeBase::haveperiodStartTime() const
@@ -105,9 +105,9 @@ bool ebucorePeriodOfTimeBase::haveperiodStartTime() const
     return haveItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartTime));
 }
 
-std::string ebucorePeriodOfTimeBase::getperiodStartTime() const
+mxfTimestamp ebucorePeriodOfTimeBase::getperiodStartTime() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartTime));
+    return getTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartTime));
 }
 
 bool ebucorePeriodOfTimeBase::haveperiodEndYear() const
@@ -115,9 +115,9 @@ bool ebucorePeriodOfTimeBase::haveperiodEndYear() const
     return haveItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndYear));
 }
 
-std::string ebucorePeriodOfTimeBase::getperiodEndYear() const
+mxfTimestamp ebucorePeriodOfTimeBase::getperiodEndYear() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndYear));
+    return getTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndYear));
 }
 
 bool ebucorePeriodOfTimeBase::haveperiodEndDate() const
@@ -125,9 +125,9 @@ bool ebucorePeriodOfTimeBase::haveperiodEndDate() const
     return haveItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndDate));
 }
 
-std::string ebucorePeriodOfTimeBase::getperiodEndDate() const
+mxfTimestamp ebucorePeriodOfTimeBase::getperiodEndDate() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndDate));
+    return getTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndDate));
 }
 
 bool ebucorePeriodOfTimeBase::haveperiodEndTime() const
@@ -135,14 +135,9 @@ bool ebucorePeriodOfTimeBase::haveperiodEndTime() const
     return haveItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndTime));
 }
 
-std::string ebucorePeriodOfTimeBase::getperiodEndTime() const
+mxfTimestamp ebucorePeriodOfTimeBase::getperiodEndTime() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndTime));
-}
-
-bool ebucorePeriodOfTimeBase::haveperiodKindGroup() const
-{
-    return haveItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodKindGroup));
+    return getTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndTime));
 }
 
 ebucoreTypeGroup* ebucorePeriodOfTimeBase::getperiodKindGroup() const
@@ -162,34 +157,34 @@ void ebucorePeriodOfTimeBase::setperiodName(std::string value)
     setStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodName), value);
 }
 
-void ebucorePeriodOfTimeBase::setperiodStartYear(std::string value)
+void ebucorePeriodOfTimeBase::setperiodStartYear(mxfTimestamp value)
 {
-    setStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartYear), value);
+    setTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartYear), value);
 }
 
-void ebucorePeriodOfTimeBase::setperiodStartDate(std::string value)
+void ebucorePeriodOfTimeBase::setperiodStartDate(mxfTimestamp value)
 {
-    setStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartDate), value);
+    setTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartDate), value);
 }
 
-void ebucorePeriodOfTimeBase::setperiodStartTime(std::string value)
+void ebucorePeriodOfTimeBase::setperiodStartTime(mxfTimestamp value)
 {
-    setStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartTime), value);
+    setTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartTime), value);
 }
 
-void ebucorePeriodOfTimeBase::setperiodEndYear(std::string value)
+void ebucorePeriodOfTimeBase::setperiodEndYear(mxfTimestamp value)
 {
-    setStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndYear), value);
+    setTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndYear), value);
 }
 
-void ebucorePeriodOfTimeBase::setperiodEndDate(std::string value)
+void ebucorePeriodOfTimeBase::setperiodEndDate(mxfTimestamp value)
 {
-    setStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndDate), value);
+    setTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndDate), value);
 }
 
-void ebucorePeriodOfTimeBase::setperiodEndTime(std::string value)
+void ebucorePeriodOfTimeBase::setperiodEndTime(mxfTimestamp value)
 {
-    setStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndTime), value);
+    setTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndTime), value);
 }
 
 void ebucorePeriodOfTimeBase::setperiodKindGroup(ebucoreTypeGroup* value)
