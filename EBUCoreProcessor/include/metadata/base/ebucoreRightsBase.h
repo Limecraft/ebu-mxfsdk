@@ -54,16 +54,27 @@ public:
 
    // getters
 
+   bool haverightsId() const;
    std::string getrightsId() const;
+   bool haverightsValue() const;
    std::string getrightsValue() const;
+   bool haverightsLanguage() const;
    std::string getrightsLanguage() const;
+   bool haverightsLink() const;
    std::string getrightsLink() const;
+   bool haverightsClearanceFlag() const;
    bool getrightsClearanceFlag() const;
+   bool haverightsAttributedID() const;
    std::string getrightsAttributedID() const;
+   bool haverightsFormatIDRef() const;
    std::string getrightsFormatIDRef() const;
+   bool haveexploitationIssues() const;
    std::string getexploitationIssues() const;
+   bool haverightsCoverage() const;
    std::vector<ebucoreCoverage*> getrightsCoverage() const;
+   bool haverightsHolderEntity() const;
    std::vector<ebucoreEntity*> getrightsHolderEntity() const;
+   bool haverightsContacts() const;
    std::vector<ebucoreContact*> getrightsContacts() const;
    ebucoreTypeGroup* getrightsKindGroup() const;
 

@@ -60,9 +60,19 @@ ebucoreRightsBase::~ebucoreRightsBase()
 {}
 
 
+bool ebucoreRightsBase::haverightsId() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsId));
+}
+
 std::string ebucoreRightsBase::getrightsId() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreRights, rightsId));
+}
+
+bool ebucoreRightsBase::haverightsValue() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsValue));
 }
 
 std::string ebucoreRightsBase::getrightsValue() const
@@ -70,9 +80,19 @@ std::string ebucoreRightsBase::getrightsValue() const
     return getStringItem(&MXF_ITEM_K(ebucoreRights, rightsValue));
 }
 
+bool ebucoreRightsBase::haverightsLanguage() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsLanguage));
+}
+
 std::string ebucoreRightsBase::getrightsLanguage() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreRights, rightsLanguage));
+}
+
+bool ebucoreRightsBase::haverightsLink() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsLink));
 }
 
 std::string ebucoreRightsBase::getrightsLink() const
@@ -80,9 +100,19 @@ std::string ebucoreRightsBase::getrightsLink() const
     return getStringItem(&MXF_ITEM_K(ebucoreRights, rightsLink));
 }
 
+bool ebucoreRightsBase::haverightsClearanceFlag() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsClearanceFlag));
+}
+
 bool ebucoreRightsBase::getrightsClearanceFlag() const
 {
     return getBooleanItem(&MXF_ITEM_K(ebucoreRights, rightsClearanceFlag));
+}
+
+bool ebucoreRightsBase::haverightsAttributedID() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsAttributedID));
 }
 
 std::string ebucoreRightsBase::getrightsAttributedID() const
@@ -90,14 +120,29 @@ std::string ebucoreRightsBase::getrightsAttributedID() const
     return getStringItem(&MXF_ITEM_K(ebucoreRights, rightsAttributedID));
 }
 
+bool ebucoreRightsBase::haverightsFormatIDRef() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsFormatIDRef));
+}
+
 std::string ebucoreRightsBase::getrightsFormatIDRef() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreRights, rightsFormatIDRef));
 }
 
+bool ebucoreRightsBase::haveexploitationIssues() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues));
+}
+
 std::string ebucoreRightsBase::getexploitationIssues() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues));
+}
+
+bool ebucoreRightsBase::haverightsCoverage() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsCoverage));
 }
 
 std::vector<ebucoreCoverage*> ebucoreRightsBase::getrightsCoverage() const
@@ -112,6 +157,11 @@ std::vector<ebucoreCoverage*> ebucoreRightsBase::getrightsCoverage() const
     return result;
 }
 
+bool ebucoreRightsBase::haverightsHolderEntity() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsHolderEntity));
+}
+
 std::vector<ebucoreEntity*> ebucoreRightsBase::getrightsHolderEntity() const
 {
     vector<ebucoreEntity*> result;
@@ -122,6 +172,11 @@ std::vector<ebucoreEntity*> ebucoreRightsBase::getrightsHolderEntity() const
         result.push_back(dynamic_cast<ebucoreEntity*>(iter->get()));
     }
     return result;
+}
+
+bool ebucoreRightsBase::haverightsContacts() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsContacts));
 }
 
 std::vector<ebucoreContact*> ebucoreRightsBase::getrightsContacts() const

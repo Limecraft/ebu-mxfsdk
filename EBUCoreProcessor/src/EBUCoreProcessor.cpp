@@ -380,7 +380,7 @@ void mapOrganisation(organisationDetailsType& source, ebucoreOrganisation *dest)
 
 void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest) {
 
-	source->setorganisationName(dest.organisationName());
+	dest.organisationName() = source->getorganisationName();
 	if (source->haveorganisationDepartment())
 		dest.organisationDepartment() = source->getorganisationDepartment();
 
@@ -575,6 +575,26 @@ std::string convert(xml_schema::idrefs& source) {
 		if (i < l) ss << ' ';
 	}
 	return ss.str();
+}
+
+xml_schema::idrefs* convert_idrefs(std::string& source) {
+	const char *delims = " ";
+	xml_schema::idrefs *dest = new xml_schema::idrefs();
+    // Skip delimiters at beginning.
+    std::string::size_type lastPos = source.find_first_not_of(delims, 0);
+    // Find first "non-delimiter".
+    std::string::size_type pos     = source.find_first_of(delims, lastPos);
+
+    while (std::string::npos != pos || std::string::npos != lastPos)
+    {
+        // Found a token, add it to the vector.
+		dest->push_back(source.substr(lastPos, pos - lastPos));
+        // Skip delimiters.  Note the "not_of"
+        lastPos = source.find_first_not_of(delims, pos);
+        // Find next "non-delimiter"
+        pos = source.find_first_of(delims, lastPos);
+    }
+	return dest;
 }
 
 void mapTitle(titleType& source, ebucoreTitle *dest) {
@@ -827,6 +847,10 @@ void mapVersion(coreMetadataType::version_type& source, ebucoreVersion *dest) {
 	// [TODO] KLV version does not define a language, while the XSD (i.e., DC element) does.
 	dest->setversionValue(source);
 	// [TODO] SIMPLE_MAP_NO_GET(source, lang, dest, setversionLanguage)
+}
+
+void mapVersion(ebucoreVersion *source, coreMetadataType::version_type& dest) {
+	dest = source->getversionValue();
 }
 
 void mapLanguage(languageType& source, ebucoreLanguage *dest) {
@@ -1305,6 +1329,86 @@ void mapRights(rightsType& source, ebucoreRights *dest) {
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setrightsKindGroup)
 }
 
+void mapRights(ebucoreRights *source, rightsType& dest) {
+	/*
+		<sequence>
+			<element ref="dc:rights" minOccurs="0">
+			</element>
+			<element name="rightsLink" type="anyURI" minOccurs="0">
+			</element>
+			<element name="rightsHolder" type="ebucore:entityType" minOccurs="0">
+			</element>
+			<element name="exploitationIssues" type="dc:elementType" minOccurs="0">
+			</element>
+			<element name="coverage" type="ebucore:coverageType" minOccurs="0">
+			</element>
+			<element name="rightsClearanceFlag" type="boolean" minOccurs="0">
+			</element>
+			<element name="disclaimer" type="dc:elementType" minOccurs="0" maxOccurs="unbounded">
+			</element>
+			<element name="rightsId" type="ebucore:identifierType" minOccurs="0" maxOccurs="unbounded">
+			</element>
+			<element name="contactDetails" type="ebucore:contactDetailsType" minOccurs="0" maxOccurs="unbounded">
+			</element>
+		</sequence>
+		<attributeGroup ref="ebucore:typeGroup">
+		</attributeGroup>
+		<attribute name="note" type="string">
+		</attribute>
+		<attribute name="formatIDRefs" type="IDREFS">
+		</attribute>
+	*/
+
+	// [TODO] KLV RightsId is a string, XSD rights id is an identitytype, not clear how te map...
+	// [TODO] KLV rightsAttributedID is nowhere to be found in EBU Core?
+	
+	if (source->haverightsValue())
+		dest.rights() = source->getrightsValue();
+	if (source->haverightsLanguage())
+		dest.rights().get().lang() = source->getrightsLanguage();
+	if (source->haverightsClearanceFlag())
+		dest.rightsClearanceFlag( source->getrightsClearanceFlag() );
+	if (source->haverightsFormatIDRef())
+		dest.formatIDRefs( std::auto_ptr<rightsType::formatIDRefs_type>( convert_idrefs(source->getrightsFormatIDRef())));
+	if (source->haveexploitationIssues())
+		dest.exploitationIssues( source->getexploitationIssues() );
+	if (source->haverightsLink())
+		dest.rightsLink( source->getrightsLink());
+
+	if (source->haverightsCoverage()) {
+		std::vector<ebucoreCoverage*> cover = source->getrightsCoverage();
+		if (cover.size() > 0) {
+			ebucoreCoverage *coverage = cover[0];
+			std::auto_ptr<coverageType> p( new coverageType() );
+			mapMetadataCoverage(coverage, *p); 
+			dest.coverage(p);
+		}
+	}
+
+	if (source->haverightsHolderEntity()) {
+		std::vector<ebucoreEntity*> ents = source->getrightsHolderEntity();
+		if (ents.size() > 0) {
+			ebucoreEntity *ent = ents[0];
+			std::auto_ptr<entityType> p( new entityType() );
+			mapEntity(ent, *p);
+			dest.rightsHolder(p);
+		}
+	}
+
+	if (source->haverightsContacts()) {
+		rightsType::contactDetails_sequence conts;
+		std::vector<ebucoreContact*> source_conts = source->getrightsContacts();
+		for (std::vector<ebucoreContact*>::iterator it = source_conts.begin(); it != source_conts.end(); it++) {
+			std::auto_ptr<contactDetailsType> p( new contactDetailsType() );
+			mapContact(*it, *p);
+			conts.push_back(p);
+		}
+		dest.contactDetails(conts);
+	}
+
+	RMAP_TYPE_GROUP(source->getrightsKindGroup() , dest, rightsType::typeDefinition_type, rightsType::typeLabel_type, rightsType::typeLink_type)
+}
+
 bool nodeOrdering(xsd::cxx::tree::type *a, xsd::cxx::tree::type *b) 
 {
 	return (a->_node()->compareDocumentPosition(b->_node()) == 2 /* DOCUMENT_POSITION_PRECEDING */);	// else, return larger...
@@ -1505,9 +1609,7 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest) {
 	if (source.version().present()) {
 		ebucoreVersion *obj = new ebucoreVersion(dest->getHeaderMetadata());
 		mapVersion(source.version().get(), obj);
-		std::vector<ebucoreVersion*> versions;
-		versions.push_back(obj);
-		dest->setversion(versions);
+		dest->setversion(obj);
 	}
 	
 	if (source.publicationHistory().present()) {
@@ -1629,6 +1731,19 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 		covers.push_back(p);
 	}
 	dest.coverage(covers);
+
+	if (source->haveversion()) {
+		std::auto_ptr<coreMetadataType::version_type> p(new coreMetadataType::version_type( source->getversion()->getversionValue() ));
+	}
+
+	coreMetadataType::rights_sequence rights;
+	std::vector<ebucoreRights*> source_rights = source->getrights();
+	for (std::vector<ebucoreRights*>::iterator it = source_rights.begin(); it != source_rights.end(); it++) {
+		std::auto_ptr<rightsType> p( new rightsType() );
+		mapRights(*it, *p);
+		rights.push_back(p);
+	}
+	dest.rights(rights);
 }
 
 DMFramework* Process(std::string location, HeaderMetadata *destination) {

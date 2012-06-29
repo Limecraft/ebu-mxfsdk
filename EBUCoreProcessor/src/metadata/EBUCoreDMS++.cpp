@@ -54,6 +54,8 @@ void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata)
 	header_metadata->registerObjectFactory(&ebucoreTemporal::setKey, new MetadataSetFactory<ebucoreTemporal>());
 	header_metadata->registerObjectFactory(&ebucorePeriodOfTime::setKey, new MetadataSetFactory<ebucorePeriodOfTime>());
 	header_metadata->registerObjectFactory(&ebucoreCoverage::setKey, new MetadataSetFactory<ebucoreCoverage>());
+	header_metadata->registerObjectFactory(&ebucoreVersion::setKey, new MetadataSetFactory<ebucoreVersion>());
+	header_metadata->registerObjectFactory(&ebucoreRights::setKey, new MetadataSetFactory<ebucoreRights>());
 	header_metadata->registerObjectFactory(&ebucoreMetadataSchemeInformation::setKey, new MetadataSetFactory<ebucoreMetadataSchemeInformation>());
 }
 

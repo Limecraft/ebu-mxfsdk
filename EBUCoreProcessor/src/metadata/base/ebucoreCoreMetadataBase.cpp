@@ -303,16 +303,11 @@ bool ebucoreCoreMetadataBase::haveversion() const
     return haveItem(&MXF_ITEM_K(ebucoreCoreMetadata, version));
 }
 
-std::vector<ebucoreVersion*> ebucoreCoreMetadataBase::getversion() const
+ebucoreVersion* ebucoreCoreMetadataBase::getversion() const
 {
-    vector<ebucoreVersion*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoreMetadata, version)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreVersion*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreVersion*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreCoreMetadata, version)));
+    MXFPP_CHECK(dynamic_cast<ebucoreVersion*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreVersion*>(obj.release());
 }
 
 bool ebucoreCoreMetadataBase::havepublicationHistoryEvent() const
@@ -520,15 +515,9 @@ void ebucoreCoreMetadataBase::appendrating(ebucoreRating* value)
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoreMetadata, rating), value);
 }
 
-void ebucoreCoreMetadataBase::setversion(const std::vector<ebucoreVersion*>& value)
+void ebucoreCoreMetadataBase::setversion(ebucoreVersion* value)
 {
-    WrapObjectVectorIterator<ebucoreVersion> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoreMetadata, version), &iter);
-}
-
-void ebucoreCoreMetadataBase::appendversion(ebucoreVersion* value)
-{
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoreMetadata, version), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreCoreMetadata, version), value);
 }
 
 void ebucoreCoreMetadataBase::setpublicationHistoryEvent(const std::vector<ebucorePublicationHistoryEvent*>& value)
