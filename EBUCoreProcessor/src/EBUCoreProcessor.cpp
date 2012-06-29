@@ -1583,6 +1583,18 @@ void mapCustomRelation(relationType& source, ebucoreCustomRelation *dest) {
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setcustomRelationTypeGroup)
 }
 
+void mapCustomRelation(ebucoreCustomRelation *source, relationType& dest) {
+	if (source->haverelationByName())
+		dest.relation() = source->getrelationByName();
+	if (source->haverelationLink())
+		dest.relationLink() = source->getrelationLink();
+	if (source->haverunningOrderNumber())
+		dest.runningOrderNumber() = source->getrunningOrderNumber();
+	if (source->havecustomRelationTypeGroup()) { // make this field required just like other typegroups??
+		RMAP_TYPE_GROUP(source->getcustomRelationTypeGroup(), dest, relationType::typeDefinition_type, relationType::typeLabel_type, relationType::typeLink_type)
+	}
+}
+
 void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest) {
 
 	NEW_VECTOR_AND_ASSIGN(source, title, ebucoreTitle, coreMetadataType::title_iterator, mapTitle, dest, settitle)	
@@ -1744,6 +1756,15 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 		rights.push_back(p);
 	}
 	dest.rights(rights);
+
+	coreMetadataType::relation_sequence rels;
+	std::vector<ebucoreCustomRelation*> source_rels = source->getcustomRelation();
+	for (std::vector<ebucoreCustomRelation*>::iterator it = source_rels.begin(); it != source_rels.end(); it++) {
+		std::auto_ptr<relationType> p( new relationType() );
+		mapCustomRelation(*it, *p);
+		rels.push_back(p);
+	}
+	dest.relation(rels);
 }
 
 DMFramework* Process(std::string location, HeaderMetadata *destination) {
