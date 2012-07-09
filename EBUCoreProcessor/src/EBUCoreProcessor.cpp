@@ -132,17 +132,40 @@ using namespace mxfpp;
 		dest.formatLink().set( std::auto_ptr<linkType> ( new linkType( source->getformatGroupLink() ) ));	\
 	}
 
-void mapRole(role& source, ebucoreRole *dest) {
-	ebucoreTypeGroup *obj = new ebucoreTypeGroup(dest->getHeaderMetadata());
+class ObjectModifier {
+public:
+	virtual void Modify(InterchangeObject *obj);
+};
+
+class GenerationUIDAppender : public ObjectModifier {
+	mxfUUID _generationUID;
+public:
+	GenerationUIDAppender(mxfUUID GenerationUID) {
+		_generationUID = GenerationUID;
+	}
+	void Modify(InterchangeObject *obj) {
+		obj->setGenerationUID(_generationUID);
+	}
+};
+
+template <class T> T* newAndModifyObject(HeaderMetadata *headerMetadata, ObjectModifier *mod) {
+	T *obj = new T(headerMetadata);
+	if (mod != NULL)
+		mod->Modify(obj);
+	return obj;
+}
+
+void mapRole(role& source, ebucoreRole *dest, ObjectModifier* mod = NULL) {
+	ebucoreTypeGroup *obj = newAndModifyObject<ebucoreTypeGroup>(dest->getHeaderMetadata(), mod);
 	MAP_TYPE_GROUP(source, obj)
 	dest->setroleType(obj);
 }
 
-void mapAddressLine(std::string source, ebucoreAddressLine *dest) {
+void mapAddressLine(std::string source, ebucoreAddressLine *dest, ObjectModifier* mod = NULL) {
 	dest->setaddressLine(source);
 }
 
-void mapAddress(addressType& source, ebucoreAddress *dest) {
+void mapAddress(addressType& source, ebucoreAddress *dest, ObjectModifier* mod = NULL) {
 	/*
 	<sequence>
 		<element name="addressLine" minOccurs="0" type="string" maxOccurs="unbounded"/>
@@ -203,7 +226,7 @@ void mapAddress(ebucoreAddress *source, addressType& dest) {
 	}
 }
 
-void mapDetails(detailsType& source, ebucoreContactDetails *dest) {
+void mapDetails(detailsType& source, ebucoreContactDetails *dest, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 			<element name="emailAddress" type="string" minOccurs="0">
@@ -250,7 +273,7 @@ void mapDetails(ebucoreContactDetails *source, detailsType& dest) {
 	RMAP_TYPE_GROUP(source->getdetailsType(), dest, detailsType::typeDefinition_type, detailsType::typeLabel_type, detailsType::typeLink_type)
 }
 
-void mapContact(contactDetailsType& source, ebucoreContact *dest) {
+void mapContact(contactDetailsType& source, ebucoreContact *dest, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 		<choice>
@@ -347,7 +370,7 @@ void mapContact(ebucoreContact *source, contactDetailsType& dest) {
 
 }
 
-void mapOrganisation(organisationDetailsType& source, ebucoreOrganisation *dest) {
+void mapOrganisation(organisationDetailsType& source, ebucoreOrganisation *dest, ObjectModifier* mod = NULL) {
 /*
 	<sequence>
 		<element name="organisationName" type="dc:elementType"/>
@@ -395,7 +418,7 @@ void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest)
 
 }
 
-void mapEntity(entityType& source, ebucoreEntity *dest) {
+void mapEntity(entityType& source, ebucoreEntity *dest, ObjectModifier* mod = NULL) {
 	/*
 	<sequence>
 		<element name="contactDetails" type="ebucore:contactDetailsType" minOccurs="0" maxOccurs="unbounded">
@@ -488,7 +511,7 @@ void mapEntity(ebucoreEntity *source, entityType& dest) {
 }
 
 
-void mapMetadataSchemeInformation(ebuCoreMainType& source, ebucoreMetadataSchemeInformation *dest) {
+void mapMetadataSchemeInformation(ebuCoreMainType& source, ebucoreMetadataSchemeInformation *dest, ObjectModifier* mod = NULL) {
 	/*
 	<sequence>
 		<element name="coreMetadata" type="ebucore:coreMetadataType">
@@ -511,6 +534,48 @@ void mapMetadataSchemeInformation(ebuCoreMainType& source, ebucoreMetadataScheme
 	// [TODO] Version and schema need processing
 
 	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, metadataProvider, ebucoreEntity, mapEntity, dest, setebucoreMetadataProvider)
+
+	// is there a version node? appearently, no easier way to check than
+	// to look through the attributes of the source node and see if there 
+	// is a matching attribute
+	xercesc_3_1::DOMNamedNodeMap* attrs = source._node()->getAttributes();
+	xercesc_3_1::DOMNode* version_node = attrs->getNamedItem(L"version");
+	if (version_node != NULL) {
+		std::wstring version(source.version()._node()->getTextContent());
+		std::string truc_version(version.begin(), version.end());
+		dest->setebucoreMetadataSchemeVersion(truc_version);
+	}
+	xercesc_3_1::DOMNode* schema_node = attrs->getNamedItem(L"schema");
+	if (schema_node != NULL) {
+		std::wstring schema(source.schema()._node()->getTextContent());
+		std::string truc_schema(schema.begin(), schema.end());
+		dest->setebucoreMetadataScheme(truc_schema);
+	}
+}
+
+void mapMetadataSchemeInformation(ebucoreMetadataSchemeInformation *source, ebuCoreMainType& dest) {
+	/*
+	<sequence>
+		<element name="coreMetadata" type="ebucore:coreMetadataType">
+		</element>
+		<element name="metadataProvider" type="ebucore:entityType" minOccurs="0">
+		</element>
+	</sequence>
+	<attribute name="schema" default="EBU_CORE_20110531.xsd">
+	</attribute>
+	<attribute name="version" default="1.3">
+	</attribute>
+	<attribute name="dateLastModified" type="date">
+	</attribute>
+	<attribute name="documentId" type="NMTOKEN">
+	</attribute>
+	<attribute ref="xml:lang">
+	</attribute>
+	*/
+
+	// [TODO] Version and schema need processing
+
+	//NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, metadataProvider, ebucoreEntity, mapEntity, dest, setebucoreMetadataProvider)
 
 }
 
@@ -597,7 +662,7 @@ xml_schema::idrefs* convert_idrefs(std::string& source) {
 	return dest;
 }
 
-void mapTitle(titleType& source, ebucoreTitle *dest) {
+void mapTitle(titleType& source, ebucoreTitle *dest, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 			<element ref="dc:title">
@@ -622,7 +687,7 @@ void mapTitle(ebucoreTitle *source, titleType& dest) {
 	}
 }
 
-void mapAlternativeTitle(alternativeTitleType& source, ebucoreAlternativeTitle *dest) {
+void mapAlternativeTitle(alternativeTitleType& source, ebucoreAlternativeTitle *dest, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 			<element ref="dc:title">
@@ -658,7 +723,7 @@ void mapAlternativeTitle(ebucoreAlternativeTitle *source, alternativeTitleType& 
 	RMAP_STATUS_GROUP(sg, dest, alternativeTitleType::statusDefinition_type, alternativeTitleType::statusLabel_type, alternativeTitleType::statusLink_type)
 }
 
-void mapIdentifier(identifierType& source, ebucoreIdentifier *dest) {
+void mapIdentifier(identifierType& source, ebucoreIdentifier *dest, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 			<element ref="dc:identifier">
@@ -718,7 +783,7 @@ void mapIdentifier(ebucoreIdentifier *source, identifierType& dest) {
 	}
 }
 
-void mapDescription(descriptionType& source, ebucoreDescription *dest) {
+void mapDescription(descriptionType& source, ebucoreDescription *dest, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 			<element ref="dc:description">
@@ -741,7 +806,7 @@ void mapDescription(ebucoreDescription *source, descriptionType& dest) {
 	RMAP_TYPE_GROUP(source->getdescriptionTypeGroup(), dest, descriptionType::typeDefinition_type, descriptionType::typeLabel_type, descriptionType::typeLink_type)
 }
 
-void mapSubject(subjectType& source, ebucoreSubject *dest) {
+void mapSubject(subjectType& source, ebucoreSubject *dest, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 			<element ref="dc:subject">
@@ -799,7 +864,7 @@ void mapSubject(ebucoreSubject *source, subjectType& dest) {
 
 }
 
-void mapRating(ratingType& source, ebucoreRating *dest) {
+void mapRating(ratingType& source, ebucoreRating *dest, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 			<element name="ratingValue" type="string"/>
@@ -835,7 +900,7 @@ void mapRating(ebucoreRating *source, ratingType& dest) {
 	RMAP_FORMAT_GROUP(source->getratingFormatGroup(), dest, ratingType::formatDefinition_type, ratingType::formatLabel_type, ratingType::formatLink_type)
 }
 
-void mapVersion(coreMetadataType::version_type& source, ebucoreVersion *dest) {
+void mapVersion(coreMetadataType::version_type& source, ebucoreVersion *dest, ObjectModifier* mod = NULL) {
 	/*
 	  <xs:simpleContent>
 		<xs:extension base="xs:string">
@@ -853,7 +918,7 @@ void mapVersion(ebucoreVersion *source, coreMetadataType::version_type& dest) {
 	dest = source->getversionValue();
 }
 
-void mapLanguage(languageType& source, ebucoreLanguage *dest) {
+void mapLanguage(languageType& source, ebucoreLanguage *dest, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 			<element ref="dc:language" minOccurs="0">
@@ -883,7 +948,7 @@ void mapLanguage(ebucoreLanguage *source, languageType& dest) {
 		dest, languageType::typeDefinition_type, languageType::typeLabel_type, languageType::typeLink_type)
 }
 
-void mapType(typeType& source, ebucoreType *dest) {
+void mapType(typeType& source, ebucoreType *dest, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 			<element ref="dc:type" minOccurs="0" maxOccurs="unbounded">
@@ -963,7 +1028,7 @@ void mapType(ebucoreType *source, typeType& dest) {
 	dest.genre(gens);
 }
 
-void mapDate(dateType& source, std::vector<ebucoreDate*>& dest, mxfpp::HeaderMetadata *header_metadata) {
+void mapDate(dateType& source, std::vector<ebucoreDate*>& dest, mxfpp::HeaderMetadata *header_metadata, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 			<element ref="dc:date" minOccurs="0" maxOccurs="unbounded">
@@ -1085,7 +1150,7 @@ void mapDate(ebucoreDate* source, dateType& dest) {
 	}
 }
 
-void mapTemporal(temporal& source, ebucoreTemporal *dest) {
+void mapTemporal(temporal& source, ebucoreTemporal *dest, ObjectModifier* mod = NULL) {
 	/*
 	<complexType>
 		<sequence>
@@ -1167,7 +1232,7 @@ void mapTemporal(ebucoreTemporal *source, temporal& dest) {
 	}
 }
 
-void mapSpatial(spatial& source, ebucoreSpatial *dest) {
+void mapSpatial(spatial& source, ebucoreSpatial *dest, ObjectModifier* mod = NULL) {
 	/*
 	<complexType>
 		<sequence>
@@ -1235,7 +1300,7 @@ void mapSpatial(ebucoreSpatial *source, spatial& dest) {
 	}
 }
 
-void mapMetadataCoverage(coverageType& source, ebucoreCoverage *dest) {
+void mapMetadataCoverage(coverageType& source, ebucoreCoverage *dest, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 			<element ref="dc:coverage" minOccurs="0">
@@ -1267,7 +1332,7 @@ void mapMetadataCoverage(ebucoreCoverage *source, coverageType& dest) {
 	}
 }
 
-void mapRights(rightsType& source, ebucoreRights *dest) {
+void mapRights(rightsType& source, ebucoreRights *dest, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 			<element ref="dc:rights" minOccurs="0">
@@ -1297,7 +1362,7 @@ void mapRights(rightsType& source, ebucoreRights *dest) {
 		</attribute>
 	*/
 
-	// [TODO] KLV RightsId is a string, XSD rights id is an identitytype, not clear how te map...
+	// [TODO] KLV RightsId is a string, XSD rights id is an identitytype, not clear how to map...
 	// [TODO] KLV rightsAttributedID is nowhere to be found in EBU Core?
 
 	SIMPLE_MAP_OPTIONAL(source, rights, dest, setrightsValue)
@@ -1414,7 +1479,7 @@ bool nodeOrdering(xsd::cxx::tree::type *a, xsd::cxx::tree::type *b)
 	return (a->_node()->compareDocumentPosition(b->_node()) == 2 /* DOCUMENT_POSITION_PRECEDING */);	// else, return larger...
 }
 
-void mapPublicationHistory(publicationHistoryType& source, std::vector<ebucorePublicationHistoryEvent*>& dest, mxfpp::HeaderMetadata *header_metadata) {
+void mapPublicationHistory(publicationHistoryType& source, std::vector<ebucorePublicationHistoryEvent*>& dest, mxfpp::HeaderMetadata *header_metadata, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 			<element name="firstPublicationDate" type="date" minOccurs="0">
@@ -1555,7 +1620,7 @@ void mapPublicationHistory(std::vector<ebucorePublicationHistoryEvent*>& source,
 	}
 }
 
-void mapCustomRelation(relationType& source, ebucoreCustomRelation *dest) {
+void mapCustomRelation(relationType& source, ebucoreCustomRelation *dest, ObjectModifier* mod = NULL) {
 	/*
 		<choice>
 			<element ref="dc:relation">
@@ -1595,7 +1660,7 @@ void mapCustomRelation(ebucoreCustomRelation *source, relationType& dest) {
 	}
 }
 
-void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest) {
+void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, ObjectModifier* mod = NULL) {
 
 	NEW_VECTOR_AND_ASSIGN(source, title, ebucoreTitle, coreMetadataType::title_iterator, mapTitle, dest, settitle)	
 	NEW_VECTOR_AND_ASSIGN(source, alternativeTitle, ebucoreAlternativeTitle, coreMetadataType::alternativeTitle_iterator, mapAlternativeTitle, dest, setalternativeTitle)
@@ -1771,10 +1836,11 @@ DMFramework* Process(std::string location, HeaderMetadata *destination) {
 	std::ifstream input(location);
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
 
-	std::wstring version(ebuCoreMainElementPtr->version()._node()->getTextContent());
+	//std::wstring version(ebuCoreMainElementPtr->version()._node()->getTextContent());
+	//std::wcout << version << std::endl;
 
 	ebucoreMainFramework *framework = new ebucoreMainFramework(destination);
-	framework->setdocumentId("testtesttest");
+	framework->setdocumentId(location);	// use the file location as document id
 
 	ebucoreCoreMetadata *core = new ebucoreCoreMetadata(destination);
 	mapCoreMetadata(ebuCoreMainElementPtr->coreMetadata(), core);
@@ -1880,9 +1946,9 @@ void ReadAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilenam
 
 		// map the EBU Core KLV framework to the XSD-derived counterpart
 		ebuCoreMainType ebuCoreMainElement(main);
-		ebuCoreMainElement.schema(ebuCoreMainElement.schema_default_value());
+		//ebuCoreMainElement.schema(ebuCoreMainElement.schema_default_value());
 		//ebuCoreMainElement.version(ebuCoreMainElement.version_default_value());
-		ebuCoreMainElement.version("1.3");
+		//ebuCoreMainElement.version("1.3");
 
 		std::auto_ptr<entityType> p( new entityType() );
 		ebucoreMetadataSchemeInformation *info = ebucore->getmetadataSchemeInformation();
