@@ -26,7 +26,7 @@ using namespace mxfpp;
 
 #define NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, sourceProperty, destType, mapMethod, dest, destProperty) \
 	if (source.sourceProperty().present()) {	\
-		destType *obj = new destType(dest->getHeaderMetadata());	\
+		destType *obj = newAndModifyObject<destType>(dest->getHeaderMetadata(), mod);	\
 		mapMethod(source.sourceProperty().get(), obj);	\
 		dest->destProperty(obj);	\
 	}
@@ -34,7 +34,7 @@ using namespace mxfpp;
 #define NEW_VECTOR_AND_ASSIGN(source, sourceProperty, destType, iteratorType, mapMethod, dest, destProperty)	\
 	{ std::vector<destType*> vec_dest_destProperty;	\
 	for (iteratorType it = source.sourceProperty().begin(); it != source.sourceProperty().end(); it++) {	\
-		destType *obj = new destType(dest->getHeaderMetadata());	\
+		destType *obj = newAndModifyObject<destType>(dest->getHeaderMetadata(), mod);	\
 		mapMethod(*it, obj);	\
 		vec_dest_destProperty.push_back(obj);	\
 	}	\
@@ -42,7 +42,7 @@ using namespace mxfpp;
 
 #define	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, sourceProperty, destType, mapMethod, dest, destProperty) \
 	if (source.sourceProperty().present()) {	\
-		destType *obj = new destType(dest->getHeaderMetadata());	\
+		destType *obj = newAndModifyObject<destType>(dest->getHeaderMetadata(), mod);	\
 		mapMethod(source.sourceProperty().get(), obj);	\
 		std::vector<destType*> v_dest_destProperty;	\
 		v_dest_destProperty.push_back(obj);	\
@@ -65,7 +65,7 @@ using namespace mxfpp;
 */
 
 #define MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, destProperty) \
-	ebucoreTypeGroup *typeGroup = new ebucoreTypeGroup(dest->getHeaderMetadata());	\
+	ebucoreTypeGroup *typeGroup = newAndModifyObject<ebucoreTypeGroup>(dest->getHeaderMetadata(), mod);	\
 	MAP_TYPE_GROUP(source, typeGroup)	\
 	dest->destProperty(typeGroup);	\
 
@@ -86,7 +86,7 @@ using namespace mxfpp;
 */
 
 #define MAP_NEW_STATUS_GROUP_AND_ASSIGN(source, dest, destProperty) \
-	ebucoreStatusGroup *statusGroup = new ebucoreStatusGroup(dest->getHeaderMetadata());	\
+	ebucoreStatusGroup *statusGroup = newAndModifyObject<ebucoreStatusGroup>(dest->getHeaderMetadata(), mod); \
 	MAP_STATUS_GROUP(source, statusGroup)	\
 	dest->destProperty(statusGroup);
 
@@ -97,7 +97,7 @@ using namespace mxfpp;
 	SIMPLE_MAP_OPTIONAL(source, formatLink, dest, setformatGroupLink)
 
 #define MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, destProperty) \
-	ebucoreFormatGroup *statusGroup = new ebucoreFormatGroup(dest->getHeaderMetadata());	\
+	ebucoreFormatGroup *statusGroup = newAndModifyObject<ebucoreFormatGroup>(dest->getHeaderMetadata(), mod);	\
 	MAP_FORMAT_GROUP(source, statusGroup)	\
 	dest->destProperty(statusGroup);
 
@@ -442,7 +442,7 @@ void mapEntity(entityType& source, ebucoreEntity *dest, ObjectModifier* mod = NU
 		contacts.push_back(obj);
 	}*/
 	if (source.contactDetails().size() > 0) {
-		ebucoreContact *obj = new ebucoreContact(dest->getHeaderMetadata());
+		ebucoreContact *obj = newAndModifyObject<ebucoreContact>(dest->getHeaderMetadata(), mod);
 		mapContact(source.contactDetails().front(), obj);
 		dest->setentityContact(obj);
 	}
@@ -451,7 +451,7 @@ void mapEntity(entityType& source, ebucoreEntity *dest, ObjectModifier* mod = NU
 
 	// [TODO] The KLV mapping lists a single role, while the XSD specifies a sequence
 	if (source.role().size() > 0) {
-		ebucoreRole *obj = new ebucoreRole(dest->getHeaderMetadata());
+		ebucoreRole *obj = newAndModifyObject<ebucoreRole>(dest->getHeaderMetadata(), mod);
 		mapRole(source.role().front(), obj);
 		dest->setentityRole(obj);
 	}
@@ -747,7 +747,7 @@ void mapIdentifier(identifierType& source, ebucoreIdentifier *dest, ObjectModifi
 	MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, setidentifierFormatGroup)
 
 	if (source.attributor().present()) {
-		ebucoreEntity *obj = new ebucoreEntity(dest->getHeaderMetadata());
+		ebucoreEntity *obj = newAndModifyObject<ebucoreEntity>(dest->getHeaderMetadata(), mod);
 		mapEntity(source.attributor().get(), obj);
 		dest->setidentifierAttributorEntity(obj);
 	}
@@ -834,7 +834,7 @@ void mapSubject(subjectType& source, ebucoreSubject *dest, ObjectModifier* mod =
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setsubjectTypeGroup)
 
 	if (source.attributor().present()) {
-		ebucoreEntity *obj = new ebucoreEntity(dest->getHeaderMetadata());
+		ebucoreEntity *obj = newAndModifyObject<ebucoreEntity>(dest->getHeaderMetadata(), mod);
 		mapEntity(source.attributor().get(), obj);
 		dest->setsubjectAttributorEntity(obj);
 	}
@@ -879,7 +879,7 @@ void mapRating(ratingType& source, ebucoreRating *dest, ObjectModifier* mod = NU
 	SIMPLE_MAP_NO_GET(source, ratingScaleMaxValue, dest, setratingScaleMaxValue)
 	SIMPLE_MAP_NO_GET(source, ratingScaleMinValue, dest, setratingScaleMinValue)
 
-	ebucoreEntity *obj = new ebucoreEntity(dest->getHeaderMetadata());
+	ebucoreEntity *obj = newAndModifyObject<ebucoreEntity>(dest->getHeaderMetadata(), mod);
 	mapEntity(source.ratingProvider(), obj);
 	dest->setratingProviderEntity(obj);
 
@@ -935,7 +935,7 @@ void mapLanguage(languageType& source, ebucoreLanguage *dest, ObjectModifier* mo
 	SIMPLE_MAP_OPTIONAL(source, language, dest, setlanguageName)
 	dest->setlanguageCode(source.language().get().lang());
 	
-	ebucoreLanguagePurpose *obj = new ebucoreLanguagePurpose(dest->getHeaderMetadata());
+	ebucoreLanguagePurpose *obj = newAndModifyObject<ebucoreLanguagePurpose>(dest->getHeaderMetadata(), mod);
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, obj, setlanguagePurposeTypeGroup)
 	dest->setlanguagePurposeSet(obj);
 }
@@ -980,14 +980,14 @@ void mapType(typeType& source, ebucoreType *dest, ObjectModifier* mod = NULL) {
 	// [TODO] KLV objecttypes is only a single reference, and unbounded sequence in XSD
 
 	if (source.objectType().size() > 0) {
-		ebucoreObjectType *obj = new ebucoreObjectType(dest->getHeaderMetadata());
+		ebucoreObjectType *obj = newAndModifyObject<ebucoreObjectType>(dest->getHeaderMetadata(), mod);
 		MAP_NEW_TYPE_GROUP_AND_ASSIGN(source.objectType().front(), obj, setobjectTypeGroup)
 		dest->setobjectType(obj);
 	}
 
 	std::vector<ebucoreTargetAudience*> v1;
 	for (typeType::targetAudience_sequence::iterator it = source.targetAudience().begin(); it != source.targetAudience().end(); it++) {
-		ebucoreTargetAudience *obj = new ebucoreTargetAudience(dest->getHeaderMetadata());
+		ebucoreTargetAudience *obj = newAndModifyObject<ebucoreTargetAudience>(dest->getHeaderMetadata(), mod);
 		MAP_NEW_TYPE_GROUP_AND_ASSIGN((*it), obj, settargetAudienceKindGroup)
 		v1.push_back(obj);
 	}
@@ -995,7 +995,7 @@ void mapType(typeType& source, ebucoreType *dest, ObjectModifier* mod = NULL) {
 
 	std::vector<ebucoreGenre*> v2;
 	for (typeType::genre_sequence::iterator it = source.genre().begin(); it != source.genre().end(); it++) {
-		ebucoreGenre *obj = new ebucoreGenre(dest->getHeaderMetadata());
+		ebucoreGenre *obj = newAndModifyObject<ebucoreGenre>(dest->getHeaderMetadata(), mod);
 		MAP_NEW_TYPE_GROUP_AND_ASSIGN((*it), obj, setgenreKindGroup)
 		v2.push_back(obj);
 	}
@@ -1065,7 +1065,7 @@ void mapDate(dateType& source, std::vector<ebucoreDate*>& dest, mxfpp::HeaderMet
 	// One XSD EBU Core data is converted to one KLV ebucoreDate + one KLV ebucoreDate per XSD alternative date 
 	// (there can be only a single alternative date typegroup def)
 	// Only start* attributes are used to map date
-	ebucoreDate *obj = new ebucoreDate(header_metadata);
+	ebucoreDate *obj = newAndModifyObject<ebucoreDate>(header_metadata, mod);
 	if (source.created().present()) {
 		dateType::created_type& date = source.created().get();
 		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setyearCreated, convert_timestamp)
@@ -1089,7 +1089,7 @@ void mapDate(dateType& source, std::vector<ebucoreDate*>& dest, mxfpp::HeaderMet
 	dest.push_back(obj);
 
 	for (dateType::alternative_iterator it = source.alternative().begin(); it != source.alternative().end(); it++) {
-		ebucoreDate *obj = new ebucoreDate(header_metadata);
+		ebucoreDate *obj = newAndModifyObject<ebucoreDate>(header_metadata, mod);
 		dateType::alternative_type& date = (*it);
 		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setotherYear, convert_timestamp)
 		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setotherDate, convert_timestamp)
@@ -1180,7 +1180,7 @@ void mapTemporal(temporal& source, ebucoreTemporal *dest, ObjectModifier* mod = 
 	// [TODO] There is no typeGroup equivalent in KLV rep., it is in the PeriodOfTime element, which is a batch, and not a single optional element such as in XSD
 	bool hasPeriodOfTime = source.periodId().present() | source.PeriodOfTime().present();
 	if (hasPeriodOfTime) {
-		ebucorePeriodOfTime *obj = new ebucorePeriodOfTime(dest->getHeaderMetadata());
+		ebucorePeriodOfTime *obj = newAndModifyObject<ebucorePeriodOfTime>(dest->getHeaderMetadata(), mod);
 		if (source.periodId().present()) {
 			obj->setperiodId(source.periodId().get());
 		}
@@ -1270,7 +1270,7 @@ void mapSpatial(spatial& source, ebucoreSpatial *dest, ObjectModifier* mod = NUL
 	if (source.location().size() > 0) {
 		std::vector<ebucoreLocation*> v;
 		for (spatial::location_iterator it = source.location().begin(); it != source.location().end(); it++) {
-			ebucoreLocation *obj = new ebucoreLocation(dest->getHeaderMetadata());
+			ebucoreLocation *obj = newAndModifyObject<ebucoreLocation>(dest->getHeaderMetadata(), mod);
 			SIMPLE_MAP_OPTIONAL((*it), locationId, obj, setlocationId)
 			SIMPLE_MAP_OPTIONAL((*it), name, obj, setlocationName)
 			SIMPLE_MAP_OPTIONAL((*it), code, obj, setlocationCode)
@@ -1376,7 +1376,7 @@ void mapRights(rightsType& source, ebucoreRights *dest, ObjectModifier* mod = NU
 
 	// [TODO] KLV coverage is a vector while XSD coverage is a single optional element
 	if (source.coverage().present()) {
-		ebucoreCoverage *obj = new ebucoreCoverage(dest->getHeaderMetadata());
+		ebucoreCoverage *obj = newAndModifyObject<ebucoreCoverage>(dest->getHeaderMetadata(), mod);
 		mapMetadataCoverage(source.coverage().get(), obj);
 		std::vector<ebucoreCoverage*> coverage;
 		coverage.push_back(obj);
@@ -1384,7 +1384,7 @@ void mapRights(rightsType& source, ebucoreRights *dest, ObjectModifier* mod = NU
 	}
 	// [TODO] KLV rightsholder is a vector while XSD rightsholder is a single optional element
 	if (source.rightsHolder().present()) {
-		ebucoreEntity *obj = new ebucoreEntity(dest->getHeaderMetadata());
+		ebucoreEntity *obj = newAndModifyObject<ebucoreEntity>(dest->getHeaderMetadata(), mod);
 		mapEntity(source.rightsHolder().get(), obj);
 		std::vector<ebucoreEntity*> holder;
 		holder.push_back(obj);
@@ -1515,7 +1515,7 @@ void mapPublicationHistory(publicationHistoryType& source, std::vector<ebucorePu
 
 	if (source.firstPublicationDate().present() || source.firstPublicationTime().present() || source.firstPublicationChannel().present()) {
 		// have a first publication event
-		ebucorePublicationHistoryEvent *obj = new ebucorePublicationHistoryEvent(header_metadata);
+		ebucorePublicationHistoryEvent *obj = newAndModifyObject<ebucorePublicationHistoryEvent>(header_metadata, mod);
 		SIMPLE_MAP_OPTIONAL_CONVERT(source, firstPublicationDate, obj, setpublicationDate, convert_timestamp)
 		SIMPLE_MAP_OPTIONAL_CONVERT(source, firstPublicationTime, obj, setpublicationTime, convert_timestamp)
 		SIMPLE_MAP_OPTIONAL(source, firstPublicationChannel, obj, setpublicationChannel)
@@ -1569,7 +1569,7 @@ void mapPublicationHistory(publicationHistoryType& source, std::vector<ebucorePu
 		if (elementType <= lastElementType) {
 			// introduce a new element
 			dest.push_back(obj);
-			obj = new ebucorePublicationHistoryEvent(header_metadata);
+			obj = newAndModifyObject<ebucorePublicationHistoryEvent>(header_metadata, mod);
 		}
 		if (date) {
 			obj->setpublicationDate(convert_timestamp(*date));
@@ -1684,7 +1684,7 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, Object
 	NEW_VECTOR_AND_ASSIGN(source, rating, ebucoreRating, coreMetadataType::rating_iterator, mapRating, dest, setrating)
 
 	if (source.version().present()) {
-		ebucoreVersion *obj = new ebucoreVersion(dest->getHeaderMetadata());
+		ebucoreVersion *obj = newAndModifyObject<ebucoreVersion>(dest->getHeaderMetadata(), mod);
 		mapVersion(source.version().get(), obj);
 		dest->setversion(obj);
 	}
@@ -1838,6 +1838,8 @@ DMFramework* Process(std::string location, HeaderMetadata *destination) {
 
 	//std::wstring version(ebuCoreMainElementPtr->version()._node()->getTextContent());
 	//std::wcout << version << std::endl;
+
+	// Generate a new Generation UID if necessary, and provide to each mapping function
 
 	ebucoreMainFramework *framework = new ebucoreMainFramework(destination);
 	framework->setdocumentId(location);	// use the file location as document id
