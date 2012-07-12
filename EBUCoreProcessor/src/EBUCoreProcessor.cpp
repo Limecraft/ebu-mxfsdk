@@ -3,6 +3,9 @@
 #include <fstream>
 #include <memory>
 
+#include <bmx/BMXException.h>
+#include <bmx/Logging.h>
+
 #include "EBUcoreProcessor.h"
 
 #include "EBU_CORE_20110915.hxx"
@@ -11,6 +14,7 @@
 
 using namespace ebuCore_2011;
 using namespace mxfpp;
+using namespace bmx;
 
 #define	SIMPLE_MAP(source, sourceProperty, dest, destProperty)	\
 	dest->destProperty(source.sourceProperty().get());
@@ -1873,6 +1877,76 @@ DMFramework* Process(std::string location) {
 	return Process(location, md);
 }
 
+void InsertFramework(HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, DMFramework *framework)
+{
+    BMX_ASSERT(header_metadata);
+
+    MaterialPackage *material_package = header_metadata->getPreface()->findMaterialPackage();
+    BMX_ASSERT(material_package);
+
+    // Preface - ContentStorage - Package - DM Track
+    StaticTrack *dm_track = new StaticTrack(header_metadata);
+    material_package->appendTracks(dm_track);
+    dm_track->setTrackName(track_name);
+    dm_track->setTrackID(track_id);
+    dm_track->setTrackNumber(0);
+
+    // Preface - ContentStorage - Package - DM Track - Sequence
+    Sequence *sequence = new Sequence(header_metadata);
+    dm_track->setSequence(sequence);
+    sequence->setDataDefinition(MXF_DDEF_L(DescriptiveMetadata));
+
+    // Preface - ContentStorage - Package - DM Track - Sequence - DMSegment
+    DMSegment *dm_segment = new DMSegment(header_metadata);
+    sequence->appendStructuralComponents(dm_segment);
+    dm_segment->setDataDefinition(MXF_DDEF_L(DescriptiveMetadata));
+
+    // move the framework set after the dm degment set
+    mxf_remove_set(header_metadata->getCHeaderMetadata(), framework->getCMetadataSet());
+    BMX_CHECK(mxf_add_set(header_metadata->getCHeaderMetadata(), framework->getCMetadataSet()));
+
+    // Preface - ContentStorage - Package - DM Track - Sequence - DMSegment - DMFramework
+    dm_segment->setDMFramework(framework);
+}
+
+void AppendDMSLabel(HeaderMetadata *header_metadata, mxfUL scheme_label)
+{
+    BMX_ASSERT(header_metadata);
+	Preface *preface = header_metadata->getPreface();
+
+    std::vector<mxfUL> dm_schemes = preface->getDMSchemes();
+    size_t i;
+    for (i = 0; i < dm_schemes.size(); i++) {
+        if (mxf_equals_ul(&dm_schemes[i], &scheme_label))
+            break;
+    }
+	try {
+		if (i >= dm_schemes.size())
+			preface->appendDMSchemes(scheme_label);
+	} catch (const MXFException &ex) {
+		// oops, cannot append, maybe something wrong with the array as read from the file
+		// try and create a new DMSchemes array if empty now
+		if (dm_schemes.size() == 0) {
+			preface->setDMSchemes(std::vector<mxfUL>());
+			preface->appendDMSchemes(scheme_label);
+		}
+	}
+}
+
+void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata) {
+	EBUCore::RegisterFrameworkObjectFactory(metadata);
+}
+
+void InsertEBUCoreFramework(HeaderMetadata *header_metadata, DMFramework *framework) {
+
+	BMX_ASSERT(header_metadata != NULL);
+
+	// Append the EBU Core DMS label to the Preface
+	AppendDMSLabel(header_metadata, MXF_DM_L(EBUCoreDescriptiveScheme));
+	// Insert the framework
+    InsertFramework(header_metadata, 10001, "EBU_Core", framework);
+}
+
 static std::vector<DMFramework*> ebu_get_static_frameworks(MaterialPackage *mp)
 {
     std::vector<DMFramework*> frameworks;
@@ -1917,8 +1991,6 @@ static std::vector<DMFramework*> ebu_get_static_frameworks(MaterialPackage *mp)
 }
 
 void ReadAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilename) {
-
-	EBUCore::RegisterFrameworkObjectFactory(metadata);
 
 	MaterialPackage *mp = metadata->getPreface()->findMaterialPackage();
 	if (!mp) {

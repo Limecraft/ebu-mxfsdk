@@ -803,6 +803,7 @@ int main(int argc, const char** argv)
             as11_print_info(file_reader);
 
 		if (ebucore_filename) {
+			RegisterFrameworkObjectFactoriesforEBUCore(file_reader->GetHeaderMetadata());
 			// write EBU Core metadata to ebucore_filename
 			ReadAndSerializeEBUCore(file_reader->GetHeaderMetadata(), ebucore_filename);
 		}
