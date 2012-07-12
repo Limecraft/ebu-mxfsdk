@@ -682,8 +682,34 @@ int main(int argc, const char** argv)
 				// seek backwards and update footer partition pack
 				mFile->seek(start_footer_partition, SEEK_SET);
 				footerPartition->write(mFile);
+
+				/////////////////////////////////////////
+				/// 3. In case of in-place updates: properly update partition packs...
+				/*		Header partition:
+							Open -> Open (If the metadata in the header was open, leave open, there's more to come in the footer)
+							Closed -> Open (Open closed metadata, the header metadata may no longer be used)
+						Body partition:
+							No metadata: Leave as is, there's no metadata to be found anyway
+							Open -> Open (Leave as is, more to come later)
+							Closed -> Open (Indicate that this is no longer a verbatim repitition of the header metadata)
+						Footer partition:
+							-> Open (if all other partitions were open, we append our EBU Core metadata and leave the partition/file open)
+							-> Closed (in other cases, this will contain the finalized (with EBU Core) metadata)
+							No metadata: Use metadata from the header partition as final and insert in this partition
+				*/
+				/////////////
+				for (i = 0 ; i < partitions.size()-1; i++) {	// rewrite for all but the footer partition
+					Partition *p = partitions[i];
+					if (mxf_is_header_partition_pack(p->getKey())) {
+						p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Header) : &MXF_PP_K(OpenIncomplete, Header) );
+					}
+					else if (mxf_is_body_partition_pack(p->getKey())) {
+						p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Body) : &MXF_PP_K(OpenIncomplete, Body) );
+					} 
+					mFile->seek(p->getThisPartition(), SEEK_SET);
+					p->write(mFile);
+				}
 			}
-			
 
 			/////////////////////////////////////////
 			/// 2a. Provide an override where the file is rewritten to accomodate updated metadata in the footer?
@@ -705,21 +731,6 @@ int main(int argc, const char** argv)
 		}
         reader = file_reader;
 
-		/////////////////////////////////////////
-        /// 3. In case of in-place updates: properly update partition packs...
-		/*		Header partition:
-					Open -> Open (If the metadata in the header was open, leave open, there's more to come in the footer)
-					Closed -> Open (Open closed metadata, the header metadata may no longer be used)
-				Body partition:
-					No metadata: Leave as is, there's no metadata to be found anyway
-					Open -> Open (Leave as is, more to come later)
-					Closed -> Open (Indicate that this is no longer a verbatim repitition of the header metadata)
-				Footer partition:
-					-> Open (if all other partitions were open, we append our EBU Core metadata and leave the partition/file open)
-					-> Closed (in other cases, this will contain the finalized (with EBU Core) metadata)
-					No metadata: Use metadata from the header partition as final and insert in this partition
-		*/
-        /////////////
 
 
 
