@@ -66,7 +66,7 @@ using namespace std;
 using namespace bmx;
 using namespace mxfpp;
 
-
+static const uint32_t MEMORY_WRITE_CHUNK_SIZE   = 8192;
 
 static char* get_label_string(mxfUL label, char *buf)
 {
@@ -616,6 +616,7 @@ int main(int argc, const char** argv)
 			mFile->skip(len);
 			mFile->readNextNonFillerKL(&key, &llen, &len);
 			BMX_CHECK(mxf_is_header_metadata(&key));
+			uint64_t pos_start_metadata =  mFile->tell() - mxfKey_extlen - llen;
 			mHeaderMetadata->read(mFile, metadata_partition, &key, llen, len);
 
 			uint64_t metadata_original_len_with_fill = metadata_partition->getHeaderByteCount();
@@ -641,7 +642,7 @@ int main(int argc, const char** argv)
 				// there can be a filler after the partition pack, skip it
 				mFile->readNextNonFillerKL(&foot_key, &foot_llen, &foot_len); // check for EOF now in case no more KLVs found??
 				// record the current (- keylength and lenlength) as begin position for metadata to write
-				uint64_t pos_start_metadata = mFile->tell() - mxfKey_extlen - foot_llen;
+				uint64_t pos_write_start_metadata = mFile->tell() - mxfKey_extlen - foot_llen;
 
 				// we are now in the next KLV, is it header metadata?
 				if (footerPartition->getHeaderByteCount() > 0) {
@@ -665,14 +666,58 @@ int main(int argc, const char** argv)
 					InsertEBUCoreFramework(mHeaderMetadata, framework);
 				}
 
-
 				// write the header metadata into the file
 
 				// seek back to the serialization position for the header metadata
-				mFile->seek(pos_start_metadata, SEEK_SET);
+				mFile->seek(pos_write_start_metadata, SEEK_SET);
 				KAGFillerWriter reserve_filler_writer(footerPartition);
 				mHeaderMetadata->write(mFile, footerPartition, &reserve_filler_writer);
-				//mHeaderMetadataEndPos = mMXFFile->tell();  // need this position when we re-write the header metadata*/
+				uint64_t mHeaderMetadataEndPos = mFile->tell();  // need this position when we re-write the header metadata */
+
+				// loop back to the beginning of the metadata and find elements that were skipped,
+				// because, they were dark, append these to the end of the header metadata
+				uint8_t *KLVBuffer = new uint8_t[64*1024];
+
+				// first, open a memory file that will buffer the unknown/dark metadata sets
+				MXFMemoryFile *memFile;
+				mxf_mem_file_open_new(MEMORY_WRITE_CHUNK_SIZE, /* virtual pos: write at the end of the current header metadata */ 0, &memFile);
+				MXFFile *mxfMemFile = mxf_mem_file_get_file(memFile);
+
+				mFile->seek(pos_start_metadata, SEEK_SET);
+				uint64_t count = 0;
+				int i = 0;
+				while (count < metadata_partition->getHeaderByteCount())
+			    {
+					mFile->readKL(&key, &llen, &len);
+					printf("Count: %lx ", count + 512);
+
+					count += mxfKey_extlen + llen;
+					count += mFile->read(KLVBuffer, len);
+
+					// is a set with this key in the final header metadata? no, then append it
+					MXFList *setList = NULL;
+					if (mxf_find_set_by_key(mHeaderMetadata->getCHeaderMetadata(), &key, &setList)) {
+						if (mxf_get_list_length(setList) == 0 && 
+							!mxf_is_primer_pack(&key) && /* don't include any primer pack or fillers */
+							!mxf_is_filler(&key)) {
+							mxf_print_key(&key);
+							// no errors and the list is empty, append the KLV to the memory file
+							mxf_write_kl(mxfMemFile, &key, len);
+							mxf_file_write(mxfMemFile, KLVBuffer, len);
+							i++;
+						} else printf("\n");
+						mxf_free_list(&setList);
+					}
+				}
+				std::cout << "Rogue KLVS: " << i << std::endl;
+
+				// how many bytes have we written to the memoryfile?
+				uint64_t memFileSize = mxf_file_tell(mxfMemFile);
+
+				// write the memory file to the physical file
+				mFile->seek(mHeaderMetadataEndPos, SEEK_SET);
+				mFile->setMemoryFile(memFile);
+				mFile->closeMemoryFile();
 
 				// write the index tables back to the footer partition
 				mFile->write(index_bytes.GetBytes(), index_bytes.GetSize());
@@ -680,6 +725,7 @@ int main(int argc, const char** argv)
 				mFile->writeRIP();
 
 				// seek backwards and update footer partition pack
+				footerPartition->setHeaderByteCount(footerPartition->getHeaderByteCount() + memFileSize); // Add dark metadata elements to file
 				mFile->seek(start_footer_partition, SEEK_SET);
 				footerPartition->write(mFile);
 
