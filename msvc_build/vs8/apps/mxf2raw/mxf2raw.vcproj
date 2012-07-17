@@ -189,7 +189,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\apps\mxf2raw\AS11Info.cpp"
+				RelativePath="..\..\..\..\apps\mxf2raw\APPInfoOutput.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\apps\mxf2raw\AS11InfoOutput.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\apps\mxf2raw\AvidInfoOutput.cpp"
 				>
 			</File>
 			<File
@@ -211,7 +219,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\apps\mxf2raw\AS11Info.h"
+				RelativePath="..\..\..\..\apps\mxf2raw\APPInfoOutput.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\apps\mxf2raw\AS11InfoOutput.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\apps\mxf2raw\AvidInfoOutput.h"
 				>
 			</File>
 		</Filter>

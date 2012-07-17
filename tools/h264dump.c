@@ -115,7 +115,6 @@ typedef struct
     uint32_t data_pos;
 
     uint32_t nal_start;
-    uint32_t num_bytes_in_nal_unit;
     uint32_t nal_size;
 
     uint64_t bit_pos;
@@ -244,6 +243,7 @@ static int parse_byte_stream_nal_unit(ParseContext *context)
     uint32_t rem_size;
     uint32_t state;
     uint8_t nal_unit_type;
+    uint32_t num_nal_unit_parse_bytes;
 
     rem_size = context->data_size - (context->nal_start + context->nal_size);
     if (rem_size > 0)
@@ -276,10 +276,16 @@ static int parse_byte_stream_nal_unit(ParseContext *context)
         state = (state << 8) | byte;
     }
 
-    context->num_bytes_in_nal_unit = context->data_pos - context->nal_start;
+    num_nal_unit_parse_bytes = context->data_pos - context->nal_start;
     if ((state & 0x00ffffff) == 0x000001 || (state & 0x00ffffff) == 0x000000) {
-        context->num_bytes_in_nal_unit -= 3;
+        num_nal_unit_parse_bytes -= 3;
         if ((state & 0x00ffffff) == 0x000000) {
+            /* add a byte to the NAL unit bytes as a workaround for the missing sequence parameter set
+               stop bit in Avid Transfer Manager AVCI files. The last couple of properties in the SPS are
+               zero and the last byte is wrongly assumed to be padding because of the missing stop bit.
+               This results in not be enough bits being available and parsing fails */
+            if (state != 0x00000001)
+                num_nal_unit_parse_bytes++;
             while (state != 0x00000001) {
                 if (!load_byte(context, &byte))
                     break;
@@ -305,7 +311,7 @@ static int parse_byte_stream_nal_unit(ParseContext *context)
     }
 
     context->bit_pos = context->nal_start * 8;
-    context->end_bit_pos = context->nal_start * 8 + context->num_bytes_in_nal_unit * 8;
+    context->end_bit_pos = context->nal_start * 8 + num_nal_unit_parse_bytes * 8;
 
     return 1;
 }
@@ -478,7 +484,7 @@ static int rbsp_trailing_bits(ParseContext *context)
     }
 
     if (!valid)
-        fprintf(stderr, "Warning: invalid rbsp_trailing_bits)\n");
+        fprintf(stderr, "Warning: invalid rbsp_trailing_bits\n");
 
     return 1;
 }
@@ -1414,8 +1420,76 @@ static int pic_timing(ParseContext *context, uint64_t payload_type, uint64_t pay
     return 1;
 }
 
+static int x264_sei_version(ParseContext *context, uint64_t data_size)
+{
+    uint32_t i;
+    char line[512];
+    size_t str_size = 0;
+    int parse_options = 0;
+
+    /* payload data is ascii text. A " - " is used to separate parts of the text.
+       The last part is "options:" which contains a set of name/value separated by a ' ' */
+
+    printf("%*c x264_sei_version:\n", context->indent * 4, ' ');
+    context->indent++;
+
+#define PRINT_LINE(end_off)                                 \
+    line[str_size - end_off] = 0;                           \
+    printf("%*c %s\n", context->indent * 4, ' ', line);     \
+    str_size = 0;
+
+    for (i = 0; i < data_size; i++) {
+        u(8); line[str_size] = (char)context->value;
+        str_size++;
+
+        if (!line[str_size - 1]) {
+            str_size--;
+            i++;
+            break;
+        }
+
+        if (parse_options) {
+            if (parse_options == 1) {
+                if (line[str_size - 1] == ' ') {
+                    str_size = 0;
+                } else {
+                    parse_options = 2;
+                }
+            } else if (line[str_size - 1] == ' ') {
+                PRINT_LINE(1)
+                parse_options = 1;
+            }
+        } else {
+            if (str_size >= 3 && strncmp(&line[str_size - 3], " - ", 3) == 0) {
+                PRINT_LINE(3)
+            } else if (str_size >= 8 && strncmp(&line[str_size - 8], "options:", 8) == 0) {
+                PRINT_LINE(0)
+                parse_options = 1;
+                context->indent++;
+            }
+        }
+
+        if (str_size == sizeof(line) - 1) {
+            PRINT_LINE(0)
+        }
+    }
+    if (str_size > 0) {
+        PRINT_LINE(0)
+    }
+    if (i < data_size)
+        CHK(skip_bits(context, (data_size - i) * 8));
+
+    if (parse_options)
+        context->indent--;
+    context->indent--;
+
+    return 1;
+}
+
 static int user_data_unregistered(ParseContext *context, uint64_t payload_type, uint64_t payload_size)
 {
+    static const uint64_t X264_USER_DATA_ID_HIGH = UINT64_C(0xdc45e9bde6d948b7);
+    static const uint64_t X264_USER_DATA_ID_LOW  = UINT64_C(0x962cd820d923eeef);
     uint64_t uuid_high, uuid_low;
 
     printf("%*c user_data_unregistered (type=%"PRIu64", size=%"PRIu64"):\n", context->indent * 4, ' ', payload_type, payload_size);
@@ -1425,10 +1499,28 @@ static int user_data_unregistered(ParseContext *context, uint64_t payload_type, 
     u(64); uuid_low = context->value;
     print_uuid(context, uuid_high, uuid_low);
 
-    printf("%*c user_data:\n", context->indent * 4, ' ');
-    context->indent++;
-    CHK(read_and_print_bytes(context, payload_size - 16));
+    if (uuid_high == X264_USER_DATA_ID_HIGH && uuid_low == X264_USER_DATA_ID_LOW) {
+        CHK(x264_sei_version(context, payload_size - 16));
+    } else {
+        printf("%*c user_data:\n", context->indent * 4, ' ');
+        context->indent++;
+        CHK(read_and_print_bytes(context, payload_size - 16));
+        context->indent--;
+    }
+
     context->indent--;
+    return 1;
+}
+
+static int recovery_point(ParseContext *context, uint64_t payload_type, uint64_t payload_size)
+{
+    printf("%*c recovery_point (type=%"PRIu64", size=%"PRIu64"):\n", context->indent * 4, ' ', payload_type, payload_size);
+    context->indent++;
+
+    ue(); PRINT_UINT("recovery_frame_count");
+    u(1); PRINT_UINT("exact_match_flag");
+    u(1); PRINT_UINT("broken_link_flag");
+    u(2); PRINT_UINT("changing_slice_group_idc");
 
     context->indent--;
     return 1;
@@ -1443,6 +1535,8 @@ static int sei_payload(ParseContext *context, uint64_t payload_type, uint64_t pa
         CHK(pic_timing(context, payload_type, payload_size));
     } else if (payload_type == 5) {
         CHK(user_data_unregistered(context, payload_type, payload_size));
+    } else if (payload_type == 6) {
+        CHK(recovery_point(context, payload_type, payload_size));
     } else {
         printf("%*c payload (type=%"PRIu64", size=%"PRIu64")\n", context->indent * 4, ' ', payload_type, payload_size);
         context->indent++;

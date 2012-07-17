@@ -47,8 +47,11 @@
 #include <bmx/MD5.h>
 #include <bmx/CRC32.h>
 #include <bmx/MXFUtils.h>
+#include <bmx/Utils.h>
 #include <bmx/Version.h>
-#include "AS11Info.h"
+#include "AS11InfoOutput.h"
+#include "APPInfoOutput.h"
+#include "AvidInfoOutput.h"
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>
 
@@ -362,6 +365,30 @@ static string create_raw_filename(string prefix, bool is_video, uint32_t index, 
     return prefix + buffer;
 }
 
+static bool parse_app_events_mask(const char *mask_str, int *mask_out)
+{
+    const char *ptr = mask_str;
+    int mask = 0;
+
+    while (*ptr) {
+        if (*ptr == 'd' || *ptr == 'D')
+            mask |= DIGIBETA_DROPOUT_MASK;
+        else if (*ptr == 'p' || *ptr == 'P')
+            mask |= PSE_FAILURE_MASK;
+        else if (*ptr == 't' || *ptr == 'T')
+            mask |= TIMECODE_BREAK_MASK;
+        else if (*ptr == 'v' || *ptr == 'V')
+            mask |= VTR_ERROR_MASK;
+        else
+            return false;
+
+        ptr++;
+    }
+
+    *mask_out = mask;
+    return true;
+}
+
 static string get_version_info()
 {
     char buffer[256];
@@ -403,6 +430,11 @@ static void usage(const char *cmd)
     fprintf(stderr, " --no-seq-scan         Do not set the sequential scan hint for optimizing file caching\n");
 #endif
     fprintf(stderr, " --check-crc32         Check frame's essence data using CRC-32 frame metadata if available\n");
+    fprintf(stderr, " --app                 Print Archive Preservation Project metadata to stdout (single file only)\n");
+    fprintf(stderr, " --app-events <mask>   Print Archive Preservation Project events metadata to stdout (single file only)\n");
+    fprintf(stderr, "                         <mask> is a sequence of event types (e.g. dtv) identified using the following characters:\n");
+    fprintf(stderr, "                            d=digibeta dropout, p=PSE failure, t=timecode break, v=VTR error\n");
+    fprintf(stderr, " --avid                Print Avid metadata to stdout (single file only)\n");
 }
 
 int main(int argc, const char** argv)
@@ -429,6 +461,9 @@ int main(int argc, const char** argv)
     int file_flags = MXF_WIN32_FLAG_SEQUENTIAL_SCAN;
 #endif
     bool check_crc32 = false;
+    bool do_print_app = false;
+    int app_events_mask = 0;
+    bool do_print_avid = false;
     int cmdln_index;
 
 
@@ -565,7 +600,11 @@ int main(int argc, const char** argv)
             check_crc32 = true;
             do_read = true;
         }
-		else if (strcmp(argv[cmdln_index], "--ebu-core") == 0)
+        else if (strcmp(argv[cmdln_index], "--app") == 0)
+        {
+            do_print_app = true;
+        }
+        else if (strcmp(argv[cmdln_index], "--app-events") == 0)
         {
             if (cmdln_index + 1 >= argc)
             {
@@ -573,9 +612,30 @@ int main(int argc, const char** argv)
                 fprintf(stderr, "Missing argument for option '%s'\n", argv[cmdln_index]);
                 return 1;
             }
-			ebucore_filename = argv[cmdln_index + 1];
+            if (!parse_app_events_mask(argv[cmdln_index + 1], &app_events_mask))
+            {
+                usage(argv[0]);
+                fprintf(stderr, "Invalid value '%s' for option '%s'\n", argv[cmdln_index + 1], argv[cmdln_index]);
+                return 1;
+            }
             cmdln_index++;
         }
+        else if (strcmp(argv[cmdln_index], "--avid") == 0)
+        {
+            do_print_avid = true;
+        }
+	else if (strcmp(argv[cmdln_index], "--ebu-core") == 0)
+	{
+        {
+            if (cmdln_index + 1 >= argc)
+            {
+                usage(argv[0]);
+                fprintf(stderr, "Missing argument for option '%s'\n", argv[cmdln_index]);
+                return 1;
+            }
+	    ebucore_filename = argv[cmdln_index + 1];
+            cmdln_index++;
+	}
         else
         {
             break;
@@ -712,8 +772,13 @@ int main(int argc, const char** argv)
             file_reader = new MXFFileReader();
             if (do_print_as11)
                 as11_register_extensions(file_reader);
-			if (ebucore_filename)
-				RegisterMetadataExtensionsforEBUCore(file_reader->GetDataModel());
+            if (do_print_app || app_events_mask)
+                app_register_extensions(file_reader);
+            // avid extensions are already registered by the MXFReader
+
+            if (ebucore_filename)
+                RegisterMetadataExtensionsforEBUCore(file_reader->GetDataModel());
+
             OPEN_FILE(file_reader, 0)
 
             reader = file_reader;
@@ -799,8 +864,16 @@ int main(int argc, const char** argv)
             printf("\n");
         }
 
-        if (do_print_as11 && file_reader)
-            as11_print_info(file_reader);
+        if (file_reader) {
+            if (do_print_as11)
+                as11_print_info(file_reader);
+            if (do_print_app)
+                app_print_info(file_reader);
+            if (app_events_mask)
+                app_print_events(file_reader, app_events_mask);
+            if (do_print_avid)
+                avid_print_info(file_reader);
+        }
 
 		if (ebucore_filename) {
 			RegisterFrameworkObjectFactoriesforEBUCore(file_reader->GetHeaderMetadata());
@@ -895,7 +968,7 @@ int main(int argc, const char** argv)
 
             // choose number of samples to read in one go
             uint32_t max_samples_per_read = 1;
-            if (!have_video && sample_rate.numerator == 48000 && sample_rate.denominator == 1)
+            if (!have_video && sample_rate == SAMPLING_RATE_48K)
                 max_samples_per_read = 1920;
 
             // read data

@@ -1,4 +1,4 @@
-library_includedir = $(includedir)/libbmx-@BMX_MAJORMINOR@
+library_includedir = $(includedir)/bmx-@BMX_MAJORMINOR@
 nobase_library_include_HEADERS = \
 	bmx/ByteArray.h \
 	bmx/CRC32.h \
@@ -36,6 +36,7 @@ nobase_library_include_HEADERS = \
 	bmx/as11/AS11Clip.h \
 	bmx/as11/AS11DMS.h \
 	bmx/as11/AS11CoreFramework.h \
+	bmx/as11/AS11Info.h \
 	bmx/as11/AS11SegmentationFramework.h \
 	bmx/as11/AS11Track.h \
 	bmx/as11/UKDPPDMS.h \
@@ -64,11 +65,13 @@ nobase_library_include_HEADERS = \
 	bmx/avid_mxf/AvidClip.h \
 	bmx/avid_mxf/AvidD10Track.h \
 	bmx/avid_mxf/AvidDVTrack.h \
+	bmx/avid_mxf/AvidInfo.h \
 	bmx/avid_mxf/AvidMJPEGTrack.h \
 	bmx/avid_mxf/AvidMPEG2LGTrack.h \
 	bmx/avid_mxf/AvidPCMTrack.h \
 	bmx/avid_mxf/AvidPictureTrack.h \
 	bmx/avid_mxf/AvidTrack.h \
+	bmx/avid_mxf/AvidTypes.h \
 	bmx/avid_mxf/AvidUncTrack.h \
 	bmx/avid_mxf/AvidVC3Track.h \
 	bmx/clip_writer/ClipWriter.h \
@@ -99,6 +102,7 @@ nobase_library_include_HEADERS = \
 	bmx/mxf_reader/EssenceReader.h \
 	bmx/mxf_reader/FrameMetadataReader.h \
 	bmx/mxf_reader/IndexTableHelper.h \
+	bmx/mxf_reader/MXFAPPInfo.h \
 	bmx/mxf_reader/MXFFileReader.h \
 	bmx/mxf_reader/MXFFileTrackReader.h \
 	bmx/mxf_reader/MXFFrameBuffer.h \

@@ -40,6 +40,8 @@
 #include <cstdio>
 #include <cerrno>
 
+#include <sys/stat.h>
+#include <sys/types.h>
 #if defined(_WIN32)
 #include <sys/timeb.h>
 #include <time.h>
@@ -48,6 +50,7 @@
 #else
 #include <uuid/uuid.h>
 #include <sys/time.h>
+#include <unistd.h>
 #endif
 
 #include <algorithm>
@@ -433,11 +436,11 @@ string bmx::strip_suffix(string filename)
         return filename;
 }
 
-string bmx::get_abs_cwd()
+string bmx::get_cwd()
 {
 #define MAX_REASONABLE_PATH_SIZE    (10 * 1024)
 
-    string abs_cwd;
+    string cwd;
     char *temp_path;
     size_t path_size = 1024;
     while (true) {
@@ -460,10 +463,10 @@ string bmx::get_abs_cwd()
         }
         path_size += 1024;
     }
-    abs_cwd = temp_path;
+    cwd = temp_path;
     delete [] temp_path;
 
-    return abs_cwd;
+    return cwd;
 }
 
 string bmx::get_abs_filename(string base_dir, string filename)
@@ -489,6 +492,43 @@ bool bmx::check_file_exists(string filename)
 
     fclose(file);
     return true;
+}
+
+bool bmx::check_is_dir(string name)
+{
+    struct stat buf;
+    if (stat(name.c_str(), &buf) != 0)
+        return false;
+
+#if defined(_MSC_VER)
+    return ((buf.st_mode & _S_IFMT) == _S_IFDIR);
+#else
+    return S_ISDIR(buf.st_mode);
+#endif
+}
+
+bool bmx::check_is_abs_path(string name)
+{
+#if defined(_WIN32)
+    if (((name[0] >= 'A' && name[0] <= 'Z') || (name[0] >= 'a' && name[0] <= 'z')) &&
+          name[1] == ':')
+    {
+        return true;
+    }
+#else
+    if (name[0] == '/')
+        return true;
+#endif
+    return false;
+}
+
+bool bmx::check_ends_with_dir_separator(string name)
+{
+#if defined(_WIN32)
+    return !name.empty() && (name[name.size() - 1] == '/' || name[name.size() - 1] == '\\');
+#else
+    return !name.empty() && name[name.size() - 1] == '/';
+#endif
 }
 
 bmx::Timestamp bmx::generate_timestamp_now()
@@ -787,5 +827,29 @@ bool bmx::check_excess_d10_padding(const unsigned char *data, uint32_t data_size
     }
 
     return true;
+}
+
+void bmx::bmx_snprintf(char *str, size_t size, const char *format, ...)
+{
+    va_list ap;
+    va_start(ap, format);
+    bmx_vsnprintf(str, size, format, ap);
+    va_end(ap);
+}
+
+void bmx::bmx_vsnprintf(char *str, size_t size, const char *format, va_list ap)
+{
+#if defined(_MSC_VER)
+    int res = _vsnprintf(str, size, format, ap);
+    if (str && size > 0) {
+        if (res == -1 && errno == EINVAL)
+            str[0] = 0;
+        else
+            str[size - 1] = 0;
+    }
+#else
+    if (vsnprintf(str, size, format, ap) < 0 && str && size > 0)
+        str[0] = 0;
+#endif
 }
 

@@ -42,6 +42,7 @@
 #include <bmx/mxf_helper/MXFDescriptorHelper.h>
 #include <bmx/MD5.h>
 #include <bmx/Version.h>
+#include <bmx/Utils.h>
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>
 
@@ -56,7 +57,7 @@ static const uint32_t KAG_SIZE = 0x200;
 static const uint32_t INDEX_SID = 1;
 static const uint32_t BODY_SID  = 2;
 
-static const mxfRational AUDIO_SAMPLING_RATE = {48000, 1};
+static const mxfRational AUDIO_SAMPLING_RATE = SAMPLING_RATE_48K;
 
 static const uint32_t MEMORY_WRITE_CHUNK_SIZE = 8192;
 

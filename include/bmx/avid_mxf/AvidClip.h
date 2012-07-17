@@ -41,20 +41,12 @@
 
 #include <bmx/avid_mxf/AvidTrack.h>
 #include <bmx/mxf_helper/MXFFileFactory.h>
-#include <bmx/BMXTypes.h>
+#include <bmx/avid_mxf/AvidTypes.h>
 
 
 
 namespace bmx
 {
-
-
-typedef struct
-{
-    int64_t position;
-    Color color;
-    std::string comment;
-} AvidLocator;
 
 
 class AvidClip
@@ -85,7 +77,8 @@ public:
     // default source package creation
     mxfpp::SourcePackage* CreateDefaultTapeSource(std::string name, uint32_t num_video_tracks, uint32_t num_audio_tracks);
     mxfpp::SourcePackage* CreateDefaultImportSource(std::string uri, std::string name,
-                                                    uint32_t num_video_tracks, uint32_t num_audio_tracks);
+                                                    uint32_t num_video_tracks, uint32_t num_audio_tracks,
+                                                    bool timecode_track);
     std::vector<std::pair<mxfUMID, uint32_t> > GetPictureSourceReferences(mxfpp::SourcePackage *source_package);
     std::vector<std::pair<mxfUMID, uint32_t> > GetSoundSourceReferences(mxfpp::SourcePackage *source_package);
 
@@ -93,8 +86,7 @@ public:
     mxfpp::DataModel* GetDataModel() const { return mDataModel; }
     mxfpp::AvidHeaderMetadata* GetHeaderMetadata() const { return mHeaderMetadata; }
     mxfpp::ContentStorage* GetContentStorage() const { return mContentStorage; }
-    void RegisterTapeSource(mxfpp::SourcePackage *source_package);
-    void RegisterImportSource(mxfpp::SourcePackage *source_package);
+    void RegisterPhysicalSource(mxfpp::SourcePackage *source_package);
 
 public:
     AvidTrack* CreateTrack(EssenceType essence_type);
@@ -111,7 +103,7 @@ public:
 private:
     void CreateMinimalHeaderMetadata();
     void CreateMaterialPackage();
-    void SetTapeStartTimecode();
+    void SetPhysicalSourceStartTimecode();
 
     void UpdateHeaderMetadata();
     void UpdateTrackDurations(AvidTrack *avid_track, mxfpp::Track *track, mxfRational edit_rate, int64_t duration);
@@ -149,8 +141,8 @@ private:
     mxfpp::AvidHeaderMetadata *mHeaderMetadata;
     mxfpp::ContentStorage *mContentStorage;
     mxfpp::MaterialPackage *mMaterialPackage;
-    std::vector<mxfpp::SourcePackage*> mTapeSourcePackages;
-    std::vector<mxfpp::SourcePackage*> mImportSourcePackages;
+    mxfpp::SourcePackage* mPhysicalSourcePackage;
+    bool mHavePhysSourceTimecodeTrack;
     mxfpp::TimecodeComponent *mMaterialTimecodeComponent;
 
     uint32_t mLocatorDescribedTrackId;

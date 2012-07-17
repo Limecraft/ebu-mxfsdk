@@ -35,6 +35,7 @@
 
 #include <bmx/d10_mxf/D10PCMTrack.h>
 #include <bmx/MXFUtils.h>
+#include <bmx/Utils.h>
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>
 
@@ -79,7 +80,7 @@ void D10PCMTrack::SetOutputTrackNumber(uint32_t track_number)
 
 void D10PCMTrack::SetSamplingRate(mxfRational sampling_rate)
 {
-    BMX_CHECK(sampling_rate.numerator == 48000 && sampling_rate.denominator == 1);
+    BMX_CHECK(sampling_rate == SAMPLING_RATE_48K);
 
     mSoundDescriptorHelper->SetSamplingRate(sampling_rate);
 

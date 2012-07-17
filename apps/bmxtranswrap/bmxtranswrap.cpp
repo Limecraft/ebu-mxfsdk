@@ -56,6 +56,7 @@
 #include <bmx/wave/WaveFileIO.h>
 #include <bmx/URI.h>
 #include <bmx/MXFUtils.h>
+#include <bmx/Utils.h>
 #include <bmx/Version.h>
 #include "../AppUtils.h"
 #include "../AS11Helper.h"
@@ -103,7 +104,10 @@ static const char DEFAULT_BEXT_ORIGINATOR[] = "bmx";
 static const uint32_t DEFAULT_RW_INTL_SIZE  = (64 * 1024);
 
 
+namespace bmx
+{
 extern bool BMX_REGRESSION_TEST;
+};
 
 
 class TranswrapFileFactory : public MXFFileFactory
@@ -383,6 +387,10 @@ static void usage(const char *cmd)
     fprintf(stderr, "  avid:\n");
     fprintf(stderr, "    --project <name>        Set the Avid project name\n");
     fprintf(stderr, "    --tape <name>           Source tape name\n");
+    fprintf(stderr, "    --import <name>         Source import name. <name> is one of the following:\n");
+    fprintf(stderr, "                              - a file URL starting with 'file://'\n");
+    fprintf(stderr, "                              - an absolute Windows (starts with '[A-Z]:') or *nix (starts with '/') filename\n");
+    fprintf(stderr, "                              - a relative filename, which will be converted to an absolute filename\n");
     fprintf(stderr, "    --comment <string>      Add 'Comments' user comment to the MaterialPackage\n");
     fprintf(stderr, "    --desc <string>         Add 'Descript' user comment to the MaterialPackage\n");
     fprintf(stderr, "    --tag <name> <value>    Add <name> user comment to the MaterialPackage. Option can be used multiple times\n");
@@ -427,6 +435,7 @@ int main(int argc, const char** argv)
     const char *shim_annot = 0;
     const char *project_name = 0;
     const char *tape_name = 0;
+    const char *import_name = 0;
     map<string, string> user_comments;
     vector<LocatorOption> locators;
     AS11Helper as11_helper;
@@ -949,6 +958,17 @@ int main(int argc, const char** argv)
             tape_name = argv[cmdln_index + 1];
             cmdln_index++;
         }
+        else if (strcmp(argv[cmdln_index], "--import") == 0)
+        {
+            if (cmdln_index + 1 >= argc)
+            {
+                usage(argv[0]);
+                fprintf(stderr, "Missing argument for option '%s'\n", argv[cmdln_index]);
+                return 1;
+            }
+            import_name = argv[cmdln_index + 1];
+            cmdln_index++;
+        }
         else if (strcmp(argv[cmdln_index], "--comment") == 0)
         {
             if (cmdln_index + 1 >= argc)
@@ -1251,8 +1271,7 @@ int main(int argc, const char** argv)
             }
             else if (input_track_info->essence_type == D10_AES3_PCM)
             {
-                if (input_sound_info->sampling_rate.numerator != 48000 ||
-                    input_sound_info->sampling_rate.denominator != 1)
+                if (input_sound_info->sampling_rate != SAMPLING_RATE_48K)
                 {
                     log_warn("Track %"PRIszt" essence type D-10 AES-3 audio sampling rate %d/%d not supported\n",
                              i,
@@ -1281,8 +1300,7 @@ int main(int argc, const char** argv)
                              i,
                              essence_type_to_string(input_track_info->essence_type),
                              input_track_info->edit_rate.numerator, input_track_info->edit_rate.denominator,
-                             frame_rate.numerator, frame_rate.denominator,
-                             ClipWriter::ClipWriterTypeToString(clip_type).c_str());
+                             frame_rate.numerator, frame_rate.denominator);
                     is_supported = false;
                 } else if (!ClipWriterTrack::IsSupported(clip_type, input_track_info->essence_type, frame_rate)) {
                     log_warn("Track %"PRIszt" essence type '%s' @%d/%d fps not supported by clip type '%s'\n",
@@ -1574,7 +1592,7 @@ int main(int argc, const char** argv)
             if (mp_created_set)
                 avid_clip->SetMaterialPackageCreationDate(mp_created);
 
-            if (tape_name || input_filenames.size() == 1) {
+            if (tape_name || import_name) {
                 uint32_t num_picture_tracks = 0;
                 uint32_t num_sound_tracks = 0;
                 for (i = 0; i < reader->GetNumTrackReaders(); i++) {
@@ -1591,7 +1609,8 @@ int main(int argc, const char** argv)
                         num_picture_tracks++;
                 }
                 if (tape_name) {
-                    physical_package = avid_clip->CreateDefaultTapeSource(tape_name, num_picture_tracks, num_sound_tracks);
+                    physical_package = avid_clip->CreateDefaultTapeSource(tape_name,
+                                                                          num_picture_tracks, num_sound_tracks);
 
                     if (tp_uid_set)
                         physical_package->setPackageUID(tp_uid);
@@ -1600,11 +1619,14 @@ int main(int argc, const char** argv)
                         physical_package->setPackageModifiedDate(tp_created);
                     }
                 } else {
-                    string name = strip_suffix(strip_path(input_filenames[0]));
                     URI uri;
-                    uri.ParseFilename(input_filenames[0]);
-                    physical_package = avid_clip->CreateDefaultImportSource(uri.ToString(), name,
-                                                                            num_picture_tracks, num_sound_tracks);
+                    if (!parse_avid_import_name(import_name, &uri)) {
+                        log_error("Failed to parse import name '%s'\n", import_name);
+                        throw false;
+                    }
+                    physical_package = avid_clip->CreateDefaultImportSource(uri.ToString(), uri.GetLastSegment(),
+                                                                            num_picture_tracks, num_sound_tracks,
+                                                                            false);
                     if (reader->GetMaterialPackageUID() != g_Null_UMID)
                         physical_package->setPackageUID(reader->GetMaterialPackageUID());
                 }
@@ -1765,22 +1787,22 @@ int main(int argc, const char** argv)
                                 output_track.track->SetAVCIMode(AVCI_NO_OR_ALL_FRAME_HEADER_MODE);
                             else
                                 output_track.track->SetAVCIMode(AVCI_ALL_FRAME_HEADER_MODE);
-                            if (input_track_reader->HaveAVCIHeader()) {
+
+                            if (input_track_reader->HaveAVCIHeader())
+                            {
                                 output_track.track->SetAVCIHeader(input_track_reader->GetAVCIHeader(), AVCI_HEADER_SIZE);
-                            } else {
-                                if (!read_avci_header_data(input_track_info->essence_type, input_picture_info->edit_rate,
-                                                           avci_header_inputs, avci_header_data, sizeof(avci_header_data)))
-                                {
-                                    if (!allow_no_avci_head) {
-                                        log_error("Failed to read AVC-Intra header data from input file for %s\n",
-                                                  essence_type_to_string(input_track_info->essence_type));
-                                        throw false;
-                                    }
-                                }
-                                else
-                                {
-                                    output_track.track->SetAVCIHeader(avci_header_data, sizeof(avci_header_data));
-                                }
+                            }
+                            else if (read_avci_header_data(input_track_info->essence_type,
+                                                           input_picture_info->edit_rate, avci_header_inputs,
+                                                           avci_header_data, sizeof(avci_header_data)))
+                            {
+                                output_track.track->SetAVCIHeader(avci_header_data, sizeof(avci_header_data));
+                            }
+                            else if (!allow_no_avci_head)
+                            {
+                                log_error("Failed to read AVC-Intra header data from input file for %s\n",
+                                          essence_type_to_string(input_track_info->essence_type));
+                                throw false;
                             }
                         }
                         break;

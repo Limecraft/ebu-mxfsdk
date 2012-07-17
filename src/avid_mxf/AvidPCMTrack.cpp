@@ -36,6 +36,7 @@
 #include <bmx/avid_mxf/AvidPCMTrack.h>
 #include <bmx/avid_mxf/AvidClip.h>
 #include <bmx/MXFUtils.h>
+#include <bmx/Utils.h>
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>
 
@@ -73,7 +74,7 @@ AvidPCMTrack::~AvidPCMTrack()
 
 void AvidPCMTrack::SetSamplingRate(mxfRational sampling_rate)
 {
-    BMX_CHECK(sampling_rate.numerator == 48000 && sampling_rate.denominator == 1);
+    BMX_CHECK(sampling_rate == SAMPLING_RATE_48K);
 
     mWaveDescriptorHelper->SetSamplingRate(sampling_rate);
     mWaveDescriptorHelper->SetSampleRate(mWaveDescriptorHelper->GetSamplingRate());

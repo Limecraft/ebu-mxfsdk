@@ -120,9 +120,14 @@ public:
         va_list varg;
         va_start(varg, format);
 #if defined(_MSC_VER)
-        _vsnprintf(message, sizeof(message), format, varg);
+        int res = _vsnprintf(message, sizeof(message), format, varg);
+        if (res == -1 && errno == EINVAL)
+            message[0] = 0;
+        else
+            message[sizeof(message) - 1] = 0;
 #else
-        vsnprintf(message, sizeof(message), format, varg);
+        if (vsnprintf(message, sizeof(message), format, varg) < 0)
+            message[0] = 0;
 #endif
         va_end(varg);
 

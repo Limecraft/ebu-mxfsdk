@@ -33,6 +33,8 @@
 #define __BMX_UTILS_H__
 
 
+#include <cstdarg>
+
 #include <string>
 #include <vector>
 
@@ -88,10 +90,13 @@ std::string strip_path(std::string filename);
 std::string strip_name(std::string filename);
 std::string strip_suffix(std::string filename);
 
-std::string get_abs_cwd();
+std::string get_cwd();
 std::string get_abs_filename(std::string base_dir, std::string filename);
 
 bool check_file_exists(std::string filename);
+bool check_is_dir(std::string name);
+bool check_is_abs_path(std::string name);
+bool check_ends_with_dir_separator(std::string name);
 
 Timestamp generate_timestamp_now();
 
@@ -117,6 +122,9 @@ Timecode decode_smpte_timecode(Rational frame_rate, const unsigned char *smpte_t
 void encode_smpte_timecode(Timecode timecode, bool field_mark, unsigned char *smpte_tc, unsigned int size);
 
 bool check_excess_d10_padding(const unsigned char *data, uint32_t data_size, uint32_t target_size);
+
+void bmx_snprintf(char *str, size_t size, const char *format, ...);
+void bmx_vsnprintf(char *str, size_t size, const char *format, va_list ap);
 
 
 };

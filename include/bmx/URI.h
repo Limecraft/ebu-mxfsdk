@@ -38,6 +38,15 @@
 #include <uriparser/Uri.h>
 
 
+#if defined(_WIN32)
+#define DIR_SEPARATOR_C     '\\'
+#define DIR_SEPARATOR_S     "\\"
+#else
+#define DIR_SEPARATOR_C     '/'
+#define DIR_SEPARATOR_S     "/"
+#endif
+
+
 
 namespace bmx
 {
@@ -73,6 +82,8 @@ public:
     URI(const URI &uri);
     ~URI();
 
+    void SetWindowsNameConvert(bool windows_name_convert);
+
     bool Parse(const char *uri_str);
     bool Parse(std::string uri_str);
     bool ParseFilename(std::string filename);
@@ -104,6 +115,7 @@ private:
 private:
     UriUriA mUriUri;
     URIStr mSourceStr;
+    bool mWindowsNameConvert;
 };
 
 

@@ -36,9 +36,6 @@
 #include <cstring>
 #include <cerrno>
 #include <cstdio>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 #include <sys/stat.h>
 #include <sys/types.h>
 #if defined(_WIN32)
@@ -64,35 +61,14 @@ static const char MEDIA_SUBDIR_NAME[]   = "media";
 
 
 
-static bool check_is_dir(string name)
-{
-    struct stat buf;
-    if (stat(name.c_str(), &buf) != 0)
-        return false;
-
-#if defined(_MSC_VER)
-    return ((buf.st_mode & _S_IFMT) == _S_IFDIR);
-#else
-    return S_ISDIR(buf.st_mode);
-#endif
-}
-
-
-
 AS02Bundle* AS02Bundle::OpenNew(string root_directory, bool create_directory,
                                 MXFFileFactory *file_factory, bool take_factory_ownership)
 {
     string root_filepath;
-    if (root_directory.empty() || root_directory[0] != '/') {
-        root_filepath = get_abs_cwd();
-        if (!root_directory.empty())
-            root_filepath.append("/").append(root_directory);
-    } else {
-        root_filepath = root_directory;
-    }
-
-    if (root_filepath[root_filepath.size() - 1] != '/')
-        root_filepath.append("/");
+    if (check_ends_with_dir_separator(root_directory))
+        root_filepath = get_abs_filename(get_cwd(), root_directory.substr(0, root_directory.size() - 1));
+    else
+        root_filepath = get_abs_filename(get_cwd(), root_directory);
 
     if (create_directory) {
 #if defined(_WIN32)
@@ -110,8 +86,8 @@ AS02Bundle* AS02Bundle::OpenNew(string root_directory, bool create_directory,
     }
 
     string sub_dir;
-    sub_dir.reserve(root_filepath.size() + sizeof(MEDIA_SUBDIR_NAME));
-    sub_dir.append(root_filepath).append(MEDIA_SUBDIR_NAME);
+    sub_dir.reserve(root_filepath.size() + 1 + sizeof(MEDIA_SUBDIR_NAME));
+    sub_dir.append(root_filepath).append(DIR_SEPARATOR_S).append(MEDIA_SUBDIR_NAME);
 #if defined(_WIN32)
     if (_mkdir(sub_dir.c_str()) != 0) {
 #else
@@ -133,8 +109,7 @@ AS02Bundle::AS02Bundle(string root_filepath, MXFFileFactory *file_factory, bool 
     mFileFactory = file_factory;
     mOwnFileFactory = take_factory_ownership;
 
-    BMX_ASSERT(!root_filepath.empty() && root_filepath[root_filepath.size() - 1] == '/');
-    mBundleName = strip_path(root_filepath.substr(0, root_filepath.size() - 1));
+    mBundleName = strip_path(root_filepath);
     BMX_CHECK_M(!mBundleName.empty(), ("Empty bundle name"));
 
     mManifest.SetBundleName(mBundleName);
@@ -154,8 +129,8 @@ string AS02Bundle::CreatePrimaryVersionFilepath(string *rel_uri_out)
 
     // 'primary' version has same name as bundle
     string result;
-    result.reserve(mRootFilepath.size() + mBundleName.size() + 4);
-    result.append(mRootFilepath).append(mBundleName).append(".mxf");
+    result.reserve(mRootFilepath.size() + 1 + mBundleName.size() + 4);
+    result.append(mRootFilepath).append(DIR_SEPARATOR_S).append(mBundleName).append(".mxf");
     if (rel_uri_out) {
         URI rel_uri;
         rel_uri.ParseFilename(mBundleName + ".mxf");
@@ -168,8 +143,8 @@ string AS02Bundle::CreatePrimaryVersionFilepath(string *rel_uri_out)
 string AS02Bundle::CreateVersionFilepath(string name, string *rel_uri_out)
 {
     string result;
-    result.reserve(mRootFilepath.size() + name.size() + 4);
-    result.append(mRootFilepath).append(name).append(".mxf");
+    result.reserve(mRootFilepath.size() + 1 + name.size() + 4);
+    result.append(mRootFilepath).append(DIR_SEPARATOR_S).append(name).append(".mxf");
     if (rel_uri_out) {
         URI rel_uri;
         rel_uri.ParseFilename(name + ".mxf");
@@ -190,11 +165,12 @@ string AS02Bundle::CreateEssenceComponentFilepath(string version_filename, bool 
     string version_name = strip_suffix(version_filename);
 
     string result;
-    result.reserve(mRootFilepath.size() + sizeof(MEDIA_SUBDIR_NAME) + 1 + version_name.size() + sizeof(suffix));
-    result.append(mRootFilepath).append(MEDIA_SUBDIR_NAME).append("/").append(version_name).append(suffix);
+    result.reserve(mRootFilepath.size() + 1 + sizeof(MEDIA_SUBDIR_NAME) + 1 + version_name.size() + sizeof(suffix));
+    result.append(mRootFilepath).append(DIR_SEPARATOR_S).append(MEDIA_SUBDIR_NAME).append(DIR_SEPARATOR_S).
+           append(version_name).append(suffix);
     if (rel_uri_out) {
         URI rel_uri;
-        rel_uri.ParseFilename(string(MEDIA_SUBDIR_NAME).append("/").append(version_name).append(suffix));
+        rel_uri.ParseFilename(string(MEDIA_SUBDIR_NAME).append(DIR_SEPARATOR_S).append(version_name).append(suffix));
         *rel_uri_out = rel_uri.ToString();
     }
 
@@ -209,17 +185,17 @@ string AS02Bundle::CompleteFilepath(string rel_uri_in)
     string filename = rel_uri.ToFilename();
 
     string comp_filepath;
-    comp_filepath.reserve(mRootFilepath.size() + filename.size());
-    comp_filepath.append(mRootFilepath).append(filename);
+    comp_filepath.reserve(mRootFilepath.size() + 1 + filename.size());
+    comp_filepath.append(mRootFilepath).append(DIR_SEPARATOR_S).append(filename);
 
     return comp_filepath;
 }
 
 void AS02Bundle::FinalizeBundle()
 {
-    mShim.Write(mRootFilepath + SHIM_NAME);
+    mShim.Write(mRootFilepath + DIR_SEPARATOR_S + SHIM_NAME);
     mManifest.RegisterFile(SHIM_NAME, SHIM_FILE_ROLE);
 
-    mManifest.Write(this, mRootFilepath + MANIFEST_NAME);
+    mManifest.Write(this, mRootFilepath + DIR_SEPARATOR_S + MANIFEST_NAME);
 }
 
