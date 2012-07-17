@@ -666,22 +666,27 @@ int main(int argc, const char** argv)
 					InsertEBUCoreFramework(mHeaderMetadata, framework);
 				}
 
-				// write the header metadata into the file
 
-				// seek back to the serialization position for the header metadata
-				mFile->seek(pos_write_start_metadata, SEEK_SET);
+				// we write the metadata to a buffer memory file first, 
+				// write 1) the in-mem metadata structure, 2) then dark/unknown sets
+				MXFMemoryFile *cMemFile;
+				mxf_mem_file_open_new(MEMORY_WRITE_CHUNK_SIZE, /* virtual pos: don't use an offset unless req, otherwise confusing */ 0, &cMemFile);
+				MXFFile *mxfMemFile = mxf_mem_file_get_file(cMemFile);
+				// temporarily wrap the the memory file for use by the libMXF++ classe
+				File memFile(mxfMemFile);
+
+				// write the header metadata into the file
+				uint64_t footerThisPartition = footerPartition->getThisPartition();
+				footerPartition->setThisPartition(0);	// temporarily override so that internals don't get confused 
+														// (need to put this back at the end anyway)
 				KAGFillerWriter reserve_filler_writer(footerPartition);
-				mHeaderMetadata->write(mFile, footerPartition, &reserve_filler_writer);
-				uint64_t mHeaderMetadataEndPos = mFile->tell();  // need this position when we re-write the header metadata */
+				mHeaderMetadata->write(&memFile, footerPartition, &reserve_filler_writer);
+				uint64_t mHeaderMetadataEndPos = memFile.tell();  // need this position when we re-write the header metadata */
+				footerPartition->setThisPartition(footerThisPartition);
 
 				// loop back to the beginning of the metadata and find elements that were skipped,
 				// because, they were dark, append these to the end of the header metadata
 				uint8_t *KLVBuffer = new uint8_t[64*1024];
-
-				// first, open a memory file that will buffer the unknown/dark metadata sets
-				MXFMemoryFile *memFile;
-				mxf_mem_file_open_new(MEMORY_WRITE_CHUNK_SIZE, /* virtual pos: write at the end of the current header metadata */ 0, &memFile);
-				MXFFile *mxfMemFile = mxf_mem_file_get_file(memFile);
 
 				mFile->seek(pos_start_metadata, SEEK_SET);
 				uint64_t count = 0;
@@ -715,9 +720,12 @@ int main(int argc, const char** argv)
 				uint64_t memFileSize = mxf_file_tell(mxfMemFile);
 
 				// write the memory file to the physical file
-				mFile->seek(mHeaderMetadataEndPos, SEEK_SET);
-				mFile->setMemoryFile(memFile);
+				// seek back to the serialization position for the header metadata
+				mFile->seek(pos_write_start_metadata, SEEK_SET);
+				mFile->setMemoryFile(cMemFile);
 				mFile->closeMemoryFile();
+				// bit of a hack to make sure the memFile isn't closed again...
+				memFile.swapCFile(NULL);
 
 				// write the index tables back to the footer partition
 				mFile->write(index_bytes.GetBytes(), index_bytes.GetSize());
@@ -725,7 +733,7 @@ int main(int argc, const char** argv)
 				mFile->writeRIP();
 
 				// seek backwards and update footer partition pack
-				footerPartition->setHeaderByteCount(footerPartition->getHeaderByteCount() + memFileSize); // Add dark metadata elements to file
+				footerPartition->setHeaderByteCount(/*footerPartition->getHeaderByteCount() + */ memFileSize); // Add dark metadata elements to file
 				mFile->seek(start_footer_partition, SEEK_SET);
 				footerPartition->write(mFile);
 
