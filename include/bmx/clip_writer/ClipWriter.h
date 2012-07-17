@@ -42,8 +42,6 @@
 
 #include <bmx/clip_writer/ClipWriterTrack.h>
 
-#include <metadata/EBUCoreDMS++.h>
-
 using namespace mxfpp;
 
 namespace bmx
