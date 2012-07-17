@@ -448,64 +448,6 @@ void ClipWriter::PrepareHeaderMetadata() {
 	BMX_EXCEPTION(("Clip type not supported for EBU Core embedding"));
 }
 
-void ClipWriter::InsertEBUCoreFramework(DMFramework *framework) {
-
-	HeaderMetadata *metadata = GetHeaderMetadata();
-	BMX_ASSERT(metadata != NULL);
-
-	// Append the EBU Core DMS label to the Preface
-	AppendDMSLabel(metadata, MXF_DM_L(EBUCoreDescriptiveScheme));
-	// Insert the framework
-    InsertFramework(metadata, 10001, "EBU_Core", framework);
-}
-
-void ClipWriter::AppendDMSLabel(HeaderMetadata *header_metadata, mxfUL scheme_label)
-{
-    BMX_ASSERT(header_metadata);
-
-    vector<mxfUL> dm_schemes = header_metadata->getPreface()->getDMSchemes();
-    size_t i;
-    for (i = 0; i < dm_schemes.size(); i++) {
-        if (mxf_equals_ul(&dm_schemes[i], &scheme_label))
-            break;
-    }
-    if (i >= dm_schemes.size())
-        header_metadata->getPreface()->appendDMSchemes(scheme_label);
-}
-
-void ClipWriter::InsertFramework(HeaderMetadata *header_metadata, uint32_t track_id, string track_name, DMFramework *framework)
-{
-    BMX_ASSERT(header_metadata);
-
-    MaterialPackage *material_package = header_metadata->getPreface()->findMaterialPackage();
-    BMX_ASSERT(material_package);
-
-    // Preface - ContentStorage - Package - DM Track
-    StaticTrack *dm_track = new StaticTrack(header_metadata);
-    material_package->appendTracks(dm_track);
-    dm_track->setTrackName(track_name);
-    dm_track->setTrackID(track_id);
-    dm_track->setTrackNumber(0);
-
-    // Preface - ContentStorage - Package - DM Track - Sequence
-    Sequence *sequence = new Sequence(header_metadata);
-    dm_track->setSequence(sequence);
-    sequence->setDataDefinition(MXF_DDEF_L(DescriptiveMetadata));
-
-    // Preface - ContentStorage - Package - DM Track - Sequence - DMSegment
-    DMSegment *dm_segment = new DMSegment(header_metadata);
-    sequence->appendStructuralComponents(dm_segment);
-    dm_segment->setDataDefinition(MXF_DDEF_L(DescriptiveMetadata));
-
-    // move the framework set after the dm degment set
-    mxf_remove_set(header_metadata->getCHeaderMetadata(), framework->getCMetadataSet());
-    BMX_CHECK(mxf_add_set(header_metadata->getCHeaderMetadata(), framework->getCMetadataSet()));
-
-    // Preface - ContentStorage - Package - DM Track - Sequence - DMSegment - DMFramework
-    dm_segment->setDMFramework(framework);
-}
-
-
 Rational ClipWriter::GetFrameRate() const
 {
     switch (mType)

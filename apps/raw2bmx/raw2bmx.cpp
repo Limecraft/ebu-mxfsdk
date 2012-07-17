@@ -2985,7 +2985,7 @@ int main(int argc, const char** argv)
 		if (ebucore_filename) {
 			EBUCore::RegisterExtensions(clip->GetDataModel());
 			DMFramework *framework = Process(ebucore_filename, clip->GetHeaderMetadata());
-			clip->InsertEBUCoreFramework(framework);
+			InsertEBUCoreFramework(clip->GetHeaderMetadata(), framework);
 		}
 
         // add AS-11 descriptive metadata

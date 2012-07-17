@@ -92,10 +92,6 @@ public:
     mxfpp::DataModel* GetDataModel() const;
 	void PrepareHeaderMetadata();
 
-	void InsertEBUCoreFramework(DMFramework *framework);
-	void AppendDMSLabel(HeaderMetadata *header_metadata, mxfUL scheme_label);
-	void InsertFramework(HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, DMFramework *framework);
-
 public:
     Rational GetFrameRate() const;
 
