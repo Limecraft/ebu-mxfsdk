@@ -1,4 +1,4 @@
-SUBDIRS = . mxf2raw raw2bmx bmxtranswrap
+SUBDIRS = . mxf2raw raw2bmx bmxtranswrap ebu2mxf
 
 
 noinst_LTLIBRARIES = libapp.la
