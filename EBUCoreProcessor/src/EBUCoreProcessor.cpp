@@ -1842,7 +1842,7 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 	dest.relation(rels);
 }
 
-DMFramework* Process(std::string location, HeaderMetadata *destination) {
+DMFramework* Process(const char* location, HeaderMetadata *destination) {
 	std::ifstream input(location);
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
 
@@ -1873,7 +1873,7 @@ void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model)
 	EBUCore::RegisterExtensions(data_model);	
 }
 
-DMFramework* Process(std::string location) {
+DMFramework* Process(const char* location) {
 
 	DataModel *mDataModel = new DataModel();
 	RegisterMetadataExtensionsforEBUCore(mDataModel);
