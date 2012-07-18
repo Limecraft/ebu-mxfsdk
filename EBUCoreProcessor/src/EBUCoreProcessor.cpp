@@ -652,7 +652,7 @@ std::string convert(xml_schema::idrefs& source) {
 	return ss.str();
 }
 
-xml_schema::idrefs* convert_idrefs(std::string& source) {
+xml_schema::idrefs* convert_idrefs(const std::string& source) {
 	const char *delims = " ";
 	xml_schema::idrefs *dest = new xml_schema::idrefs();
     // Skip delimiters at beginning.
