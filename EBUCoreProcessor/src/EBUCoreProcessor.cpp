@@ -6,7 +6,7 @@
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>
 
-#include "EBUcoreProcessor.h"
+#include "EBUCoreProcessor.h"
 
 #include "EBU_CORE_20110915.hxx"
 
@@ -543,13 +543,17 @@ void mapMetadataSchemeInformation(ebuCoreMainType& source, ebucoreMetadataScheme
 	// to look through the attributes of the source node and see if there 
 	// is a matching attribute
 	xercesc_3_1::DOMNamedNodeMap* attrs = source._node()->getAttributes();
-	xercesc_3_1::DOMNode* version_node = attrs->getNamedItem(L"version");
+	XMLCh* str_version = xercesc_3_1::XMLString::transcode("version");
+	const xercesc_3_1::DOMNode* version_node = attrs->getNamedItem(str_version);
+	xercesc_3_1::XMLString::release(&str_version);
 	if (version_node != NULL) {
 		std::wstring version(source.version()._node()->getTextContent());
 		std::string truc_version(version.begin(), version.end());
 		dest->setebucoreMetadataSchemeVersion(truc_version);
 	}
-	xercesc_3_1::DOMNode* schema_node = attrs->getNamedItem(L"schema");
+	XMLCh* str_schema = xercesc_3_1::XMLString::transcode("schema");
+	const xercesc_3_1::DOMNode* schema_node = attrs->getNamedItem(str_schema);
+	xercesc_3_1::XMLString::release(&str_schema);
 	if (schema_node != NULL) {
 		std::wstring schema(source.schema()._node()->getTextContent());
 		std::string truc_schema(schema.begin(), schema.end());
