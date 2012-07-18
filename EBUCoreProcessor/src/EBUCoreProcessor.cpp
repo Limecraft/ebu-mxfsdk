@@ -12,6 +12,8 @@
 
 #include <metadata/EBUCoreDMS++.h>
 
+#include <xercesc/util/TransService.hpp>
+
 using namespace ebuCore_2011;
 using namespace mxfpp;
 using namespace bmx;
@@ -547,17 +549,17 @@ void mapMetadataSchemeInformation(ebuCoreMainType& source, ebucoreMetadataScheme
 	const xercesc_3_1::DOMNode* version_node = attrs->getNamedItem(str_version);
 	xercesc_3_1::XMLString::release(&str_version);
 	if (version_node != NULL) {
-		std::wstring version(source.version()._node()->getTextContent());
-		std::string truc_version(version.begin(), version.end());
-		dest->setebucoreMetadataSchemeVersion(truc_version);
+		xercesc_3_1::TranscodeToStr version(source.version()._node()->getTextContent(), "UTF-8");
+		std::string std_version((char*)version.str());
+		dest->setebucoreMetadataSchemeVersion(std_version);
 	}
 	XMLCh* str_schema = xercesc_3_1::XMLString::transcode("schema");
 	const xercesc_3_1::DOMNode* schema_node = attrs->getNamedItem(str_schema);
 	xercesc_3_1::XMLString::release(&str_schema);
 	if (schema_node != NULL) {
-		std::wstring schema(source.schema()._node()->getTextContent());
-		std::string truc_schema(schema.begin(), schema.end());
-		dest->setebucoreMetadataScheme(truc_schema);
+		xercesc_3_1::TranscodeToStr schema(source.schema()._node()->getTextContent(), "UTF-8");
+		std::string std_schema((char*)schema.str());
+		dest->setebucoreMetadataScheme(std_schema);
 	}
 }
 
