@@ -187,7 +187,7 @@ fi
 AC_SUBST(WARN_CFLAGS)
 
 BMX_CFLAGS="${WARN_CFLAGS} ${LIBMXF_CFLAGS} ${LIBMXFPP_CFLAGS} \
-	${LIBURIPARSER_CFLAGS} -I\$(top_srcdir)/include"
+	${LIBURIPARSER_CFLAGS} -I\$(top_srcdir)/include -I\$(top_srcdir)/EBUCoreProcessor/include"
 AC_SUBST(BMX_CFLAGS)
 
 BMX_LIBADDLIBS="${UUIDLIB} ${LIBURIPARSER_LIBS} ${LIBMXF_LIBS} ${LIBMXFPP_LIBS}"
@@ -238,6 +238,8 @@ AC_CONFIG_FILES([
 	src/as11/Makefile
 	src/wave/Makefile
 	src/clip_writer/Makefile
+	EBUCoreProcessor/Makefile
+	EBUCoreProcessor/src/Makefile
 	test/Makefile
 	test/as02/Makefile
 	test/as11/Makefile
@@ -251,6 +253,7 @@ AC_CONFIG_FILES([
 	apps/mxf2raw/Makefile
 	apps/raw2bmx/Makefile
 	apps/bmxtranswrap/Makefile
+	apps/ebu2mxf/Makefile
 	tools/Makefile
 	msvc_build/Makefile
 	msvc_build/vs8/Makefile

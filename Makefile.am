@@ -1,4 +1,4 @@
-SUBDIRS = include src apps tools test msvc_build
+SUBDIRS = include src EBUCoreProcessor apps tools test msvc_build
 
 
 pkgconfig_DATA = bmx-$(BMX_MAJORMINOR).pc

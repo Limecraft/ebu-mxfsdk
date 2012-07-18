@@ -625,7 +625,6 @@ int main(int argc, const char** argv)
             do_print_avid = true;
         }
 	else if (strcmp(argv[cmdln_index], "--ebu-core") == 0)
-	{
         {
             if (cmdln_index + 1 >= argc)
             {
