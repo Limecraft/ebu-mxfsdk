@@ -51,8 +51,9 @@
 #include <bmx/MD5.h>
 #include <bmx/CRC32.h>
 #include <bmx/MXFUtils.h>
+#include <bmx/Utils.h>
 #include <bmx/Version.h>
-#include "AS11Info.h"
+#include <bmx/as11/AS11Info.h>
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>
 
