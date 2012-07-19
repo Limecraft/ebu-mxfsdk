@@ -18,6 +18,14 @@ using namespace ebuCore_2011;
 using namespace mxfpp;
 using namespace bmx;
 
+namespace EBUCore {
+
+// {DAE59218-AF8D-47D4-A216-B6C648EA548C}
+static const mxfUUID ProductUID = 
+{ 0xda, 0xe5, 0x92, 0x18, 0xaf, 0x8d, 0x47, 0xd4, 0xa2, 0x16, 0xb6, 0xc6, 0x48, 0xea, 0x54, 0x8c };
+static const mxfProductVersion EBU_SDK_PRODUCT_VERSION = {0, 1, 0, 0, 0};
+
+
 #define	SIMPLE_MAP(source, sourceProperty, dest, destProperty)	\
 	dest->destProperty(source.sourceProperty().get());
 #define	SIMPLE_MAP_NO_GET(source, sourceProperty, dest, destProperty)	\
@@ -33,7 +41,7 @@ using namespace bmx;
 #define NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, sourceProperty, destType, mapMethod, dest, destProperty) \
 	if (source.sourceProperty().present()) {	\
 		destType *obj = newAndModifyObject<destType>(dest->getHeaderMetadata(), mod);	\
-		mapMethod(source.sourceProperty().get(), obj);	\
+		mapMethod(source.sourceProperty().get(), obj, mod);	\
 		dest->destProperty(obj);	\
 	}
 
@@ -41,7 +49,7 @@ using namespace bmx;
 	{ std::vector<destType*> vec_dest_destProperty;	\
 	for (iteratorType it = source.sourceProperty().begin(); it != source.sourceProperty().end(); it++) {	\
 		destType *obj = newAndModifyObject<destType>(dest->getHeaderMetadata(), mod);	\
-		mapMethod(*it, obj);	\
+		mapMethod(*it, obj, mod);	\
 		vec_dest_destProperty.push_back(obj);	\
 	}	\
 	dest->destProperty(vec_dest_destProperty); }
@@ -49,7 +57,7 @@ using namespace bmx;
 #define	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, sourceProperty, destType, mapMethod, dest, destProperty) \
 	if (source.sourceProperty().present()) {	\
 		destType *obj = newAndModifyObject<destType>(dest->getHeaderMetadata(), mod);	\
-		mapMethod(source.sourceProperty().get(), obj);	\
+		mapMethod(source.sourceProperty().get(), obj, mod);	\
 		std::vector<destType*> v_dest_destProperty;	\
 		v_dest_destProperty.push_back(obj);	\
 		dest->destProperty(v_dest_destProperty);	\
@@ -140,7 +148,7 @@ using namespace bmx;
 
 class ObjectModifier {
 public:
-	virtual void Modify(InterchangeObject *obj);
+	virtual void Modify(InterchangeObject *obj) = 0;
 };
 
 class GenerationUIDAppender : public ObjectModifier {
@@ -1842,28 +1850,56 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 	dest.relation(rels);
 }
 
-DMFramework* Process(const char* location, HeaderMetadata *destination) {
+Identification* GenerateEBUCoreIdentificationSet(mxfpp::HeaderMetadata *destination) {
+	mxfUUID GenerationUID;
+	mxfTimestamp GenerationTime;
+	mxf_generate_uuid(&GenerationUID);
+	mxf_get_timestamp_now(&GenerationTime);
+
+	Identification* newId = new Identification(destination);
+	destination->getPreface()->appendIdentifications(newId);
+	newId->initialise("EBU", "EBUCore SDK", "0.1", ProductUID);
+	newId->setProductVersion(EBU_SDK_PRODUCT_VERSION);
+	newId->setModificationDate(GenerationTime);
+	newId->setThisGenerationUID(GenerationUID);
+	newId->setGenerationUID(GenerationUID);
+	return newId;
+}
+
+DMFramework* Process(const char* location, HeaderMetadata *destination, Identification* identificationToAppend) {
 	std::ifstream input(location);
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
 
-	//std::wstring version(ebuCoreMainElementPtr->version()._node()->getTextContent());
-	//std::wcout << version << std::endl;
-
 	// Generate a new Generation UID if necessary, and provide to each mapping function
-
+	GenerationUIDAppender *appender = NULL;
+	if (identificationToAppend != NULL) {
+		appender = new GenerationUIDAppender(identificationToAppend->getThisGenerationUID());
+	}
 	ebucoreMainFramework *framework = new ebucoreMainFramework(destination);
+	appender->Modify(framework);
 	framework->setdocumentId(location);	// use the file location as document id
 
 	ebucoreCoreMetadata *core = new ebucoreCoreMetadata(destination);
-	mapCoreMetadata(ebuCoreMainElementPtr->coreMetadata(), core);
+	appender->Modify(core);
+	if (appender != NULL)
+		mapCoreMetadata(ebuCoreMainElementPtr->coreMetadata(), core, appender);
+	else
+		mapCoreMetadata(ebuCoreMainElementPtr->coreMetadata(), core);
 
 	ebucoreMetadataSchemeInformation *info = new ebucoreMetadataSchemeInformation(destination);
-	mapMetadataSchemeInformation(*ebuCoreMainElementPtr, info);
+	appender->Modify(info);
+	if (appender != NULL)
+		mapMetadataSchemeInformation(*ebuCoreMainElementPtr, info, appender);
+	else
+		mapMetadataSchemeInformation(*ebuCoreMainElementPtr, info);
 
 	framework->setcoreMetadata(core);
 	framework->setmetadataSchemeInformation(info);
 
 	std::cout << framework->getdocumentId();
+
+	if (appender!=NULL)
+		delete appender;
 
 	return framework;
 }
@@ -1883,7 +1919,7 @@ DMFramework* Process(const char* location) {
 	return Process(location, md);
 }
 
-void InsertFramework(HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, DMFramework *framework)
+void InsertFramework(HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, DMFramework *framework, ObjectModifier *mod = NULL)
 {
     BMX_ASSERT(header_metadata);
 
@@ -1892,6 +1928,7 @@ void InsertFramework(HeaderMetadata *header_metadata, uint32_t track_id, std::st
 
     // Preface - ContentStorage - Package - DM Track
     StaticTrack *dm_track = new StaticTrack(header_metadata);
+	if (mod!=NULL) mod->Modify(dm_track);
     material_package->appendTracks(dm_track);
     dm_track->setTrackName(track_name);
     dm_track->setTrackID(track_id);
@@ -1899,11 +1936,13 @@ void InsertFramework(HeaderMetadata *header_metadata, uint32_t track_id, std::st
 
     // Preface - ContentStorage - Package - DM Track - Sequence
     Sequence *sequence = new Sequence(header_metadata);
+	if (mod!=NULL) mod->Modify(sequence);
     dm_track->setSequence(sequence);
     sequence->setDataDefinition(MXF_DDEF_L(DescriptiveMetadata));
 
     // Preface - ContentStorage - Package - DM Track - Sequence - DMSegment
     DMSegment *dm_segment = new DMSegment(header_metadata);
+	if (mod!=NULL) mod->Modify(dm_segment);
     sequence->appendStructuralComponents(dm_segment);
     dm_segment->setDataDefinition(MXF_DDEF_L(DescriptiveMetadata));
 
@@ -1943,14 +1982,23 @@ void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata)
 	EBUCore::RegisterFrameworkObjectFactory(metadata);
 }
 
-void InsertEBUCoreFramework(HeaderMetadata *header_metadata, DMFramework *framework) {
+void InsertEBUCoreFramework(HeaderMetadata *header_metadata, DMFramework *framework, Identification *identificationToAppend) {
 
 	BMX_ASSERT(header_metadata != NULL);
 
 	// Append the EBU Core DMS label to the Preface
 	AppendDMSLabel(header_metadata, MXF_DM_L(EBUCoreDescriptiveScheme));
 	// Insert the framework
-    InsertFramework(header_metadata, 10001, "EBU_Core", framework);
+
+	GenerationUIDAppender *appender = NULL;
+	if (identificationToAppend != NULL) {
+		appender = new GenerationUIDAppender(identificationToAppend->getThisGenerationUID());
+	}
+
+    InsertFramework(header_metadata, 10001, "EBU_Core", framework, appender);
+
+	if (appender!=NULL)
+		delete appender;
 }
 
 static std::vector<DMFramework*> ebu_get_static_frameworks(MaterialPackage *mp)
@@ -2047,3 +2095,4 @@ void ReadAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilenam
 
 }
 
+} // namespace EBUCore

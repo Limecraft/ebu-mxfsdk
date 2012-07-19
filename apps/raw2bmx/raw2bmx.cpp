@@ -2983,9 +2983,9 @@ int main(int argc, const char** argv)
 
 		// Register EBU Core extensions in the metadata data model
 		if (ebucore_filename) {
-			RegisterMetadataExtensionsforEBUCore(clip->GetDataModel());
-			DMFramework *framework = Process(ebucore_filename, clip->GetHeaderMetadata());
-			InsertEBUCoreFramework(clip->GetHeaderMetadata(), framework);
+			EBUCore::RegisterMetadataExtensionsforEBUCore(clip->GetDataModel());
+			DMFramework *framework = EBUCore::Process(ebucore_filename, clip->GetHeaderMetadata());
+			EBUCore::InsertEBUCoreFramework(clip->GetHeaderMetadata(), framework);
 		}
 
         // add AS-11 descriptive metadata

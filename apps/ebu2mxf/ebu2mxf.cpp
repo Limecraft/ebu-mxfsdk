@@ -529,7 +529,7 @@ int main(int argc, const char** argv)
 
         file_reader = new MXFFileReader();
 		if (ebucore_filename)
-			RegisterMetadataExtensionsforEBUCore(file_reader->GetDataModel());
+			EBUCore::RegisterMetadataExtensionsforEBUCore(file_reader->GetDataModel());
 
 		MXFFileReader::OpenResult result;
 		MXFFile *mxf_file;
@@ -537,7 +537,7 @@ int main(int argc, const char** argv)
 
 			File *mFile = new File(mxf_file);
 			DataModel *mDataModel = new DataModel();
-			RegisterMetadataExtensionsforEBUCore(mDataModel);
+			EBUCore::RegisterMetadataExtensionsforEBUCore(mDataModel);
 
 			/////////////////////////////////////////
 		    /// 1. Open MXF File and locate all partitions, using the RIP
@@ -663,8 +663,9 @@ int main(int argc, const char** argv)
 
 				// Append EBUCore metadata to the metadata
 				if (ebucore_filename) {
-					DMFramework *framework = Process(ebucore_filename, mHeaderMetadata);
-					InsertEBUCoreFramework(mHeaderMetadata, framework);
+					Identification* id = EBUCore::GenerateEBUCoreIdentificationSet(mHeaderMetadata);
+					DMFramework *framework = EBUCore::Process(ebucore_filename, mHeaderMetadata, id);
+					EBUCore::InsertEBUCoreFramework(mHeaderMetadata, framework, id);
 				}
 
 
