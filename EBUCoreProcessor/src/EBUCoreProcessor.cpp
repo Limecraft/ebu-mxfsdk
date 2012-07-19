@@ -5,6 +5,7 @@
 
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>
+#include <bmx/ByteArray.h>
 
 #include "EBUCoreMapping.h"
 #include "EBUCoreProcessor.h"
@@ -36,6 +37,67 @@ Identification* GenerateEBUCoreIdentificationSet(mxfpp::HeaderMetadata *destinat
 	newId->setThisGenerationUID(GenerationUID);
 	newId->setGenerationUID(GenerationUID);
 	return newId;
+}
+
+void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata, 
+							const char* mxfLocation, 
+							void (*progress_callback)(float progress, std::string& message, std::string& function),
+							bool optNoIdentification) {
+	
+}
+
+void EmbedEBUCoreMetadata(	const char* metadataLocation, 
+							const char* mxfLocation, 
+							void (*progress_callback)(float progress, std::string& message, std::string& function),
+							bool optNoIdentification) {
+	std::ifstream input(metadataLocation);
+	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
+	EmbedEBUCoreMetadata(ebuCoreMainElementPtr, mxfLocation, progress_callback, optNoIdentification);	
+}
+
+void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument, 
+							const char* mxfLocation, 
+							void (*progress_callback)(float progress, std::string& message, std::string& function),
+							bool optNoIdentification) {
+	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (metadataDocument, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
+	EmbedEBUCoreMetadata(ebuCoreMainElementPtr, mxfLocation, progress_callback, optNoIdentification);	
+}
+
+uint64_t BufferIndex(File* mFile, Partition* partition, bmx::ByteArray& index_bytes) {
+	uint64_t index_length = partition->getIndexByteCount();
+	std::cout << "Footer Partition index size: " << partition->getIndexByteCount() << std::endl;
+
+	// skip to the end of the header metadata: Partition Pack + Header Byte Count
+	mxfKey foot_key;
+	uint8_t foot_llen;
+	uint64_t foot_len;
+	mFile->seek(partition->getThisPartition(), SEEK_SET);
+	mFile->readKL(&foot_key, &foot_llen, &foot_len);
+	mFile->skip(foot_len);
+
+	// there can be a filler after the partition pack, skip it
+	mFile->readNextNonFillerKL(&foot_key, &foot_llen, &foot_len); // check for EOF now in case no more KLVs found??
+	// record the current (- keylength and lenlength) as begin position for metadata to write
+	uint64_t pos_write_start_metadata = mFile->tell() - mxfKey_extlen - foot_llen;
+
+	// we are now in the next KLV, is it header metadata?
+	if (partition->getHeaderByteCount() > 0) {
+		// it is, skip past it (per 377M, this should include any fillers following the header metadata!)
+		mFile->skip(partition->getHeaderByteCount() - mxfKey_extlen - foot_llen);
+	} else {
+		// there is no header metadata, which means that we have skipped too far, 
+		// we're in the first index segment now, attempt to seek backward
+		mFile->seek(- mxfKey_extlen - foot_llen, SEEK_CUR);
+	}
+
+	// read the index segments into a byte buffer for later relocation
+	if (index_bytes.GetSize() < index_length)
+		index_bytes.Grow(index_length);
+	uint32_t br = mFile->read(index_bytes.GetBytes(), index_length);
+	index_bytes.SetSize(index_length);
+	std::cout << "bytes read: " << br << std::endl;
+	
+	return pos_write_start_metadata;
 }
 
 DMFramework* Process(const char* location, HeaderMetadata *destination, Identification* identificationToAppend) {

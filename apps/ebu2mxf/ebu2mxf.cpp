@@ -631,35 +631,9 @@ int main(int argc, const char** argv)
 			// What does the footer partition look like? Are there index entries to move around?
 			if (footerPartition->getIndexByteCount() > 0) {
 				uint64_t index_length = footerPartition->getIndexByteCount();
-				std::cout << "Footer Partition index size: " << footerPartition->getIndexByteCount() << std::endl;
-
-				// skip to the end of the header metadata: Partition Pack + Header Byte Count
-				mxfKey foot_key;
-				uint8_t foot_llen;
-				uint64_t foot_len;
-				mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
-				mFile->readKL(&foot_key, &foot_llen, &foot_len);
-				mFile->skip(foot_len);
-				// there can be a filler after the partition pack, skip it
-				mFile->readNextNonFillerKL(&foot_key, &foot_llen, &foot_len); // check for EOF now in case no more KLVs found??
-				// record the current (- keylength and lenlength) as begin position for metadata to write
-				uint64_t pos_write_start_metadata = mFile->tell() - mxfKey_extlen - foot_llen;
-
-				// we are now in the next KLV, is it header metadata?
-				if (footerPartition->getHeaderByteCount() > 0) {
-					// it is, skip past it (per 377M, this should include any fillers following the header metadata!)
-					mFile->skip(footerPartition->getHeaderByteCount() - mxfKey_extlen - foot_llen);
-				} else {
-					// there is no header metadata, which means that we have skipped too far, 
-					// we're in the first index segment now, attempt to seek backward
-					mFile->seek(- mxfKey_extlen - foot_llen, SEEK_CUR);
-				}
-
-				// read the index segments into a byte buffer for later relocation
 				bmx::ByteArray index_bytes(index_length);
-				uint32_t br = mFile->read(index_bytes.GetBytes(), index_length);
-				index_bytes.SetSize(index_length);
-				std::cout << "bytes read: " << br << std::endl;
+
+				uint64_t pos_write_start_metadata = EBUCore::BufferIndex(mFile, footerPartition, index_bytes);
 
 				// Append EBUCore metadata to the metadata
 				if (ebucore_filename) {
@@ -667,7 +641,6 @@ int main(int argc, const char** argv)
 					DMFramework *framework = EBUCore::Process(ebucore_filename, mHeaderMetadata, id);
 					EBUCore::InsertEBUCoreFramework(mHeaderMetadata, framework, id);
 				}
-
 
 				// we write the metadata to a buffer memory file first, 
 				// write 1) the in-mem metadata structure, 2) then dark/unknown sets
