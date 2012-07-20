@@ -629,115 +629,56 @@ int main(int argc, const char** argv)
 			uint64_t start_footer_partition = footerPartition->getThisPartition();
 
 			// What does the footer partition look like? Are there index entries to move around?
-			if (footerPartition->getIndexByteCount() > 0) {
-				uint64_t index_length = footerPartition->getIndexByteCount();
-				bmx::ByteArray index_bytes(index_length);
+			uint32_t index_length = 0;
+			bmx::ByteArray index_bytes(index_length);
+			uint64_t pos_write_start_metadata = EBUCore::BufferIndex(mFile, footerPartition, index_bytes, &index_length);
 
-				uint64_t pos_write_start_metadata = EBUCore::BufferIndex(mFile, footerPartition, index_bytes);
+			// Append EBUCore metadata to the metadata
+			if (ebucore_filename) {
+				Identification* id = EBUCore::GenerateEBUCoreIdentificationSet(mHeaderMetadata);
+				DMFramework *framework = EBUCore::Process(ebucore_filename, mHeaderMetadata, id);
+				EBUCore::InsertEBUCoreFramework(mHeaderMetadata, framework, id);
+			}
 
-				// Append EBUCore metadata to the metadata
-				if (ebucore_filename) {
-					Identification* id = EBUCore::GenerateEBUCoreIdentificationSet(mHeaderMetadata);
-					DMFramework *framework = EBUCore::Process(ebucore_filename, mHeaderMetadata, id);
-					EBUCore::InsertEBUCoreFramework(mHeaderMetadata, framework, id);
-				}
+			uint64_t headerMetadataSize = EBUCore::WriteMetadataToFile(mFile, mHeaderMetadata, pos_start_metadata, pos_write_start_metadata, footerPartition, metadata_partition);
 
-				// we write the metadata to a buffer memory file first, 
-				// write 1) the in-mem metadata structure, 2) then dark/unknown sets
-				MXFMemoryFile *cMemFile;
-				mxf_mem_file_open_new(MEMORY_WRITE_CHUNK_SIZE, /* virtual pos: don't use an offset unless req, otherwise confusing */ 0, &cMemFile);
-				MXFFile *mxfMemFile = mxf_mem_file_get_file(cMemFile);
-				// temporarily wrap the the memory file for use by the libMXF++ classe
-				File memFile(mxfMemFile);
-
-				// write the header metadata into the file
-				uint64_t footerThisPartition = footerPartition->getThisPartition();
-				footerPartition->setThisPartition(0);	// temporarily override so that internals don't get confused 
-														// (need to put this back at the end anyway)
-				KAGFillerWriter reserve_filler_writer(footerPartition);
-				mHeaderMetadata->write(&memFile, footerPartition, &reserve_filler_writer);
-				uint64_t mHeaderMetadataEndPos = memFile.tell();  // need this position when we re-write the header metadata */
-				footerPartition->setThisPartition(footerThisPartition);
-
-				// loop back to the beginning of the metadata and find elements that were skipped,
-				// because, they were dark, append these to the end of the header metadata
-				uint8_t *KLVBuffer = new uint8_t[64*1024];
-
-				mFile->seek(pos_start_metadata, SEEK_SET);
-				uint64_t count = 0;
-				int i = 0;
-				while (count < metadata_partition->getHeaderByteCount())
-			    {
-					mFile->readKL(&key, &llen, &len);
-					printf("Count: %lx ", count + 512);
-
-					count += mxfKey_extlen + llen;
-					count += mFile->read(KLVBuffer, len);
-
-					// is a set with this key in the final header metadata? no, then append it
-					MXFList *setList = NULL;
-					if (mxf_find_set_by_key(mHeaderMetadata->getCHeaderMetadata(), &key, &setList)) {
-						if (mxf_get_list_length(setList) == 0 && 
-							!mxf_is_primer_pack(&key) && /* don't include any primer pack or fillers */
-							!mxf_is_filler(&key)) {
-							mxf_print_key(&key);
-							// no errors and the list is empty, append the KLV to the memory file
-							mxf_write_kl(mxfMemFile, &key, len);
-							mxf_file_write(mxfMemFile, KLVBuffer, len);
-							i++;
-						} else printf("\n");
-						mxf_free_list(&setList);
-					}
-				}
-				std::cout << "Rogue KLVS: " << i << std::endl;
-
-				// how many bytes have we written to the memoryfile?
-				uint64_t memFileSize = mxf_file_tell(mxfMemFile);
-
-				// write the memory file to the physical file
-				// seek back to the serialization position for the header metadata
-				mFile->seek(pos_write_start_metadata, SEEK_SET);
-				mFile->setMemoryFile(cMemFile);
-				mFile->closeMemoryFile();
-				// bit of a hack to make sure the memFile isn't closed again...
-				memFile.swapCFile(NULL);
-
+			if (index_length > 0) {
 				// write the index tables back to the footer partition
 				mFile->write(index_bytes.GetBytes(), index_bytes.GetSize());
+			}
 
-				mFile->writeRIP();
+			mFile->writeRIP();
 
-				// seek backwards and update footer partition pack
-				footerPartition->setHeaderByteCount(/*footerPartition->getHeaderByteCount() + */ memFileSize); // Add dark metadata elements to file
-				mFile->seek(start_footer_partition, SEEK_SET);
-				footerPartition->write(mFile);
+			// seek backwards and update footer partition pack
+			footerPartition->setHeaderByteCount(/*footerPartition->getHeaderByteCount() + */ headerMetadataSize); // Add dark metadata elements to file
+			mFile->seek(start_footer_partition, SEEK_SET);
+			footerPartition->write(mFile);
 
-				/////////////////////////////////////////
-				/// 3. In case of in-place updates: properly update partition packs...
-				/*		Header partition:
-							Open -> Open (If the metadata in the header was open, leave open, there's more to come in the footer)
-							Closed -> Open (Open closed metadata, the header metadata may no longer be used)
-						Body partition:
-							No metadata: Leave as is, there's no metadata to be found anyway
-							Open -> Open (Leave as is, more to come later)
-							Closed -> Open (Indicate that this is no longer a verbatim repitition of the header metadata)
-						Footer partition:
-							-> Open (if all other partitions were open, we append our EBU Core metadata and leave the partition/file open)
-							-> Closed (in other cases, this will contain the finalized (with EBU Core) metadata)
-							No metadata: Use metadata from the header partition as final and insert in this partition
-				*/
-				/////////////
-				for (i = 0 ; i < partitions.size()-1; i++) {	// rewrite for all but the footer partition
-					Partition *p = partitions[i];
-					if (mxf_is_header_partition_pack(p->getKey())) {
-						p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Header) : &MXF_PP_K(OpenIncomplete, Header) );
-					}
-					else if (mxf_is_body_partition_pack(p->getKey())) {
-						p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Body) : &MXF_PP_K(OpenIncomplete, Body) );
-					} 
-					mFile->seek(p->getThisPartition(), SEEK_SET);
-					p->write(mFile);
+			/////////////////////////////////////////
+			/// 3. In case of in-place updates: properly update partition packs...
+			/*		Header partition:
+						Open -> Open (If the metadata in the header was open, leave open, there's more to come in the footer)
+						Closed -> Open (Open closed metadata, the header metadata may no longer be used)
+					Body partition:
+						No metadata: Leave as is, there's no metadata to be found anyway
+						Open -> Open (Leave as is, more to come later)
+						Closed -> Open (Indicate that this is no longer a verbatim repitition of the header metadata)
+					Footer partition:
+						-> Open (if all other partitions were open, we append our EBU Core metadata and leave the partition/file open)
+						-> Closed (in other cases, this will contain the finalized (with EBU Core) metadata)
+						No metadata: Use metadata from the header partition as final and insert in this partition
+			*/
+			/////////////
+			for (i = 0 ; i < partitions.size()-1; i++) {	// rewrite for all but the footer partition
+				Partition *p = partitions[i];
+				if (mxf_is_header_partition_pack(p->getKey())) {
+					p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Header) : &MXF_PP_K(OpenIncomplete, Header) );
 				}
+				else if (mxf_is_body_partition_pack(p->getKey())) {
+					p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Body) : &MXF_PP_K(OpenIncomplete, Body) );
+				} 
+				mFile->seek(p->getThisPartition(), SEEK_SET);
+				p->write(mFile);
 			}
 
 			/////////////////////////////////////////
@@ -749,7 +690,6 @@ int main(int argc, const char** argv)
 
 
 			result = MXFFileReader::MXF_RESULT_SUCCESS;
-			//result = file_reader->Open(new File(mxf_file), filenames[0]);
 		} else {
 			result = MXFFileReader::MXF_RESULT_OPEN_FAIL;
 		}
@@ -786,42 +726,6 @@ int main(int argc, const char** argv)
             }
             printf("\n");
         }
-
-        //if (do_print_as11 && file_reader)
-        //    as11_print_info(file_reader);
-
-		/* write partition pack and header metadata 
-
-		    Partition &header_partition = mMXFFile->createPartition();
-    if (mSupportCompleteSinglePass)
-        header_partition.setKey(&MXF_PP_K(ClosedComplete, Header));
-    else
-        header_partition.setKey(&MXF_PP_K(OpenIncomplete, Header));
-    header_partition.setVersion(1, ((mFlavour & OP1A_377_2004_FLAVOUR) ? 2 : 3));
-    if ((mFlavour & OP1A_MIN_PARTITIONS_FLAVOUR) && mIndexTable->IsCBE())
-        header_partition.setIndexSID(INDEX_SID);
-    else
-        header_partition.setIndexSID(0);
-    if ((mFlavour & OP1A_MIN_PARTITIONS_FLAVOUR))
-        header_partition.setBodySID(BODY_SID);
-    else
-        header_partition.setBodySID(0);
-    header_partition.setKagSize(mKAGSize);
-    header_partition.setOperationalPattern(&MXF_OP_L(1a, MultiTrack_Stream_Internal));
-    set<mxfUL>::const_iterator iter;
-    for (iter = mEssenceContainerULs.begin(); iter != mEssenceContainerULs.end(); iter++)
-        header_partition.addEssenceContainer(&(*iter));
-    header_partition.write(mMXFFile);
-    header_partition.fillToKag(mMXFFile);
-
-    mHeaderMetadataStartPos = mMXFFile->tell(); // need this position when we re-write the header metadata
-    KAGFillerWriter reserve_filler_writer(&header_partition, mReserveMinBytes);
-    mHeaderMetadata->write(mMXFFile, &header_partition, &reserve_filler_writer);
-    mHeaderMetadataEndPos = mMXFFile->tell();  // need this position when we re-write the header metadata
-	*/
-
-        // read data
-
 
         // clean-up
         delete reader;

@@ -18,6 +18,8 @@ using namespace bmx;
 
 namespace EBUCore {
 
+static const uint32_t MEMORY_WRITE_CHUNK_SIZE   = 8192;
+
 // {DAE59218-AF8D-47D4-A216-B6C648EA548C}
 static const mxfUUID ProductUID = 
 { 0xda, 0xe5, 0x92, 0x18, 0xaf, 0x8d, 0x47, 0xd4, 0xa2, 0x16, 0xb6, 0xc6, 0x48, 0xea, 0x54, 0x8c };
@@ -63,8 +65,8 @@ void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument,
 	EmbedEBUCoreMetadata(ebuCoreMainElementPtr, mxfLocation, progress_callback, optNoIdentification);	
 }
 
-uint64_t BufferIndex(File* mFile, Partition* partition, bmx::ByteArray& index_bytes) {
-	uint64_t index_length = partition->getIndexByteCount();
+uint64_t BufferIndex(File* mFile, Partition* partition, bmx::ByteArray& index_bytes, uint32_t* index_length) {
+	*index_length = partition->getIndexByteCount();
 	std::cout << "Footer Partition index size: " << partition->getIndexByteCount() << std::endl;
 
 	// skip to the end of the header metadata: Partition Pack + Header Byte Count
@@ -91,13 +93,81 @@ uint64_t BufferIndex(File* mFile, Partition* partition, bmx::ByteArray& index_by
 	}
 
 	// read the index segments into a byte buffer for later relocation
-	if (index_bytes.GetSize() < index_length)
-		index_bytes.Grow(index_length);
-	uint32_t br = mFile->read(index_bytes.GetBytes(), index_length);
-	index_bytes.SetSize(index_length);
+	if (index_bytes.GetSize() < *index_length)
+		index_bytes.Grow(*index_length);
+	uint32_t br = mFile->read(index_bytes.GetBytes(), *index_length);
+	index_bytes.SetSize(*index_length);
 	std::cout << "bytes read: " << br << std::endl;
 	
 	return pos_write_start_metadata;
+}
+
+uint64_t WriteMetadataToFile(File* mFile, HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, Partition* metadataDestitionPartition, Partition* metadataSourcePartition) {
+	mxfKey key;
+	uint8_t llen;
+	uint64_t len;
+
+	// we write the metadata to a buffer memory file first, 
+	// write 1) the in-mem metadata structure, 2) then dark/unknown sets
+	MXFMemoryFile *cMemFile;
+	mxf_mem_file_open_new(MEMORY_WRITE_CHUNK_SIZE, /* virtual pos: don't use an offset unless req, otherwise confusing */ 0, &cMemFile);
+	MXFFile *mxfMemFile = mxf_mem_file_get_file(cMemFile);
+	// temporarily wrap the the memory file for use by the libMXF++ classe
+	File memFile(mxfMemFile);
+
+	// write the header metadata into the file
+	uint64_t footerThisPartition = metadataDestitionPartition->getThisPartition();
+	metadataDestitionPartition->setThisPartition(0);	// temporarily override so that internals don't get confused 
+														// (need to put this back at the end anyway)
+	KAGFillerWriter reserve_filler_writer(metadataDestitionPartition);
+	mHeaderMetadata->write(&memFile, metadataDestitionPartition, &reserve_filler_writer);
+	uint64_t mHeaderMetadataEndPos = memFile.tell();  // need this position when we re-write the header metadata */
+	metadataDestitionPartition->setThisPartition(footerThisPartition);
+
+	// loop back to the beginning of the metadata and find elements that were skipped,
+	// because, they were dark, append these to the end of the header metadata
+	uint8_t *KLVBuffer = new uint8_t[64*1024];
+
+	mFile->seek(metadata_read_position, SEEK_SET);
+	uint64_t count = 0;
+	int i = 0;
+	while (count < metadataSourcePartition->getHeaderByteCount())
+	{
+		mFile->readKL(&key, &llen, &len);
+		printf("Count: %lx ", count + 512);
+
+		count += mxfKey_extlen + llen;
+		count += mFile->read(KLVBuffer, len);
+
+		// is a set with this key in the final header metadata? no, then append it
+		MXFList *setList = NULL;
+		if (mxf_find_set_by_key(mHeaderMetadata->getCHeaderMetadata(), &key, &setList)) {
+			if (mxf_get_list_length(setList) == 0 && 
+				!mxf_is_primer_pack(&key) && /* don't include any primer pack or fillers */
+				!mxf_is_filler(&key)) {
+				mxf_print_key(&key);
+				// no errors and the list is empty, append the KLV to the memory file
+				mxf_write_kl(mxfMemFile, &key, len);
+				mxf_file_write(mxfMemFile, KLVBuffer, len);
+				i++;
+			} else printf("\n");
+			mxf_free_list(&setList);
+		}
+	}
+	std::cout << "Rogue KLVS: " << i << std::endl;
+
+	// how many bytes have we written to the memoryfile?
+	uint64_t memFileSize = mxf_file_tell(mxfMemFile);
+
+	// write the memory file to the physical file
+	// seek back to the serialization position for the header metadata
+	mFile->seek(metadata_write_position, SEEK_SET);
+	mFile->setMemoryFile(cMemFile);
+	mFile->closeMemoryFile();
+	// bit of a hack to make sure the memFile isn't closed again...
+	memFile.swapCFile(NULL);
+
+	return memFileSize;
 }
 
 DMFramework* Process(const char* location, HeaderMetadata *destination, Identification* identificationToAppend) {
