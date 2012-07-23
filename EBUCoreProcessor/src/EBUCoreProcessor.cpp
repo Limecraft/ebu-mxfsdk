@@ -102,7 +102,7 @@ uint64_t BufferIndex(File* mFile, Partition* partition, bmx::ByteArray& index_by
 	return pos_write_start_metadata;
 }
 
-uint64_t WriteMetadataToFile(File* mFile, HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, Partition* metadataDestitionPartition, Partition* metadataSourcePartition) {
+uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, Partition* metadataDestitionPartition, Partition* metadataSourcePartition) {
 	mxfKey key;
 	uint8_t llen;
 	uint64_t len;
@@ -159,15 +159,64 @@ uint64_t WriteMetadataToFile(File* mFile, HeaderMetadata *mHeaderMetadata, uint6
 	// how many bytes have we written to the memoryfile?
 	uint64_t memFileSize = mxf_file_tell(mxfMemFile);
 
+	// set output
+	*destMemFile = cMemFile;
+
+	// bit of a hack to make sure the memFile isn't closed yet...
+	memFile.swapCFile(NULL);
+
+	return memFileSize;
+}
+
+uint64_t WriteMetadataToFile(File* mFile, HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, Partition* metadataDestitionPartition, Partition* metadataSourcePartition) {
+	MXFMemoryFile *cMemFile;
+
+	// record the original metadata size
+	uint64_t oriMetadataSize = metadataSourcePartition->getHeaderByteCount();
+
+	// how many bytes have we written to the memoryfile?
+	uint64_t memFileSize = WriteMetadataToMemoryFile(mFile, &cMemFile, mHeaderMetadata, metadata_read_position, metadataDestitionPartition, metadataSourcePartition);
+
+	// shift if required
+	if (shiftFileBytesIfNeeded && memFileSize > oriMetadataSize) {
+		ShiftBytesInFile(mFile, metadata_write_position, memFileSize - oriMetadataSize);
+	}
+
 	// write the memory file to the physical file
 	// seek back to the serialization position for the header metadata
 	mFile->seek(metadata_write_position, SEEK_SET);
 	mFile->setMemoryFile(cMemFile);
 	mFile->closeMemoryFile();
-	// bit of a hack to make sure the memFile isn't closed again...
-	memFile.swapCFile(NULL);
 
 	return memFileSize;
+}
+
+
+void ShiftBytesInFile(mxfpp::File* mFile, int64_t shiftPosition, int64_t shiftOffset) {
+	// allocate ourselves a buffer for copying
+#define BUFFER_SIZE	(32*1024)
+#define MAX(a,b)	((a) > (b) ? (a) : (b))
+	uint8_t *buffer = new uint8_t[BUFFER_SIZE];
+	// move to the back of the file
+	mFile->seek(0, SEEK_END);
+	// how far are we in the file?
+	int64_t eof = mFile->tell();
+	int64_t bufferPos = eof - BUFFER_SIZE;
+
+	uint64_t readFromBuffer = MAX(0, BUFFER_SIZE - MAX(0, shiftPosition - bufferPos));
+	while(readFromBuffer > 0) {
+		// fill our buffer to the extent we need to read
+		mFile->seek(bufferPos + (BUFFER_SIZE - readFromBuffer), SEEK_SET);
+		mFile->read(buffer, readFromBuffer);
+		// then write to a position shiftPosition further
+		mFile->seek(bufferPos + (BUFFER_SIZE - readFromBuffer) + shiftOffset, SEEK_SET);
+		mFile->write(buffer, readFromBuffer);
+
+		bufferPos -= BUFFER_SIZE;
+		readFromBuffer = MAX(0, BUFFER_SIZE - MAX(0, shiftPosition - bufferPos));
+	}
+
+	delete buffer;
 }
 
 DMFramework* Process(const char* location, HeaderMetadata *destination, Identification* identificationToAppend) {

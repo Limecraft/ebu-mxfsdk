@@ -668,6 +668,10 @@ int main(int argc, const char** argv)
 				/// to be natively supported by playout/hardware-constrained machines)
 				/////////////
 
+				// Write metadata to the header partition, forcing a file bytes shift if required (likely)
+				
+				// In this case, there's no further need for shifting the index bytes (been done already)
+				// What we do have to do is update each of the partition packs with an updated offset
 
 			}
 			/////////////////////////////////////////
