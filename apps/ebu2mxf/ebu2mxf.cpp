@@ -395,6 +395,7 @@ int main(int argc, const char** argv)
     const char *log_filename = 0;
     std::vector<const char *> filenames;
     const char *prefix = 0;
+	bool do_force_header = false;
     bool do_read = false;
     bool do_print_info = false;
     bool deinterleave = false;
@@ -453,6 +454,10 @@ int main(int argc, const char** argv)
         else if (strcmp(argv[cmdln_index], "-i") == 0)
         {
             do_print_info = true;
+        }
+        else if (strcmp(argv[cmdln_index], "--force-header") == 0)
+        {
+            do_force_header = true;
         }
 		else if (strcmp(argv[cmdln_index], "--ebu-core") == 0)
         {
@@ -623,37 +628,48 @@ int main(int argc, const char** argv)
 			uint64_t metadata_original_len_with_fill = metadata_partition->getHeaderByteCount();
 
 			/////////////////////////////////////////
-			/// 2. In order to avoid rewriting large portions of the file, we append our metadata
-			/// to that of the footer partition (if already present, and new otherwise)
+			/// 2. Insert the EBU Core object tree into the header metadata
 			/////////////
-			uint64_t start_footer_partition = footerPartition->getThisPartition();
-
-			// What does the footer partition look like? Are there index entries to move around?
-			uint32_t index_length = 0;
-			bmx::ByteArray index_bytes(index_length);
-			uint64_t pos_write_start_metadata = EBUCore::BufferIndex(mFile, footerPartition, index_bytes, &index_length);
-
-			// Append EBUCore metadata to the metadata
 			if (ebucore_filename) {
 				Identification* id = EBUCore::GenerateEBUCoreIdentificationSet(mHeaderMetadata);
 				DMFramework *framework = EBUCore::Process(ebucore_filename, mHeaderMetadata, id);
 				EBUCore::InsertEBUCoreFramework(mHeaderMetadata, framework, id);
 			}
 
-			uint64_t headerMetadataSize = EBUCore::WriteMetadataToFile(mFile, mHeaderMetadata, pos_start_metadata, pos_write_start_metadata, footerPartition, metadata_partition);
+			/////////////////////////////////////////
+			/// 2. In order to avoid rewriting large portions of the file, we append our metadata
+			/// to that of the footer partition (if already present, and new otherwise)
+			/////////////
+			if (!do_force_header) {
 
-			if (index_length > 0) {
-				// write the index tables back to the footer partition
-				mFile->write(index_bytes.GetBytes(), index_bytes.GetSize());
+				// What does the footer partition look like? Are there index entries to move around?
+				uint32_t index_length = 0;
+				bmx::ByteArray index_bytes(index_length);
+				uint64_t pos_write_start_metadata = EBUCore::BufferIndex(mFile, footerPartition, index_bytes, &index_length);
+
+				uint64_t headerMetadataSize = EBUCore::WriteMetadataToFile(mFile, mHeaderMetadata, pos_start_metadata, pos_write_start_metadata, footerPartition, metadata_partition);
+
+				if (index_length > 0) {
+					// write the index tables back to the footer partition
+					mFile->write(index_bytes.GetBytes(), index_bytes.GetSize());
+				}
+
+				mFile->writeRIP();
+
+				// seek backwards and update footer partition pack
+				footerPartition->setHeaderByteCount(/*footerPartition->getHeaderByteCount() + */ headerMetadataSize); // Add dark metadata elements to file
+				mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
+				footerPartition->write(mFile);
+
+			} else {
+				/////////////////////////////////////////
+				/// 2a. Provide an override where the file is rewritten to accomodate updated metadata in the header partition?
+				/// (This could become necessary when generated MXF files need 
+				/// to be natively supported by playout/hardware-constrained machines)
+				/////////////
+
+
 			}
-
-			mFile->writeRIP();
-
-			// seek backwards and update footer partition pack
-			footerPartition->setHeaderByteCount(/*footerPartition->getHeaderByteCount() + */ headerMetadataSize); // Add dark metadata elements to file
-			mFile->seek(start_footer_partition, SEEK_SET);
-			footerPartition->write(mFile);
-
 			/////////////////////////////////////////
 			/// 3. In case of in-place updates: properly update partition packs...
 			/*		Header partition:
@@ -680,15 +696,7 @@ int main(int argc, const char** argv)
 				mFile->seek(p->getThisPartition(), SEEK_SET);
 				p->write(mFile);
 			}
-
-			/////////////////////////////////////////
-			/// 2a. Provide an override where the file is rewritten to accomodate updated metadata in the footer?
-			/// (This could become necessary when generated MXF files need 
-			/// to be natively supported by playout/hardware-constrained machines)
-			/////////////
 			
-
-
 			result = MXFFileReader::MXF_RESULT_SUCCESS;
 		} else {
 			result = MXFFileReader::MXF_RESULT_OPEN_FAIL;

@@ -79,6 +79,7 @@ libebucore_la_SOURCES = \
 	EBU_CORE_20110915.cxx \
 	simpledc20021212.cxx \
 	xml.cxx \
+	EBUCoreMapping.cpp \
 	EBUCoreProcessor.cpp
 
 libebucore_la_CXXFLAGS = $(BMX_CFLAGS)
