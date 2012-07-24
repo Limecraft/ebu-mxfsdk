@@ -647,7 +647,7 @@ int main(int argc, const char** argv)
 				bmx::ByteArray index_bytes(index_length);
 				uint64_t pos_write_start_metadata = EBUCore::BufferIndex(mFile, footerPartition, index_bytes, &index_length);
 
-				uint64_t headerMetadataSize = EBUCore::WriteMetadataToFile(mFile, mHeaderMetadata, pos_start_metadata, pos_write_start_metadata, footerPartition, metadata_partition);
+				uint64_t headerMetadataSize = EBUCore::WriteMetadataToFile(mFile, mHeaderMetadata, pos_start_metadata, pos_write_start_metadata, false, footerPartition, metadata_partition);
 
 				if (index_length > 0) {
 					// write the index tables back to the footer partition
@@ -695,11 +695,25 @@ int main(int argc, const char** argv)
 				/// to be natively supported by playout/hardware-constrained machines)
 				/////////////
 
+				uint64_t oriMetadataSize = headerPartition->getHeaderByteCount();
+
 				// Write metadata to the header partition, forcing a file bytes shift if required (likely)
+				uint64_t headerMetadataSize = EBUCore::WriteMetadataToFile(mFile, mHeaderMetadata, pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition);
 				
 				// In this case, there's no further need for shifting the index bytes (been done already)
 				// What we do have to do is update each of the partition packs with an updated offset
+				for (i = 0 ; i < partitions.size()-1; i++) {
+					Partition *p = partitions[i];
+					p->setThisPartition(p->getThisPartition() + headerMetadataSize - oriMetadataSize);
+					mFile->seek(p->getThisPartition(), SEEK_SET);
+					p->write(mFile);
+				}
 
+				// seek to the end of the footer partition
+				mFile->seek(footerPartition->getThisPartition() + footerPartition->getHeaderByteCount() + footerPartition->getIndexByteCount(), SEEK_SET);
+				
+				// finish by re-writing the rip
+				mFile->writeRIP();
 			}
 			
 			result = MXFFileReader::MXF_RESULT_SUCCESS;
