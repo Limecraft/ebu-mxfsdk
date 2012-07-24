@@ -107,6 +107,9 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 	uint8_t llen;
 	uint64_t len;
 
+	// cache this in case we are writing to the source partition
+	uint64_t oriSourceHeaderByteCount = metadataSourcePartition->getHeaderByteCount();
+
 	// we write the metadata to a buffer memory file first, 
 	// write 1) the in-mem metadata structure, 2) then dark/unknown sets
 	MXFMemoryFile *cMemFile;
@@ -131,7 +134,7 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 	mFile->seek(metadata_read_position, SEEK_SET);
 	uint64_t count = 0;
 	int i = 0;
-	while (count < metadataSourcePartition->getHeaderByteCount())
+	while (count < oriSourceHeaderByteCount)
 	{
 		mFile->readKL(&key, &llen, &len);
 		printf("Count: %lx ", count + 512);
