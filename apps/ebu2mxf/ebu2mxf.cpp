@@ -700,18 +700,28 @@ int main(int argc, const char** argv)
 				// Write metadata to the header partition, forcing a file bytes shift if required (likely)
 				uint64_t headerMetadataSize = EBUCore::WriteMetadataToFile(mFile, mHeaderMetadata, pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition);
 				
+				uint64_t fileOffset = headerMetadataSize - oriMetadataSize;
+
 				// In this case, there's no further need for shifting the index bytes (been done already)
 				// What we do have to do is update each of the partition packs with an updated offset
-				for (i = 0 ; i < partitions.size()-1; i++) {
+				uint64_t prevPartition = 0;
+				for (i = 0 ; i < partitions.size(); i++) {
 					Partition *p = partitions[i];
-					p->setThisPartition(p->getThisPartition() + headerMetadataSize - oriMetadataSize);
-					mFile->seek(p->getThisPartition(), SEEK_SET);
-					p->write(mFile);
+					if (!mxf_is_header_partition_pack(p->getKey())) {
+						p->setThisPartition(p->getThisPartition() + fileOffset);
+						p->setPreviousPartition(prevPartition);
+						p->setFooterPartition(p->getFooterPartition() + fileOffset);
+						mFile->seek(p->getThisPartition(), SEEK_SET);
+						p->write(mFile);
+					}
+					prevPartition = p->getThisPartition();
 				}
 
 				// seek to the end of the footer partition
 				mFile->seek(footerPartition->getThisPartition() + footerPartition->getHeaderByteCount() + footerPartition->getIndexByteCount(), SEEK_SET);
 				
+				int64_t t = mFile->tell();
+
 				// finish by re-writing the rip
 				mFile->writeRIP();
 			}
