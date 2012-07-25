@@ -710,22 +710,87 @@ int main(int argc, const char** argv)
 					if (!mxf_is_header_partition_pack(p->getKey())) {
 						p->setThisPartition(p->getThisPartition() + fileOffset);
 						p->setPreviousPartition(prevPartition);
-						p->setFooterPartition(p->getFooterPartition() + fileOffset);
 					} else if (mxf_is_header_partition_pack(p->getKey())) {
 						// make sure this is updated also
 						p->setHeaderByteCount(headerMetadataSize);
-						mFile->seek(p->getThisPartition(), SEEK_SET);
-						p->write(mFile);
 					}
+					p->setFooterPartition(p->getFooterPartition() + fileOffset);
+					mFile->seek(p->getThisPartition(), SEEK_SET);
+					p->write(mFile);
 					prevPartition = p->getThisPartition();
 				}
 
-				// finish by re-writing the rip, which should be at the end of the file,
-				// calculate the length of the RIP
-				uint64_t ripLength = (4 + 8) * partitions.size() + 4;	// 4 + 8 bytes per partition + the length of the RIP in 4-byte integer
-				ripLength += mxfKey_extlen + mxf_get_llen(mFile->getCFile(), ripLength);	// add the KL length
-				mFile->seek(-ripLength, SEEK_END);
+				// Finish by re-writing the rip.
+				// To be safe, we will overwrite the entire RIP of the previous file, 
+				// by extending the filler if present, or by adding a new filler up until the next KAG.
+
+				// find the offset in the footer partition from which the header and index starts
+				mFile->seek(0, SEEK_END);
+				int64_t eof = mFile->tell();
+
+				mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
+				mFile->readKL(&key, &llen, &len);
+				mFile->skip(len);
+				// read all fillers from here
+				bool wasFiller = true;
+				while (wasFiller && mFile->tell() < eof) {
+					mFile->readKL(&key, &llen, &len);
+					if (!mxf_is_filler(&key)) {
+						wasFiller = false;
+						// rewind till before the KL
+						mFile->seek(- mxfKey_extlen - llen, SEEK_CUR);
+					} else {
+						// skip the filler
+						mFile->skip(len);
+					}
+				}
+				uint64_t behindFooterPartitionPack = mFile->tell();
+				uint64_t fillerWritePosition = -1, fillerSeekLimit = -1, fillerSeekStartPosition = -1;;
+				
+				if (footerPartition->getIndexByteCount() > 0) {
+					// extend (or insert) index filler
+					fillerSeekStartPosition = behindFooterPartitionPack + footerPartition->getHeaderByteCount();
+					fillerSeekLimit = footerPartition->getIndexByteCount();
+				}
+				else if (footerPartition->getHeaderByteCount() > 0) {
+					// extend (or insert) metadata filler
+					fillerSeekStartPosition = behindFooterPartitionPack;
+					fillerSeekLimit = footerPartition->getHeaderByteCount();
+				} else {
+					// extend (or insert) partition pack filler
+					fillerSeekStartPosition = behindFooterPartitionPack;
+					fillerSeekLimit = 0;
+				}
+
+				// find the filler to extend section
+				mFile->seek(fillerSeekStartPosition, SEEK_SET);
+				// find the last filler in the bunch
+
+				uint64_t lastFillerPos = -1;
+				uint64_t count = 0;
+				while (count < fillerSeekLimit)
+				{
+					mFile->readKL(&key, &llen, &len);
+					if (mxf_is_filler(&key))
+						lastFillerPos = behindFooterPartitionPack + footerPartition->getHeaderByteCount() + count;
+					count += mxfKey_extlen + llen + len;
+					mFile->skip(len);
+				}
+				fillerWritePosition = (lastFillerPos == -1) ? (fillerSeekStartPosition + fillerSeekLimit) : (lastFillerPos);
+
+				// write the filler to the next KAG after the end of the file
+				mFile->seek(fillerWritePosition, SEEK_SET);
+				footerPartition->allocateSpaceToKag(mFile, eof - fillerWritePosition);
+
+				if (footerPartition->getIndexByteCount() > 0)
+					footerPartition->setIndexByteCount(mFile->tell() - fillerSeekStartPosition);
+				else if (footerPartition->getHeaderByteCount() > 0)
+					footerPartition->setHeaderByteCount(mFile->tell() - fillerSeekStartPosition);
+
 				mFile->writeRIP();
+
+				mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
+				footerPartition->write(mFile);
 			}
 			
 			result = MXFFileReader::MXF_RESULT_SUCCESS;
