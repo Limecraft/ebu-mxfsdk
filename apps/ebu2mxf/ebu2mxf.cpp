@@ -725,67 +725,17 @@ int main(int argc, const char** argv)
 				// by extending the filler if present, or by adding a new filler up until the next KAG.
 
 				// find the offset in the footer partition from which the header and index starts
-				mFile->seek(0, SEEK_END);
-				int64_t eof = mFile->tell();
-
-				mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
-				mFile->readKL(&key, &llen, &len);
-				mFile->skip(len);
-				// read all fillers from here
-				bool wasFiller = true;
-				while (wasFiller && mFile->tell() < eof) {
-					mFile->readKL(&key, &llen, &len);
-					if (!mxf_is_filler(&key)) {
-						wasFiller = false;
-						// rewind till before the KL
-						mFile->seek(- mxfKey_extlen - llen, SEEK_CUR);
-					} else {
-						// skip the filler
-						mFile->skip(len);
-					}
-				}
-				uint64_t behindFooterPartitionPack = mFile->tell();
-				uint64_t fillerWritePosition = -1, fillerSeekLimit = -1, fillerSeekStartPosition = -1;;
-				
-				if (footerPartition->getIndexByteCount() > 0) {
-					// extend (or insert) index filler
-					fillerSeekStartPosition = behindFooterPartitionPack + footerPartition->getHeaderByteCount();
-					fillerSeekLimit = footerPartition->getIndexByteCount();
-				}
-				else if (footerPartition->getHeaderByteCount() > 0) {
-					// extend (or insert) metadata filler
-					fillerSeekStartPosition = behindFooterPartitionPack;
-					fillerSeekLimit = footerPartition->getHeaderByteCount();
-				} else {
-					// extend (or insert) partition pack filler
-					fillerSeekStartPosition = behindFooterPartitionPack;
-					fillerSeekLimit = 0;
-				}
-
-				// find the filler to extend section
-				mFile->seek(fillerSeekStartPosition, SEEK_SET);
-				// find the last filler in the bunch
-
-				uint64_t lastFillerPos = -1;
-				uint64_t count = 0;
-				while (count < fillerSeekLimit)
-				{
-					mFile->readKL(&key, &llen, &len);
-					if (mxf_is_filler(&key))
-						lastFillerPos = behindFooterPartitionPack + footerPartition->getHeaderByteCount() + count;
-					count += mxfKey_extlen + llen + len;
-					mFile->skip(len);
-				}
-				fillerWritePosition = (lastFillerPos == -1) ? (fillerSeekStartPosition + fillerSeekLimit) : (lastFillerPos);
+				int64_t eof, partitionSectionOffset;
+				int64_t fillerWritePosition = EBUCore::FindLastPartitionFill(mFile, footerPartition, &partitionSectionOffset, &eof);
 
 				// write the filler to the next KAG after the end of the file
 				mFile->seek(fillerWritePosition, SEEK_SET);
 				footerPartition->allocateSpaceToKag(mFile, eof - fillerWritePosition);
 
 				if (footerPartition->getIndexByteCount() > 0)
-					footerPartition->setIndexByteCount(mFile->tell() - fillerSeekStartPosition);
+					footerPartition->setIndexByteCount(mFile->tell() - partitionSectionOffset);
 				else if (footerPartition->getHeaderByteCount() > 0)
-					footerPartition->setHeaderByteCount(mFile->tell() - fillerSeekStartPosition);
+					footerPartition->setHeaderByteCount(mFile->tell() - partitionSectionOffset);
 
 				mFile->writeRIP();
 

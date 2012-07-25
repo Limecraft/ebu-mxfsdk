@@ -197,6 +197,69 @@ uint64_t WriteMetadataToFile(File* mFile, HeaderMetadata *mHeaderMetadata, uint6
 	return memFileSize;
 }
 
+int64_t FindLastPartitionFill(mxfpp::File* mFile, mxfpp::Partition* partition, int64_t* partitionSectionOffset, int64_t *extractedFileSize) {
+	mxfKey key;
+	uint8_t llen;
+	uint64_t len;
+
+	// make sure we won't be seeking past the end of the file, so record its size
+	int64_t eof = mFile->size();
+	if (extractedFileSize != NULL)
+		*extractedFileSize = eof;
+
+	mFile->seek(partition->getThisPartition(), SEEK_SET);
+	mFile->readKL(&key, &llen, &len);
+	mFile->skip(len);
+	// read all fillers from here
+	bool wasFiller = true;
+	while (wasFiller && mFile->tell() < eof) {
+		mFile->readKL(&key, &llen, &len);
+		if (!mxf_is_filler(&key)) {
+			wasFiller = false;
+			// rewind till before the KL
+			mFile->seek(- mxfKey_extlen - llen, SEEK_CUR);
+		} else {
+			// skip the filler
+			mFile->skip(len);
+		}
+	}
+	int64_t behindPartitionPack = mFile->tell();
+	int64_t fillerWritePosition = -1, fillerSeekLimit = -1, fillerSeekStartPosition = -1;;
+				
+	if (partition->getIndexByteCount() > 0) {
+		// extend (or insert) index filler
+		fillerSeekStartPosition = behindPartitionPack + partition->getHeaderByteCount();
+		fillerSeekLimit = partition->getIndexByteCount();
+	}
+	else if (partition->getHeaderByteCount() > 0) {
+		// extend (or insert) metadata filler
+		fillerSeekStartPosition = behindPartitionPack;
+		fillerSeekLimit = partition->getHeaderByteCount();
+	} else {
+		// extend (or insert) partition pack filler
+		fillerSeekStartPosition = behindPartitionPack;
+		fillerSeekLimit = 0;
+	}
+
+	// find the filler to extend section
+	mFile->seek(fillerSeekStartPosition, SEEK_SET);
+	// find the last filler in the bunch
+
+	uint64_t lastFillerPos = -1;
+	uint64_t count = 0;
+	while (count < fillerSeekLimit)
+	{
+		mFile->readKL(&key, &llen, &len);
+		if (mxf_is_filler(&key))
+			lastFillerPos = behindPartitionPack + partition->getHeaderByteCount() + count;
+		count += mxfKey_extlen + llen + len;
+		mFile->skip(len);
+	}
+	
+	*partitionSectionOffset = fillerSeekStartPosition;
+	return (lastFillerPos == -1) ? (fillerSeekStartPosition + fillerSeekLimit) : (lastFillerPos);
+}
+
 
 void ShiftBytesInFile(mxfpp::File* mFile, int64_t shiftPosition, int64_t shiftOffset) {
 	// allocate ourselves a buffer for copying
