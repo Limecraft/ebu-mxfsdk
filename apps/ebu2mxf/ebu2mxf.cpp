@@ -711,18 +711,20 @@ int main(int argc, const char** argv)
 						p->setThisPartition(p->getThisPartition() + fileOffset);
 						p->setPreviousPartition(prevPartition);
 						p->setFooterPartition(p->getFooterPartition() + fileOffset);
+					} else if (mxf_is_header_partition_pack(p->getKey())) {
+						// make sure this is updated also
+						p->setHeaderByteCount(headerMetadataSize);
 						mFile->seek(p->getThisPartition(), SEEK_SET);
 						p->write(mFile);
 					}
 					prevPartition = p->getThisPartition();
 				}
 
-				// seek to the end of the footer partition
-				mFile->seek(footerPartition->getThisPartition() + footerPartition->getHeaderByteCount() + footerPartition->getIndexByteCount(), SEEK_SET);
-				
-				int64_t t = mFile->tell();
-
-				// finish by re-writing the rip
+				// finish by re-writing the rip, which should be at the end of the file,
+				// calculate the length of the RIP
+				uint64_t ripLength = (4 + 8) * partitions.size() + 4;	// 4 + 8 bytes per partition + the length of the RIP in 4-byte integer
+				ripLength += mxfKey_extlen + mxf_get_llen(mFile->getCFile(), ripLength);	// add the KL length
+				mFile->seek(-ripLength, SEEK_END);
 				mFile->writeRIP();
 			}
 			
