@@ -123,7 +123,7 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 	metadataDestitionPartition->setThisPartition(0);	// temporarily override so that internals don't get confused 
 														// (need to put this back at the end anyway)
 	KAGFillerWriter reserve_filler_writer(metadataDestitionPartition);
-	mHeaderMetadata->write(&memFile, metadataDestitionPartition, &reserve_filler_writer);
+	mHeaderMetadata->write(&memFile, metadataDestitionPartition, NULL);
 	uint64_t mHeaderMetadataEndPos = memFile.tell();  // need this position when we re-write the header metadata */
 	metadataDestitionPartition->setThisPartition(footerThisPartition);
 
@@ -158,6 +158,9 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 		}
 	}
 	std::cout << "Rogue KLVS: " << i << std::endl;
+
+	// fill the appended metadata up to the KAG
+	reserve_filler_writer.write(&memFile);
 
 	// how many bytes have we written to the memoryfile?
 	uint64_t memFileSize = mxf_file_tell(mxfMemFile);
