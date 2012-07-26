@@ -394,27 +394,10 @@ int main(int argc, const char** argv)
 {
     const char *log_filename = 0;
     std::vector<const char *> filenames;
-    const char *prefix = 0;
 	bool do_force_header = false;
-    bool do_read = false;
     bool do_print_info = false;
-    bool deinterleave = false;
-    int64_t start = 0;
-    int64_t duration = -1;
-    bool no_precharge = false;
-    bool no_rollout = false;
-    bool calc_md5 = false;
-    bool calc_file_md5 = false;
-    bool calc_file_md5_only = false;
-    bool use_group_reader = false;
-    bool keep_input_order = false;
     bool do_print_version = false;
-    bool do_print_as11 = false;
     const char *ebucore_filename = 0;
-#if defined(_WIN32)
-    int file_flags = MXF_WIN32_FLAG_SEQUENTIAL_SCAN;
-#endif
-    bool check_crc32 = false;
     int cmdln_index;
 
 
