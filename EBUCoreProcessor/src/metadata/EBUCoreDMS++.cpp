@@ -1,6 +1,8 @@
 
 #include <metadata/EBUCoreDMS++.h>
 
+using namespace EBUCore::KLV;
+
 namespace EBUCore {
 
 void RegisterExtensions(DataModel *data_model)

@@ -37,13 +37,14 @@
 #include <metadata/EBUCoreDMS.h>
 
 // forward declare circularly referenced classes
-namespace mxfpp
+namespace EBUCore
 {
-	class ebucoreContact;
-	class ebucoreRole;
-	class ebucoreOrganisation;
-	class ebucoreMetadataSchemeInformation;
-	//class ebucoreTypeGroup;
+	namespace KLV {
+		class ebucoreContact;
+		class ebucoreRole;
+		class ebucoreOrganisation;
+		class ebucoreMetadataSchemeInformation;
+	}
 }
 
 #include <metadata/ebucoreTypeGroup.h>

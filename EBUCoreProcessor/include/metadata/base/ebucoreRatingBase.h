@@ -36,8 +36,9 @@
 
 #include <libMXF++/metadata/InterchangeObject.h>
 
+using namespace mxfpp;
 
-namespace mxfpp
+namespace EBUCore { namespace KLV
 {
 
 
@@ -79,7 +80,7 @@ protected:
 };
 
 
-};
+}};
 
 
 #endif

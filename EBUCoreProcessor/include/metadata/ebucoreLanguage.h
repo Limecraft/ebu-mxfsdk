@@ -36,8 +36,9 @@
 
 #include <metadata/base/ebucoreLanguageBase.h>
 
+using namespace mxfpp;
 
-namespace mxfpp
+namespace EBUCore { namespace KLV
 {
 
 
@@ -58,7 +59,7 @@ protected:
 };
 
 
-};
+}};
 
 
 #endif

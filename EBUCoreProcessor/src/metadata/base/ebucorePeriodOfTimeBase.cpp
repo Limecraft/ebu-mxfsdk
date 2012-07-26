@@ -41,6 +41,7 @@
 
 using namespace std;
 using namespace mxfpp;
+using namespace EBUCore::KLV;
 
 
 const mxfKey ebucorePeriodOfTimeBase::setKey = MXF_SET_K(ebucorePeriodOfTime);

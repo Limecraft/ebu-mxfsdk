@@ -5,6 +5,8 @@
 
 #include <metadata/EBUCoreDMS++.h>
 
+using namespace EBUCore::KLV;
+
 namespace EBUCore {
 
 class ObjectModifier {

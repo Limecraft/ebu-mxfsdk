@@ -41,6 +41,7 @@
 
 using namespace std;
 using namespace mxfpp;
+using namespace EBUCore::KLV;
 
 
 const mxfKey ebucoreOrganisationBase::setKey = MXF_SET_K(ebucoreOrganisation);
