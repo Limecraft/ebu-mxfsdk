@@ -99,17 +99,6 @@ void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model)
 	EBUCore::RegisterExtensions(data_model);	
 }
 
-DMFramework* Process(const char* location) {
-
-	DataModel *mDataModel = new DataModel();
-	RegisterMetadataExtensionsforEBUCore(mDataModel);
-
-	HeaderMetadata *md = new HeaderMetadata(mDataModel);
-
-	return Process(location, md);
-}
-
-
 void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata, 
 							const char* metadataLocation,
 							const char* mxfLocation, 
@@ -139,21 +128,21 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 			DataModel *mDataModel = new DataModel();
 			EBUCore::RegisterMetadataExtensionsforEBUCore(mDataModel);
 
-			/////////////////////////////////////////
-		    /// 1. Open MXF File and locate all partitions, using the RIP
-			/////////////
+			// ///////////////////////////////////////
+		    // / 1. Open MXF File and locate all partitions, using the RIP
+			// ///////////
 
 			if (!mFile->readPartitions())
 				log_warn("Failed to read all partitions. File may be incomplete or invalid\n");
 
 	        const std::vector<Partition*> &partitions = mFile->getPartitions();
 
-			/////////////////////////////////////////
-	        /// 1a. Locate the Metadata to use for extension
+			// ///////////////////////////////////////
+	        // / 1a. Locate the Metadata to use for extension
 			/*		We prefer closed footer metadata when available (if the metadata 
 					is repeated in the footer, it is likely to be more up-to-date than
 					that in the header.																*/
-		    /////////////
+		    // ///////////
 	        Partition *metadata_partition = NULL, *headerPartition = NULL, *footerPartition = NULL;
 
 			size_t i;
@@ -222,17 +211,17 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 
 			uint64_t metadata_original_len_with_fill = metadata_partition->getHeaderByteCount();
 
-			/////////////////////////////////////////
-			/// 2. Insert the EBU Core object tree into the header metadata
-			/////////////
+			// ///////////////////////////////////////
+			// / 2. Insert the EBU Core object tree into the header metadata
+			// ///////////
 			Identification* id = EBUCore::GenerateEBUCoreIdentificationSet(mHeaderMetadata);
 			DMFramework *framework = EBUCore::Process(metadata, metadataLocation, mHeaderMetadata, id);
 			EBUCore::InsertEBUCoreFramework(mHeaderMetadata, framework, id);
 
-			/////////////////////////////////////////
-			/// 2. In order to avoid rewriting large portions of the file, we append our metadata
-			/// to that of the footer partition (if already present, and new otherwise)
-			/////////////
+			// ///////////////////////////////////////
+			// / 2. In order to avoid rewriting large portions of the file, we append our metadata
+			// / to that of the footer partition (if already present, and new otherwise)
+			// ///////////
 			if (!optForceHeader) {
 
 				// What does the footer partition look like? Are there index entries to move around?
@@ -254,8 +243,8 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 				mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
 				footerPartition->write(mFile);
 
-				/////////////////////////////////////////
-				/// 3. In case of in-place updates: properly update partition packs...
+				// ///////////////////////////////////////
+				// / 3. In case of in-place updates: properly update partition packs...
 				/*		Header partition:
 							Open -> Open (If the metadata in the header was open, leave open, there's more to come in the footer)
 							Closed -> Open (Open closed metadata, the header metadata may no longer be used)
@@ -268,7 +257,7 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 							-> Closed (in other cases, this will contain the finalized (with EBU Core) metadata)
 							No metadata: Use metadata from the header partition as final and insert in this partition
 				*/
-				/////////////
+				// ///////////
 				for (i = 0 ; i < partitions.size()-1; i++) {	// rewrite for all but the footer partition
 					Partition *p = partitions[i];
 					if (mxf_is_header_partition_pack(p->getKey())) {
@@ -282,11 +271,11 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 				}
 
 			} else {
-				/////////////////////////////////////////
-				/// 2a. Provide an override where the file is rewritten to accomodate updated metadata in the header partition?
-				/// (This could become necessary when generated MXF files need 
-				/// to be natively supported by playout/hardware-constrained machines)
-				/////////////
+				// ///////////////////////////////////////
+				// / 2a. Provide an override where the file is rewritten to accomodate updated metadata in the header partition?
+				// / (This could become necessary when generated MXF files need 
+				// / to be natively supported by playout/hardware-constrained machines)
+				// ///////////
 
 				uint64_t oriMetadataSize = headerPartition->getHeaderByteCount();
 
