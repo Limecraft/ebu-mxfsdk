@@ -3,11 +3,15 @@
 
 #include <xercesc/dom/DOMDocument.hpp>
 
+/**
+*	EBU MXF SDK main namespace for EBUCore functionality.
+*/
 namespace EBUCore
 {
 	mxfpp::Identification* GenerateEBUCoreIdentificationSet(mxfpp::HeaderMetadata *destination);
 	mxfpp::DMFramework* Process(const char* location);
 	mxfpp::DMFramework* Process(const char* location, mxfpp::HeaderMetadata *destination, mxfpp::Identification *identificationToAppend = NULL);
+
 	void ReadAndSerializeEBUCore(mxfpp::HeaderMetadata *file_reader, const char* outputfilename);
 	void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model);
 	void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata);
@@ -24,12 +28,38 @@ namespace EBUCore
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, std::string& message, std::string& function),
 							bool optNoIdentification = false);*/
+	
+	/**
+	*	Embed EBUCore metadata into an MXF file.
+	*/
 	void EmbedEBUCoreMetadata(	const char* metadataLocation, 
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, std::string& message, std::string& function),
-							bool optNoIdentification = false);
+							bool optNoIdentification = false, bool optForceHeader = false);
+
+	/**
+	*	Embed EBUCore metadata into an MXF file.
+	*/
 	void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument, 
+							const char* metadataLocation,
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, std::string& message, std::string& function),
-							bool optNoIdentification = false);
+							bool optNoIdentification = false, bool optForceHeader = false);
+
+	/**
+	*	Extract EBUCore metadata from an MXF file.
+	*/
+	void ExtractEBUCoreMetadata(
+							const char* mxfLocation,
+							xercesc::DOMDocument& metadataDocument,
+							void (*progress_callback)(float progress, std::string& message, std::string& function));
+	
+	/**
+	*	Extract EBUCore metadata from an MXF file.
+	*/
+	void ExtractEBUCoreMetadata(
+							const char* mxfLocation,
+							const char* metadataLocation,
+							void (*progress_callback)(float progress, std::string& message, std::string& function));
+
 }
