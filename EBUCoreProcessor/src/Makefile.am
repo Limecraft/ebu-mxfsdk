@@ -80,6 +80,7 @@ libebucore_la_SOURCES = \
 	simpledc20021212.cxx \
 	xml.cxx \
 	EBUCoreMapping.cpp \
+	EBUCoreReverseMapping.cpp \
 	EBUCoreProcessor.cpp
 
 libebucore_la_CXXFLAGS = $(BMX_CFLAGS)
