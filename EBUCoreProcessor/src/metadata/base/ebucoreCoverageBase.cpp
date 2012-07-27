@@ -66,16 +66,11 @@ bool ebucoreCoverageBase::havespatial() const
     return haveItem(&MXF_ITEM_K(ebucoreCoverage, spatial));
 }
 
-std::vector<ebucoreSpatial*> ebucoreCoverageBase::getspatial() const
+ebucoreSpatial* ebucoreCoverageBase::getspatial() const
 {
-    vector<ebucoreSpatial*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoverage, spatial)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreSpatial*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreSpatial*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreCoverage, spatial)));
+    MXFPP_CHECK(dynamic_cast<ebucoreSpatial*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreSpatial*>(obj.release());
 }
 
 bool ebucoreCoverageBase::havetemporal() const
@@ -83,37 +78,20 @@ bool ebucoreCoverageBase::havetemporal() const
     return haveItem(&MXF_ITEM_K(ebucoreCoverage, temporal));
 }
 
-std::vector<ebucoreTemporal*> ebucoreCoverageBase::gettemporal() const
+ebucoreTemporal* ebucoreCoverageBase::gettemporal() const
 {
-    vector<ebucoreTemporal*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoverage, temporal)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreTemporal*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreTemporal*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreCoverage, temporal)));
+    MXFPP_CHECK(dynamic_cast<ebucoreTemporal*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTemporal*>(obj.release());
 }
 
-void ebucoreCoverageBase::setspatial(const std::vector<ebucoreSpatial*>& value)
+void ebucoreCoverageBase::setspatial(ebucoreSpatial* value)
 {
-    WrapObjectVectorIterator<ebucoreSpatial> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoverage, spatial), &iter);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreCoverage, spatial), value);
 }
 
-void ebucoreCoverageBase::appendspatial(ebucoreSpatial* value)
+void ebucoreCoverageBase::settemporal(ebucoreTemporal* value)
 {
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoverage, spatial), value);
-}
-
-void ebucoreCoverageBase::settemporal(const std::vector<ebucoreTemporal*>& value)
-{
-    WrapObjectVectorIterator<ebucoreTemporal> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoverage, temporal), &iter);
-}
-
-void ebucoreCoverageBase::appendtemporal(ebucoreTemporal* value)
-{
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoverage, temporal), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreCoverage, temporal), value);
 }
 

@@ -300,16 +300,10 @@ void mapContact(contactDetailsType& source, ebucoreContact *dest, ObjectModifier
 	}
 
 	// [TODO] We skip RelatedContacts for now, KLV mapping refers to Contacts, while the XSD refers to entities
-	/*std::vector<ebucoreContact*> relatedContacts;
-	for (contactDetailsType::relatedContacts_sequence::iterator it = source.relatedContacts().begin(); it != source.details().end(); it++) {
-		ebucoreContact *obj = new ebucoreContact(dest->getHeaderMetadata());
-		mapContact(*it, obj);
-		relatedContacts.push_back(obj);
-	}
-	dest->setcontactRelatedContacts(relatedContacts);*/
+	// [FIX?] KLV mapping updated to entities
+	NEW_VECTOR_AND_ASSIGN(source, relatedContacts, ebucoreEntity, contactDetailsType::relatedContacts_iterator, mapEntity, dest, setcontactRelatedContacts)
 	
 	// [TODO] We skip contactId for now, KLV mapping refers to an UID, while the XSD refers to anyURI type
-
 }
 
 void mapContact(ebucoreContact *source, contactDetailsType& dest) {
@@ -345,13 +339,15 @@ void mapContact(ebucoreContact *source, contactDetailsType& dest) {
 	}
 
 	// [TODO] We skip RelatedContacts for now, KLV mapping refers to Contacts, while the XSD refers to entities
-	/*std::vector<ebucoreContact*> relatedContacts;
-	for (contactDetailsType::relatedContacts_sequence::iterator it = source.relatedContacts().begin(); it != source.details().end(); it++) {
-		ebucoreContact *obj = new ebucoreContact(dest->getHeaderMetadata());
-		mapContact(*it, obj);
-		relatedContacts.push_back(obj);
+	// [FIX?] Updated to entityType
+	contactDetailsType::relatedContacts_sequence rels;
+	std::vector<ebucoreEntity*> source_rels = source->getcontactRelatedContacts();
+	for (std::vector<ebucoreEntity*>::iterator it = source_rels.begin(); it != source_rels.end(); it++) {
+		std::auto_ptr<entityType> p( new entityType() );
+		mapEntity(*it, *(p.get()));
+		rels.push_back(p);
 	}
-	dest->setcontactRelatedContacts(relatedContacts);*/
+	dest.relatedContacts(rels);
 	
 	// [TODO] We skip contactId for now, KLV mapping refers to an UID, while the XSD refers to anyURI type
 
@@ -386,6 +382,8 @@ void mapOrganisation(organisationDetailsType& source, ebucoreOrganisation *dest,
 	dest->setorganisationName(source.organisationName());
 	SIMPLE_MAP_OPTIONAL(source, organisationDepartment, dest, setorganisationDepartment)	
 	NEW_VECTOR_AND_ASSIGN(source, details, ebucoreContactDetails, contactDetailsType::details_sequence::iterator, mapDetails, dest, setorganisationDetails)
+	// [FIX?] Related contacts are now entities	
+	NEW_VECTOR_AND_ASSIGN(source, contacts, ebucoreEntity, organisationDetailsType::contacts_iterator, mapEntity, dest, setorganisationRelatedContacts)
 }
 
 void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest) {
@@ -393,6 +391,15 @@ void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest)
 	dest.organisationName() = source->getorganisationName();
 	if (source->haveorganisationDepartment())
 		dest.organisationDepartment() = source->getorganisationDepartment();
+
+	organisationDetailsType::contacts_sequence seq_conts;
+	std::vector<ebucoreEntity*> source_conts = source->getorganisationRelatedContacts();
+	for (std::vector<ebucoreEntity*>::iterator it = source_conts.begin(); it != source_conts.end(); it++) {
+		std::auto_ptr<entityType> p( new entityType() );
+		mapEntity(*it, *(p.get()));
+		seq_conts.push_back(p);
+	}
+	dest.contacts(seq_conts);
 
 	organisationDetailsType::details_sequence seq;
 	std::vector<ebucoreContactDetails*> source_vec = source->getorganisationDetails();
@@ -402,7 +409,6 @@ void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest)
 		seq.push_back(p);
 	}
 	dest.details(seq);
-
 }
 
 void mapEntity(entityType& source, ebucoreEntity *dest, ObjectModifier* mod) {
@@ -422,26 +428,14 @@ void mapEntity(entityType& source, ebucoreEntity *dest, ObjectModifier* mod) {
 	*/
 
 	// [TODO] The KLV mapping lists a single contact, while the XSD specifies a sequence
-	/*std::vector<ebucoreContact*> contacts;
-	for (entityType::contactDetails_sequence::iterator it = source.contactDetails().begin(); it != source.contactDetails().end(); it++) {
-		ebucoreContact *obj = new ebucoreContact(dest->getHeaderMetadata());
-		mapContact(*it, obj);
-		contacts.push_back(obj);
-	}*/
-	if (source.contactDetails().size() > 0) {
-		ebucoreContact *obj = newAndModifyObject<ebucoreContact>(dest->getHeaderMetadata(), mod);
-		mapContact(source.contactDetails().front(), obj);
-		dest->setentityContact(obj);
-	}
+	// [FIX?] Updated to sequence
+	NEW_VECTOR_AND_ASSIGN(source, contactDetails, ebucoreContact, entityType::contactDetails_iterator, mapContact, dest, setentityContact)
 
 	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, organisationDetails, ebucoreOrganisation, mapOrganisation, dest, setentityOrganisation)
 
 	// [TODO] The KLV mapping lists a single role, while the XSD specifies a sequence
-	if (source.role().size() > 0) {
-		ebucoreRole *obj = newAndModifyObject<ebucoreRole>(dest->getHeaderMetadata(), mod);
-		mapRole(source.role().front(), obj);
-		dest->setentityRole(obj);
-	}
+	// [FIX?] Updated to sequence
+	NEW_VECTOR_AND_ASSIGN(source, role, ebucoreRole, entityType::role_iterator, mapRole, dest, setentityRole)
 
 	// [TODO] We skip entityId for now, KLV mapping refers to an UID, while the XSD refers to anyURI type
 }
@@ -463,17 +457,15 @@ void mapEntity(ebucoreEntity *source, entityType& dest) {
 	*/
 
 	// [TODO] The KLV mapping lists a single contact, while the XSD specifies a sequence
-	/*std::vector<ebucoreContact*> contacts;
-	for (entityType::contactDetails_sequence::iterator it = source.contactDetails().begin(); it != source.contactDetails().end(); it++) {
-		ebucoreContact *obj = new ebucoreContact(dest->getHeaderMetadata());
-		mapContact(*it, obj);
-		contacts.push_back(obj);
-	}*/
+	// [FIX?] Updated cardinality
 	if (source->haveentityContact()) {
 		entityType::contactDetails_sequence seq;
-		std::auto_ptr<entityType::contactDetails_type> p( new entityType::contactDetails_type() );
-		mapContact(source->getentityContact(), *(p.get()));
-		seq.push_back(p);
+		std::vector<ebucoreContact*> source_conts = source->getentityContact();
+		for (std::vector<ebucoreContact*>::iterator it = source_conts.begin(); it != source_conts.end(); it++) {
+			std::auto_ptr<entityType::contactDetails_type> p( new entityType::contactDetails_type() );
+			mapContact((*it), *(p.get()));
+			seq.push_back(p);
+		}
 		dest.contactDetails(seq);
 	}
 
@@ -484,13 +476,16 @@ void mapEntity(ebucoreEntity *source, entityType& dest) {
 	}
 
 	// [TODO] The KLV mapping lists a single role, while the XSD specifies a sequence
+	// [FIX?] Updated cardinality
 	if (source->haveentityRole()) {
-		ebucoreRole *role = source->getentityRole();
-		ebucoreTypeGroup *tg = role->getroleType();
-		std::auto_ptr<entityType::role_type> p( new entityType::role_type() );
-		RMAP_TYPE_GROUP(tg, (*(p.get())), role::typeDefinition_type, role::typeLabel_type, role::typeLink_type)
 		entityType::role_sequence seq;
-		seq.push_back(p);
+		std::vector<ebucoreRole*> source_roles = source->getentityRole();
+		for (std::vector<ebucoreRole*>::iterator it = source_roles.begin(); it != source_roles.end(); it++) {
+			ebucoreTypeGroup *tg = (*it)->getroleType();
+			std::auto_ptr<entityType::role_type> p( new entityType::role_type() );
+			RMAP_TYPE_GROUP(tg, (*(p.get())), role::typeDefinition_type, role::typeLabel_type, role::typeLink_type)
+			seq.push_back(p);			
+		}
 		dest.role(seq);
 	}
 
@@ -816,6 +811,7 @@ void mapSubject(subjectType& source, ebucoreSubject *dest, ObjectModifier* mod =
 	*/
 
 	// [TODO] KLV Subject defines batch multiple attributors, XSD (0..1), used a single one in dictionary
+	// [FIX?] Updated cardinality
 
 	SIMPLE_MAP_NO_GET(source, subject, dest, setsubjectValue)
 	SIMPLE_MAP_NO_GET(source, subject().lang, dest, setsubjectLanguage)
@@ -833,6 +829,7 @@ void mapSubject(subjectType& source, ebucoreSubject *dest, ObjectModifier* mod =
 
 void mapSubject(ebucoreSubject *source, subjectType& dest) {
 	// [TODO] KLV Subject defines batch multiple attributors, XSD (0..1), used a single one in dictionary
+	// [FIX?] Updated cardinality
 
 	dest.subject() = source->getsubjectValue();
 	dest.subject().lang() = source->getsubjectLanguage();
@@ -968,13 +965,16 @@ void mapType(typeType& source, ebucoreType *dest, ObjectModifier* mod = NULL) {
 	*/
 	
 	// [TODO] KLV Type ignores content of dc:type?
-	// [TODO] KLV objecttypes is only a single reference, and unbounded sequence in XSD
 
-	if (source.objectType().size() > 0) {
+	// [TODO] KLV objecttypes is only a single reference, and unbounded sequence in XSD
+	// [FIX?] Updated cardinality
+	std::vector<ebucoreObjectType*> vec_dest_objecttype;
+	for (typeType::objectType_iterator it = source.objectType().begin(); it != source.objectType().end(); it++) {
 		ebucoreObjectType *obj = newAndModifyObject<ebucoreObjectType>(dest->getHeaderMetadata(), mod);
 		MAP_NEW_TYPE_GROUP_AND_ASSIGN(source.objectType().front(), obj, setobjectTypeGroup)
-		dest->setobjectType(obj);
+		vec_dest_objecttype.push_back(obj);
 	}
+	dest->setobjectType(vec_dest_objecttype);
 
 	std::vector<ebucoreTargetAudience*> v1;
 	for (typeType::targetAudience_sequence::iterator it = source.targetAudience().begin(); it != source.targetAudience().end(); it++) {
@@ -994,9 +994,11 @@ void mapType(typeType& source, ebucoreType *dest, ObjectModifier* mod = NULL) {
 }
 
 void mapType(ebucoreType *source, typeType& dest) {
-	if (source->haveobjectType()) {
+	typeType::objectType_sequence obtyps;
+	std::vector<ebucoreObjectType*> source_obtyps = source->getobjectType();
+	for (std::vector<ebucoreObjectType*>::iterator it = source_obtyps.begin(); it != source_obtyps.end(); it++) {
 		std::auto_ptr<objectType> p( new objectType() );
-		RMAP_TYPE_GROUP(source->getobjectType()->getobjectTypeGroup(), (*p), objectType::typeDefinition_type, objectType::typeLabel_type, objectType::typeLink_type)
+		RMAP_TYPE_GROUP((*it)->getobjectTypeGroup(), (*p), objectType::typeDefinition_type, objectType::typeLabel_type, objectType::typeLink_type)
 		dest.objectType().push_back(p);
 	}
 
@@ -1169,6 +1171,7 @@ void mapTemporal(temporal& source, ebucoreTemporal *dest, ObjectModifier* mod = 
 	*/
 
 	// [TODO] There is no typeGroup equivalent in KLV rep., it is in the PeriodOfTime element, which is a batch, and not a single optional element such as in XSD
+	// [FIX?] PeriodOfTime element is now a single optional element
 	bool hasPeriodOfTime = source.periodId().present() | source.PeriodOfTime().present();
 	if (hasPeriodOfTime) {
 		ebucorePeriodOfTime *obj = newAndModifyObject<ebucorePeriodOfTime>(dest->getHeaderMetadata(), mod);
@@ -1188,18 +1191,15 @@ void mapTemporal(temporal& source, ebucoreTemporal *dest, ObjectModifier* mod = 
 			MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, obj, setperiodKindGroup)
 		}
 
-		std::vector<ebucorePeriodOfTime*> v;
-		v.push_back(obj);
-		dest->setperiodOfTime(v);
+		dest->setperiodOfTime(obj);
 	}
 }
 
 void mapTemporal(ebucoreTemporal *source, temporal& dest) {
 	// if there is more that a single period of time, we only use the first one
-	std::vector<ebucorePeriodOfTime*> pots = source->getperiodOfTime();
-	if (pots.size() > 0) {
-		// pick the first to work with
-		ebucorePeriodOfTime *pot = pots[0];
+	// [FIX?] Updated cardinality, source has only max 1 periodoftime
+	if (source->haveperiodOfTime()) {
+		ebucorePeriodOfTime *pot = source->getperiodOfTime();
 		std::auto_ptr<PeriodOfTime> p(new PeriodOfTime());
 
 		if (pot->haveperiodId())
@@ -1303,22 +1303,22 @@ void mapMetadataCoverage(coverageType& source, ebucoreCoverage *dest, ObjectModi
 
 	// [TODO] KLV Coverage has no XSD dc:coverage string representation
 	// [TODO] KLV Coverage has a batch of spatial and tempoal and only 0 or 1 in XSD
-	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, temporal, ebucoreTemporal, mapTemporal, dest, settemporal)
-	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, spatial, ebucoreSpatial, mapSpatial, dest, setspatial)
-
+	// [Fix?] Updated cardinality
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, temporal, ebucoreTemporal, mapTemporal, dest, settemporal)
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, spatial, ebucoreSpatial, mapSpatial, dest, setspatial)
 }
 
 void mapMetadataCoverage(ebucoreCoverage *source, coverageType& dest) {
-	if (source->havespatial() && source->getspatial().size() > 0) {
+	// [Fix?] Updated cardinality
+	if (source->havespatial()) {
 		std::auto_ptr<spatial> lp( new spatial() );
-		ebucoreSpatial *s = source->getspatial()[0];
-		mapSpatial(s, *lp);
+		mapSpatial(source->getspatial(), *lp);
 		dest.spatial(lp);
 	}
-	if (source->havetemporal() && source->gettemporal().size() > 0) {
+	// [Fix?] Updated cardinality
+	if (source->havetemporal()) {
 		std::auto_ptr<temporal> tp( new temporal() );
-		ebucoreTemporal *s = source->gettemporal()[0];
-		mapTemporal(s, *tp);
+		mapTemporal(source->gettemporal(), *tp);
 		dest.temporal(tp);
 	}
 }
@@ -1366,21 +1366,13 @@ void mapRights(rightsType& source, ebucoreRights *dest, ObjectModifier* mod = NU
 	SIMPLE_MAP_OPTIONAL(source, rightsLink, dest, setrightsLink)
 
 	// [TODO] KLV coverage is a vector while XSD coverage is a single optional element
-	if (source.coverage().present()) {
-		ebucoreCoverage *obj = newAndModifyObject<ebucoreCoverage>(dest->getHeaderMetadata(), mod);
-		mapMetadataCoverage(source.coverage().get(), obj);
-		std::vector<ebucoreCoverage*> coverage;
-		coverage.push_back(obj);
-		dest->setrightsCoverage(coverage);
-	}
+	// [FIX?] Updated cardinality
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, coverage, ebucoreCoverage, mapMetadataCoverage, dest, setrightsCoverage)
+
 	// [TODO] KLV rightsholder is a vector while XSD rightsholder is a single optional element
-	if (source.rightsHolder().present()) {
-		ebucoreEntity *obj = newAndModifyObject<ebucoreEntity>(dest->getHeaderMetadata(), mod);
-		mapEntity(source.rightsHolder().get(), obj);
-		std::vector<ebucoreEntity*> holder;
-		holder.push_back(obj);
-		dest->setrightsHolderEntity(holder);
-	}
+	// [FIX?] Updated cardinality
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, rightsHolder, ebucoreEntity, mapEntity, dest, setrightsHolderEntity)
+
 	NEW_VECTOR_AND_ASSIGN(source, contactDetails, ebucoreContact, rightsType::contactDetails_sequence::iterator, mapContact, dest, setrightsContacts)
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setrightsKindGroup)
 }
@@ -1431,24 +1423,18 @@ void mapRights(ebucoreRights *source, rightsType& dest) {
 	if (source->haverightsLink())
 		dest.rightsLink( source->getrightsLink());
 
+	// [FIX?] Updated cardinality
 	if (source->haverightsCoverage()) {
-		std::vector<ebucoreCoverage*> cover = source->getrightsCoverage();
-		if (cover.size() > 0) {
-			ebucoreCoverage *coverage = cover[0];
-			std::auto_ptr<coverageType> p( new coverageType() );
-			mapMetadataCoverage(coverage, *p); 
-			dest.coverage(p);
-		}
+		std::auto_ptr<coverageType> p( new coverageType() );
+		mapMetadataCoverage(source->getrightsCoverage(), *p); 
+		dest.coverage(p);
 	}
 
+	// [FIX?] Updated cardinality
 	if (source->haverightsHolderEntity()) {
-		std::vector<ebucoreEntity*> ents = source->getrightsHolderEntity();
-		if (ents.size() > 0) {
-			ebucoreEntity *ent = ents[0];
-			std::auto_ptr<entityType> p( new entityType() );
-			mapEntity(ent, *p);
-			dest.rightsHolder(p);
-		}
+		std::auto_ptr<entityType> p( new entityType() );
+		mapEntity(source->getrightsHolderEntity(), *p);
+		dest.rightsHolder(p);
 	}
 
 	if (source->haverightsContacts()) {

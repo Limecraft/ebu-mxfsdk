@@ -155,14 +155,14 @@ std::vector<ebucoreContactDetails*> ebucoreContactBase::getcontactDetails() cons
     return result;
 }
 
-std::vector<ebucoreContact*> ebucoreContactBase::getcontactRelatedContacts() const
+std::vector<ebucoreEntity*> ebucoreContactBase::getcontactRelatedContacts() const
 {
-    vector<ebucoreContact*> result;
+    vector<ebucoreEntity*> result;
     auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, contactRelatedContacts)));
     while (iter->next())
     {
-        MXFPP_CHECK(dynamic_cast<ebucoreContact*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreContact*>(iter->get()));
+        MXFPP_CHECK(dynamic_cast<ebucoreEntity*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreEntity*>(iter->get()));
     }
     return result;
 }
@@ -223,13 +223,13 @@ void ebucoreContactBase::appendcontactDetails(ebucoreContactDetails* value)
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, contactDetails), value);
 }
 
-void ebucoreContactBase::setcontactRelatedContacts(const std::vector<ebucoreContact*>& value)
+void ebucoreContactBase::setcontactRelatedContacts(const std::vector<ebucoreEntity*>& value)
 {
-    WrapObjectVectorIterator<ebucoreContact> iter(value);
+    WrapObjectVectorIterator<ebucoreEntity> iter(value);
     setStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, contactRelatedContacts), &iter);
 }
 
-void ebucoreContactBase::appendcontactRelatedContacts(ebucoreContact* value)
+void ebucoreContactBase::appendcontactRelatedContacts(ebucoreEntity* value)
 {
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, contactRelatedContacts), value);
 }

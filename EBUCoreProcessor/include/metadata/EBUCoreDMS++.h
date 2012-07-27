@@ -44,6 +44,7 @@ namespace EBUCore
 		class ebucoreRole;
 		class ebucoreOrganisation;
 		class ebucoreMetadataSchemeInformation;
+		class ebucoreEntity;
 	}
 }
 

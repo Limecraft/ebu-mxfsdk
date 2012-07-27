@@ -56,17 +56,15 @@ public:
    // getters
 
    bool havespatial() const;
-   std::vector<ebucoreSpatial*> getspatial() const;
+   ebucoreSpatial* getspatial() const;
    bool havetemporal() const;
-   std::vector<ebucoreTemporal*> gettemporal() const;
+   ebucoreTemporal* gettemporal() const;
 
 
    // setters
 
-   void setspatial(const std::vector<ebucoreSpatial*>& value);
-   void appendspatial(ebucoreSpatial* value);
-   void settemporal(const std::vector<ebucoreTemporal*>& value);
-   void appendtemporal(ebucoreTemporal* value);
+   void setspatial(ebucoreSpatial* value);
+   void settemporal(ebucoreTemporal* value);
 
 
 protected:

@@ -66,26 +66,15 @@ bool ebucoreTemporalBase::haveperiodOfTime() const
     return haveItem(&MXF_ITEM_K(ebucoreTemporal, periodOfTime));
 }
 
-std::vector<ebucorePeriodOfTime*> ebucoreTemporalBase::getperiodOfTime() const
+ebucorePeriodOfTime* ebucoreTemporalBase::getperiodOfTime() const
 {
-    vector<ebucorePeriodOfTime*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreTemporal, periodOfTime)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucorePeriodOfTime*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucorePeriodOfTime*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreTemporal, periodOfTime)));
+    MXFPP_CHECK(dynamic_cast<ebucorePeriodOfTime*>(obj.get()) != 0);
+    return dynamic_cast<ebucorePeriodOfTime*>(obj.release());
 }
 
-void ebucoreTemporalBase::setperiodOfTime(const std::vector<ebucorePeriodOfTime*>& value)
+void ebucoreTemporalBase::setperiodOfTime(ebucorePeriodOfTime* value)
 {
-    WrapObjectVectorIterator<ebucorePeriodOfTime> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreTemporal, periodOfTime), &iter);
-}
-
-void ebucoreTemporalBase::appendperiodOfTime(ebucorePeriodOfTime* value)
-{
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreTemporal, periodOfTime), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreTemporal, periodOfTime), value);
 }
 

@@ -55,15 +55,15 @@ public:
 
    // getters
 
-   bool haveobjectType() const;
-   ebucoreObjectType* getobjectType() const;
+   std::vector<ebucoreObjectType*> getobjectType() const;
    std::vector<ebucoreGenre*> getgenre() const;
    std::vector<ebucoreTargetAudience*> gettargetAudience() const;
 
 
    // setters
 
-   void setobjectType(ebucoreObjectType* value);
+   void setobjectType(const std::vector<ebucoreObjectType*>& value);
+   void appendobjectType(ebucoreObjectType* value);
    void setgenre(const std::vector<ebucoreGenre*>& value);
    void appendgenre(ebucoreGenre* value);
    void settargetAudience(const std::vector<ebucoreTargetAudience*>& value);

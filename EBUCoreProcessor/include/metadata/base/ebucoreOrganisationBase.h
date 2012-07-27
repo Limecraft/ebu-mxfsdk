@@ -62,7 +62,7 @@ public:
    std::string getorganisationDepartment() const;
    ebucoreTypeGroup* getorganisationType() const;
    std::vector<ebucoreContactDetails*> getorganisationDetails() const;
-   std::vector<ebucoreContact*> getorganisationRelatedContacts() const;
+   std::vector<ebucoreEntity*> getorganisationRelatedContacts() const;
 
 
    // setters
@@ -74,8 +74,8 @@ public:
    void setorganisationType(ebucoreTypeGroup* value);
    void setorganisationDetails(const std::vector<ebucoreContactDetails*>& value);
    void appendorganisationDetails(ebucoreContactDetails* value);
-   void setorganisationRelatedContacts(const std::vector<ebucoreContact*>& value);
-   void appendorganisationRelatedContacts(ebucoreContact* value);
+   void setorganisationRelatedContacts(const std::vector<ebucoreEntity*>& value);
+   void appendorganisationRelatedContacts(ebucoreEntity* value);
 
 
 protected:

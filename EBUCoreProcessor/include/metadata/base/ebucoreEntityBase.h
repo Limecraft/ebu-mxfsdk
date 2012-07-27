@@ -57,19 +57,21 @@ public:
 
    mxfUUID getentityId() const;
    bool haveentityContact() const;
-   ebucoreContact* getentityContact() const;
+   std::vector<ebucoreContact*> getentityContact() const;
    bool haveentityOrganisation() const;
    ebucoreOrganisation* getentityOrganisation() const;
    bool haveentityRole() const;
-   ebucoreRole* getentityRole() const;
+   std::vector<ebucoreRole*> getentityRole() const;
 
 
    // setters
 
    void setentityId(mxfUUID value);
-   void setentityContact(ebucoreContact* value);
+   void setentityContact(const std::vector<ebucoreContact*>& value);
+   void appendentityContact(ebucoreContact* value);
    void setentityOrganisation(ebucoreOrganisation* value);
-   void setentityRole(ebucoreRole* value);
+   void setentityRole(const std::vector<ebucoreRole*>& value);
+   void appendentityRole(ebucoreRole* value);
 
 
 protected:

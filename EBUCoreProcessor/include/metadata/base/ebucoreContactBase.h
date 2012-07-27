@@ -72,7 +72,7 @@ public:
    std::string getoccupation() const;
    ebucoreTypeGroup* getcontactType() const;
    std::vector<ebucoreContactDetails*> getcontactDetails() const;
-   std::vector<ebucoreContact*> getcontactRelatedContacts() const;
+   std::vector<ebucoreEntity*> getcontactRelatedContacts() const;
 
 
    // setters
@@ -88,8 +88,8 @@ public:
    void setcontactType(ebucoreTypeGroup* value);
    void setcontactDetails(const std::vector<ebucoreContactDetails*>& value);
    void appendcontactDetails(ebucoreContactDetails* value);
-   void setcontactRelatedContacts(const std::vector<ebucoreContact*>& value);
-   void appendcontactRelatedContacts(ebucoreContact* value);
+   void setcontactRelatedContacts(const std::vector<ebucoreEntity*>& value);
+   void appendcontactRelatedContacts(ebucoreEntity* value);
 
 
 protected:

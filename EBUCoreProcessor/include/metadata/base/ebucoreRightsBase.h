@@ -72,9 +72,9 @@ public:
    bool haveexploitationIssues() const;
    std::string getexploitationIssues() const;
    bool haverightsCoverage() const;
-   std::vector<ebucoreCoverage*> getrightsCoverage() const;
+   ebucoreCoverage* getrightsCoverage() const;
    bool haverightsHolderEntity() const;
-   std::vector<ebucoreEntity*> getrightsHolderEntity() const;
+   ebucoreEntity* getrightsHolderEntity() const;
    bool haverightsContacts() const;
    std::vector<ebucoreContact*> getrightsContacts() const;
    ebucoreTypeGroup* getrightsKindGroup() const;
@@ -90,10 +90,8 @@ public:
    void setrightsAttributedID(std::string value);
    void setrightsFormatIDRef(std::string value);
    void setexploitationIssues(std::string value);
-   void setrightsCoverage(const std::vector<ebucoreCoverage*>& value);
-   void appendrightsCoverage(ebucoreCoverage* value);
-   void setrightsHolderEntity(const std::vector<ebucoreEntity*>& value);
-   void appendrightsHolderEntity(ebucoreEntity* value);
+   void setrightsCoverage(ebucoreCoverage* value);
+   void setrightsHolderEntity(ebucoreEntity* value);
    void setrightsContacts(const std::vector<ebucoreContact*>& value);
    void appendrightsContacts(ebucoreContact* value);
    void setrightsKindGroup(ebucoreTypeGroup* value);

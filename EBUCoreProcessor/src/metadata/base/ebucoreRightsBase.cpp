@@ -146,16 +146,11 @@ bool ebucoreRightsBase::haverightsCoverage() const
     return haveItem(&MXF_ITEM_K(ebucoreRights, rightsCoverage));
 }
 
-std::vector<ebucoreCoverage*> ebucoreRightsBase::getrightsCoverage() const
+ebucoreCoverage* ebucoreRightsBase::getrightsCoverage() const
 {
-    vector<ebucoreCoverage*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsCoverage)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreCoverage*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreCoverage*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRights, rightsCoverage)));
+    MXFPP_CHECK(dynamic_cast<ebucoreCoverage*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreCoverage*>(obj.release());
 }
 
 bool ebucoreRightsBase::haverightsHolderEntity() const
@@ -163,16 +158,11 @@ bool ebucoreRightsBase::haverightsHolderEntity() const
     return haveItem(&MXF_ITEM_K(ebucoreRights, rightsHolderEntity));
 }
 
-std::vector<ebucoreEntity*> ebucoreRightsBase::getrightsHolderEntity() const
+ebucoreEntity* ebucoreRightsBase::getrightsHolderEntity() const
 {
-    vector<ebucoreEntity*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsHolderEntity)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreEntity*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreEntity*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRights, rightsHolderEntity)));
+    MXFPP_CHECK(dynamic_cast<ebucoreEntity*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreEntity*>(obj.release());
 }
 
 bool ebucoreRightsBase::haverightsContacts() const
@@ -239,26 +229,14 @@ void ebucoreRightsBase::setexploitationIssues(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues), value);
 }
 
-void ebucoreRightsBase::setrightsCoverage(const std::vector<ebucoreCoverage*>& value)
+void ebucoreRightsBase::setrightsCoverage(ebucoreCoverage* value)
 {
-    WrapObjectVectorIterator<ebucoreCoverage> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsCoverage), &iter);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreRights, rightsCoverage), value);
 }
 
-void ebucoreRightsBase::appendrightsCoverage(ebucoreCoverage* value)
+void ebucoreRightsBase::setrightsHolderEntity(ebucoreEntity* value)
 {
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsCoverage), value);
-}
-
-void ebucoreRightsBase::setrightsHolderEntity(const std::vector<ebucoreEntity*>& value)
-{
-    WrapObjectVectorIterator<ebucoreEntity> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsHolderEntity), &iter);
-}
-
-void ebucoreRightsBase::appendrightsHolderEntity(ebucoreEntity* value)
-{
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsHolderEntity), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreRights, rightsHolderEntity), value);
 }
 
 void ebucoreRightsBase::setrightsContacts(const std::vector<ebucoreContact*>& value)

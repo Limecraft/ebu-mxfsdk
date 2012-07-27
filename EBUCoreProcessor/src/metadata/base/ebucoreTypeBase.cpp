@@ -61,16 +61,16 @@ ebucoreTypeBase::~ebucoreTypeBase()
 {}
 
 
-bool ebucoreTypeBase::haveobjectType() const
+std::vector<ebucoreObjectType*> ebucoreTypeBase::getobjectType() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreType, objectType));
-}
-
-ebucoreObjectType* ebucoreTypeBase::getobjectType() const
-{
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreType, objectType)));
-    MXFPP_CHECK(dynamic_cast<ebucoreObjectType*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreObjectType*>(obj.release());
+    vector<ebucoreObjectType*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreType, objectType)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreObjectType*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreObjectType*>(iter->get()));
+    }
+    return result;
 }
 
 std::vector<ebucoreGenre*> ebucoreTypeBase::getgenre() const
@@ -97,9 +97,15 @@ std::vector<ebucoreTargetAudience*> ebucoreTypeBase::gettargetAudience() const
     return result;
 }
 
-void ebucoreTypeBase::setobjectType(ebucoreObjectType* value)
+void ebucoreTypeBase::setobjectType(const std::vector<ebucoreObjectType*>& value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucoreType, objectType), value);
+    WrapObjectVectorIterator<ebucoreObjectType> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreType, objectType), &iter);
+}
+
+void ebucoreTypeBase::appendobjectType(ebucoreObjectType* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreType, objectType), value);
 }
 
 void ebucoreTypeBase::setgenre(const std::vector<ebucoreGenre*>& value)
