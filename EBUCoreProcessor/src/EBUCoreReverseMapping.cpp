@@ -15,94 +15,52 @@ using namespace mxfpp;
 
 namespace EBUCore {
 
-#define	SIMPLE_MAP(source, sourceProperty, dest, destProperty)	\
-	dest->destProperty(source.sourceProperty().get());
+#define	SIMPLE_RMAP(source, sourceProperty, dest, destProperty)	\
+	dest.destProperty() = source->sourceProperty();
 #define	SIMPLE_MAP_NO_GET(source, sourceProperty, dest, destProperty)	\
 	dest->destProperty(source.sourceProperty());
 
-#define	SIMPLE_MAP_OPTIONAL(source, sourceProperty, dest, destProperty)	\
-	if (source.sourceProperty().present())	\
-		dest->destProperty(source.sourceProperty().get());
+#define	SIMPLE_RMAP_OPTIONAL(source, haveSourceProperty, getSourceProperty, dest, destProperty)	\
+	if (source->haveSourceProperty())	\
+		dest.destProperty() = source->getSourceProperty();
+#define	SIMPLE_RMAP_OPTIONAL_POINTER(source, haveSourceProperty, getSourceProperty, dest, destProperty)	\
+	if (source->haveSourceProperty())	\
+		dest->destProperty() = source->getSourceProperty();
 #define	SIMPLE_MAP_OPTIONAL_CONVERT(source, sourceProperty, dest, destProperty, convertFunction)	\
 	if (source.sourceProperty().present())	\
 		dest->destProperty(convertFunction(source.sourceProperty().get()));
 
-#define NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, sourceProperty, destType, mapMethod, dest, destProperty) \
-	if (source.sourceProperty().present()) {	\
-		destType *obj = newAndModifyObject<destType>(dest->getHeaderMetadata(), mod);	\
-		mapMethod(source.sourceProperty().get(), obj, mod);	\
-		dest->destProperty(obj);	\
+#define NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haveSourceProperty, getSourceProperty, destType, mapMethod, dest, destProperty) \
+	if (source->haveSourceProperty()) {	\
+		std::auto_ptr<destType> p( new destType() );	\
+		mapMethod(source->getSourceProperty(), *p);	\
+		dest.destProperty(p);	\
+	}
+#define NEW_OBJECT_AND_RASSIGN_OPTIONAL_GETPOINTER(source, haveSourceProperty, getSourceProperty, destType, mapMethod, dest, destProperty) \
+	if (source->haveSourceProperty()) {	\
+		std::auto_ptr<destType> p( new destType() );	\
+		mapMethod(source->getSourceProperty(), *(p.get()));	\
+		dest.destProperty(p);	\
 	}
 
-#define NEW_VECTOR_AND_ASSIGN(source, sourceProperty, destType, iteratorType, mapMethod, dest, destProperty)	\
-	{ std::vector<destType*> vec_dest_destProperty;	\
-	for (iteratorType it = source.sourceProperty().begin(); it != source.sourceProperty().end(); it++) {	\
-		destType *obj = newAndModifyObject<destType>(dest->getHeaderMetadata(), mod);	\
-		mapMethod(*it, obj, mod);	\
-		vec_dest_destProperty.push_back(obj);	\
-	}	\
-	dest->destProperty(vec_dest_destProperty); }
+#define NEW_VECTOR_AND_RASSIGN(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty)	\
+	{ destSequenceType vec_##dest##destProperty; \
+	for (iteratorType it = source->sourceProperty().begin(); it != source->sourceProperty().end(); it++) { \
+		std::auto_ptr<destType> p( new destType() ); \
+		mapMethod(*it, *p); \
+		vec_##dest##destProperty.push_back(p); \
+	} \
+	dest.destProperty(vec_##dest##destProperty); }
 
-#define	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, sourceProperty, destType, mapMethod, dest, destProperty) \
-	if (source.sourceProperty().present()) {	\
-		destType *obj = newAndModifyObject<destType>(dest->getHeaderMetadata(), mod);	\
-		mapMethod(source.sourceProperty().get(), obj, mod);	\
-		std::vector<destType*> v_dest_destProperty;	\
-		v_dest_destProperty.push_back(obj);	\
-		dest->destProperty(v_dest_destProperty);	\
-	}
-
-#define MAP_TYPE_GROUP(source, dest)	\
-	SIMPLE_MAP_OPTIONAL(source, typeDefinition, dest, settypeGroupDefinition) \
-	SIMPLE_MAP_OPTIONAL(source, typeLabel, dest, settypeGroupLabel) \
-	SIMPLE_MAP_OPTIONAL(source, typeLink, dest, settypeGroupLink)
-/*
-	<attributeGroup name="typeGroup">
-		<attribute name="typeLabel" type="string"/>
-		<attribute name="typeDefinition" type="string"/>
-		<attribute name="typeLink" type="anyURI"/>
-	</attributeGroup>
-
-	This macro is not defined as a function since typeGroups are not separate types 
-	but are more like duck typing (just a group of included attributes).
-*/
-
-#define MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, destProperty) \
-	ebucoreTypeGroup *typeGroup = newAndModifyObject<ebucoreTypeGroup>(dest->getHeaderMetadata(), mod);	\
-	MAP_TYPE_GROUP(source, typeGroup)	\
-	dest->destProperty(typeGroup);	\
-
-
-#define MAP_STATUS_GROUP(source, dest)	\
-	SIMPLE_MAP_OPTIONAL(source, statusDefinition, dest, setstatusGroupDefinition) \
-	SIMPLE_MAP_OPTIONAL(source, statusLabel, dest, setstatusGroupLabel) \
-	SIMPLE_MAP_OPTIONAL(source, statusLink, dest, setstatusGroupLink)
-/*
-	<attributeGroup name="statusGroup">
-		<attribute name="statusLabel" type="string"/>
-		<attribute name="statusDefinition" type="string"/>
-		<attribute name="statusLink" type="anyURI"/>
-	</attributeGroup>
-
-	This macro is not defined as a function since statusGroups are not separate types 
-	but are more like duck typing (just a group of included attributes).
-*/
-
-#define MAP_NEW_STATUS_GROUP_AND_ASSIGN(source, dest, destProperty) \
-	ebucoreStatusGroup *statusGroup = newAndModifyObject<ebucoreStatusGroup>(dest->getHeaderMetadata(), mod); \
-	MAP_STATUS_GROUP(source, statusGroup)	\
-	dest->destProperty(statusGroup);
-
-
-#define MAP_FORMAT_GROUP(source, dest)	\
-	SIMPLE_MAP_OPTIONAL(source, formatDefinition, dest, setformatGroupDefinition) \
-	SIMPLE_MAP_OPTIONAL(source, formatLabel, dest, setformatGroupLabel) \
-	SIMPLE_MAP_OPTIONAL(source, formatLink, dest, setformatGroupLink)
-
-#define MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, destProperty) \
-	ebucoreFormatGroup *statusGroup = newAndModifyObject<ebucoreFormatGroup>(dest->getHeaderMetadata(), mod);	\
-	MAP_FORMAT_GROUP(source, statusGroup)	\
-	dest->destProperty(statusGroup);
+#define NEW_VECTOR_AND_RASSIGN_WITH_DC(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty)	\
+	{ destSequenceType vec_##dest##destProperty; \
+	for (iteratorType it = source->sourceProperty().begin(); it != source->sourceProperty().end(); it++) { \
+		std::auto_ptr<dc::elementType> dcp( new dc::elementType() ); \
+		std::auto_ptr<destType> p( new destType(dcp) ); \
+		mapMethod(*it, *p); \
+		vec_##dest##destProperty.push_back(p); \
+	} \
+	dest.destProperty(vec_##dest##destProperty); }
 
 #define RMAP_TYPE_GROUP(source, dest, definitionType, labelType, linkType)	\
 	if (source->havetypeGroupDefinition()) {	\
@@ -147,42 +105,29 @@ void mapAddress(ebucoreAddress *source, addressType& dest) {
 		dest.addressLine(lines);
 	}
 
-	if (source->havetownCity())
-		dest.addressTownCity() = source->gettownCity();
-	if (source->havecountyState())
-		dest.addressCountyState() = source->getcountyState();
-	if (source->havedeliveryCode())
-		dest.addressDeliveryCode() = source->getdeliveryCode();
+	SIMPLE_RMAP_OPTIONAL(source, havetownCity, gettownCity, dest, addressTownCity)
+	SIMPLE_RMAP_OPTIONAL(source, havecountyState, getcountyState, dest, addressCountyState)
+	SIMPLE_RMAP_OPTIONAL(source, havedeliveryCode, getdeliveryCode, dest, addressDeliveryCode)
 
 	// special treatment for country, current KLV mapping is not via a typeGroup!
 	if (source->havecountryCode() || source->havecountryName()) {
 		std::auto_ptr<addressType::country_type> p( new addressType::country_type() );
-		if (source->havecountryCode())
-			p->typeLink() = source->getcountryCode();
-		if (source->havecountryName())
-			p->typeLabel() = source->getcountryName();
+		SIMPLE_RMAP_OPTIONAL_POINTER(source, havecountryCode, getcountryCode, p, typeLink)
+		SIMPLE_RMAP_OPTIONAL_POINTER(source, havecountryName, getcountryName, p, typeLabel)
 		dest.country(p);
 	}
 }
 
 void mapDetails(ebucoreContactDetails *source, detailsType& dest) {
 
-	if (source->haveemailAddress())
-		dest.emailAddress() = source->getemailAddress();
-	if (source->havewebAddress())
-		dest.webAddress() = source->getwebAddress();
+	SIMPLE_RMAP_OPTIONAL(source, haveemailAddress, getemailAddress, dest, emailAddress)
+	SIMPLE_RMAP_OPTIONAL(source, havewebAddress, getwebAddress, dest, webAddress)
 
 	// map address
-	if (source->haveaddress()) {
-		std::auto_ptr<addressType> p( new addressType() );
-		mapAddress(source->getaddress(), *(p.get()) );
-		dest.address(p);
-	}
-	
-	if (source->havetelephoneNumber())
-		dest.telephoneNumber() = source->gettelephoneNumber();
-	if (source->havemobileTelephoneNumber())
-		dest.mobileTelephoneNumber() = source->getmobileTelephoneNumber();
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL_GETPOINTER(source, haveaddress, getaddress, addressType, mapAddress, dest, address)
+
+	SIMPLE_RMAP_OPTIONAL(source, havetelephoneNumber, gettelephoneNumber, dest, telephoneNumber)
+	SIMPLE_RMAP_OPTIONAL(source, havemobileTelephoneNumber, getmobileTelephoneNumber, dest, mobileTelephoneNumber)
 
 	RMAP_TYPE_GROUP(source->getdetailsType(), dest, detailsType::typeDefinition_type, detailsType::typeLabel_type, detailsType::typeLink_type)
 }
@@ -196,22 +141,12 @@ void mapContact(ebucoreContact *source, contactDetailsType& dest) {
 	} else {
 		dest.name() = source->getgivenName();
 	}
-	if (source->haveotherGivenName())
-		dest.username() = source->getotherGivenName();
-	if (source->haveoccupation())
-		dest.occupation() = source->getoccupation();
 
-	//dest.details()
+	SIMPLE_RMAP_OPTIONAL(source, haveotherGivenName, getotherGivenName, dest, username)
+	SIMPLE_RMAP_OPTIONAL(source, haveoccupation, getoccupation, dest, occupation)
 
 	// map contactdetails
-	contactDetailsType::details_sequence details;
-	std::vector<ebucoreContactDetails*> source_vec = source->getcontactDetails();
-	for (std::vector<ebucoreContactDetails*>::iterator it = source_vec.begin(); it != source_vec.end(); it++) {
-		std::auto_ptr<detailsType> p( new detailsType() );
-		mapDetails(*it, *(p.get()));
-		details.push_back(p);
-	}
-	dest.details(details);
+	NEW_VECTOR_AND_RASSIGN(source, getcontactDetails, detailsType, contactDetailsType::details_sequence, std::vector<ebucoreContactDetails*>::iterator, mapDetails, dest, details)
 
 	if (source->havestageName()) {
 		contactDetailsType::stageName_sequence seq;
@@ -221,14 +156,7 @@ void mapContact(ebucoreContact *source, contactDetailsType& dest) {
 
 	// [TODO] We skip RelatedContacts for now, KLV mapping refers to Contacts, while the XSD refers to entities
 	// [FIX?] Updated to entityType
-	contactDetailsType::relatedContacts_sequence rels;
-	std::vector<ebucoreEntity*> source_rels = source->getcontactRelatedContacts();
-	for (std::vector<ebucoreEntity*>::iterator it = source_rels.begin(); it != source_rels.end(); it++) {
-		std::auto_ptr<entityType> p( new entityType() );
-		mapEntity(*it, *(p.get()));
-		rels.push_back(p);
-	}
-	dest.relatedContacts(rels);
+	NEW_VECTOR_AND_RASSIGN(source, getcontactRelatedContacts, entityType, contactDetailsType::relatedContacts_sequence, std::vector<ebucoreEntity*>::iterator, mapEntity, dest, relatedContacts)
 	
 	// [TODO] We skip contactId for now, KLV mapping refers to an UID, while the XSD refers to anyURI type
 
@@ -236,27 +164,11 @@ void mapContact(ebucoreContact *source, contactDetailsType& dest) {
 
 void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest) {
 
-	dest.organisationName() = source->getorganisationName();
-	if (source->haveorganisationDepartment())
-		dest.organisationDepartment() = source->getorganisationDepartment();
+	SIMPLE_RMAP(source, getorganisationName, dest, organisationName)
+	SIMPLE_RMAP_OPTIONAL(source, haveorganisationDepartment, getorganisationDepartment, dest, organisationDepartment)
 
-	organisationDetailsType::contacts_sequence seq_conts;
-	std::vector<ebucoreEntity*> source_conts = source->getorganisationRelatedContacts();
-	for (std::vector<ebucoreEntity*>::iterator it = source_conts.begin(); it != source_conts.end(); it++) {
-		std::auto_ptr<entityType> p( new entityType() );
-		mapEntity(*it, *(p.get()));
-		seq_conts.push_back(p);
-	}
-	dest.contacts(seq_conts);
-
-	organisationDetailsType::details_sequence seq;
-	std::vector<ebucoreContactDetails*> source_vec = source->getorganisationDetails();
-	for (std::vector<ebucoreContactDetails*>::iterator it = source_vec.begin(); it != source_vec.end(); it++) {
-		std::auto_ptr<detailsType> p( new detailsType() );
-		mapDetails(*it, *(p.get()));
-		seq.push_back(p);
-	}
-	dest.details(seq);
+	NEW_VECTOR_AND_RASSIGN(source, getorganisationRelatedContacts, entityType, organisationDetailsType::contacts_sequence, std::vector<ebucoreEntity*>::iterator, mapEntity, dest, contacts)
+	NEW_VECTOR_AND_RASSIGN(source, getorganisationDetails, detailsType, organisationDetailsType::details_sequence, std::vector<ebucoreContactDetails*>::iterator, mapDetails, dest, details)
 }
 
 void mapEntity(ebucoreEntity *source, entityType& dest) {
@@ -278,14 +190,7 @@ void mapEntity(ebucoreEntity *source, entityType& dest) {
 	// [TODO] The KLV mapping lists a single contact, while the XSD specifies a sequence
 	// [FIX?] Updated cardinality
 	if (source->haveentityContact()) {
-		entityType::contactDetails_sequence seq;
-		std::vector<ebucoreContact*> source_conts = source->getentityContact();
-		for (std::vector<ebucoreContact*>::iterator it = source_conts.begin(); it != source_conts.end(); it++) {
-			std::auto_ptr<entityType::contactDetails_type> p( new entityType::contactDetails_type() );
-			mapContact((*it), *(p.get()));
-			seq.push_back(p);
-		}
-		dest.contactDetails(seq);
+		NEW_VECTOR_AND_RASSIGN(source, getentityContact, contactDetailsType, entityType::contactDetails_sequence, std::vector<ebucoreContact*>::iterator, mapContact, dest, contactDetails)
 	}
 
 	if (source->haveentityOrganisation()) {
@@ -370,8 +275,8 @@ xml_schema::idrefs* convert_idrefs(const std::string& source) {
 }
 
 void mapTitle(ebucoreTitle *source, titleType& dest) {
-	dest.title() = source->gettitleValue();
-	dest.title().lang() = source->gettitleLanguage();
+	SIMPLE_RMAP(source, gettitleValue, dest, title)
+	SIMPLE_RMAP(source, gettitleLanguage, dest, title().lang)
 	if (source->havetitleAttributionDate()) {
 		std::auto_ptr<ebuCoreMainType::dateLastModified_type> dp( convert_timestamp_date(source->gettitleAttributionDate()));
 		dest.attributiondate().set(dp);
@@ -379,8 +284,8 @@ void mapTitle(ebucoreTitle *source, titleType& dest) {
 }
 
 void mapAlternativeTitle(ebucoreAlternativeTitle *source, alternativeTitleType& dest) {
-	dest.title() = source->getalternativeTitleValue();
-	dest.title().lang() = source->getalternativeTitleLanguage();
+	SIMPLE_RMAP(source, getalternativeTitleValue, dest, title)
+	SIMPLE_RMAP(source, getalternativeTitleLanguage, dest, title().lang)
 
 	ebucoreTypeGroup* tg = source->getalternativeTitleTypeGroup();
 	ebucoreStatusGroup* sg = source->getalternativeTitleStatusGroup();
@@ -410,16 +315,13 @@ void mapIdentifier(ebucoreIdentifier *source, identifierType& dest) {
 	RMAP_FORMAT_GROUP(source->getidentifierFormatGroup(), dest, identifierType::formatDefinition_type, identifierType::formatLabel_type, identifierType::formatLink_type)
 	RMAP_TYPE_GROUP(source->getidentifierTypeGroup(), dest, identifierType::typeDefinition_type, identifierType::typeLabel_type, identifierType::typeLink_type)
 
-	if (source->haveidentifierAttributorEntity()) {
-		std::auto_ptr<entityType> tp( new entityType() );
-		mapEntity(source->getidentifierAttributorEntity(), *tp);
-		dest.attributor(tp);
-	}
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haveidentifierAttributorEntity, getidentifierAttributorEntity, entityType, mapEntity, dest, attributor)
 }
 
 void mapDescription(ebucoreDescription *source, descriptionType& dest) {
-	dest.description() = source->getdescriptionValue();
-	dest.description().lang() = source->getdescriptionLanguage();
+	SIMPLE_RMAP(source, getdescriptionValue, dest, description)
+	SIMPLE_RMAP(source, getdescriptionLanguage, dest, description().lang)
+
 	RMAP_TYPE_GROUP(source->getdescriptionTypeGroup(), dest, descriptionType::typeDefinition_type, descriptionType::typeLabel_type, descriptionType::typeLink_type)
 }
 
@@ -427,31 +329,20 @@ void mapSubject(ebucoreSubject *source, subjectType& dest) {
 	// [TODO] KLV Subject defines batch multiple attributors, XSD (0..1), used a single one in dictionary
 	// [FIX?] Updated cardinality
 
-	dest.subject() = source->getsubjectValue();
-	dest.subject().lang() = source->getsubjectLanguage();
-
-	if (source->havesubjectCode()) {
-		dest.subjectCode(source->getsubjectCode());
-	}
-
-	if (source->havesubjectDefinition()) {
-		dest.subjectDefinition(source->getsubjectDefinition());
-	}
+	SIMPLE_RMAP(source, getsubjectValue, dest, subject)
+	SIMPLE_RMAP(source, getsubjectLanguage, dest, subject().lang)
+	SIMPLE_RMAP_OPTIONAL(source, havesubjectCode, getsubjectCode, dest, subjectCode)
+	SIMPLE_RMAP_OPTIONAL(source, havesubjectDefinition, getsubjectDefinition, dest, subjectDefinition)
 
 	RMAP_TYPE_GROUP(source->getsubjectTypeGroup(), dest, subjectType::typeDefinition_type, subjectType::typeLabel_type, subjectType::typeLink_type)
 
-	if (source->havesubjectAttributorEntity()) {
-		std::auto_ptr<entityType> tp( new entityType() );
-		mapEntity(source->getsubjectAttributorEntity(), *tp);
-		dest.attributor(tp);
-	}
-
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, havesubjectAttributorEntity, getsubjectAttributorEntity, entityType, mapEntity, dest, attributor)
 }
 
 void mapRating(ebucoreRating *source, ratingType& dest) {
-	dest.ratingValue() = source->getratingValue();
-	dest.ratingScaleMinValue() = source->getratingScaleMinValue();
-	dest.ratingScaleMaxValue() = source->getratingScaleMaxValue();
+	SIMPLE_RMAP(source, getratingValue, dest, ratingValue)
+	SIMPLE_RMAP(source, getratingScaleMinValue, dest, ratingScaleMinValue)
+	SIMPLE_RMAP(source, getratingScaleMaxValue, dest, ratingScaleMaxValue)
 
 	std::auto_ptr<entityType> tp( new entityType() );
 	mapEntity(source->getratingProviderEntity(), *tp);
@@ -466,9 +357,9 @@ void mapVersion(ebucoreVersion *source, coreMetadataType::version_type& dest) {
 }
 
 void mapLanguage(ebucoreLanguage *source, languageType& dest) {
-	dest.language() = source->getlanguageName();
-	dest.language().get().lang() = source->getlanguageCode();
-
+	SIMPLE_RMAP(source, getlanguageName, dest, language)
+	SIMPLE_RMAP(source, getlanguageCode, dest, language().get().lang)
+	
 	RMAP_TYPE_GROUP( source->getlanguagePurposeSet()->getlanguagePurposeTypeGroup(), 
 		dest, languageType::typeDefinition_type, languageType::typeLabel_type, languageType::typeLink_type)
 }
@@ -560,10 +451,8 @@ void mapTemporal(ebucoreTemporal *source, temporal& dest) {
 		ebucorePeriodOfTime *pot = source->getperiodOfTime();
 		std::auto_ptr<PeriodOfTime> p(new PeriodOfTime());
 
-		if (pot->haveperiodId())
-			dest.periodId() = pot->getperiodId();
-		if (pot->haveperiodName())
-			p->period() = pot->getperiodName();
+		SIMPLE_RMAP_OPTIONAL(pot, haveperiodId, getperiodId, dest, periodId)
+		SIMPLE_RMAP_OPTIONAL_POINTER(pot, haveperiodName, getperiodName, p, period)
 		if (pot->haveperiodStartYear())
 			p->startYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(pot->getperiodStartYear()) ) );
 		if (pot->haveperiodStartDate())
@@ -587,12 +476,9 @@ void mapSpatial(ebucoreSpatial *source, spatial& dest) {
 		std::auto_ptr<location> p( new location() );
 		ebucoreLocation* loc = *it;
 		
-		if (loc->havelocationId())
-			p->locationId() = loc->getlocationId();
-		if (loc->havelocationName())
-			p->name() = loc->getlocationName();
-		if (loc->havelocationCode())
-			p->code() = loc->getlocationCode();
+		SIMPLE_RMAP_OPTIONAL_POINTER(loc, havelocationId, getlocationId, p, locationId)
+		SIMPLE_RMAP_OPTIONAL_POINTER(loc, havelocationName, getlocationName, p, name)
+		SIMPLE_RMAP_OPTIONAL_POINTER(loc, havelocationCode, getlocationCode, p, code)
 		RMAP_TYPE_GROUP(loc->getlocationKindGroup(), (*p), location::typeDefinition_type, location::typeLabel_type, location::typeLink_type)
 
 		dest.location().push_back(p);
@@ -601,17 +487,9 @@ void mapSpatial(ebucoreSpatial *source, spatial& dest) {
 
 void mapMetadataCoverage(ebucoreCoverage *source, coverageType& dest) {
 	// [Fix?] Updated cardinality
-	if (source->havespatial()) {
-		std::auto_ptr<spatial> lp( new spatial() );
-		mapSpatial(source->getspatial(), *lp);
-		dest.spatial(lp);
-	}
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, havespatial, getspatial, spatial, mapSpatial, dest, spatial)
 	// [Fix?] Updated cardinality
-	if (source->havetemporal()) {
-		std::auto_ptr<temporal> tp( new temporal() );
-		mapTemporal(source->gettemporal(), *tp);
-		dest.temporal(tp);
-	}
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, havetemporal, gettemporal, temporal, mapTemporal, dest, temporal)
 }
 
 void mapRights(ebucoreRights *source, rightsType& dest) {
@@ -647,42 +525,24 @@ void mapRights(ebucoreRights *source, rightsType& dest) {
 	// [TODO] KLV RightsId is a string, XSD rights id is an identitytype, not clear how te map...
 	// [TODO] KLV rightsAttributedID is nowhere to be found in EBU Core?
 	
-	if (source->haverightsValue())
-		dest.rights() = source->getrightsValue();
-	if (source->haverightsLanguage())
-		dest.rights().get().lang() = source->getrightsLanguage();
-	if (source->haverightsClearanceFlag())
-		dest.rightsClearanceFlag( source->getrightsClearanceFlag() );
+	SIMPLE_RMAP_OPTIONAL(source, haverightsValue, getrightsValue, dest, rights)
+	SIMPLE_RMAP_OPTIONAL(source, haverightsLanguage, getrightsLanguage, dest, rights().get().lang)
+	SIMPLE_RMAP_OPTIONAL(source, haverightsClearanceFlag, getrightsClearanceFlag, dest, rightsClearanceFlag)
+
 	if (source->haverightsFormatIDRef())
 		dest.formatIDRefs( std::auto_ptr<rightsType::formatIDRefs_type>( convert_idrefs(source->getrightsFormatIDRef())));
-	if (source->haveexploitationIssues())
-		dest.exploitationIssues( source->getexploitationIssues() );
-	if (source->haverightsLink())
-		dest.rightsLink( source->getrightsLink());
+
+	SIMPLE_RMAP_OPTIONAL(source, haveexploitationIssues, getexploitationIssues, dest, exploitationIssues)
+	SIMPLE_RMAP_OPTIONAL(source, haverightsLink, getrightsLink, dest, rightsLink)
 
 	// [FIX?] Updated cardinality
-	if (source->haverightsCoverage()) {
-		std::auto_ptr<coverageType> p( new coverageType() );
-		mapMetadataCoverage(source->getrightsCoverage(), *p); 
-		dest.coverage(p);
-	}
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haverightsCoverage, getrightsCoverage, coverageType, mapMetadataCoverage, dest, coverage)
 
 	// [FIX?] Updated cardinality
-	if (source->haverightsHolderEntity()) {
-		std::auto_ptr<entityType> p( new entityType() );
-		mapEntity(source->getrightsHolderEntity(), *p);
-		dest.rightsHolder(p);
-	}
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haverightsHolderEntity, getrightsHolderEntity, entityType, mapEntity, dest, rightsHolder)
 
 	if (source->haverightsContacts()) {
-		rightsType::contactDetails_sequence conts;
-		std::vector<ebucoreContact*> source_conts = source->getrightsContacts();
-		for (std::vector<ebucoreContact*>::iterator it = source_conts.begin(); it != source_conts.end(); it++) {
-			std::auto_ptr<contactDetailsType> p( new contactDetailsType() );
-			mapContact(*it, *p);
-			conts.push_back(p);
-		}
-		dest.contactDetails(conts);
+		NEW_VECTOR_AND_RASSIGN(source, getrightsContacts, contactDetailsType, rightsType::contactDetails_sequence, std::vector<ebucoreContact*>::iterator, mapContact, dest, contactDetails)
 	}
 
 	RMAP_TYPE_GROUP(source->getrightsKindGroup() , dest, rightsType::typeDefinition_type, rightsType::typeLabel_type, rightsType::typeLink_type)
@@ -700,8 +560,7 @@ void mapPublicationHistory(std::vector<ebucorePublicationHistoryEvent*>& source,
 			}
 			if (event->havepublicationChannel()) {
 				dest.firstPublicationChannel() = event->getpublicationChannel();
-				if (event->havepublicationFormatIDRef())
-					dest.firstPublicationChannel().get().formatIdRef() = event->getpublicationFormatIDRef();
+				SIMPLE_RMAP_OPTIONAL(event, havepublicationChannel, getpublicationChannel, dest, firstPublicationChannel)
 			}
 		} else {
 			if (event->havepublicationDate()) {
@@ -713,8 +572,7 @@ void mapPublicationHistory(std::vector<ebucorePublicationHistoryEvent*>& source,
 			if (event->havepublicationChannel()) {
 				std::auto_ptr<repeatChannel> p (new repeatChannel());
 				(*p) = event->getpublicationChannel();
-				if (event->havepublicationFormatIDRef())
-					p->formatIdRef() = event->getpublicationFormatIDRef();
+				SIMPLE_RMAP_OPTIONAL_POINTER(event, havepublicationFormatIDRef, getpublicationFormatIDRef, p, formatIdRef)
 				dest.repeatChannel().push_back(p);
 			}
 		}
@@ -722,12 +580,9 @@ void mapPublicationHistory(std::vector<ebucorePublicationHistoryEvent*>& source,
 }
 
 void mapCustomRelation(ebucoreCustomRelation *source, relationType& dest) {
-	if (source->haverelationByName())
-		dest.relation() = source->getrelationByName();
-	if (source->haverelationLink())
-		dest.relationLink() = source->getrelationLink();
-	if (source->haverunningOrderNumber())
-		dest.runningOrderNumber() = source->getrunningOrderNumber();
+	SIMPLE_RMAP_OPTIONAL(source, haverelationByName, getrelationByName, dest, relation)
+	SIMPLE_RMAP_OPTIONAL(source, haverelationLink, getrelationLink, dest, relationLink)
+	SIMPLE_RMAP_OPTIONAL(source, haverunningOrderNumber, getrunningOrderNumber, dest, runningOrderNumber)
 	if (source->havecustomRelationTypeGroup()) { // make this field required just like other typegroups??
 		RMAP_TYPE_GROUP(source->getcustomRelationTypeGroup(), dest, relationType::typeDefinition_type, relationType::typeLabel_type, relationType::typeLink_type)
 	}
@@ -735,73 +590,17 @@ void mapCustomRelation(ebucoreCustomRelation *source, relationType& dest) {
 
 void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 
-	coreMetadataType::title_sequence titles;
-	std::vector<ebucoreTitle*> source_titles = source->gettitle();
-	for (std::vector<ebucoreTitle*>::iterator it = source_titles.begin(); it != source_titles.end(); it++) {
-		std::auto_ptr<dc::elementType> dcp( new dc::elementType() );
-		std::auto_ptr<titleType> tp( new titleType(dcp) );
-		mapTitle(*it, *tp);
-		titles.push_back(tp);
-	}
-	dest.title(titles);
+	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, gettitle, titleType, coreMetadataType::title_sequence, std::vector<ebucoreTitle*>::iterator, mapTitle, dest, title)
+	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getalternativeTitle, alternativeTitleType, coreMetadataType::alternativeTitle_sequence, 
+		std::vector<ebucoreAlternativeTitle*>::iterator, mapAlternativeTitle, dest, alternativeTitle)
+	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getdescription, descriptionType, coreMetadataType::description_sequence, std::vector<ebucoreDescription*>::iterator, mapDescription, dest, description)
 
-	coreMetadataType::alternativeTitle_sequence alttitles;
-	std::vector<ebucoreAlternativeTitle*> source_alt_titles = source->getalternativeTitle();
-	for (std::vector<ebucoreAlternativeTitle*>::iterator it = source_alt_titles.begin(); it != source_alt_titles.end(); it++) {
-		std::auto_ptr<dc::elementType> dcp( new dc::elementType() );
-		std::auto_ptr<alternativeTitleType> tp( new alternativeTitleType(dcp) );
-		mapAlternativeTitle(*it, *tp);
-		alttitles.push_back(tp);
-	}
-	dest.alternativeTitle(alttitles);
+	NEW_VECTOR_AND_RASSIGN(source, getpublisher, entityType, coreMetadataType::publisher_sequence, std::vector<ebucoreEntity*>::iterator, mapEntity, dest, publisher)
 
-	coreMetadataType::description_sequence descs;
-	std::vector<ebucoreDescription*> source_descs = source->getdescription();
-	for (std::vector<ebucoreDescription*>::iterator it = source_descs.begin(); it != source_descs.end(); it++) {
-		std::auto_ptr<dc::elementType> dcp( new dc::elementType() );
-		std::auto_ptr<descriptionType> tp( new descriptionType(dcp) );
-		mapDescription(*it, *tp);
-		descs.push_back(tp);
-	}
-	dest.description(descs);
-
-	coreMetadataType::publisher_sequence publ;
-	std::vector<ebucoreEntity*> source_publ = source->getpublisher();
-	for (std::vector<ebucoreEntity*>::iterator it = source_publ.begin(); it != source_publ.end(); it++) {
-		std::auto_ptr<entityType> p( new entityType() );
-		mapEntity(*it, *p);
-		publ.push_back(p);
-	}
-	dest.publisher(publ);
-
-	coreMetadataType::identifier_sequence idents;
-	std::vector<ebucoreIdentifier*> source_ident = source->getidentifier();
-	for (std::vector<ebucoreIdentifier*>::iterator it = source_ident.begin(); it != source_ident.end(); it++) {
-		std::auto_ptr<dc::elementType> dcp( new dc::elementType() );
-		std::auto_ptr<identifierType> p( new identifierType( dcp ) );
-		mapIdentifier(*it, *p);
-		idents.push_back(p);
-	}
-	dest.identifier(idents);
-
-	coreMetadataType::subject_sequence subjs;
-	std::vector<ebucoreSubject*> source_subj = source->getsubject();
-	for (std::vector<ebucoreSubject*>::iterator it = source_subj.begin(); it != source_subj.end(); it++) {
-		std::auto_ptr<dc::elementType> dcp( new dc::elementType() );
-		std::auto_ptr<subjectType> p( new subjectType(dcp) );
-		mapSubject(*it, *p);
-		subjs.push_back(p);
-	}
-	dest.subject(subjs);
-
-	coreMetadataType::type_sequence types;
-	std::vector<ebucoreType*> source_types = source->gettype();
-	for (std::vector<ebucoreType*>::iterator it = source_types.begin(); it != source_types.end(); it++) {
-		std::auto_ptr<typeType> p( new typeType() );
-		mapType(*it, *p);
-		types.push_back(p);
-	}
-	dest.type(types);
+	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getidentifier, identifierType, coreMetadataType::identifier_sequence, std::vector<ebucoreIdentifier*>::iterator, mapIdentifier, dest, identifier)
+	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getsubject, subjectType, coreMetadataType::subject_sequence, std::vector<ebucoreSubject*>::iterator, mapSubject, dest, subject)
+	
+	NEW_VECTOR_AND_RASSIGN(source, gettype, typeType, coreMetadataType::type_sequence, std::vector<ebucoreType*>::iterator, mapType, dest, type)
 
 	std::vector<ebucorePublicationHistoryEvent*> source_events = source->getpublicationHistoryEvent();
 	if (source_events.size() > 0) {
@@ -810,54 +609,17 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 		dest.publicationHistory(p);
 	}
 
-	coreMetadataType::date_sequence dates;
-	std::vector<ebucoreDate*> source_dates = source->getdate();
-	for (std::vector<ebucoreDate*>::iterator it = source_dates.begin(); it != source_dates.end(); it++) {
-		std::auto_ptr<dateType> p( new dateType() );
-		mapDate(*it, *p);
-		dates.push_back(p);
-	}
-	dest.date(dates);
-
-	coreMetadataType::language_sequence langs;
-	std::vector<ebucoreLanguage*> source_langs = source->getlanguage();
-	for (std::vector<ebucoreLanguage*>::iterator it = source_langs.begin(); it != source_langs.end(); it++) {
-		std::auto_ptr<languageType> p( new languageType() );
-		mapLanguage(*it, *p);
-		langs.push_back(p);
-	}
-	dest.language(langs);
-
-	coreMetadataType::coverage_sequence covers;
-	std::vector<ebucoreCoverage*> source_covers = source->getcoverage();
-	for (std::vector<ebucoreCoverage*>::iterator it = source_covers.begin(); it != source_covers.end(); it++) {
-		std::auto_ptr<coverageType> p( new coverageType() );
-		mapMetadataCoverage(*it, *p);
-		covers.push_back(p);
-	}
-	dest.coverage(covers);
+	NEW_VECTOR_AND_RASSIGN(source, getdate, dateType, coreMetadataType::date_sequence, std::vector<ebucoreDate*>::iterator, mapDate, dest, date)
+	NEW_VECTOR_AND_RASSIGN(source, getlanguage, languageType, coreMetadataType::language_sequence, std::vector<ebucoreLanguage*>::iterator, mapLanguage, dest, language)
+	NEW_VECTOR_AND_RASSIGN(source, getcoverage, coverageType, coreMetadataType::coverage_sequence, std::vector<ebucoreCoverage*>::iterator, mapMetadataCoverage, dest, coverage)
 
 	if (source->haveversion()) {
 		std::auto_ptr<coreMetadataType::version_type> p(new coreMetadataType::version_type( source->getversion()->getversionValue() ));
 	}
 
-	coreMetadataType::rights_sequence rights;
-	std::vector<ebucoreRights*> source_rights = source->getrights();
-	for (std::vector<ebucoreRights*>::iterator it = source_rights.begin(); it != source_rights.end(); it++) {
-		std::auto_ptr<rightsType> p( new rightsType() );
-		mapRights(*it, *p);
-		rights.push_back(p);
-	}
-	dest.rights(rights);
+	NEW_VECTOR_AND_RASSIGN(source, getrights, rightsType, coreMetadataType::rights_sequence, std::vector<ebucoreRights*>::iterator, mapRights, dest, rights)
+	NEW_VECTOR_AND_RASSIGN(source, getcustomRelation, relationType, coreMetadataType::relation_sequence, std::vector<ebucoreCustomRelation*>::iterator, mapCustomRelation, dest, relation)
 
-	coreMetadataType::relation_sequence rels;
-	std::vector<ebucoreCustomRelation*> source_rels = source->getcustomRelation();
-	for (std::vector<ebucoreCustomRelation*>::iterator it = source_rels.begin(); it != source_rels.end(); it++) {
-		std::auto_ptr<relationType> p( new relationType() );
-		mapCustomRelation(*it, *p);
-		rels.push_back(p);
-	}
-	dest.relation(rels);
 }
 
 }
