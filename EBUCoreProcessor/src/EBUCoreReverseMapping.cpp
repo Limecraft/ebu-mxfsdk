@@ -43,24 +43,24 @@ namespace EBUCore {
 		dest.destProperty(p);	\
 	}
 
-#define NEW_VECTOR_AND_RASSIGN(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty)	\
+#define NEW_VECTOR_AND_RASSIGN_CARGS_PREFIXCODE(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty, prefixCode, ctrArgs)	\
 	{ destSequenceType vec_##dest##destProperty; \
 	for (iteratorType it = source->sourceProperty().begin(); it != source->sourceProperty().end(); it++) { \
-		std::auto_ptr<destType> p( new destType() ); \
+		prefixCode; \
+		std::auto_ptr<destType> p( new destType(ctrArgs) ); \
 		mapMethod(*it, *p); \
 		vec_##dest##destProperty.push_back(p); \
 	} \
 	dest.destProperty(vec_##dest##destProperty); }
 
+#define NEW_VECTOR_AND_RASSIGN(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty)	\
+	NEW_VECTOR_AND_RASSIGN_CARGS_PREFIXCODE(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty,,)
+
 #define NEW_VECTOR_AND_RASSIGN_WITH_DC(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty)	\
-	{ destSequenceType vec_##dest##destProperty; \
-	for (iteratorType it = source->sourceProperty().begin(); it != source->sourceProperty().end(); it++) { \
-		std::auto_ptr<dc::elementType> dcp( new dc::elementType() ); \
-		std::auto_ptr<destType> p( new destType(dcp) ); \
-		mapMethod(*it, *p); \
-		vec_##dest##destProperty.push_back(p); \
-	} \
-	dest.destProperty(vec_##dest##destProperty); }
+	NEW_VECTOR_AND_RASSIGN_CARGS_PREFIXCODE(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty, std::auto_ptr<dc::elementType> dcp( new dc::elementType() ), dcp)
+
+#define NEW_VECTOR_AND_RASSIGN_CARGS(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty, constructorArgs)	\
+	NEW_VECTOR_AND_RASSIGN_CARGS_PREFIXCODE(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty,,constructorArgs)
 
 #define RMAP_TYPE_GROUP(source, dest, definitionType, labelType, linkType)	\
 	if (source->havetypeGroupDefinition()) {	\
@@ -339,17 +339,23 @@ void mapSubject(ebucoreSubject *source, subjectType& dest) {
 	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, havesubjectAttributorEntity, getsubjectAttributorEntity, entityType, mapEntity, dest, attributor)
 }
 
-void mapRating(ebucoreRating *source, ratingType& dest) {
-	SIMPLE_RMAP(source, getratingValue, dest, ratingValue)
-	SIMPLE_RMAP(source, getratingScaleMinValue, dest, ratingScaleMinValue)
-	SIMPLE_RMAP(source, getratingScaleMaxValue, dest, ratingScaleMaxValue)
+std::auto_ptr<ratingType> mapRating(ebucoreRating *source) {
 
 	std::auto_ptr<entityType> tp( new entityType() );
 	mapEntity(source->getratingProviderEntity(), *tp);
-	dest.ratingProvider(tp);
 
-	RMAP_TYPE_GROUP(source->getratingTypeGroup(), dest, ratingType::typeDefinition_type, ratingType::typeLabel_type, ratingType::typeLink_type)
-	RMAP_FORMAT_GROUP(source->getratingFormatGroup(), dest, ratingType::formatDefinition_type, ratingType::formatLabel_type, ratingType::formatLink_type)
+	// a new ratingType requires a number of values directly in its constructor, 
+	// so we need something a little different
+	std::auto_ptr<ratingType> dest( new ratingType( 
+		source->getratingValue(),
+		source->getratingScaleMinValue(),
+		source->getratingScaleMaxValue(), 
+		tp) );
+
+	RMAP_TYPE_GROUP(source->getratingTypeGroup(), (*dest), ratingType::typeDefinition_type, ratingType::typeLabel_type, ratingType::typeLink_type)
+	RMAP_FORMAT_GROUP(source->getratingFormatGroup(), (*dest), ratingType::formatDefinition_type, ratingType::formatLabel_type, ratingType::formatLink_type)
+
+	return dest;
 }
 
 void mapVersion(ebucoreVersion *source, coreMetadataType::version_type& dest) {
@@ -595,7 +601,9 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 		std::vector<ebucoreAlternativeTitle*>::iterator, mapAlternativeTitle, dest, alternativeTitle)
 	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getdescription, descriptionType, coreMetadataType::description_sequence, std::vector<ebucoreDescription*>::iterator, mapDescription, dest, description)
 
+	NEW_VECTOR_AND_RASSIGN(source, getcreator, entityType, coreMetadataType::creator_sequence, std::vector<ebucoreEntity*>::iterator, mapEntity, dest, creator)
 	NEW_VECTOR_AND_RASSIGN(source, getpublisher, entityType, coreMetadataType::publisher_sequence, std::vector<ebucoreEntity*>::iterator, mapEntity, dest, publisher)
+	NEW_VECTOR_AND_RASSIGN(source, getcontributor, entityType, coreMetadataType::contributor_sequence, std::vector<ebucoreEntity*>::iterator, mapEntity, dest, contributor)
 
 	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getidentifier, identifierType, coreMetadataType::identifier_sequence, std::vector<ebucoreIdentifier*>::iterator, mapIdentifier, dest, identifier)
 	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getsubject, subjectType, coreMetadataType::subject_sequence, std::vector<ebucoreSubject*>::iterator, mapSubject, dest, subject)
@@ -612,6 +620,14 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 	NEW_VECTOR_AND_RASSIGN(source, getdate, dateType, coreMetadataType::date_sequence, std::vector<ebucoreDate*>::iterator, mapDate, dest, date)
 	NEW_VECTOR_AND_RASSIGN(source, getlanguage, languageType, coreMetadataType::language_sequence, std::vector<ebucoreLanguage*>::iterator, mapLanguage, dest, language)
 	NEW_VECTOR_AND_RASSIGN(source, getcoverage, coverageType, coreMetadataType::coverage_sequence, std::vector<ebucoreCoverage*>::iterator, mapMetadataCoverage, dest, coverage)
+
+	// a ratingTypes requires a number of values directly in their constructor,
+	// so we need something a little different
+	coreMetadataType::rating_sequence vec_ratings;
+	for (std::vector<ebucoreRating*>::iterator it = source->getrating().begin(); it != source->getrating().end(); it++) {
+		vec_ratings.push_back(mapRating(*it));
+	}
+	dest.rating(vec_ratings);
 
 	if (source->haveversion()) {
 		std::auto_ptr<coreMetadataType::version_type> p(new coreMetadataType::version_type( source->getversion()->getversionValue() ));
