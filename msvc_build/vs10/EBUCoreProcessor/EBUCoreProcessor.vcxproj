@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E0F3C797-3186-4BB7-B3B7-EB92A378CDC7}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>EBUCoreProcessor</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\code\BMX\bmxlib-bmx\EBUCoreProcessor\include;C:\code\BMX\libmxf;C:\code\BMX\libMXF++;C:\code\BMX\bmxlib-bmx\include;C:\code\BMX\libMXF++\msvc_build\vs10;C:\code\EBU-SDK\xsd-3.3.0-i686-windows\libxsd;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\include;C:\code\BMX\uriparser\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessToFile>false</PreprocessToFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\EBUCoreMapping.cpp">
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</PreprocessToFile>
+    </ClCompile>
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\EBUCoreProcessor.cpp">
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</PreprocessToFile>
+    </ClCompile>
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\EBUCoreReverseMapping.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\EBU_CORE_20110915.cxx" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreAddressBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreAddressLineBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreAlternativeTitleBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreBasicRelationBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreContactBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreContactDetailsBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreCoordinatesBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreCoreMetadataBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreCoverageBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreCustomRelationBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreDateBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreDescriptionBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreEntityBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreFormatGroupBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreGenreBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreIdentifierBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreLanguageBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreLanguagePurposeBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreLocationBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreMainFrameworkBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreMetadataSchemeInformationBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreObjectTypeBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreOrganisationBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucorePeriodOfTimeBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucorePublicationHistoryEventBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreRatingBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreRightsBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreRoleBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreSpatialBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreStatusGroupBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreSubjectBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreTargetAudienceBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreTemporalBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreTitleBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreTypeBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreTypeGroupBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreVersionBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreAddress.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreAddressLine.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreAlternativeTitle.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreBasicRelation.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreContact.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreContactDetails.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreCoordinates.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreCoreMetadata.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreCoverage.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreCustomRelation.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreDate.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreDescription.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\EBUCoreDMS++.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreEntity.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreFormatGroup.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreGenre.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreIdentifier.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreLanguage.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreLanguagePurpose.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreLocation.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreMainFramework.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreMetadataSchemeInformation.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreObjectType.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreOrganisation.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucorePeriodOfTime.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucorePublicationHistoryEvent.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreRating.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreRights.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreRole.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreSpatial.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreStatusGroup.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreSubject.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreTargetAudience.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreTemporal.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreTitle.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreType.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreTypeGroup.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreVersion.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\simpledc20021212.cxx" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\xml.cxx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\EBUCoreMapping.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\EBUCoreProcessor.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\EBU_CORE_20110915.hxx" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreAddressBase.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreContactBase.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreContactDetailsBase.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreEntityBase.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreMainFrameworkBase.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreMetadataSchemeInformationBase.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreOrganisationBase.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreRoleBase.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreTypeGroupBase.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreAddress.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreContact.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreContactDetails.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\EBUCoreDMS++.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\EBUCoreDMS.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreEntity.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreMainFramework.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreMetadataSchemeInformation.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreOrganisation.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreRole.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreTypeGroup.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucore_extensions_data_model.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\simpledc20021212.hxx" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\xml.hxx" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

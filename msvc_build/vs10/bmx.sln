@@ -1,35 +1,38 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual C++ Express 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bmx", "bmx\bmx.vcproj", "{D6AD7523-372A-4CC3-8AEA-0EC52D955359}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bmx", "bmx\bmx.vcxproj", "{D6AD7523-372A-4CC3-8AEA-0EC52D955359}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libMXF", "..\..\..\ebu-libmxf\msvc_build\vs10\mxf\libMXF.vcxproj", "{580F8E65-F910-46A6-8A9C-6A8E58D95E53}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libMXF++", "..\..\..\ebu-libMXF++\msvc_build\vs10\libMXF++\libMXF++.vcxproj", "{33E3C49F-5483-4081-9446-9238A59B761A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uriparser", "..\..\..\uriparser\win32\Visual_Studio_2005\uriparser.vcxproj", "{8E2F76A2-59B5-4DF7-8062-EBD6FCF0C8B3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bmxtranswrap", "apps\bmxtranswrap\bmxtranswrap.vcxproj", "{66CB2EA7-A853-45D1-80BC-254E451DE950}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "raw2bmx", "apps\raw2bmx\raw2bmx.vcxproj", "{BF415E6B-C90A-449D-A697-06B6CD724614}"
 	ProjectSection(ProjectDependencies) = postProject
-		{8E2F76A2-59B5-4DF7-8062-EBD6FCF0C8B3} = {8E2F76A2-59B5-4DF7-8062-EBD6FCF0C8B3}
-		{33E3C49F-5483-4081-9446-9238A59B761A} = {33E3C49F-5483-4081-9446-9238A59B761A}
-		{580F8E65-F910-46A6-8A9C-6A8E58D95E53} = {580F8E65-F910-46A6-8A9C-6A8E58D95E53}
+		{E0F3C797-3186-4BB7-B3B7-EB92A378CDC7} = {E0F3C797-3186-4BB7-B3B7-EB92A378CDC7}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libMXF", "..\..\..\libMXF\msvc_build\vs8\mxf\libMXF.vcproj", "{580F8E65-F910-46A6-8A9C-6A8E58D95E53}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libMXF++", "..\..\..\libMXF++\msvc_build\vs8\libMXF++\libMXF++.vcproj", "{33E3C49F-5483-4081-9446-9238A59B761A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mxf2raw", "apps\mxf2raw\mxf2raw.vcxproj", "{B4D2CA33-C03D-4D0C-8003-C7472EE98C6A}"
 	ProjectSection(ProjectDependencies) = postProject
-		{580F8E65-F910-46A6-8A9C-6A8E58D95E53} = {580F8E65-F910-46A6-8A9C-6A8E58D95E53}
+		{E0F3C797-3186-4BB7-B3B7-EB92A378CDC7} = {E0F3C797-3186-4BB7-B3B7-EB92A378CDC7}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uriparser", "..\..\..\uriparser\win32\Visual_Studio_2005\uriparser.vcproj", "{8E2F76A2-59B5-4DF7-8062-EBD6FCF0C8B3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EBUCoreProcessor", "EBUCoreProcessor\EBUCoreProcessor.vcxproj", "{E0F3C797-3186-4BB7-B3B7-EB92A378CDC7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bmxtranswrap", "apps\bmxtranswrap\bmxtranswrap.vcproj", "{66CB2EA7-A853-45D1-80BC-254E451DE950}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EBUCoreParserTest", "EBUCoreParserTest\EBUCoreParserTest.vcxproj", "{15258C3E-C951-4E73-81B5-D02715035C3B}"
 	ProjectSection(ProjectDependencies) = postProject
-		{D6AD7523-372A-4CC3-8AEA-0EC52D955359} = {D6AD7523-372A-4CC3-8AEA-0EC52D955359}
+		{E0F3C797-3186-4BB7-B3B7-EB92A378CDC7} = {E0F3C797-3186-4BB7-B3B7-EB92A378CDC7}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "raw2bmx", "apps\raw2bmx\raw2bmx.vcproj", "{BF415E6B-C90A-449D-A697-06B6CD724614}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D6AD7523-372A-4CC3-8AEA-0EC52D955359} = {D6AD7523-372A-4CC3-8AEA-0EC52D955359}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ST434", "ST434\ST434.vcxproj", "{627DBB6B-2594-4DC1-8223-4AEDC36716CA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mxf2raw", "apps\mxf2raw\mxf2raw.vcproj", "{B4D2CA33-C03D-4D0C-8003-C7472EE98C6A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ebu2mxf", "apps\ebu2mxf\ebu2mxf.vcxproj", "{5B04D480-0324-4EB6-A36A-291177BE8997}"
 	ProjectSection(ProjectDependencies) = postProject
-		{D6AD7523-372A-4CC3-8AEA-0EC52D955359} = {D6AD7523-372A-4CC3-8AEA-0EC52D955359}
+		{E0F3C797-3186-4BB7-B3B7-EB92A378CDC7} = {E0F3C797-3186-4BB7-B3B7-EB92A378CDC7}
 	EndProjectSection
 EndProject
 Global
@@ -66,6 +69,22 @@ Global
 		{B4D2CA33-C03D-4D0C-8003-C7472EE98C6A}.Debug|Win32.Build.0 = Debug|Win32
 		{B4D2CA33-C03D-4D0C-8003-C7472EE98C6A}.Release|Win32.ActiveCfg = Release|Win32
 		{B4D2CA33-C03D-4D0C-8003-C7472EE98C6A}.Release|Win32.Build.0 = Release|Win32
+		{E0F3C797-3186-4BB7-B3B7-EB92A378CDC7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E0F3C797-3186-4BB7-B3B7-EB92A378CDC7}.Debug|Win32.Build.0 = Debug|Win32
+		{E0F3C797-3186-4BB7-B3B7-EB92A378CDC7}.Release|Win32.ActiveCfg = Release|Win32
+		{E0F3C797-3186-4BB7-B3B7-EB92A378CDC7}.Release|Win32.Build.0 = Release|Win32
+		{15258C3E-C951-4E73-81B5-D02715035C3B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{15258C3E-C951-4E73-81B5-D02715035C3B}.Debug|Win32.Build.0 = Debug|Win32
+		{15258C3E-C951-4E73-81B5-D02715035C3B}.Release|Win32.ActiveCfg = Release|Win32
+		{15258C3E-C951-4E73-81B5-D02715035C3B}.Release|Win32.Build.0 = Release|Win32
+		{627DBB6B-2594-4DC1-8223-4AEDC36716CA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{627DBB6B-2594-4DC1-8223-4AEDC36716CA}.Debug|Win32.Build.0 = Debug|Win32
+		{627DBB6B-2594-4DC1-8223-4AEDC36716CA}.Release|Win32.ActiveCfg = Release|Win32
+		{627DBB6B-2594-4DC1-8223-4AEDC36716CA}.Release|Win32.Build.0 = Release|Win32
+		{5B04D480-0324-4EB6-A36A-291177BE8997}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5B04D480-0324-4EB6-A36A-291177BE8997}.Debug|Win32.Build.0 = Debug|Win32
+		{5B04D480-0324-4EB6-A36A-291177BE8997}.Release|Win32.ActiveCfg = Release|Win32
+		{5B04D480-0324-4EB6-A36A-291177BE8997}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
