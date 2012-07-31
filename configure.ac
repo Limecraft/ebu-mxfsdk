@@ -194,7 +194,7 @@ BMX_LIBADDLIBS="${UUIDLIB} ${LIBURIPARSER_LIBS} ${LIBMXF_LIBS} ${LIBMXFPP_LIBS}"
 AC_SUBST(BMX_LIBADDLIBS)
 
 BMX_LDADDLIBS="${BMX_LIBADDLIBS} \
-	\$(top_builddir)/src/libbmx-${BMX_MAJORMINOR}.la"
+	\$(top_builddir)/src/libbmx-${BMX_MAJORMINOR}.la \$(top_builddir)/EBUCoreProcessor/src/libebucore.la -lxerces-c"
 AC_SUBST(BMX_LDADDLIBS)
 
 
