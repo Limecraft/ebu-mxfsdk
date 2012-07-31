@@ -84,6 +84,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\apps\mxf2raw\AS11Info.h" />
     <ClInclude Include="..\..\..\include\bmx\as02\AS02AVCITrack.h" />
     <ClInclude Include="..\..\..\include\bmx\as02\AS02Bundle.h" />
     <ClInclude Include="..\..\..\include\bmx\as02\AS02Clip.h" />
@@ -223,11 +224,14 @@
     <ClCompile Include="..\..\..\src\as11\AS11Clip.cpp" />
     <ClCompile Include="..\..\..\src\as11\AS11CoreFramework.cpp" />
     <ClCompile Include="..\..\..\src\as11\AS11DMS.cpp" />
+    <ClCompile Include="..\..\..\src\as11\AS11Info.cpp" />
     <ClCompile Include="..\..\..\src\as11\AS11SegmentationFramework.cpp" />
     <ClCompile Include="..\..\..\src\as11\AS11Track.cpp" />
+    <ClCompile Include="..\..\..\src\avid_mxf\AvidInfo.cpp" />
     <ClCompile Include="..\..\..\src\essence_parser\AVCIEssenceParser.cpp" />
     <ClCompile Include="..\..\..\src\mxf_helper\AVCIMXFDescriptorHelper.cpp" />
     <ClCompile Include="..\..\..\src\essence_parser\AVCIRawEssenceReader.cpp" />
+    <ClCompile Include="..\..\..\src\mxf_reader\MXFAPPInfo.cpp" />
     <ClCompile Include="..\..\..\src\writer_helper\AVCIWriterHelper.cpp" />
     <ClCompile Include="..\..\..\src\avid_mxf\AvidAlphaTrack.cpp" />
     <ClCompile Include="..\..\..\src\avid_mxf\AvidAVCITrack.cpp" />

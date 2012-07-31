@@ -47,14 +47,14 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..\;..\..\..\..\apps;..\..\..\..\apps\mxf2raw;..\..\..\..\..\ebu-libMXF;..\..\..\..\..\ebu-libMXFpp;..\..\..\..\..\uriparser\include;..\..\..\..\include;..;C:\code\BMX\bmxlib-bmx\EBUCoreProcessor\include;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\;..\..\..\..\apps;..\..\..\..\apps\mxf2raw;..\..\..\..\..\ebu-libMXF;..\..\..\..\..\ebu-libMXFpp;..\..\..\..\..\uriparser\include;..\..\..\..\include;..\..\..\..\EBUCoreProcessor\include;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libMXF.lib;libMXF++.lib;uriparser.lib;bmx.lib;EBUCoreProcessor.lib;xerces-c_3D.lib;ole32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\..\ebu-libMXF\msvc_build\vs10\mxf\Debug;..\..\..\..\..\ebu-libMXFpp\msvc_build\vs10\libMXF++\Debug;..\..\..\..\..\uriparser\win32;..\..\bmx\Debug;C:\code\BMX\bmxlib-bmx\msvc_build\vs10\Debug;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\..\ebu-libMXF\msvc_build\vs10\mxf\Debug;..\..\..\..\..\ebu-libMXFpp\msvc_build\vs10\libMXF++\Debug;..\..\..\..\..\uriparser\win32;..\..\bmx\Debug;..\..\..\..\msvc_build\vs10\Debug;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>

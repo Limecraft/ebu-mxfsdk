@@ -45,7 +45,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\code\BMX\bmxlib-bmx\EBUCoreProcessor\include;C:\code\BMX\libmxf;C:\code\BMX\libMXF++;C:\code\BMX\bmxlib-bmx\include;C:\code\BMX\libMXF++\msvc_build\vs10;C:\code\EBU-SDK\xsd-3.3.0-i686-windows\libxsd;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\include;C:\code\BMX\uriparser\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\EBUCoreProcessor\include;..\..\..\..\ebu-libmxf;..\..\..\..\ebu-libMXFpp;..\..\..\include;..\..\..\..\ebu-libMXFpp\msvc_build\vs10;..\..\..\..\uriparser\include;C:\code\EBU-SDK\xsd-3.3.0-i686-windows\libxsd;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
