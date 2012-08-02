@@ -18,6 +18,15 @@
     throw result; \
 }
 
+#if defined(_WIN32)
+	int file_flags = MXF_WIN32_FLAG_SEQUENTIAL_SCAN;
+#define MXF_OPEN_READ(fn, pf)   mxf_win32_file_open_read(fn, file_flags, pf)
+#define MXF_OPEN_MODIFY(fn, pf)   mxf_win32_file_open_modify(fn, file_flags, pf)
+#else
+#define MXF_OPEN_READ(fn, pf)   mxf_disk_file_open_read(fn, pf)
+#define MXF_OPEN_MODIFY(fn, pf)   mxf_disk_file_open_modify(fn, pf)
+#endif
+
 #include "EBUCoreMapping.h"
 #include "EBUCoreProcessor.h"
 
@@ -99,20 +108,69 @@ void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model)
 	EBUCore::RegisterExtensions(data_model);	
 }
 
+Partition* FindPreferredMetadataPartition(const std::vector<Partition*>& partitions, Partition** headerPartition, Partition** footerPartition) {
+
+	Partition *metadata_partition = NULL, *header = NULL, *footer = NULL;
+
+	size_t i;
+	for (i = partitions.size(); i > 0 ; i--) {
+		Partition *p = partitions[i-1];
+		if (mxf_is_header_partition_pack(p->getKey()))
+			header = p;
+		else if (mxf_is_footer_partition_pack(p->getKey()))
+			footer = p;
+	}
+	if (		footer!=NULL && 
+				mxf_partition_is_closed(footer->getKey()) && 
+				footer->getHeaderByteCount() > 0)
+		metadata_partition = footer;
+	else if (	header != NULL && 
+				mxf_partition_is_closed(header->getKey()) &&
+				header->getHeaderByteCount() > 0)
+		metadata_partition = header;
+	else {
+		log_warn("No metadata found in any of the closed header and footer partitions.");
+
+		// there is no closed header or footer partition with metadata
+		// find closed metadata in any of the body partitions 
+		// (header metadata might have gone lost in transit)
+		for (i = partitions.size(); i > 0 ; i--) {
+			Partition *p = partitions[i-1];
+			if (	mxf_is_body_partition_pack(p->getKey()) &&
+					mxf_partition_is_closed(p->getKey()) && 
+					p->getHeaderByteCount() > 0) {
+				metadata_partition = p;
+				break;	// use the last partition in the file as metadata, as it should be the most complete...
+			}
+		}
+
+		// is there still no metadata? Try to find metadata in open partitions
+		if (metadata_partition == NULL) {
+			log_warn("No metadata found in any of the closed body partitions either.");
+
+			for (i = partitions.size(); i > 0 ; i--) {
+				Partition *p = partitions[i-1];
+				if (	!mxf_partition_is_closed(p->getKey()) && 
+						p->getHeaderByteCount() > 0) {
+					metadata_partition = p;
+					break;	// use the last partition in the file as metadata, as it should be the most complete...
+				}
+			}
+		}
+	}
+
+	if (headerPartition!=NULL)
+		*headerPartition = header;
+	if (footerPartition!=NULL)
+		*footerPartition = footer;
+	return metadata_partition;
+}
+
 void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata, 
 							const char* metadataLocation,
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, std::string& message, std::string& function),
 							bool optNoIdentification, bool optForceHeader) {
-
-#if defined(_WIN32)
-	int file_flags = MXF_WIN32_FLAG_SEQUENTIAL_SCAN;
-#define MXF_OPEN_READ(fn, pf)   mxf_win32_file_open_read(fn, file_flags, pf)
-#define MXF_OPEN_MODIFY(fn, pf)   mxf_win32_file_open_modify(fn, file_flags, pf)
-#else
-#define MXF_OPEN_READ(fn, pf)   mxf_disk_file_open_read(fn, pf)
-#define MXF_OPEN_MODIFY(fn, pf)   mxf_disk_file_open_modify(fn, pf)
-#endif
 
         //MXFReader *reader;
         MXFFileReader *file_reader = 0;
@@ -145,53 +203,7 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 		    // ///////////
 	        Partition *metadata_partition = NULL, *headerPartition = NULL, *footerPartition = NULL;
 
-			size_t i;
-			for (i = partitions.size(); i > 0 ; i--) {
-				Partition *p = partitions[i-1];
-				if (mxf_is_header_partition_pack(p->getKey()))
-					headerPartition = p;
-				else if (mxf_is_footer_partition_pack(p->getKey()))
-					footerPartition = p;
-			}
-			if (		footerPartition!=NULL && 
-						mxf_partition_is_closed(footerPartition->getKey()) && 
-						footerPartition->getHeaderByteCount() > 0)
-				metadata_partition = footerPartition;
-			else if (	headerPartition != NULL && 
-						mxf_partition_is_closed(headerPartition->getKey()) &&
-						headerPartition->getHeaderByteCount() > 0)
-				metadata_partition = headerPartition;
-			else {
-				log_warn("No metadata found in any of the closed header and footer partitions.");
-
-				// there is no closed header or footer partition with metadata
-				// find closed metadata in any of the body partitions 
-				// (header metadata might have gone lost in transit)
-				for (i = partitions.size(); i > 0 ; i--) {
-					Partition *p = partitions[i-1];
-					if (	mxf_is_body_partition_pack(p->getKey()) &&
-							mxf_partition_is_closed(p->getKey()) && 
-							p->getHeaderByteCount() > 0) {
-						metadata_partition = p;
-						break;	// use the last partition in the file as metadata, as it should be the most complete...
-					}
-				}
-
-				// is there still no metadata? Try to find metadata in open partitions
-				if (metadata_partition == NULL) {
-					log_warn("No metadata found in any of the closed body partitions either.");
-
-					for (i = partitions.size(); i > 0 ; i--) {
-						Partition *p = partitions[i-1];
-						if (	!mxf_partition_is_closed(p->getKey()) && 
-								p->getHeaderByteCount() > 0) {
-							metadata_partition = p;
-							break;	// use the last partition in the file as metadata, as it should be the most complete...
-						}
-					}
-				}
-			}
-		
+			metadata_partition = FindPreferredMetadataPartition(partitions, &headerPartition, &footerPartition);
 			if (!metadata_partition)
 				THROW_RESULT(MXFFileReader::MXF_RESULT_NO_HEADER_METADATA);
 
@@ -258,7 +270,7 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 							No metadata: Use metadata from the header partition as final and insert in this partition
 				*/
 				// ///////////
-				for (i = 0 ; i < partitions.size()-1; i++) {	// rewrite for all but the footer partition
+				for (size_t i = 0 ; i < partitions.size()-1; i++) {	// rewrite for all but the footer partition
 					Partition *p = partitions[i];
 					if (mxf_is_header_partition_pack(p->getKey())) {
 						p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Header) : &MXF_PP_K(OpenIncomplete, Header) );
@@ -287,7 +299,7 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 				// In this case, there's no further need for shifting the index bytes (been done already)
 				// What we do have to do is update each of the partition packs with an updated offset
 				uint64_t prevPartition = 0;
-				for (i = 0 ; i < partitions.size(); i++) {
+				for (size_t i = 0 ; i < partitions.size(); i++) {
 					Partition *p = partitions[i];
 					if (!mxf_is_header_partition_pack(p->getKey())) {
 						p->setThisPartition(p->getThisPartition() + fileOffset);
