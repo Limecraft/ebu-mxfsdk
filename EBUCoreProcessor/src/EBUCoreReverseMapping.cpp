@@ -43,9 +43,9 @@ namespace EBUCore {
 		dest.destProperty(p);	\
 	}
 
-#define NEW_VECTOR_AND_RASSIGN_CARGS_PREFIXCODE(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty, prefixCode, ctrArgs)	\
-	{ destSequenceType vec_##dest##destProperty; \
-	for (iteratorType it = source->sourceProperty().begin(); it != source->sourceProperty().end(); it++) { \
+#define NEW_VECTOR_AND_RASSIGN_CARGS_PREFIXCODE(source, sourceProperty, destType, destSequenceType, vectorType, mapMethod, dest, destProperty, prefixCode, ctrArgs)	\
+	{ destSequenceType vec_##dest##destProperty; vectorType& vec_##source##sourceProperty = source->sourceProperty(); \
+	for (vectorType::iterator it = vec_##source##sourceProperty.begin(); it != vec_##source##sourceProperty.end(); it++) { \
 		prefixCode; \
 		std::auto_ptr<destType> p( new destType(ctrArgs) ); \
 		mapMethod(*it, *p); \
@@ -53,14 +53,14 @@ namespace EBUCore {
 	} \
 	dest.destProperty(vec_##dest##destProperty); }
 
-#define NEW_VECTOR_AND_RASSIGN(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty)	\
-	NEW_VECTOR_AND_RASSIGN_CARGS_PREFIXCODE(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty,,)
+#define NEW_VECTOR_AND_RASSIGN(source, sourceProperty, destType, destSequenceType, vectorType, mapMethod, dest, destProperty)	\
+	NEW_VECTOR_AND_RASSIGN_CARGS_PREFIXCODE(source, sourceProperty, destType, destSequenceType, vectorType, mapMethod, dest, destProperty,,)
 
-#define NEW_VECTOR_AND_RASSIGN_WITH_DC(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty)	\
-	NEW_VECTOR_AND_RASSIGN_CARGS_PREFIXCODE(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty, std::auto_ptr<dc::elementType> dcp( new dc::elementType() ), dcp)
+#define NEW_VECTOR_AND_RASSIGN_WITH_DC(source, sourceProperty, destType, destSequenceType, vectorType, mapMethod, dest, destProperty)	\
+	NEW_VECTOR_AND_RASSIGN_CARGS_PREFIXCODE(source, sourceProperty, destType, destSequenceType, vectorType, mapMethod, dest, destProperty, std::auto_ptr<dc::elementType> dcp( new dc::elementType() ), dcp)
 
-#define NEW_VECTOR_AND_RASSIGN_CARGS(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty, constructorArgs)	\
-	NEW_VECTOR_AND_RASSIGN_CARGS_PREFIXCODE(source, sourceProperty, destType, destSequenceType, iteratorType, mapMethod, dest, destProperty,,constructorArgs)
+#define NEW_VECTOR_AND_RASSIGN_CARGS(source, sourceProperty, destType, destSequenceType, vectorType, mapMethod, dest, destProperty, constructorArgs)	\
+	NEW_VECTOR_AND_RASSIGN_CARGS_PREFIXCODE(source, sourceProperty, destType, destSequenceType, vectorType, mapMethod, dest, destProperty,,constructorArgs)
 
 #define RMAP_TYPE_GROUP(source, dest, definitionType, labelType, linkType)	\
 	if (source->havetypeGroupDefinition()) {	\
@@ -146,7 +146,7 @@ void mapContact(ebucoreContact *source, contactDetailsType& dest) {
 	SIMPLE_RMAP_OPTIONAL(source, haveoccupation, getoccupation, dest, occupation)
 
 	// map contactdetails
-	NEW_VECTOR_AND_RASSIGN(source, getcontactDetails, detailsType, contactDetailsType::details_sequence, std::vector<ebucoreContactDetails*>::iterator, mapDetails, dest, details)
+	NEW_VECTOR_AND_RASSIGN(source, getcontactDetails, detailsType, contactDetailsType::details_sequence, std::vector<ebucoreContactDetails*>, mapDetails, dest, details)
 
 	if (source->havestageName()) {
 		contactDetailsType::stageName_sequence seq;
@@ -156,7 +156,7 @@ void mapContact(ebucoreContact *source, contactDetailsType& dest) {
 
 	// [TODO] We skip RelatedContacts for now, KLV mapping refers to Contacts, while the XSD refers to entities
 	// [FIX?] Updated to entityType
-	NEW_VECTOR_AND_RASSIGN(source, getcontactRelatedContacts, entityType, contactDetailsType::relatedContacts_sequence, std::vector<ebucoreEntity*>::iterator, mapEntity, dest, relatedContacts)
+	NEW_VECTOR_AND_RASSIGN(source, getcontactRelatedContacts, entityType, contactDetailsType::relatedContacts_sequence, std::vector<ebucoreEntity*>, mapEntity, dest, relatedContacts)
 	
 	// [TODO] We skip contactId for now, KLV mapping refers to an UID, while the XSD refers to anyURI type
 
@@ -167,8 +167,8 @@ void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest)
 	SIMPLE_RMAP(source, getorganisationName, dest, organisationName)
 	SIMPLE_RMAP_OPTIONAL(source, haveorganisationDepartment, getorganisationDepartment, dest, organisationDepartment)
 
-	NEW_VECTOR_AND_RASSIGN(source, getorganisationRelatedContacts, entityType, organisationDetailsType::contacts_sequence, std::vector<ebucoreEntity*>::iterator, mapEntity, dest, contacts)
-	NEW_VECTOR_AND_RASSIGN(source, getorganisationDetails, detailsType, organisationDetailsType::details_sequence, std::vector<ebucoreContactDetails*>::iterator, mapDetails, dest, details)
+	NEW_VECTOR_AND_RASSIGN(source, getorganisationRelatedContacts, entityType, organisationDetailsType::contacts_sequence, std::vector<ebucoreEntity*>, mapEntity, dest, contacts)
+	NEW_VECTOR_AND_RASSIGN(source, getorganisationDetails, detailsType, organisationDetailsType::details_sequence, std::vector<ebucoreContactDetails*>, mapDetails, dest, details)
 }
 
 void mapEntity(ebucoreEntity *source, entityType& dest) {
@@ -190,7 +190,7 @@ void mapEntity(ebucoreEntity *source, entityType& dest) {
 	// [TODO] The KLV mapping lists a single contact, while the XSD specifies a sequence
 	// [FIX?] Updated cardinality
 	if (source->haveentityContact()) {
-		NEW_VECTOR_AND_RASSIGN(source, getentityContact, contactDetailsType, entityType::contactDetails_sequence, std::vector<ebucoreContact*>::iterator, mapContact, dest, contactDetails)
+		NEW_VECTOR_AND_RASSIGN(source, getentityContact, contactDetailsType, entityType::contactDetails_sequence, std::vector<ebucoreContact*>, mapContact, dest, contactDetails)
 	}
 
 	if (source->haveentityOrganisation()) {
@@ -548,7 +548,7 @@ void mapRights(ebucoreRights *source, rightsType& dest) {
 	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haverightsHolderEntity, getrightsHolderEntity, entityType, mapEntity, dest, rightsHolder)
 
 	if (source->haverightsContacts()) {
-		NEW_VECTOR_AND_RASSIGN(source, getrightsContacts, contactDetailsType, rightsType::contactDetails_sequence, std::vector<ebucoreContact*>::iterator, mapContact, dest, contactDetails)
+		NEW_VECTOR_AND_RASSIGN(source, getrightsContacts, contactDetailsType, rightsType::contactDetails_sequence, std::vector<ebucoreContact*>, mapContact, dest, contactDetails)
 	}
 
 	RMAP_TYPE_GROUP(source->getrightsKindGroup() , dest, rightsType::typeDefinition_type, rightsType::typeLabel_type, rightsType::typeLink_type)
@@ -595,20 +595,19 @@ void mapCustomRelation(ebucoreCustomRelation *source, relationType& dest) {
 }
 
 void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
-
-	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, gettitle, titleType, coreMetadataType::title_sequence, std::vector<ebucoreTitle*>::iterator, mapTitle, dest, title)
+	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, gettitle, titleType, coreMetadataType::title_sequence, std::vector<ebucoreTitle*>, mapTitle, dest, title)
 	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getalternativeTitle, alternativeTitleType, coreMetadataType::alternativeTitle_sequence, 
-		std::vector<ebucoreAlternativeTitle*>::iterator, mapAlternativeTitle, dest, alternativeTitle)
-	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getdescription, descriptionType, coreMetadataType::description_sequence, std::vector<ebucoreDescription*>::iterator, mapDescription, dest, description)
+		std::vector<ebucoreAlternativeTitle*>, mapAlternativeTitle, dest, alternativeTitle)
+	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getdescription, descriptionType, coreMetadataType::description_sequence, std::vector<ebucoreDescription*>, mapDescription, dest, description)
 
-	NEW_VECTOR_AND_RASSIGN(source, getcreator, entityType, coreMetadataType::creator_sequence, std::vector<ebucoreEntity*>::iterator, mapEntity, dest, creator)
-	NEW_VECTOR_AND_RASSIGN(source, getpublisher, entityType, coreMetadataType::publisher_sequence, std::vector<ebucoreEntity*>::iterator, mapEntity, dest, publisher)
-	NEW_VECTOR_AND_RASSIGN(source, getcontributor, entityType, coreMetadataType::contributor_sequence, std::vector<ebucoreEntity*>::iterator, mapEntity, dest, contributor)
+	NEW_VECTOR_AND_RASSIGN(source, getcreator, entityType, coreMetadataType::creator_sequence, std::vector<ebucoreEntity*>, mapEntity, dest, creator)
+	NEW_VECTOR_AND_RASSIGN(source, getpublisher, entityType, coreMetadataType::publisher_sequence, std::vector<ebucoreEntity*>, mapEntity, dest, publisher)
+	NEW_VECTOR_AND_RASSIGN(source, getcontributor, entityType, coreMetadataType::contributor_sequence, std::vector<ebucoreEntity*>, mapEntity, dest, contributor)
 
-	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getidentifier, identifierType, coreMetadataType::identifier_sequence, std::vector<ebucoreIdentifier*>::iterator, mapIdentifier, dest, identifier)
-	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getsubject, subjectType, coreMetadataType::subject_sequence, std::vector<ebucoreSubject*>::iterator, mapSubject, dest, subject)
+	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getidentifier, identifierType, coreMetadataType::identifier_sequence, std::vector<ebucoreIdentifier*>, mapIdentifier, dest, identifier)
+	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getsubject, subjectType, coreMetadataType::subject_sequence, std::vector<ebucoreSubject*>, mapSubject, dest, subject)
 	
-	NEW_VECTOR_AND_RASSIGN(source, gettype, typeType, coreMetadataType::type_sequence, std::vector<ebucoreType*>::iterator, mapType, dest, type)
+	NEW_VECTOR_AND_RASSIGN(source, gettype, typeType, coreMetadataType::type_sequence, std::vector<ebucoreType*>, mapType, dest, type)
 
 	std::vector<ebucorePublicationHistoryEvent*> source_events = source->getpublicationHistoryEvent();
 	if (source_events.size() > 0) {
@@ -617,14 +616,15 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 		dest.publicationHistory(p);
 	}
 
-	NEW_VECTOR_AND_RASSIGN(source, getdate, dateType, coreMetadataType::date_sequence, std::vector<ebucoreDate*>::iterator, mapDate, dest, date)
-	NEW_VECTOR_AND_RASSIGN(source, getlanguage, languageType, coreMetadataType::language_sequence, std::vector<ebucoreLanguage*>::iterator, mapLanguage, dest, language)
-	NEW_VECTOR_AND_RASSIGN(source, getcoverage, coverageType, coreMetadataType::coverage_sequence, std::vector<ebucoreCoverage*>::iterator, mapMetadataCoverage, dest, coverage)
+	NEW_VECTOR_AND_RASSIGN(source, getdate, dateType, coreMetadataType::date_sequence, std::vector<ebucoreDate*>, mapDate, dest, date)
+	NEW_VECTOR_AND_RASSIGN(source, getlanguage, languageType, coreMetadataType::language_sequence, std::vector<ebucoreLanguage*>, mapLanguage, dest, language)
+	NEW_VECTOR_AND_RASSIGN(source, getcoverage, coverageType, coreMetadataType::coverage_sequence, std::vector<ebucoreCoverage*>, mapMetadataCoverage, dest, coverage)
 
 	// a ratingTypes requires a number of values directly in their constructor,
 	// so we need something a little different
 	coreMetadataType::rating_sequence vec_ratings;
-	for (std::vector<ebucoreRating*>::iterator it = source->getrating().begin(); it != source->getrating().end(); it++) {
+	std::vector<ebucoreRating*>& vec_src_ratings = source->getrating();
+	for (std::vector<ebucoreRating*>::iterator it = vec_src_ratings.begin(); it != vec_src_ratings.end(); it++) {
 		vec_ratings.push_back(mapRating(*it));
 	}
 	dest.rating(vec_ratings);
@@ -633,8 +633,8 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 		std::auto_ptr<coreMetadataType::version_type> p(new coreMetadataType::version_type( source->getversion()->getversionValue() ));
 	}
 
-	NEW_VECTOR_AND_RASSIGN(source, getrights, rightsType, coreMetadataType::rights_sequence, std::vector<ebucoreRights*>::iterator, mapRights, dest, rights)
-	NEW_VECTOR_AND_RASSIGN(source, getcustomRelation, relationType, coreMetadataType::relation_sequence, std::vector<ebucoreCustomRelation*>::iterator, mapCustomRelation, dest, relation)
+	NEW_VECTOR_AND_RASSIGN(source, getrights, rightsType, coreMetadataType::rights_sequence, std::vector<ebucoreRights*>, mapRights, dest, rights)
+	NEW_VECTOR_AND_RASSIGN(source, getcustomRelation, relationType, coreMetadataType::relation_sequence, std::vector<ebucoreCustomRelation*>, mapCustomRelation, dest, relation)
 
 }
 
