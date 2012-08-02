@@ -358,6 +358,47 @@ void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument,
 	EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, optNoIdentification, optForceHeader);	
 }
 
+std::auto_ptr<ebuCoreMainType> ExtractEBUCoreMetadataXSD(
+							const char* mxfLocation,
+							void (*progress_callback)(float progress, std::string& message, std::string& function)) {
+	return std::auto_ptr<ebuCoreMainType>(NULL);
+}
+
+
+xercesc::DOMDocument& ExtractEBUCoreMetadata(
+							const char* mxfLocation,
+							void (*progress_callback)(float progress, std::string& message, std::string& function)) {
+
+	std::auto_ptr<ebuCoreMainType> p = ExtractEBUCoreMetadataXSD(mxfLocation, progress_callback);
+
+	xml_schema::namespace_infomap map;
+	map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";
+	map["dc"].name = "http://purl.org/dc/elements/1.1/";
+
+	::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > xml = ebuCoreMain(*p, map);
+	return *xml;
+
+}
+	
+void ExtractEBUCoreMetadata(const char* mxfLocation,
+							const char* metadataLocation,
+							void (*progress_callback)(float progress, std::string& message, std::string& function)) {
+
+	std::auto_ptr<ebuCoreMainType> p = ExtractEBUCoreMetadataXSD(mxfLocation, progress_callback);
+	// open a file output stream
+	std::ofstream out(metadataLocation);
+	
+	xml_schema::namespace_infomap map;
+	map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";
+	map["dc"].name = "http://purl.org/dc/elements/1.1/";
+
+	ebuCoreMain (out, *p, map);
+	out.close();
+
+}
+
+
+
 uint64_t BufferIndex(File* mFile, Partition* partition, bmx::ByteArray& index_bytes, uint32_t* index_length) {
 	*index_length = partition->getIndexByteCount();
 	std::cout << "Footer Partition index size: " << partition->getIndexByteCount() << std::endl;
