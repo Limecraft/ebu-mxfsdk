@@ -1,0 +1,195 @@
+
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#define __STDC_FORMAT_MACROS
+
+#include <cstdio>
+#include <cstring>
+#include <cerrno>
+#include <iostream>
+#include <algorithm>
+
+#include <bmx/mxf_reader/MXFFileReader.h>
+#include <bmx/mxf_reader/MXFGroupReader.h>
+#include <bmx/mxf_reader/MXFSequenceReader.h>
+#include <bmx/mxf_reader/MXFFrameMetadata.h>
+#include <bmx/essence_parser/SoundConversion.h>
+#include <bmx/MD5.h>
+#include <bmx/CRC32.h>
+#include <bmx/MXFUtils.h>
+#include <bmx/Utils.h>
+#include <bmx/Version.h>
+#include <bmx/as11/AS11Info.h>
+#include <bmx/BMXException.h>
+#include <bmx/Logging.h>
+
+#if defined(_WIN32)
+#include <mxf/mxf_win32_file.h>
+#endif
+
+#include <EBUCoreProcessor.h>
+
+using namespace std;
+using namespace bmx;
+using namespace mxfpp;
+
+static string get_version_info()
+{
+    char buffer[256];
+    sprintf(buffer, "mxf2raw, %s v%s, %s %s (scm %s)",
+            get_bmx_library_name().c_str(),
+            get_bmx_version_string().c_str(),
+            __DATE__, __TIME__,
+            get_bmx_scm_version_string().c_str());
+    return buffer;
+}
+
+static void usage(const char *cmd)
+{
+    fprintf(stderr, "%s\n", get_version_info().c_str());
+    fprintf(stderr, "Usage: %s <<options>> <filename>\n", cmd);
+    fprintf(stderr, "Options:\n");
+    fprintf(stderr, " -h | --help           Show usage and exit\n");
+    fprintf(stderr, " -v | --version        Print version info\n");
+    fprintf(stderr, " -l <file>             Log filename. Default log to stderr/stdout\n");
+    fprintf(stderr, " -i                    Print file information to stdout\n");
+    fprintf(stderr, " --ebu-core <file>     Write embedded EBU Core metadata to file\n");
+}
+
+int main(int argc, const char** argv)
+{
+    const char *log_filename = 0;
+    std::vector<const char *> filenames;
+    bool do_print_info = false;
+    bool do_print_version = false;
+    const char *ebucore_filename = 0;
+    int cmdln_index;
+
+
+    if (argc == 1) {
+        usage(argv[0]);
+        return 0;
+    }
+
+    for (cmdln_index = 1; cmdln_index < argc; cmdln_index++)
+    {
+        if (strcmp(argv[cmdln_index], "--help") == 0 ||
+            strcmp(argv[cmdln_index], "-h") == 0)
+        {
+            usage(argv[0]);
+            return 0;
+        }
+        else if (strcmp(argv[cmdln_index], "--version") == 0 ||
+                 strcmp(argv[cmdln_index], "-v") == 0)
+        {
+            if (argc == 2) {
+                printf("%s\n", get_version_info().c_str());
+                return 0;
+            }
+            do_print_version = true;
+        }
+        else if (strcmp(argv[cmdln_index], "-l") == 0)
+        {
+            if (cmdln_index + 1 >= argc)
+            {
+                usage(argv[0]);
+                fprintf(stderr, "Missing argument for option '%s'\n", argv[cmdln_index]);
+                return 1;
+            }
+            log_filename = argv[cmdln_index + 1];
+            cmdln_index++;
+        }
+        else if (strcmp(argv[cmdln_index], "-i") == 0)
+        {
+            do_print_info = true;
+        }
+		else if (strcmp(argv[cmdln_index], "--ebu-core") == 0)
+        {
+            if (cmdln_index + 1 >= argc)
+            {
+                usage(argv[0]);
+                fprintf(stderr, "Missing argument for option '%s'\n", argv[cmdln_index]);
+                return 1;
+            }
+			ebucore_filename = argv[cmdln_index + 1];
+            cmdln_index++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    if (cmdln_index + 1 > argc) {
+        usage(argv[0]);
+        fprintf(stderr, "Missing parameters\n");
+        return 1;
+    } else if (cmdln_index >= argc) {
+        usage(argv[0]);
+        fprintf(stderr, "No <filename> given\n");
+        return 1;
+    }
+
+    for (; cmdln_index < argc; cmdln_index++) {
+        if (!check_file_exists(argv[cmdln_index])) {
+            if (argv[cmdln_index][0] == '-') {
+                usage(argv[0]);
+                fprintf(stderr, "Unknown argument '%s'\n", argv[cmdln_index]);
+            } else {
+                fprintf(stderr, "Failed to open input filename '%s'\n", argv[cmdln_index]);
+            }
+            return 1;
+        }
+        filenames.push_back(argv[cmdln_index]);
+    }
+
+
+    if (log_filename) {
+        if (!open_log_file(log_filename))
+            return 1;
+    }
+
+    connect_libmxf_logging();
+
+    if (do_print_version)
+        log_info("%s\n", get_version_info().c_str());
+
+    int cmd_result = 0;
+
+    try
+    {
+		if (ebucore_filename) {
+			EBUCore::ExtractEBUCoreMetadata(filenames[0], ebucore_filename, NULL);
+		}
+    }
+    catch (const MXFException &ex)
+    {
+        log_error("MXF exception caught: %s\n", ex.getMessage().c_str());
+        cmd_result = 1;
+    }
+    catch (const BMXException &ex)
+    {
+        log_error("BMX exception caught: %s\n", ex.what());
+        cmd_result = 1;
+    }
+    catch (const bool &ex)
+    {
+        (void)ex;
+        cmd_result = 1;
+    }
+    catch (...)
+    {
+        log_error("Unknown exception caught\n");
+        cmd_result = 1;
+    }
+
+    if (log_filename)
+        close_log_file();
+
+
+    return cmd_result;
+}
+

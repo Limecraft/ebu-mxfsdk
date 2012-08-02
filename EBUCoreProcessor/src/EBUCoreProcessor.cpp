@@ -773,29 +773,62 @@ std::auto_ptr<ebuCoreMainType> ExtractEBUCoreMetadataXSD(
 							const char* mxfLocation,
 							void (*progress_callback)(float progress, std::string& message, std::string& function)) {
 
-	// ///////////////////////////////////////
-	// / 1. Open MXF File and locate all partitions, using the RIP
-	// ///////////
+	MXFFileReader *file_reader = 0;
 
+    file_reader = new MXFFileReader();
+	EBUCore::RegisterMetadataExtensionsforEBUCore(file_reader->GetDataModel());
 
-	// ///////////////////////////////////////
-	// / 1a. Locate the Metadata to use for extension
-	/*		We prefer closed footer metadata when available (if the metadata 
-			is repeated in the footer, it is likely to be more up-to-date than
-			that in the header.																*/
-	// ///////////
+	MXFFileReader::OpenResult result;
+	MXFFile *mxf_file;
+	if (MXF_OPEN_READ(mxfLocation, &mxf_file)) {
 
+		File *mFile = new File(mxf_file);
+		DataModel *mDataModel = new DataModel();
+		EBUCore::RegisterMetadataExtensionsforEBUCore(mDataModel);
 
-	// ///////////////////////////////////////
-	// / 2. Locate the EBUCore metadata in the MXF header metadata and serialize it to 
-	// ///////////
-	std::auto_ptr<ebuCoreMainType> p( FindAndSerializeEBUCore(NULL /*header_metadata*/) );
+		// ///////////////////////////////////////
+		// / 1. Open MXF File and locate all partitions, using the RIP
+		// ///////////
 
-	// ///////////////////////////////////////
-	// / 3. We're done, close the MXF file.
-	// ///////////
+		if (!mFile->readPartitions())
+			log_warn("Failed to read all partitions. File may be incomplete or invalid\n");
 
-	return p;
+	    const std::vector<Partition*> &partitions = mFile->getPartitions();
+
+		// ///////////////////////////////////////
+	    // / 1a. Locate the Metadata to use for extension
+		/*		We prefer closed footer metadata when available (if the metadata 
+				is repeated in the footer, it is likely to be more up-to-date than
+				that in the header.																*/
+		// ///////////
+	    Partition *metadata_partition = NULL, *headerPartition = NULL, *footerPartition = NULL;
+
+		metadata_partition = FindPreferredMetadataPartition(partitions, &headerPartition, &footerPartition);
+		if (!metadata_partition)
+			THROW_RESULT(MXFFileReader::MXF_RESULT_NO_HEADER_METADATA);
+
+		HeaderMetadata *mHeaderMetadata = new HeaderMetadata(mDataModel);
+
+		mxfKey key; uint8_t llen; uint64_t len;
+		mFile->seek(metadata_partition->getThisPartition(), SEEK_SET);
+		mFile->readKL(&key, &llen, &len);
+		mFile->skip(len);
+		mFile->readNextNonFillerKL(&key, &llen, &len);
+		BMX_CHECK(mxf_is_header_metadata(&key));
+		mHeaderMetadata->read(mFile, metadata_partition, &key, llen, len);
+
+		// ///////////////////////////////////////
+		// / 2. Locate the EBUCore metadata in the MXF header metadata and serialize it to 
+		// ///////////
+		std::auto_ptr<ebuCoreMainType> p( FindAndSerializeEBUCore(mHeaderMetadata) );
+
+		// ///////////////////////////////////////
+		// / 3. We're done, close the MXF file.
+		// ///////////
+		delete file_reader;
+
+		return p;
+	}
 }
 
 
