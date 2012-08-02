@@ -361,7 +361,30 @@ void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument,
 std::auto_ptr<ebuCoreMainType> ExtractEBUCoreMetadataXSD(
 							const char* mxfLocation,
 							void (*progress_callback)(float progress, std::string& message, std::string& function)) {
-	return std::auto_ptr<ebuCoreMainType>(NULL);
+
+	// ///////////////////////////////////////
+	// / 1. Open MXF File and locate all partitions, using the RIP
+	// ///////////
+
+
+	// ///////////////////////////////////////
+	// / 1a. Locate the Metadata to use for extension
+	/*		We prefer closed footer metadata when available (if the metadata 
+			is repeated in the footer, it is likely to be more up-to-date than
+			that in the header.																*/
+	// ///////////
+
+
+	// ///////////////////////////////////////
+	// / 2. Locate the EBUCore metadata in the MXF header metadata and serialize it to 
+	// ///////////
+	std::auto_ptr<ebuCoreMainType> p( FindAndSerializeEBUCore(NULL /*header_metadata*/) );
+
+	// ///////////////////////////////////////
+	// / 3. We're done, close the MXF file.
+	// ///////////
+
+	return p;
 }
 
 
