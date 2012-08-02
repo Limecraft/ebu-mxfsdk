@@ -820,6 +820,7 @@ std::auto_ptr<ebuCoreMainType> ExtractEBUCoreMetadataXSD(
 		// ///////////////////////////////////////
 		// / 2. Locate the EBUCore metadata in the MXF header metadata and serialize it to 
 		// ///////////
+		EBUCore::RegisterFrameworkObjectFactoriesforEBUCore(mHeaderMetadata);
 		std::auto_ptr<ebuCoreMainType> p( FindAndSerializeEBUCore(mHeaderMetadata) );
 
 		// ///////////////////////////////////////
