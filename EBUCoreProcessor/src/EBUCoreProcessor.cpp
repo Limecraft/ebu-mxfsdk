@@ -114,7 +114,7 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 #define MXF_OPEN_MODIFY(fn, pf)   mxf_disk_file_open_modify(fn, pf)
 #endif
 
-        MXFReader *reader;
+        //MXFReader *reader;
         MXFFileReader *file_reader = 0;
 
         file_reader = new MXFFileReader();
@@ -334,10 +334,10 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 			delete file_reader;
 			throw false;
 		}
-        reader = file_reader;
+        //reader = file_reader;
 
         // clean-up
-        delete reader;	
+        delete file_reader;	
 }
 
 void EmbedEBUCoreMetadata(	const char* metadataLocation, 
@@ -357,70 +357,6 @@ void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument,
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (metadataDocument, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
 	EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, optNoIdentification, optForceHeader);	
 }
-
-std::auto_ptr<ebuCoreMainType> ExtractEBUCoreMetadataXSD(
-							const char* mxfLocation,
-							void (*progress_callback)(float progress, std::string& message, std::string& function)) {
-
-	// ///////////////////////////////////////
-	// / 1. Open MXF File and locate all partitions, using the RIP
-	// ///////////
-
-
-	// ///////////////////////////////////////
-	// / 1a. Locate the Metadata to use for extension
-	/*		We prefer closed footer metadata when available (if the metadata 
-			is repeated in the footer, it is likely to be more up-to-date than
-			that in the header.																*/
-	// ///////////
-
-
-	// ///////////////////////////////////////
-	// / 2. Locate the EBUCore metadata in the MXF header metadata and serialize it to 
-	// ///////////
-	std::auto_ptr<ebuCoreMainType> p( FindAndSerializeEBUCore(NULL /*header_metadata*/) );
-
-	// ///////////////////////////////////////
-	// / 3. We're done, close the MXF file.
-	// ///////////
-
-	return p;
-}
-
-
-xercesc::DOMDocument& ExtractEBUCoreMetadata(
-							const char* mxfLocation,
-							void (*progress_callback)(float progress, std::string& message, std::string& function)) {
-
-	std::auto_ptr<ebuCoreMainType> p = ExtractEBUCoreMetadataXSD(mxfLocation, progress_callback);
-
-	xml_schema::namespace_infomap map;
-	map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";
-	map["dc"].name = "http://purl.org/dc/elements/1.1/";
-
-	::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > xml = ebuCoreMain(*p, map);
-	return *xml;
-
-}
-	
-void ExtractEBUCoreMetadata(const char* mxfLocation,
-							const char* metadataLocation,
-							void (*progress_callback)(float progress, std::string& message, std::string& function)) {
-
-	std::auto_ptr<ebuCoreMainType> p = ExtractEBUCoreMetadataXSD(mxfLocation, progress_callback);
-	// open a file output stream
-	std::ofstream out(metadataLocation);
-	
-	xml_schema::namespace_infomap map;
-	map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";
-	map["dc"].name = "http://purl.org/dc/elements/1.1/";
-
-	ebuCoreMain (out, *p, map);
-	out.close();
-
-}
-
-
 
 uint64_t BufferIndex(File* mFile, Partition* partition, bmx::ByteArray& index_bytes, uint32_t* index_length) {
 	*index_length = partition->getIndexByteCount();
@@ -819,6 +755,68 @@ void FindAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilenam
 		std::ofstream out(outputfilename);
 		ebuCoreMain (out, *ebuCoreMainElement, map);
 		out.close();
+}
+
+std::auto_ptr<ebuCoreMainType> ExtractEBUCoreMetadataXSD(
+							const char* mxfLocation,
+							void (*progress_callback)(float progress, std::string& message, std::string& function)) {
+
+	// ///////////////////////////////////////
+	// / 1. Open MXF File and locate all partitions, using the RIP
+	// ///////////
+
+
+	// ///////////////////////////////////////
+	// / 1a. Locate the Metadata to use for extension
+	/*		We prefer closed footer metadata when available (if the metadata 
+			is repeated in the footer, it is likely to be more up-to-date than
+			that in the header.																*/
+	// ///////////
+
+
+	// ///////////////////////////////////////
+	// / 2. Locate the EBUCore metadata in the MXF header metadata and serialize it to 
+	// ///////////
+	std::auto_ptr<ebuCoreMainType> p( FindAndSerializeEBUCore(NULL /*header_metadata*/) );
+
+	// ///////////////////////////////////////
+	// / 3. We're done, close the MXF file.
+	// ///////////
+
+	return p;
+}
+
+
+xercesc::DOMDocument& ExtractEBUCoreMetadata(
+							const char* mxfLocation,
+							void (*progress_callback)(float progress, std::string& message, std::string& function)) {
+
+	std::auto_ptr<ebuCoreMainType> p = ExtractEBUCoreMetadataXSD(mxfLocation, progress_callback);
+
+	xml_schema::namespace_infomap map;
+	map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";
+	map["dc"].name = "http://purl.org/dc/elements/1.1/";
+
+	::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > xml = ebuCoreMain(*p, map);
+	return *xml;
+
+}
+	
+void ExtractEBUCoreMetadata(const char* mxfLocation,
+							const char* metadataLocation,
+							void (*progress_callback)(float progress, std::string& message, std::string& function)) {
+
+	std::auto_ptr<ebuCoreMainType> p = ExtractEBUCoreMetadataXSD(mxfLocation, progress_callback);
+	// open a file output stream
+	std::ofstream out(metadataLocation);
+	
+	xml_schema::namespace_infomap map;
+	map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";
+	map["dc"].name = "http://purl.org/dc/elements/1.1/";
+
+	ebuCoreMain (out, *p, map);
+	out.close();
+
 }
 
 } // namespace EBUCore
