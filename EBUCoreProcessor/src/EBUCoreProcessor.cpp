@@ -691,7 +691,6 @@ void InsertEBUCoreFramework(HeaderMetadata *header_metadata, DMFramework *framew
 
 	// Append the EBU Core DMS label to the Preface
 	AppendDMSLabel(header_metadata, MXF_DM_L(EBUCoreDescriptiveScheme));
-	// Insert the framework
 
 	GenerationUIDAppender *appender = NULL;
 	if (identificationToAppend != NULL) {
@@ -747,11 +746,12 @@ static std::vector<DMFramework*> ebu_get_static_frameworks(MaterialPackage *mp)
     return frameworks;
 }
 
-void ReadAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilename) {
-
+std::auto_ptr<ebuCoreMainType> FindAndSerializeEBUCore(HeaderMetadata *metadata) {
+	
 	MaterialPackage *mp = metadata->getPreface()->findMaterialPackage();
 	if (!mp) {
-        return;
+		// throw an exception!
+		return std::auto_ptr<ebuCoreMainType>(NULL);
     }
 
 	ebucoreMainFramework *ebucore = NULL;
@@ -765,37 +765,37 @@ void ReadAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilenam
 		}
     }
 
-	if (ebucore) {
+	if (ebucore==NULL) {
+		// throw an exception!
+		return std::auto_ptr<ebuCoreMainType>(NULL);
+	}
+	
+	std::auto_ptr<ebuCoreMainType::coreMetadata_type> main( new ebuCoreMainType::coreMetadata_type() );
+	mapCoreMetadata(ebucore->getcoreMetadata(), *main);
 
-		titleType::title_type dc_title("Berlin Wall 50th");
-		titleType title(dc_title);
+	// map the EBU Core KLV framework to the XSD-derived counterpart
+	std::auto_ptr<ebuCoreMainType> ebuCoreMainElement( new ebuCoreMainType(main) );
 
-		ebuCoreMainType::coreMetadata_type main;
-		//main.title().push_back(title);
+	std::auto_ptr<entityType> p( new entityType() );
+	ebucoreMetadataSchemeInformation *info = ebucore->getmetadataSchemeInformation();
+	mapEntity(info->getebucoreMetadataProvider(), *(p.get()));
+	ebuCoreMainElement->metadataProvider(p);
 
-		mapCoreMetadata(ebucore->getcoreMetadata(), main);
+	return ebuCoreMainElement;
+}
 
-		// map the EBU Core KLV framework to the XSD-derived counterpart
-		ebuCoreMainType ebuCoreMainElement(main);
-		//ebuCoreMainElement.schema(ebuCoreMainElement.schema_default_value());
-		//ebuCoreMainElement.version(ebuCoreMainElement.version_default_value());
-		//ebuCoreMainElement.version("1.3");
-
-		std::auto_ptr<entityType> p( new entityType() );
-		ebucoreMetadataSchemeInformation *info = ebucore->getmetadataSchemeInformation();
-		mapEntity(info->getebucoreMetadataProvider(), *(p.get()));
-		ebuCoreMainElement.metadataProvider(p);
-
+void FindAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilename) {
+	
+		std::auto_ptr<ebuCoreMainType> ebuCoreMainElement( FindAndSerializeEBUCore(metadata) );
+	
 		xml_schema::namespace_infomap map;
 		map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";
 		map["dc"].name = "http://purl.org/dc/elements/1.1/";
 
 		// open a file output stream
 		std::ofstream out(outputfilename);
-		ebuCoreMain (out, ebuCoreMainElement, map);
+		ebuCoreMain (out, *ebuCoreMainElement, map);
 		out.close();
-	}
-
 }
 
 } // namespace EBUCore
