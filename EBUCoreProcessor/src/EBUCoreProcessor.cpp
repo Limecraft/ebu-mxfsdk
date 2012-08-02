@@ -169,7 +169,7 @@ Partition* FindPreferredMetadataPartition(const std::vector<Partition*>& partiti
 void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata, 
 							const char* metadataLocation,
 							const char* mxfLocation, 
-							void (*progress_callback)(float progress, std::string& message, std::string& function),
+							void (*progress_callback)(float progress, int level, std::string& message, std::string& function),
 							bool optNoIdentification, bool optForceHeader) {
 
         //MXFReader *reader;
@@ -354,7 +354,7 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 
 void EmbedEBUCoreMetadata(	const char* metadataLocation, 
 							const char* mxfLocation, 
-							void (*progress_callback)(float progress, std::string& message, std::string& function),
+							void (*progress_callback)(float progress, int level, std::string& message, std::string& function),
 							bool optNoIdentification, bool optForceHeader) {
 	std::ifstream input(metadataLocation);
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
@@ -364,7 +364,7 @@ void EmbedEBUCoreMetadata(	const char* metadataLocation,
 void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument, 
 							const char* metadataLocation,
 							const char* mxfLocation, 
-							void (*progress_callback)(float progress, std::string& message, std::string& function),
+							void (*progress_callback)(float progress, int level, std::string& message, std::string& function),
 							bool optNoIdentification, bool optForceHeader) {
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (metadataDocument, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
 	EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, optNoIdentification, optForceHeader);	
@@ -771,7 +771,7 @@ void FindAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilenam
 
 std::auto_ptr<ebuCoreMainType> ExtractEBUCoreMetadataXSD(
 							const char* mxfLocation,
-							void (*progress_callback)(float progress, std::string& message, std::string& function)) {
+							void (*progress_callback)(float progress, int level, std::string& message, std::string& function)) {
 
 	MXFFileReader *file_reader = 0;
 
@@ -835,7 +835,7 @@ std::auto_ptr<ebuCoreMainType> ExtractEBUCoreMetadataXSD(
 
 xercesc::DOMDocument& ExtractEBUCoreMetadata(
 							const char* mxfLocation,
-							void (*progress_callback)(float progress, std::string& message, std::string& function)) {
+							void (*progress_callback)(float progress, int level, std::string& message, std::string& function)) {
 
 	std::auto_ptr<ebuCoreMainType> p = ExtractEBUCoreMetadataXSD(mxfLocation, progress_callback);
 
@@ -850,7 +850,7 @@ xercesc::DOMDocument& ExtractEBUCoreMetadata(
 	
 void ExtractEBUCoreMetadata(const char* mxfLocation,
 							const char* metadataLocation,
-							void (*progress_callback)(float progress, std::string& message, std::string& function)) {
+							void (*progress_callback)(float progress, int level, std::string& message, std::string& function)) {
 
 	std::auto_ptr<ebuCoreMainType> p = ExtractEBUCoreMetadataXSD(mxfLocation, progress_callback);
 	// open a file output stream
