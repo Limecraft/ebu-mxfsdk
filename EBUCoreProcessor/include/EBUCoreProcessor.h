@@ -23,6 +23,15 @@ namespace EBUCore
 	int64_t FindLastPartitionFill(mxfpp::File* mFile, mxfpp::Partition* partition, int64_t* partitionSectionOffset, int64_t *extractedFileSize = NULL);
 	void ShiftBytesInFile(mxfpp::File* mFile, int64_t shiftPosition, int64_t shiftOffset);
 
+	enum ProgressCallbackLevel {
+		FATAL,
+		ERROR,
+		WARN,
+		INFO,
+		DEBUG,
+		TRACE
+	};
+
 	/**
 	*	Embed EBUCore metadata into an MXF file.
 		@return Has no return value, but throws an exception when irregularities occur. The caller is informed of any progress by means of the __progress_callback__ argument.
@@ -39,7 +48,7 @@ namespace EBUCore
 	*/
 	void EmbedEBUCoreMetadata(	const char* metadataLocation, 
 							const char* mxfLocation, 
-							void (*progress_callback)(float progress, int level, std::string& message, std::string& function),
+							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
 							bool optNoIdentification = false, bool optForceHeader = false);
 
 	/**
@@ -65,7 +74,7 @@ namespace EBUCore
 	void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument, 
 							const char* metadataLocation,
 							const char* mxfLocation, 
-							void (*progress_callback)(float progress, int level, std::string& message, std::string& function),
+							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
 							bool optNoIdentification = false, bool optForceHeader = false);
 
 	/**
@@ -80,7 +89,7 @@ namespace EBUCore
 	*/
 	xercesc::DOMDocument& ExtractEBUCoreMetadata(
 							const char* mxfLocation,
-							void (*progress_callback)(float progress, int level, std::string& message, std::string& function));
+							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...));
 	
 	/**
 	*	Extract EBUCore metadata from an MXF file.
@@ -94,6 +103,6 @@ namespace EBUCore
 	void ExtractEBUCoreMetadata(
 							const char* mxfLocation,
 							const char* metadataLocation,
-							void (*progress_callback)(float progress, int level, std::string& message, std::string& function));
+							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...));
 
 }

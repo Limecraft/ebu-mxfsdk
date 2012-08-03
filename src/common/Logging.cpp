@@ -188,8 +188,13 @@ void bmx::log_debug(const char *format, ...)
     va_list p_arg;
 
     va_start(p_arg, format);
-    vlog2(DEBUG_LOG, 0, format, p_arg);
+	log_debug(format, p_arg);
     va_end(p_arg);
+}
+
+void bmx::log_debug(const char *format, va_list args)
+{
+    vlog2(DEBUG_LOG, 0, format, args);
 }
 
 void bmx::log_info(const char *format, ...)
@@ -197,17 +202,28 @@ void bmx::log_info(const char *format, ...)
     va_list p_arg;
 
     va_start(p_arg, format);
-    vlog2(INFO_LOG, 0, format, p_arg);
+    log_info(format, p_arg);
     va_end(p_arg);
 }
+
+void bmx::log_info(const char *format, va_list args)
+{
+    vlog2(INFO_LOG, 0, format, args);
+}
+
 
 void bmx::log_warn(const char *format, ...)
 {
     va_list p_arg;
 
     va_start(p_arg, format);
-    vlog2(WARN_LOG, 0, format, p_arg);
+    log_warn(format, p_arg);
     va_end(p_arg);
+}
+
+void bmx::log_warn(const char *format, va_list args)
+{
+    vlog2(WARN_LOG, 0, format, args);
 }
 
 void bmx::log_error(const char *format, ...)
@@ -215,8 +231,13 @@ void bmx::log_error(const char *format, ...)
     va_list p_arg;
 
     va_start(p_arg, format);
-    vlog2(ERROR_LOG, 0, format, p_arg);
+    log_error(format, p_arg);
     va_end(p_arg);
+}
+
+void bmx::log_error(const char *format, va_list args)
+{
+	vlog2(ERROR_LOG, 0, format, args);
 }
 
 void bmx::log_error_nl(const char *format, ...)
@@ -224,8 +245,13 @@ void bmx::log_error_nl(const char *format, ...)
     va_list p_arg;
 
     va_start(p_arg, format);
-    vlog2(ERROR_LOG, 0, format, p_arg);
+    log_error_nl(format, p_arg);
     va_end(p_arg);
+}
+
+void bmx::log_error_nl(const char *format, va_list args)
+{
+    vlog2(ERROR_LOG, 0, format, args);
 
     // add newline
     if (LOG_FILE)

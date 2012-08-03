@@ -59,6 +59,23 @@ static void usage(const char *cmd)
     fprintf(stderr, " --ebu-core <file>     Write embedded EBU Core metadata to file\n");
 }
 
+void progress_cb(float progress, EBUCore::ProgressCallbackLevel level, const char *function, const char *msg_format, ...) {
+	va_list p_arg;
+    va_start(p_arg, msg_format);
+	switch (level) {
+	case EBUCore::INFO:
+		log_info(msg_format, p_arg); return;
+	case EBUCore::DEBUG:
+	case EBUCore::TRACE:
+		log_debug(msg_format, p_arg); return;
+	case EBUCore::ERROR:
+		log_error(msg_format, p_arg); return;
+	case EBUCore::WARN:
+		log_warn(msg_format, p_arg); return;
+	};
+	va_end(p_arg);
+}
+
 int main(int argc, const char** argv)
 {
     const char *log_filename = 0;
@@ -162,7 +179,7 @@ int main(int argc, const char** argv)
     try
     {
 		if (ebucore_filename) {
-			EBUCore::ExtractEBUCoreMetadata(filenames[0], ebucore_filename, NULL);
+			EBUCore::ExtractEBUCoreMetadata(filenames[0], ebucore_filename, &progress_cb);
 		}
     }
     catch (const MXFException &ex)

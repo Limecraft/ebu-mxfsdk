@@ -74,6 +74,13 @@ void log_error(const char *format, ...);
 void log_error_nl(const char *format, ...);
 
 
+void log_debug(const char *format, va_list args);
+void log_info(const char *format, va_list args);
+void log_warn(const char *format, va_list args);
+void log_error(const char *format, va_list args);
+
+void log_error_nl(const char *format, va_list args);
+
 };
 
 
