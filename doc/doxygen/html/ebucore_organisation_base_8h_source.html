@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>EBU MXF SDK: C:/code/BMX/bmxlib-bmx/EBUCoreProcessor/include/metadata/base/ebucoreOrganisationBase.h Source File</title>
+<title>EBU MXF SDK: C:/code/BMX/ebu-bmx/EBUCoreProcessor/include/metadata/base/ebucoreOrganisationBase.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -105,7 +105,7 @@
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;   std::string getorganisationDepartment() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   ebucoreTypeGroup* getorganisationType() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;   std::vector&lt;ebucoreContactDetails*&gt; getorganisationDetails() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;   std::vector&lt;ebucoreContact*&gt; getorganisationRelatedContacts() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;   std::vector&lt;ebucoreEntity*&gt; getorganisationRelatedContacts() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;   <span class="comment">// setters</span></div>
@@ -117,8 +117,8 @@
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;   <span class="keywordtype">void</span> setorganisationType(ebucoreTypeGroup* value);</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;   <span class="keywordtype">void</span> setorganisationDetails(<span class="keyword">const</span> std::vector&lt;ebucoreContactDetails*&gt;&amp; value);</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;   <span class="keywordtype">void</span> appendorganisationDetails(ebucoreContactDetails* value);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;   <span class="keywordtype">void</span> setorganisationRelatedContacts(<span class="keyword">const</span> std::vector&lt;ebucoreContact*&gt;&amp; value);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;   <span class="keywordtype">void</span> appendorganisationRelatedContacts(ebucoreContact* value);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;   <span class="keywordtype">void</span> setorganisationRelatedContacts(<span class="keyword">const</span> std::vector&lt;ebucoreEntity*&gt;&amp; value);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;   <span class="keywordtype">void</span> appendorganisationRelatedContacts(ebucoreEntity* value);</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">protected</span>:</div>
@@ -133,7 +133,7 @@
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 26 2012 23:46:28 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 3 2012 17:12:17 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

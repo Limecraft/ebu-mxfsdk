@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>EBU MXF SDK: C:/code/BMX/bmxlib-bmx/EBUCoreProcessor/include/metadata/base/ebucoreRightsBase.h Source File</title>
+<title>EBU MXF SDK: C:/code/BMX/ebu-bmx/EBUCoreProcessor/include/metadata/base/ebucoreRightsBase.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,9 +115,9 @@
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;   <span class="keywordtype">bool</span> haveexploitationIssues() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;   std::string getexploitationIssues() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;   <span class="keywordtype">bool</span> haverightsCoverage() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;   std::vector&lt;ebucoreCoverage*&gt; getrightsCoverage() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;   ebucoreCoverage* getrightsCoverage() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;   <span class="keywordtype">bool</span> haverightsHolderEntity() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;   std::vector&lt;ebucoreEntity*&gt; getrightsHolderEntity() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;   ebucoreEntity* getrightsHolderEntity() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;   <span class="keywordtype">bool</span> haverightsContacts() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;   std::vector&lt;ebucoreContact*&gt; getrightsContacts() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;   ebucoreTypeGroup* getrightsKindGroup() <span class="keyword">const</span>;</div>
@@ -133,28 +133,26 @@
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;   <span class="keywordtype">void</span> setrightsAttributedID(std::string value);</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;   <span class="keywordtype">void</span> setrightsFormatIDRef(std::string value);</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;   <span class="keywordtype">void</span> setexploitationIssues(std::string value);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;   <span class="keywordtype">void</span> setrightsCoverage(<span class="keyword">const</span> std::vector&lt;ebucoreCoverage*&gt;&amp; value);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;   <span class="keywordtype">void</span> appendrightsCoverage(ebucoreCoverage* value);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;   <span class="keywordtype">void</span> setrightsHolderEntity(<span class="keyword">const</span> std::vector&lt;ebucoreEntity*&gt;&amp; value);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;   <span class="keywordtype">void</span> appendrightsHolderEntity(ebucoreEntity* value);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;   <span class="keywordtype">void</span> setrightsContacts(<span class="keyword">const</span> std::vector&lt;ebucoreContact*&gt;&amp; value);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;   <span class="keywordtype">void</span> appendrightsContacts(ebucoreContact* value);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;   <span class="keywordtype">void</span> setrightsKindGroup(ebucoreTypeGroup* value);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    ebucoreRightsBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;};</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;   <span class="keywordtype">void</span> setrightsCoverage(ebucoreCoverage* value);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;   <span class="keywordtype">void</span> setrightsHolderEntity(ebucoreEntity* value);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;   <span class="keywordtype">void</span> setrightsContacts(<span class="keyword">const</span> std::vector&lt;ebucoreContact*&gt;&amp; value);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;   <span class="keywordtype">void</span> appendrightsContacts(ebucoreContact* value);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;   <span class="keywordtype">void</span> setrightsKindGroup(ebucoreTypeGroup* value);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    ebucoreRightsBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;};</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}};</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}};</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 26 2012 23:46:28 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 3 2012 17:12:17 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

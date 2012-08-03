@@ -48,15 +48,15 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:afc4317c6a4e9f5c288135f647df482b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_core.html#afc4317c6a4e9f5c288135f647df482b2">EmbedEBUCoreMetadata</a> (const char *metadataLocation, const char *mxfLocation, void(*progress_callback)(float progress, std::string &amp;message, std::string &amp;function), bool optNoIdentification=false, bool optForceHeader=false)</td></tr>
-<tr class="memitem:a68e570c91bc5a1c2e29368634ad08eb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_core.html#a68e570c91bc5a1c2e29368634ad08eb8">EmbedEBUCoreMetadata</a> (xercesc::DOMDocument &amp;metadataDocument, const char *metadataLocation, const char *mxfLocation, void(*progress_callback)(float progress, std::string &amp;message, std::string &amp;function), bool optNoIdentification=false, bool optForceHeader=false)</td></tr>
-<tr class="memitem:aad77c2a76d164659730290266175d478"><td class="memItemLeft" align="right" valign="top">xercesc::DOMDocument &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_core.html#aad77c2a76d164659730290266175d478">ExtractEBUCoreMetadata</a> (const char *mxfLocation, void(*progress_callback)(float progress, std::string &amp;message, std::string &amp;function))</td></tr>
-<tr class="memitem:ae991feecf80c4761df878e7de2d5bf57"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_core.html#ae991feecf80c4761df878e7de2d5bf57">ExtractEBUCoreMetadata</a> (const char *mxfLocation, const char *metadataLocation, void(*progress_callback)(float progress, std::string &amp;message, std::string &amp;function))</td></tr>
+<tr class="memitem:ae832549b9dfe0bc44c1aae619cf58439"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_core.html#ae832549b9dfe0bc44c1aae619cf58439">EmbedEBUCoreMetadata</a> (const char *metadataLocation, const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...), bool optNoIdentification=false, bool optForceHeader=false)</td></tr>
+<tr class="memitem:a83ce85287e63d8744da33eaf7a0b5073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_core.html#a83ce85287e63d8744da33eaf7a0b5073">EmbedEBUCoreMetadata</a> (xercesc::DOMDocument &amp;metadataDocument, const char *metadataLocation, const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...), bool optNoIdentification=false, bool optForceHeader=false)</td></tr>
+<tr class="memitem:a30ede5851b0e2eeb6adb6d355e6f3f0c"><td class="memItemLeft" align="right" valign="top">xercesc::DOMDocument &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_core.html#a30ede5851b0e2eeb6adb6d355e6f3f0c">ExtractEBUCoreMetadata</a> (const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...))</td></tr>
+<tr class="memitem:ac68b00d3d88b690e0d1022c5333ab5f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_core.html#ac68b00d3d88b690e0d1022c5333ab5f4">ExtractEBUCoreMetadata</a> (const char *mxfLocation, const char *metadataLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...))</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>EBU MXF SDK main namespace for <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> functionality. </p>
 </div><h2>Function Documentation</h2>
-<a class="anchor" id="afc4317c6a4e9f5c288135f647df482b2"></a>
+<a class="anchor" id="ae832549b9dfe0bc44c1aae619cf58439"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -75,7 +75,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void(*)(float progress, std::string &amp;message, std::string &amp;function)&#160;</td>
+          <td class="paramtype">void(*)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...)&#160;</td>
           <td class="paramname"><em>progress_callback</em>, </td>
         </tr>
         <tr>
@@ -112,7 +112,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a68e570c91bc5a1c2e29368634ad08eb8"></a>
+<a class="anchor" id="a83ce85287e63d8744da33eaf7a0b5073"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -137,7 +137,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void(*)(float progress, std::string &amp;message, std::string &amp;function)&#160;</td>
+          <td class="paramtype">void(*)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...)&#160;</td>
           <td class="paramname"><em>progress_callback</em>, </td>
         </tr>
         <tr>
@@ -176,12 +176,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aad77c2a76d164659730290266175d478"></a>
+<a class="anchor" id="a30ede5851b0e2eeb6adb6d355e6f3f0c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">xercesc::DOMDocument&amp; EBUCore::ExtractEBUCoreMetadata </td>
+          <td class="memname">xercesc::DOMDocument &amp; EBUCore::ExtractEBUCoreMetadata </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>mxfLocation</em>, </td>
@@ -189,7 +189,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void(*)(float progress, std::string &amp;message, std::string &amp;function)&#160;</td>
+          <td class="paramtype">void(*)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...)&#160;</td>
           <td class="paramname"><em>progress_callback</em>&#160;</td>
         </tr>
         <tr>
@@ -212,7 +212,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae991feecf80c4761df878e7de2d5bf57"></a>
+<a class="anchor" id="ac68b00d3d88b690e0d1022c5333ab5f4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -231,7 +231,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void(*)(float progress, std::string &amp;message, std::string &amp;function)&#160;</td>
+          <td class="paramtype">void(*)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...)&#160;</td>
           <td class="paramname"><em>progress_callback</em>&#160;</td>
         </tr>
         <tr>
@@ -257,7 +257,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 26 2012 23:46:28 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 3 2012 17:12:17 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

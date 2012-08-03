@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>EBU MXF SDK: C:/code/BMX/bmxlib-bmx/EBUCoreProcessor/include/EBUCoreProcessor.h Source File</title>
+<title>EBU MXF SDK: C:/code/BMX/ebu-bmx/EBUCoreProcessor/include/EBUCoreProcessor.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -51,7 +51,7 @@
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        mxfpp::Identification* GenerateEBUCoreIdentificationSet(mxfpp::HeaderMetadata *destination);</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        mxfpp::DMFramework* Process(<span class="keyword">const</span> <span class="keywordtype">char</span>* location, mxfpp::HeaderMetadata *destination, mxfpp::Identification *identificationToAppend = NULL);</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keywordtype">void</span> ReadAndSerializeEBUCore(mxfpp::HeaderMetadata *file_reader, <span class="keyword">const</span> <span class="keywordtype">char</span>* outputfilename);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keywordtype">void</span> FindAndSerializeEBUCore(mxfpp::HeaderMetadata *metadata, <span class="keyword">const</span> <span class="keywordtype">char</span>* outputfilename);</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keywordtype">void</span> RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model);</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keywordtype">void</span> RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata);</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keywordtype">void</span> InsertEBUCoreFramework(mxfpp::HeaderMetadata *header_metadata, mxfpp::DMFramework *framework, mxfpp::Identification *identificationToAppend = NULL);</div>
@@ -62,32 +62,41 @@
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        int64_t FindLastPartitionFill(mxfpp::File* mFile, mxfpp::Partition* partition, int64_t* partitionSectionOffset, int64_t *extractedFileSize = NULL);</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordtype">void</span> ShiftBytesInFile(mxfpp::File* mFile, int64_t shiftPosition, int64_t shiftOffset);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_core.html#afc4317c6a4e9f5c288135f647df482b2">EmbedEBUCoreMetadata</a>(      <span class="keyword">const</span> <span class="keywordtype">char</span>* metadataLocation, </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation, </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                                                        <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, std::string&amp; message, std::string&amp; <span class="keyword">function</span>),</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                                                        <span class="keywordtype">bool</span> optNoIdentification = <span class="keyword">false</span>, <span class="keywordtype">bool</span> optForceHeader = <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_core.html#afc4317c6a4e9f5c288135f647df482b2">EmbedEBUCoreMetadata</a>(      xercesc::DOMDocument&amp; metadataDocument, </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* metadataLocation,</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation, </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                                                        <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, std::string&amp; message, std::string&amp; <span class="keyword">function</span>),</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                                                        <span class="keywordtype">bool</span> optNoIdentification = <span class="keyword">false</span>, <span class="keywordtype">bool</span> optForceHeader = <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        xercesc::DOMDocument&amp; <a class="code" href="namespace_e_b_u_core.html#aad77c2a76d164659730290266175d478">ExtractEBUCoreMetadata</a>(</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation,</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                                                        <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, std::string&amp; message, std::string&amp; <span class="keyword">function</span>));</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_core.html#aad77c2a76d164659730290266175d478">ExtractEBUCoreMetadata</a>(</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation,</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* metadataLocation,</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                                                        <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, std::string&amp; message, std::string&amp; <span class="keyword">function</span>));</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;}</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">enum</span> ProgressCallbackLevel {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                FATAL,</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                ERROR,</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                WARN,</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                INFO,</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                DEBUG,</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                TRACE</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        };</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_core.html#ae832549b9dfe0bc44c1aae619cf58439">EmbedEBUCoreMetadata</a>(      <span class="keyword">const</span> <span class="keywordtype">char</span>* metadataLocation, </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation, </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                                                        <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, ProgressCallbackLevel level, <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">function</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg_format, ...),</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                                                        <span class="keywordtype">bool</span> optNoIdentification = <span class="keyword">false</span>, <span class="keywordtype">bool</span> optForceHeader = <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_core.html#ae832549b9dfe0bc44c1aae619cf58439">EmbedEBUCoreMetadata</a>(      xercesc::DOMDocument&amp; metadataDocument, </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* metadataLocation,</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation, </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                                                        <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, ProgressCallbackLevel level, <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">function</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg_format, ...),</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                                                        <span class="keywordtype">bool</span> optNoIdentification = <span class="keyword">false</span>, <span class="keywordtype">bool</span> optForceHeader = <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        xercesc::DOMDocument&amp; <a class="code" href="namespace_e_b_u_core.html#a30ede5851b0e2eeb6adb6d355e6f3f0c">ExtractEBUCoreMetadata</a>(</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation,</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                                                        <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, ProgressCallbackLevel level, <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">function</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg_format, ...));</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_core.html#a30ede5851b0e2eeb6adb6d355e6f3f0c">ExtractEBUCoreMetadata</a>(</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation,</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* metadataLocation,</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                                                        <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, ProgressCallbackLevel level, <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">function</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg_format, ...));</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 26 2012 23:46:28 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 3 2012 17:12:17 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>
