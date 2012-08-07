@@ -184,7 +184,7 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 		// ///////////
 
 		if (!mFile->readPartitions())
-			log_warn("Failed to read all partitions. File may be incomplete or invalid\n");
+			throw BMXException("Failed to read all partitions. File may be incomplete or invalid");
 
 	    const std::vector<Partition*> &partitions = mFile->getPartitions();
 
@@ -194,11 +194,15 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 				is repeated in the footer, it is likely to be more up-to-date than
 				that in the header.																*/
 		// ///////////
+		progress_callback(0.25, ProgressCallbackLevel::INFO, "EmbedEBUCoreMetadata", "Locating preferred MXF metadata");
+
 	    Partition *metadata_partition = NULL, *headerPartition = NULL, *footerPartition = NULL;
 
 		metadata_partition = FindPreferredMetadataPartition(partitions, &headerPartition, &footerPartition);
 		if (!metadata_partition)
-			THROW_RESULT(MXFFileReader::MXF_RESULT_NO_HEADER_METADATA);
+			throw BMXException("No MXF suitable MXF metadata found");
+
+		progress_callback(0.3, ProgressCallbackLevel::INFO, "EmbedEBUCoreMetadata", "Reading and parsing MXF metadata");
 
 		mxfKey key;
 		uint8_t llen;
@@ -219,6 +223,8 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 		// ///////////////////////////////////////
 		// / 2. Insert the EBU Core object tree into the header metadata
 		// ///////////
+		progress_callback(0.4, ProgressCallbackLevel::INFO, "EmbedEBUCoreMetadata", "Embedding EBUCore metadata in MXF metadata");
+
 		Identification* id = EBUCore::GenerateEBUCoreIdentificationSet(&*mHeaderMetadata);
 		DMFramework *framework = EBUCore::Process(metadata, metadataLocation, &*mHeaderMetadata, id);
 		EBUCore::InsertEBUCoreFramework(&*mHeaderMetadata, framework, id);
@@ -229,6 +235,8 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 		// ///////////
 		if (!optForceHeader) {
 
+			progress_callback(0.5, ProgressCallbackLevel::INFO, "EmbedEBUCoreMetadata", "Writing new metadata into footer partition");
+
 			// What does the footer partition look like? Are there index entries to move around?
 			uint32_t index_length = 0;
 			bmx::ByteArray index_bytes(index_length);
@@ -237,11 +245,17 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 			uint64_t headerMetadataSize = EBUCore::WriteMetadataToFile(&*mFile, &*mHeaderMetadata, pos_start_metadata, pos_write_start_metadata, false, footerPartition, metadata_partition);
 
 			if (index_length > 0) {
+				progress_callback(0.75, ProgressCallbackLevel::DEBUG, "EmbedEBUCoreMetadata", "Rewritng footer partition index entries");
+
 				// write the index tables back to the footer partition
 				mFile->write(index_bytes.GetBytes(), index_bytes.GetSize());
 			}
 
+			progress_callback(0.8, ProgressCallbackLevel::INFO, "EmbedEBUCoreMetadata", "Rewriting file Random Index Pack");
+
 			mFile->writeRIP();
+
+			progress_callback(0.9, ProgressCallbackLevel::INFO, "EmbedEBUCoreMetadata", "Updating partition packs");
 
 			// seek backwards and update footer partition pack
 			footerPartition->setHeaderByteCount(/*footerPartition->getHeaderByteCount() + */ headerMetadataSize); // Add dark metadata elements to file
@@ -281,14 +295,19 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 			// / (This could become necessary when generated MXF files need 
 			// / to be natively supported by playout/hardware-constrained machines)
 			// ///////////
+			progress_callback(0.5, ProgressCallbackLevel::INFO, "EmbedEBUCoreMetadata", "Forcing new metadata into header partition, shifting bytes where necessary");
 
 			uint64_t oriMetadataSize = headerPartition->getHeaderByteCount();
 
 			// Write metadata to the header partition, forcing a file bytes shift if required (likely)
 			uint64_t headerMetadataSize = EBUCore::WriteMetadataToFile(&*mFile, &*mHeaderMetadata, pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition);
-				
+
 			uint64_t fileOffset = headerMetadataSize - oriMetadataSize;
 
+			progress_callback(0.8, ProgressCallbackLevel::INFO, "EmbedEBUCoreMetadata", "Shifted file bytes after header partition by %"PRId64" bytes", fileOffset);
+
+			progress_callback(0.81, ProgressCallbackLevel::INFO, "EmbedEBUCoreMetadata", "Updating partition pack offsets");
+			
 			// In this case, there's no further need for shifting the index bytes (been done already)
 			// What we do have to do is update each of the partition packs with an updated offset
 			uint64_t prevPartition = 0;
@@ -310,6 +329,8 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 			// Finish by re-writing the rip.
 			// To be safe, we will overwrite the entire RIP of the previous file, 
 			// by extending the filler if present, or by adding a new filler up until the next KAG.
+
+			progress_callback(0.9, ProgressCallbackLevel::INFO, "EmbedEBUCoreMetadata", "Rewriting file Random Index Pack");
 
 			// find the offset in the footer partition from which the header and index starts
 			int64_t eof, partitionSectionOffset;

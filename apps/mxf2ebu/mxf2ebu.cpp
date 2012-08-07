@@ -60,20 +60,28 @@ static void usage(const char *cmd)
 }
 
 void progress_cb(float progress, EBUCore::ProgressCallbackLevel level, const char *function, const char *msg_format, ...) {
+	// append a newline to the msg_format string
+	int len = strlen(msg_format);
+	char* newline_msg_format =(char*)malloc((len+2) * sizeof(char));
+	strncpy(newline_msg_format, msg_format, len); newline_msg_format[len] = 0;
+	strncat(newline_msg_format, "\n", 1);
+
 	va_list p_arg;
     va_start(p_arg, msg_format);
 	switch (level) {
 	case EBUCore::INFO:
-		log_info(msg_format, p_arg); return;
+		log_info(newline_msg_format, p_arg); return;
 	case EBUCore::DEBUG:
 	case EBUCore::TRACE:
-		log_debug(msg_format, p_arg); return;
+		log_debug(newline_msg_format, p_arg); return;
 	case EBUCore::ERROR:
-		log_error(msg_format, p_arg); return;
+		log_error(newline_msg_format, p_arg); return;
 	case EBUCore::WARN:
-		log_warn(msg_format, p_arg); return;
+		log_warn(newline_msg_format, p_arg); return;
 	};
 	va_end(p_arg);
+
+	free(newline_msg_format);
 }
 
 int main(int argc, const char** argv)
