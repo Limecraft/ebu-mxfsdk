@@ -780,6 +780,8 @@ std::auto_ptr<ebuCoreMainType> ExtractEBUCoreMetadataXSD(
 							const char* mxfLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...)) {
 
+	progress_callback(0.2, ProgressCallbackLevel::INFO, "ExtractEBUCoreMetadata", "Opening MXF file %s", mxfLocation);
+
 	std::auto_ptr<File> mFile( File::openRead(mxfLocation) );	// throws MXFException if open failed!
 
 	std::auto_ptr<DataModel> mDataModel ( new DataModel() );
@@ -790,7 +792,7 @@ std::auto_ptr<ebuCoreMainType> ExtractEBUCoreMetadataXSD(
 	// ///////////
 
 	if (!mFile->readPartitions())
-		log_warn("Failed to read all partitions. File may be incomplete or invalid\n");
+		throw BMXException("Failed to read all partitions. File may be incomplete or invalid");
 
 	const std::vector<Partition*> &partitions = mFile->getPartitions();
 
@@ -800,11 +802,15 @@ std::auto_ptr<ebuCoreMainType> ExtractEBUCoreMetadataXSD(
 			is repeated in the footer, it is likely to be more up-to-date than
 			that in the header.																*/
 	// ///////////
+	progress_callback(0.25, ProgressCallbackLevel::INFO, "ExtractEBUCoreMetadata", "Locating preferred MXF metadata");
+
 	Partition *metadata_partition = NULL, *headerPartition = NULL, *footerPartition = NULL;
 
 	metadata_partition = FindPreferredMetadataPartition(partitions, &headerPartition, &footerPartition);
 	if (!metadata_partition)
-		THROW_RESULT(MXFFileReader::MXF_RESULT_NO_HEADER_METADATA);
+		throw BMXException("No MXF suitable MXF metadata found");
+
+	progress_callback(0.5, ProgressCallbackLevel::INFO, "ExtractEBUCoreMetadata", "Reading and parsing MXF metadata");
 
 	std::auto_ptr<HeaderMetadata> mHeaderMetadata ( new HeaderMetadata(&*mDataModel) );
 
@@ -819,6 +825,8 @@ std::auto_ptr<ebuCoreMainType> ExtractEBUCoreMetadataXSD(
 	// ///////////////////////////////////////
 	// / 2. Locate the EBUCore metadata in the MXF header metadata and serialize it to 
 	// ///////////
+	progress_callback(0.75, ProgressCallbackLevel::INFO, "ExtractEBUCoreMetadata", "Locating and extracting EBUCore KLV metadata");
+
 	EBUCore::RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
 	std::auto_ptr<ebuCoreMainType> p( FindAndSerializeEBUCore(&*mHeaderMetadata) );
 
@@ -836,6 +844,8 @@ xercesc::DOMDocument& ExtractEBUCoreMetadata(
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...)) {
 
 	std::auto_ptr<ebuCoreMainType> p = ExtractEBUCoreMetadataXSD(mxfLocation, progress_callback);
+
+	progress_callback(0.9, ProgressCallbackLevel::INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to output Xerces-C DOM Document");
 
 	xml_schema::namespace_infomap map;
 	map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";
@@ -858,7 +868,7 @@ void ExtractEBUCoreMetadata(const char* mxfLocation,
 	map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";
 	map["dc"].name = "http://purl.org/dc/elements/1.1/";
 
-	progress_callback(0.9, INFO, NULL, "Writing metadata to XML file at %s\n", metadataLocation);
+	progress_callback(0.9, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to XML file at %s\n", metadataLocation);
 
 	ebuCoreMain (out, *p, map);
 	out.close();
