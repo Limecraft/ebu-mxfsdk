@@ -172,192 +172,178 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
 							bool optNoIdentification, bool optForceHeader) {
 
-        //MXFReader *reader;
-        MXFFileReader *file_reader = 0;
+		progress_callback(0.2, ProgressCallbackLevel::INFO, "EmbedEBUCoreMetadata", "Opening MXF file %s", mxfLocation);
 
-        file_reader = new MXFFileReader();
-		EBUCore::RegisterMetadataExtensionsforEBUCore(file_reader->GetDataModel());
+		std::auto_ptr<File> mFile( File::openModify(mxfLocation) );	// throws MXFException if open failed!
 
-		MXFFileReader::OpenResult result;
-		MXFFile *mxf_file;
-		if (MXF_OPEN_MODIFY(mxfLocation, &mxf_file)) {
+		std::auto_ptr<DataModel> mDataModel ( new DataModel() );
+		EBUCore::RegisterMetadataExtensionsforEBUCore(&*mDataModel);
 
-			File *mFile = new File(mxf_file);
-			DataModel *mDataModel = new DataModel();
-			EBUCore::RegisterMetadataExtensionsforEBUCore(mDataModel);
+		// ///////////////////////////////////////
+		// / 1. Open MXF File and locate all partitions, using the RIP
+		// ///////////
 
-			// ///////////////////////////////////////
-		    // / 1. Open MXF File and locate all partitions, using the RIP
-			// ///////////
+		if (!mFile->readPartitions())
+			log_warn("Failed to read all partitions. File may be incomplete or invalid\n");
 
-			if (!mFile->readPartitions())
-				log_warn("Failed to read all partitions. File may be incomplete or invalid\n");
+	    const std::vector<Partition*> &partitions = mFile->getPartitions();
 
-	        const std::vector<Partition*> &partitions = mFile->getPartitions();
+		// ///////////////////////////////////////
+	    // / 1a. Locate the Metadata to use for extension
+		/*		We prefer closed footer metadata when available (if the metadata 
+				is repeated in the footer, it is likely to be more up-to-date than
+				that in the header.																*/
+		// ///////////
+	    Partition *metadata_partition = NULL, *headerPartition = NULL, *footerPartition = NULL;
 
-			// ///////////////////////////////////////
-	        // / 1a. Locate the Metadata to use for extension
-			/*		We prefer closed footer metadata when available (if the metadata 
-					is repeated in the footer, it is likely to be more up-to-date than
-					that in the header.																*/
-		    // ///////////
-	        Partition *metadata_partition = NULL, *headerPartition = NULL, *footerPartition = NULL;
+		metadata_partition = FindPreferredMetadataPartition(partitions, &headerPartition, &footerPartition);
+		if (!metadata_partition)
+			THROW_RESULT(MXFFileReader::MXF_RESULT_NO_HEADER_METADATA);
 
-			metadata_partition = FindPreferredMetadataPartition(partitions, &headerPartition, &footerPartition);
-			if (!metadata_partition)
-				THROW_RESULT(MXFFileReader::MXF_RESULT_NO_HEADER_METADATA);
+		mxfKey key;
+		uint8_t llen;
+		uint64_t len;
 
-			mxfKey key;
-			uint8_t llen;
-			uint64_t len;
+		std::auto_ptr<HeaderMetadata> mHeaderMetadata ( new HeaderMetadata(&*mDataModel) );
 
-			HeaderMetadata *mHeaderMetadata = new HeaderMetadata(mDataModel);
+		mFile->seek(metadata_partition->getThisPartition(), SEEK_SET);
+		mFile->readKL(&key, &llen, &len);
+		mFile->skip(len);
+		mFile->readNextNonFillerKL(&key, &llen, &len);
+		BMX_CHECK(mxf_is_header_metadata(&key));
+		uint64_t pos_start_metadata =  mFile->tell() - mxfKey_extlen - llen;
+		mHeaderMetadata->read(&*mFile, metadata_partition, &key, llen, len);
 
-			mFile->seek(metadata_partition->getThisPartition(), SEEK_SET);
-			mFile->readKL(&key, &llen, &len);
-			mFile->skip(len);
-			mFile->readNextNonFillerKL(&key, &llen, &len);
-			BMX_CHECK(mxf_is_header_metadata(&key));
-			uint64_t pos_start_metadata =  mFile->tell() - mxfKey_extlen - llen;
-			mHeaderMetadata->read(mFile, metadata_partition, &key, llen, len);
+		uint64_t metadata_original_len_with_fill = metadata_partition->getHeaderByteCount();
 
-			uint64_t metadata_original_len_with_fill = metadata_partition->getHeaderByteCount();
+		// ///////////////////////////////////////
+		// / 2. Insert the EBU Core object tree into the header metadata
+		// ///////////
+		Identification* id = EBUCore::GenerateEBUCoreIdentificationSet(&*mHeaderMetadata);
+		DMFramework *framework = EBUCore::Process(metadata, metadataLocation, &*mHeaderMetadata, id);
+		EBUCore::InsertEBUCoreFramework(&*mHeaderMetadata, framework, id);
 
-			// ///////////////////////////////////////
-			// / 2. Insert the EBU Core object tree into the header metadata
-			// ///////////
-			Identification* id = EBUCore::GenerateEBUCoreIdentificationSet(mHeaderMetadata);
-			DMFramework *framework = EBUCore::Process(metadata, metadataLocation, mHeaderMetadata, id);
-			EBUCore::InsertEBUCoreFramework(mHeaderMetadata, framework, id);
+		// ///////////////////////////////////////
+		// / 2. In order to avoid rewriting large portions of the file, we append our metadata
+		// / to that of the footer partition (if already present, and new otherwise)
+		// ///////////
+		if (!optForceHeader) {
 
-			// ///////////////////////////////////////
-			// / 2. In order to avoid rewriting large portions of the file, we append our metadata
-			// / to that of the footer partition (if already present, and new otherwise)
-			// ///////////
-			if (!optForceHeader) {
+			// What does the footer partition look like? Are there index entries to move around?
+			uint32_t index_length = 0;
+			bmx::ByteArray index_bytes(index_length);
+			uint64_t pos_write_start_metadata = EBUCore::BufferIndex(&*mFile, footerPartition, index_bytes, &index_length);
 
-				// What does the footer partition look like? Are there index entries to move around?
-				uint32_t index_length = 0;
-				bmx::ByteArray index_bytes(index_length);
-				uint64_t pos_write_start_metadata = EBUCore::BufferIndex(mFile, footerPartition, index_bytes, &index_length);
+			uint64_t headerMetadataSize = EBUCore::WriteMetadataToFile(&*mFile, &*mHeaderMetadata, pos_start_metadata, pos_write_start_metadata, false, footerPartition, metadata_partition);
 
-				uint64_t headerMetadataSize = EBUCore::WriteMetadataToFile(mFile, mHeaderMetadata, pos_start_metadata, pos_write_start_metadata, false, footerPartition, metadata_partition);
-
-				if (index_length > 0) {
-					// write the index tables back to the footer partition
-					mFile->write(index_bytes.GetBytes(), index_bytes.GetSize());
-				}
-
-				mFile->writeRIP();
-
-				// seek backwards and update footer partition pack
-				footerPartition->setHeaderByteCount(/*footerPartition->getHeaderByteCount() + */ headerMetadataSize); // Add dark metadata elements to file
-				mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
-				footerPartition->write(mFile);
-
-				// ///////////////////////////////////////
-				// / 3. In case of in-place updates: properly update partition packs...
-				/*		Header partition:
-							Open -> Open (If the metadata in the header was open, leave open, there's more to come in the footer)
-							Closed -> Open (Open closed metadata, the header metadata may no longer be used)
-						Body partition:
-							No metadata: Leave as is, there's no metadata to be found anyway
-							Open -> Open (Leave as is, more to come later)
-							Closed -> Open (Indicate that this is no longer a verbatim repitition of the header metadata)
-						Footer partition:
-							-> Open (if all other partitions were open, we append our EBU Core metadata and leave the partition/file open)
-							-> Closed (in other cases, this will contain the finalized (with EBU Core) metadata)
-							No metadata: Use metadata from the header partition as final and insert in this partition
-				*/
-				// ///////////
-				for (size_t i = 0 ; i < partitions.size()-1; i++) {	// rewrite for all but the footer partition
-					Partition *p = partitions[i];
-					if (mxf_is_header_partition_pack(p->getKey())) {
-						p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Header) : &MXF_PP_K(OpenIncomplete, Header) );
-					}
-					else if (mxf_is_body_partition_pack(p->getKey())) {
-						p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Body) : &MXF_PP_K(OpenIncomplete, Body) );
-					} 
-					mFile->seek(p->getThisPartition(), SEEK_SET);
-					p->write(mFile);
-				}
-
-			} else {
-				// ///////////////////////////////////////
-				// / 2a. Provide an override where the file is rewritten to accomodate updated metadata in the header partition?
-				// / (This could become necessary when generated MXF files need 
-				// / to be natively supported by playout/hardware-constrained machines)
-				// ///////////
-
-				uint64_t oriMetadataSize = headerPartition->getHeaderByteCount();
-
-				// Write metadata to the header partition, forcing a file bytes shift if required (likely)
-				uint64_t headerMetadataSize = EBUCore::WriteMetadataToFile(mFile, mHeaderMetadata, pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition);
-				
-				uint64_t fileOffset = headerMetadataSize - oriMetadataSize;
-
-				// In this case, there's no further need for shifting the index bytes (been done already)
-				// What we do have to do is update each of the partition packs with an updated offset
-				uint64_t prevPartition = 0;
-				for (size_t i = 0 ; i < partitions.size(); i++) {
-					Partition *p = partitions[i];
-					if (!mxf_is_header_partition_pack(p->getKey())) {
-						p->setThisPartition(p->getThisPartition() + fileOffset);
-						p->setPreviousPartition(prevPartition);
-					} else if (mxf_is_header_partition_pack(p->getKey())) {
-						// make sure this is updated also
-						p->setHeaderByteCount(headerMetadataSize);
-					}
-					p->setFooterPartition(p->getFooterPartition() + fileOffset);
-					mFile->seek(p->getThisPartition(), SEEK_SET);
-					p->write(mFile);
-					prevPartition = p->getThisPartition();
-				}
-
-				// Finish by re-writing the rip.
-				// To be safe, we will overwrite the entire RIP of the previous file, 
-				// by extending the filler if present, or by adding a new filler up until the next KAG.
-
-				// find the offset in the footer partition from which the header and index starts
-				int64_t eof, partitionSectionOffset;
-				int64_t fillerWritePosition = EBUCore::FindLastPartitionFill(mFile, footerPartition, &partitionSectionOffset, &eof);
-
-				// write the filler to the next KAG after the end of the file
-				mFile->seek(fillerWritePosition, SEEK_SET);
-				footerPartition->allocateSpaceToKag(mFile, eof - fillerWritePosition);
-
-				if (footerPartition->getIndexByteCount() > 0)
-					footerPartition->setIndexByteCount(mFile->tell() - partitionSectionOffset);
-				else if (footerPartition->getHeaderByteCount() > 0)
-					footerPartition->setHeaderByteCount(mFile->tell() - partitionSectionOffset);
-
-				mFile->writeRIP();
-
-				mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
-				footerPartition->write(mFile);
+			if (index_length > 0) {
+				// write the index tables back to the footer partition
+				mFile->write(index_bytes.GetBytes(), index_bytes.GetSize());
 			}
-			
-			result = MXFFileReader::MXF_RESULT_SUCCESS;
-		} else {
-			result = MXFFileReader::MXF_RESULT_OPEN_FAIL;
-		}
-		if (result != MXFFileReader::MXF_RESULT_SUCCESS) {
-			log_error("Failed to open MXF file '%s': %s\n", mxfLocation, MXFFileReader::ResultToString(result).c_str());
-			delete file_reader;
-			throw false;
-		}
-        //reader = file_reader;
 
-        // clean-up
-        delete file_reader;	
+			mFile->writeRIP();
+
+			// seek backwards and update footer partition pack
+			footerPartition->setHeaderByteCount(/*footerPartition->getHeaderByteCount() + */ headerMetadataSize); // Add dark metadata elements to file
+			mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
+			footerPartition->write(&*mFile);
+
+			// ///////////////////////////////////////
+			// / 3. In case of in-place updates: properly update partition packs...
+			/*		Header partition:
+						Open -> Open (If the metadata in the header was open, leave open, there's more to come in the footer)
+						Closed -> Open (Open closed metadata, the header metadata may no longer be used)
+					Body partition:
+						No metadata: Leave as is, there's no metadata to be found anyway
+						Open -> Open (Leave as is, more to come later)
+						Closed -> Open (Indicate that this is no longer a verbatim repitition of the header metadata)
+					Footer partition:
+						-> Open (if all other partitions were open, we append our EBU Core metadata and leave the partition/file open)
+						-> Closed (in other cases, this will contain the finalized (with EBU Core) metadata)
+						No metadata: Use metadata from the header partition as final and insert in this partition
+			*/
+			// ///////////
+			for (size_t i = 0 ; i < partitions.size()-1; i++) {	// rewrite for all but the footer partition
+				Partition *p = partitions[i];
+				if (mxf_is_header_partition_pack(p->getKey())) {
+					p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Header) : &MXF_PP_K(OpenIncomplete, Header) );
+				}
+				else if (mxf_is_body_partition_pack(p->getKey())) {
+					p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Body) : &MXF_PP_K(OpenIncomplete, Body) );
+				} 
+				mFile->seek(p->getThisPartition(), SEEK_SET);
+				p->write(&*mFile);
+			}
+
+		} else {
+			// ///////////////////////////////////////
+			// / 2a. Provide an override where the file is rewritten to accomodate updated metadata in the header partition?
+			// / (This could become necessary when generated MXF files need 
+			// / to be natively supported by playout/hardware-constrained machines)
+			// ///////////
+
+			uint64_t oriMetadataSize = headerPartition->getHeaderByteCount();
+
+			// Write metadata to the header partition, forcing a file bytes shift if required (likely)
+			uint64_t headerMetadataSize = EBUCore::WriteMetadataToFile(&*mFile, &*mHeaderMetadata, pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition);
+				
+			uint64_t fileOffset = headerMetadataSize - oriMetadataSize;
+
+			// In this case, there's no further need for shifting the index bytes (been done already)
+			// What we do have to do is update each of the partition packs with an updated offset
+			uint64_t prevPartition = 0;
+			for (size_t i = 0 ; i < partitions.size(); i++) {
+				Partition *p = partitions[i];
+				if (!mxf_is_header_partition_pack(p->getKey())) {
+					p->setThisPartition(p->getThisPartition() + fileOffset);
+					p->setPreviousPartition(prevPartition);
+				} else if (mxf_is_header_partition_pack(p->getKey())) {
+					// make sure this is updated also
+					p->setHeaderByteCount(headerMetadataSize);
+				}
+				p->setFooterPartition(p->getFooterPartition() + fileOffset);
+				mFile->seek(p->getThisPartition(), SEEK_SET);
+				p->write(&*mFile);
+				prevPartition = p->getThisPartition();
+			}
+
+			// Finish by re-writing the rip.
+			// To be safe, we will overwrite the entire RIP of the previous file, 
+			// by extending the filler if present, or by adding a new filler up until the next KAG.
+
+			// find the offset in the footer partition from which the header and index starts
+			int64_t eof, partitionSectionOffset;
+			int64_t fillerWritePosition = EBUCore::FindLastPartitionFill(&*mFile, footerPartition, &partitionSectionOffset, &eof);
+
+			// write the filler to the next KAG after the end of the file
+			mFile->seek(fillerWritePosition, SEEK_SET);
+			footerPartition->allocateSpaceToKag(&*mFile, eof - fillerWritePosition);
+
+			if (footerPartition->getIndexByteCount() > 0)
+				footerPartition->setIndexByteCount(mFile->tell() - partitionSectionOffset);
+			else if (footerPartition->getHeaderByteCount() > 0)
+				footerPartition->setHeaderByteCount(mFile->tell() - partitionSectionOffset);
+
+			mFile->writeRIP();
+
+			mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
+			footerPartition->write(&*mFile);
+		}
+
+        // clean-up through auto_ptr destruction
 }
 
 void EmbedEBUCoreMetadata(	const char* metadataLocation, 
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
 							bool optNoIdentification, bool optForceHeader) {
+
+	progress_callback(0.1, ProgressCallbackLevel::INFO, "EmbedEBUCoreMetadata", "Reading EBUCore XML document from file %s", metadataLocation);
+
 	std::ifstream input(metadataLocation);
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
+	input.close();
+
 	EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, optNoIdentification, optForceHeader);	
 }
 
