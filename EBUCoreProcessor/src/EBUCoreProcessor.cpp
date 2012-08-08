@@ -414,7 +414,7 @@ uint64_t BufferIndex(File* mFile, Partition* partition, bmx::ByteArray& index_by
 	return pos_write_start_metadata;
 }
 
-uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, Partition* metadataDestitionPartition, Partition* metadataSourcePartition) {
+uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, Partition* metadataDestitionPartition, Partition* metadataSourcePartition) {
 	mxfKey key;
 	uint8_t llen;
 	uint64_t len;
@@ -425,7 +425,7 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 	// we write the metadata to a buffer memory file first, 
 	// write 1) the in-mem metadata structure, 2) then dark/unknown sets
 	MXFMemoryFile *cMemFile;
-	mxf_mem_file_open_new(MEMORY_WRITE_CHUNK_SIZE, /* virtual pos: don't use an offset unless req, otherwise confusing */ 0, &cMemFile);
+	mxf_mem_file_open_new(MEMORY_WRITE_CHUNK_SIZE, /* virtual pos: use the write position offset such that the KAG can be correctly calculated */ metadata_write_position, &cMemFile);
 	MXFFile *mxfMemFile = mxf_mem_file_get_file(cMemFile);
 	// temporarily wrap the the memory file for use by the libMXF++ classe
 	File memFile(mxfMemFile);
@@ -474,8 +474,8 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 	// fill the appended metadata up to the KAG
 	reserve_filler_writer.write(&memFile);
 
-	// how many bytes have we written to the memoryfile?
-	uint64_t memFileSize = mxf_file_tell(mxfMemFile);
+	// how many bytes have we written to the memoryfile? subtract the virtual metadata_write_position offset!
+	uint64_t memFileSize = mxf_file_tell(mxfMemFile) - metadata_write_position;
 
 	// set output
 	*destMemFile = cMemFile;
@@ -493,7 +493,7 @@ uint64_t WriteMetadataToFile(File* mFile, HeaderMetadata *mHeaderMetadata, uint6
 	uint64_t oriMetadataSize = metadataSourcePartition->getHeaderByteCount();
 
 	// how many bytes have we written to the memoryfile?
-	uint64_t memFileSize = WriteMetadataToMemoryFile(mFile, &cMemFile, mHeaderMetadata, metadata_read_position, metadataDestitionPartition, metadataSourcePartition);
+	uint64_t memFileSize = WriteMetadataToMemoryFile(mFile, &cMemFile, mHeaderMetadata, metadata_read_position, metadata_write_position, metadataDestitionPartition, metadataSourcePartition);
 
 	// shift if required
 	if (shiftFileBytesIfNeeded && memFileSize > oriMetadataSize) {
