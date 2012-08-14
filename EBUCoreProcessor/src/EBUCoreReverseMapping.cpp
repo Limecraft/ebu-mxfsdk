@@ -44,8 +44,8 @@ namespace EBUCore {
 	}
 
 #define NEW_VECTOR_AND_RASSIGN_CARGS_PREFIXCODE(source, sourceProperty, destType, destSequenceType, vectorType, mapMethod, dest, destProperty, prefixCode, ctrArgs)	\
-	{ destSequenceType vec_##dest##destProperty; vectorType& vec_##source##sourceProperty = source->sourceProperty(); \
-	for (vectorType::iterator it = vec_##source##sourceProperty.begin(); it != vec_##source##sourceProperty.end(); it++) { \
+	{ destSequenceType vec_##dest##destProperty; const vectorType& vec_##source##sourceProperty = source->sourceProperty(); \
+	for (vectorType::const_iterator it = vec_##source##sourceProperty.begin(); it != vec_##source##sourceProperty.end(); it++) { \
 		prefixCode; \
 		std::auto_ptr<destType> p( new destType(ctrArgs) ); \
 		mapMethod(*it, *p); \
@@ -623,8 +623,8 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 	// a ratingTypes requires a number of values directly in their constructor,
 	// so we need something a little different
 	coreMetadataType::rating_sequence vec_ratings;
-	std::vector<ebucoreRating*>& vec_src_ratings = source->getrating();
-	for (std::vector<ebucoreRating*>::iterator it = vec_src_ratings.begin(); it != vec_src_ratings.end(); it++) {
+	const std::vector<ebucoreRating*>& vec_src_ratings = source->getrating();
+	for (std::vector<ebucoreRating*>::const_iterator it = vec_src_ratings.begin(); it != vec_src_ratings.end(); it++) {
 		vec_ratings.push_back(mapRating(*it));
 	}
 	dest.rating(vec_ratings);

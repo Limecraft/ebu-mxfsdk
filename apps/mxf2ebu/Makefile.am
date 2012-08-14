@@ -1,8 +1,8 @@
 bin_PROGRAMS = mxf2ebu
 
-ebu2mxf_SOURCES = mxf2ebu.cpp
+mxf2ebu_SOURCES = mxf2ebu.cpp
 
-ebu2mxf_CXXFLAGS = $(BMX_CFLAGS)
-ebu2mxf_LDADD = $(BMX_LDADDLIBS)
+mxf2ebu_CXXFLAGS = $(BMX_CFLAGS)
+mxf2ebu_LDADD = $(BMX_LDADDLIBS)
 
 
