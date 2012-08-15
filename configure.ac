@@ -254,6 +254,7 @@ AC_CONFIG_FILES([
 	apps/raw2bmx/Makefile
 	apps/bmxtranswrap/Makefile
 	apps/ebu2mxf/Makefile
+	apps/mxf2ebu/Makefile
 	tools/Makefile
 	msvc_build/Makefile
 	msvc_build/vs8/Makefile
