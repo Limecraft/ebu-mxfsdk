@@ -59,7 +59,7 @@ public:
    std::string getorganisationName() const;
    std::string getorganisationCode() const;
    bool haveorganisationDepartment() const;
-   std::string getorganisationDepartment() const;
+   ebucoreOrganisationDepartment* getorganisationDepartment() const;
    ebucoreTypeGroup* getorganisationType() const;
    std::vector<ebucoreContactDetails*> getorganisationDetails() const;
    std::vector<ebucoreEntity*> getorganisationRelatedContacts() const;
@@ -70,7 +70,7 @@ public:
    void setorganisationId(mxfUUID value);
    void setorganisationName(std::string value);
    void setorganisationCode(std::string value);
-   void setorganisationDepartment(std::string value);
+   void setorganisationDepartment(ebucoreOrganisationDepartment* value);
    void setorganisationType(ebucoreTypeGroup* value);
    void setorganisationDetails(const std::vector<ebucoreContactDetails*>& value);
    void appendorganisationDetails(ebucoreContactDetails* value);

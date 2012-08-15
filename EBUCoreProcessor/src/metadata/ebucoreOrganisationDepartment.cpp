@@ -29,38 +29,29 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
-#define __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
-
-
-
-#include <libMXF++/metadata/InterchangeObject.h>
-
-using namespace mxfpp;
-
-namespace EBUCore { namespace KLV
-{
-
-
-class ebucoreLanguagePurposeBase : public InterchangeObject
-{
-public:
-    friend class MetadataSetFactory<ebucoreLanguagePurposeBase>;
-    static const mxfKey setKey;
-
-public:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreLanguagePurposeBase();
-
-
-
-
-protected:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
-};
-
-
-}};
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
+
+#include <libMXF++/MXF.h>
+#include <metadata/EBUCoreDMS++.h>
+
+
+using namespace std;
+using namespace mxfpp;
+using namespace EBUCore::KLV;
+
+
+
+ebucoreOrganisationDepartment::ebucoreOrganisationDepartment(HeaderMetadata *headerMetadata)
+: ebucoreOrganisationDepartmentBase(headerMetadata)
+{}
+
+ebucoreOrganisationDepartment::ebucoreOrganisationDepartment(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: ebucoreOrganisationDepartmentBase(headerMetadata, cMetadataSet)
+{}
+
+ebucoreOrganisationDepartment::~ebucoreOrganisationDepartment()
+{}
+
+

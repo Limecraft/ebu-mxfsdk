@@ -29,12 +29,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCOREADDRESSLINE_BASE_H__
-#define __MXFPP_EBUCOREADDRESSLINE_BASE_H__
+#ifndef __MXFPP_EBUCORETEXTUALANNOTATION_H__
+#define __MXFPP_EBUCORETEXTUALANNOTATION_H__
 
 
 
-#include <libMXF++/metadata/InterchangeObject.h>
+#include <metadata/base/ebucoreTextualAnnotationBase.h>
 
 using namespace mxfpp;
 
@@ -42,29 +42,20 @@ namespace EBUCore { namespace KLV
 {
 
 
-class ebucoreAddressLineBase : public InterchangeObject
+class ebucoreTextualAnnotation : public ebucoreTextualAnnotationBase
 {
 public:
-    friend class MetadataSetFactory<ebucoreAddressLineBase>;
-    static const mxfKey setKey;
+    friend class MetadataSetFactory<ebucoreTextualAnnotation>;
 
 public:
-    ebucoreAddressLineBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreAddressLineBase();
+    ebucoreTextualAnnotation(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreTextualAnnotation();
 
 
-   // getters
-
-   std::string getaddressLine() const;
-
-
-   // setters
-
-   void setaddressLine(std::string value);
 
 
 protected:
-    ebucoreAddressLineBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreTextualAnnotation(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

@@ -61,15 +61,3 @@ ebucoreLanguagePurposeBase::~ebucoreLanguagePurposeBase()
 {}
 
 
-ebucoreTypeGroup* ebucoreLanguagePurposeBase::getlanguagePurposeTypeGroup() const
-{
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreLanguagePurpose, languagePurposeTypeGroup)));
-    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
-}
-
-void ebucoreLanguagePurposeBase::setlanguagePurposeTypeGroup(ebucoreTypeGroup* value)
-{
-    setStrongRefItem(&MXF_ITEM_K(ebucoreLanguagePurpose, languagePurposeTypeGroup), value);
-}
-

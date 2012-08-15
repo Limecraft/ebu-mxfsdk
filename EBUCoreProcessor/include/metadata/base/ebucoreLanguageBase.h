@@ -57,14 +57,14 @@ public:
 
    std::string getlanguageName() const;
    std::string getlanguageCode() const;
-   ebucoreLanguagePurpose* getlanguagePurposeSet() const;
+   ebucoreTypeGroup* getlanguagePurposeSet() const;
 
 
    // setters
 
    void setlanguageName(std::string value);
    void setlanguageCode(std::string value);
-   void setlanguagePurposeSet(ebucoreLanguagePurpose* value);
+   void setlanguagePurposeSet(ebucoreTypeGroup* value);
 
 
 protected:

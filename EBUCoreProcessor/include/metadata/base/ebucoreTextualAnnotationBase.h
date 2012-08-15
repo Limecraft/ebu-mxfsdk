@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
-#define __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
+#ifndef __MXFPP_EBUCORETEXTUALANNOTATION_BASE_H__
+#define __MXFPP_EBUCORETEXTUALANNOTATION_BASE_H__
 
 
 
@@ -42,21 +42,32 @@ namespace EBUCore { namespace KLV
 {
 
 
-class ebucoreLanguagePurposeBase : public InterchangeObject
+class ebucoreTextualAnnotationBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucoreLanguagePurposeBase>;
+    friend class MetadataSetFactory<ebucoreTextualAnnotationBase>;
     static const mxfKey setKey;
 
 public:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreLanguagePurposeBase();
+    ebucoreTextualAnnotationBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreTextualAnnotationBase();
 
 
+   // getters
+
+   std::string gettext() const;
+   bool havetextLanguage() const;
+   std::string gettextLanguage() const;
+
+
+   // setters
+
+   void settext(std::string value);
+   void settextLanguage(std::string value);
 
 
 protected:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreTextualAnnotationBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

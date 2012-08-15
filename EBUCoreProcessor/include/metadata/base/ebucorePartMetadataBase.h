@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
-#define __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
+#ifndef __MXFPP_EBUCOREPARTMETADATA_BASE_H__
+#define __MXFPP_EBUCOREPARTMETADATA_BASE_H__
 
 
 
@@ -42,21 +42,57 @@ namespace EBUCore { namespace KLV
 {
 
 
-class ebucoreLanguagePurposeBase : public InterchangeObject
+class ebucorePartMetadataBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucoreLanguagePurposeBase>;
+    friend class MetadataSetFactory<ebucorePartMetadataBase>;
     static const mxfKey setKey;
 
 public:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreLanguagePurposeBase();
+    ebucorePartMetadataBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucorePartMetadataBase();
 
 
+   // getters
+
+   std::string getpartId() const;
+   std::string getpartName() const;
+   bool havepartDefinition() const;
+   std::string getpartDefinition() const;
+   bool havepartStartTime() const;
+   mxfRational getpartStartTime() const;
+   bool havepartStartEditUnitNumber() const;
+   int64_t getpartStartEditUnitNumber() const;
+   bool havepartEndTime() const;
+   mxfRational getpartEndTime() const;
+   bool havepartEndEditUnitNumber() const;
+   int64_t getpartEndEditUnitNumber() const;
+   bool havepartDurationTime() const;
+   mxfRational getpartDurationTime() const;
+   bool havepartDurationEditUnitNumber() const;
+   int64_t getpartDurationEditUnitNumber() const;
+   bool havepartTypeGroup() const;
+   std::string getpartTypeGroup() const;
+   ebucoreCoreMetadata* getpartMeta() const;
+
+
+   // setters
+
+   void setpartId(std::string value);
+   void setpartName(std::string value);
+   void setpartDefinition(std::string value);
+   void setpartStartTime(mxfRational value);
+   void setpartStartEditUnitNumber(int64_t value);
+   void setpartEndTime(mxfRational value);
+   void setpartEndEditUnitNumber(int64_t value);
+   void setpartDurationTime(mxfRational value);
+   void setpartDurationEditUnitNumber(int64_t value);
+   void setpartTypeGroup(std::string value);
+   void setpartMeta(ebucoreCoreMetadata* value);
 
 
 protected:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucorePartMetadataBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

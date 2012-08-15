@@ -9,7 +9,7 @@
 
 #include <xercesc/util/TransService.hpp>
 
-using namespace ebuCore_2011;
+using namespace ebuCore_2012;
 using namespace mxfpp;
 //using namespace bmx;
 
@@ -56,7 +56,8 @@ namespace EBUCore {
 	SIMPLE_MAP_OPTIONAL(source, typeDefinition, dest, settypeGroupDefinition) \
 	SIMPLE_MAP_OPTIONAL(source, typeLabel, dest, settypeGroupLabel) \
 	SIMPLE_MAP_OPTIONAL(source, typeLink, dest, settypeGroupLink)
-/*
+
+	/*
 	<attributeGroup name="typeGroup">
 		<attribute name="typeLabel" type="string"/>
 		<attribute name="typeDefinition" type="string"/>
@@ -117,8 +118,9 @@ void mapRole(role& source, ebucoreRole *dest, ObjectModifier* mod = NULL) {
 	dest->setroleType(obj);
 }
 
-void mapAddressLine(std::string source, ebucoreAddressLine *dest, ObjectModifier* mod = NULL) {
-	dest->setaddressLine(source);
+void mapTextualAnnotation(std::string source, ebucoreTextualAnnotation *dest, ObjectModifier* mod = NULL) {
+	/* deal with lang! */
+	dest->settext(source);
 }
 
 void mapAddress(addressType& source, ebucoreAddress *dest, ObjectModifier* mod = NULL) {
@@ -137,7 +139,7 @@ void mapAddress(addressType& source, ebucoreAddress *dest, ObjectModifier* mod =
 	*/
 
 	if (source.addressLine().size() > 0) {
-		NEW_VECTOR_AND_ASSIGN(source, addressLine, ebucoreAddressLine, addressType::addressLine_iterator, mapAddressLine, dest, setaddressLines)
+		NEW_VECTOR_AND_ASSIGN(source, addressLine, ebucoreTextualAnnotation, addressType::addressLine_iterator, mapTextualAnnotation, dest, setaddressLines)
 	}
 	
 	SIMPLE_MAP_OPTIONAL(source, addressTownCity, dest, settownCity)
@@ -166,7 +168,7 @@ void mapDetails(detailsType& source, ebucoreContactDetails *dest, ObjectModifier
 		</sequence>
 		<attributeGroup ref="ebucore:typeGroup"/>
 	*/
-	SIMPLE_MAP_OPTIONAL(source, emailAddress, dest, setemailAddress)
+	NEW_VECTOR_AND_ASSIGN(source, emailAddress, ebucoreTextualAnnotation, detailsType::emailAddress_iterator, mapTextualAnnotation, dest, setemailAddress)
 	SIMPLE_MAP_OPTIONAL(source, webAddress, dest, setwebAddress)
 
 	// map address
@@ -205,22 +207,27 @@ void mapContact(contactDetailsType& source, ebucoreContact *dest, ObjectModifier
 		SIMPLE_MAP_OPTIONAL(source, familyName, dest, setfamilyName)
 	}
 
-	// username -> othergivenname mapping?
-	SIMPLE_MAP_OPTIONAL(source, username, dest, setotherGivenName)
+	NEW_VECTOR_AND_ASSIGN(source, otherGivenName, ebucoreTextualAnnotation, contactDetailsType::otherGivenName_iterator, mapTextualAnnotation, dest, setotherGivenName)
+	NEW_VECTOR_AND_ASSIGN(source, username, ebucoreTextualAnnotation, contactDetailsType::username_iterator, mapTextualAnnotation, dest, setusername)
+
+	//SIMPLE_MAP_OPTIONAL(source, username, dest, setotherGivenName)
 	SIMPLE_MAP_OPTIONAL(source, occupation, dest, setoccupation)
 
 	// map contactdetails
 	NEW_VECTOR_AND_ASSIGN(source, details, ebucoreContactDetails, contactDetailsType::details_sequence::iterator, mapDetails, dest, setcontactDetails)
 
-	if (source.stageName().size() > 0) {
-		dest->setstageName(source.stageName().front());
-	}
+	NEW_VECTOR_AND_ASSIGN(source, stageName, ebucoreTextualAnnotation, contactDetailsType::stageName_iterator, mapTextualAnnotation, dest, setstageName)
 
 	// [TODO] We skip RelatedContacts for now, KLV mapping refers to Contacts, while the XSD refers to entities
 	// [FIX?] KLV mapping updated to entities
 	NEW_VECTOR_AND_ASSIGN(source, relatedContacts, ebucoreEntity, contactDetailsType::relatedContacts_iterator, mapEntity, dest, setcontactRelatedContacts)
 	
 	// [TODO] We skip contactId for now, KLV mapping refers to an UID, while the XSD refers to anyURI type
+}
+
+void mapOrganisationDepartment(organisationDepartment& source, ebucoreOrganisationDepartment *dest, ObjectModifier* mod = NULL) {
+	dest->setdepartmentName(source);
+	SIMPLE_MAP_OPTIONAL(source, departmentId, dest, setdepartmentId)
 }
 
 void mapOrganisation(organisationDetailsType& source, ebucoreOrganisation *dest, ObjectModifier* mod = NULL) {
@@ -249,8 +256,12 @@ void mapOrganisation(organisationDetailsType& source, ebucoreOrganisation *dest,
 	//		- KLV defines a typegroup, which is not present in XSD
 	//		- KLV organizationRelatedContacts refers to contacts, XSD refers to entities
 
-	dest->setorganisationName(source.organisationName());
-	SIMPLE_MAP_OPTIONAL(source, organisationDepartment, dest, setorganisationDepartment)	
+	if (source.organisationName().size() > 0) {
+		dest->setorganisationName(source.organisationName()[0]);
+	}
+
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, organisationDepartment, ebucoreOrganisationDepartment, mapOrganisationDepartment, dest, setorganisationDepartment)
+
 	NEW_VECTOR_AND_ASSIGN(source, details, ebucoreContactDetails, contactDetailsType::details_sequence::iterator, mapDetails, dest, setorganisationDetails)
 	// [FIX?] Related contacts are now entities	
 	NEW_VECTOR_AND_ASSIGN(source, contacts, ebucoreEntity, organisationDetailsType::contacts_iterator, mapEntity, dest, setorganisationRelatedContacts)
@@ -276,7 +287,8 @@ void mapEntity(entityType& source, ebucoreEntity *dest, ObjectModifier* mod) {
 	// [FIX?] Updated to sequence
 	NEW_VECTOR_AND_ASSIGN(source, contactDetails, ebucoreContact, entityType::contactDetails_iterator, mapContact, dest, setentityContact)
 
-	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, organisationDetails, ebucoreOrganisation, mapOrganisation, dest, setentityOrganisation)
+	//NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, organisationDetails, ebucoreOrganisation, mapOrganisation, dest, setentityOrganisation)
+	NEW_VECTOR_AND_ASSIGN(source, organisationDetails, ebucoreOrganisation, entityType::organisationDetails_iterator, mapOrganisation, dest, setentityOrganisation)
 
 	// [TODO] The KLV mapping lists a single role, while the XSD specifies a sequence
 	// [FIX?] Updated to sequence
@@ -321,6 +333,7 @@ void mapMetadataSchemeInformation(ebuCoreMainType& source, ebucoreMetadataScheme
 		std::string std_version((char*)version.str());
 		dest->setebucoreMetadataSchemeVersion(std_version);
 	}
+	/* EBUCore1.4:
 	XMLCh* str_schema = xercesc_3_1::XMLString::transcode("schema");
 	const xercesc_3_1::DOMNode* schema_node = attrs->getNamedItem(str_schema);
 	xercesc_3_1::XMLString::release(&str_schema);
@@ -328,7 +341,7 @@ void mapMetadataSchemeInformation(ebuCoreMainType& source, ebucoreMetadataScheme
 		xercesc_3_1::TranscodeToStr schema(source.schema()._node()->getTextContent(), "UTF-8");
 		std::string std_schema((char*)schema.str());
 		dest->setebucoreMetadataScheme(std_schema);
-	}
+	}*/
 }
 
 mxfTimestamp convert_timestamp(xml_schema::date& source) {
@@ -393,8 +406,17 @@ void mapTitle(titleType& source, ebucoreTitle *dest, ObjectModifier* mod = NULL)
 		<attribute name="note" type="string">
 		</attribute>
 	*/
+	/* Deprecated 1.3:
 	SIMPLE_MAP_NO_GET(source, title, dest, settitleValue)
 	SIMPLE_MAP_NO_GET(source, title().lang, dest, settitleLanguage)
+	*/
+	if (source.title().size() > 0) {
+		titleType::title_type& title = source.title()[0];
+		dest->settitleValue(title);
+		SIMPLE_MAP_NO_GET(title, lang, dest, settitleLanguage)
+	}
+
+	SIMPLE_MAP_OPTIONAL(source, note, dest, settitleNote)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, attributiondate, dest, settitleAttributionDate, convert_timestamp)
 }
 
@@ -416,10 +438,19 @@ void mapAlternativeTitle(alternativeTitleType& source, ebucoreAlternativeTitle *
 
 	// [TODO] XSD alternativeTitle has the dateGroup attributegroup which maps to a number of dates,
 	// KLV alternativeTitle only has an alternativeTitleAttributeDate, skipped for now.
+	// [FIX?] map date to XSD startdate
 
+	/* Deprecated 1.3:
 	SIMPLE_MAP_NO_GET(source, title, dest, setalternativeTitleValue)
 	SIMPLE_MAP_NO_GET(source, title().lang, dest, setalternativeTitleLanguage)
+	*/
+	if (source.title().size() > 0) {
+		titleType::title_type& title = source.title()[0];
+		dest->setalternativeTitleValue(title);
+		SIMPLE_MAP_NO_GET(title, lang, dest, setalternativeTitleLanguage)
+	}
 
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, startDate, dest, setalternativeTitleAttributionDate, convert_timestamp)
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setalternativeTitleTypeGroup)
 	MAP_NEW_STATUS_GROUP_AND_ASSIGN(source, dest, setalternativeTitleStatusGroup)
 }
@@ -538,9 +569,8 @@ void mapVersion(coreMetadataType::version_type& source, ebucoreVersion *dest, Ob
 	  </xs:simpleContent>
 	*/
 
-	// [TODO] KLV version does not define a language, while the XSD (i.e., DC element) does.
 	dest->setversionValue(source);
-	// [TODO] SIMPLE_MAP_NO_GET(source, lang, dest, setversionLanguage)
+	SIMPLE_MAP_NO_GET(source, lang, dest, setversionLanguage)
 }
 
 void mapLanguage(languageType& source, ebucoreLanguage *dest, ObjectModifier* mod = NULL) {
@@ -559,10 +589,7 @@ void mapLanguage(languageType& source, ebucoreLanguage *dest, ObjectModifier* mo
 	// only a reference to the typegroup, required?
 	SIMPLE_MAP_OPTIONAL(source, language, dest, setlanguageName)
 	dest->setlanguageCode(source.language().get().lang());
-	
-	ebucoreLanguagePurpose *obj = newAndModifyObject<ebucoreLanguagePurpose>(dest->getHeaderMetadata(), mod);
-	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, obj, setlanguagePurposeTypeGroup)
-	dest->setlanguagePurposeSet(obj);
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setlanguagePurposeSet)
 }
 
 void mapType(typeType& source, ebucoreType *dest, ObjectModifier* mod = NULL) {
@@ -721,27 +748,20 @@ void mapTemporal(temporal& source, ebucoreTemporal *dest, ObjectModifier* mod = 
 
 	// [TODO] There is no typeGroup equivalent in KLV rep., it is in the PeriodOfTime element, which is a batch, and not a single optional element such as in XSD
 	// [FIX?] PeriodOfTime element is now a single optional element
-	bool hasPeriodOfTime = source.periodId().present() | source.PeriodOfTime().present();
-	if (hasPeriodOfTime) {
-		ebucorePeriodOfTime *obj = newAndModifyObject<ebucorePeriodOfTime>(dest->getHeaderMetadata(), mod);
-		if (source.periodId().present()) {
-			obj->setperiodId(source.periodId().get());
-		}
-		if (source.PeriodOfTime().present()) {
-			PeriodOfTime &pot = source.PeriodOfTime().get();
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, startYear, obj, setperiodStartYear, convert_timestamp)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, startDate, obj, setperiodStartDate, convert_timestamp)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, startTime, obj, setperiodStartTime, convert_timestamp)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, endYear, obj, setperiodEndYear, convert_timestamp)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, endDate, obj, setperiodEndDate, convert_timestamp)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, endTime, obj, setperiodEndTime, convert_timestamp)
-			SIMPLE_MAP_OPTIONAL(pot, period, obj, setperiodName)
+	// [EBUCore1.4] PeriodId in temporal??
+	NEW_VECTOR_AND_ASSIGN(source, PeriodOfTime, ebucorePeriodOfTime, temporal::PeriodOfTime_iterator, , dest, setperiodOfTime)
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, settemporalTypeGroup)
+}
 
-			MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, obj, setperiodKindGroup)
-		}
-
-		dest->setperiodOfTime(obj);
-	}
+void mapPeriodOfTime(PeriodOfTime& source, ebucorePeriodOfTime* dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, period, dest, setperiodId)
+	SIMPLE_MAP_OPTIONAL(source, period, dest, setperiodName)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, startYear, dest, setperiodStartYear, convert_timestamp)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, startDate, dest, setperiodStartDate, convert_timestamp)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, startTime, dest, setperiodStartTime, convert_timestamp)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, endYear, dest, setperiodEndYear, convert_timestamp)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, endDate, dest, setperiodEndDate, convert_timestamp)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, endTime, dest, setperiodEndTime, convert_timestamp)
 }
 
 void mapSpatial(spatial& source, ebucoreSpatial *dest, ObjectModifier* mod = NULL) {
@@ -870,112 +890,66 @@ bool nodeOrdering(xsd::cxx::tree::type *a, xsd::cxx::tree::type *b)
 	return (a->_node()->compareDocumentPosition(b->_node()) == 2 /* DOCUMENT_POSITION_PRECEDING */);	// else, return larger...
 }
 
-void mapPublicationHistory(publicationHistoryType& source, std::vector<ebucorePublicationHistoryEvent*>& dest, mxfpp::HeaderMetadata *header_metadata, ObjectModifier* mod = NULL) {
+void mapPublicationHistoryEvent(publicationEvent& source, ebucorePublicationHistoryEvent* dest, ObjectModifier* mod = NULL) {
 	/*
-		<sequence>
-			<element name="firstPublicationDate" type="date" minOccurs="0">
-			</element>
-			<element name="firstPublicationTime" type="time" minOccurs="0">
-			</element>
-			<element name="firstPublicationChannel" minOccurs="0">
-				<complexType>
-					<simpleContent>
-						<extension base="string">
-							<attribute name="formatIdRef" type="IDREF"/>
-						</extension>
-					</simpleContent>
-				</complexType>
-			</element>
-			<sequence minOccurs="0" maxOccurs="unbounded">
-				<element name="repeatDate" type="date" minOccurs="0">
+	<complexType>
+			<sequence>
+				<element name="publicationDate" type="date" minOccurs="0">
 				</element>
-				<element name="repeatTime" type="time" minOccurs="0">
+				<element name="publicationTime" type="time" minOccurs="0">
 				</element>
-				<element name="repeatChannel" minOccurs="0">
+				<element name="publicationService" minOccurs="0" type="string">
+				</element>
+				<element name="publicationMedium" minOccurs="0">
+					<complexType>
+						<attributeGroup ref="ebucore:typeGroup"/>
+					</complexType>
+				</element>
+				<element name="publicationChannel" minOccurs="0">
 					<complexType>
 						<simpleContent>
-							<extension base="string">
-								<attribute name="formatIdRef" type="IDREF"/>
-							</extension>
+							<extension base="string"> </extension>
 						</simpleContent>
 					</complexType>
 				</element>
 			</sequence>
+			<attribute name="firstShowing" type="boolean"/>
+			<attribute name="live" type="boolean"/>
+			<attribute name="free" type="boolean"/>
+			<attribute name="formatIdRef" type="IDREF">
+			</attribute>
+			<attribute name="rightsIDRefs" type="IDREFS">
+			</attribute>
+	</complexType>
 	*/
-	// split the publicationhistory	in a single first publication event and then mulitple other repeats
 
-	if (source.firstPublicationDate().present() || source.firstPublicationTime().present() || source.firstPublicationChannel().present()) {
-		// have a first publication event
+	// [TODO] XSD publicationMedium is an empty type with a typegroup, KLV is a plain string, using typeLabel for now
+	// [TODO] XSD has live, free, and rightsIDRefs, no equivalent in KLV?
+
+	SIMPLE_MAP_OPTIONAL(source, firstShowing, dest, setfirstPublicationFlag)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, publicationDate, dest, setpublicationDate, convert_timestamp)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, publicationTime, dest, setpublicationDate, convert_timestamp)
+	SIMPLE_MAP_OPTIONAL(source, publicationChannel, dest, setpublicationChannel)
+	SIMPLE_MAP_OPTIONAL(source, publicationService, dest, setpublicationService)
+	if (source.publicationMedium().present() && source.publicationMedium().get().typeLabel().present()) {
+		dest->setpublicationMedium(source.publicationMedium().get().typeLabel().get());
+	}
+}
+
+void mapPublicationHistory(publicationHistoryType& source, std::vector<ebucorePublicationHistoryEvent*>& dest, mxfpp::HeaderMetadata *header_metadata, ObjectModifier* mod = NULL) {
+	/*
+	<sequence>
+		<element name="publicationEvent" minOccurs="0" maxOccurs="unbounded">
+		</element>
+	</sequence>
+	*/
+	std::vector<ebucorePublicationHistoryEvent*> vec_dest_hist;
+	for (publicationHistoryType::publicationEvent_iterator it = source.publicationEvent().begin(); it != source.publicationEvent().end(); it++) {
 		ebucorePublicationHistoryEvent *obj = newAndModifyObject<ebucorePublicationHistoryEvent>(header_metadata, mod);
-		SIMPLE_MAP_OPTIONAL_CONVERT(source, firstPublicationDate, obj, setpublicationDate, convert_timestamp)
-		SIMPLE_MAP_OPTIONAL_CONVERT(source, firstPublicationTime, obj, setpublicationTime, convert_timestamp)
-		SIMPLE_MAP_OPTIONAL(source, firstPublicationChannel, obj, setpublicationChannel)
-		obj->setfirstPublicationFlag(true);
-		if (source.firstPublicationChannel().present() && source.firstPublicationChannel().get().formatIdRef().present()) {
-			obj->setpublicationFormatIDRef(source.firstPublicationChannel().get().formatIdRef().get());
-		}
-		dest.push_back(obj);
+		mapPublicationHistoryEvent(*it, obj, mod);
+		vec_dest_hist.push_back(obj);
 	}
-
-#define DATE	0
-#define TIME	1
-#define CHANNEL	2
-
-	// try and recreate the original order of publication repeat elements
-	std::vector< xsd::cxx::tree::type *> elements;
-	for (publicationHistoryType::repeatDate_iterator it = source.repeatDate().begin(); it != source.repeatDate().end(); it++) {
-		elements.push_back(&*it);
-	}
-	for (publicationHistoryType::repeatTime_iterator it = source.repeatTime().begin(); it != source.repeatTime().end(); it++) {
-		elements.push_back(&*it);
-	}
-	for (publicationHistoryType::repeatChannel_iterator it = source.repeatChannel().begin(); it != source.repeatChannel().end(); it++) {
-		elements.push_back(&*it);
-	}
-	std::sort(elements.begin(), elements.end(), &nodeOrdering);
-
-	ebucorePublicationHistoryEvent *obj = NULL;
-	if (elements.size() > 0)
-		obj = new ebucorePublicationHistoryEvent(header_metadata);
-
-	int lastElementType = -1;
-	for (std::vector< xsd::cxx::tree::type *>::iterator it = elements.begin(); it != elements.end(); it++) {
-		int elementType;
-		// loop through the sorted vector and make publicationhistory as needed
-		publicationHistoryType::repeatDate_type* date = NULL;
-		publicationHistoryType::repeatTime_type* time = NULL;
-		publicationHistoryType::repeatChannel_type* channel = NULL;
-		date = dynamic_cast<publicationHistoryType::repeatDate_type*>(*it);
-		if (date) { // it is a repeatDate
-			elementType = DATE;
-		} else {
-			time = dynamic_cast<publicationHistoryType::repeatTime_type*>(*it);
-			if (time) {
-				elementType = TIME;
-			} else {
-				channel = dynamic_cast<publicationHistoryType::repeatChannel_type*>(*it);
-				elementType = CHANNEL;
-			}
-		}
-		if (elementType <= lastElementType) {
-			// introduce a new element
-			dest.push_back(obj);
-			obj = newAndModifyObject<ebucorePublicationHistoryEvent>(header_metadata, mod);
-		}
-		if (date) {
-			obj->setpublicationDate(convert_timestamp(*date));
-		} else if (time) {
-			obj->setpublicationTime(convert_timestamp(*time));
-		} else {
-			obj->setpublicationChannel(*channel);
-			if (channel->formatIdRef().present()) {
-				obj->setpublicationFormatIDRef(channel->formatIdRef().get());
-			}
-		}
-	}
-	// push the last object into the destination list (if the object is valid)
-	if (obj)
-		dest.push_back(obj);
+	dest.assign(vec_dest_hist.begin(), vec_dest_hist.end());
 }
 
 void mapCustomRelation(relationType& source, ebucoreCustomRelation *dest, ObjectModifier* mod = NULL) {
@@ -1029,9 +1003,9 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, Object
 	NEW_VECTOR_AND_ASSIGN(source, rights, ebucoreRights, coreMetadataType::rights_iterator, mapRights, dest, setrights)
 	NEW_VECTOR_AND_ASSIGN(source, rating, ebucoreRating, coreMetadataType::rating_iterator, mapRating, dest, setrating)
 
-	if (source.version().present()) {
+	if (source.version().size() > 0) {
 		ebucoreVersion *obj = newAndModifyObject<ebucoreVersion>(dest->getHeaderMetadata(), mod);
-		mapVersion(source.version().get(), obj);
+		mapVersion(source.version()[0], obj);
 		dest->setversion(obj);
 	}
 	
@@ -1050,5 +1024,10 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, Object
 		part sets
 	*/
 }
+
+/*void mapPart(part& source, ebucorePartMetadata *dest, ObjectModifier* mod) {
+
+	//MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setpartTypeGroup)
+}*/
 
 }

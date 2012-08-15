@@ -29,38 +29,65 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
-#define __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
-
-
-
-#include <libMXF++/metadata/InterchangeObject.h>
-
-using namespace mxfpp;
-
-namespace EBUCore { namespace KLV
-{
-
-
-class ebucoreLanguagePurposeBase : public InterchangeObject
-{
-public:
-    friend class MetadataSetFactory<ebucoreLanguagePurposeBase>;
-    static const mxfKey setKey;
-
-public:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreLanguagePurposeBase();
-
-
-
-
-protected:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
-};
-
-
-}};
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
+
+#include <memory>
+
+#include <libMXF++/MXF.h>
+#include <metadata/EBUCoreDMS++.h>
+
+
+using namespace std;
+using namespace mxfpp;
+using namespace EBUCore::KLV;
+
+
+const mxfKey ebucoreOrganisationDepartmentBase::setKey = MXF_SET_K(ebucoreOrganisationDepartment);
+
+
+ebucoreOrganisationDepartmentBase::ebucoreOrganisationDepartmentBase(HeaderMetadata *headerMetadata)
+: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
+{
+    headerMetadata->add(this);
+}
+
+ebucoreOrganisationDepartmentBase::ebucoreOrganisationDepartmentBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: InterchangeObject(headerMetadata, cMetadataSet)
+{}
+
+ebucoreOrganisationDepartmentBase::~ebucoreOrganisationDepartmentBase()
+{}
+
+
+bool ebucoreOrganisationDepartmentBase::havedepartmentId() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreOrganisationDepartment, departmentId));
+}
+
+std::string ebucoreOrganisationDepartmentBase::getdepartmentId() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreOrganisationDepartment, departmentId));
+}
+
+bool ebucoreOrganisationDepartmentBase::havedepartmentName() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreOrganisationDepartment, departmentName));
+}
+
+std::string ebucoreOrganisationDepartmentBase::getdepartmentName() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreOrganisationDepartment, departmentName));
+}
+
+void ebucoreOrganisationDepartmentBase::setdepartmentId(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreOrganisationDepartment, departmentId), value);
+}
+
+void ebucoreOrganisationDepartmentBase::setdepartmentName(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreOrganisationDepartment, departmentName), value);
+}
+

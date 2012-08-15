@@ -32,7 +32,7 @@
 
 #include <xercesc/util/TransService.hpp>
 
-using namespace ebuCore_2011;
+using namespace ebuCore_2012;
 using namespace mxfpp;
 using namespace bmx;
 

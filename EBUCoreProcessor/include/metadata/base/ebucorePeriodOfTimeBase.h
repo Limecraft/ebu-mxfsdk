@@ -71,7 +71,6 @@ public:
    mxfTimestamp getperiodEndDate() const;
    bool haveperiodEndTime() const;
    mxfTimestamp getperiodEndTime() const;
-   ebucoreTypeGroup* getperiodKindGroup() const;
 
 
    // setters
@@ -84,7 +83,6 @@ public:
    void setperiodEndYear(mxfTimestamp value);
    void setperiodEndDate(mxfTimestamp value);
    void setperiodEndTime(mxfTimestamp value);
-   void setperiodKindGroup(ebucoreTypeGroup* value);
 
 
 protected:

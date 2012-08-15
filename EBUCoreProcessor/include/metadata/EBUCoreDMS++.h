@@ -52,11 +52,12 @@ namespace EBUCore
 #include <metadata/ebucoreFormatGroup.h>
 #include <metadata/ebucoreStatusGroup.h>
 #include <metadata/ebucoreRole.h>
-#include <metadata/ebucoreAddressLine.h>
+#include <metadata/ebucoreTextualAnnotation.h>
 #include <metadata/ebucoreAddress.h>
 #include <metadata/ebucoreContactDetails.h>
 #include <metadata/ebucoreContact.h>
 #include <metadata/ebucoreEntity.h>
+#include <metadata/ebucoreOrganisationDepartment.h>
 #include <metadata/ebucoreOrganisation.h>
 #include <metadata/ebucoreIdentifier.h>
 #include <metadata/ebucoreAlternativeTitle.h>
@@ -84,6 +85,7 @@ namespace EBUCore
 #include <metadata/ebucoreRights.h>
 #include <metadata/ebucoreCoreMetadata.h>
 #include <metadata/ebucoreMainFramework.h>
+#include <metadata/ebucorePartMetadata.h>
 #include <metadata/ebucoreMetadataSchemeInformation.h>
 
 

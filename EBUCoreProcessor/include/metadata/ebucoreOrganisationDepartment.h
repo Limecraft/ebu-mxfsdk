@@ -29,45 +29,37 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#include <memory>
-
-#include <libMXF++/MXF.h>
-#include <metadata/EBUCoreDMS++.h>
+#ifndef __MXFPP_EBUCOREORGANISATIONDEPARTMENT_H__
+#define __MXFPP_EBUCOREORGANISATIONDEPARTMENT_H__
 
 
-using namespace std;
+
+#include <metadata/base/ebucoreOrganisationDepartmentBase.h>
+
 using namespace mxfpp;
-using namespace EBUCore::KLV;
 
-
-const mxfKey ebucoreAddressLineBase::setKey = MXF_SET_K(ebucoreAddressLine);
-
-
-ebucoreAddressLineBase::ebucoreAddressLineBase(HeaderMetadata *headerMetadata)
-: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
+namespace EBUCore { namespace KLV
 {
-    headerMetadata->add(this);
-}
-
-ebucoreAddressLineBase::ebucoreAddressLineBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: InterchangeObject(headerMetadata, cMetadataSet)
-{}
-
-ebucoreAddressLineBase::~ebucoreAddressLineBase()
-{}
 
 
-std::string ebucoreAddressLineBase::getaddressLine() const
+class ebucoreOrganisationDepartment : public ebucoreOrganisationDepartmentBase
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreAddressLine, addressLine));
-}
+public:
+    friend class MetadataSetFactory<ebucoreOrganisationDepartment>;
 
-void ebucoreAddressLineBase::setaddressLine(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreAddressLine, addressLine), value);
-}
+public:
+    ebucoreOrganisationDepartment(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreOrganisationDepartment();
 
+
+
+
+protected:
+    ebucoreOrganisationDepartment(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+};
+
+
+}};
+
+
+#endif

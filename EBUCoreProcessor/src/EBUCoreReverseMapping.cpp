@@ -9,7 +9,7 @@
 
 #include <xercesc/util/TransService.hpp>
 
-using namespace ebuCore_2011;
+using namespace ebuCore_2012;
 using namespace mxfpp;
 //using namespace bmx;
 
@@ -93,14 +93,20 @@ namespace EBUCore {
 		dest.formatLink().set( std::auto_ptr<linkType> ( new linkType( source->getformatGroupLink() ) ));	\
 	}
 
+void mapTextualAnnotation(ebucoreTextualAnnotation *source, std::string& dest) {
+	dest = source->gettext();
+}
+
 void mapAddress(ebucoreAddress *source, addressType& dest) {
 	// atm, only a single address line is defined in KLV mapping
 	if (source->haveaddressLines()) {
 		addressType::addressLine_sequence lines;
-		std::vector<ebucoreAddressLine*> source_vec = source->getaddressLines();
-		for (std::vector<ebucoreAddressLine*>::iterator it = source_vec.begin(); it != source_vec.end(); it++) {
+		std::vector<ebucoreTextualAnnotation*> source_vec = source->getaddressLines();
+		for (std::vector<ebucoreTextualAnnotation*>::iterator it = source_vec.begin(); it != source_vec.end(); it++) {
 			std::auto_ptr<detailsType> p( new detailsType() );
-			lines.push_back((*it)->getaddressLine());
+			lines.push_back((*it)->gettext());
+			if ((*it)->havetextLanguage())
+				lines.back().lang() = (*it)->gettextLanguage();
 		}
 		dest.addressLine(lines);
 	}
@@ -120,7 +126,10 @@ void mapAddress(ebucoreAddress *source, addressType& dest) {
 
 void mapDetails(ebucoreContactDetails *source, detailsType& dest) {
 
-	SIMPLE_RMAP_OPTIONAL(source, haveemailAddress, getemailAddress, dest, emailAddress)
+	if (source->haveemailAddress()) {
+		NEW_VECTOR_AND_RASSIGN(source, getemailAddress, detailsType::emailAddress_type, detailsType::emailAddress_sequence, std::vector<ebucoreTextualAnnotation*>, mapTextualAnnotation, dest, emailAddress)
+	}
+	
 	SIMPLE_RMAP_OPTIONAL(source, havewebAddress, getwebAddress, dest, webAddress)
 
 	// map address
@@ -142,16 +151,19 @@ void mapContact(ebucoreContact *source, contactDetailsType& dest) {
 		dest.name() = source->getgivenName();
 	}
 
-	SIMPLE_RMAP_OPTIONAL(source, haveotherGivenName, getotherGivenName, dest, username)
+	if (source->haveotherGivenName()) {
+		NEW_VECTOR_AND_RASSIGN(source, getotherGivenName, contactDetailsType::otherGivenName_type, contactDetailsType::otherGivenName_sequence, std::vector<ebucoreTextualAnnotation*>, mapTextualAnnotation, dest, otherGivenName)
+	}
+	if (source->haveusername()) {
+		NEW_VECTOR_AND_RASSIGN(source, getusername, contactDetailsType::username_type, contactDetailsType::username_sequence, std::vector<ebucoreTextualAnnotation*>, mapTextualAnnotation, dest, username)
+	}
 	SIMPLE_RMAP_OPTIONAL(source, haveoccupation, getoccupation, dest, occupation)
 
 	// map contactdetails
 	NEW_VECTOR_AND_RASSIGN(source, getcontactDetails, detailsType, contactDetailsType::details_sequence, std::vector<ebucoreContactDetails*>, mapDetails, dest, details)
 
 	if (source->havestageName()) {
-		contactDetailsType::stageName_sequence seq;
-		seq.push_back( source->getstageName() );
-		dest.stageName(seq);
+		NEW_VECTOR_AND_RASSIGN(source, getstageName, contactDetailsType::stageName_type, contactDetailsType::stageName_sequence, std::vector<ebucoreTextualAnnotation*>, mapTextualAnnotation, dest, stageName)
 	}
 
 	// [TODO] We skip RelatedContacts for now, KLV mapping refers to Contacts, while the XSD refers to entities
@@ -162,10 +174,15 @@ void mapContact(ebucoreContact *source, contactDetailsType& dest) {
 
 }
 
-void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest) {
+void mapOrganisationDepartment(ebucoreOrganisationDepartment *source, organisationDepartment& dest) {
+	if (source->havedepartmentName())
+		dest = source->getdepartmentName();
+	SIMPLE_RMAP_OPTIONAL(source, havedepartmentId, getdepartmentId, dest, departmentId)
+}
 
-	SIMPLE_RMAP(source, getorganisationName, dest, organisationName)
-	SIMPLE_RMAP_OPTIONAL(source, haveorganisationDepartment, getorganisationDepartment, dest, organisationDepartment)
+void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest) {
+	dest.organisationName().push_back(source->getorganisationName());
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haveorganisationDepartment, getorganisationDepartment, organisationDepartment, mapOrganisationDepartment, dest, organisationDepartment)
 
 	NEW_VECTOR_AND_RASSIGN(source, getorganisationRelatedContacts, entityType, organisationDetailsType::contacts_sequence, std::vector<ebucoreEntity*>, mapEntity, dest, contacts)
 	NEW_VECTOR_AND_RASSIGN(source, getorganisationDetails, detailsType, organisationDetailsType::details_sequence, std::vector<ebucoreContactDetails*>, mapDetails, dest, details)
@@ -194,9 +211,7 @@ void mapEntity(ebucoreEntity *source, entityType& dest) {
 	}
 
 	if (source->haveentityOrganisation()) {
-		std::auto_ptr<entityType::organisationDetails_type> p( new entityType::organisationDetails_type("") );
-		mapOrganisation(source->getentityOrganisation(), *(p.get()) );
-		dest.organisationDetails(p);
+		NEW_VECTOR_AND_RASSIGN(source, getentityOrganisation, organisationDetailsType, entityType::organisationDetails_sequence, std::vector<ebucoreOrganisation*>, mapOrganisation, dest, organisationDetails)
 	}
 
 	// [TODO] The KLV mapping lists a single role, while the XSD specifies a sequence
@@ -275,8 +290,13 @@ xml_schema::idrefs* convert_idrefs(const std::string& source) {
 }
 
 void mapTitle(ebucoreTitle *source, titleType& dest) {
-	SIMPLE_RMAP(source, gettitleValue, dest, title)
-	SIMPLE_RMAP(source, gettitleLanguage, dest, title().lang)
+	std::auto_ptr<titleType::title_type> p ( new titleType::title_type(source->gettitleValue()) );
+	p->lang() = source->gettitleLanguage();
+	dest.title().push_back(p);
+
+	//SIMPLE_RMAP(source, gettitleValue, dest, title)
+	//SIMPLE_RMAP(source, gettitleLanguage, dest, title().lang)
+	SIMPLE_RMAP_OPTIONAL(source, havetitleNote, gettitleNote, dest, note)
 	if (source->havetitleAttributionDate()) {
 		std::auto_ptr<ebuCoreMainType::dateLastModified_type> dp( convert_timestamp_date(source->gettitleAttributionDate()));
 		dest.attributiondate().set(dp);
@@ -284,8 +304,12 @@ void mapTitle(ebucoreTitle *source, titleType& dest) {
 }
 
 void mapAlternativeTitle(ebucoreAlternativeTitle *source, alternativeTitleType& dest) {
-	SIMPLE_RMAP(source, getalternativeTitleValue, dest, title)
-	SIMPLE_RMAP(source, getalternativeTitleLanguage, dest, title().lang)
+	std::auto_ptr<alternativeTitleType::title_type> p ( new alternativeTitleType::title_type(source->getalternativeTitleValue()) );
+	p->lang() = source->getalternativeTitleLanguage();
+	dest.title().push_back(p);
+	
+	//SIMPLE_RMAP(source, getalternativeTitleValue, dest, title)
+	//SIMPLE_RMAP(source, getalternativeTitleLanguage, dest, title().lang)
 
 	ebucoreTypeGroup* tg = source->getalternativeTitleTypeGroup();
 	ebucoreStatusGroup* sg = source->getalternativeTitleStatusGroup();
@@ -341,8 +365,8 @@ void mapSubject(ebucoreSubject *source, subjectType& dest) {
 
 std::auto_ptr<ratingType> mapRating(ebucoreRating *source) {
 
-	std::auto_ptr<entityType> tp( new entityType() );
-	mapEntity(source->getratingProviderEntity(), *tp);
+	entityType *e = new entityType();
+	mapEntity(source->getratingProviderEntity(), *e);
 
 	// a new ratingType requires a number of values directly in its constructor, 
 	// so we need something a little different
@@ -350,7 +374,7 @@ std::auto_ptr<ratingType> mapRating(ebucoreRating *source) {
 		source->getratingValue(),
 		source->getratingScaleMinValue(),
 		source->getratingScaleMaxValue(), 
-		tp) );
+		*e) );
 
 	RMAP_TYPE_GROUP(source->getratingTypeGroup(), (*dest), ratingType::typeDefinition_type, ratingType::typeLabel_type, ratingType::typeLink_type)
 	RMAP_FORMAT_GROUP(source->getratingFormatGroup(), (*dest), ratingType::formatDefinition_type, ratingType::formatLabel_type, ratingType::formatLink_type)
@@ -365,8 +389,8 @@ void mapVersion(ebucoreVersion *source, coreMetadataType::version_type& dest) {
 void mapLanguage(ebucoreLanguage *source, languageType& dest) {
 	SIMPLE_RMAP(source, getlanguageName, dest, language)
 	SIMPLE_RMAP(source, getlanguageCode, dest, language().get().lang)
-	
-	RMAP_TYPE_GROUP( source->getlanguagePurposeSet()->getlanguagePurposeTypeGroup(), 
+
+	RMAP_TYPE_GROUP( source->getlanguagePurposeSet(), 
 		dest, languageType::typeDefinition_type, languageType::typeLabel_type, languageType::typeLink_type)
 }
 
@@ -450,30 +474,31 @@ void mapDate(ebucoreDate* source, dateType& dest) {
 	}
 }
 
+void mapPeriodOfTime(ebucorePeriodOfTime* source, PeriodOfTime& dest) {
+	SIMPLE_RMAP_OPTIONAL(source, haveperiodId, getperiodId, dest, period)
+	if (source->haveperiodName()) 
+		dest.periodName( std::auto_ptr<PeriodOfTime::periodName_type>( new PeriodOfTime::periodName_type( source->getperiodName() ) ) );
+	if (source->haveperiodStartYear())
+		dest.startYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(source->getperiodStartYear()) ) );
+	if (source->haveperiodStartDate())
+		dest.startDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(source->getperiodStartDate()) ) );
+	if (source->haveperiodStartTime())
+		dest.startTime( std::auto_ptr<xml_schema::time>( convert_timestamp_time(source->getperiodStartTime()) ) );
+	if (source->haveperiodEndYear())
+		dest.endYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(source->getperiodEndYear()) ) );
+	if (source->haveperiodEndDate())
+		dest.endDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(source->getperiodEndDate()) ) );
+	if (source->haveperiodEndTime())
+		dest.endTime( std::auto_ptr<xml_schema::time>( convert_timestamp_time(source->getperiodEndTime()) ) );
+}
+
 void mapTemporal(ebucoreTemporal *source, temporal& dest) {
 	// if there is more that a single period of time, we only use the first one
 	// [FIX?] Updated cardinality, source has only max 1 periodoftime
 	if (source->haveperiodOfTime()) {
-		ebucorePeriodOfTime *pot = source->getperiodOfTime();
-		std::auto_ptr<PeriodOfTime> p(new PeriodOfTime());
-
-		SIMPLE_RMAP_OPTIONAL(pot, haveperiodId, getperiodId, dest, periodId)
-		SIMPLE_RMAP_OPTIONAL_POINTER(pot, haveperiodName, getperiodName, p, period)
-		if (pot->haveperiodStartYear())
-			p->startYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(pot->getperiodStartYear()) ) );
-		if (pot->haveperiodStartDate())
-			p->startDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(pot->getperiodStartDate()) ) );
-		if (pot->haveperiodStartTime())
-			p->startTime( std::auto_ptr<xml_schema::time>( convert_timestamp_time(pot->getperiodStartTime()) ) );
-		if (pot->haveperiodEndYear())
-			p->endYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(pot->getperiodEndYear()) ) );
-		if (pot->haveperiodEndDate())
-			p->endDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(pot->getperiodEndDate()) ) );
-		if (pot->haveperiodEndTime())
-			p->endTime( std::auto_ptr<xml_schema::time>( convert_timestamp_time(pot->getperiodEndTime()) ) );
-
-		RMAP_TYPE_GROUP(pot->getperiodKindGroup(), dest, temporal::typeDefinition_type, temporal::typeLabel_type, temporal::typeLink_type)		
+		NEW_VECTOR_AND_RASSIGN(source, getperiodOfTime, PeriodOfTime, temporal::PeriodOfTime_sequence, std::vector<ebucorePeriodOfTime*>, mapPeriodOfTime, dest, PeriodOfTime)
 	}
+	RMAP_TYPE_GROUP(source->gettemporalTypeGroup(), dest, temporal::typeDefinition_type, temporal::typeLabel_type, temporal::typeLink_type)		
 }
 
 void mapSpatial(ebucoreSpatial *source, spatial& dest) {
@@ -554,35 +579,39 @@ void mapRights(ebucoreRights *source, rightsType& dest) {
 	RMAP_TYPE_GROUP(source->getrightsKindGroup() , dest, rightsType::typeDefinition_type, rightsType::typeLabel_type, rightsType::typeLink_type)
 }
 
-void mapPublicationHistory(std::vector<ebucorePublicationHistoryEvent*>& source, publicationHistoryType& dest) {
-	for (std::vector<ebucorePublicationHistoryEvent*>::iterator it = source.begin(); it != source.end(); it++) {
-		ebucorePublicationHistoryEvent *event = *it;
-		if (event->getfirstPublicationFlag()) {
-			if (event->havepublicationDate()) {
-				dest.firstPublicationDate( std::auto_ptr<publicationHistoryType::firstPublicationDate_type>( convert_timestamp_date(event->getpublicationDate()) ));
-			}
-			if (event->havepublicationTime()) {
-				dest.firstPublicationTime( std::auto_ptr<publicationHistoryType::firstPublicationTime_type>( convert_timestamp_time(event->getpublicationTime()) ));
-			}
-			if (event->havepublicationChannel()) {
-				dest.firstPublicationChannel() = event->getpublicationChannel();
-				SIMPLE_RMAP_OPTIONAL(event, havepublicationChannel, getpublicationChannel, dest, firstPublicationChannel)
-			}
-		} else {
-			if (event->havepublicationDate()) {
-				dest.repeatDate().push_back( std::auto_ptr<publicationHistoryType::repeatDate_type>( convert_timestamp_date(event->getpublicationDate())) );
-			}
-			if (event->havepublicationTime()) {
-				dest.repeatTime().push_back( std::auto_ptr<publicationHistoryType::repeatTime_type>( convert_timestamp_time(event->getpublicationTime())) );
-			}
-			if (event->havepublicationChannel()) {
-				std::auto_ptr<repeatChannel> p (new repeatChannel());
-				(*p) = event->getpublicationChannel();
-				SIMPLE_RMAP_OPTIONAL_POINTER(event, havepublicationFormatIDRef, getpublicationFormatIDRef, p, formatIdRef)
-				dest.repeatChannel().push_back(p);
-			}
-		}
+void mapPublicationHistoryEvent(ebucorePublicationHistoryEvent* source, publicationEvent& dest) {
+
+	SIMPLE_RMAP(source, getfirstPublicationFlag, dest, firstShowing)
+
+	if (source->havepublicationDate()) {
+		dest.publicationDate( std::auto_ptr<publicationEvent::publicationDate_type>( convert_timestamp_date(source->getpublicationDate())) );
 	}
+	if (source->havepublicationTime()) {
+		dest.publicationTime( std::auto_ptr<publicationEvent::publicationTime_type>( convert_timestamp_time(source->getpublicationTime())) );
+	}
+	if (source->havepublicationChannel()) {
+		dest.publicationChannel( std::auto_ptr<publicationEvent::publicationChannel_type>( new publicationEvent::publicationChannel_type(source->getpublicationChannel()) ) );
+	}
+	if (source->havepublicationService()) {
+		dest.publicationService( std::auto_ptr<publicationEvent::publicationService_type>( new publicationEvent::publicationService_type(source->getpublicationService()) ) );
+	}
+	if (source->havepublicationMedium()) {
+		std::auto_ptr<publicationEvent::publicationMedium_type> p ( new publicationEvent::publicationMedium_type() );
+		p->typeLabel() = source->getpublicationMedium();
+		dest.publicationMedium(p);
+	}
+
+	//SIMPLE_RMAP_OPTIONAL_POINTER(event, havepublicationFormatIDRef, getpublicationFormatIDRef, p, formatIdRef)
+}
+
+void mapPublicationHistory(std::vector<ebucorePublicationHistoryEvent*>& source, publicationHistoryType& dest) {
+	publicationHistoryType::publicationEvent_sequence vec_dest;
+	for (std::vector<ebucorePublicationHistoryEvent*>::iterator it = source.begin(); it != source.end(); it++) {
+		std::auto_ptr<publicationEvent> p( new publicationEvent() );
+		mapPublicationHistoryEvent(*it, *p);
+		vec_dest.push_back(p);
+	}
+	dest.publicationEvent(vec_dest);
 }
 
 void mapCustomRelation(ebucoreCustomRelation *source, relationType& dest) {
@@ -595,8 +624,8 @@ void mapCustomRelation(ebucoreCustomRelation *source, relationType& dest) {
 }
 
 void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
-	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, gettitle, titleType, coreMetadataType::title_sequence, std::vector<ebucoreTitle*>, mapTitle, dest, title)
-	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getalternativeTitle, alternativeTitleType, coreMetadataType::alternativeTitle_sequence, 
+	NEW_VECTOR_AND_RASSIGN(source, gettitle, titleType, coreMetadataType::title_sequence, std::vector<ebucoreTitle*>, mapTitle, dest, title)
+	NEW_VECTOR_AND_RASSIGN(source, getalternativeTitle, alternativeTitleType, coreMetadataType::alternativeTitle_sequence, 
 		std::vector<ebucoreAlternativeTitle*>, mapAlternativeTitle, dest, alternativeTitle)
 	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getdescription, descriptionType, coreMetadataType::description_sequence, std::vector<ebucoreDescription*>, mapDescription, dest, description)
 

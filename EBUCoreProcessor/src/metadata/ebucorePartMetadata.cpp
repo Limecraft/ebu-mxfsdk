@@ -29,37 +29,29 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCOREADDRESSLINE_H__
-#define __MXFPP_EBUCOREADDRESSLINE_H__
-
-
-
-#include <metadata/base/ebucoreAddressLineBase.h>
-
-using namespace mxfpp;
-
-namespace EBUCore { namespace KLV
-{
-
-
-class ebucoreAddressLine : public ebucoreAddressLineBase
-{
-public:
-    friend class MetadataSetFactory<ebucoreAddressLine>;
-
-public:
-    ebucoreAddressLine(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreAddressLine();
-
-
-
-
-protected:
-    ebucoreAddressLine(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
-};
-
-
-}};
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
+
+#include <libMXF++/MXF.h>
+#include <metadata/EBUCoreDMS++.h>
+
+
+using namespace std;
+using namespace mxfpp;
+using namespace EBUCore::KLV;
+
+
+
+ebucorePartMetadata::ebucorePartMetadata(HeaderMetadata *headerMetadata)
+: ebucorePartMetadataBase(headerMetadata)
+{}
+
+ebucorePartMetadata::ebucorePartMetadata(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: ebucorePartMetadataBase(headerMetadata, cMetadataSet)
+{}
+
+ebucorePartMetadata::~ebucorePartMetadata()
+{}
+
+

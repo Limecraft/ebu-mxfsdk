@@ -66,8 +66,23 @@ std::string ebucoreVersionBase::getversionValue() const
     return getStringItem(&MXF_ITEM_K(ebucoreVersion, versionValue));
 }
 
+bool ebucoreVersionBase::haveversionLanguage() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreVersion, versionLanguage));
+}
+
+std::string ebucoreVersionBase::getversionLanguage() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreVersion, versionLanguage));
+}
+
 void ebucoreVersionBase::setversionValue(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreVersion, versionValue), value);
+}
+
+void ebucoreVersionBase::setversionLanguage(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreVersion, versionLanguage), value);
 }
 

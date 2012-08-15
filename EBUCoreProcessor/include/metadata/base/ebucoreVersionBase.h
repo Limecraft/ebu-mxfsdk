@@ -56,11 +56,14 @@ public:
    // getters
 
    std::string getversionValue() const;
+   bool haveversionLanguage() const;
+   std::string getversionLanguage() const;
 
 
    // setters
 
    void setversionValue(std::string value);
+   void setversionLanguage(std::string value);
 
 
 protected:

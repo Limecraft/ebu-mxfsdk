@@ -71,11 +71,11 @@ std::string ebucoreLanguageBase::getlanguageCode() const
     return getStringItem(&MXF_ITEM_K(ebucoreLanguage, languageCode));
 }
 
-ebucoreLanguagePurpose* ebucoreLanguageBase::getlanguagePurposeSet() const
+ebucoreTypeGroup* ebucoreLanguageBase::getlanguagePurposeSet() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreLanguage, languagePurposeSet)));
-    MXFPP_CHECK(dynamic_cast<ebucoreLanguagePurpose*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreLanguagePurpose*>(obj.release());
+    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
 void ebucoreLanguageBase::setlanguageName(std::string value)
@@ -88,7 +88,7 @@ void ebucoreLanguageBase::setlanguageCode(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreLanguage, languageCode), value);
 }
 
-void ebucoreLanguageBase::setlanguagePurposeSet(ebucoreLanguagePurpose* value)
+void ebucoreLanguageBase::setlanguagePurposeSet(ebucoreTypeGroup* value)
 {
     setStrongRefItem(&MXF_ITEM_K(ebucoreLanguage, languagePurposeSet), value);
 }

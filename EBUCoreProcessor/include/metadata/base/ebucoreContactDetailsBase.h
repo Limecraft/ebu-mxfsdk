@@ -56,7 +56,7 @@ public:
    // getters
 
    bool haveemailAddress() const;
-   std::string getemailAddress() const;
+   std::vector<ebucoreTextualAnnotation*> getemailAddress() const;
    bool havewebAddress() const;
    std::string getwebAddress() const;
    bool havetelephoneNumber() const;
@@ -70,7 +70,8 @@ public:
 
    // setters
 
-   void setemailAddress(std::string value);
+   void setemailAddress(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendemailAddress(ebucoreTextualAnnotation* value);
    void setwebAddress(std::string value);
    void settelephoneNumber(std::string value);
    void setmobileTelephoneNumber(std::string value);

@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
-#define __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
+#ifndef __MXFPP_EBUCOREORGANISATIONDEPARTMENT_BASE_H__
+#define __MXFPP_EBUCOREORGANISATIONDEPARTMENT_BASE_H__
 
 
 
@@ -42,21 +42,33 @@ namespace EBUCore { namespace KLV
 {
 
 
-class ebucoreLanguagePurposeBase : public InterchangeObject
+class ebucoreOrganisationDepartmentBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucoreLanguagePurposeBase>;
+    friend class MetadataSetFactory<ebucoreOrganisationDepartmentBase>;
     static const mxfKey setKey;
 
 public:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreLanguagePurposeBase();
+    ebucoreOrganisationDepartmentBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreOrganisationDepartmentBase();
 
 
+   // getters
+
+   bool havedepartmentId() const;
+   std::string getdepartmentId() const;
+   bool havedepartmentName() const;
+   std::string getdepartmentName() const;
+
+
+   // setters
+
+   void setdepartmentId(std::string value);
+   void setdepartmentName(std::string value);
 
 
 protected:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreOrganisationDepartmentBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

@@ -29,38 +29,60 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
-#define __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
-
-
-
-#include <libMXF++/metadata/InterchangeObject.h>
-
-using namespace mxfpp;
-
-namespace EBUCore { namespace KLV
-{
-
-
-class ebucoreLanguagePurposeBase : public InterchangeObject
-{
-public:
-    friend class MetadataSetFactory<ebucoreLanguagePurposeBase>;
-    static const mxfKey setKey;
-
-public:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreLanguagePurposeBase();
-
-
-
-
-protected:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
-};
-
-
-}};
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
+
+#include <memory>
+
+#include <libMXF++/MXF.h>
+#include <metadata/EBUCoreDMS++.h>
+
+
+using namespace std;
+using namespace mxfpp;
+using namespace EBUCore::KLV;
+
+
+const mxfKey ebucoreTextualAnnotationBase::setKey = MXF_SET_K(ebucoreTextualAnnotation);
+
+
+ebucoreTextualAnnotationBase::ebucoreTextualAnnotationBase(HeaderMetadata *headerMetadata)
+: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
+{
+    headerMetadata->add(this);
+}
+
+ebucoreTextualAnnotationBase::ebucoreTextualAnnotationBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: InterchangeObject(headerMetadata, cMetadataSet)
+{}
+
+ebucoreTextualAnnotationBase::~ebucoreTextualAnnotationBase()
+{}
+
+
+std::string ebucoreTextualAnnotationBase::gettext() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreTextualAnnotation, text));
+}
+
+bool ebucoreTextualAnnotationBase::havetextLanguage() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTextualAnnotation, textLanguage));
+}
+
+std::string ebucoreTextualAnnotationBase::gettextLanguage() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreTextualAnnotation, textLanguage));
+}
+
+void ebucoreTextualAnnotationBase::settext(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreTextualAnnotation, text), value);
+}
+
+void ebucoreTextualAnnotationBase::settextLanguage(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreTextualAnnotation, textLanguage), value);
+}
+
