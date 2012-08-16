@@ -81,9 +81,11 @@ bool ebucoreOrganisationBase::haveorganisationDepartment() const
     return haveItem(&MXF_ITEM_K(ebucoreOrganisation, organisationDepartment));
 }
 
-std::string ebucoreOrganisationBase::getorganisationDepartment() const
+ebucoreOrganisationDepartment* ebucoreOrganisationBase::getorganisationDepartment() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationDepartment));
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreOrganisation, organisationDepartment)));
+    MXFPP_CHECK(dynamic_cast<ebucoreOrganisationDepartment*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreOrganisationDepartment*>(obj.release());
 }
 
 ebucoreTypeGroup* ebucoreOrganisationBase::getorganisationType() const
@@ -132,9 +134,9 @@ void ebucoreOrganisationBase::setorganisationCode(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationCode), value);
 }
 
-void ebucoreOrganisationBase::setorganisationDepartment(std::string value)
+void ebucoreOrganisationBase::setorganisationDepartment(ebucoreOrganisationDepartment* value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationDepartment), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreOrganisation, organisationDepartment), value);
 }
 
 void ebucoreOrganisationBase::setorganisationType(ebucoreTypeGroup* value)

@@ -29,12 +29,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCOREADDRESSLINE_H__
-#define __MXFPP_EBUCOREADDRESSLINE_H__
+#ifndef __MXFPP_EBUCOREORGANISATIONDEPARTMENT_H__
+#define __MXFPP_EBUCOREORGANISATIONDEPARTMENT_H__
 
 
 
-#include <metadata/base/ebucoreAddressLineBase.h>
+#include <metadata/base/ebucoreOrganisationDepartmentBase.h>
 
 using namespace mxfpp;
 
@@ -42,20 +42,20 @@ namespace EBUCore { namespace KLV
 {
 
 
-class ebucoreAddressLine : public ebucoreAddressLineBase
+class ebucoreOrganisationDepartment : public ebucoreOrganisationDepartmentBase
 {
 public:
-    friend class MetadataSetFactory<ebucoreAddressLine>;
+    friend class MetadataSetFactory<ebucoreOrganisationDepartment>;
 
 public:
-    ebucoreAddressLine(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreAddressLine();
+    ebucoreOrganisationDepartment(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreOrganisationDepartment();
 
 
 
 
 protected:
-    ebucoreAddressLine(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreOrganisationDepartment(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

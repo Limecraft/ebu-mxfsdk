@@ -43,15 +43,15 @@ using namespace EBUCore::KLV;
 
 
 
-ebucoreAddressLine::ebucoreAddressLine(HeaderMetadata *headerMetadata)
-: ebucoreAddressLineBase(headerMetadata)
+ebucorePartMetadata::ebucorePartMetadata(HeaderMetadata *headerMetadata)
+: ebucorePartMetadataBase(headerMetadata)
 {}
 
-ebucoreAddressLine::ebucoreAddressLine(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: ebucoreAddressLineBase(headerMetadata, cMetadataSet)
+ebucorePartMetadata::ebucorePartMetadata(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: ebucorePartMetadataBase(headerMetadata, cMetadataSet)
 {}
 
-ebucoreAddressLine::~ebucoreAddressLine()
+ebucorePartMetadata::~ebucorePartMetadata()
 {}
 
 

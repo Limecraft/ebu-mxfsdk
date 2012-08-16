@@ -44,30 +44,30 @@ using namespace mxfpp;
 using namespace EBUCore::KLV;
 
 
-const mxfKey ebucoreAddressLineBase::setKey = MXF_SET_K(ebucoreAddressLine);
+const mxfKey ebucoreTechnicalAttributeBooleanBase::setKey = MXF_SET_K(ebucoreTechnicalAttributeBoolean);
 
 
-ebucoreAddressLineBase::ebucoreAddressLineBase(HeaderMetadata *headerMetadata)
-: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
+ebucoreTechnicalAttributeBooleanBase::ebucoreTechnicalAttributeBooleanBase(HeaderMetadata *headerMetadata)
+: ebucoreTypeGroup(headerMetadata, headerMetadata->createCSet(&setKey))
 {
     headerMetadata->add(this);
 }
 
-ebucoreAddressLineBase::ebucoreAddressLineBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: InterchangeObject(headerMetadata, cMetadataSet)
+ebucoreTechnicalAttributeBooleanBase::ebucoreTechnicalAttributeBooleanBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: ebucoreTypeGroup(headerMetadata, cMetadataSet)
 {}
 
-ebucoreAddressLineBase::~ebucoreAddressLineBase()
+ebucoreTechnicalAttributeBooleanBase::~ebucoreTechnicalAttributeBooleanBase()
 {}
 
 
-std::string ebucoreAddressLineBase::getaddressLine() const
+bool ebucoreTechnicalAttributeBooleanBase::gettechnicalAttributeBooleanValue() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreAddressLine, addressLine));
+    return getBooleanItem(&MXF_ITEM_K(ebucoreTechnicalAttributeBoolean, technicalAttributeBooleanValue));
 }
 
-void ebucoreAddressLineBase::setaddressLine(std::string value)
+void ebucoreTechnicalAttributeBooleanBase::settechnicalAttributeBooleanValue(bool value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreAddressLine, addressLine), value);
+    setBooleanItem(&MXF_ITEM_K(ebucoreTechnicalAttributeBoolean, technicalAttributeBooleanValue), value);
 }
 

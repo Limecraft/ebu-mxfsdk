@@ -93,14 +93,17 @@ namespace EBUCore {
 		dest.formatLink().set( std::auto_ptr<linkType> ( new linkType( source->getformatGroupLink() ) ));	\
 	}
 
+void mapTextualAnnotation(ebucoreTextualAnnotation *source, std::string& dest) {
+	dest = source->gettext();
+}
+
 void mapAddress(ebucoreAddress *source, addressType& dest) {
-	// atm, only a single address line is defined in KLV mapping
 	if (source->haveaddressLines()) {
 		addressType::addressLine_sequence lines;
-		std::vector<ebucoreAddressLine*> source_vec = source->getaddressLines();
-		for (std::vector<ebucoreAddressLine*>::iterator it = source_vec.begin(); it != source_vec.end(); it++) {
+		std::vector<ebucoreTextualAnnotation*> source_vec = source->getaddressLines();
+		for (std::vector<ebucoreTextualAnnotation*>::iterator it = source_vec.begin(); it != source_vec.end(); it++) {
 			std::auto_ptr<detailsType> p( new detailsType() );
-			lines.push_back((*it)->getaddressLine());
+			lines.push_back((*it)->gettext());
 		}
 		dest.addressLine(lines);
 	}
@@ -120,7 +123,15 @@ void mapAddress(ebucoreAddress *source, addressType& dest) {
 
 void mapDetails(ebucoreContactDetails *source, detailsType& dest) {
 
-	SIMPLE_RMAP_OPTIONAL(source, haveemailAddress, getemailAddress, dest, emailAddress)
+	// [TODO] EC1.3 XSD has only a single email addresss
+	if (source->haveemailAddress()) {
+		std::vector<ebucoreTextualAnnotation*>& v = source->getemailAddress();
+		if (v.size() > 0) {
+			std::auto_ptr<detailsType::emailAddress_type> p( new detailsType::emailAddress_type() );
+			mapTextualAnnotation(v[0], *p);
+		}
+	}
+
 	SIMPLE_RMAP_OPTIONAL(source, havewebAddress, getwebAddress, dest, webAddress)
 
 	// map address
@@ -142,17 +153,21 @@ void mapContact(ebucoreContact *source, contactDetailsType& dest) {
 		dest.name() = source->getgivenName();
 	}
 
-	SIMPLE_RMAP_OPTIONAL(source, haveotherGivenName, getotherGivenName, dest, username)
+	// [TODO] EC1.3 XSD only has a single username
+	if (source->haveusername()) {
+		std::vector<ebucoreTextualAnnotation*>& v = source->getusername();
+		if (v.size() > 0) {
+			std::auto_ptr<contactDetailsType::username_type> p( new contactDetailsType::username_type() );
+			mapTextualAnnotation(v[0], *p);
+		}
+	}
+
 	SIMPLE_RMAP_OPTIONAL(source, haveoccupation, getoccupation, dest, occupation)
 
 	// map contactdetails
 	NEW_VECTOR_AND_RASSIGN(source, getcontactDetails, detailsType, contactDetailsType::details_sequence, std::vector<ebucoreContactDetails*>, mapDetails, dest, details)
 
-	if (source->havestageName()) {
-		contactDetailsType::stageName_sequence seq;
-		seq.push_back( source->getstageName() );
-		dest.stageName(seq);
-	}
+	NEW_VECTOR_AND_RASSIGN(source, getstageName, contactDetailsType::stageName_type, contactDetailsType::stageName_sequence, std::vector<ebucoreTextualAnnotation*>, mapTextualAnnotation, dest, stageName)
 
 	// [TODO] We skip RelatedContacts for now, KLV mapping refers to Contacts, while the XSD refers to entities
 	// [FIX?] Updated to entityType
@@ -162,10 +177,16 @@ void mapContact(ebucoreContact *source, contactDetailsType& dest) {
 
 }
 
+void mapOrganisationDepartment(ebucoreOrganisationDepartment *source, organisationDepartment& dest) {
+	if (source->havedepartmentName())
+	dest = source->getdepartmentName();
+	SIMPLE_RMAP_OPTIONAL(source, havedepartmentId, getdepartmentId, dest, departmentId)
+}
+
 void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest) {
 
 	SIMPLE_RMAP(source, getorganisationName, dest, organisationName)
-	SIMPLE_RMAP_OPTIONAL(source, haveorganisationDepartment, getorganisationDepartment, dest, organisationDepartment)
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haveorganisationDepartment, getorganisationDepartment, organisationDepartment, mapOrganisationDepartment, dest, organisationDepartment)
 
 	NEW_VECTOR_AND_RASSIGN(source, getorganisationRelatedContacts, entityType, organisationDetailsType::contacts_sequence, std::vector<ebucoreEntity*>, mapEntity, dest, contacts)
 	NEW_VECTOR_AND_RASSIGN(source, getorganisationDetails, detailsType, organisationDetailsType::details_sequence, std::vector<ebucoreContactDetails*>, mapDetails, dest, details)
@@ -193,10 +214,13 @@ void mapEntity(ebucoreEntity *source, entityType& dest) {
 		NEW_VECTOR_AND_RASSIGN(source, getentityContact, contactDetailsType, entityType::contactDetails_sequence, std::vector<ebucoreContact*>, mapContact, dest, contactDetails)
 	}
 
+	// [TODO] EC1.3 XSD has only a single email organisation
 	if (source->haveentityOrganisation()) {
-		std::auto_ptr<entityType::organisationDetails_type> p( new entityType::organisationDetails_type("") );
-		mapOrganisation(source->getentityOrganisation(), *(p.get()) );
-		dest.organisationDetails(p);
+		std::vector<ebucoreOrganisation*>& v = source->getentityOrganisation();
+		if (v.size() > 0) {
+			std::auto_ptr<entityType::organisationDetails_type> p( new entityType::organisationDetails_type("") );
+			mapOrganisation(v[0], *p);
+		}
 	}
 
 	// [TODO] The KLV mapping lists a single role, while the XSD specifies a sequence
@@ -365,8 +389,8 @@ void mapVersion(ebucoreVersion *source, coreMetadataType::version_type& dest) {
 void mapLanguage(ebucoreLanguage *source, languageType& dest) {
 	SIMPLE_RMAP(source, getlanguageName, dest, language)
 	SIMPLE_RMAP(source, getlanguageCode, dest, language().get().lang)
-	
-	RMAP_TYPE_GROUP( source->getlanguagePurposeSet()->getlanguagePurposeTypeGroup(), 
+
+	RMAP_TYPE_GROUP( source->getlanguagePurposeSet(),
 		dest, languageType::typeDefinition_type, languageType::typeLabel_type, languageType::typeLink_type)
 }
 
@@ -450,30 +474,40 @@ void mapDate(ebucoreDate* source, dateType& dest) {
 	}
 }
 
+void mapPeriodOfTime(ebucorePeriodOfTime* source, PeriodOfTime& dest) {
+	SIMPLE_RMAP_OPTIONAL(source, haveperiodId, getperiodId, dest, period)
+	if (source->haveperiodName())
+		dest.period() = source->getperiodName();
+	if (source->haveperiodStartYear())
+		dest.startYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(source->getperiodStartYear()) ) );
+	if (source->haveperiodStartDate())
+		dest.startDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(source->getperiodStartDate()) ) );
+	if (source->haveperiodStartTime())
+		dest.startTime( std::auto_ptr<xml_schema::time>( convert_timestamp_time(source->getperiodStartTime()) ) );
+	if (source->haveperiodEndYear())
+		dest.endYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(source->getperiodEndYear()) ) );
+	if (source->haveperiodEndDate())
+		dest.endDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(source->getperiodEndDate()) ) );
+	if (source->haveperiodEndTime())
+		dest.endTime( std::auto_ptr<xml_schema::time>( convert_timestamp_time(source->getperiodEndTime()) ) );
+}
+
 void mapTemporal(ebucoreTemporal *source, temporal& dest) {
-	// if there is more that a single period of time, we only use the first one
-	// [FIX?] Updated cardinality, source has only max 1 periodoftime
+
+	// [TODO] EC1.3 XSD has only a single periodoftime
 	if (source->haveperiodOfTime()) {
-		ebucorePeriodOfTime *pot = source->getperiodOfTime();
-		std::auto_ptr<PeriodOfTime> p(new PeriodOfTime());
-
-		SIMPLE_RMAP_OPTIONAL(pot, haveperiodId, getperiodId, dest, periodId)
-		SIMPLE_RMAP_OPTIONAL_POINTER(pot, haveperiodName, getperiodName, p, period)
-		if (pot->haveperiodStartYear())
-			p->startYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(pot->getperiodStartYear()) ) );
-		if (pot->haveperiodStartDate())
-			p->startDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(pot->getperiodStartDate()) ) );
-		if (pot->haveperiodStartTime())
-			p->startTime( std::auto_ptr<xml_schema::time>( convert_timestamp_time(pot->getperiodStartTime()) ) );
-		if (pot->haveperiodEndYear())
-			p->endYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(pot->getperiodEndYear()) ) );
-		if (pot->haveperiodEndDate())
-			p->endDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(pot->getperiodEndDate()) ) );
-		if (pot->haveperiodEndTime())
-			p->endTime( std::auto_ptr<xml_schema::time>( convert_timestamp_time(pot->getperiodEndTime()) ) );
-
-		RMAP_TYPE_GROUP(pot->getperiodKindGroup(), dest, temporal::typeDefinition_type, temporal::typeLabel_type, temporal::typeLink_type)		
+		std::vector<ebucorePeriodOfTime*>& v = source->getperiodOfTime();
+		if (v.size() > 0) {
+			std::auto_ptr<PeriodOfTime> p( new PeriodOfTime() );
+			mapPeriodOfTime(v[0], *p);
+			// [TODO] In EC1.3 XSD periodid belongs to temporal, not to the periodoftime
+			// set periodid if present
+			if (v[0]->haveperiodId())
+				dest.periodId() = v[0]->getperiodId();
+		}
 	}
+
+	RMAP_TYPE_GROUP(source->gettemporalTypeGroup(), dest, temporal::typeDefinition_type, temporal::typeLabel_type, temporal::typeLink_type)	
 }
 
 void mapSpatial(ebucoreSpatial *source, spatial& dest) {

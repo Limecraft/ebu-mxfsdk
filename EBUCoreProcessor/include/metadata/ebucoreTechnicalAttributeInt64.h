@@ -29,47 +29,37 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#include <memory>
-
-#include <libMXF++/MXF.h>
-#include <metadata/EBUCoreDMS++.h>
+#ifndef __MXFPP_EBUCORETECHNICALATTRIBUTEINT64_H__
+#define __MXFPP_EBUCORETECHNICALATTRIBUTEINT64_H__
 
 
-using namespace std;
+
+#include <metadata/base/ebucoreTechnicalAttributeInt64Base.h>
+
 using namespace mxfpp;
-using namespace EBUCore::KLV;
 
-
-const mxfKey ebucoreLanguagePurposeBase::setKey = MXF_SET_K(ebucoreLanguagePurpose);
-
-
-ebucoreLanguagePurposeBase::ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata)
-: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
+namespace EBUCore { namespace KLV
 {
-    headerMetadata->add(this);
-}
-
-ebucoreLanguagePurposeBase::ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: InterchangeObject(headerMetadata, cMetadataSet)
-{}
-
-ebucoreLanguagePurposeBase::~ebucoreLanguagePurposeBase()
-{}
 
 
-ebucoreTypeGroup* ebucoreLanguagePurposeBase::getlanguagePurposeTypeGroup() const
+class ebucoreTechnicalAttributeInt64 : public ebucoreTechnicalAttributeInt64Base
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreLanguagePurpose, languagePurposeTypeGroup)));
-    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
-}
+public:
+    friend class MetadataSetFactory<ebucoreTechnicalAttributeInt64>;
 
-void ebucoreLanguagePurposeBase::setlanguagePurposeTypeGroup(ebucoreTypeGroup* value)
-{
-    setStrongRefItem(&MXF_ITEM_K(ebucoreLanguagePurpose, languagePurposeTypeGroup), value);
-}
+public:
+    ebucoreTechnicalAttributeInt64(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreTechnicalAttributeInt64();
 
+
+
+
+protected:
+    ebucoreTechnicalAttributeInt64(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+};
+
+
+}};
+
+
+#endif

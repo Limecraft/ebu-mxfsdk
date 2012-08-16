@@ -91,9 +91,16 @@ bool ebucoreContactBase::haveotherGivenName() const
     return haveItem(&MXF_ITEM_K(ebucoreContact, otherGivenName));
 }
 
-std::string ebucoreContactBase::getotherGivenName() const
+std::vector<ebucoreTextualAnnotation*> ebucoreContactBase::getotherGivenName() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreContact, otherGivenName));
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, otherGivenName)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
 }
 
 bool ebucoreContactBase::havesaluation() const
@@ -121,9 +128,16 @@ bool ebucoreContactBase::havestageName() const
     return haveItem(&MXF_ITEM_K(ebucoreContact, stageName));
 }
 
-std::string ebucoreContactBase::getstageName() const
+std::vector<ebucoreTextualAnnotation*> ebucoreContactBase::getstageName() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreContact, stageName));
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, stageName)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
 }
 
 bool ebucoreContactBase::haveoccupation() const
@@ -134,6 +148,23 @@ bool ebucoreContactBase::haveoccupation() const
 std::string ebucoreContactBase::getoccupation() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreContact, occupation));
+}
+
+bool ebucoreContactBase::haveusername() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContact, username));
+}
+
+std::vector<ebucoreTextualAnnotation*> ebucoreContactBase::getusername() const
+{
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, username)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
 }
 
 ebucoreTypeGroup* ebucoreContactBase::getcontactType() const
@@ -182,9 +213,15 @@ void ebucoreContactBase::setgivenName(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreContact, givenName), value);
 }
 
-void ebucoreContactBase::setotherGivenName(std::string value)
+void ebucoreContactBase::setotherGivenName(const std::vector<ebucoreTextualAnnotation*>& value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreContact, otherGivenName), value);
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, otherGivenName), &iter);
+}
+
+void ebucoreContactBase::appendotherGivenName(ebucoreTextualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, otherGivenName), value);
 }
 
 void ebucoreContactBase::setsaluation(std::string value)
@@ -197,14 +234,31 @@ void ebucoreContactBase::setsuffix(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreContact, suffix), value);
 }
 
-void ebucoreContactBase::setstageName(std::string value)
+void ebucoreContactBase::setstageName(const std::vector<ebucoreTextualAnnotation*>& value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreContact, stageName), value);
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, stageName), &iter);
+}
+
+void ebucoreContactBase::appendstageName(ebucoreTextualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, stageName), value);
 }
 
 void ebucoreContactBase::setoccupation(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreContact, occupation), value);
+}
+
+void ebucoreContactBase::setusername(const std::vector<ebucoreTextualAnnotation*>& value)
+{
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, username), &iter);
+}
+
+void ebucoreContactBase::appendusername(ebucoreTextualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, username), value);
 }
 
 void ebucoreContactBase::setcontactType(ebucoreTypeGroup* value)

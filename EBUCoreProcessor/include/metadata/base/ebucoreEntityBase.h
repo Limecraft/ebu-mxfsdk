@@ -59,7 +59,7 @@ public:
    bool haveentityContact() const;
    std::vector<ebucoreContact*> getentityContact() const;
    bool haveentityOrganisation() const;
-   ebucoreOrganisation* getentityOrganisation() const;
+   std::vector<ebucoreOrganisation*> getentityOrganisation() const;
    bool haveentityRole() const;
    std::vector<ebucoreRole*> getentityRole() const;
 
@@ -69,7 +69,8 @@ public:
    void setentityId(mxfUUID value);
    void setentityContact(const std::vector<ebucoreContact*>& value);
    void appendentityContact(ebucoreContact* value);
-   void setentityOrganisation(ebucoreOrganisation* value);
+   void setentityOrganisation(const std::vector<ebucoreOrganisation*>& value);
+   void appendentityOrganisation(ebucoreOrganisation* value);
    void setentityRole(const std::vector<ebucoreRole*>& value);
    void appendentityRole(ebucoreRole* value);
 

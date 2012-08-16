@@ -117,8 +117,9 @@ void mapRole(role& source, ebucoreRole *dest, ObjectModifier* mod = NULL) {
 	dest->setroleType(obj);
 }
 
-void mapAddressLine(std::string source, ebucoreAddressLine *dest, ObjectModifier* mod = NULL) {
-	dest->setaddressLine(source);
+void mapTextualAnnotation(std::string source, ebucoreTextualAnnotation *dest, ObjectModifier* mod = NULL) {
+	/* deal with lang! */
+	dest->settext(source);
 }
 
 void mapAddress(addressType& source, ebucoreAddress *dest, ObjectModifier* mod = NULL) {
@@ -137,7 +138,7 @@ void mapAddress(addressType& source, ebucoreAddress *dest, ObjectModifier* mod =
 	*/
 
 	if (source.addressLine().size() > 0) {
-		NEW_VECTOR_AND_ASSIGN(source, addressLine, ebucoreAddressLine, addressType::addressLine_iterator, mapAddressLine, dest, setaddressLines)
+		NEW_VECTOR_AND_ASSIGN(source, addressLine, ebucoreTextualAnnotation, addressType::addressLine_iterator, mapTextualAnnotation, dest, setaddressLines)
 	}
 	
 	SIMPLE_MAP_OPTIONAL(source, addressTownCity, dest, settownCity)
@@ -166,7 +167,8 @@ void mapDetails(detailsType& source, ebucoreContactDetails *dest, ObjectModifier
 		</sequence>
 		<attributeGroup ref="ebucore:typeGroup"/>
 	*/
-	SIMPLE_MAP_OPTIONAL(source, emailAddress, dest, setemailAddress)
+	// [TODO] EC1.3 XSD has only a single email addresss
+	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, emailAddress, ebucoreTextualAnnotation, mapTextualAnnotation, dest, setemailAddress)
 	SIMPLE_MAP_OPTIONAL(source, webAddress, dest, setwebAddress)
 
 	// map address
@@ -205,22 +207,29 @@ void mapContact(contactDetailsType& source, ebucoreContact *dest, ObjectModifier
 		SIMPLE_MAP_OPTIONAL(source, familyName, dest, setfamilyName)
 	}
 
-	// username -> othergivenname mapping?
-	SIMPLE_MAP_OPTIONAL(source, username, dest, setotherGivenName)
+	// [TODO] EC1.3 XSD only has a single username
+	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, username, ebucoreTextualAnnotation, mapTextualAnnotation, dest, setusername)
+	
+	// [TODO] EC1.3 XSD doesn't have otherGivenName
+	// SIMPLE_MAP_OPTIONAL(source, username, dest, setotherGivenName)
+
 	SIMPLE_MAP_OPTIONAL(source, occupation, dest, setoccupation)
 
 	// map contactdetails
 	NEW_VECTOR_AND_ASSIGN(source, details, ebucoreContactDetails, contactDetailsType::details_sequence::iterator, mapDetails, dest, setcontactDetails)
 
-	if (source.stageName().size() > 0) {
-		dest->setstageName(source.stageName().front());
-	}
+	NEW_VECTOR_AND_ASSIGN(source, stageName, ebucoreTextualAnnotation, contactDetailsType::stageName_iterator, mapTextualAnnotation, dest, setstageName)
 
 	// [TODO] We skip RelatedContacts for now, KLV mapping refers to Contacts, while the XSD refers to entities
 	// [FIX?] KLV mapping updated to entities
 	NEW_VECTOR_AND_ASSIGN(source, relatedContacts, ebucoreEntity, contactDetailsType::relatedContacts_iterator, mapEntity, dest, setcontactRelatedContacts)
 	
 	// [TODO] We skip contactId for now, KLV mapping refers to an UID, while the XSD refers to anyURI type
+}
+
+void mapOrganisationDepartment(organisationDepartment& source, ebucoreOrganisationDepartment *dest, ObjectModifier* mod = NULL) {
+	dest->setdepartmentName(source);
+	SIMPLE_MAP_OPTIONAL(source, departmentId, dest, setdepartmentId)
 }
 
 void mapOrganisation(organisationDetailsType& source, ebucoreOrganisation *dest, ObjectModifier* mod = NULL) {
@@ -250,7 +259,9 @@ void mapOrganisation(organisationDetailsType& source, ebucoreOrganisation *dest,
 	//		- KLV organizationRelatedContacts refers to contacts, XSD refers to entities
 
 	dest->setorganisationName(source.organisationName());
-	SIMPLE_MAP_OPTIONAL(source, organisationDepartment, dest, setorganisationDepartment)	
+
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, organisationDepartment, ebucoreOrganisationDepartment, mapOrganisationDepartment, dest, setorganisationDepartment)
+
 	NEW_VECTOR_AND_ASSIGN(source, details, ebucoreContactDetails, contactDetailsType::details_sequence::iterator, mapDetails, dest, setorganisationDetails)
 	// [FIX?] Related contacts are now entities	
 	NEW_VECTOR_AND_ASSIGN(source, contacts, ebucoreEntity, organisationDetailsType::contacts_iterator, mapEntity, dest, setorganisationRelatedContacts)
@@ -276,7 +287,8 @@ void mapEntity(entityType& source, ebucoreEntity *dest, ObjectModifier* mod) {
 	// [FIX?] Updated to sequence
 	NEW_VECTOR_AND_ASSIGN(source, contactDetails, ebucoreContact, entityType::contactDetails_iterator, mapContact, dest, setentityContact)
 
-	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, organisationDetails, ebucoreOrganisation, mapOrganisation, dest, setentityOrganisation)
+	// [TODO] EC1.3 XSD defines only a single optional organisation
+	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, organisationDetails, ebucoreOrganisation, mapOrganisation, dest, setentityOrganisation)
 
 	// [TODO] The KLV mapping lists a single role, while the XSD specifies a sequence
 	// [FIX?] Updated to sequence
@@ -559,10 +571,7 @@ void mapLanguage(languageType& source, ebucoreLanguage *dest, ObjectModifier* mo
 	// only a reference to the typegroup, required?
 	SIMPLE_MAP_OPTIONAL(source, language, dest, setlanguageName)
 	dest->setlanguageCode(source.language().get().lang());
-	
-	ebucoreLanguagePurpose *obj = newAndModifyObject<ebucoreLanguagePurpose>(dest->getHeaderMetadata(), mod);
-	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, obj, setlanguagePurposeTypeGroup)
-	dest->setlanguagePurposeSet(obj);
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setlanguagePurposeSet)
 }
 
 void mapType(typeType& source, ebucoreType *dest, ObjectModifier* mod = NULL) {
@@ -692,6 +701,18 @@ void mapDate(dateType& source, std::vector<ebucoreDate*>& dest, mxfpp::HeaderMet
 	}
 }
 
+void mapPeriodOfTime(PeriodOfTime& source, ebucorePeriodOfTime* dest, ObjectModifier* mod = NULL) {
+	// [TODO] fix period <-> periodId
+	SIMPLE_MAP_OPTIONAL(source, period, dest, setperiodId)
+	SIMPLE_MAP_OPTIONAL(source, period, dest, setperiodName)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, startYear, dest, setperiodStartYear, convert_timestamp)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, startDate, dest, setperiodStartDate, convert_timestamp)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, startTime, dest, setperiodStartTime, convert_timestamp)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, endYear, dest, setperiodEndYear, convert_timestamp)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, endDate, dest, setperiodEndDate, convert_timestamp)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, endTime, dest, setperiodEndTime, convert_timestamp)
+}
+
 void mapTemporal(temporal& source, ebucoreTemporal *dest, ObjectModifier* mod = NULL) {
 	/*
 	<complexType>
@@ -721,27 +742,17 @@ void mapTemporal(temporal& source, ebucoreTemporal *dest, ObjectModifier* mod = 
 
 	// [TODO] There is no typeGroup equivalent in KLV rep., it is in the PeriodOfTime element, which is a batch, and not a single optional element such as in XSD
 	// [FIX?] PeriodOfTime element is now a single optional element
+
 	bool hasPeriodOfTime = source.periodId().present() | source.PeriodOfTime().present();
 	if (hasPeriodOfTime) {
-		ebucorePeriodOfTime *obj = newAndModifyObject<ebucorePeriodOfTime>(dest->getHeaderMetadata(), mod);
+		SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, PeriodOfTime, ebucorePeriodOfTime, mapPeriodOfTime, dest, setperiodOfTime)
+		// [TODO] In EC1.3 XSD periodid belongs to temporal, not to the periodoftime
+		// set periodid if present
 		if (source.periodId().present()) {
-			obj->setperiodId(source.periodId().get());
+			dest->getperiodOfTime()[0]->setperiodId( source.periodId().get() );
 		}
-		if (source.PeriodOfTime().present()) {
-			PeriodOfTime &pot = source.PeriodOfTime().get();
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, startYear, obj, setperiodStartYear, convert_timestamp)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, startDate, obj, setperiodStartDate, convert_timestamp)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, startTime, obj, setperiodStartTime, convert_timestamp)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, endYear, obj, setperiodEndYear, convert_timestamp)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, endDate, obj, setperiodEndDate, convert_timestamp)
-			SIMPLE_MAP_OPTIONAL_CONVERT(pot, endTime, obj, setperiodEndTime, convert_timestamp)
-			SIMPLE_MAP_OPTIONAL(pot, period, obj, setperiodName)
-
-			MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, obj, setperiodKindGroup)
-		}
-
-		dest->setperiodOfTime(obj);
 	}
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, settemporalTypeGroup)
 }
 
 void mapSpatial(spatial& source, ebucoreSpatial *dest, ObjectModifier* mod = NULL) {

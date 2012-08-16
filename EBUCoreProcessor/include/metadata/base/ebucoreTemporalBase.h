@@ -56,12 +56,15 @@ public:
    // getters
 
    bool haveperiodOfTime() const;
-   ebucorePeriodOfTime* getperiodOfTime() const;
+   std::vector<ebucorePeriodOfTime*> getperiodOfTime() const;
+   ebucoreTypeGroup* gettemporalTypeGroup() const;
 
 
    // setters
 
-   void setperiodOfTime(ebucorePeriodOfTime* value);
+   void setperiodOfTime(const std::vector<ebucorePeriodOfTime*>& value);
+   void appendperiodOfTime(ebucorePeriodOfTime* value);
+   void settemporalTypeGroup(ebucoreTypeGroup* value);
 
 
 protected:

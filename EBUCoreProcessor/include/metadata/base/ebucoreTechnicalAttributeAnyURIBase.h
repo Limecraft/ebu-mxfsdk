@@ -29,12 +29,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
-#define __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
+#ifndef __MXFPP_EBUCORETECHNICALATTRIBUTEANYURI_BASE_H__
+#define __MXFPP_EBUCORETECHNICALATTRIBUTEANYURI_BASE_H__
 
 
 
-#include <libMXF++/metadata/InterchangeObject.h>
+#include <metadata/ebucoreTypeGroup.h>
 
 using namespace mxfpp;
 
@@ -42,29 +42,29 @@ namespace EBUCore { namespace KLV
 {
 
 
-class ebucoreLanguagePurposeBase : public InterchangeObject
+class ebucoreTechnicalAttributeAnyURIBase : public ebucoreTypeGroup
 {
 public:
-    friend class MetadataSetFactory<ebucoreLanguagePurposeBase>;
+    friend class MetadataSetFactory<ebucoreTechnicalAttributeAnyURIBase>;
     static const mxfKey setKey;
 
 public:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreLanguagePurposeBase();
+    ebucoreTechnicalAttributeAnyURIBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreTechnicalAttributeAnyURIBase();
 
 
    // getters
 
-   ebucoreTypeGroup* getlanguagePurposeTypeGroup() const;
+   std::string gettechnicalAttributeAnyURIValue() const;
 
 
    // setters
 
-   void setlanguagePurposeTypeGroup(ebucoreTypeGroup* value);
+   void settechnicalAttributeAnyURIValue(std::string value);
 
 
 protected:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreTechnicalAttributeAnyURIBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

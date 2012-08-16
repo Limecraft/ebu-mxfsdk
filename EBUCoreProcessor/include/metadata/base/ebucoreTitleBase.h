@@ -59,6 +59,8 @@ public:
    std::string gettitleLanguage() const;
    bool havetitleAttributionDate() const;
    mxfTimestamp gettitleAttributionDate() const;
+   bool havetitleNote() const;
+   std::string gettitleNote() const;
 
 
    // setters
@@ -66,6 +68,7 @@ public:
    void settitleValue(std::string value);
    void settitleLanguage(std::string value);
    void settitleAttributionDate(mxfTimestamp value);
+   void settitleNote(std::string value);
 
 
 protected:

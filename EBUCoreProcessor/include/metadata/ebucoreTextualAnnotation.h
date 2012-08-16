@@ -29,29 +29,37 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#include <libMXF++/MXF.h>
-#include <metadata/EBUCoreDMS++.h>
+#ifndef __MXFPP_EBUCORETEXTUALANNOTATION_H__
+#define __MXFPP_EBUCORETEXTUALANNOTATION_H__
 
 
-using namespace std;
+
+#include <metadata/base/ebucoreTextualAnnotationBase.h>
+
 using namespace mxfpp;
-using namespace EBUCore::KLV;
+
+namespace EBUCore { namespace KLV
+{
+
+
+class ebucoreTextualAnnotation : public ebucoreTextualAnnotationBase
+{
+public:
+    friend class MetadataSetFactory<ebucoreTextualAnnotation>;
+
+public:
+    ebucoreTextualAnnotation(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreTextualAnnotation();
 
 
 
-ebucoreLanguagePurpose::ebucoreLanguagePurpose(HeaderMetadata *headerMetadata)
-: ebucoreLanguagePurposeBase(headerMetadata)
-{}
 
-ebucoreLanguagePurpose::ebucoreLanguagePurpose(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: ebucoreLanguagePurposeBase(headerMetadata, cMetadataSet)
-{}
-
-ebucoreLanguagePurpose::~ebucoreLanguagePurpose()
-{}
+protected:
+    ebucoreTextualAnnotation(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+};
 
 
+}};
+
+
+#endif

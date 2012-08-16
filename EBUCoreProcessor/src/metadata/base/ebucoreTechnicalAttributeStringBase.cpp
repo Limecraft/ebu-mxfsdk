@@ -29,46 +29,45 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCOREADDRESSLINE_BASE_H__
-#define __MXFPP_EBUCOREADDRESSLINE_BASE_H__
-
-
-
-#include <libMXF++/metadata/InterchangeObject.h>
-
-using namespace mxfpp;
-
-namespace EBUCore { namespace KLV
-{
-
-
-class ebucoreAddressLineBase : public InterchangeObject
-{
-public:
-    friend class MetadataSetFactory<ebucoreAddressLineBase>;
-    static const mxfKey setKey;
-
-public:
-    ebucoreAddressLineBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreAddressLineBase();
-
-
-   // getters
-
-   std::string getaddressLine() const;
-
-
-   // setters
-
-   void setaddressLine(std::string value);
-
-
-protected:
-    ebucoreAddressLineBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
-};
-
-
-}};
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
+
+#include <memory>
+
+#include <libMXF++/MXF.h>
+#include <metadata/EBUCoreDMS++.h>
+
+
+using namespace std;
+using namespace mxfpp;
+using namespace EBUCore::KLV;
+
+
+const mxfKey ebucoreTechnicalAttributeStringBase::setKey = MXF_SET_K(ebucoreTechnicalAttributeString);
+
+
+ebucoreTechnicalAttributeStringBase::ebucoreTechnicalAttributeStringBase(HeaderMetadata *headerMetadata)
+: ebucoreTypeGroup(headerMetadata, headerMetadata->createCSet(&setKey))
+{
+    headerMetadata->add(this);
+}
+
+ebucoreTechnicalAttributeStringBase::ebucoreTechnicalAttributeStringBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: ebucoreTypeGroup(headerMetadata, cMetadataSet)
+{}
+
+ebucoreTechnicalAttributeStringBase::~ebucoreTechnicalAttributeStringBase()
+{}
+
+
+std::string ebucoreTechnicalAttributeStringBase::gettechnicalAttributeStringValue() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreTechnicalAttributeString, technicalAttributeStringValue));
+}
+
+void ebucoreTechnicalAttributeStringBase::settechnicalAttributeStringValue(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreTechnicalAttributeString, technicalAttributeStringValue), value);
+}
+

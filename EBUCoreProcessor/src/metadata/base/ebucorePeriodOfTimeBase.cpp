@@ -141,13 +141,6 @@ mxfTimestamp ebucorePeriodOfTimeBase::getperiodEndTime() const
     return getTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndTime));
 }
 
-ebucoreTypeGroup* ebucorePeriodOfTimeBase::getperiodKindGroup() const
-{
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodKindGroup)));
-    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
-}
-
 void ebucorePeriodOfTimeBase::setperiodId(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodId), value);
@@ -186,10 +179,5 @@ void ebucorePeriodOfTimeBase::setperiodEndDate(mxfTimestamp value)
 void ebucorePeriodOfTimeBase::setperiodEndTime(mxfTimestamp value)
 {
     setTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndTime), value);
-}
-
-void ebucorePeriodOfTimeBase::setperiodKindGroup(ebucoreTypeGroup* value)
-{
-    setStrongRefItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodKindGroup), value);
 }
 

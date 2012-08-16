@@ -25,6 +25,7 @@ void RegisterExtensions(DataModel *data_model)
 
 void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata)
 {
+	header_metadata->registerObjectFactory(&ebucoreTextualAnnotation::setKey, new MetadataSetFactory<ebucoreTextualAnnotation>());
 	header_metadata->registerObjectFactory(&ebucoreMainFramework::setKey, new MetadataSetFactory<ebucoreMainFramework>());
 	header_metadata->registerObjectFactory(&ebucoreCoreMetadata::setKey, new MetadataSetFactory<ebucoreCoreMetadata>());
 	header_metadata->registerObjectFactory(&ebucoreTitle::setKey, new MetadataSetFactory<ebucoreTitle>());
@@ -33,10 +34,10 @@ void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata)
 	header_metadata->registerObjectFactory(&ebucoreStatusGroup::setKey, new MetadataSetFactory<ebucoreStatusGroup>());
 	header_metadata->registerObjectFactory(&ebucoreFormatGroup::setKey, new MetadataSetFactory<ebucoreFormatGroup>());
 	header_metadata->registerObjectFactory(&ebucoreEntity::setKey, new MetadataSetFactory<ebucoreEntity>());
-	header_metadata->registerObjectFactory(&ebucoreAddressLine::setKey, new MetadataSetFactory<ebucoreAddressLine>());
 	header_metadata->registerObjectFactory(&ebucoreAddress::setKey, new MetadataSetFactory<ebucoreAddress>());
 	header_metadata->registerObjectFactory(&ebucoreContact::setKey, new MetadataSetFactory<ebucoreContact>());
 	header_metadata->registerObjectFactory(&ebucoreContactDetails::setKey, new MetadataSetFactory<ebucoreContactDetails>());
+	header_metadata->registerObjectFactory(&ebucoreOrganisationDepartment::setKey, new MetadataSetFactory<ebucoreOrganisationDepartment>());
 	header_metadata->registerObjectFactory(&ebucoreOrganisation::setKey, new MetadataSetFactory<ebucoreOrganisation>());
 	header_metadata->registerObjectFactory(&ebucoreRole::setKey, new MetadataSetFactory<ebucoreRole>());
 	header_metadata->registerObjectFactory(&ebucoreIdentifier::setKey, new MetadataSetFactory<ebucoreIdentifier>());
@@ -49,7 +50,6 @@ void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata)
 	header_metadata->registerObjectFactory(&ebucoreDescription::setKey, new MetadataSetFactory<ebucoreDescription>());
 	header_metadata->registerObjectFactory(&ebucorePublicationHistoryEvent::setKey, new MetadataSetFactory<ebucorePublicationHistoryEvent>());
 	header_metadata->registerObjectFactory(&ebucoreDate::setKey, new MetadataSetFactory<ebucoreDate>());
-	header_metadata->registerObjectFactory(&ebucoreLanguagePurpose::setKey, new MetadataSetFactory<ebucoreLanguagePurpose>());
 	header_metadata->registerObjectFactory(&ebucoreLanguage::setKey, new MetadataSetFactory<ebucoreLanguage>());
 	header_metadata->registerObjectFactory(&ebucoreSpatial::setKey, new MetadataSetFactory<ebucoreSpatial>());
 	header_metadata->registerObjectFactory(&ebucoreLocation::setKey, new MetadataSetFactory<ebucoreLocation>());
