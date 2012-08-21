@@ -125,7 +125,7 @@ void mapDetails(ebucoreContactDetails *source, detailsType& dest) {
 
 	// [TODO] EC1.3 XSD has only a single email addresss
 	if (source->haveemailAddress()) {
-		std::vector<ebucoreTextualAnnotation*>& v = source->getemailAddress();
+		const std::vector<ebucoreTextualAnnotation*>& v = source->getemailAddress();
 		if (v.size() > 0) {
 			std::auto_ptr<detailsType::emailAddress_type> p( new detailsType::emailAddress_type() );
 			mapTextualAnnotation(v[0], *p);
@@ -155,7 +155,7 @@ void mapContact(ebucoreContact *source, contactDetailsType& dest) {
 
 	// [TODO] EC1.3 XSD only has a single username
 	if (source->haveusername()) {
-		std::vector<ebucoreTextualAnnotation*>& v = source->getusername();
+		const std::vector<ebucoreTextualAnnotation*>& v = source->getusername();
 		if (v.size() > 0) {
 			std::auto_ptr<contactDetailsType::username_type> p( new contactDetailsType::username_type() );
 			mapTextualAnnotation(v[0], *p);
@@ -216,7 +216,7 @@ void mapEntity(ebucoreEntity *source, entityType& dest) {
 
 	// [TODO] EC1.3 XSD has only a single email organisation
 	if (source->haveentityOrganisation()) {
-		std::vector<ebucoreOrganisation*>& v = source->getentityOrganisation();
+		const std::vector<ebucoreOrganisation*>& v = source->getentityOrganisation();
 		if (v.size() > 0) {
 			std::auto_ptr<entityType::organisationDetails_type> p( new entityType::organisationDetails_type("") );
 			mapOrganisation(v[0], *p);
@@ -227,8 +227,8 @@ void mapEntity(ebucoreEntity *source, entityType& dest) {
 	// [FIX?] Updated cardinality
 	if (source->haveentityRole()) {
 		entityType::role_sequence seq;
-		std::vector<ebucoreRole*> source_roles = source->getentityRole();
-		for (std::vector<ebucoreRole*>::iterator it = source_roles.begin(); it != source_roles.end(); it++) {
+		const std::vector<ebucoreRole*> source_roles = source->getentityRole();
+		for (std::vector<ebucoreRole*>::const_iterator it = source_roles.begin(); it != source_roles.end(); it++) {
 			ebucoreTypeGroup *tg = (*it)->getroleType();
 			std::auto_ptr<entityType::role_type> p( new entityType::role_type() );
 			RMAP_TYPE_GROUP(tg, (*(p.get())), role::typeDefinition_type, role::typeLabel_type, role::typeLink_type)
@@ -496,7 +496,7 @@ void mapTemporal(ebucoreTemporal *source, temporal& dest) {
 
 	// [TODO] EC1.3 XSD has only a single periodoftime
 	if (source->haveperiodOfTime()) {
-		std::vector<ebucorePeriodOfTime*>& v = source->getperiodOfTime();
+		const std::vector<ebucorePeriodOfTime*>& v = source->getperiodOfTime();
 		if (v.size() > 0) {
 			std::auto_ptr<PeriodOfTime> p( new PeriodOfTime() );
 			mapPeriodOfTime(v[0], *p);
