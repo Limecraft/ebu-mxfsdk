@@ -19,7 +19,15 @@ namespace EBUCore
 	uint64_t BufferIndex(mxfpp::File* mFile, mxfpp::Partition* partition, bmx::ByteArray& index_bytes, uint32_t* index_length);
 	uint64_t WriteMetadataToMemoryFile(mxfpp::File* mFile, MXFMemoryFile **destMemFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, mxfpp::Partition* metadataDestitionPartition, mxfpp::Partition* metadataSourcePartition);
 	uint64_t WriteMetadataToFile(mxfpp::File* mFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, mxfpp::Partition* metadataDestitionPartition, mxfpp::Partition* metadataSourcePartition);
-	
+
+	class MXFFileDarkSerializer {
+	public:
+		virtual uint64_t WriteToMXFFile(mxfpp::File *f) = 0;
+	};
+
+	uint64_t WriteDarkMetadataToMemoryFile(mxfpp::File* mFile, MXFMemoryFile **destMemFile, MXFFileDarkSerializer& metadata, uint64_t metadata_read_position, uint64_t metadata_write_position, mxfpp::Partition* metadataDestitionPartition, mxfpp::Partition* metadataSourcePartition);
+	uint64_t WriteDarkMetadataToFile(mxfpp::File* mFile, MXFFileDarkSerializer& metadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, mxfpp::Partition* metadataDestitionPartition, mxfpp::Partition* metadataSourcePartition);
+
 	int64_t FindLastPartitionFill(mxfpp::File* mFile, mxfpp::Partition* partition, int64_t* partitionSectionOffset, int64_t *extractedFileSize = NULL);
 	void ShiftBytesInFile(mxfpp::File* mFile, int64_t shiftPosition, int64_t shiftOffset);
 
@@ -49,6 +57,7 @@ namespace EBUCore
 	void EmbedEBUCoreMetadata(	const char* metadataLocation, 
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
+							bool optWriteDarkMetadata = false,
 							bool optNoIdentification = false, bool optForceHeader = false);
 
 	/**
@@ -75,6 +84,7 @@ namespace EBUCore
 							const char* metadataLocation,
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
+							bool optWriteDarkMetadata = false,
 							bool optNoIdentification = false, bool optForceHeader = false);
 
 	/**

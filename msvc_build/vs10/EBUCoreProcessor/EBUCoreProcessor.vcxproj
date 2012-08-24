@@ -209,6 +209,7 @@
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreTypeGroup.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucore_extensions_data_model.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\simpledc20021212.hxx" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\XercesUtils.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\xml.hxx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

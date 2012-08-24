@@ -523,7 +523,7 @@ int main(int argc, const char** argv)
     try
     {
 		if (ebucore_filename) {
-			EBUCore::EmbedEBUCoreMetadata(ebucore_filename, filenames[0], &progress_cb, false, do_force_header);
+			EBUCore::EmbedEBUCoreMetadata(ebucore_filename, filenames[0], &progress_cb, true, false, do_force_header);
 		}
     }
     catch (const MXFException &ex)
