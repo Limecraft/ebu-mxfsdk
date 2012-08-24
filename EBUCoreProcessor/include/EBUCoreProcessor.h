@@ -49,6 +49,7 @@ namespace EBUCore
 		@param progress_callback A function that is called with updated progress concerning the embedding process. 
 		The function is called with the overall progress of the operation in __progress__,  a __message__ that describes the updated status, 
 		and the name of the internal __function__ to which the progress update relates (which can be used for debugging purposes).
+		@param optWriteDarkMetadata When true, forces the SDK to serialize the EBUCore document as 'dark' metadata into the header metadata of the MXF file.
 		@param optNoIdentification When true, forces the SDK not to write an additional MXF metadata Identification set to identify the SDK as source of metadata updates.
 		@param optForceHeader When true, forces the SDK to write the EBUCore metadata into the header partition, potentially forcing a rewrite of the entire MXF file. 
 		In normal operation, the SDK attempts to write the EBUCore metadata into the footer partition, marking the header (and potential body) partitions that contain metadata as
@@ -75,6 +76,7 @@ namespace EBUCore
 		@param progress_callback A function that is called with updated progress concerning the embedding process. 
 		The function is called with the overall progress of the operation in __progress__,  a __message__ that describes the updated status, 
 		and the name of the internal __function__ to which the progress update relates (which can be used for debugging purposes).
+		@param optWriteDarkMetadata When true, forces the SDK to serialize the EBUCore document as 'dark' metadata into the header metadata of the MXF file.
 		@param optNoIdentification When true, forces the SDK not to write an additional MXF metadata Identification set to identify the SDK as source of metadata updates.
 		@param optForceHeader When true, forces the SDK to write the EBUCore metadata into the header partition, potentially forcing a rewrite of the entire MXF file. 
 		In normal operation, the SDK attempts to write the EBUCore metadata into the footer partition, marking the header (and potential body) partitions that contain metadata as
@@ -89,6 +91,8 @@ namespace EBUCore
 
 	/**
 	*	Extract EBUCore metadata from an MXF file.\n
+		The SDK consecutively tries to extract the metadata in three ways; from KLV-encoded EBUCore metadata sets, 
+		from a sidecar file referenced by the MXF file's metadata, or as 'dark' metadata from a KLV set identified by the appropriate key.\n
 		This variant of __ExtractEBUCoreMetadata__ returns a Xerces-C++ XML DOM data structure that can 
 		be processed and transformed by the caller, before e.g., being written out to disk.
 		@return Returns a reference to a Xerces-C++ XML DOM document representation that conforms to the EBUCore XML schema.
@@ -102,7 +106,9 @@ namespace EBUCore
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...));
 	
 	/**
-	*	Extract EBUCore metadata from an MXF file.
+	*	Extract EBUCore metadata from an MXF file.\n
+		The SDK consecutively tries to extract the metadata in three ways; from KLV-encoded EBUCore metadata sets, 
+		from a sidecar file referenced by the MXF file's metadata, or as 'dark' metadata from a KLV set identified by the appropriate key.\n
 		@return Has no return value, but throws an exception when irregularities occur. The caller is informed of any progress by means of the __progress_callback__ argument.
 		@param mxfLocation The location of the MXF file in which to extract the EBUCore metadata.
 		@param metadataLocation The location of the EBUCore XML metadata document file destination. The XML document written conforms to the EBUCore XML schema.

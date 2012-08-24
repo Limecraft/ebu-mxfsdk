@@ -102,7 +102,7 @@
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;   std::string getorganisationName() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;   std::string getorganisationCode() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;   <span class="keywordtype">bool</span> haveorganisationDepartment() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;   std::string getorganisationDepartment() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;   ebucoreOrganisationDepartment* getorganisationDepartment() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   ebucoreTypeGroup* getorganisationType() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;   std::vector&lt;ebucoreContactDetails*&gt; getorganisationDetails() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;   std::vector&lt;ebucoreEntity*&gt; getorganisationRelatedContacts() <span class="keyword">const</span>;</div>
@@ -113,7 +113,7 @@
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;   <span class="keywordtype">void</span> setorganisationId(mxfUUID value);</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;   <span class="keywordtype">void</span> setorganisationName(std::string value);</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;   <span class="keywordtype">void</span> setorganisationCode(std::string value);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;   <span class="keywordtype">void</span> setorganisationDepartment(std::string value);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;   <span class="keywordtype">void</span> setorganisationDepartment(ebucoreOrganisationDepartment* value);</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;   <span class="keywordtype">void</span> setorganisationType(ebucoreTypeGroup* value);</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;   <span class="keywordtype">void</span> setorganisationDetails(<span class="keyword">const</span> std::vector&lt;ebucoreContactDetails*&gt;&amp; value);</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;   <span class="keywordtype">void</span> appendorganisationDetails(ebucoreContactDetails* value);</div>
@@ -133,7 +133,7 @@
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Aug 3 2012 17:12:17 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 24 2012 17:09:22 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

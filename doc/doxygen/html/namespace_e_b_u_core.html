@@ -48,15 +48,15 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae832549b9dfe0bc44c1aae619cf58439"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_core.html#ae832549b9dfe0bc44c1aae619cf58439">EmbedEBUCoreMetadata</a> (const char *metadataLocation, const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...), bool optNoIdentification=false, bool optForceHeader=false)</td></tr>
-<tr class="memitem:a83ce85287e63d8744da33eaf7a0b5073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_core.html#a83ce85287e63d8744da33eaf7a0b5073">EmbedEBUCoreMetadata</a> (xercesc::DOMDocument &amp;metadataDocument, const char *metadataLocation, const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...), bool optNoIdentification=false, bool optForceHeader=false)</td></tr>
+<tr class="memitem:a1ebcf6af9449ec8f1f5669bfbcaa33ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_core.html#a1ebcf6af9449ec8f1f5669bfbcaa33ce">EmbedEBUCoreMetadata</a> (const char *metadataLocation, const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...), bool optWriteDarkMetadata=false, bool optNoIdentification=false, bool optForceHeader=false)</td></tr>
+<tr class="memitem:abf6d2b2311b61a8c157e26969e45f232"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_core.html#abf6d2b2311b61a8c157e26969e45f232">EmbedEBUCoreMetadata</a> (xercesc::DOMDocument &amp;metadataDocument, const char *metadataLocation, const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...), bool optWriteDarkMetadata=false, bool optNoIdentification=false, bool optForceHeader=false)</td></tr>
 <tr class="memitem:a30ede5851b0e2eeb6adb6d355e6f3f0c"><td class="memItemLeft" align="right" valign="top">xercesc::DOMDocument &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_core.html#a30ede5851b0e2eeb6adb6d355e6f3f0c">ExtractEBUCoreMetadata</a> (const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...))</td></tr>
 <tr class="memitem:ac68b00d3d88b690e0d1022c5333ab5f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_core.html#ac68b00d3d88b690e0d1022c5333ab5f4">ExtractEBUCoreMetadata</a> (const char *mxfLocation, const char *metadataLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...))</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>EBU MXF SDK main namespace for <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> functionality. </p>
 </div><h2>Function Documentation</h2>
-<a class="anchor" id="ae832549b9dfe0bc44c1aae619cf58439"></a>
+<a class="anchor" id="a1ebcf6af9449ec8f1f5669bfbcaa33ce"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -77,6 +77,12 @@ Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">void(*)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...)&#160;</td>
           <td class="paramname"><em>progress_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>optWriteDarkMetadata</em> = <code>false</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -104,6 +110,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">metadataLocation</td><td>The location of the <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> XML metadata document file. This file is parsed using the Xerces-C++ XML parser. The document is assumed to conform to the <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> XML schema and is not explicitly validated. </td></tr>
     <tr><td class="paramname">mxfLocation</td><td>The location of the MXF file in which to embed the <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> metadata. </td></tr>
     <tr><td class="paramname">progress_callback</td><td>A function that is called with updated progress concerning the embedding process. The function is called with the overall progress of the operation in <b>progress</b>, a <b>message</b> that describes the updated status, and the name of the internal <b>function</b> to which the progress update relates (which can be used for debugging purposes). </td></tr>
+    <tr><td class="paramname">optWriteDarkMetadata</td><td>When true, forces the SDK to serialize the <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> document as 'dark' metadata into the header metadata of the MXF file. </td></tr>
     <tr><td class="paramname">optNoIdentification</td><td>When true, forces the SDK not to write an additional MXF metadata Identification set to identify the SDK as source of metadata updates. </td></tr>
     <tr><td class="paramname">optForceHeader</td><td>When true, forces the SDK to write the <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> metadata into the header partition, potentially forcing a rewrite of the entire MXF file. In normal operation, the SDK attempts to write the <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> metadata into the footer partition, marking the header (and potential body) partitions that contain metadata as open and incomplete. This way only the footer paritition and the (small) partition packs must be updated. </td></tr>
   </table>
@@ -112,7 +119,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a83ce85287e63d8744da33eaf7a0b5073"></a>
+<a class="anchor" id="abf6d2b2311b61a8c157e26969e45f232"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -144,6 +151,12 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>optWriteDarkMetadata</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>optNoIdentification</em> = <code>false</code>, </td>
         </tr>
         <tr>
@@ -168,6 +181,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">metadataLocation</td><td>The logical location of the metadata document, as it will be embedded in the KLV <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> metadata. As in this form the <b>metadataDocument</b> doesn't provide an indication of the physical source location of the document, it is be provided separately here. When irrelevant, an empty string "" can be provided. </td></tr>
     <tr><td class="paramname">mxfLocation</td><td>The location of the MXF file in which to embed the <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> metadata. </td></tr>
     <tr><td class="paramname">progress_callback</td><td>A function that is called with updated progress concerning the embedding process. The function is called with the overall progress of the operation in <b>progress</b>, a <b>message</b> that describes the updated status, and the name of the internal <b>function</b> to which the progress update relates (which can be used for debugging purposes). </td></tr>
+    <tr><td class="paramname">optWriteDarkMetadata</td><td>When true, forces the SDK to serialize the <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> document as 'dark' metadata into the header metadata of the MXF file. </td></tr>
     <tr><td class="paramname">optNoIdentification</td><td>When true, forces the SDK not to write an additional MXF metadata Identification set to identify the SDK as source of metadata updates. </td></tr>
     <tr><td class="paramname">optForceHeader</td><td>When true, forces the SDK to write the <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> metadata into the header partition, potentially forcing a rewrite of the entire MXF file. In normal operation, the SDK attempts to write the <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> metadata into the footer partition, marking the header (and potential body) partitions that contain metadata as open and incomplete. This way only the footer paritition and the (small) partition packs must be updated. </td></tr>
   </table>
@@ -200,6 +214,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Extract <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> metadata from an MXF file.<br/>
+ The SDK consecutively tries to extract the metadata in three ways; from KLV-encoded <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> metadata sets, from a sidecar file referenced by the MXF file's metadata, or as 'dark' metadata from a KLV set identified by the appropriate key.<br/>
  This variant of <b>ExtractEBUCoreMetadata</b> returns a Xerces-C++ XML DOM data structure that can be processed and transformed by the caller, before e.g., being written out to disk. </p>
 <dl class="section return"><dt>Returns</dt><dd>Returns a reference to a Xerces-C++ XML DOM document representation that conforms to the <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> XML schema. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -241,7 +256,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Extract <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> metadata from an MXF file. </p>
+<p>Extract <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> metadata from an MXF file.<br/>
+ The SDK consecutively tries to extract the metadata in three ways; from KLV-encoded <a class="el" href="namespace_e_b_u_core.html">EBUCore</a> metadata sets, from a sidecar file referenced by the MXF file's metadata, or as 'dark' metadata from a KLV set identified by the appropriate key.<br/>
+ </p>
 <dl class="section return"><dt>Returns</dt><dd>Has no return value, but throws an exception when irregularities occur. The caller is informed of any progress by means of the <b>progress_callback</b> argument. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -257,7 +274,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Aug 3 2012 17:12:17 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 24 2012 17:09:22 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>
