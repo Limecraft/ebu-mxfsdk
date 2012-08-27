@@ -4,6 +4,10 @@
 #include <xercesc/sax/InputSource.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/sax/HandlerBase.hpp>
+#include <xercesc/dom/DOMImplementationLS.hpp>
+#include <xercesc/dom/DOMLSSerializer.hpp>
+#include <xercesc/dom/DOMLSOutput.hpp>
+#include <xercesc/dom/DOMImplementationRegistry.hpp>
 
 #include <libMXF++/MXF.h>
 
@@ -37,15 +41,37 @@ public:
 	}
 };
 
-DOMDocument* ParseXercesDocument(InputSource& input) {
-	XercesDOMParser* parser = new XercesDOMParser();
+void ConfigureParser(XercesDOMParser* parser, ErrorHandler *errHandler) {
 	parser->setValidationScheme(XercesDOMParser::Val_Never);
 	parser->setValidationSchemaFullChecking(false);
 	parser->setDoSchema(false);
 	parser->setDoNamespaces(true);    // optional
-
-	ErrorHandler* errHandler = (ErrorHandler*) new HandlerBase();
     parser->setErrorHandler(errHandler);
+}
+
+DOMDocument* ParseXercesDocument(const XMLCh* location) {
+
+	XercesDOMParser* parser = new XercesDOMParser();
+	ErrorHandler* errHandler = (ErrorHandler*) new HandlerBase();
+	ConfigureParser(parser, errHandler);
+
+	DOMDocument* out = NULL;
+
+	try {
+		parser->parse(location);
+		out = parser->getDocument();
+	} catch (...) {}
+
+	delete parser;
+	delete errHandler;
+
+	return out;
+}
+
+DOMDocument* ParseXercesDocument(InputSource& input) {
+	XercesDOMParser* parser = new XercesDOMParser();
+	ErrorHandler* errHandler = (ErrorHandler*) new HandlerBase();
+	ConfigureParser(parser, errHandler);
 
 	DOMDocument* out = NULL;
 
@@ -60,17 +86,51 @@ DOMDocument* ParseXercesDocument(InputSource& input) {
 	return out;
 }
 
-/*class DarkDOMDocumentSerializer : public MXFFileDarkSerializer, xercesc::XMLFormatTarget {
+class DarkDOMDocumentSerializer : public EBUCore::MXFFileDarkSerializer, public xercesc::XMLFormatTarget {
 	xercesc::DOMDocument& doc;
 	mxfpp::File *mxfFile;
+	uint64_t size;
 public:
-	DarkDOMDocumentSerializer(xercesc::DOMDocument& document ) : doc(document) {}
-	void WriteToMXFFile(File *f) {
+	DarkDOMDocumentSerializer(xercesc::DOMDocument& document) : doc(document), size(0) {}
+
+	uint64_t WriteToMXFFile(mxfpp::File *f) {
 		mxfFile = f;
 		// call into xerces for serialization
-		// cf. http://www.ibm.com/developerworks/xml/library/x-serial.html
-	}
-	void writeChars(const XMLByte* toWrite, const unsigned int count, xercesc::XMLFormatter* const formatter) {
+		// cf. http://xerces.apache.org/xerces-c/program-dom-3.html#DOMLSSerializer
 
+		static const XMLCh gLS[] = { chLatin_L, chLatin_S, chNull };
+		DOMImplementation *impl = DOMImplementationRegistry::getDOMImplementation(gLS);
+
+		// construct the DOMWriter
+		DOMLSSerializer *writer = ((DOMImplementationLS*)impl)->createLSSerializer();
+
+        // optionally you can set some features on this serializer
+        if (writer->getDomConfig()->canSetParameter(XMLUni::fgDOMWRTDiscardDefaultContent, true))
+            writer->getDomConfig()->setParameter(XMLUni::fgDOMWRTDiscardDefaultContent, true);
+
+        if (writer->getDomConfig()->canSetParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true))
+             writer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
+
+		// prepare output
+		DOMLSOutput *outp = ((DOMImplementationLS*)impl)->createLSOutput();
+		outp->setByteStream(this);
+
+		// serialize the DOMNode to a UTF-16 string
+		writer->write(&doc, outp);
+
+		// release the memory
+		outp->release();
+		writer->release();
+
+		return size;
 	}
-};*/
+
+	void writeChars(const XMLByte* const toWrite, const XMLSize_t count, xercesc::XMLFormatter* const formatter) {
+		mxfFile->write((const unsigned char*)toWrite, count);
+		size += count;
+	}
+
+	virtual ~DarkDOMDocumentSerializer() {
+		size = 0;
+	}
+};

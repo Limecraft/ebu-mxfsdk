@@ -23,6 +23,7 @@ namespace EBUCore
 	class MXFFileDarkSerializer {
 	public:
 		virtual uint64_t WriteToMXFFile(mxfpp::File *f) = 0;
+		virtual ~MXFFileDarkSerializer() {};
 	};
 
 	uint64_t WriteDarkMetadataToMemoryFile(mxfpp::File* mFile, MXFMemoryFile **destMemFile, MXFFileDarkSerializer& metadata, uint64_t metadata_read_position, uint64_t metadata_write_position, mxfpp::Partition* metadataDestitionPartition, mxfpp::Partition* metadataSourcePartition);
@@ -38,6 +39,12 @@ namespace EBUCore
 		INFO,
 		DEBUG,
 		TRACE
+	};
+
+	enum MetadataKind {
+		KLV_ENCODED,
+		DARK,
+		SIDECAR
 	};
 
 	/**
@@ -58,7 +65,7 @@ namespace EBUCore
 	void EmbedEBUCoreMetadata(	const char* metadataLocation, 
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-							bool optWriteDarkMetadata = false,
+							MetadataKind optWaytoWrite = KLV_ENCODED,
 							bool optNoIdentification = false, bool optForceHeader = false);
 
 	/**
@@ -86,7 +93,7 @@ namespace EBUCore
 							const char* metadataLocation,
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-							bool optWriteDarkMetadata = false,
+							MetadataKind optWaytoWrite = KLV_ENCODED,
 							bool optNoIdentification = false, bool optForceHeader = false);
 
 	/**

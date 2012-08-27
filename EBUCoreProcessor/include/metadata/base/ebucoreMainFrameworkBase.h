@@ -57,8 +57,11 @@ public:
 
    bool havedocumentLocator() const;
    std::string getdocumentLocator() const;
+   bool havedocumentId() const;
    std::string getdocumentId() const;
+   bool havecoreMetadata() const;
    ebucoreCoreMetadata* getcoreMetadata() const;
+   bool havemetadataSchemeInformation() const;
    ebucoreMetadataSchemeInformation* getmetadataSchemeInformation() const;
 
 

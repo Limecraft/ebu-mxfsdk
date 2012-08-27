@@ -40,8 +40,6 @@
 #include "EBUCoreProcessor.h"
 
 #include <xercesc/util/TransService.hpp>
-#include <xercesc/dom/DOMImplementationRegistry.hpp>
-#include "XercesUtils.h"
 
 using namespace ebuCore_2011;
 using namespace mxfpp;
@@ -75,6 +73,12 @@ public:
 		in.close();
 	}
 };
+
+}
+
+#include "XercesUtils.h"
+
+namespace EBUCore {
 
 static const uint32_t MEMORY_WRITE_CHUNK_SIZE   = 8192;
 
@@ -117,6 +121,23 @@ Identification* GenerateEBUCoreIdentificationSet(mxfpp::HeaderMetadata *destinat
 	return newId;
 }
 
+DMFramework* GenerateSideCarFramework(const char* metadataLocation, HeaderMetadata *destination, Identification* identificationToAppend) {
+
+	GenerationUIDAppender *appender = NULL;
+	if (identificationToAppend != NULL) {
+		appender = new GenerationUIDAppender(identificationToAppend->getThisGenerationUID());
+	}
+	ebucoreMainFramework *framework = new ebucoreMainFramework(destination);
+	appender->Modify(framework);
+	framework->setdocumentId(metadataLocation);	// use the file location as document id
+	framework->setdocumentLocator(metadataLocation);
+
+	if (appender!=NULL)
+		delete appender;
+
+	return framework;
+}
+
 DMFramework* Process(std::auto_ptr<ebuCoreMainType> metadata, const char* metadataLocation, HeaderMetadata *destination, Identification* identificationToAppend) {
 
 	// Generate a new Generation UID if necessary, and provide to each mapping function
@@ -145,7 +166,7 @@ DMFramework* Process(std::auto_ptr<ebuCoreMainType> metadata, const char* metada
 	framework->setcoreMetadata(core);
 	framework->setmetadataSchemeInformation(info);
 
-	std::cout << framework->getdocumentId();
+	//std::cout << framework->getdocumentId();
 
 	if (appender!=NULL)
 		delete appender;
@@ -224,8 +245,9 @@ Partition* FindPreferredMetadataPartition(const std::vector<Partition*>& partiti
 
 void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata, 
 							const char* metadataLocation,
-							const char* mxfLocation, 
+							const char* mxfLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
+							bool optEmbedAsSidecar,
 							bool optNoIdentification, bool optForceHeader) {
 
 		progress_callback(0.2, INFO, "EmbedEBUCoreMetadata", "Opening MXF file %s", mxfLocation);
@@ -281,8 +303,11 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 		// ///////////
 		progress_callback(0.4, INFO, "EmbedEBUCoreMetadata", "Embedding EBUCore metadata in MXF metadata");
 
-		Identification* id = EBUCore::GenerateEBUCoreIdentificationSet(&*mHeaderMetadata);
-		DMFramework *framework = EBUCore::Process(metadata, metadataLocation, &*mHeaderMetadata, id);
+		Identification* id = optNoIdentification ? NULL : EBUCore::GenerateEBUCoreIdentificationSet(&*mHeaderMetadata);
+		// choose between sidecar serialization or fully fledged KLV-encoded metadata
+		DMFramework *framework = optEmbedAsSidecar ?
+			EBUCore::GenerateSideCarFramework(metadataLocation, &*mHeaderMetadata, id) :
+			EBUCore::Process(metadata, metadataLocation, &*mHeaderMetadata, id);
 		EBUCore::InsertEBUCoreFramework(&*mHeaderMetadata, framework, id);
 
 		// ///////////////////////////////////////
@@ -462,7 +487,9 @@ void EmbedDarkEBUCoreMetadata(	xercesc::DOMDocument *metadataDocument,
 		// / 3. Create a Serializer for our dark metadata
 		// ///////////
 
-		DarkFileSerializer ser(metadataLocation);
+		std::auto_ptr<MXFFileDarkSerializer> ser( (metadataDocument != NULL) ? 
+			static_cast<MXFFileDarkSerializer*>(new DarkDOMDocumentSerializer(*metadataDocument)) : 
+			static_cast<MXFFileDarkSerializer*>(new DarkFileSerializer(metadataLocation)) );
 
 		// ///////////////////////////////////////
 		// / 2. In order to avoid rewriting large portions of the file, we append our metadata
@@ -477,7 +504,7 @@ void EmbedDarkEBUCoreMetadata(	xercesc::DOMDocument *metadataDocument,
 			bmx::ByteArray index_bytes(index_length);
 			uint64_t pos_write_start_metadata = EBUCore::BufferIndex(&*mFile, footerPartition, index_bytes, &index_length);
 
-			uint64_t headerMetadataSize = WriteDarkMetadataToFile(&*mFile, ser, pos_start_metadata, pos_write_start_metadata, false, footerPartition, metadata_partition);
+			uint64_t headerMetadataSize = WriteDarkMetadataToFile(&*mFile, *ser, pos_start_metadata, pos_write_start_metadata, false, footerPartition, metadata_partition);
 
 			if (index_length > 0) {
 				progress_callback(0.75, DEBUG, "EmbedEBUCoreMetadata", "Rewritng footer partition index entries");
@@ -535,7 +562,7 @@ void EmbedDarkEBUCoreMetadata(	xercesc::DOMDocument *metadataDocument,
 			uint64_t oriMetadataSize = headerPartition->getHeaderByteCount();
 
 			// Write metadata to the header partition, forcing a file bytes shift if required (likely)
-			uint64_t headerMetadataSize = EBUCore::WriteDarkMetadataToFile(&*mFile, ser, pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition);
+			uint64_t headerMetadataSize = EBUCore::WriteDarkMetadataToFile(&*mFile, *ser, pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition);
 
 			uint64_t fileOffset = headerMetadataSize - oriMetadataSize;
 
@@ -593,7 +620,7 @@ void EmbedDarkEBUCoreMetadata(	xercesc::DOMDocument *metadataDocument,
 void EmbedEBUCoreMetadata(	const char* metadataLocation, 
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-							bool optWriteDarkMetadata,
+							MetadataKind optWaytoWrite,
 							bool optNoIdentification, bool optForceHeader) {
 
 	progress_callback(0.1, INFO, "EmbedEBUCoreMetadata", "Reading EBUCore XML document from file %s", metadataLocation);
@@ -602,20 +629,37 @@ void EmbedEBUCoreMetadata(	const char* metadataLocation,
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
 	input.close();
 
-	if (optWriteDarkMetadata)
-		EmbedDarkEBUCoreMetadata(NULL, metadataLocation, mxfLocation, progress_callback, optNoIdentification, optForceHeader);
-	else
-		EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, optNoIdentification, optForceHeader);	
+	switch (optWaytoWrite) {
+	case KLV_ENCODED:
+		EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, false, optNoIdentification, optForceHeader);	
+		break;
+	case DARK:
+		EmbedDarkEBUCoreMetadata( (*ebuCoreMainElementPtr)._node()->getOwnerDocument() /*NULL*/, metadataLocation, mxfLocation, progress_callback, optNoIdentification, optForceHeader);
+		break;
+	case SIDECAR:
+		EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, true, optNoIdentification, optForceHeader);
+		break;
+	}
 }
 
 void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument, 
 							const char* metadataLocation,
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-							bool optWriteDarkMetadata,
+							MetadataKind optWaytoWrite,
 							bool optNoIdentification, bool optForceHeader) {
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (metadataDocument, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
-	EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, optNoIdentification, optForceHeader);	
+	switch (optWaytoWrite) {
+	case KLV_ENCODED:
+		EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, false, optNoIdentification, optForceHeader);
+		break;
+	case DARK:
+		EmbedDarkEBUCoreMetadata(&metadataDocument, metadataLocation, mxfLocation, progress_callback, optNoIdentification, optForceHeader);
+		break;
+	case SIDECAR:
+		EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, true, optNoIdentification, optForceHeader);
+		break;
+	}
 }
 
 uint64_t BufferIndex(File* mFile, Partition* partition, bmx::ByteArray& index_bytes, uint32_t* index_length) {
@@ -1062,12 +1106,31 @@ static std::vector<DMFramework*> ebu_get_static_frameworks(MaterialPackage *mp)
     return frameworks;
 }
 
-std::auto_ptr<ebuCoreMainType> FindAndSerializeEBUCore(HeaderMetadata *metadata) {
+std::auto_ptr<ebuCoreMainType> ParseEBUCoreMetadata(ebucoreMainFramework *fw) {
+	// assert that a coremetadata element is present!
+
+	std::auto_ptr<ebuCoreMainType::coreMetadata_type> main( new ebuCoreMainType::coreMetadata_type() );
+	mapCoreMetadata(fw->getcoreMetadata(), *main);
+
+	// map the EBU Core KLV framework to the XSD-derived counterpart
+	std::auto_ptr<ebuCoreMainType> ebuCoreMainElement( new ebuCoreMainType(main) );
+
+	if (fw->havemetadataSchemeInformation()) {
+		std::auto_ptr<entityType> p( new entityType() );
+		ebucoreMetadataSchemeInformation *info = fw->getmetadataSchemeInformation();
+		mapEntity(info->getebucoreMetadataProvider(), *(p.get()));
+		ebuCoreMainElement->metadataProvider(p);
+	}
 	
+	return ebuCoreMainElement;
+}
+
+ebucoreMainFramework* FindEBUCoreMetadataFramework(HeaderMetadata *metadata) {
+
 	MaterialPackage *mp = metadata->getPreface()->findMaterialPackage();
 	if (!mp) {
 		// throw an exception!
-		return std::auto_ptr<ebuCoreMainType>(NULL);
+		return NULL;
     }
 
 	ebucoreMainFramework *ebucore = NULL;
@@ -1081,24 +1144,24 @@ std::auto_ptr<ebuCoreMainType> FindAndSerializeEBUCore(HeaderMetadata *metadata)
 		}
     }
 
-	if (ebucore==NULL) {
+	return ebucore;
+}
+
+std::auto_ptr<ebuCoreMainType> FindAndSerializeEBUCore(HeaderMetadata *metadata) {
+	
+	ebucoreMainFramework *fw = FindEBUCoreMetadataFramework(metadata);
+
+	if (fw==NULL) {
 		// throw an exception!
 		return std::auto_ptr<ebuCoreMainType>(NULL);
 	}
 	
-	std::auto_ptr<ebuCoreMainType::coreMetadata_type> main( new ebuCoreMainType::coreMetadata_type() );
-	mapCoreMetadata(ebucore->getcoreMetadata(), *main);
-
-	// map the EBU Core KLV framework to the XSD-derived counterpart
-	std::auto_ptr<ebuCoreMainType> ebuCoreMainElement( new ebuCoreMainType(main) );
-
-	std::auto_ptr<entityType> p( new entityType() );
-	ebucoreMetadataSchemeInformation *info = ebucore->getmetadataSchemeInformation();
-	mapEntity(info->getebucoreMetadataProvider(), *(p.get()));
-	ebuCoreMainElement->metadataProvider(p);
-
-	return ebuCoreMainElement;
+	return fw->havecoreMetadata() ? 
+		ParseEBUCoreMetadata(fw) : 
+		std::auto_ptr<ebuCoreMainType>(NULL);
 }
+
+
 
 void FindAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilename) {
 	
@@ -1176,7 +1239,47 @@ void ExtractEBUCoreMetadata(
 	progress_callback(0.75, INFO, "ExtractEBUCoreMetadata", "Locating and extracting EBUCore KLV metadata");
 
 	EBUCore::RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
-	std::auto_ptr<ebuCoreMainType> p( FindAndSerializeEBUCore(&*mHeaderMetadata) );
+
+	std::auto_ptr<ebuCoreMainType> p;
+	ebucoreMainFramework *fw = FindEBUCoreMetadataFramework(&*mHeaderMetadata);
+
+	if (fw != NULL) {
+		if (fw->havecoreMetadata()) {
+			// there is a CoreMetadata object, enough to parse the KLV-encoded metadata
+			p = ParseEBUCoreMetadata(fw);
+		} else {
+			// ///////////////////////////////////////
+			// / 2b. If there is no KLV-codec metadata beyond the framework, there could be a reference to a sidecar XML file
+			// ///////////
+			if (fw->havedocumentLocator()) {
+				std::string& loc = fw->getdocumentLocator();
+				//if (loc.size() > 0) {
+					if (outputFashion == SERIALIZE_TO_FILE) {
+						progress_callback(0.9, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to XML file at %s\n", metadataLocation);
+
+						std::ofstream out(metadataLocation, std::ofstream::out | std::ofstream::binary);
+						std::ifstream in(loc, std::ifstream::in | std::ifstream::binary);
+						std::copy(std::istream_iterator<unsigned char>(in), std::istream_iterator<unsigned char>(), std::ostream_iterator<unsigned char>(out));
+
+						in.close();
+						out.close();
+					} 
+					else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
+						progress_callback(0.9, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to output Xerces-C DOM Document");
+					
+						xercesc::TranscodeFromStr location((const unsigned char*)loc.c_str(), loc.size(), "UTF-8");
+						*outputDocument = ParseXercesDocument(location.str());
+					}
+				//}
+				//else {
+				//	// location too short!
+				//}
+			} else {
+				// this is wrong, as there is no coremetadata, and no reference to a sidecar file!
+			}
+		}
+	}
+	//std::auto_ptr<ebuCoreMainType> p( FindAndSerializeEBUCore(&*mHeaderMetadata) );
 
 	if (p.get() != NULL) {
 
@@ -1203,7 +1306,7 @@ void ExtractEBUCoreMetadata(
 
 	} else {
 		// ///////////////////////////////////////
-		// / 2b. If there is no KLV-codec metadata, there could be embedded dark metadata,
+		// / 2c. If there is no KLV-codec metadata, there could be embedded dark metadata,
 		// /     find its key in the metadata
 		// ///////////
 		mFile->seek(metadata_partition->getThisPartition(), SEEK_SET);
