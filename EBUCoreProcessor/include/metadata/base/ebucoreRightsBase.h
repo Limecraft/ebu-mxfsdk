@@ -62,9 +62,9 @@ public:
    bool haverightsClearanceFlag() const;
    bool getrightsClearanceFlag() const;
    bool haverightsValue() const;
-   std::vector<textualAnnotation*> getrightsValue() const;
+   std::vector<ebucoreTextualAnnotation*> getrightsValue() const;
    bool haveexploitationIssues() const;
-   textualAnnotation* getexploitationIssues() const;
+   ebucoreTextualAnnotation* getexploitationIssues() const;
    bool haverightsCoverage() const;
    ebucoreCoverage* getrightsCoverage() const;
    bool haverightsHolderEntity() const;
@@ -81,9 +81,9 @@ public:
    void setrightsId(std::string value);
    void setrightsLink(std::string value);
    void setrightsClearanceFlag(bool value);
-   void setrightsValue(const std::vector<textualAnnotation*>& value);
-   void appendrightsValue(textualAnnotation* value);
-   void setexploitationIssues(textualAnnotation* value);
+   void setrightsValue(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendrightsValue(ebucoreTextualAnnotation* value);
+   void setexploitationIssues(ebucoreTextualAnnotation* value);
    void setrightsCoverage(ebucoreCoverage* value);
    void setrightsHolderEntity(const std::vector<ebucoreEntity*>& value);
    void appendrightsHolderEntity(ebucoreEntity* value);

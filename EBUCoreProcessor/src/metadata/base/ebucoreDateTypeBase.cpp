@@ -76,11 +76,11 @@ bool ebucoreDateTypeBase::havetextualDate() const
     return haveItem(&MXF_ITEM_K(ebucoreDateType, textualDate));
 }
 
-textualAnnotation* ebucoreDateTypeBase::gettextualDate() const
+ebucoreTextualAnnotation* ebucoreDateTypeBase::gettextualDate() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreDateType, textualDate)));
-    MXFPP_CHECK(dynamic_cast<textualAnnotation*>(obj.get()) != 0);
-    return dynamic_cast<textualAnnotation*>(obj.release());
+    MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTextualAnnotation*>(obj.release());
 }
 
 bool ebucoreDateTypeBase::havedateTypeGroup() const
@@ -100,7 +100,7 @@ void ebucoreDateTypeBase::setdateValue(mxfTimestamp value)
     setTimestampItem(&MXF_ITEM_K(ebucoreDateType, dateValue), value);
 }
 
-void ebucoreDateTypeBase::settextualDate(textualAnnotation* value)
+void ebucoreDateTypeBase::settextualDate(ebucoreTextualAnnotation* value)
 {
     setStrongRefItem(&MXF_ITEM_K(ebucoreDateType, textualDate), value);
 }

@@ -57,15 +57,15 @@ public:
 
    bool havedescriptionNote() const;
    std::string getdescriptionNote() const;
-   std::vector<textualAnnotation*> getdescriptionValue() const;
+   std::vector<ebucoreTextualAnnotation*> getdescriptionValue() const;
    ebucoreTypeGroup* getdescriptionTypeGroup() const;
 
 
    // setters
 
    void setdescriptionNote(std::string value);
-   void setdescriptionValue(const std::vector<textualAnnotation*>& value);
-   void appenddescriptionValue(textualAnnotation* value);
+   void setdescriptionValue(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appenddescriptionValue(ebucoreTextualAnnotation* value);
    void setdescriptionTypeGroup(ebucoreTypeGroup* value);
 
 

@@ -66,11 +66,11 @@ bool ebucoreCoverageBase::havecoverageValue() const
     return haveItem(&MXF_ITEM_K(ebucoreCoverage, coverageValue));
 }
 
-textualAnnotation* ebucoreCoverageBase::getcoverageValue() const
+ebucoreTextualAnnotation* ebucoreCoverageBase::getcoverageValue() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreCoverage, coverageValue)));
-    MXFPP_CHECK(dynamic_cast<textualAnnotation*>(obj.get()) != 0);
-    return dynamic_cast<textualAnnotation*>(obj.release());
+    MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTextualAnnotation*>(obj.release());
 }
 
 bool ebucoreCoverageBase::havespatial() const
@@ -97,7 +97,7 @@ ebucoreTemporal* ebucoreCoverageBase::gettemporal() const
     return dynamic_cast<ebucoreTemporal*>(obj.release());
 }
 
-void ebucoreCoverageBase::setcoverageValue(textualAnnotation* value)
+void ebucoreCoverageBase::setcoverageValue(ebucoreTextualAnnotation* value)
 {
     setStrongRefItem(&MXF_ITEM_K(ebucoreCoverage, coverageValue), value);
 }

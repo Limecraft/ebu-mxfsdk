@@ -71,14 +71,14 @@ std::string ebucoreDescriptionBase::getdescriptionNote() const
     return getStringItem(&MXF_ITEM_K(ebucoreDescription, descriptionNote));
 }
 
-std::vector<textualAnnotation*> ebucoreDescriptionBase::getdescriptionValue() const
+std::vector<ebucoreTextualAnnotation*> ebucoreDescriptionBase::getdescriptionValue() const
 {
-    vector<textualAnnotation*> result;
+    vector<ebucoreTextualAnnotation*> result;
     auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreDescription, descriptionValue)));
     while (iter->next())
     {
-        MXFPP_CHECK(dynamic_cast<textualAnnotation*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<textualAnnotation*>(iter->get()));
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
     }
     return result;
 }
@@ -95,13 +95,13 @@ void ebucoreDescriptionBase::setdescriptionNote(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreDescription, descriptionNote), value);
 }
 
-void ebucoreDescriptionBase::setdescriptionValue(const std::vector<textualAnnotation*>& value)
+void ebucoreDescriptionBase::setdescriptionValue(const std::vector<ebucoreTextualAnnotation*>& value)
 {
-    WrapObjectVectorIterator<textualAnnotation> iter(value);
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
     setStrongRefArrayItem(&MXF_ITEM_K(ebucoreDescription, descriptionValue), &iter);
 }
 
-void ebucoreDescriptionBase::appenddescriptionValue(textualAnnotation* value)
+void ebucoreDescriptionBase::appenddescriptionValue(ebucoreTextualAnnotation* value)
 {
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreDescription, descriptionValue), value);
 }

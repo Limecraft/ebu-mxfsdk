@@ -66,11 +66,11 @@ bool ebucoreSpatialBase::havespatialDefinitionNote() const
     return haveItem(&MXF_ITEM_K(ebucoreSpatial, spatialDefinitionNote));
 }
 
-textualAnnotation* ebucoreSpatialBase::getspatialDefinitionNote() const
+ebucoreTextualAnnotation* ebucoreSpatialBase::getspatialDefinitionNote() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreSpatial, spatialDefinitionNote)));
-    MXFPP_CHECK(dynamic_cast<textualAnnotation*>(obj.get()) != 0);
-    return dynamic_cast<textualAnnotation*>(obj.release());
+    MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTextualAnnotation*>(obj.release());
 }
 
 bool ebucoreSpatialBase::havelocation() const
@@ -78,14 +78,14 @@ bool ebucoreSpatialBase::havelocation() const
     return haveItem(&MXF_ITEM_K(ebucoreSpatial, location));
 }
 
-std::vector<textualAnnotation*> ebucoreSpatialBase::getlocation() const
+std::vector<ebucoreTextualAnnotation*> ebucoreSpatialBase::getlocation() const
 {
-    vector<textualAnnotation*> result;
+    vector<ebucoreTextualAnnotation*> result;
     auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreSpatial, location)));
     while (iter->next())
     {
-        MXFPP_CHECK(dynamic_cast<textualAnnotation*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<textualAnnotation*>(iter->get()));
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
     }
     return result;
 }
@@ -107,18 +107,18 @@ std::vector<ebucoreCoordinates*> ebucoreSpatialBase::getcoordinates() const
     return result;
 }
 
-void ebucoreSpatialBase::setspatialDefinitionNote(textualAnnotation* value)
+void ebucoreSpatialBase::setspatialDefinitionNote(ebucoreTextualAnnotation* value)
 {
     setStrongRefItem(&MXF_ITEM_K(ebucoreSpatial, spatialDefinitionNote), value);
 }
 
-void ebucoreSpatialBase::setlocation(const std::vector<textualAnnotation*>& value)
+void ebucoreSpatialBase::setlocation(const std::vector<ebucoreTextualAnnotation*>& value)
 {
-    WrapObjectVectorIterator<textualAnnotation> iter(value);
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
     setStrongRefArrayItem(&MXF_ITEM_K(ebucoreSpatial, location), &iter);
 }
 
-void ebucoreSpatialBase::appendlocation(textualAnnotation* value)
+void ebucoreSpatialBase::appendlocation(ebucoreTextualAnnotation* value)
 {
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreSpatial, location), value);
 }

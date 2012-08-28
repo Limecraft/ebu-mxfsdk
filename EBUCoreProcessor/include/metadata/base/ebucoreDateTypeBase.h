@@ -58,7 +58,7 @@ public:
    bool havedateValue() const;
    mxfTimestamp getdateValue() const;
    bool havetextualDate() const;
-   textualAnnotation* gettextualDate() const;
+   ebucoreTextualAnnotation* gettextualDate() const;
    bool havedateTypeGroup() const;
    ebucoreTypeGroup* getdateTypeGroup() const;
 
@@ -66,7 +66,7 @@ public:
    // setters
 
    void setdateValue(mxfTimestamp value);
-   void settextualDate(textualAnnotation* value);
+   void settextualDate(ebucoreTextualAnnotation* value);
    void setdateTypeGroup(ebucoreTypeGroup* value);
 
 

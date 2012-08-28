@@ -81,14 +81,14 @@ std::string ebucoreAlternativeTitleBase::getalternativeTitleNote() const
     return getStringItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleNote));
 }
 
-std::vector<textualAnnotation*> ebucoreAlternativeTitleBase::getalternativeTitleValue() const
+std::vector<ebucoreTextualAnnotation*> ebucoreAlternativeTitleBase::getalternativeTitleValue() const
 {
-    vector<textualAnnotation*> result;
+    vector<ebucoreTextualAnnotation*> result;
     auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleValue)));
     while (iter->next())
     {
-        MXFPP_CHECK(dynamic_cast<textualAnnotation*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<textualAnnotation*>(iter->get()));
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
     }
     return result;
 }
@@ -117,13 +117,13 @@ void ebucoreAlternativeTitleBase::setalternativeTitleNote(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleNote), value);
 }
 
-void ebucoreAlternativeTitleBase::setalternativeTitleValue(const std::vector<textualAnnotation*>& value)
+void ebucoreAlternativeTitleBase::setalternativeTitleValue(const std::vector<ebucoreTextualAnnotation*>& value)
 {
-    WrapObjectVectorIterator<textualAnnotation> iter(value);
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
     setStrongRefArrayItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleValue), &iter);
 }
 
-void ebucoreAlternativeTitleBase::appendalternativeTitleValue(textualAnnotation* value)
+void ebucoreAlternativeTitleBase::appendalternativeTitleValue(ebucoreTextualAnnotation* value)
 {
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleValue), value);
 }

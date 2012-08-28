@@ -58,7 +58,7 @@ public:
    bool havetypeNote() const;
    std::string gettypeNote() const;
    bool havetypeValue() const;
-   std::vector<textualAnnotation*> gettypeValue() const;
+   std::vector<ebucoreTextualAnnotation*> gettypeValue() const;
    std::vector<ebucoreObjectType*> getobjectType() const;
    std::vector<ebucoreGenre*> getgenre() const;
    std::vector<ebucoreTargetAudience*> gettargetAudience() const;
@@ -67,8 +67,8 @@ public:
    // setters
 
    void settypeNote(std::string value);
-   void settypeValue(const std::vector<textualAnnotation*>& value);
-   void appendtypeValue(textualAnnotation* value);
+   void settypeValue(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendtypeValue(ebucoreTextualAnnotation* value);
    void setobjectType(const std::vector<ebucoreObjectType*>& value);
    void appendobjectType(ebucoreObjectType* value);
    void setgenre(const std::vector<ebucoreGenre*>& value);

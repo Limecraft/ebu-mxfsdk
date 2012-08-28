@@ -59,7 +59,7 @@ public:
    mxfTimestamp getalternativeTitleAttributionDate() const;
    bool havealternativeTitleNote() const;
    std::string getalternativeTitleNote() const;
-   std::vector<textualAnnotation*> getalternativeTitleValue() const;
+   std::vector<ebucoreTextualAnnotation*> getalternativeTitleValue() const;
    ebucoreTypeGroup* getalternativeTitleTypeGroup() const;
    ebucoreStatusGroup* getalternativeTitleStatusGroup() const;
 
@@ -68,8 +68,8 @@ public:
 
    void setalternativeTitleAttributionDate(mxfTimestamp value);
    void setalternativeTitleNote(std::string value);
-   void setalternativeTitleValue(const std::vector<textualAnnotation*>& value);
-   void appendalternativeTitleValue(textualAnnotation* value);
+   void setalternativeTitleValue(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendalternativeTitleValue(ebucoreTextualAnnotation* value);
    void setalternativeTitleTypeGroup(ebucoreTypeGroup* value);
    void setalternativeTitleStatusGroup(ebucoreStatusGroup* value);
 

@@ -96,14 +96,14 @@ bool ebucoreRightsBase::haverightsValue() const
     return haveItem(&MXF_ITEM_K(ebucoreRights, rightsValue));
 }
 
-std::vector<textualAnnotation*> ebucoreRightsBase::getrightsValue() const
+std::vector<ebucoreTextualAnnotation*> ebucoreRightsBase::getrightsValue() const
 {
-    vector<textualAnnotation*> result;
+    vector<ebucoreTextualAnnotation*> result;
     auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsValue)));
     while (iter->next())
     {
-        MXFPP_CHECK(dynamic_cast<textualAnnotation*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<textualAnnotation*>(iter->get()));
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
     }
     return result;
 }
@@ -113,11 +113,11 @@ bool ebucoreRightsBase::haveexploitationIssues() const
     return haveItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues));
 }
 
-textualAnnotation* ebucoreRightsBase::getexploitationIssues() const
+ebucoreTextualAnnotation* ebucoreRightsBase::getexploitationIssues() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues)));
-    MXFPP_CHECK(dynamic_cast<textualAnnotation*>(obj.get()) != 0);
-    return dynamic_cast<textualAnnotation*>(obj.release());
+    MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTextualAnnotation*>(obj.release());
 }
 
 bool ebucoreRightsBase::haverightsCoverage() const
@@ -205,18 +205,18 @@ void ebucoreRightsBase::setrightsClearanceFlag(bool value)
     setBooleanItem(&MXF_ITEM_K(ebucoreRights, rightsClearanceFlag), value);
 }
 
-void ebucoreRightsBase::setrightsValue(const std::vector<textualAnnotation*>& value)
+void ebucoreRightsBase::setrightsValue(const std::vector<ebucoreTextualAnnotation*>& value)
 {
-    WrapObjectVectorIterator<textualAnnotation> iter(value);
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
     setStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsValue), &iter);
 }
 
-void ebucoreRightsBase::appendrightsValue(textualAnnotation* value)
+void ebucoreRightsBase::appendrightsValue(ebucoreTextualAnnotation* value)
 {
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsValue), value);
 }
 
-void ebucoreRightsBase::setexploitationIssues(textualAnnotation* value)
+void ebucoreRightsBase::setexploitationIssues(ebucoreTextualAnnotation* value)
 {
     setStrongRefItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues), value);
 }

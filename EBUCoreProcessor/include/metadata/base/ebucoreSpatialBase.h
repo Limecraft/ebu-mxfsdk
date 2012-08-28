@@ -56,18 +56,18 @@ public:
    // getters
 
    bool havespatialDefinitionNote() const;
-   textualAnnotation* getspatialDefinitionNote() const;
+   ebucoreTextualAnnotation* getspatialDefinitionNote() const;
    bool havelocation() const;
-   std::vector<textualAnnotation*> getlocation() const;
+   std::vector<ebucoreTextualAnnotation*> getlocation() const;
    bool havecoordinates() const;
    std::vector<ebucoreCoordinates*> getcoordinates() const;
 
 
    // setters
 
-   void setspatialDefinitionNote(textualAnnotation* value);
-   void setlocation(const std::vector<textualAnnotation*>& value);
-   void appendlocation(textualAnnotation* value);
+   void setspatialDefinitionNote(ebucoreTextualAnnotation* value);
+   void setlocation(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendlocation(ebucoreTextualAnnotation* value);
    void setcoordinates(const std::vector<ebucoreCoordinates*>& value);
    void appendcoordinates(ebucoreCoordinates* value);
 

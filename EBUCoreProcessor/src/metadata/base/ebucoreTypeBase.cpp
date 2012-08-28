@@ -76,14 +76,14 @@ bool ebucoreTypeBase::havetypeValue() const
     return haveItem(&MXF_ITEM_K(ebucoreType, typeValue));
 }
 
-std::vector<textualAnnotation*> ebucoreTypeBase::gettypeValue() const
+std::vector<ebucoreTextualAnnotation*> ebucoreTypeBase::gettypeValue() const
 {
-    vector<textualAnnotation*> result;
+    vector<ebucoreTextualAnnotation*> result;
     auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreType, typeValue)));
     while (iter->next())
     {
-        MXFPP_CHECK(dynamic_cast<textualAnnotation*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<textualAnnotation*>(iter->get()));
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
     }
     return result;
 }
@@ -129,13 +129,13 @@ void ebucoreTypeBase::settypeNote(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreType, typeNote), value);
 }
 
-void ebucoreTypeBase::settypeValue(const std::vector<textualAnnotation*>& value)
+void ebucoreTypeBase::settypeValue(const std::vector<ebucoreTextualAnnotation*>& value)
 {
-    WrapObjectVectorIterator<textualAnnotation> iter(value);
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
     setStrongRefArrayItem(&MXF_ITEM_K(ebucoreType, typeValue), &iter);
 }
 
-void ebucoreTypeBase::appendtypeValue(textualAnnotation* value)
+void ebucoreTypeBase::appendtypeValue(ebucoreTextualAnnotation* value)
 {
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreType, typeValue), value);
 }

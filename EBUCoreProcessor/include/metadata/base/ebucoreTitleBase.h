@@ -59,15 +59,15 @@ public:
    mxfTimestamp gettitleAttributionDate() const;
    bool havetitleNote() const;
    std::string gettitleNote() const;
-   std::vector<textualAnnotation*> gettitleValue() const;
+   std::vector<ebucoreTextualAnnotation*> gettitleValue() const;
 
 
    // setters
 
    void settitleAttributionDate(mxfTimestamp value);
    void settitleNote(std::string value);
-   void settitleValue(const std::vector<textualAnnotation*>& value);
-   void appendtitleValue(textualAnnotation* value);
+   void settitleValue(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendtitleValue(ebucoreTextualAnnotation* value);
 
 
 protected:

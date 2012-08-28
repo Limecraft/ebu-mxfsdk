@@ -48,11 +48,25 @@ namespace EBUCore
 	}
 }
 
+#include <metadata/ebucoreTextualAnnotation.h>
 #include <metadata/ebucoreTypeGroup.h>
 #include <metadata/ebucoreFormatGroup.h>
 #include <metadata/ebucoreStatusGroup.h>
-#include <metadata/ebucoreRole.h>
-#include <metadata/ebucoreTextualAnnotation.h>
+
+#include <metadata/ebucoreTechnicalAttributeAnyURI.h>
+#include <metadata/ebucoreTechnicalAttributeBoolean.h>
+#include <metadata/ebucoreTechnicalAttributeFloat.h>
+#include <metadata/ebucoreTechnicalAttributeInt16.h>
+#include <metadata/ebucoreTechnicalAttributeInt32.h>
+#include <metadata/ebucoreTechnicalAttributeInt64.h>
+#include <metadata/ebucoreTechnicalAttributeInt8.h>
+#include <metadata/ebucoreTechnicalAttributeRational.h>
+#include <metadata/ebucoreTechnicalAttributeString.h>
+#include <metadata/ebucoreTechnicalAttributeUInt16.h>
+#include <metadata/ebucoreTechnicalAttributeUInt32.h>
+#include <metadata/ebucoreTechnicalAttributeUInt64.h>
+#include <metadata/ebucoreTechnicalAttributeUInt8.h>
+
 #include <metadata/ebucoreAddress.h>
 #include <metadata/ebucoreContactDetails.h>
 #include <metadata/ebucoreContact.h>
@@ -64,10 +78,10 @@ namespace EBUCore
 #include <metadata/ebucoreBasicRelation.h>
 #include <metadata/ebucoreCoordinates.h>
 #include <metadata/ebucoreCustomRelation.h>
+#include <metadata/ebucoreDateType.h>
 #include <metadata/ebucoreDate.h>
 #include <metadata/ebucoreDescription.h>
 #include <metadata/ebucoreGenre.h>
-#include <metadata/ebucoreLanguagePurpose.h>
 #include <metadata/ebucoreLanguage.h>
 #include <metadata/ebucoreLocation.h>
 #include <metadata/ebucoreObjectType.h>
@@ -85,7 +99,6 @@ namespace EBUCore
 #include <metadata/ebucoreRights.h>
 #include <metadata/ebucoreCoreMetadata.h>
 #include <metadata/ebucoreMainFramework.h>
-#include <metadata/ebucorePartMetadata.h>
 #include <metadata/ebucoreMetadataSchemeInformation.h>
 
 
