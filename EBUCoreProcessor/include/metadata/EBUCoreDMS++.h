@@ -98,6 +98,7 @@ namespace EBUCore
 #include <metadata/ebucoreCoverage.h>
 #include <metadata/ebucoreRights.h>
 #include <metadata/ebucoreCoreMetadata.h>
+#include <metadata/ebucorePartMetadata.h>
 #include <metadata/ebucoreMainFramework.h>
 #include <metadata/ebucoreMetadataSchemeInformation.h>
 
