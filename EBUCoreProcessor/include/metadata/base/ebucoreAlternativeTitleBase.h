@@ -55,19 +55,21 @@ public:
 
    // getters
 
-   std::string getalternativeTitleValue() const;
-   std::string getalternativeTitleLanguage() const;
    bool havealternativeTitleAttributionDate() const;
    mxfTimestamp getalternativeTitleAttributionDate() const;
+   bool havealternativeTitleNote() const;
+   std::string getalternativeTitleNote() const;
+   std::vector<textualAnnotation*> getalternativeTitleValue() const;
    ebucoreTypeGroup* getalternativeTitleTypeGroup() const;
    ebucoreStatusGroup* getalternativeTitleStatusGroup() const;
 
 
    // setters
 
-   void setalternativeTitleValue(std::string value);
-   void setalternativeTitleLanguage(std::string value);
    void setalternativeTitleAttributionDate(mxfTimestamp value);
+   void setalternativeTitleNote(std::string value);
+   void setalternativeTitleValue(const std::vector<textualAnnotation*>& value);
+   void appendalternativeTitleValue(textualAnnotation* value);
    void setalternativeTitleTypeGroup(ebucoreTypeGroup* value);
    void setalternativeTitleStatusGroup(ebucoreStatusGroup* value);
 

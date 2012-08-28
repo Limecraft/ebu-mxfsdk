@@ -55,15 +55,17 @@ public:
 
    // getters
 
-   std::string getlanguageName() const;
    std::string getlanguageCode() const;
+   std::string getlanguageLanguage() const;
+   std::string getlanguageNote() const;
    ebucoreTypeGroup* getlanguagePurposeSet() const;
 
 
    // setters
 
-   void setlanguageName(std::string value);
    void setlanguageCode(std::string value);
+   void setlanguageLanguage(std::string value);
+   void setlanguageNote(std::string value);
    void setlanguagePurposeSet(ebucoreTypeGroup* value);
 
 

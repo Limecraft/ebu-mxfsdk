@@ -56,6 +56,7 @@ public:
    // getters
 
    std::string getidentifierValue() const;
+   std::string getidentifierNote() const;
    ebucoreTypeGroup* getidentifierTypeGroup() const;
    ebucoreFormatGroup* getidentifierFormatGroup() const;
    bool haveidentifierAttributorEntity() const;
@@ -65,6 +66,7 @@ public:
    // setters
 
    void setidentifierValue(std::string value);
+   void setidentifierNote(std::string value);
    void setidentifierTypeGroup(ebucoreTypeGroup* value);
    void setidentifierFormatGroup(ebucoreFormatGroup* value);
    void setidentifierAttributorEntity(ebucoreEntity* value);

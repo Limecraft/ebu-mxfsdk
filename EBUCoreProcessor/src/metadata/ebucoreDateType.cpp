@@ -43,15 +43,15 @@ using namespace EBUCore::KLV;
 
 
 
-ebucoreLanguagePurpose::ebucoreLanguagePurpose(HeaderMetadata *headerMetadata)
-: ebucoreLanguagePurposeBase(headerMetadata)
+ebucoreDateType::ebucoreDateType(HeaderMetadata *headerMetadata)
+: ebucoreDateTypeBase(headerMetadata)
 {}
 
-ebucoreLanguagePurpose::ebucoreLanguagePurpose(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: ebucoreLanguagePurposeBase(headerMetadata, cMetadataSet)
+ebucoreDateType::ebucoreDateType(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: ebucoreDateTypeBase(headerMetadata, cMetadataSet)
 {}
 
-ebucoreLanguagePurpose::~ebucoreLanguagePurpose()
+ebucoreDateType::~ebucoreDateType()
 {}
 
 

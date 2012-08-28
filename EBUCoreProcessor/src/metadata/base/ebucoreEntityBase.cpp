@@ -61,9 +61,14 @@ ebucoreEntityBase::~ebucoreEntityBase()
 {}
 
 
-mxfUUID ebucoreEntityBase::getentityId() const
+bool ebucoreEntityBase::haveentityId() const
 {
-    return getUUIDItem(&MXF_ITEM_K(ebucoreEntity, entityId));
+    return haveItem(&MXF_ITEM_K(ebucoreEntity, entityId));
+}
+
+std::string ebucoreEntityBase::getentityId() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreEntity, entityId));
 }
 
 bool ebucoreEntityBase::haveentityContact() const
@@ -105,21 +110,21 @@ bool ebucoreEntityBase::haveentityRole() const
     return haveItem(&MXF_ITEM_K(ebucoreEntity, entityRole));
 }
 
-std::vector<ebucoreRole*> ebucoreEntityBase::getentityRole() const
+std::vector<ebucoreTypeGroup*> ebucoreEntityBase::getentityRole() const
 {
-    vector<ebucoreRole*> result;
+    vector<ebucoreTypeGroup*> result;
     auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreEntity, entityRole)));
     while (iter->next())
     {
-        MXFPP_CHECK(dynamic_cast<ebucoreRole*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreRole*>(iter->get()));
+        MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTypeGroup*>(iter->get()));
     }
     return result;
 }
 
-void ebucoreEntityBase::setentityId(mxfUUID value)
+void ebucoreEntityBase::setentityId(std::string value)
 {
-    setUUIDItem(&MXF_ITEM_K(ebucoreEntity, entityId), value);
+    setStringItem(&MXF_ITEM_K(ebucoreEntity, entityId), value);
 }
 
 void ebucoreEntityBase::setentityContact(const std::vector<ebucoreContact*>& value)
@@ -144,13 +149,13 @@ void ebucoreEntityBase::appendentityOrganisation(ebucoreOrganisation* value)
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreEntity, entityOrganisation), value);
 }
 
-void ebucoreEntityBase::setentityRole(const std::vector<ebucoreRole*>& value)
+void ebucoreEntityBase::setentityRole(const std::vector<ebucoreTypeGroup*>& value)
 {
-    WrapObjectVectorIterator<ebucoreRole> iter(value);
+    WrapObjectVectorIterator<ebucoreTypeGroup> iter(value);
     setStrongRefArrayItem(&MXF_ITEM_K(ebucoreEntity, entityRole), &iter);
 }
 
-void ebucoreEntityBase::appendentityRole(ebucoreRole* value)
+void ebucoreEntityBase::appendentityRole(ebucoreTypeGroup* value)
 {
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreEntity, entityRole), value);
 }

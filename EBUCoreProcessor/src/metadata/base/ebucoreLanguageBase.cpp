@@ -61,14 +61,19 @@ ebucoreLanguageBase::~ebucoreLanguageBase()
 {}
 
 
-std::string ebucoreLanguageBase::getlanguageName() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreLanguage, languageName));
-}
-
 std::string ebucoreLanguageBase::getlanguageCode() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreLanguage, languageCode));
+}
+
+std::string ebucoreLanguageBase::getlanguageLanguage() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreLanguage, languageLanguage));
+}
+
+std::string ebucoreLanguageBase::getlanguageNote() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreLanguage, languageNote));
 }
 
 ebucoreTypeGroup* ebucoreLanguageBase::getlanguagePurposeSet() const
@@ -78,14 +83,19 @@ ebucoreTypeGroup* ebucoreLanguageBase::getlanguagePurposeSet() const
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
-void ebucoreLanguageBase::setlanguageName(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreLanguage, languageName), value);
-}
-
 void ebucoreLanguageBase::setlanguageCode(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreLanguage, languageCode), value);
+}
+
+void ebucoreLanguageBase::setlanguageLanguage(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreLanguage, languageLanguage), value);
+}
+
+void ebucoreLanguageBase::setlanguageNote(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreLanguage, languageNote), value);
 }
 
 void ebucoreLanguageBase::setlanguagePurposeSet(ebucoreTypeGroup* value)

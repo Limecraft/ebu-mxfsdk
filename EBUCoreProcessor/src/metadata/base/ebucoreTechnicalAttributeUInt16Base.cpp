@@ -33,6 +33,8 @@
 #include "config.h"
 #endif
 
+#include <memory>
+
 #include <libMXF++/MXF.h>
 #include <metadata/EBUCoreDMS++.h>
 
@@ -42,16 +44,30 @@ using namespace mxfpp;
 using namespace EBUCore::KLV;
 
 
+const mxfKey ebucoreTechnicalAttributeUInt16Base::setKey = MXF_SET_K(ebucoreTechnicalAttributeUInt16);
 
-ebucoreRole::ebucoreRole(HeaderMetadata *headerMetadata)
-: ebucoreRoleBase(headerMetadata)
+
+ebucoreTechnicalAttributeUInt16Base::ebucoreTechnicalAttributeUInt16Base(HeaderMetadata *headerMetadata)
+: ebucoreTypeGroup(headerMetadata, headerMetadata->createCSet(&setKey))
+{
+    headerMetadata->add(this);
+}
+
+ebucoreTechnicalAttributeUInt16Base::ebucoreTechnicalAttributeUInt16Base(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: ebucoreTypeGroup(headerMetadata, cMetadataSet)
 {}
 
-ebucoreRole::ebucoreRole(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: ebucoreRoleBase(headerMetadata, cMetadataSet)
+ebucoreTechnicalAttributeUInt16Base::~ebucoreTechnicalAttributeUInt16Base()
 {}
 
-ebucoreRole::~ebucoreRole()
-{}
 
+uint16_t ebucoreTechnicalAttributeUInt16Base::gettechnicalAttributeUInt16Value() const
+{
+    return getUInt16Item(&MXF_ITEM_K(ebucoreTechnicalAttributeUInt16, technicalAttributeUInt16Value));
+}
+
+void ebucoreTechnicalAttributeUInt16Base::settechnicalAttributeUInt16Value(uint16_t value)
+{
+    setUInt16Item(&MXF_ITEM_K(ebucoreTechnicalAttributeUInt16, technicalAttributeUInt16Value), value);
+}
 

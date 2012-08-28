@@ -141,11 +141,6 @@ int64_t ebucorePartMetadataBase::getpartDurationEditUnitNumber() const
     return getLengthItem(&MXF_ITEM_K(ebucorePartMetadata, partDurationEditUnitNumber));
 }
 
-bool ebucorePartMetadataBase::havepartTypeGroup() const
-{
-    return haveItem(&MXF_ITEM_K(ebucorePartMetadata, partTypeGroup));
-}
-
 std::string ebucorePartMetadataBase::getpartTypeGroup() const
 {
     return getStringItem(&MXF_ITEM_K(ebucorePartMetadata, partTypeGroup));

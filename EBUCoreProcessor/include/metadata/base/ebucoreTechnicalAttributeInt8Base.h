@@ -29,12 +29,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORELANGUAGEPURPOSE_H__
-#define __MXFPP_EBUCORELANGUAGEPURPOSE_H__
+#ifndef __MXFPP_EBUCORETECHNICALATTRIBUTEINT8_BASE_H__
+#define __MXFPP_EBUCORETECHNICALATTRIBUTEINT8_BASE_H__
 
 
 
-#include <metadata/base/ebucoreLanguagePurposeBase.h>
+#include <metadata/ebucoreTypeGroup.h>
 
 using namespace mxfpp;
 
@@ -42,20 +42,29 @@ namespace EBUCore { namespace KLV
 {
 
 
-class ebucoreLanguagePurpose : public ebucoreLanguagePurposeBase
+class ebucoreTechnicalAttributeInt8Base : public ebucoreTypeGroup
 {
 public:
-    friend class MetadataSetFactory<ebucoreLanguagePurpose>;
+    friend class MetadataSetFactory<ebucoreTechnicalAttributeInt8Base>;
+    static const mxfKey setKey;
 
 public:
-    ebucoreLanguagePurpose(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreLanguagePurpose();
+    ebucoreTechnicalAttributeInt8Base(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreTechnicalAttributeInt8Base();
 
 
+   // getters
+
+   int8_t gettechnicalAttributeInt8Value() const;
+
+
+   // setters
+
+   void settechnicalAttributeInt8Value(int8_t value);
 
 
 protected:
-    ebucoreLanguagePurpose(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreTechnicalAttributeInt8Base(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

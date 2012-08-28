@@ -61,7 +61,9 @@ public:
    std::string getlocationName() const;
    bool havelocationCode() const;
    std::string getlocationCode() const;
-   ebucoreTypeGroup* getlocationKindGroup() const;
+   ebucoreTypeGroup* getlocationTypeGroup() const;
+   bool havecoordinateReference() const;
+   XXX getcoordinateReference() const;
 
 
    // setters
@@ -69,7 +71,8 @@ public:
    void setlocationId(std::string value);
    void setlocationName(std::string value);
    void setlocationCode(std::string value);
-   void setlocationKindGroup(ebucoreTypeGroup* value);
+   void setlocationTypeGroup(ebucoreTypeGroup* value);
+   void setcoordinateReference(XXX value);
 
 
 protected:

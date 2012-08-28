@@ -56,7 +56,9 @@ public:
    // getters
 
    bool havecontactId() const;
-   mxfUUID getcontactId() const;
+   std::string getcontactId() const;
+   bool havecontactName() const;
+   std::string getcontactName() const;
    bool havefamilyName() const;
    std::string getfamilyName() const;
    std::string getgivenName() const;
@@ -66,8 +68,6 @@ public:
    std::string getsaluation() const;
    bool havesuffix() const;
    std::string getsuffix() const;
-   bool havestageName() const;
-   std::vector<ebucoreTextualAnnotation*> getstageName() const;
    bool haveoccupation() const;
    std::string getoccupation() const;
    bool haveusername() const;
@@ -75,19 +75,20 @@ public:
    ebucoreTypeGroup* getcontactType() const;
    std::vector<ebucoreContactDetails*> getcontactDetails() const;
    std::vector<ebucoreEntity*> getcontactRelatedContacts() const;
+   bool havestageName() const;
+   std::vector<ebucoreTextualAnnotation*> getstageName() const;
 
 
    // setters
 
-   void setcontactId(mxfUUID value);
+   void setcontactId(std::string value);
+   void setcontactName(std::string value);
    void setfamilyName(std::string value);
    void setgivenName(std::string value);
    void setotherGivenName(const std::vector<ebucoreTextualAnnotation*>& value);
    void appendotherGivenName(ebucoreTextualAnnotation* value);
    void setsaluation(std::string value);
    void setsuffix(std::string value);
-   void setstageName(const std::vector<ebucoreTextualAnnotation*>& value);
-   void appendstageName(ebucoreTextualAnnotation* value);
    void setoccupation(std::string value);
    void setusername(const std::vector<ebucoreTextualAnnotation*>& value);
    void appendusername(ebucoreTextualAnnotation* value);
@@ -96,6 +97,8 @@ public:
    void appendcontactDetails(ebucoreContactDetails* value);
    void setcontactRelatedContacts(const std::vector<ebucoreEntity*>& value);
    void appendcontactRelatedContacts(ebucoreEntity* value);
+   void setstageName(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendstageName(ebucoreTextualAnnotation* value);
 
 
 protected:

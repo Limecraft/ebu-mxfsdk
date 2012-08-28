@@ -29,35 +29,46 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#include <memory>
-
-#include <libMXF++/MXF.h>
-#include <metadata/EBUCoreDMS++.h>
+#ifndef __MXFPP_EBUCORETECHNICALATTRIBUTEANYURI_BASE_H__
+#define __MXFPP_EBUCORETECHNICALATTRIBUTEANYURI_BASE_H__
 
 
-using namespace std;
+
+#include <metadata/ebucoreTypeGroup.h>
+
 using namespace mxfpp;
-using namespace EBUCore::KLV;
 
-
-const mxfKey ebucoreLanguagePurposeBase::setKey = MXF_SET_K(ebucoreLanguagePurpose);
-
-
-ebucoreLanguagePurposeBase::ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata)
-: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
+namespace EBUCore { namespace KLV
 {
-    headerMetadata->add(this);
-}
-
-ebucoreLanguagePurposeBase::ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: InterchangeObject(headerMetadata, cMetadataSet)
-{}
-
-ebucoreLanguagePurposeBase::~ebucoreLanguagePurposeBase()
-{}
 
 
+class ebucoreTechnicalAttributeAnyURIBase : public ebucoreTypeGroup
+{
+public:
+    friend class MetadataSetFactory<ebucoreTechnicalAttributeAnyURIBase>;
+    static const mxfKey setKey;
+
+public:
+    ebucoreTechnicalAttributeAnyURIBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreTechnicalAttributeAnyURIBase();
+
+
+   // getters
+
+   std::string gettechnicalAttributeAnyURIValue() const;
+
+
+   // setters
+
+   void settechnicalAttributeAnyURIValue(std::string value);
+
+
+protected:
+    ebucoreTechnicalAttributeAnyURIBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+};
+
+
+}};
+
+
+#endif

@@ -116,16 +116,6 @@ std::string ebucorePublicationHistoryEventBase::getpublicationChannel() const
     return getStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationChannel));
 }
 
-bool ebucorePublicationHistoryEventBase::havepublicationFormatIDRef() const
-{
-    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationFormatIDRef));
-}
-
-std::string ebucorePublicationHistoryEventBase::getpublicationFormatIDRef() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationFormatIDRef));
-}
-
 void ebucorePublicationHistoryEventBase::setfirstPublicationFlag(bool value)
 {
     setBooleanItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, firstPublicationFlag), value);
@@ -154,10 +144,5 @@ void ebucorePublicationHistoryEventBase::setpublicationMedium(std::string value)
 void ebucorePublicationHistoryEventBase::setpublicationChannel(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationChannel), value);
-}
-
-void ebucorePublicationHistoryEventBase::setpublicationFormatIDRef(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationFormatIDRef), value);
 }
 

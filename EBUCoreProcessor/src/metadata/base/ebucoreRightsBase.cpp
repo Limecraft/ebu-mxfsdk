@@ -71,26 +71,6 @@ std::string ebucoreRightsBase::getrightsId() const
     return getStringItem(&MXF_ITEM_K(ebucoreRights, rightsId));
 }
 
-bool ebucoreRightsBase::haverightsValue() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsValue));
-}
-
-std::string ebucoreRightsBase::getrightsValue() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreRights, rightsValue));
-}
-
-bool ebucoreRightsBase::haverightsLanguage() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsLanguage));
-}
-
-std::string ebucoreRightsBase::getrightsLanguage() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreRights, rightsLanguage));
-}
-
 bool ebucoreRightsBase::haverightsLink() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreRights, rightsLink));
@@ -111,24 +91,21 @@ bool ebucoreRightsBase::getrightsClearanceFlag() const
     return getBooleanItem(&MXF_ITEM_K(ebucoreRights, rightsClearanceFlag));
 }
 
-bool ebucoreRightsBase::haverightsAttributedID() const
+bool ebucoreRightsBase::haverightsValue() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsAttributedID));
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsValue));
 }
 
-std::string ebucoreRightsBase::getrightsAttributedID() const
+std::vector<textualAnnotation*> ebucoreRightsBase::getrightsValue() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreRights, rightsAttributedID));
-}
-
-bool ebucoreRightsBase::haverightsFormatIDRef() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsFormatIDRef));
-}
-
-std::string ebucoreRightsBase::getrightsFormatIDRef() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreRights, rightsFormatIDRef));
+    vector<textualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsValue)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<textualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<textualAnnotation*>(iter->get()));
+    }
+    return result;
 }
 
 bool ebucoreRightsBase::haveexploitationIssues() const
@@ -136,9 +113,11 @@ bool ebucoreRightsBase::haveexploitationIssues() const
     return haveItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues));
 }
 
-std::string ebucoreRightsBase::getexploitationIssues() const
+textualAnnotation* ebucoreRightsBase::getexploitationIssues() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues));
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues)));
+    MXFPP_CHECK(dynamic_cast<textualAnnotation*>(obj.get()) != 0);
+    return dynamic_cast<textualAnnotation*>(obj.release());
 }
 
 bool ebucoreRightsBase::haverightsCoverage() const
@@ -158,11 +137,16 @@ bool ebucoreRightsBase::haverightsHolderEntity() const
     return haveItem(&MXF_ITEM_K(ebucoreRights, rightsHolderEntity));
 }
 
-ebucoreEntity* ebucoreRightsBase::getrightsHolderEntity() const
+std::vector<ebucoreEntity*> ebucoreRightsBase::getrightsHolderEntity() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRights, rightsHolderEntity)));
-    MXFPP_CHECK(dynamic_cast<ebucoreEntity*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreEntity*>(obj.release());
+    vector<ebucoreEntity*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsHolderEntity)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreEntity*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreEntity*>(iter->get()));
+    }
+    return result;
 }
 
 bool ebucoreRightsBase::haverightsContacts() const
@@ -182,26 +166,33 @@ std::vector<ebucoreContact*> ebucoreRightsBase::getrightsContacts() const
     return result;
 }
 
-ebucoreTypeGroup* ebucoreRightsBase::getrightsKindGroup() const
+ebucoreTypeGroup* ebucoreRightsBase::getrightsTypeGroup() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRights, rightsKindGroup)));
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRights, rightsTypeGroup)));
     MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+}
+
+bool ebucoreRightsBase::haverightsAttributeID() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsAttributeID));
+}
+
+std::vector<ebucoreIdentifier*> ebucoreRightsBase::getrightsAttributeID() const
+{
+    vector<ebucoreIdentifier*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsAttributeID)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreIdentifier*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreIdentifier*>(iter->get()));
+    }
+    return result;
 }
 
 void ebucoreRightsBase::setrightsId(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreRights, rightsId), value);
-}
-
-void ebucoreRightsBase::setrightsValue(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreRights, rightsValue), value);
-}
-
-void ebucoreRightsBase::setrightsLanguage(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreRights, rightsLanguage), value);
 }
 
 void ebucoreRightsBase::setrightsLink(std::string value)
@@ -214,19 +205,20 @@ void ebucoreRightsBase::setrightsClearanceFlag(bool value)
     setBooleanItem(&MXF_ITEM_K(ebucoreRights, rightsClearanceFlag), value);
 }
 
-void ebucoreRightsBase::setrightsAttributedID(std::string value)
+void ebucoreRightsBase::setrightsValue(const std::vector<textualAnnotation*>& value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreRights, rightsAttributedID), value);
+    WrapObjectVectorIterator<textualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsValue), &iter);
 }
 
-void ebucoreRightsBase::setrightsFormatIDRef(std::string value)
+void ebucoreRightsBase::appendrightsValue(textualAnnotation* value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreRights, rightsFormatIDRef), value);
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsValue), value);
 }
 
-void ebucoreRightsBase::setexploitationIssues(std::string value)
+void ebucoreRightsBase::setexploitationIssues(textualAnnotation* value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues), value);
 }
 
 void ebucoreRightsBase::setrightsCoverage(ebucoreCoverage* value)
@@ -234,9 +226,15 @@ void ebucoreRightsBase::setrightsCoverage(ebucoreCoverage* value)
     setStrongRefItem(&MXF_ITEM_K(ebucoreRights, rightsCoverage), value);
 }
 
-void ebucoreRightsBase::setrightsHolderEntity(ebucoreEntity* value)
+void ebucoreRightsBase::setrightsHolderEntity(const std::vector<ebucoreEntity*>& value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucoreRights, rightsHolderEntity), value);
+    WrapObjectVectorIterator<ebucoreEntity> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsHolderEntity), &iter);
+}
+
+void ebucoreRightsBase::appendrightsHolderEntity(ebucoreEntity* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsHolderEntity), value);
 }
 
 void ebucoreRightsBase::setrightsContacts(const std::vector<ebucoreContact*>& value)
@@ -250,8 +248,19 @@ void ebucoreRightsBase::appendrightsContacts(ebucoreContact* value)
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsContacts), value);
 }
 
-void ebucoreRightsBase::setrightsKindGroup(ebucoreTypeGroup* value)
+void ebucoreRightsBase::setrightsTypeGroup(ebucoreTypeGroup* value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucoreRights, rightsKindGroup), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreRights, rightsTypeGroup), value);
+}
+
+void ebucoreRightsBase::setrightsAttributeID(const std::vector<ebucoreIdentifier*>& value)
+{
+    WrapObjectVectorIterator<ebucoreIdentifier> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsAttributeID), &iter);
+}
+
+void ebucoreRightsBase::appendrightsAttributeID(ebucoreIdentifier* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsAttributeID), value);
 }
 

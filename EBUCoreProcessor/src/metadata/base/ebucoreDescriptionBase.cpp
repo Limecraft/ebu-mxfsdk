@@ -61,14 +61,26 @@ ebucoreDescriptionBase::~ebucoreDescriptionBase()
 {}
 
 
-std::string ebucoreDescriptionBase::getdescriptionValue() const
+bool ebucoreDescriptionBase::havedescriptionNote() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreDescription, descriptionValue));
+    return haveItem(&MXF_ITEM_K(ebucoreDescription, descriptionNote));
 }
 
-std::string ebucoreDescriptionBase::getdescriptionLanguage() const
+std::string ebucoreDescriptionBase::getdescriptionNote() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreDescription, descriptionLanguage));
+    return getStringItem(&MXF_ITEM_K(ebucoreDescription, descriptionNote));
+}
+
+std::vector<textualAnnotation*> ebucoreDescriptionBase::getdescriptionValue() const
+{
+    vector<textualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreDescription, descriptionValue)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<textualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<textualAnnotation*>(iter->get()));
+    }
+    return result;
 }
 
 ebucoreTypeGroup* ebucoreDescriptionBase::getdescriptionTypeGroup() const
@@ -78,14 +90,20 @@ ebucoreTypeGroup* ebucoreDescriptionBase::getdescriptionTypeGroup() const
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
-void ebucoreDescriptionBase::setdescriptionValue(std::string value)
+void ebucoreDescriptionBase::setdescriptionNote(std::string value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreDescription, descriptionValue), value);
+    setStringItem(&MXF_ITEM_K(ebucoreDescription, descriptionNote), value);
 }
 
-void ebucoreDescriptionBase::setdescriptionLanguage(std::string value)
+void ebucoreDescriptionBase::setdescriptionValue(const std::vector<textualAnnotation*>& value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreDescription, descriptionLanguage), value);
+    WrapObjectVectorIterator<textualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreDescription, descriptionValue), &iter);
+}
+
+void ebucoreDescriptionBase::appenddescriptionValue(textualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreDescription, descriptionValue), value);
 }
 
 void ebucoreDescriptionBase::setdescriptionTypeGroup(ebucoreTypeGroup* value)

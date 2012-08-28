@@ -61,6 +61,16 @@ ebucoreTemporalBase::~ebucoreTemporalBase()
 {}
 
 
+bool ebucoreTemporalBase::havetemporalDefinitionNote() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTemporal, temporalDefinitionNote));
+}
+
+std::string ebucoreTemporalBase::gettemporalDefinitionNote() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreTemporal, temporalDefinitionNote));
+}
+
 bool ebucoreTemporalBase::haveperiodOfTime() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreTemporal, periodOfTime));
@@ -83,6 +93,11 @@ ebucoreTypeGroup* ebucoreTemporalBase::gettemporalTypeGroup() const
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreTemporal, temporalTypeGroup)));
     MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+}
+
+void ebucoreTemporalBase::settemporalDefinitionNote(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreTemporal, temporalDefinitionNote), value);
 }
 
 void ebucoreTemporalBase::setperiodOfTime(const std::vector<ebucorePeriodOfTime*>& value)

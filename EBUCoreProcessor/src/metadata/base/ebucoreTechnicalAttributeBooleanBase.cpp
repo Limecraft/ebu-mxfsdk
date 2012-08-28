@@ -44,32 +44,30 @@ using namespace mxfpp;
 using namespace EBUCore::KLV;
 
 
-const mxfKey ebucoreRoleBase::setKey = MXF_SET_K(ebucoreRole);
+const mxfKey ebucoreTechnicalAttributeBooleanBase::setKey = MXF_SET_K(ebucoreTechnicalAttributeBoolean);
 
 
-ebucoreRoleBase::ebucoreRoleBase(HeaderMetadata *headerMetadata)
-: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
+ebucoreTechnicalAttributeBooleanBase::ebucoreTechnicalAttributeBooleanBase(HeaderMetadata *headerMetadata)
+: ebucoreTypeGroup(headerMetadata, headerMetadata->createCSet(&setKey))
 {
     headerMetadata->add(this);
 }
 
-ebucoreRoleBase::ebucoreRoleBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: InterchangeObject(headerMetadata, cMetadataSet)
+ebucoreTechnicalAttributeBooleanBase::ebucoreTechnicalAttributeBooleanBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: ebucoreTypeGroup(headerMetadata, cMetadataSet)
 {}
 
-ebucoreRoleBase::~ebucoreRoleBase()
+ebucoreTechnicalAttributeBooleanBase::~ebucoreTechnicalAttributeBooleanBase()
 {}
 
 
-ebucoreTypeGroup* ebucoreRoleBase::getroleType() const
+bool ebucoreTechnicalAttributeBooleanBase::gettechnicalAttributeBooleanValue() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRole, roleType)));
-    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+    return getBooleanItem(&MXF_ITEM_K(ebucoreTechnicalAttributeBoolean, technicalAttributeBooleanValue));
 }
 
-void ebucoreRoleBase::setroleType(ebucoreTypeGroup* value)
+void ebucoreTechnicalAttributeBooleanBase::settechnicalAttributeBooleanValue(bool value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucoreRole, roleType), value);
+    setBooleanItem(&MXF_ITEM_K(ebucoreTechnicalAttributeBoolean, technicalAttributeBooleanValue), value);
 }
 

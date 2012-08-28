@@ -61,23 +61,6 @@ ebucoreContactDetailsBase::~ebucoreContactDetailsBase()
 {}
 
 
-bool ebucoreContactDetailsBase::haveemailAddress() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreContactDetails, emailAddress));
-}
-
-std::vector<ebucoreTextualAnnotation*> ebucoreContactDetailsBase::getemailAddress() const
-{
-    vector<ebucoreTextualAnnotation*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreContactDetails, emailAddress)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
-    }
-    return result;
-}
-
 bool ebucoreContactDetailsBase::havewebAddress() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreContactDetails, webAddress));
@@ -127,15 +110,21 @@ ebucoreAddress* ebucoreContactDetailsBase::getaddress() const
     return dynamic_cast<ebucoreAddress*>(obj.release());
 }
 
-void ebucoreContactDetailsBase::setemailAddress(const std::vector<ebucoreTextualAnnotation*>& value)
+bool ebucoreContactDetailsBase::haveemailAddress() const
 {
-    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreContactDetails, emailAddress), &iter);
+    return haveItem(&MXF_ITEM_K(ebucoreContactDetails, emailAddress));
 }
 
-void ebucoreContactDetailsBase::appendemailAddress(ebucoreTextualAnnotation* value)
+std::vector<ebucoreTextualAnnotation*> ebucoreContactDetailsBase::getemailAddress() const
 {
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreContactDetails, emailAddress), value);
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreContactDetails, emailAddress)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
 }
 
 void ebucoreContactDetailsBase::setwebAddress(std::string value)
@@ -161,5 +150,16 @@ void ebucoreContactDetailsBase::setdetailsType(ebucoreTypeGroup* value)
 void ebucoreContactDetailsBase::setaddress(ebucoreAddress* value)
 {
     setStrongRefItem(&MXF_ITEM_K(ebucoreContactDetails, address), value);
+}
+
+void ebucoreContactDetailsBase::setemailAddress(const std::vector<ebucoreTextualAnnotation*>& value)
+{
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreContactDetails, emailAddress), &iter);
+}
+
+void ebucoreContactDetailsBase::appendemailAddress(ebucoreTextualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreContactDetails, emailAddress), value);
 }
 

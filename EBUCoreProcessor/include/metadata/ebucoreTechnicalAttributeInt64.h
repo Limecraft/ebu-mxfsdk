@@ -29,12 +29,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
-#define __MXFPP_EBUCORELANGUAGEPURPOSE_BASE_H__
+#ifndef __MXFPP_EBUCORETECHNICALATTRIBUTEINT64_H__
+#define __MXFPP_EBUCORETECHNICALATTRIBUTEINT64_H__
 
 
 
-#include <libMXF++/metadata/InterchangeObject.h>
+#include <metadata/base/ebucoreTechnicalAttributeInt64Base.h>
 
 using namespace mxfpp;
 
@@ -42,21 +42,20 @@ namespace EBUCore { namespace KLV
 {
 
 
-class ebucoreLanguagePurposeBase : public InterchangeObject
+class ebucoreTechnicalAttributeInt64 : public ebucoreTechnicalAttributeInt64Base
 {
 public:
-    friend class MetadataSetFactory<ebucoreLanguagePurposeBase>;
-    static const mxfKey setKey;
+    friend class MetadataSetFactory<ebucoreTechnicalAttributeInt64>;
 
 public:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreLanguagePurposeBase();
+    ebucoreTechnicalAttributeInt64(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreTechnicalAttributeInt64();
 
 
 
 
 protected:
-    ebucoreLanguagePurposeBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreTechnicalAttributeInt64(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

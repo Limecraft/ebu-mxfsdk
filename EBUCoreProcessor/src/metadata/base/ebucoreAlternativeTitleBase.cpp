@@ -61,16 +61,6 @@ ebucoreAlternativeTitleBase::~ebucoreAlternativeTitleBase()
 {}
 
 
-std::string ebucoreAlternativeTitleBase::getalternativeTitleValue() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleValue));
-}
-
-std::string ebucoreAlternativeTitleBase::getalternativeTitleLanguage() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleLanguage));
-}
-
 bool ebucoreAlternativeTitleBase::havealternativeTitleAttributionDate() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleAttributionDate));
@@ -79,6 +69,28 @@ bool ebucoreAlternativeTitleBase::havealternativeTitleAttributionDate() const
 mxfTimestamp ebucoreAlternativeTitleBase::getalternativeTitleAttributionDate() const
 {
     return getTimestampItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleAttributionDate));
+}
+
+bool ebucoreAlternativeTitleBase::havealternativeTitleNote() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleNote));
+}
+
+std::string ebucoreAlternativeTitleBase::getalternativeTitleNote() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleNote));
+}
+
+std::vector<textualAnnotation*> ebucoreAlternativeTitleBase::getalternativeTitleValue() const
+{
+    vector<textualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleValue)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<textualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<textualAnnotation*>(iter->get()));
+    }
+    return result;
 }
 
 ebucoreTypeGroup* ebucoreAlternativeTitleBase::getalternativeTitleTypeGroup() const
@@ -95,19 +107,25 @@ ebucoreStatusGroup* ebucoreAlternativeTitleBase::getalternativeTitleStatusGroup(
     return dynamic_cast<ebucoreStatusGroup*>(obj.release());
 }
 
-void ebucoreAlternativeTitleBase::setalternativeTitleValue(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleValue), value);
-}
-
-void ebucoreAlternativeTitleBase::setalternativeTitleLanguage(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleLanguage), value);
-}
-
 void ebucoreAlternativeTitleBase::setalternativeTitleAttributionDate(mxfTimestamp value)
 {
     setTimestampItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleAttributionDate), value);
+}
+
+void ebucoreAlternativeTitleBase::setalternativeTitleNote(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleNote), value);
+}
+
+void ebucoreAlternativeTitleBase::setalternativeTitleValue(const std::vector<textualAnnotation*>& value)
+{
+    WrapObjectVectorIterator<textualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleValue), &iter);
+}
+
+void ebucoreAlternativeTitleBase::appendalternativeTitleValue(textualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleValue), value);
 }
 
 void ebucoreAlternativeTitleBase::setalternativeTitleTypeGroup(ebucoreTypeGroup* value)

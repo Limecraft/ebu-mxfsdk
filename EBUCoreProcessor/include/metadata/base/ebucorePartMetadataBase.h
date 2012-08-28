@@ -71,7 +71,6 @@ public:
    mxfRational getpartDurationTime() const;
    bool havepartDurationEditUnitNumber() const;
    int64_t getpartDurationEditUnitNumber() const;
-   bool havepartTypeGroup() const;
    std::string getpartTypeGroup() const;
    ebucoreCoreMetadata* getpartMeta() const;
 

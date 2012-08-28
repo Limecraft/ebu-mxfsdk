@@ -55,15 +55,17 @@ public:
 
    // getters
 
-   std::string getdescriptionValue() const;
-   std::string getdescriptionLanguage() const;
+   bool havedescriptionNote() const;
+   std::string getdescriptionNote() const;
+   std::vector<textualAnnotation*> getdescriptionValue() const;
    ebucoreTypeGroup* getdescriptionTypeGroup() const;
 
 
    // setters
 
-   void setdescriptionValue(std::string value);
-   void setdescriptionLanguage(std::string value);
+   void setdescriptionNote(std::string value);
+   void setdescriptionValue(const std::vector<textualAnnotation*>& value);
+   void appenddescriptionValue(textualAnnotation* value);
    void setdescriptionTypeGroup(ebucoreTypeGroup* value);
 
 

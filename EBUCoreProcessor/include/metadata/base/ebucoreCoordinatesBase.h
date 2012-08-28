@@ -57,14 +57,14 @@ public:
 
    std::string getposX() const;
    std::string getposY() const;
-   ebucoreTypeGroup* getcoordinatesKindGroup() const;
+   ebucoreTypeGroup* getcoordinatesTypeGroup() const;
 
 
    // setters
 
    void setposX(std::string value);
    void setposY(std::string value);
-   void setcoordinatesKindGroup(ebucoreTypeGroup* value);
+   void setcoordinatesTypeGroup(ebucoreTypeGroup* value);
 
 
 protected:

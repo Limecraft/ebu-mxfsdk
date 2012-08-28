@@ -61,16 +61,6 @@ ebucoreTitleBase::~ebucoreTitleBase()
 {}
 
 
-std::string ebucoreTitleBase::gettitleValue() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreTitle, titleValue));
-}
-
-std::string ebucoreTitleBase::gettitleLanguage() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreTitle, titleLanguage));
-}
-
 bool ebucoreTitleBase::havetitleAttributionDate() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreTitle, titleAttributionDate));
@@ -91,14 +81,16 @@ std::string ebucoreTitleBase::gettitleNote() const
     return getStringItem(&MXF_ITEM_K(ebucoreTitle, titleNote));
 }
 
-void ebucoreTitleBase::settitleValue(std::string value)
+std::vector<textualAnnotation*> ebucoreTitleBase::gettitleValue() const
 {
-    setStringItem(&MXF_ITEM_K(ebucoreTitle, titleValue), value);
-}
-
-void ebucoreTitleBase::settitleLanguage(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreTitle, titleLanguage), value);
+    vector<textualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreTitle, titleValue)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<textualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<textualAnnotation*>(iter->get()));
+    }
+    return result;
 }
 
 void ebucoreTitleBase::settitleAttributionDate(mxfTimestamp value)
@@ -109,5 +101,16 @@ void ebucoreTitleBase::settitleAttributionDate(mxfTimestamp value)
 void ebucoreTitleBase::settitleNote(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreTitle, titleNote), value);
+}
+
+void ebucoreTitleBase::settitleValue(const std::vector<textualAnnotation*>& value)
+{
+    WrapObjectVectorIterator<textualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreTitle, titleValue), &iter);
+}
+
+void ebucoreTitleBase::appendtitleValue(textualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreTitle, titleValue), value);
 }
 

@@ -55,6 +55,8 @@ public:
 
    // getters
 
+   bool havecoverageValue() const;
+   textualAnnotation* getcoverageValue() const;
    bool havespatial() const;
    ebucoreSpatial* getspatial() const;
    bool havetemporal() const;
@@ -63,6 +65,7 @@ public:
 
    // setters
 
+   void setcoverageValue(textualAnnotation* value);
    void setspatial(ebucoreSpatial* value);
    void settemporal(ebucoreTemporal* value);
 

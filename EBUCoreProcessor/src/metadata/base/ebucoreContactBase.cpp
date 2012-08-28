@@ -66,9 +66,19 @@ bool ebucoreContactBase::havecontactId() const
     return haveItem(&MXF_ITEM_K(ebucoreContact, contactId));
 }
 
-mxfUUID ebucoreContactBase::getcontactId() const
+std::string ebucoreContactBase::getcontactId() const
 {
-    return getUUIDItem(&MXF_ITEM_K(ebucoreContact, contactId));
+    return getStringItem(&MXF_ITEM_K(ebucoreContact, contactId));
+}
+
+bool ebucoreContactBase::havecontactName() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContact, contactName));
+}
+
+std::string ebucoreContactBase::getcontactName() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreContact, contactName));
 }
 
 bool ebucoreContactBase::havefamilyName() const
@@ -121,23 +131,6 @@ bool ebucoreContactBase::havesuffix() const
 std::string ebucoreContactBase::getsuffix() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreContact, suffix));
-}
-
-bool ebucoreContactBase::havestageName() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreContact, stageName));
-}
-
-std::vector<ebucoreTextualAnnotation*> ebucoreContactBase::getstageName() const
-{
-    vector<ebucoreTextualAnnotation*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, stageName)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
-    }
-    return result;
 }
 
 bool ebucoreContactBase::haveoccupation() const
@@ -198,9 +191,31 @@ std::vector<ebucoreEntity*> ebucoreContactBase::getcontactRelatedContacts() cons
     return result;
 }
 
-void ebucoreContactBase::setcontactId(mxfUUID value)
+bool ebucoreContactBase::havestageName() const
 {
-    setUUIDItem(&MXF_ITEM_K(ebucoreContact, contactId), value);
+    return haveItem(&MXF_ITEM_K(ebucoreContact, stageName));
+}
+
+std::vector<ebucoreTextualAnnotation*> ebucoreContactBase::getstageName() const
+{
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, stageName)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
+}
+
+void ebucoreContactBase::setcontactId(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreContact, contactId), value);
+}
+
+void ebucoreContactBase::setcontactName(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreContact, contactName), value);
 }
 
 void ebucoreContactBase::setfamilyName(std::string value)
@@ -232,17 +247,6 @@ void ebucoreContactBase::setsaluation(std::string value)
 void ebucoreContactBase::setsuffix(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreContact, suffix), value);
-}
-
-void ebucoreContactBase::setstageName(const std::vector<ebucoreTextualAnnotation*>& value)
-{
-    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, stageName), &iter);
-}
-
-void ebucoreContactBase::appendstageName(ebucoreTextualAnnotation* value)
-{
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, stageName), value);
 }
 
 void ebucoreContactBase::setoccupation(std::string value)
@@ -286,5 +290,16 @@ void ebucoreContactBase::setcontactRelatedContacts(const std::vector<ebucoreEnti
 void ebucoreContactBase::appendcontactRelatedContacts(ebucoreEntity* value)
 {
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, contactRelatedContacts), value);
+}
+
+void ebucoreContactBase::setstageName(const std::vector<ebucoreTextualAnnotation*>& value)
+{
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, stageName), &iter);
+}
+
+void ebucoreContactBase::appendstageName(ebucoreTextualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, stageName), value);
 }
 

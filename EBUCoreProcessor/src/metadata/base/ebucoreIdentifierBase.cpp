@@ -66,6 +66,11 @@ std::string ebucoreIdentifierBase::getidentifierValue() const
     return getStringItem(&MXF_ITEM_K(ebucoreIdentifier, identifierValue));
 }
 
+std::string ebucoreIdentifierBase::getidentifierNote() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreIdentifier, identifierNote));
+}
+
 ebucoreTypeGroup* ebucoreIdentifierBase::getidentifierTypeGroup() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreIdentifier, identifierTypeGroup)));
@@ -95,6 +100,11 @@ ebucoreEntity* ebucoreIdentifierBase::getidentifierAttributorEntity() const
 void ebucoreIdentifierBase::setidentifierValue(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreIdentifier, identifierValue), value);
+}
+
+void ebucoreIdentifierBase::setidentifierNote(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreIdentifier, identifierNote), value);
 }
 
 void ebucoreIdentifierBase::setidentifierTypeGroup(ebucoreTypeGroup* value)

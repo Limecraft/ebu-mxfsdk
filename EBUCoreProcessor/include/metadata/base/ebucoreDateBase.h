@@ -55,10 +55,6 @@ public:
 
    // getters
 
-   bool haveotherDate() const;
-   mxfTimestamp getotherDate() const;
-   bool haveotherYear() const;
-   mxfTimestamp getotherYear() const;
    bool havedateCreated() const;
    mxfTimestamp getdateCreated() const;
    bool haveyearCreated() const;
@@ -75,14 +71,14 @@ public:
    mxfTimestamp getdateDigitized() const;
    bool haveyearDigitized() const;
    mxfTimestamp getyearDigitized() const;
-   bool havedateTypeGroup() const;
-   ebucoreTypeGroup* getdateTypeGroup() const;
+   bool havedateNote() const;
+   std::string getdateNote() const;
+   bool havealternativeDate() const;
+   ebucoreDateType* getalternativeDate() const;
 
 
    // setters
 
-   void setotherDate(mxfTimestamp value);
-   void setotherYear(mxfTimestamp value);
    void setdateCreated(mxfTimestamp value);
    void setyearCreated(mxfTimestamp value);
    void setdateIssued(mxfTimestamp value);
@@ -91,7 +87,8 @@ public:
    void setyearModified(mxfTimestamp value);
    void setdateDigitized(mxfTimestamp value);
    void setyearDigitized(mxfTimestamp value);
-   void setdateTypeGroup(ebucoreTypeGroup* value);
+   void setdateNote(std::string value);
+   void setalternativeDate(ebucoreDateType* value);
 
 
 protected:

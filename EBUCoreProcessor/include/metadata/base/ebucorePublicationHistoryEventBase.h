@@ -66,8 +66,6 @@ public:
    std::string getpublicationMedium() const;
    bool havepublicationChannel() const;
    std::string getpublicationChannel() const;
-   bool havepublicationFormatIDRef() const;
-   std::string getpublicationFormatIDRef() const;
 
 
    // setters
@@ -78,7 +76,6 @@ public:
    void setpublicationService(std::string value);
    void setpublicationMedium(std::string value);
    void setpublicationChannel(std::string value);
-   void setpublicationFormatIDRef(std::string value);
 
 
 protected:

@@ -29,12 +29,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCOREROLE_BASE_H__
-#define __MXFPP_EBUCOREROLE_BASE_H__
+#ifndef __MXFPP_EBUCORETECHNICALATTRIBUTEUINT16_BASE_H__
+#define __MXFPP_EBUCORETECHNICALATTRIBUTEUINT16_BASE_H__
 
 
 
-#include <libMXF++/metadata/InterchangeObject.h>
+#include <metadata/ebucoreTypeGroup.h>
 
 using namespace mxfpp;
 
@@ -42,29 +42,29 @@ namespace EBUCore { namespace KLV
 {
 
 
-class ebucoreRoleBase : public InterchangeObject
+class ebucoreTechnicalAttributeUInt16Base : public ebucoreTypeGroup
 {
 public:
-    friend class MetadataSetFactory<ebucoreRoleBase>;
+    friend class MetadataSetFactory<ebucoreTechnicalAttributeUInt16Base>;
     static const mxfKey setKey;
 
 public:
-    ebucoreRoleBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreRoleBase();
+    ebucoreTechnicalAttributeUInt16Base(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreTechnicalAttributeUInt16Base();
 
 
    // getters
 
-   ebucoreTypeGroup* getroleType() const;
+   uint16_t gettechnicalAttributeUInt16Value() const;
 
 
    // setters
 
-   void setroleType(ebucoreTypeGroup* value);
+   void settechnicalAttributeUInt16Value(uint16_t value);
 
 
 protected:
-    ebucoreRoleBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreTechnicalAttributeUInt16Base(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

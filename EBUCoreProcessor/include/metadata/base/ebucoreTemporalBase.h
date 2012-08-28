@@ -55,6 +55,8 @@ public:
 
    // getters
 
+   bool havetemporalDefinitionNote() const;
+   std::string gettemporalDefinitionNote() const;
    bool haveperiodOfTime() const;
    std::vector<ebucorePeriodOfTime*> getperiodOfTime() const;
    ebucoreTypeGroup* gettemporalTypeGroup() const;
@@ -62,6 +64,7 @@ public:
 
    // setters
 
+   void settemporalDefinitionNote(std::string value);
    void setperiodOfTime(const std::vector<ebucorePeriodOfTime*>& value);
    void appendperiodOfTime(ebucorePeriodOfTime* value);
    void settemporalTypeGroup(ebucoreTypeGroup* value);

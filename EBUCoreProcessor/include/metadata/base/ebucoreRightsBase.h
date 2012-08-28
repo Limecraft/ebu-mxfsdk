@@ -57,44 +57,41 @@ public:
 
    bool haverightsId() const;
    std::string getrightsId() const;
-   bool haverightsValue() const;
-   std::string getrightsValue() const;
-   bool haverightsLanguage() const;
-   std::string getrightsLanguage() const;
    bool haverightsLink() const;
    std::string getrightsLink() const;
    bool haverightsClearanceFlag() const;
    bool getrightsClearanceFlag() const;
-   bool haverightsAttributedID() const;
-   std::string getrightsAttributedID() const;
-   bool haverightsFormatIDRef() const;
-   std::string getrightsFormatIDRef() const;
+   bool haverightsValue() const;
+   std::vector<textualAnnotation*> getrightsValue() const;
    bool haveexploitationIssues() const;
-   std::string getexploitationIssues() const;
+   textualAnnotation* getexploitationIssues() const;
    bool haverightsCoverage() const;
    ebucoreCoverage* getrightsCoverage() const;
    bool haverightsHolderEntity() const;
-   ebucoreEntity* getrightsHolderEntity() const;
+   std::vector<ebucoreEntity*> getrightsHolderEntity() const;
    bool haverightsContacts() const;
    std::vector<ebucoreContact*> getrightsContacts() const;
-   ebucoreTypeGroup* getrightsKindGroup() const;
+   ebucoreTypeGroup* getrightsTypeGroup() const;
+   bool haverightsAttributeID() const;
+   std::vector<ebucoreIdentifier*> getrightsAttributeID() const;
 
 
    // setters
 
    void setrightsId(std::string value);
-   void setrightsValue(std::string value);
-   void setrightsLanguage(std::string value);
    void setrightsLink(std::string value);
    void setrightsClearanceFlag(bool value);
-   void setrightsAttributedID(std::string value);
-   void setrightsFormatIDRef(std::string value);
-   void setexploitationIssues(std::string value);
+   void setrightsValue(const std::vector<textualAnnotation*>& value);
+   void appendrightsValue(textualAnnotation* value);
+   void setexploitationIssues(textualAnnotation* value);
    void setrightsCoverage(ebucoreCoverage* value);
-   void setrightsHolderEntity(ebucoreEntity* value);
+   void setrightsHolderEntity(const std::vector<ebucoreEntity*>& value);
+   void appendrightsHolderEntity(ebucoreEntity* value);
    void setrightsContacts(const std::vector<ebucoreContact*>& value);
    void appendrightsContacts(ebucoreContact* value);
-   void setrightsKindGroup(ebucoreTypeGroup* value);
+   void setrightsTypeGroup(ebucoreTypeGroup* value);
+   void setrightsAttributeID(const std::vector<ebucoreIdentifier*>& value);
+   void appendrightsAttributeID(ebucoreIdentifier* value);
 
 
 protected:

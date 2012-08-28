@@ -61,26 +61,6 @@ ebucoreDateBase::~ebucoreDateBase()
 {}
 
 
-bool ebucoreDateBase::haveotherDate() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreDate, otherDate));
-}
-
-mxfTimestamp ebucoreDateBase::getotherDate() const
-{
-    return getTimestampItem(&MXF_ITEM_K(ebucoreDate, otherDate));
-}
-
-bool ebucoreDateBase::haveotherYear() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreDate, otherYear));
-}
-
-mxfTimestamp ebucoreDateBase::getotherYear() const
-{
-    return getTimestampItem(&MXF_ITEM_K(ebucoreDate, otherYear));
-}
-
 bool ebucoreDateBase::havedateCreated() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreDate, dateCreated));
@@ -161,26 +141,26 @@ mxfTimestamp ebucoreDateBase::getyearDigitized() const
     return getTimestampItem(&MXF_ITEM_K(ebucoreDate, yearDigitized));
 }
 
-bool ebucoreDateBase::havedateTypeGroup() const
+bool ebucoreDateBase::havedateNote() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreDate, dateTypeGroup));
+    return haveItem(&MXF_ITEM_K(ebucoreDate, dateNote));
 }
 
-ebucoreTypeGroup* ebucoreDateBase::getdateTypeGroup() const
+std::string ebucoreDateBase::getdateNote() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreDate, dateTypeGroup)));
-    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+    return getStringItem(&MXF_ITEM_K(ebucoreDate, dateNote));
 }
 
-void ebucoreDateBase::setotherDate(mxfTimestamp value)
+bool ebucoreDateBase::havealternativeDate() const
 {
-    setTimestampItem(&MXF_ITEM_K(ebucoreDate, otherDate), value);
+    return haveItem(&MXF_ITEM_K(ebucoreDate, alternativeDate));
 }
 
-void ebucoreDateBase::setotherYear(mxfTimestamp value)
+ebucoreDateType* ebucoreDateBase::getalternativeDate() const
 {
-    setTimestampItem(&MXF_ITEM_K(ebucoreDate, otherYear), value);
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreDate, alternativeDate)));
+    MXFPP_CHECK(dynamic_cast<ebucoreDateType*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreDateType*>(obj.release());
 }
 
 void ebucoreDateBase::setdateCreated(mxfTimestamp value)
@@ -223,8 +203,13 @@ void ebucoreDateBase::setyearDigitized(mxfTimestamp value)
     setTimestampItem(&MXF_ITEM_K(ebucoreDate, yearDigitized), value);
 }
 
-void ebucoreDateBase::setdateTypeGroup(ebucoreTypeGroup* value)
+void ebucoreDateBase::setdateNote(std::string value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucoreDate, dateTypeGroup), value);
+    setStringItem(&MXF_ITEM_K(ebucoreDate, dateNote), value);
+}
+
+void ebucoreDateBase::setalternativeDate(ebucoreDateType* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreDate, alternativeDate), value);
 }
 

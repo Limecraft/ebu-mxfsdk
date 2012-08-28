@@ -91,11 +91,23 @@ std::string ebucoreLocationBase::getlocationCode() const
     return getStringItem(&MXF_ITEM_K(ebucoreLocation, locationCode));
 }
 
-ebucoreTypeGroup* ebucoreLocationBase::getlocationKindGroup() const
+ebucoreTypeGroup* ebucoreLocationBase::getlocationTypeGroup() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreLocation, locationKindGroup)));
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreLocation, locationTypeGroup)));
     MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+}
+
+bool ebucoreLocationBase::havecoordinateReference() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreLocation, coordinateReference));
+}
+
+XXX ebucoreLocationBase::getcoordinateReference() const
+{
+    auto_ptr<MetadataSet> obj(getWeakRefItem(&MXF_ITEM_K(ebucoreLocation, coordinateReference)));
+    MXFPP_CHECK(dynamic_cast<XX*>(obj.get()) != 0);
+    return dynamic_cast<XX*>(obj.release());
 }
 
 void ebucoreLocationBase::setlocationId(std::string value)
@@ -113,8 +125,13 @@ void ebucoreLocationBase::setlocationCode(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreLocation, locationCode), value);
 }
 
-void ebucoreLocationBase::setlocationKindGroup(ebucoreTypeGroup* value)
+void ebucoreLocationBase::setlocationTypeGroup(ebucoreTypeGroup* value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucoreLocation, locationKindGroup), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreLocation, locationTypeGroup), value);
+}
+
+void ebucoreLocationBase::setcoordinateReference(XXX value)
+{
+    setWeakRefItem(&MXF_ITEM_K(ebucoreLocation, coordinateReference), value);
 }
 

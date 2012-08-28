@@ -71,9 +71,9 @@ std::string ebucoreCoordinatesBase::getposY() const
     return getStringItem(&MXF_ITEM_K(ebucoreCoordinates, posY));
 }
 
-ebucoreTypeGroup* ebucoreCoordinatesBase::getcoordinatesKindGroup() const
+ebucoreTypeGroup* ebucoreCoordinatesBase::getcoordinatesTypeGroup() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreCoordinates, coordinatesKindGroup)));
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreCoordinates, coordinatesTypeGroup)));
     MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
@@ -88,8 +88,8 @@ void ebucoreCoordinatesBase::setposY(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreCoordinates, posY), value);
 }
 
-void ebucoreCoordinatesBase::setcoordinatesKindGroup(ebucoreTypeGroup* value)
+void ebucoreCoordinatesBase::setcoordinatesTypeGroup(ebucoreTypeGroup* value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucoreCoordinates, coordinatesKindGroup), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreCoordinates, coordinatesTypeGroup), value);
 }
 

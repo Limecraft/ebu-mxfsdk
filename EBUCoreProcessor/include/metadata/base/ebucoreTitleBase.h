@@ -55,20 +55,19 @@ public:
 
    // getters
 
-   std::string gettitleValue() const;
-   std::string gettitleLanguage() const;
    bool havetitleAttributionDate() const;
    mxfTimestamp gettitleAttributionDate() const;
    bool havetitleNote() const;
    std::string gettitleNote() const;
+   std::vector<textualAnnotation*> gettitleValue() const;
 
 
    // setters
 
-   void settitleValue(std::string value);
-   void settitleLanguage(std::string value);
    void settitleAttributionDate(mxfTimestamp value);
    void settitleNote(std::string value);
+   void settitleValue(const std::vector<textualAnnotation*>& value);
+   void appendtitleValue(textualAnnotation* value);
 
 
 protected:
