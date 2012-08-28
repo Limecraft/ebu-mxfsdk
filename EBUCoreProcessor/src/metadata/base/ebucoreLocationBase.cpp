@@ -103,11 +103,11 @@ bool ebucoreLocationBase::havecoordinateReference() const
     return haveItem(&MXF_ITEM_K(ebucoreLocation, coordinateReference));
 }
 
-XXX ebucoreLocationBase::getcoordinateReference() const
+ebucoreCoordinates* ebucoreLocationBase::getcoordinateReference() const
 {
     auto_ptr<MetadataSet> obj(getWeakRefItem(&MXF_ITEM_K(ebucoreLocation, coordinateReference)));
-    MXFPP_CHECK(dynamic_cast<XX*>(obj.get()) != 0);
-    return dynamic_cast<XX*>(obj.release());
+    MXFPP_CHECK(dynamic_cast<ebucoreCoordinates*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreCoordinates*>(obj.release());
 }
 
 void ebucoreLocationBase::setlocationId(std::string value)
@@ -130,7 +130,7 @@ void ebucoreLocationBase::setlocationTypeGroup(ebucoreTypeGroup* value)
     setStrongRefItem(&MXF_ITEM_K(ebucoreLocation, locationTypeGroup), value);
 }
 
-void ebucoreLocationBase::setcoordinateReference(XXX value)
+void ebucoreLocationBase::setcoordinateReference(ebucoreCoordinates* value)
 {
     setWeakRefItem(&MXF_ITEM_K(ebucoreLocation, coordinateReference), value);
 }

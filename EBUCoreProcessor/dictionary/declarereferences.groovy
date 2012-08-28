@@ -73,7 +73,7 @@ xmlDictionary.MXFTypes.Enumeration[0].each { type ->
 
 xmlDictionary.findAll{ it.'@type' == 'localSet' }.each {
 	localSet ->
-		localSet.findAll { it.'@type'.contains('StrongRef') }.each { localSetElem ->
+		localSet.findAll { it.'@type'.contains('StrongRef') || it.'@type'.contains('WeakRef') }.each { localSetElem ->
 			println "{ &MXF_ITEM_K(" + localSet.name() + ", " + localSetElem.name() + '), "' + localSetElem.'@target' +  '*" },'
 		}
 		println ""
