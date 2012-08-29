@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>EBU MXF SDK: EBUCore::MXFFileDarkSerializer Class Reference</title>
+<title>EBU MXF SDK: EBUCore::DarkFileSerializer Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -42,37 +42,37 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_e_b_u_core.html">EBUCore</a></li><li class="navelem"><a class="el" href="class_e_b_u_core_1_1_m_x_f_file_dark_serializer.html">MXFFileDarkSerializer</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_e_b_u_core.html">EBUCore</a></li><li class="navelem"><a class="el" href="class_e_b_u_core_1_1_dark_file_serializer.html">DarkFileSerializer</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="class_e_b_u_core_1_1_m_x_f_file_dark_serializer-members.html">List of all members</a>  </div>
+<a href="class_e_b_u_core_1_1_dark_file_serializer-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">EBUCore::MXFFileDarkSerializer Class Reference</div>  </div>
+<div class="title">EBUCore::DarkFileSerializer Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><code>#include &lt;<a class="el" href="_e_b_u_core_processor_8h_source.html">EBUCoreProcessor.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for EBUCore::MXFFileDarkSerializer:</div>
+Inheritance diagram for EBUCore::DarkFileSerializer:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="class_e_b_u_core_1_1_m_x_f_file_dark_serializer.png" usemap="#EBUCore::MXFFileDarkSerializer_map" alt=""/>
-  <map id="EBUCore::MXFFileDarkSerializer_map" name="EBUCore::MXFFileDarkSerializer_map">
-<area href="class_e_b_u_core_1_1_dark_file_serializer.html" alt="EBUCore::DarkFileSerializer" shape="rect" coords="0,56,200,80"/>
+  <img src="class_e_b_u_core_1_1_dark_file_serializer.png" usemap="#EBUCore::DarkFileSerializer_map" alt=""/>
+  <map id="EBUCore::DarkFileSerializer_map" name="EBUCore::DarkFileSerializer_map">
+<area href="class_e_b_u_core_1_1_m_x_f_file_dark_serializer.html" alt="EBUCore::MXFFileDarkSerializer" shape="rect" coords="0,0,200,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af450bc78ace86806bb95bc825a2e2abd"><td class="memItemLeft" align="right" valign="top">virtual uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_core_1_1_m_x_f_file_dark_serializer.html#af450bc78ace86806bb95bc825a2e2abd">WriteToMXFFile</a> (mxfpp::File *f)=0</td></tr>
+<tr class="memitem:a5f5e453222f45acfa0d6bebd880e9e84"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_core_1_1_dark_file_serializer.html#a5f5e453222f45acfa0d6bebd880e9e84">DarkFileSerializer</a> (const char *metadataLocation)</td></tr>
+<tr class="inherit_header pub_methods_class_e_b_u_core_1_1_m_x_f_file_dark_serializer"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_e_b_u_core_1_1_m_x_f_file_dark_serializer')"><img src="closed.png" alt="-"/>&nbsp;Public Member Functions inherited from <a class="el" href="class_e_b_u_core_1_1_m_x_f_file_dark_serializer.html">EBUCore::MXFFileDarkSerializer</a></td></tr>
+<tr class="memitem:af450bc78ace86806bb95bc825a2e2abd inherit pub_methods_class_e_b_u_core_1_1_m_x_f_file_dark_serializer"><td class="memItemLeft" align="right" valign="top">virtual uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_core_1_1_m_x_f_file_dark_serializer.html#af450bc78ace86806bb95bc825a2e2abd">WriteToMXFFile</a> (mxfpp::File *f)=0</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>Abstract Utility class that defines an interface for writing dark metadata (i.e., blobs of bytes) to an MXF file. </p>
-</div><h2>Member Function Documentation</h2>
-<a class="anchor" id="af450bc78ace86806bb95bc825a2e2abd"></a>
+<div class="textblock"><p>Utility class for writing dark metadata to MXF files, using dark metadata read from a file. </p>
+</div><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a5f5e453222f45acfa0d6bebd880e9e84"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -80,24 +80,23 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual uint64_t EBUCore::MXFFileDarkSerializer::WriteToMXFFile </td>
+          <td class="memname">EBUCore::DarkFileSerializer::DarkFileSerializer </td>
           <td>(</td>
-          <td class="paramtype">mxfpp::File *&#160;</td>
-          <td class="paramname"><em>f</em></td><td>)</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>metadataLocation</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Writes the dark metadata to the given MXF file. The file may be assumed to be ready to receive the metadata and positioned at the start of the value of a specially prepared KLV element.</p>
-<dl class="section return"><dt>Returns</dt><dd>The number of dark bytes written to the MXF file. </dd></dl>
+<p>Constructor. Opens the file at given location.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">f</td><td>The MXF file to which to write the dark bytes. </td></tr>
+    <tr><td class="paramname">metadataLocation</td><td>Location of the dark metadata file. </td></tr>
   </table>
   </dd>
 </dl>
@@ -105,7 +104,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/code/BMX/ebu-bmx/EBUCoreProcessor/include/<a class="el" href="_e_b_u_core_processor_8h_source.html">EBUCoreProcessor.h</a></li>
+<li>C:/code/BMX/ebu-bmx/EBUCoreProcessor/src/EBUCoreProcessor.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

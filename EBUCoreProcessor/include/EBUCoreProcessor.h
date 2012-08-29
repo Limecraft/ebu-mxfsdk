@@ -201,6 +201,21 @@ namespace EBUCore
 	*/
 	void ShiftBytesInFile(mxfpp::File* mFile, int64_t shiftPosition, int64_t shiftOffset);
 
+	/**
+	*	From a given set of partitions, locates the partition which has the preferred header metadata. Additionally, also locates the header and footer partition.\n
+		The preferred metadata is located as follows. 
+		- If the footer partition is marked as closed and contains header metadata, it is selected. 
+		- Else, if the header partition is marked as closed and contains header metadata, it is selected.
+		- Else, if any of the body partitions is marked as closed and contains header metadata, it is selected. The last body partition to match is chosen.
+		- Else, if there are any open partitions that contain metadata, the last of these is selected.
+		
+		@returns Returns the partition that contains the preferred metadata, or NULL if no applicable partition could be found.
+		@param partitions The list of partitions from which the selection is made, typically all partitions of an MXF file.
+		@param headerPartition Pointer to variable that will be assigned the header partition of the list.
+		@param footerPartition Pointer to variable that will be assigned the footer partition of the list.
+	*/
+	mxfpp::Partition* FindPreferredMetadataPartition(const std::vector<mxfpp::Partition*>& partitions, mxfpp::Partition** headerPartition, mxfpp::Partition** footerPartition);
+
 	enum ProgressCallbackLevel {
 		FATAL,
 		ERROR,
@@ -210,9 +225,15 @@ namespace EBUCore
 		TRACE
 	};
 
+	/**
+	*	Defines the ways of serializing metadata in MXF files.
+	*/
 	enum MetadataKind {
+		/**	Metadata is encoded using full-featured KLV-encoded metadata element sets (recommended when applicable). */
 		KLV_ENCODED,
+		/** Metadata is encoded using a single KLV element in which the metadata is written as is. */
 		DARK,
+		/** A KLV-encoded metadata set is added to the the header metadata with a reference to an external file that contains the actual metadata. */
 		SIDECAR
 	};
 
@@ -225,7 +246,7 @@ namespace EBUCore
 		@param progress_callback A function that is called with updated progress concerning the embedding process. 
 		The function is called with the overall progress of the operation in __progress__,  a __message__ that describes the updated status, 
 		and the name of the internal __function__ to which the progress update relates (which can be used for debugging purposes).
-		@param optWriteDarkMetadata When true, forces the SDK to serialize the EBUCore document as 'dark' metadata into the header metadata of the MXF file.
+		@param optWaytoWrite Specifies the way in which the provided metadata will be serialized into the MXF file.
 		@param optNoIdentification When true, forces the SDK not to write an additional MXF metadata Identification set to identify the SDK as source of metadata updates.
 		@param optForceHeader When true, forces the SDK to write the EBUCore metadata into the header partition, potentially forcing a rewrite of the entire MXF file. 
 		In normal operation, the SDK attempts to write the EBUCore metadata into the footer partition, marking the header (and potential body) partitions that contain metadata as
@@ -252,7 +273,7 @@ namespace EBUCore
 		@param progress_callback A function that is called with updated progress concerning the embedding process. 
 		The function is called with the overall progress of the operation in __progress__,  a __message__ that describes the updated status, 
 		and the name of the internal __function__ to which the progress update relates (which can be used for debugging purposes).
-		@param optWriteDarkMetadata When true, forces the SDK to serialize the EBUCore document as 'dark' metadata into the header metadata of the MXF file.
+		@param optWaytoWrite Specifies the way in which the provided metadata will be serialized into the MXF file.
 		@param optNoIdentification When true, forces the SDK not to write an additional MXF metadata Identification set to identify the SDK as source of metadata updates.
 		@param optForceHeader When true, forces the SDK to write the EBUCore metadata into the header partition, potentially forcing a rewrite of the entire MXF file. 
 		In normal operation, the SDK attempts to write the EBUCore metadata into the footer partition, marking the header (and potential body) partitions that contain metadata as

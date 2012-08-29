@@ -47,32 +47,40 @@ using namespace bmx;
 
 namespace EBUCore {
 
-class DarkFileSerializer : public MXFFileDarkSerializer {
-	std::ifstream in;
-public:
-	DarkFileSerializer(const char* metadataLocation) {
-		in.open(metadataLocation, std::ifstream::in | std::ifstream::binary);
-	}
-	uint64_t WriteToMXFFile(File *f) {
-		uint64_t size = 0;
-		std::streamsize read=0;
-		char buffer[4096];
-		while (in) {
-			in.read(buffer, 4096); read = in.gcount();
-			if (read > 0) {
-				f->write((const unsigned char*)buffer, read);
-				size += read;
-			}
+	/**
+		Utility class for writing dark metadata to MXF files, using dark metadata read from a file. 
+	*/
+	class DarkFileSerializer : public MXFFileDarkSerializer {
+		std::ifstream in;
+	public:
+		/**
+			Constructor. Opens the file at given location.
+
+			@param metadataLocation Location of the dark metadata file.
+		*/
+		DarkFileSerializer(const char* metadataLocation) {
+			in.open(metadataLocation, std::ifstream::in | std::ifstream::binary);
 		}
-		return size;
-		//while (read = in.readsome(buffer, 4096) > 0 && !in.eof()) {
-		//	f->write((const unsigned char*)buffer, read);
-		//}
-	}
-	virtual ~DarkFileSerializer() {
-		in.close();
-	}
-};
+		uint64_t WriteToMXFFile(File *f) {
+			uint64_t size = 0;
+			std::streamsize read=0;
+			char buffer[4096];
+			while (in) {
+				in.read(buffer, 4096); read = in.gcount();
+				if (read > 0) {
+					f->write((const unsigned char*)buffer, read);
+					size += read;
+				}
+			}
+			return size;
+			//while (read = in.readsome(buffer, 4096) > 0 && !in.eof()) {
+			//	f->write((const unsigned char*)buffer, read);
+			//}
+		}
+		virtual ~DarkFileSerializer() {
+			in.close();
+		}
+	};
 
 }
 
