@@ -1260,13 +1260,13 @@ void ExtractEBUCoreMetadata(
 			// / 2b. If there is no KLV-codec metadata beyond the framework, there could be a reference to a sidecar XML file
 			// ///////////
 			if (fw->havedocumentLocator()) {
-				std::string& loc = fw->getdocumentLocator();
+				const std::string& loc = fw->getdocumentLocator();
 				//if (loc.size() > 0) {
 					if (outputFashion == SERIALIZE_TO_FILE) {
 						progress_callback(0.9, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to XML file at %s\n", metadataLocation);
 
 						std::ofstream out(metadataLocation, std::ofstream::out | std::ofstream::binary);
-						std::ifstream in(loc, std::ifstream::in | std::ifstream::binary);
+						std::ifstream in(loc.c_str(), std::ifstream::in | std::ifstream::binary);
 						std::copy(std::istream_iterator<unsigned char>(in), std::istream_iterator<unsigned char>(), std::ostream_iterator<unsigned char>(out));
 
 						in.close();
