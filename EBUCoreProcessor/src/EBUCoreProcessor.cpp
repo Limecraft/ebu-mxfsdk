@@ -644,7 +644,7 @@ void EmbedEBUCoreMetadata(	const char* metadataLocation,
 		EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, false, optNoIdentification, optForceHeader);	
 		break;
 	case DARK:
-		EmbedDarkEBUCoreMetadata( (*ebuCoreMainElementPtr)._node()->getOwnerDocument() /*NULL*/, metadataLocation, mxfLocation, progress_callback, optNoIdentification, optForceHeader);
+		EmbedDarkEBUCoreMetadata(NULL, metadataLocation, mxfLocation, progress_callback, optNoIdentification, optForceHeader);
 		break;
 	case SIDECAR:
 		EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, true, optNoIdentification, optForceHeader);
