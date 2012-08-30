@@ -714,7 +714,7 @@ uint64_t BufferIndex(File* mFile, Partition* partition, bmx::ByteArray& index_by
 	return pos_write_start_metadata;
 }
 
-uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, Partition* metadataDestitionPartition, Partition* metadataSourcePartition) {
+uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, Partition* metadataDestinationPartition, Partition* metadataSourcePartition) {
 	mxfKey key;
 	uint8_t llen;
 	uint64_t len;
@@ -731,13 +731,13 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 	File memFile(mxfMemFile);
 
 	// write the header metadata into the file
-	uint64_t footerThisPartition = metadataDestitionPartition->getThisPartition();
-	metadataDestitionPartition->setThisPartition(0);	// temporarily override so that internals don't get confused 
+	uint64_t footerThisPartition = metadataDestinationPartition->getThisPartition();
+	metadataDestinationPartition->setThisPartition(0);	// temporarily override so that internals don't get confused 
 														// (need to put this back at the end anyway)
-	KAGFillerWriter reserve_filler_writer(metadataDestitionPartition);
-	mHeaderMetadata->write(&memFile, metadataDestitionPartition, NULL);
+	KAGFillerWriter reserve_filler_writer(metadataDestinationPartition);
+	mHeaderMetadata->write(&memFile, metadataDestinationPartition, NULL);
 	uint64_t mHeaderMetadataEndPos = memFile.tell();  // need this position when we re-write the header metadata */
-	metadataDestitionPartition->setThisPartition(footerThisPartition);
+	metadataDestinationPartition->setThisPartition(footerThisPartition);
 
 	// loop back to the beginning of the metadata and find elements that were skipped,
 	// because, they were dark, append these to the end of the header metadata
@@ -786,7 +786,7 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 	return memFileSize;
 }
 
-uint64_t WriteDarkMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, MXFFileDarkSerializer& metadata, uint64_t metadata_read_position, uint64_t metadata_write_position, Partition* metadataDestitionPartition, Partition* metadataSourcePartition) {
+uint64_t WriteDarkMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, MXFFileDarkSerializer& metadata, uint64_t metadata_read_position, uint64_t metadata_write_position, Partition* metadataDestinationPartition, Partition* metadataSourcePartition) {
 	mxfKey key;
 	uint8_t llen;
 	uint64_t len;
@@ -803,10 +803,10 @@ uint64_t WriteDarkMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile,
 	File memFile(mxfMemFile);
 	
 	// write the original header metadata into the memory file
-	uint64_t footerThisPartition = metadataDestitionPartition->getThisPartition();
-	metadataDestitionPartition->setThisPartition(0);	// temporarily override so that internals don't get confused 
+	uint64_t footerThisPartition = metadataDestinationPartition->getThisPartition();
+	metadataDestinationPartition->setThisPartition(0);	// temporarily override so that internals don't get confused 
 														// (need to put this back at the end anyway)
-	KAGFillerWriter reserve_filler_writer(metadataDestitionPartition);
+	KAGFillerWriter reserve_filler_writer(metadataDestinationPartition);
 	mFile->seek(metadata_read_position, SEEK_SET);
 	uint8_t *KLVBuffer = new uint8_t[64*1024];
 	uint64_t count = 0, read = 0;
@@ -850,7 +850,7 @@ uint64_t WriteDarkMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile,
 	memFile.writeFixedKL(&keyEBUCoreDarkMetadata, 4, darkMetadataSize);
 
 	// and place this back to its original value
-	metadataDestitionPartition->setThisPartition(footerThisPartition);
+	metadataDestinationPartition->setThisPartition(footerThisPartition);
 
 	// set output
 	*destMemFile = cMemFile;
@@ -861,14 +861,14 @@ uint64_t WriteDarkMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile,
 	return memFileSize;
 }
 
-uint64_t WriteDarkMetadataToFile(File* mFile, MXFFileDarkSerializer& metadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, Partition* metadataDestitionPartition, Partition* metadataSourcePartition) {
+uint64_t WriteDarkMetadataToFile(File* mFile, MXFFileDarkSerializer& metadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, Partition* metadataDestinationPartition, Partition* metadataSourcePartition) {
 	MXFMemoryFile *cMemFile;
 
 	// record the original metadata size
 	uint64_t oriMetadataSize = metadataSourcePartition->getHeaderByteCount();
 
 	// how many bytes have we written to the memoryfile?
-	uint64_t memFileSize = WriteDarkMetadataToMemoryFile(mFile, &cMemFile, metadata, metadata_read_position, metadata_write_position, metadataDestitionPartition, metadataSourcePartition);
+	uint64_t memFileSize = WriteDarkMetadataToMemoryFile(mFile, &cMemFile, metadata, metadata_read_position, metadata_write_position, metadataDestinationPartition, metadataSourcePartition);
 
 	// shift if required
 	if (shiftFileBytesIfNeeded && memFileSize > oriMetadataSize) {
@@ -884,14 +884,14 @@ uint64_t WriteDarkMetadataToFile(File* mFile, MXFFileDarkSerializer& metadata, u
 	return memFileSize;
 }
 
-uint64_t WriteMetadataToFile(File* mFile, HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, Partition* metadataDestitionPartition, Partition* metadataSourcePartition) {
+uint64_t WriteMetadataToFile(File* mFile, HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, Partition* metadataDestinationPartition, Partition* metadataSourcePartition) {
 	MXFMemoryFile *cMemFile;
 
 	// record the original metadata size
 	uint64_t oriMetadataSize = metadataSourcePartition->getHeaderByteCount();
 
 	// how many bytes have we written to the memoryfile?
-	uint64_t memFileSize = WriteMetadataToMemoryFile(mFile, &cMemFile, mHeaderMetadata, metadata_read_position, metadata_write_position, metadataDestitionPartition, metadataSourcePartition);
+	uint64_t memFileSize = WriteMetadataToMemoryFile(mFile, &cMemFile, mHeaderMetadata, metadata_read_position, metadata_write_position, metadataDestinationPartition, metadataSourcePartition);
 
 	// shift if required
 	if (shiftFileBytesIfNeeded && memFileSize > oriMetadataSize) {
