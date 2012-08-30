@@ -1341,7 +1341,7 @@ void ExtractEBUCoreMetadata(
 		{
 			mFile->readKL(&key, &llen, &len);
 			if (mxf_equals_key(&key, &keyEBUCoreDarkMetadata)) {
-				progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "Located EBUCore dark metadata set at offset %" PRId64 "...", metadata_partition->getThisPartition() + count - mxfKey_extlen - llen);
+				progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "Located EBUCore dark metadata set at offset %" PRId64 "...", metadata_partition->getThisPartition() + count);
 
 				// there is dark metadata, get it out
 				if (outputFashion == SERIALIZE_TO_FILE) {
