@@ -1281,6 +1281,7 @@ void ExtractEBUCoreMetadata(
 
 						std::ofstream out(metadataLocation, std::ofstream::out | std::ofstream::binary);
 						std::ifstream in(loc.c_str(), std::ifstream::in | std::ifstream::binary);
+						in >> std::noskipws;
 						std::copy(std::istream_iterator<unsigned char>(in), std::istream_iterator<unsigned char>(), std::ostream_iterator<unsigned char>(out));
 
 						in.close();
@@ -1333,6 +1334,7 @@ void ExtractEBUCoreMetadata(
 		// / 2c. If there is no KLV-codec metadata, there could be embedded dark metadata,
 		// /     find its key in the metadata
 		// ///////////
+		bool darkFound = false;
 		progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "No ebucoreMainFramework found on the MXF timeline, looking for dark metadata...");
 
 		mFile->seek(metadata_partition->getThisPartition(), SEEK_SET);
@@ -1341,11 +1343,12 @@ void ExtractEBUCoreMetadata(
 		{
 			mFile->readKL(&key, &llen, &len);
 			if (mxf_equals_key(&key, &keyEBUCoreDarkMetadata)) {
+				darkFound = true;
 				progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "Located EBUCore dark metadata set at offset %" PRId64 "...", metadata_partition->getThisPartition() + count);
 
 				// there is dark metadata, get it out
 				if (outputFashion == SERIALIZE_TO_FILE) {
-					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to XML file at %s\n", metadataLocation);
+					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to XML file at %s", metadataLocation);
 
 					WriteKLVContentsToFile(metadataLocation, &*mFile, len);
 				} 
@@ -1362,6 +1365,9 @@ void ExtractEBUCoreMetadata(
 			}
 			count += mxfKey_extlen + llen + len;
 		}
+
+		if (!darkFound)
+			progress_callback(0.99f, INFO, "ExtractEBUCoreMetadata", "No dark metadata set found");
 	}
 
 	// ///////////////////////////////////////
