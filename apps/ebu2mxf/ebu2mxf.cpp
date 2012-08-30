@@ -420,6 +420,8 @@ int main(int argc, const char** argv)
     const char *log_filename = 0;
     std::vector<const char *> filenames;
 	bool do_force_header = false;
+	bool do_sidecar = false;
+	bool do_dark = false;
     bool do_print_info = false;
     bool do_print_version = false;
     const char *ebucore_filename = 0;
@@ -466,6 +468,14 @@ int main(int argc, const char** argv)
         else if (strcmp(argv[cmdln_index], "--force-header") == 0)
         {
             do_force_header = true;
+        }
+		else if (strcmp(argv[cmdln_index], "--dark") == 0)
+        {
+            do_dark = true;
+        }
+		else if (strcmp(argv[cmdln_index], "--sidecar") == 0)
+        {
+            do_sidecar = true;
         }
 		else if (strcmp(argv[cmdln_index], "--ebu-core") == 0)
         {
@@ -523,7 +533,9 @@ int main(int argc, const char** argv)
     try
     {
 		if (ebucore_filename) {
-			EBUCore::EmbedEBUCoreMetadata(ebucore_filename, filenames[0], &progress_cb, /*EBUCore::KLV_ENCODED*/ EBUCore::DARK , false, do_force_header);
+			// select correct serialization mode
+			EBUCore::MetadataKind kind = do_sidecar ? EBUCore::SIDECAR : (do_dark ? EBUCore::DARK : EBUCore::KLV_ENCODED);
+			EBUCore::EmbedEBUCoreMetadata(ebucore_filename, filenames[0], &progress_cb, kind, false, do_force_header);
 		}
     }
     catch (const MXFException &ex)
