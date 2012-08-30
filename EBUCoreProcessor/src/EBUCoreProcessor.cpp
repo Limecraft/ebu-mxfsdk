@@ -1251,7 +1251,7 @@ void ExtractEBUCoreMetadata(
 	// ///////////////////////////////////////
 	// / 2a. Locate the KLV-coded EBUCore metadata in the MXF header metadata and serialize it to 
 	// ///////////
-	progress_callback(0.75f, INFO, "ExtractEBUCoreMetadata", "Locating and extracting EBUCore KLV metadata");
+	progress_callback(0.6f, INFO, "ExtractEBUCoreMetadata", "Locating and extracting EBUCore KLV metadata");
 
 	EBUCore::RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
 
@@ -1259,18 +1259,25 @@ void ExtractEBUCoreMetadata(
 	ebucoreMainFramework *fw = FindEBUCoreMetadataFramework(&*mHeaderMetadata);
 
 	if (fw != NULL) {
+		progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "Found an ebucoreMainFramework on the MXF timeline");
+
 		if (fw->havecoreMetadata()) {
 			// there is a CoreMetadata object, enough to parse the KLV-encoded metadata
 			p = ParseEBUCoreMetadata(fw);
 		} else {
+			progress_callback(0.62f, INFO, "ExtractEBUCoreMetadata", "No coreMetadata set is attached to the ebucoreMainFramework, attempting to locate a side-car metadata reference...");
+		
 			// ///////////////////////////////////////
 			// / 2b. If there is no KLV-codec metadata beyond the framework, there could be a reference to a sidecar XML file
 			// ///////////
 			if (fw->havedocumentLocator()) {
 				const std::string& loc = fw->getdocumentLocator();
+
+				progress_callback(0.65f, INFO, "ExtractEBUCoreMetadata", "A side-car metadata reference (documentLocator) was found: %s", loc.c_str());
+
 				//if (loc.size() > 0) {
 					if (outputFashion == SERIALIZE_TO_FILE) {
-						progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to XML file at %s\n", metadataLocation);
+						progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing side-car EBUCore metadata to XML file at %s\n", metadataLocation);
 
 						std::ofstream out(metadataLocation, std::ofstream::out | std::ofstream::binary);
 						std::ifstream in(loc.c_str(), std::ifstream::in | std::ifstream::binary);
@@ -1280,7 +1287,7 @@ void ExtractEBUCoreMetadata(
 						out.close();
 					} 
 					else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
-						progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to output Xerces-C DOM Document");
+						progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing side-car EBUCore metadata to output Xerces-C DOM Document");
 					
 						xercesc::TranscodeFromStr location((const unsigned char*)loc.c_str(), loc.size(), "UTF-8");
 						*outputDocument = ParseXercesDocument(location.str());
@@ -1293,51 +1300,57 @@ void ExtractEBUCoreMetadata(
 				// this is wrong, as there is no coremetadata, and no reference to a sidecar file!
 			}
 		}
-	}
-	//std::auto_ptr<ebuCoreMainType> p( FindAndSerializeEBUCore(&*mHeaderMetadata) );
 
-	if (p.get() != NULL) {
+		if (p.get() != NULL) {
 
-		xml_schema::namespace_infomap map;
-		map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";
-		map["dc"].name = "http://purl.org/dc/elements/1.1/";
+			progress_callback(0.7f, INFO, "ExtractEBUCoreMetadata", "A coreMetadata set was attached to the ebucoreMainFramework, and was processed successfully");
 
-		if (outputFashion == SERIALIZE_TO_FILE) {
-			progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to XML file at %s\n", metadataLocation);
+			xml_schema::namespace_infomap map;
+			map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";
+			map["dc"].name = "http://purl.org/dc/elements/1.1/";
 
-			// open a file output stream
-			std::ofstream out(metadataLocation);
-			ebuCoreMain (out, *p, map);
-			out.close();
-		} 
-		else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
-			progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to output Xerces-C DOM Document");
+			if (outputFashion == SERIALIZE_TO_FILE) {
+				progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to XML file at %s\n", metadataLocation);
+
+				// open a file output stream
+				std::ofstream out(metadataLocation);
+				ebuCoreMain (out, *p, map);
+				out.close();
+			} 
+			else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
+				progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to output Xerces-C DOM Document");
 		
-			::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > xml = ebuCoreMain(*p, map);
-			// pass the DOM document to output
-			*outputDocument = xml.get();
-			xml.release();
-		}
+				::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > xml = ebuCoreMain(*p, map);
+				// pass the DOM document to output
+				*outputDocument = xml.get();
+				xml.release();
+			}
 
-	} else {
+		} 
+	}
+	else {
 		// ///////////////////////////////////////
 		// / 2c. If there is no KLV-codec metadata, there could be embedded dark metadata,
 		// /     find its key in the metadata
 		// ///////////
+		progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "No ebucoreMainFramework found on the MXF timeline, looking for dark metadata...");
+
 		mFile->seek(metadata_partition->getThisPartition(), SEEK_SET);
 		uint64_t count = 0, sourceHeaderByteCount = metadata_partition->getHeaderByteCount();
 		while (count < sourceHeaderByteCount)
 		{
 			mFile->readKL(&key, &llen, &len);
 			if (mxf_equals_key(&key, &keyEBUCoreDarkMetadata)) {
+				progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "Located EBUCore dark metadata set at offset %" PRId64 "...", metadata_partition->getThisPartition() + count - mxfKey_extlen - llen);
+
 				// there is dark metadata, get it out
 				if (outputFashion == SERIALIZE_TO_FILE) {
-					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to XML file at %s\n", metadataLocation);
+					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to XML file at %s\n", metadataLocation);
 
 					WriteKLVContentsToFile(metadataLocation, &*mFile, len);
 				} 
 				else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
-					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to output Xerces-C DOM Document");
+					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to output Xerces-C DOM Document");
 					
 					KLVInputSource inp(&*mFile, len);
 					*outputDocument = ParseXercesDocument(inp);
