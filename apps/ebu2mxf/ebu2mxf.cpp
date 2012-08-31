@@ -388,6 +388,9 @@ static void usage(const char *cmd)
     fprintf(stderr, " -l <file>             Log filename. Default log to stderr/stdout\n");
     fprintf(stderr, " -i                    Print file information to stdout\n");
     fprintf(stderr, " --ebu-core <file>     Write embedded EBU Core metadata to file\n");
+    fprintf(stderr, " --force-header        Force metadata to be appended into the header partition\n");
+    fprintf(stderr, " --dark                Write EBU Core metadata into a dark metadata set\n");
+    fprintf(stderr, " --sidecar             Write EBU Core metadata as a side-car reference\n");
 }
 
 void progress_cb(float progress, EBUCore::ProgressCallbackLevel level, const char *function, const char *msg_format, ...) {
