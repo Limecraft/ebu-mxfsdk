@@ -1,0 +1,8 @@
+<map id="EBUCore::mapTemporal" name="EBUCore::mapTemporal">
+<area shape="rect" id="node3" href="$namespace_e_b_u_core.html#a56d14dacdb6367857a8039ce7c7438bf" title="EBUCore::mapTemporal" alt="" coords="243,81,405,108"/>
+<area shape="rect" id="node6" href="$classebu_core__2011_1_1temporal.html#adb8368343d24e17b24b25636cdc333e8" title="ebuCore_2011::temporal\l::periodId" alt="" coords="507,5,669,46"/>
+<area shape="rect" id="node8" href="$namespace_e_b_u_core.html#a5723aa3fc1b5bb3e5ffda89a46083329" title="EBUCore::mapPeriodOfTime" alt="" coords="495,99,681,125"/>
+<area shape="rect" id="node11" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_temporal_base.html#ae31b189bfc2e846266bcd2841e6bc060" title="EBUCore::KLV::ebucoreTemporal\lBase::getperiodOfTime" alt="" coords="480,158,696,199"/>
+<area shape="rect" id="node13" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_temporal_base.html#a1358e1e17cf5d7cc3b81e59dcfd8bef8" title="EBUCore::KLV::ebucoreTemporal\lBase::haveperiodOfTime" alt="" coords="216,234,432,275"/>
+<area shape="rect" id="node18" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_temporal_base.html#aa99a0aaca64acfb81fcfa61a775b1072" title="EBUCore::KLV::ebucoreTemporal\lBase::gettemporalTypeGroup" alt="" coords="216,299,432,341"/>
+</map>

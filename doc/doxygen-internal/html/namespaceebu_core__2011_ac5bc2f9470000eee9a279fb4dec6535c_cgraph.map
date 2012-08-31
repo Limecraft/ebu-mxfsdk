@@ -1,0 +1,37 @@
+<map id="ebuCore_2011::operator&lt;&lt;" name="ebuCore_2011::operator&lt;&lt;">
+<area shape="rect" id="node3" href="$classebu_core__2011_1_1core_metadata_type.html#ade7e1c405b38c1eb3888da9e166be802" title="ebuCore_2011::coreMetadata\lType::title" alt="" coords="229,5,421,46"/>
+<area shape="rect" id="node5" href="$classebu_core__2011_1_1core_metadata_type.html#a833cd6d51bf45b3db0685e0fc05e215f" title="ebuCore_2011::coreMetadata\lType::alternativeTitle" alt="" coords="229,70,421,111"/>
+<area shape="rect" id="node7" href="$classebu_core__2011_1_1core_metadata_type.html#a30a1fe8259b3aac8c7d089c0280b8629" title="ebuCore_2011::coreMetadata\lType::creator" alt="" coords="229,135,421,177"/>
+<area shape="rect" id="node9" href="$classebu_core__2011_1_1core_metadata_type.html#a84072aa44100635baa483e418e057ed3" title="ebuCore_2011::coreMetadata\lType::subject" alt="" coords="229,201,421,242"/>
+<area shape="rect" id="node11" href="$classebu_core__2011_1_1core_metadata_type.html#a150610183a44f39f9d108802bc68411c" title="ebuCore_2011::coreMetadata\lType::description" alt="" coords="229,266,421,307"/>
+<area shape="rect" id="node13" href="$classebu_core__2011_1_1core_metadata_type.html#ab62efd6271e0ca2ded89d465873182ce" title="ebuCore_2011::coreMetadata\lType::publisher" alt="" coords="229,331,421,373"/>
+<area shape="rect" id="node15" href="$classebu_core__2011_1_1core_metadata_type.html#aebc4709fa3ff3fa369c652c12d202ed7" title="ebuCore_2011::coreMetadata\lType::contributor" alt="" coords="229,397,421,438"/>
+<area shape="rect" id="node17" href="$classebu_core__2011_1_1core_metadata_type.html#a217882bd819b2ba630b7a62aa1e6884a" title="ebuCore_2011::coreMetadata\lType::date" alt="" coords="229,462,421,503"/>
+<area shape="rect" id="node19" href="$classebu_core__2011_1_1core_metadata_type.html#a1f8fd13642c64e66cd3b96a71241ed03" title="ebuCore_2011::coreMetadata\lType::type" alt="" coords="229,527,421,569"/>
+<area shape="rect" id="node21" href="$classebu_core__2011_1_1core_metadata_type.html#a5c96fb868b5b985c4f761001a5ccceee" title="ebuCore_2011::coreMetadata\lType::format" alt="" coords="229,593,421,634"/>
+<area shape="rect" id="node23" href="$classebu_core__2011_1_1core_metadata_type.html#af6119d59db578000aa62aff4c53e8393" title="ebuCore_2011::coreMetadata\lType::identifier" alt="" coords="229,658,421,699"/>
+<area shape="rect" id="node25" href="$classebu_core__2011_1_1core_metadata_type.html#ae518a19284bcdb90836b02fefe3a31d4" title="ebuCore_2011::coreMetadata\lType::source" alt="" coords="229,723,421,765"/>
+<area shape="rect" id="node27" href="$classebu_core__2011_1_1core_metadata_type.html#a9205d62b8e4c6762aef9eebc11735986" title="ebuCore_2011::coreMetadata\lType::language" alt="" coords="229,789,421,830"/>
+<area shape="rect" id="node29" href="$classebu_core__2011_1_1core_metadata_type.html#af70a201677c9754724dfacac569f5b37" title="ebuCore_2011::coreMetadata\lType::relation" alt="" coords="229,854,421,895"/>
+<area shape="rect" id="node31" href="$classebu_core__2011_1_1core_metadata_type.html#ac03a82d454ca99ee1d77730569d18644" title="ebuCore_2011::coreMetadata\lType::isVersionOf" alt="" coords="229,919,421,961"/>
+<area shape="rect" id="node33" href="$classebu_core__2011_1_1core_metadata_type.html#a99d2d5bfe1befa87a13fc32fd8fa49f4" title="ebuCore_2011::coreMetadata\lType::hasVersion" alt="" coords="229,985,421,1026"/>
+<area shape="rect" id="node35" href="$classebu_core__2011_1_1core_metadata_type.html#a27a1ca26d27ed8c591ab51653bc4be44" title="ebuCore_2011::coreMetadata\lType::isReplacedBy" alt="" coords="229,1050,421,1091"/>
+<area shape="rect" id="node37" href="$classebu_core__2011_1_1core_metadata_type.html#abcbc167724e582a9f8d3d785ebe0a6fd" title="ebuCore_2011::coreMetadata\lType::replaces" alt="" coords="229,1115,421,1157"/>
+<area shape="rect" id="node39" href="$classebu_core__2011_1_1core_metadata_type.html#a721f1b7bc459f13fef62e92c38fa09be" title="ebuCore_2011::coreMetadata\lType::isRequiredBy" alt="" coords="229,1181,421,1222"/>
+<area shape="rect" id="node41" href="$classebu_core__2011_1_1core_metadata_type.html#ab64e4a7c54caf9e76b25836f05dc838d" title="ebuCore_2011::coreMetadata\lType::requires" alt="" coords="229,1246,421,1287"/>
+<area shape="rect" id="node43" href="$classebu_core__2011_1_1core_metadata_type.html#a2cd12715b822924ab22e90e33ef04423" title="ebuCore_2011::coreMetadata\lType::isPartOf" alt="" coords="229,1311,421,1353"/>
+<area shape="rect" id="node45" href="$classebu_core__2011_1_1core_metadata_type.html#aba7b6c4e0b65dcad44d799be393b2874" title="ebuCore_2011::coreMetadata\lType::hasPart" alt="" coords="229,1377,421,1418"/>
+<area shape="rect" id="node47" href="$classebu_core__2011_1_1core_metadata_type.html#a80190c2c0a5320a374260a49da1371c8" title="ebuCore_2011::coreMetadata\lType::hasTrackPart" alt="" coords="229,1442,421,1483"/>
+<area shape="rect" id="node49" href="$classebu_core__2011_1_1core_metadata_type.html#ab67e74060bf6c35ad954fa961ebf042b" title="ebuCore_2011::coreMetadata\lType::isReferencedBy" alt="" coords="229,1507,421,1549"/>
+<area shape="rect" id="node51" href="$classebu_core__2011_1_1core_metadata_type.html#a5a1bfb847009387b079f43b21c8b866c" title="ebuCore_2011::coreMetadata\lType::references" alt="" coords="229,1573,421,1614"/>
+<area shape="rect" id="node53" href="$classebu_core__2011_1_1core_metadata_type.html#a9cf96dd980cf5456f7bd60e6a6549048" title="ebuCore_2011::coreMetadata\lType::isFormatOf" alt="" coords="229,1638,421,1679"/>
+<area shape="rect" id="node55" href="$classebu_core__2011_1_1core_metadata_type.html#a8870002d7cef0227fe5484d8a64d0126" title="ebuCore_2011::coreMetadata\lType::hasFormat" alt="" coords="229,1703,421,1745"/>
+<area shape="rect" id="node57" href="$classebu_core__2011_1_1core_metadata_type.html#a704c2cce6d0e7c496d82af118e7f3706" title="ebuCore_2011::coreMetadata\lType::isEpisodeOf" alt="" coords="229,1769,421,1810"/>
+<area shape="rect" id="node59" href="$classebu_core__2011_1_1core_metadata_type.html#af81f434f1fe0e64adf35c684809fa736" title="ebuCore_2011::coreMetadata\lType::isMemberOf" alt="" coords="229,1834,421,1875"/>
+<area shape="rect" id="node61" href="$classebu_core__2011_1_1core_metadata_type.html#a7c3084a9b5f74f0d657cfed079a24a8c" title="ebuCore_2011::coreMetadata\lType::coverage" alt="" coords="229,1899,421,1941"/>
+<area shape="rect" id="node63" href="$classebu_core__2011_1_1core_metadata_type.html#ad13c147ed9f0ee93c8ede1edbccf1e10" title="ebuCore_2011::coreMetadata\lType::rights" alt="" coords="229,1965,421,2006"/>
+<area shape="rect" id="node65" href="$classebu_core__2011_1_1core_metadata_type.html#afb9d8e54474119877df5535226d0e456" title="ebuCore_2011::coreMetadata\lType::version" alt="" coords="229,2030,421,2071"/>
+<area shape="rect" id="node67" href="$classebu_core__2011_1_1core_metadata_type.html#a5b2eab2a0b4cebdb942668a32a1d1998" title="ebuCore_2011::coreMetadata\lType::publicationHistory" alt="" coords="229,2095,421,2137"/>
+<area shape="rect" id="node69" href="$classebu_core__2011_1_1core_metadata_type.html#ada1b252e38bb7a14423efb6d09ed0293" title="ebuCore_2011::coreMetadata\lType::rating" alt="" coords="229,2161,421,2202"/>
+<area shape="rect" id="node71" href="$classebu_core__2011_1_1core_metadata_type.html#a1f00d232c0d9f026d566bfc89802a51d" title="ebuCore_2011::coreMetadata\lType::part" alt="" coords="229,2226,421,2267"/>
+</map>

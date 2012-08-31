@@ -1,0 +1,20 @@
+<map id="ebuCore_2011::operator&lt;&lt;" name="ebuCore_2011::operator&lt;&lt;">
+<area shape="rect" id="node3" href="$classebu_core__2011_1_1data_format_type.html#ac9aed9d71fa9f7ba2a91fffd2903a778" title="ebuCore_2011::dataFormat\lType::captioningFormat" alt="" coords="263,5,441,46"/>
+<area shape="rect" id="node5" href="$classebu_core__2011_1_1data_format_type.html#a03853c8b6b5d055cdcd3e828de3638d7" title="ebuCore_2011::dataFormat\lType::ancillaryDataFormat" alt="" coords="263,70,441,111"/>
+<area shape="rect" id="node7" href="$classebu_core__2011_1_1data_format_type.html#a0e69467c9721014ce9af587bb6eae427" title="ebuCore_2011::dataFormat\lType::technicalAttributeString" alt="" coords="255,135,449,177"/>
+<area shape="rect" id="node9" href="$classebu_core__2011_1_1data_format_type.html#ae53b96945c66719b9d6ff17be5b07477" title="ebuCore_2011::dataFormat\lType::technicalAttributeByte" alt="" coords="259,201,445,242"/>
+<area shape="rect" id="node11" href="$classebu_core__2011_1_1data_format_type.html#a49fa57afc152c4666138e4eeedc66ef0" title="ebuCore_2011::dataFormat\lType::technicalAttributeShort" alt="" coords="257,266,447,307"/>
+<area shape="rect" id="node13" href="$classebu_core__2011_1_1data_format_type.html#a296228e8ca81b0c3ed3951ad7f6300f5" title="ebuCore_2011::dataFormat\lType::technicalAttributeInteger" alt="" coords="253,331,451,373"/>
+<area shape="rect" id="node15" href="$classebu_core__2011_1_1data_format_type.html#a9e80b5e983843a24f031dc4f62c20499" title="ebuCore_2011::dataFormat\lType::technicalAttributeLong" alt="" coords="259,397,445,438"/>
+<area shape="rect" id="node17" href="$classebu_core__2011_1_1data_format_type.html#a8a7a66b75a7538b19aaccf2216960b9a" title="ebuCore_2011::dataFormat\lType::technicalAttributeUnsignedByte" alt="" coords="232,462,472,503"/>
+<area shape="rect" id="node19" href="$classebu_core__2011_1_1data_format_type.html#af6cbf987ee4f6d99eb10478d954ad25e" title="ebuCore_2011::dataFormat\lType::technicalAttributeUnsignedShort" alt="" coords="230,527,474,569"/>
+<area shape="rect" id="node21" href="$classebu_core__2011_1_1data_format_type.html#a643da90ad567948234d2b004532f0637" title="ebuCore_2011::dataFormat\lType::technicalAttributeUnsigned\lInteger" alt="" coords="245,593,459,649"/>
+<area shape="rect" id="node23" href="$classebu_core__2011_1_1data_format_type.html#a98460269c4742fe4091c1d45fdaffd33" title="ebuCore_2011::dataFormat\lType::technicalAttributeUnsignedLong" alt="" coords="231,674,473,715"/>
+<area shape="rect" id="node25" href="$classebu_core__2011_1_1data_format_type.html#a81322ec960a4fd512446000b3f40e465" title="ebuCore_2011::dataFormat\lType::technicalAttributeBoolean" alt="" coords="249,739,455,781"/>
+<area shape="rect" id="node27" href="$classebu_core__2011_1_1data_format_type.html#a0462e1630132c1f8d8cc014b0e6cf791" title="ebuCore_2011::dataFormat\lType::technicalAttributeFloat" alt="" coords="258,805,446,846"/>
+<area shape="rect" id="node29" href="$classebu_core__2011_1_1data_format_type.html#a7287bcffce61cb21c3393a016a6fbda0" title="ebuCore_2011::dataFormat\lType::technicalAttributeRational" alt="" coords="249,870,455,911"/>
+<area shape="rect" id="node31" href="$classebu_core__2011_1_1data_format_type.html#abca67213a8bdfa13c612f96438e1e895" title="ebuCore_2011::dataFormat\lType::technicalAttributeUri" alt="" coords="263,935,441,977"/>
+<area shape="rect" id="node33" href="$classebu_core__2011_1_1data_format_type.html#a745315f8a02daae4dd58b5780c4d411c" title="ebuCore_2011::dataFormat\lType::dataFormatId" alt="" coords="263,1001,441,1042"/>
+<area shape="rect" id="node35" href="$classebu_core__2011_1_1data_format_type.html#a6220203c94404d6cd9f84aeb7094278a" title="ebuCore_2011::dataFormat\lType::dataFormatName" alt="" coords="263,1066,441,1107"/>
+<area shape="rect" id="node37" href="$classebu_core__2011_1_1data_format_type.html#adeef90305deea2075ee101eaa1d78229" title="ebuCore_2011::dataFormat\lType::dataFormatDefinition" alt="" coords="263,1131,441,1173"/>
+</map>

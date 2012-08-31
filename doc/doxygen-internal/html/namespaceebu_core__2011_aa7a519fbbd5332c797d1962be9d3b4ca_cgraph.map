@@ -1,0 +1,15 @@
+<map id="ebuCore_2011::operator&lt;&lt;" name="ebuCore_2011::operator&lt;&lt;">
+<area shape="rect" id="node3" href="$classebu_core__2011_1_1signing_format.html#ab674ccd2623ee7825e83538ebbfe5efa" title="ebuCore_2011::signingFormat\l::trackId" alt="" coords="229,5,424,46"/>
+<area shape="rect" id="node5" href="$classebu_core__2011_1_1signing_format.html#a7028cd0baa054b7466f48ed24bf4c45f" title="ebuCore_2011::signingFormat\l::trackName" alt="" coords="229,70,424,111"/>
+<area shape="rect" id="node7" href="$classebu_core__2011_1_1signing_format.html#aaa87217a715e658b96c127e494b6dd90" title="ebuCore_2011::signingFormat\l::language" alt="" coords="229,135,424,177"/>
+<area shape="rect" id="node9" href="$classebu_core__2011_1_1signing_format.html#af7a5dc0efadbf9c5fc466db7b78d7d8f" title="ebuCore_2011::signingFormat\l::typeLabel" alt="" coords="229,201,424,242"/>
+<area shape="rect" id="node11" href="$classebu_core__2011_1_1signing_format.html#afe97d40674dd380c04db2db13f6d2c01" title="ebuCore_2011::signingFormat\l::typeDefinition" alt="" coords="229,266,424,307"/>
+<area shape="rect" id="node13" href="$classebu_core__2011_1_1signing_format.html#a64f462caa9f3a539d67fffaf66420242" title="ebuCore_2011::signingFormat\l::typeLink" alt="" coords="229,331,424,373"/>
+<area shape="rect" id="node15" href="$classebu_core__2011_1_1signing_format.html#a69156566ce2dbb48b3ed2c0cc1038892" title="ebuCore_2011::signingFormat\l::formatLabel" alt="" coords="229,397,424,438"/>
+<area shape="rect" id="node17" href="$classebu_core__2011_1_1signing_format.html#a8c0862d8bbe92f5e5260cb5c388a69c5" title="ebuCore_2011::signingFormat\l::formatDefinition" alt="" coords="229,462,424,503"/>
+<area shape="rect" id="node19" href="$classebu_core__2011_1_1signing_format.html#a4ac1d7bafaa9819f8effc93b3ae2cb30" title="ebuCore_2011::signingFormat\l::formatLink" alt="" coords="229,527,424,569"/>
+<area shape="rect" id="node21" href="$classebu_core__2011_1_1signing_format.html#acad66f58e37411d3eeb27d7c1c452051" title="ebuCore_2011::signingFormat\l::signingSourceUri" alt="" coords="229,593,424,634"/>
+<area shape="rect" id="node23" href="$classebu_core__2011_1_1signing_format.html#a71197378bf95c375c541c0378752d425" title="ebuCore_2011::signingFormat\l::signingFormatId" alt="" coords="229,658,424,699"/>
+<area shape="rect" id="node25" href="$classebu_core__2011_1_1signing_format.html#aba3602290a48e87aa0b3004b47a11001" title="ebuCore_2011::signingFormat\l::signingFormatName" alt="" coords="229,723,424,765"/>
+<area shape="rect" id="node27" href="$classebu_core__2011_1_1signing_format.html#a35afdc0063763ed3bf85b9138df376c2" title="ebuCore_2011::signingFormat\l::signingFormatDefinition" alt="" coords="229,789,424,830"/>
+</map>

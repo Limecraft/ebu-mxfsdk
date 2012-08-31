@@ -1,0 +1,12 @@
+<map id="EBUCore::mapRights" name="EBUCore::mapRights">
+<area shape="rect" id="node3" href="$namespace_e_b_u_core.html#a4215c928c29585a488115c21b36c2406" title="EBUCore::mapRights" alt="" coords="227,104,373,131"/>
+<area shape="rect" id="node6" href="$namespace_e_b_u_core.html#a400498a0d8f13d757b8a5a79617f7b31" title="EBUCore::mapMetadataCoverage" alt="" coords="448,29,664,56"/>
+<area shape="rect" id="node9" href="$namespace_e_b_u_core.html#a08045b816d66b376c9cc45e39b082564" title="EBUCore::mapEntity" alt="" coords="485,155,627,181"/>
+<area shape="rect" id="node12" href="$namespace_e_b_u_core.html#ae4e601a94f6e46b14aa1b0acf8b7abff" title="EBUCore::mapContact" alt="" coords="712,155,867,181"/>
+<area shape="rect" id="node17" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_rights_base.html#a936835abb0ae293becf4bbf164299253" title="EBUCore::KLV::ebucoreRights\lBase::haverightsFormatIDRef" alt="" coords="200,257,400,298"/>
+<area shape="rect" id="node19" href="$classebu_core__2011_1_1rights_type.html#a35f8ca10aa5bed3083980c4ff3509d59" title="ebuCore_2011::rightsType\l::formatIDRefs" alt="" coords="213,322,387,363"/>
+<area shape="rect" id="node21" href="$namespace_e_b_u_core.html#ae7d5a37b79c6afe7e22c745eac256849" title="EBUCore::convert_idrefs" alt="" coords="219,412,381,439"/>
+<area shape="rect" id="node24" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_rights_base.html#ad8e542934eba4e4eaf18db1f401d8f7f" title="EBUCore::KLV::ebucoreRights\lBase::getrightsFormatIDRef" alt="" coords="200,463,400,505"/>
+<area shape="rect" id="node28" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_rights_base.html#a22dd84287cf51b3af4144ca325da45c5" title="EBUCore::KLV::ebucoreRights\lBase::haverightsContacts" alt="" coords="200,529,400,570"/>
+<area shape="rect" id="node31" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_rights_base.html#a0f99442b6c66d8cf3e7d3feca4d1dc0e" title="EBUCore::KLV::ebucoreRights\lBase::getrightsKindGroup" alt="" coords="200,594,400,635"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="EBUCore::mapPublicationHistory" name="EBUCore::mapPublicationHistory">
+<area shape="rect" id="node3" href="$namespace_e_b_u_core.html#a26151345159d16e1013ccfe009ef16af" title="EBUCore::mapPublicationHistory" alt="" coords="275,187,490,213"/>
+<area shape="rect" id="node6" href="$classebu_core__2011_1_1publication_history_type.html#a8eef5baffed4e8fdf77ff82a375259dc" title="ebuCore_2011::publication\lHistoryType::firstPublicationDate" alt="" coords="555,5,765,46"/>
+<area shape="rect" id="node8" href="$classebu_core__2011_1_1publication_history_type.html#a30f7a2957669c5b865084f12b4f27375" title="ebuCore_2011::publication\lHistoryType::firstPublicationTime" alt="" coords="554,70,766,111"/>
+<area shape="rect" id="node10" href="$classebu_core__2011_1_1publication_history_type.html#a0d9ead5716b2e7c1fe1de263bc065740" title="ebuCore_2011::publication\lHistoryType::firstPublicationChannel" alt="" coords="545,135,775,177"/>
+<area shape="rect" id="node12" href="$classebu_core__2011_1_1publication_history_type.html#a5fda5ed18f348f557ac66279ca8c6812" title="ebuCore_2011::publication\lHistoryType::repeatDate" alt="" coords="573,201,747,242"/>
+<area shape="rect" id="node14" href="$classebu_core__2011_1_1publication_history_type.html#a732b20d2f8d6c03a69949569feb5f8b4" title="ebuCore_2011::publication\lHistoryType::repeatTime" alt="" coords="573,266,747,307"/>
+<area shape="rect" id="node16" href="$classebu_core__2011_1_1publication_history_type.html#ada04b27a2dbb80475e3b38c9a0ea9b82" title="ebuCore_2011::publication\lHistoryType::repeatChannel" alt="" coords="569,331,751,373"/>
+<area shape="rect" id="node19" href="$namespace_e_b_u_core.html#a2612372fecfbbe7c7b4906065d60ccd2" title="EBUCore::convert_timestamp_date" alt="" coords="270,413,495,440"/>
+<area shape="rect" id="node23" href="$namespace_e_b_u_core.html#a27fc09b5e2898ccba0a296436db8173f" title="EBUCore::convert_timestamp_time" alt="" coords="270,488,495,515"/>
+</map>

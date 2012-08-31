@@ -1,0 +1,12 @@
+<map id="EBUCore::EmbedEBUCoreMetadata" name="EBUCore::EmbedEBUCoreMetadata">
+<area shape="rect" id="node3" href="$namespace_e_b_u_core.html#aa72287914176c1fad5c448002771e85b" title="EBUCore::EmbedEBUCoreMetadata" alt="" coords="289,29,522,56"/>
+<area shape="rect" id="node6" href="$namespace_e_b_u_core.html#a709463d0978d35dc7033a9968de7aaba" title="EBUCore::RegisterMetadata\lExtensionsforEBUCore" alt="" coords="312,105,499,146"/>
+<area shape="rect" id="node9" href="$namespace_e_b_u_core.html#a282538cbd5ececa181aa89c8333d2613" title="EBUCore::FindPreferredMetadata\lPartition" alt="" coords="298,170,513,211"/>
+<area shape="rect" id="node11" href="$namespace_e_b_u_core.html#a699993b606b543caf128dbb1e4da4970" title="EBUCore::GenerateEBUCore\lIdentificationSet" alt="" coords="310,259,501,301"/>
+<area shape="rect" id="node14" href="$namespace_e_b_u_core.html#ad4b67ce4ed115cf691ecddceae0c0d6e" title="EBUCore::GenerateSideCar\lFramework" alt="" coords="314,349,497,390"/>
+<area shape="rect" id="node17" href="$namespace_e_b_u_core.html#acb8489c710bca72c0ed4d3687b035e2c" title="EBUCore::Process" alt="" coords="339,415,471,441"/>
+<area shape="rect" id="node19" href="$namespace_e_b_u_core.html#a3609c4c60753c42f02565529c7658574" title="EBUCore::InsertEBUCoreFramework" alt="" coords="288,465,523,492"/>
+<area shape="rect" id="node21" href="$namespace_e_b_u_core.html#a08b668e0d8e64d6fac27763fca386de3" title="EBUCore::BufferIndex" alt="" coords="331,516,479,543"/>
+<area shape="rect" id="node23" href="$namespace_e_b_u_core.html#aa18b70d457e021e9b49fbd9a55bef502" title="EBUCore::WriteMetadataToFile" alt="" coords="303,567,507,593"/>
+<area shape="rect" id="node25" href="$namespace_e_b_u_core.html#a627531cfdad6dc4929cd06f6fef22e7d" title="EBUCore::FindLastPartitionFill" alt="" coords="306,641,505,668"/>
+</map>

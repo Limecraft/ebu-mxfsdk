@@ -1,0 +1,16 @@
+<map id="EBUCore::KLV::ebucoreTypeGroup" name="EBUCore::KLV::ebucoreTypeGroup">
+<area shape="rect" id="node5" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_technical_attribute_any_u_r_i_base.html" title="EBUCore::KLV::ebucoreTechnical\lAttributeAnyURIBase" alt="" coords="485,5,704,46"/>
+<area shape="rect" id="node7" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_technical_attribute_boolean_base.html" title="EBUCore::KLV::ebucoreTechnical\lAttributeBooleanBase" alt="" coords="485,70,704,111"/>
+<area shape="rect" id="node9" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_technical_attribute_float_base.html" title="EBUCore::KLV::ebucoreTechnical\lAttributeFloatBase" alt="" coords="485,135,704,177"/>
+<area shape="rect" id="node11" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_technical_attribute_int16_base.html" title="EBUCore::KLV::ebucoreTechnical\lAttributeInt16Base" alt="" coords="485,201,704,242"/>
+<area shape="rect" id="node13" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_technical_attribute_int32_base.html" title="EBUCore::KLV::ebucoreTechnical\lAttributeInt32Base" alt="" coords="485,266,704,307"/>
+<area shape="rect" id="node15" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_technical_attribute_int64_base.html" title="EBUCore::KLV::ebucoreTechnical\lAttributeInt64Base" alt="" coords="485,331,704,373"/>
+<area shape="rect" id="node17" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_technical_attribute_int8_base.html" title="EBUCore::KLV::ebucoreTechnical\lAttributeInt8Base" alt="" coords="485,397,704,438"/>
+<area shape="rect" id="node19" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_technical_attribute_rational_base.html" title="EBUCore::KLV::ebucoreTechnical\lAttributeRationalBase" alt="" coords="485,462,704,503"/>
+<area shape="rect" id="node21" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_technical_attribute_string_base.html" title="EBUCore::KLV::ebucoreTechnical\lAttributeStringBase" alt="" coords="485,527,704,569"/>
+<area shape="rect" id="node23" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_technical_attribute_u_int16_base.html" title="EBUCore::KLV::ebucoreTechnical\lAttributeUInt16Base" alt="" coords="485,593,704,634"/>
+<area shape="rect" id="node25" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_technical_attribute_u_int32_base.html" title="EBUCore::KLV::ebucoreTechnical\lAttributeUInt32Base" alt="" coords="485,658,704,699"/>
+<area shape="rect" id="node27" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_technical_attribute_u_int64_base.html" title="EBUCore::KLV::ebucoreTechnical\lAttributeUInt64Base" alt="" coords="485,723,704,765"/>
+<area shape="rect" id="node29" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_technical_attribute_u_int8_base.html" title="EBUCore::KLV::ebucoreTechnical\lAttributeUInt8Base" alt="" coords="485,789,704,830"/>
+<area shape="rect" id="node2" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_type_group_base.html" title="EBUCore::KLV::ebucoreType\lGroupBase" alt="" coords="6,397,197,438"/>
+</map>

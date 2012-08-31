@@ -1,0 +1,8 @@
+<map id="EBUCore::mapDetails" name="EBUCore::mapDetails">
+<area shape="rect" id="node3" href="$namespace_e_b_u_core.html#a69422b405209111c66043b992cc2a45b" title="EBUCore::mapDetails" alt="" coords="232,29,381,56"/>
+<area shape="rect" id="node6" href="$namespace_e_b_u_core.html#a9c17a76c4a64109713789abf3b2f16f6" title="EBUCore::mapTextualAnnotation" alt="" coords="664,80,877,107"/>
+<area shape="rect" id="node9" href="$namespace_e_b_u_core.html#a322c486ac06a355313e9d8ee96494dd5" title="EBUCore::mapAddress" alt="" coords="459,80,616,107"/>
+<area shape="rect" id="node13" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_contact_details_base.html#abdebc710d76c457fd06667dadac21e98" title="EBUCore::KLV::ebucoreContact\lDetailsBase::haveemailAddress" alt="" coords="203,182,411,223"/>
+<area shape="rect" id="node15" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_contact_details_base.html#a0d37bc06cbc1efbe6641ec269a73a7b2" title="EBUCore::KLV::ebucoreContact\lDetailsBase::getemailAddress" alt="" coords="203,247,411,289"/>
+<area shape="rect" id="node19" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_contact_details_base.html#a6b0580ddfb21ac1b889d16879442976f" title="EBUCore::KLV::ebucoreContact\lDetailsBase::getdetailsType" alt="" coords="203,313,411,354"/>
+</map>

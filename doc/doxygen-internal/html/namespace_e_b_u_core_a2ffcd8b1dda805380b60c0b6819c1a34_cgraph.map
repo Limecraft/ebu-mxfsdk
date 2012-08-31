@@ -1,0 +1,14 @@
+<map id="EBUCore::mapContact" name="EBUCore::mapContact">
+<area shape="rect" id="node3" href="$namespace_e_b_u_core.html#ae4e601a94f6e46b14aa1b0acf8b7abff" title="EBUCore::mapContact" alt="" coords="235,169,389,196"/>
+<area shape="rect" id="node6" href="$classebu_core__2011_1_1contact_details_type.html#ae3865affb21c0ac244868b6bb773f927" title="ebuCore_2011::contactDetails\lType::name" alt="" coords="465,5,661,46"/>
+<area shape="rect" id="node8" href="$namespace_e_b_u_core.html#a9c17a76c4a64109713789abf3b2f16f6" title="EBUCore::mapTextualAnnotation" alt="" coords="709,145,923,172"/>
+<area shape="rect" id="node11" href="$namespace_e_b_u_core.html#a69422b405209111c66043b992cc2a45b" title="EBUCore::mapDetails" alt="" coords="488,95,637,121"/>
+<area shape="rect" id="node15" href="$namespace_e_b_u_core.html#a08045b816d66b376c9cc45e39b082564" title="EBUCore::mapEntity" alt="" coords="491,220,634,247"/>
+<area shape="rect" id="node19" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_contact_base.html#aa086ab3d93947c8514ae7f0ac5c3b15e" title="EBUCore::KLV::ebucoreContact\lBase::havefamilyName" alt="" coords="208,322,416,363"/>
+<area shape="rect" id="node21" href="$classebu_core__2011_1_1contact_details_type.html#a83a266348771dcabd02864109ea1df5c" title="ebuCore_2011::contactDetails\lType::familyName" alt="" coords="214,387,410,429"/>
+<area shape="rect" id="node23" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_contact_base.html#a6e658571f78dd018d89cf1ab6e8ed7ce" title="EBUCore::KLV::ebucoreContact\lBase::getfamilyName" alt="" coords="208,453,416,494"/>
+<area shape="rect" id="node25" href="$classebu_core__2011_1_1contact_details_type.html#ae95b05c0f48d5ebdcd7822ef601a4b3e" title="ebuCore_2011::contactDetails\lType::givenName" alt="" coords="214,518,410,559"/>
+<area shape="rect" id="node27" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_contact_base.html#a082966a1818b06e979c51c725425a3ab" title="EBUCore::KLV::ebucoreContact\lBase::getgivenName" alt="" coords="208,583,416,625"/>
+<area shape="rect" id="node30" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_contact_base.html#a5b5a849830d179ec0c6c76b98e5753fc" title="EBUCore::KLV::ebucoreContact\lBase::haveusername" alt="" coords="208,649,416,690"/>
+<area shape="rect" id="node32" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_contact_base.html#a08c867fb1303925bca62e01730f75d48" title="EBUCore::KLV::ebucoreContact\lBase::getusername" alt="" coords="208,714,416,755"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="EBUCore::mapDate" name="EBUCore::mapDate">
+<area shape="rect" id="node4" href="$classebu_core__2011_1_1date_type.html#a38d82a2bed5725152e1b1c7b3db05882" title="ebuCore_2011::dateType\l::created" alt="" coords="203,5,370,46"/>
+<area shape="rect" id="node6" href="$namespace_e_b_u_core.html#a8e7c988aad0a473824162aa9c01071d3" title="EBUCore::convert_timestamp" alt="" coords="190,95,383,121"/>
+<area shape="rect" id="node9" href="$classebu_core__2011_1_1date_type.html#a09f50f857b4f66c95e3314c6e6203741" title="ebuCore_2011::dateType\l::issued" alt="" coords="203,146,370,187"/>
+<area shape="rect" id="node11" href="$classebu_core__2011_1_1date_type.html#a60a615ebfbddf5c9f16335a361c168f8" title="ebuCore_2011::dateType\l::modified" alt="" coords="203,211,370,253"/>
+<area shape="rect" id="node13" href="$classebu_core__2011_1_1date_type.html#ab7be8a4623e28b95c85f4ea2f87900ad" title="ebuCore_2011::dateType\l::digitised" alt="" coords="203,277,370,318"/>
+<area shape="rect" id="node15" href="$classebu_core__2011_1_1date_type.html#ae8ddd138e1858ae77472598db9fab890" title="ebuCore_2011::dateType\l::alternative" alt="" coords="203,342,370,383"/>
+</map>

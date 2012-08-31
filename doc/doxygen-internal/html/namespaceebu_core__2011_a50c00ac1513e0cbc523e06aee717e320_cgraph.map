@@ -1,0 +1,21 @@
+<map id="ebuCore_2011::operator&lt;&lt;" name="ebuCore_2011::operator&lt;&lt;">
+<area shape="rect" id="node3" href="$classebu_core__2011_1_1audio_format_type.html#a88a0d53ee52673e3eeefa163e0ba5a4a" title="ebuCore_2011::audioFormat\lType::audioEncoding" alt="" coords="259,5,445,46"/>
+<area shape="rect" id="node5" href="$classebu_core__2011_1_1audio_format_type.html#ad79fd5f598e7482de5d06488f05c499d" title="ebuCore_2011::audioFormat\lType::audioTrackConfiguration" alt="" coords="254,70,450,111"/>
+<area shape="rect" id="node7" href="$classebu_core__2011_1_1audio_format_type.html#aec171b4bef19b9caae1c7bdaaa75173a" title="ebuCore_2011::audioFormat\lType::audioTrack" alt="" coords="259,135,445,177"/>
+<area shape="rect" id="node9" href="$classebu_core__2011_1_1audio_format_type.html#a72619236ec7a313b1b183b998ecee8f2" title="ebuCore_2011::audioFormat\lType::technicalAttributeString" alt="" coords="255,201,449,242"/>
+<area shape="rect" id="node11" href="$classebu_core__2011_1_1audio_format_type.html#afd4a9b8e9ef48d0ae769fbd3175693d9" title="ebuCore_2011::audioFormat\lType::technicalAttributeByte" alt="" coords="259,266,445,307"/>
+<area shape="rect" id="node13" href="$classebu_core__2011_1_1audio_format_type.html#a4ac9cc707c1c3765f0e09eaf984f3afe" title="ebuCore_2011::audioFormat\lType::technicalAttributeShort" alt="" coords="257,331,447,373"/>
+<area shape="rect" id="node15" href="$classebu_core__2011_1_1audio_format_type.html#a0681dec8d6d19e861b9061a0c3c0e890" title="ebuCore_2011::audioFormat\lType::technicalAttributeInteger" alt="" coords="253,397,451,438"/>
+<area shape="rect" id="node17" href="$classebu_core__2011_1_1audio_format_type.html#a8a586dee171c9956cabaae3906961c4f" title="ebuCore_2011::audioFormat\lType::technicalAttributeLong" alt="" coords="259,462,445,503"/>
+<area shape="rect" id="node19" href="$classebu_core__2011_1_1audio_format_type.html#a9e75a42ef28dbd16c418ff4a0951910d" title="ebuCore_2011::audioFormat\lType::technicalAttributeUnsignedByte" alt="" coords="232,527,472,569"/>
+<area shape="rect" id="node21" href="$classebu_core__2011_1_1audio_format_type.html#a1b44f221ce17fc1797405ecce09e6fe5" title="ebuCore_2011::audioFormat\lType::technicalAttributeUnsignedShort" alt="" coords="230,593,474,634"/>
+<area shape="rect" id="node23" href="$classebu_core__2011_1_1audio_format_type.html#aaacfbb7fb1e1b645e73484f349998fc2" title="ebuCore_2011::audioFormat\lType::technicalAttributeUnsigned\lInteger" alt="" coords="245,659,459,715"/>
+<area shape="rect" id="node25" href="$classebu_core__2011_1_1audio_format_type.html#afb1246f825b690f1a94bbaa9f7ca53bf" title="ebuCore_2011::audioFormat\lType::technicalAttributeUnsignedLong" alt="" coords="231,739,473,781"/>
+<area shape="rect" id="node27" href="$classebu_core__2011_1_1audio_format_type.html#aa24974ef62c155697ce755fb70a5151e" title="ebuCore_2011::audioFormat\lType::technicalAttributeBoolean" alt="" coords="249,805,455,846"/>
+<area shape="rect" id="node29" href="$classebu_core__2011_1_1audio_format_type.html#ab7ee2e1d7eae06d8da568fa76e4b2a9f" title="ebuCore_2011::audioFormat\lType::technicalAttributeFloat" alt="" coords="258,870,446,911"/>
+<area shape="rect" id="node31" href="$classebu_core__2011_1_1audio_format_type.html#a6a88183b56b5125429e1c7a75b07fa9c" title="ebuCore_2011::audioFormat\lType::technicalAttributeRational" alt="" coords="249,935,455,977"/>
+<area shape="rect" id="node33" href="$classebu_core__2011_1_1audio_format_type.html#af9b6faaf5953244abe67f2b5dee166a3" title="ebuCore_2011::audioFormat\lType::technicalAttributeUri" alt="" coords="259,1001,445,1042"/>
+<area shape="rect" id="node35" href="$classebu_core__2011_1_1audio_format_type.html#a8dde0894c3664c1f5f32740334ed9001" title="ebuCore_2011::audioFormat\lType::audioFormatId" alt="" coords="259,1066,445,1107"/>
+<area shape="rect" id="node37" href="$classebu_core__2011_1_1audio_format_type.html#a23fbaf92a322b61f9fbd51ea9d71f6a6" title="ebuCore_2011::audioFormat\lType::audioFormatName" alt="" coords="259,1131,445,1173"/>
+<area shape="rect" id="node39" href="$classebu_core__2011_1_1audio_format_type.html#a2315fd4444d343898d8e3544d9ac699e" title="ebuCore_2011::audioFormat\lType::audioFormatDefinition" alt="" coords="259,1197,445,1238"/>
+</map>

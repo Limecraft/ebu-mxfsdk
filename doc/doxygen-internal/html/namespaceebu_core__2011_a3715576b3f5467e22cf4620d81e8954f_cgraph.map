@@ -1,0 +1,11 @@
+<map id="ebuCore_2011::operator&lt;&lt;" name="ebuCore_2011::operator&lt;&lt;">
+<area shape="rect" id="node3" href="$classebu_core__2011_1_1contact_details_type.html#ae3865affb21c0ac244868b6bb773f927" title="ebuCore_2011::contactDetails\lType::name" alt="" coords="230,5,426,46"/>
+<area shape="rect" id="node5" href="$classebu_core__2011_1_1contact_details_type.html#ae95b05c0f48d5ebdcd7822ef601a4b3e" title="ebuCore_2011::contactDetails\lType::givenName" alt="" coords="230,70,426,111"/>
+<area shape="rect" id="node7" href="$classebu_core__2011_1_1contact_details_type.html#a83a266348771dcabd02864109ea1df5c" title="ebuCore_2011::contactDetails\lType::familyName" alt="" coords="230,135,426,177"/>
+<area shape="rect" id="node9" href="$classebu_core__2011_1_1contact_details_type.html#ae945f6d25fffeab95fe5a2c81ff25c8e" title="ebuCore_2011::contactDetails\lType::username" alt="" coords="230,201,426,242"/>
+<area shape="rect" id="node11" href="$classebu_core__2011_1_1contact_details_type.html#a6e2b9d15cd94211b336b7d19de1fa56c" title="ebuCore_2011::contactDetails\lType::occupation" alt="" coords="230,266,426,307"/>
+<area shape="rect" id="node13" href="$classebu_core__2011_1_1contact_details_type.html#aac8d11809b710c1e72212d4dbfc6bfe0" title="ebuCore_2011::contactDetails\lType::details" alt="" coords="230,331,426,373"/>
+<area shape="rect" id="node15" href="$classebu_core__2011_1_1contact_details_type.html#ada87f98df5d66e6e080d790b4360c58c" title="ebuCore_2011::contactDetails\lType::stageName" alt="" coords="230,397,426,438"/>
+<area shape="rect" id="node17" href="$classebu_core__2011_1_1contact_details_type.html#af56f25aa53af51c294c36a9cba698e3a" title="ebuCore_2011::contactDetails\lType::relatedContacts" alt="" coords="230,462,426,503"/>
+<area shape="rect" id="node19" href="$classebu_core__2011_1_1contact_details_type.html#ab015a2750e21d77558fb7e16e9a5ba1f" title="ebuCore_2011::contactDetails\lType::contactId" alt="" coords="230,527,426,569"/>
+</map>

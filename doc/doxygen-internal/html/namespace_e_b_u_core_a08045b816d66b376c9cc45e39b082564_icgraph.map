@@ -1,0 +1,11 @@
+<map id="EBUCore::mapEntity" name="EBUCore::mapEntity">
+<area shape="rect" id="node3" href="$namespace_e_b_u_core.html#ae4e601a94f6e46b14aa1b0acf8b7abff" title="EBUCore::mapContact" alt="" coords="225,111,380,138"/>
+<area shape="rect" id="node7" href="$namespace_e_b_u_core.html#a4215c928c29585a488115c21b36c2406" title="EBUCore::mapRights" alt="" coords="461,162,608,188"/>
+<area shape="rect" id="node10" href="$namespace_e_b_u_core.html#aa66b8b33faead5c9274a6fa39c731d67" title="EBUCore::mapCoreMetadata" alt="" coords="662,274,853,300"/>
+<area shape="rect" id="node13" href="$namespace_e_b_u_core.html#ae97a9120a2b7e301fa7f4c9d489983ed" title="EBUCore::ParseEBUCoreMetadata" alt="" coords="901,126,1128,152"/>
+<area shape="rect" id="node16" href="$namespace_e_b_u_core.html#a9d7ecf764851f9c05da65ee3444625ed" title="EBUCore::mapOrganisation" alt="" coords="211,287,394,314"/>
+<area shape="rect" id="node21" href="$namespace_e_b_u_core.html#a8044ae26207f56ae4d4a7feaffea0937" title="EBUCore::mapMetadataScheme\lInformation" alt="" coords="197,362,408,404"/>
+<area shape="rect" id="node24" href="$namespace_e_b_u_core.html#a61e64662a2862b8a297b52e3f9481694" title="EBUCore::mapIdentifier" alt="" coords="456,431,613,458"/>
+<area shape="rect" id="node28" href="$namespace_e_b_u_core.html#a5a3a6d9c01986906857e9e90efb18b32" title="EBUCore::mapSubject" alt="" coords="458,518,611,544"/>
+<area shape="rect" id="node32" href="$namespace_e_b_u_core.html#a74af4bec2d90dfe9491cd21e50277a20" title="EBUCore::mapRating" alt="" coords="461,334,608,360"/>
+</map>

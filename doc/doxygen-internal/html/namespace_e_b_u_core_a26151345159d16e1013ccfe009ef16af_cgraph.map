@@ -1,0 +1,13 @@
+<map id="EBUCore::mapPublicationHistory" name="EBUCore::mapPublicationHistory">
+<area shape="rect" id="node4" href="$classebu_core__2011_1_1publication_history_type.html#a8eef5baffed4e8fdf77ff82a375259dc" title="ebuCore_2011::publication\lHistoryType::firstPublicationDate" alt="" coords="307,5,517,46"/>
+<area shape="rect" id="node6" href="$classebu_core__2011_1_1publication_history_type.html#a30f7a2957669c5b865084f12b4f27375" title="ebuCore_2011::publication\lHistoryType::firstPublicationTime" alt="" coords="306,70,518,111"/>
+<area shape="rect" id="node8" href="$classebu_core__2011_1_1publication_history_type.html#a0d9ead5716b2e7c1fe1de263bc065740" title="ebuCore_2011::publication\lHistoryType::firstPublicationChannel" alt="" coords="297,135,527,177"/>
+<area shape="rect" id="node10" href="$namespace_e_b_u_core.html#a8e7c988aad0a473824162aa9c01071d3" title="EBUCore::convert_timestamp" alt="" coords="315,225,509,252"/>
+<area shape="rect" id="node13" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_publication_history_event_base.html#a6c1e2c80827a27c4533498e8f2045498" title="EBUCore::KLV::ebucorePublication\lHistoryEventBase::setfirstPublicationFlag" alt="" coords="281,277,543,318"/>
+<area shape="rect" id="node15" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_publication_history_event_base.html#a742e436d8d246bd2df4e0dc03cc65ba2" title="EBUCore::KLV::ebucorePublication\lHistoryEventBase::setpublicationFormatIDRef" alt="" coords="269,342,555,383"/>
+<area shape="rect" id="node17" href="$classebu_core__2011_1_1publication_history_type.html#a5fda5ed18f348f557ac66279ca8c6812" title="ebuCore_2011::publication\lHistoryType::repeatDate" alt="" coords="325,407,499,449"/>
+<area shape="rect" id="node19" href="$classebu_core__2011_1_1publication_history_type.html#a732b20d2f8d6c03a69949569feb5f8b4" title="ebuCore_2011::publication\lHistoryType::repeatTime" alt="" coords="325,473,499,514"/>
+<area shape="rect" id="node21" href="$classebu_core__2011_1_1publication_history_type.html#ada04b27a2dbb80475e3b38c9a0ea9b82" title="ebuCore_2011::publication\lHistoryType::repeatChannel" alt="" coords="321,538,503,579"/>
+<area shape="rect" id="node23" href="$namespace_e_b_u_core.html#a558667951aa5cc51a0b7b827358de279" title="EBUCore::nodeOrdering" alt="" coords="331,628,493,655"/>
+<area shape="rect" id="node26" href="$classebu_core__2011_1_1repeat_channel.html#a7155ef57b87054688013acb2c3fa730b" title="ebuCore_2011::repeatChannel\l::formatIdRef" alt="" coords="314,679,510,721"/>
+</map>

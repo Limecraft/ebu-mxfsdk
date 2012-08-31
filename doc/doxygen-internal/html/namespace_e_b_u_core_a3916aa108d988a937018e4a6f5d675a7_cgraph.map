@@ -1,0 +1,8 @@
+<map id="EBUCore::mapIdentifier" name="EBUCore::mapIdentifier">
+<area shape="rect" id="node3" href="$namespace_e_b_u_core.html#a61e64662a2862b8a297b52e3f9481694" title="EBUCore::mapIdentifier" alt="" coords="237,29,395,56"/>
+<area shape="rect" id="node6" href="$namespace_e_b_u_core.html#a08045b816d66b376c9cc45e39b082564" title="EBUCore::mapEntity" alt="" coords="470,55,613,81"/>
+<area shape="rect" id="node9" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_identifier_base.html#a32c4828c844d1ec60716b037cfec0d8d" title="EBUCore::KLV::ebucoreIdentifier\lBase::getidentifierValue" alt="" coords="211,131,421,173"/>
+<area shape="rect" id="node11" href="$classebu_core__2011_1_1identifier_type.html#aaacfefce54c9e094acf4852f6a849f9a" title="ebuCore_2011::identifier\lType::identifier" alt="" coords="235,197,397,238"/>
+<area shape="rect" id="node13" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_identifier_base.html#a03dfcf494764727eecf437f9804ab408" title="EBUCore::KLV::ebucoreIdentifier\lBase::getidentifierFormatGroup" alt="" coords="211,262,421,303"/>
+<area shape="rect" id="node15" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_identifier_base.html#a68008351e40a5dbea22aa24ee27a40e5" title="EBUCore::KLV::ebucoreIdentifier\lBase::getidentifierTypeGroup" alt="" coords="211,327,421,369"/>
+</map>

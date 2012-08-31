@@ -1,0 +1,7 @@
+<map id="EBUCore::mapTitle" name="EBUCore::mapTitle">
+<area shape="rect" id="node3" href="$namespace_e_b_u_core.html#a177465915f7b4a33eac531425b922b3a" title="EBUCore::mapTitle" alt="" coords="233,29,367,56"/>
+<area shape="rect" id="node6" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_title_base.html#acf9c4ea3b2a0feb8bac94b352226ae12" title="EBUCore::KLV::ebucoreTitle\lBase::havetitleAttributionDate" alt="" coords="203,81,397,122"/>
+<area shape="rect" id="node8" href="$namespace_e_b_u_core.html#a2612372fecfbbe7c7b4906065d60ccd2" title="EBUCore::convert_timestamp_date" alt="" coords="187,171,413,197"/>
+<area shape="rect" id="node11" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_title_base.html#aa402c5bbfdc32f8b24bcf087005f686d" title="EBUCore::KLV::ebucoreTitle\lBase::gettitleAttributionDate" alt="" coords="207,222,393,263"/>
+<area shape="rect" id="node13" href="$classebu_core__2011_1_1title_type.html#ad12742a2fcc5c8beefe93c32bfd18e2f" title="ebuCore_2011::titleType\l::attributiondate" alt="" coords="219,287,381,329"/>
+</map>
