@@ -45,7 +45,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\code\BMX\bmxlib-bmx\ST434\include;C:\code\EBU-SDK\xsd-3.3.0-i686-windows\libxsd;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\code\BMX\ebu-bmx\ST434\include;C:\code\EBU-SDK\xsd-3.3.0-i686-windows\libxsd;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
