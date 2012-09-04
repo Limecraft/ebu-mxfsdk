@@ -74,7 +74,7 @@ public:
    bool havedateNote() const;
    std::string getdateNote() const;
    bool havealternativeDate() const;
-   ebucoreDateType* getalternativeDate() const;
+   std::vector<ebucoreDateType*> getalternativeDate() const;
 
 
    // setters
@@ -88,7 +88,8 @@ public:
    void setdateDigitized(mxfTimestamp value);
    void setyearDigitized(mxfTimestamp value);
    void setdateNote(std::string value);
-   void setalternativeDate(ebucoreDateType* value);
+   void setalternativeDate(const std::vector<ebucoreDateType*>& value);
+   void appendalternativeDate(ebucoreDateType* value);
 
 
 protected:

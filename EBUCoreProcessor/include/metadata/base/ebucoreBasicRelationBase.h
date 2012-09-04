@@ -55,38 +55,38 @@ public:
 
    // getters
 
-   mxfUMID getisVersionOf() const;
-   mxfUMID gethasVersion() const;
-   mxfUMID getisReplacedBy() const;
-   mxfUMID getreplaces() const;
-   mxfUMID getisRequiredBy() const;
-   mxfUMID getrequires() const;
-   mxfUMID getisPartOf() const;
-   mxfUMID gethasPart() const;
-   mxfUMID getisReferencedBy() const;
-   mxfUMID getreferences() const;
-   mxfUMID getisFormatOf() const;
-   mxfUMID gethasFormat() const;
-   mxfUMID getisEpisodeOf() const;
-   mxfUMID getisMemberOf() const;
+   std::string getisVersionOf() const;
+   std::string gethasVersion() const;
+   std::string getisReplacedBy() const;
+   std::string getreplaces() const;
+   std::string getisRequiredBy() const;
+   std::string getrequires() const;
+   std::string getisPartOf() const;
+   std::string gethasPart() const;
+   std::string getisReferencedBy() const;
+   std::string getreferences() const;
+   std::string getisFormatOf() const;
+   std::string gethasFormat() const;
+   std::string getisEpisodeOf() const;
+   std::string getisMemberOf() const;
 
 
    // setters
 
-   void setisVersionOf(mxfUMID value);
-   void sethasVersion(mxfUMID value);
-   void setisReplacedBy(mxfUMID value);
-   void setreplaces(mxfUMID value);
-   void setisRequiredBy(mxfUMID value);
-   void setrequires(mxfUMID value);
-   void setisPartOf(mxfUMID value);
-   void sethasPart(mxfUMID value);
-   void setisReferencedBy(mxfUMID value);
-   void setreferences(mxfUMID value);
-   void setisFormatOf(mxfUMID value);
-   void sethasFormat(mxfUMID value);
-   void setisEpisodeOf(mxfUMID value);
-   void setisMemberOf(mxfUMID value);
+   void setisVersionOf(std::string value);
+   void sethasVersion(std::string value);
+   void setisReplacedBy(std::string value);
+   void setreplaces(std::string value);
+   void setisRequiredBy(std::string value);
+   void setrequires(std::string value);
+   void setisPartOf(std::string value);
+   void sethasPart(std::string value);
+   void setisReferencedBy(std::string value);
+   void setreferences(std::string value);
+   void setisFormatOf(std::string value);
+   void sethasFormat(std::string value);
+   void setisEpisodeOf(std::string value);
+   void setisMemberOf(std::string value);
 
 
 protected:

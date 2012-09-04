@@ -156,11 +156,16 @@ bool ebucoreDateBase::havealternativeDate() const
     return haveItem(&MXF_ITEM_K(ebucoreDate, alternativeDate));
 }
 
-ebucoreDateType* ebucoreDateBase::getalternativeDate() const
+std::vector<ebucoreDateType*> ebucoreDateBase::getalternativeDate() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreDate, alternativeDate)));
-    MXFPP_CHECK(dynamic_cast<ebucoreDateType*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreDateType*>(obj.release());
+    vector<ebucoreDateType*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreDate, alternativeDate)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreDateType*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreDateType*>(iter->get()));
+    }
+    return result;
 }
 
 void ebucoreDateBase::setdateCreated(mxfTimestamp value)
@@ -208,8 +213,14 @@ void ebucoreDateBase::setdateNote(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreDate, dateNote), value);
 }
 
-void ebucoreDateBase::setalternativeDate(ebucoreDateType* value)
+void ebucoreDateBase::setalternativeDate(const std::vector<ebucoreDateType*>& value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucoreDate, alternativeDate), value);
+    WrapObjectVectorIterator<ebucoreDateType> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreDate, alternativeDate), &iter);
+}
+
+void ebucoreDateBase::appendalternativeDate(ebucoreDateType* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreDate, alternativeDate), value);
 }
 

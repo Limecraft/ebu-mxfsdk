@@ -66,6 +66,8 @@ public:
    std::string getpublicationMedium() const;
    bool havepublicationChannel() const;
    std::string getpublicationChannel() const;
+   bool havepublicationFormatReference() const;
+   ebucoreFormat* getpublicationFormatReference() const;
 
 
    // setters
@@ -76,6 +78,7 @@ public:
    void setpublicationService(std::string value);
    void setpublicationMedium(std::string value);
    void setpublicationChannel(std::string value);
+   void setpublicationFormatReference(ebucoreFormat* value);
 
 
 protected:

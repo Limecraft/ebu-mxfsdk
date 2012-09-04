@@ -61,143 +61,143 @@ ebucoreBasicRelationBase::~ebucoreBasicRelationBase()
 {}
 
 
-mxfUMID ebucoreBasicRelationBase::getisVersionOf() const
+std::string ebucoreBasicRelationBase::getisVersionOf() const
 {
-    return getUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isVersionOf));
+    return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isVersionOf));
 }
 
-mxfUMID ebucoreBasicRelationBase::gethasVersion() const
+std::string ebucoreBasicRelationBase::gethasVersion() const
 {
-    return getUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, hasVersion));
+    return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, hasVersion));
 }
 
-mxfUMID ebucoreBasicRelationBase::getisReplacedBy() const
+std::string ebucoreBasicRelationBase::getisReplacedBy() const
 {
-    return getUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isReplacedBy));
+    return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isReplacedBy));
 }
 
-mxfUMID ebucoreBasicRelationBase::getreplaces() const
+std::string ebucoreBasicRelationBase::getreplaces() const
 {
-    return getUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, replaces));
+    return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, replaces));
 }
 
-mxfUMID ebucoreBasicRelationBase::getisRequiredBy() const
+std::string ebucoreBasicRelationBase::getisRequiredBy() const
 {
-    return getUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isRequiredBy));
+    return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isRequiredBy));
 }
 
-mxfUMID ebucoreBasicRelationBase::getrequires() const
+std::string ebucoreBasicRelationBase::getrequires() const
 {
-    return getUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, requires));
+    return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, requires));
 }
 
-mxfUMID ebucoreBasicRelationBase::getisPartOf() const
+std::string ebucoreBasicRelationBase::getisPartOf() const
 {
-    return getUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isPartOf));
+    return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isPartOf));
 }
 
-mxfUMID ebucoreBasicRelationBase::gethasPart() const
+std::string ebucoreBasicRelationBase::gethasPart() const
 {
-    return getUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, hasPart));
+    return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, hasPart));
 }
 
-mxfUMID ebucoreBasicRelationBase::getisReferencedBy() const
+std::string ebucoreBasicRelationBase::getisReferencedBy() const
 {
-    return getUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isReferencedBy));
+    return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isReferencedBy));
 }
 
-mxfUMID ebucoreBasicRelationBase::getreferences() const
+std::string ebucoreBasicRelationBase::getreferences() const
 {
-    return getUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, references));
+    return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, references));
 }
 
-mxfUMID ebucoreBasicRelationBase::getisFormatOf() const
+std::string ebucoreBasicRelationBase::getisFormatOf() const
 {
-    return getUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isFormatOf));
+    return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isFormatOf));
 }
 
-mxfUMID ebucoreBasicRelationBase::gethasFormat() const
+std::string ebucoreBasicRelationBase::gethasFormat() const
 {
-    return getUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, hasFormat));
+    return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, hasFormat));
 }
 
-mxfUMID ebucoreBasicRelationBase::getisEpisodeOf() const
+std::string ebucoreBasicRelationBase::getisEpisodeOf() const
 {
-    return getUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isEpisodeOf));
+    return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isEpisodeOf));
 }
 
-mxfUMID ebucoreBasicRelationBase::getisMemberOf() const
+std::string ebucoreBasicRelationBase::getisMemberOf() const
 {
-    return getUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isMemberOf));
+    return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isMemberOf));
 }
 
-void ebucoreBasicRelationBase::setisVersionOf(mxfUMID value)
+void ebucoreBasicRelationBase::setisVersionOf(std::string value)
 {
-    setUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isVersionOf), value);
+    setStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isVersionOf), value);
 }
 
-void ebucoreBasicRelationBase::sethasVersion(mxfUMID value)
+void ebucoreBasicRelationBase::sethasVersion(std::string value)
 {
-    setUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, hasVersion), value);
+    setStringItem(&MXF_ITEM_K(ebucoreBasicRelation, hasVersion), value);
 }
 
-void ebucoreBasicRelationBase::setisReplacedBy(mxfUMID value)
+void ebucoreBasicRelationBase::setisReplacedBy(std::string value)
 {
-    setUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isReplacedBy), value);
+    setStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isReplacedBy), value);
 }
 
-void ebucoreBasicRelationBase::setreplaces(mxfUMID value)
+void ebucoreBasicRelationBase::setreplaces(std::string value)
 {
-    setUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, replaces), value);
+    setStringItem(&MXF_ITEM_K(ebucoreBasicRelation, replaces), value);
 }
 
-void ebucoreBasicRelationBase::setisRequiredBy(mxfUMID value)
+void ebucoreBasicRelationBase::setisRequiredBy(std::string value)
 {
-    setUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isRequiredBy), value);
+    setStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isRequiredBy), value);
 }
 
-void ebucoreBasicRelationBase::setrequires(mxfUMID value)
+void ebucoreBasicRelationBase::setrequires(std::string value)
 {
-    setUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, requires), value);
+    setStringItem(&MXF_ITEM_K(ebucoreBasicRelation, requires), value);
 }
 
-void ebucoreBasicRelationBase::setisPartOf(mxfUMID value)
+void ebucoreBasicRelationBase::setisPartOf(std::string value)
 {
-    setUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isPartOf), value);
+    setStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isPartOf), value);
 }
 
-void ebucoreBasicRelationBase::sethasPart(mxfUMID value)
+void ebucoreBasicRelationBase::sethasPart(std::string value)
 {
-    setUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, hasPart), value);
+    setStringItem(&MXF_ITEM_K(ebucoreBasicRelation, hasPart), value);
 }
 
-void ebucoreBasicRelationBase::setisReferencedBy(mxfUMID value)
+void ebucoreBasicRelationBase::setisReferencedBy(std::string value)
 {
-    setUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isReferencedBy), value);
+    setStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isReferencedBy), value);
 }
 
-void ebucoreBasicRelationBase::setreferences(mxfUMID value)
+void ebucoreBasicRelationBase::setreferences(std::string value)
 {
-    setUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, references), value);
+    setStringItem(&MXF_ITEM_K(ebucoreBasicRelation, references), value);
 }
 
-void ebucoreBasicRelationBase::setisFormatOf(mxfUMID value)
+void ebucoreBasicRelationBase::setisFormatOf(std::string value)
 {
-    setUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isFormatOf), value);
+    setStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isFormatOf), value);
 }
 
-void ebucoreBasicRelationBase::sethasFormat(mxfUMID value)
+void ebucoreBasicRelationBase::sethasFormat(std::string value)
 {
-    setUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, hasFormat), value);
+    setStringItem(&MXF_ITEM_K(ebucoreBasicRelation, hasFormat), value);
 }
 
-void ebucoreBasicRelationBase::setisEpisodeOf(mxfUMID value)
+void ebucoreBasicRelationBase::setisEpisodeOf(std::string value)
 {
-    setUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isEpisodeOf), value);
+    setStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isEpisodeOf), value);
 }
 
-void ebucoreBasicRelationBase::setisMemberOf(mxfUMID value)
+void ebucoreBasicRelationBase::setisMemberOf(std::string value)
 {
-    setUMIDItem(&MXF_ITEM_K(ebucoreBasicRelation, isMemberOf), value);
+    setStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isMemberOf), value);
 }
 

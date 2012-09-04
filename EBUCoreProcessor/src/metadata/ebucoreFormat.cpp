@@ -29,52 +29,29 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORESPATIAL_BASE_H__
-#define __MXFPP_EBUCORESPATIAL_BASE_H__
-
-
-
-#include <libMXF++/metadata/InterchangeObject.h>
-
-using namespace mxfpp;
-
-namespace EBUCore { namespace KLV
-{
-
-
-class ebucoreSpatialBase : public InterchangeObject
-{
-public:
-    friend class MetadataSetFactory<ebucoreSpatialBase>;
-    static const mxfKey setKey;
-
-public:
-    ebucoreSpatialBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreSpatialBase();
-
-
-   // getters
-
-   bool havelocation() const;
-   std::vector<ebucoreTextualAnnotation*> getlocation() const;
-   bool havecoordinates() const;
-   std::vector<ebucoreCoordinates*> getcoordinates() const;
-
-
-   // setters
-
-   void setlocation(const std::vector<ebucoreTextualAnnotation*>& value);
-   void appendlocation(ebucoreTextualAnnotation* value);
-   void setcoordinates(const std::vector<ebucoreCoordinates*>& value);
-   void appendcoordinates(ebucoreCoordinates* value);
-
-
-protected:
-    ebucoreSpatialBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
-};
-
-
-}};
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
+
+#include <libMXF++/MXF.h>
+#include <metadata/EBUCoreDMS++.h>
+
+
+using namespace std;
+using namespace mxfpp;
+using namespace EBUCore::KLV;
+
+
+
+ebucoreFormat::ebucoreFormat(HeaderMetadata *headerMetadata)
+: ebucoreFormatBase(headerMetadata)
+{}
+
+ebucoreFormat::ebucoreFormat(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: ebucoreFormatBase(headerMetadata, cMetadataSet)
+{}
+
+ebucoreFormat::~ebucoreFormat()
+{}
+
+

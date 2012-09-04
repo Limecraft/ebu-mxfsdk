@@ -61,18 +61,6 @@ ebucoreSpatialBase::~ebucoreSpatialBase()
 {}
 
 
-bool ebucoreSpatialBase::havespatialDefinitionNote() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreSpatial, spatialDefinitionNote));
-}
-
-ebucoreTextualAnnotation* ebucoreSpatialBase::getspatialDefinitionNote() const
-{
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreSpatial, spatialDefinitionNote)));
-    MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreTextualAnnotation*>(obj.release());
-}
-
 bool ebucoreSpatialBase::havelocation() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreSpatial, location));
@@ -105,11 +93,6 @@ std::vector<ebucoreCoordinates*> ebucoreSpatialBase::getcoordinates() const
         result.push_back(dynamic_cast<ebucoreCoordinates*>(iter->get()));
     }
     return result;
-}
-
-void ebucoreSpatialBase::setspatialDefinitionNote(ebucoreTextualAnnotation* value)
-{
-    setStrongRefItem(&MXF_ITEM_K(ebucoreSpatial, spatialDefinitionNote), value);
 }
 
 void ebucoreSpatialBase::setlocation(const std::vector<ebucoreTextualAnnotation*>& value)

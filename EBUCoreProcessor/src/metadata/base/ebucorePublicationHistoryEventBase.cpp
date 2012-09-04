@@ -116,6 +116,18 @@ std::string ebucorePublicationHistoryEventBase::getpublicationChannel() const
     return getStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationChannel));
 }
 
+bool ebucorePublicationHistoryEventBase::havepublicationFormatReference() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationFormatReference));
+}
+
+ebucoreFormat* ebucorePublicationHistoryEventBase::getpublicationFormatReference() const
+{
+    auto_ptr<MetadataSet> obj(getWeakRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationFormatReference)));
+    MXFPP_CHECK(dynamic_cast<ebucoreFormat*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreFormat*>(obj.release());
+}
+
 void ebucorePublicationHistoryEventBase::setfirstPublicationFlag(bool value)
 {
     setBooleanItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, firstPublicationFlag), value);
@@ -144,5 +156,10 @@ void ebucorePublicationHistoryEventBase::setpublicationMedium(std::string value)
 void ebucorePublicationHistoryEventBase::setpublicationChannel(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationChannel), value);
+}
+
+void ebucorePublicationHistoryEventBase::setpublicationFormatReference(ebucoreFormat* value)
+{
+    setWeakRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationFormatReference), value);
 }
 

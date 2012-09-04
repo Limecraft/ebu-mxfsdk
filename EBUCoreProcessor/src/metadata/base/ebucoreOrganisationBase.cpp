@@ -61,19 +61,48 @@ ebucoreOrganisationBase::~ebucoreOrganisationBase()
 {}
 
 
-mxfUUID ebucoreOrganisationBase::getorganisationId() const
+bool ebucoreOrganisationBase::haveorganisationId() const
 {
-    return getUUIDItem(&MXF_ITEM_K(ebucoreOrganisation, organisationId));
+    return haveItem(&MXF_ITEM_K(ebucoreOrganisation, organisationId));
 }
 
-std::string ebucoreOrganisationBase::getorganisationName() const
+std::string ebucoreOrganisationBase::getorganisationId() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationName));
+    return getStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationId));
 }
 
-std::string ebucoreOrganisationBase::getorganisationCode() const
+bool ebucoreOrganisationBase::haveorganisationName() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationCode));
+    return haveItem(&MXF_ITEM_K(ebucoreOrganisation, organisationName));
+}
+
+std::vector<textualAnnotation*> ebucoreOrganisationBase::getorganisationName() const
+{
+    vector<textualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreOrganisation, organisationName)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<textualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<textualAnnotation*>(iter->get()));
+    }
+    return result;
+}
+
+bool ebucoreOrganisationBase::haveorganisationCode() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreOrganisation, organisationCode));
+}
+
+std::vector<textualAnnotation*> ebucoreOrganisationBase::getorganisationCode() const
+{
+    vector<textualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreOrganisation, organisationCode)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<textualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<textualAnnotation*>(iter->get()));
+    }
+    return result;
 }
 
 bool ebucoreOrganisationBase::haveorganisationDepartment() const
@@ -95,6 +124,11 @@ ebucoreTypeGroup* ebucoreOrganisationBase::getorganisationType() const
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
+bool ebucoreOrganisationBase::haveorganisationDetails() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreOrganisation, organisationDetails));
+}
+
 std::vector<ebucoreContactDetails*> ebucoreOrganisationBase::getorganisationDetails() const
 {
     vector<ebucoreContactDetails*> result;
@@ -105,6 +139,11 @@ std::vector<ebucoreContactDetails*> ebucoreOrganisationBase::getorganisationDeta
         result.push_back(dynamic_cast<ebucoreContactDetails*>(iter->get()));
     }
     return result;
+}
+
+bool ebucoreOrganisationBase::haveorganisationRelatedContacts() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreOrganisation, organisationRelatedContacts));
 }
 
 std::vector<ebucoreEntity*> ebucoreOrganisationBase::getorganisationRelatedContacts() const
@@ -119,19 +158,31 @@ std::vector<ebucoreEntity*> ebucoreOrganisationBase::getorganisationRelatedConta
     return result;
 }
 
-void ebucoreOrganisationBase::setorganisationId(mxfUUID value)
+void ebucoreOrganisationBase::setorganisationId(std::string value)
 {
-    setUUIDItem(&MXF_ITEM_K(ebucoreOrganisation, organisationId), value);
+    setStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationId), value);
 }
 
-void ebucoreOrganisationBase::setorganisationName(std::string value)
+void ebucoreOrganisationBase::setorganisationName(const std::vector<textualAnnotation*>& value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationName), value);
+    WrapObjectVectorIterator<textualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreOrganisation, organisationName), &iter);
 }
 
-void ebucoreOrganisationBase::setorganisationCode(std::string value)
+void ebucoreOrganisationBase::appendorganisationName(textualAnnotation* value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationCode), value);
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreOrganisation, organisationName), value);
+}
+
+void ebucoreOrganisationBase::setorganisationCode(const std::vector<textualAnnotation*>& value)
+{
+    WrapObjectVectorIterator<textualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreOrganisation, organisationCode), &iter);
+}
+
+void ebucoreOrganisationBase::appendorganisationCode(textualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreOrganisation, organisationCode), value);
 }
 
 void ebucoreOrganisationBase::setorganisationDepartment(ebucoreOrganisationDepartment* value)

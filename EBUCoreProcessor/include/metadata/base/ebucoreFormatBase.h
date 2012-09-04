@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORESPATIAL_BASE_H__
-#define __MXFPP_EBUCORESPATIAL_BASE_H__
+#ifndef __MXFPP_EBUCOREFORMAT_BASE_H__
+#define __MXFPP_EBUCOREFORMAT_BASE_H__
 
 
 
@@ -42,35 +42,21 @@ namespace EBUCore { namespace KLV
 {
 
 
-class ebucoreSpatialBase : public InterchangeObject
+class ebucoreFormatBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucoreSpatialBase>;
+    friend class MetadataSetFactory<ebucoreFormatBase>;
     static const mxfKey setKey;
 
 public:
-    ebucoreSpatialBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreSpatialBase();
+    ebucoreFormatBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreFormatBase();
 
 
-   // getters
-
-   bool havelocation() const;
-   std::vector<ebucoreTextualAnnotation*> getlocation() const;
-   bool havecoordinates() const;
-   std::vector<ebucoreCoordinates*> getcoordinates() const;
-
-
-   // setters
-
-   void setlocation(const std::vector<ebucoreTextualAnnotation*>& value);
-   void appendlocation(ebucoreTextualAnnotation* value);
-   void setcoordinates(const std::vector<ebucoreCoordinates*>& value);
-   void appendcoordinates(ebucoreCoordinates* value);
 
 
 protected:
-    ebucoreSpatialBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreFormatBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

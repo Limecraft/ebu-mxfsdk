@@ -55,21 +55,28 @@ public:
 
    // getters
 
-   mxfUUID getorganisationId() const;
-   std::string getorganisationName() const;
-   std::string getorganisationCode() const;
+   bool haveorganisationId() const;
+   std::string getorganisationId() const;
+   bool haveorganisationName() const;
+   std::vector<textualAnnotation*> getorganisationName() const;
+   bool haveorganisationCode() const;
+   std::vector<textualAnnotation*> getorganisationCode() const;
    bool haveorganisationDepartment() const;
    ebucoreOrganisationDepartment* getorganisationDepartment() const;
    ebucoreTypeGroup* getorganisationType() const;
+   bool haveorganisationDetails() const;
    std::vector<ebucoreContactDetails*> getorganisationDetails() const;
+   bool haveorganisationRelatedContacts() const;
    std::vector<ebucoreEntity*> getorganisationRelatedContacts() const;
 
 
    // setters
 
-   void setorganisationId(mxfUUID value);
-   void setorganisationName(std::string value);
-   void setorganisationCode(std::string value);
+   void setorganisationId(std::string value);
+   void setorganisationName(const std::vector<textualAnnotation*>& value);
+   void appendorganisationName(textualAnnotation* value);
+   void setorganisationCode(const std::vector<textualAnnotation*>& value);
+   void appendorganisationCode(textualAnnotation* value);
    void setorganisationDepartment(ebucoreOrganisationDepartment* value);
    void setorganisationType(ebucoreTypeGroup* value);
    void setorganisationDetails(const std::vector<ebucoreContactDetails*>& value);
