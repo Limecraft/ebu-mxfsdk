@@ -91,16 +91,16 @@ std::string ebucoreSubjectBase::getsubjectNote() const
     return getStringItem(&MXF_ITEM_K(ebucoreSubject, subjectNote));
 }
 
-std::vector<ebucoreTextualAnnotation*> ebucoreSubjectBase::getsubjectValue() const
+ebucoreTextualAnnotation* ebucoreSubjectBase::getsubjectValue() const
 {
-    vector<ebucoreTextualAnnotation*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreSubject, subjectValue)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreSubject, subjectValue)));
+    MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTextualAnnotation*>(obj.release());
+}
+
+bool ebucoreSubjectBase::havesubjectTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreSubject, subjectTypeGroup));
 }
 
 ebucoreTypeGroup* ebucoreSubjectBase::getsubjectTypeGroup() const
@@ -137,15 +137,9 @@ void ebucoreSubjectBase::setsubjectNote(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreSubject, subjectNote), value);
 }
 
-void ebucoreSubjectBase::setsubjectValue(const std::vector<ebucoreTextualAnnotation*>& value)
+void ebucoreSubjectBase::setsubjectValue(ebucoreTextualAnnotation* value)
 {
-    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreSubject, subjectValue), &iter);
-}
-
-void ebucoreSubjectBase::appendsubjectValue(ebucoreTextualAnnotation* value)
-{
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreSubject, subjectValue), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreSubject, subjectValue), value);
 }
 
 void ebucoreSubjectBase::setsubjectTypeGroup(ebucoreTypeGroup* value)

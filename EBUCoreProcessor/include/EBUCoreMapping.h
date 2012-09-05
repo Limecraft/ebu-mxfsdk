@@ -2,7 +2,8 @@
 #include <libMXF++/MXF.h>
 
 //#include "EBU_CORE_20110915.hxx"
-#include "EBU_CORE_20120403.hxx"
+//#include "EBU_CORE_20120403.hxx"
+#include "EBU_CORE_20120817.hxx"
 
 #include <metadata/EBUCoreDMS++.h>
 

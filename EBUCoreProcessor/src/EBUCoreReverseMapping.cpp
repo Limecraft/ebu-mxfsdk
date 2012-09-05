@@ -30,6 +30,12 @@ namespace EBUCore {
 	if (source.sourceProperty().present())	\
 		dest->destProperty(convertFunction(source.sourceProperty().get()));
 
+#define NEW_OBJECT_AND_RASSIGN(source, getSourceProperty, destType, mapMethod, dest, destProperty) \
+	{	\
+		std::auto_ptr<destType> p( new destType() );	\
+		mapMethod(source->getSourceProperty(), *p);	\
+		dest.destProperty(p);	\
+	}
 #define NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haveSourceProperty, getSourceProperty, destType, mapMethod, dest, destProperty) \
 	if (source->haveSourceProperty()) {	\
 		std::auto_ptr<destType> p( new destType() );	\
@@ -92,6 +98,12 @@ namespace EBUCore {
 	if (source->haveformatGroupLink()) {	\
 		dest.formatLink().set( std::auto_ptr<linkType> ( new linkType( source->getformatGroupLink() ) ));	\
 	}
+
+void mapTextualAnnotation(ebucoreTextualAnnotation *source, dc::elementType& dest) {
+	dest = source->gettext();
+	if (source->havetextLanguage())
+		dest.lang() = source->gettextLanguage();
+}
 
 void mapTextualAnnotation(ebucoreTextualAnnotation *source, std::string& dest) {
 	dest = source->gettext();
@@ -181,11 +193,20 @@ void mapOrganisationDepartment(ebucoreOrganisationDepartment *source, organisati
 }
 
 void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest) {
-	dest.organisationName().push_back(source->getorganisationName());
+
+	NEW_VECTOR_AND_RASSIGN(source, getorganisationName, organisationDetailsType::organisationName_type, 
+		organisationDetailsType::organisationName_sequence, std::vector<ebucoreTextualAnnotation*>, mapTextualAnnotation, dest, organisationName)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getorganisationCode, organisationDetailsType::organisationCode_type, 
+		organisationDetailsType::organisationCode_sequence, std::vector<ebucoreTextualAnnotation*>, mapTextualAnnotation, dest, organisationCode, (*it)->gettext())
+
 	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haveorganisationDepartment, getorganisationDepartment, organisationDepartment, mapOrganisationDepartment, dest, organisationDepartment)
 
 	NEW_VECTOR_AND_RASSIGN(source, getorganisationRelatedContacts, entityType, organisationDetailsType::contacts_sequence, std::vector<ebucoreEntity*>, mapEntity, dest, contacts)
 	NEW_VECTOR_AND_RASSIGN(source, getorganisationDetails, detailsType, organisationDetailsType::details_sequence, std::vector<ebucoreContactDetails*>, mapDetails, dest, details)
+}
+
+void mapRole(ebucoreTypeGroup *source, role& dest) {
+	RMAP_TYPE_GROUP(source, dest, role::typeDefinition_type, role::typeLabel_type, role::typeLink_type)
 }
 
 void mapEntity(ebucoreEntity *source, entityType& dest) {
@@ -216,16 +237,10 @@ void mapEntity(ebucoreEntity *source, entityType& dest) {
 
 	// [TODO] The KLV mapping lists a single role, while the XSD specifies a sequence
 	// [FIX?] Updated cardinality
+
+
 	if (source->haveentityRole()) {
-		entityType::role_sequence seq;
-		std::vector<ebucoreRole*> source_roles = source->getentityRole();
-		for (std::vector<ebucoreRole*>::iterator it = source_roles.begin(); it != source_roles.end(); it++) {
-			ebucoreTypeGroup *tg = (*it)->getroleType();
-			std::auto_ptr<entityType::role_type> p( new entityType::role_type() );
-			RMAP_TYPE_GROUP(tg, (*(p.get())), role::typeDefinition_type, role::typeLabel_type, role::typeLink_type)
-			seq.push_back(p);			
-		}
-		dest.role(seq);
+		NEW_VECTOR_AND_RASSIGN(source, getentityRole, role, entityType::role_sequence, std::vector<ebucoreTypeGroup*>, mapRole, dest, role)
 	}
 
 	// [TODO] We skip entityId for now, KLV mapping refers to an UID, while the XSD refers to anyURI type
@@ -290,9 +305,9 @@ xml_schema::idrefs* convert_idrefs(const std::string& source) {
 }
 
 void mapTitle(ebucoreTitle *source, titleType& dest) {
-	std::auto_ptr<titleType::title_type> p ( new titleType::title_type(source->gettitleValue()) );
-	p->lang() = source->gettitleLanguage();
-	dest.title().push_back(p);
+
+	NEW_VECTOR_AND_RASSIGN(source, gettitleValue, titleType::title_type, titleType::title_sequence, 
+		std::vector<ebucoreTextualAnnotation*>, mapTextualAnnotation, dest, title)
 
 	//SIMPLE_RMAP(source, gettitleValue, dest, title)
 	//SIMPLE_RMAP(source, gettitleLanguage, dest, title().lang)
@@ -304,12 +319,9 @@ void mapTitle(ebucoreTitle *source, titleType& dest) {
 }
 
 void mapAlternativeTitle(ebucoreAlternativeTitle *source, alternativeTitleType& dest) {
-	std::auto_ptr<alternativeTitleType::title_type> p ( new alternativeTitleType::title_type(source->getalternativeTitleValue()) );
-	p->lang() = source->getalternativeTitleLanguage();
-	dest.title().push_back(p);
-	
-	//SIMPLE_RMAP(source, getalternativeTitleValue, dest, title)
-	//SIMPLE_RMAP(source, getalternativeTitleLanguage, dest, title().lang)
+
+	NEW_VECTOR_AND_RASSIGN(source, getalternativeTitleValue, alternativeTitleType::title_type, alternativeTitleType::title_sequence, 
+		std::vector<ebucoreTextualAnnotation*>, mapTextualAnnotation, dest, title)
 
 	ebucoreTypeGroup* tg = source->getalternativeTitleTypeGroup();
 	ebucoreStatusGroup* sg = source->getalternativeTitleStatusGroup();
@@ -343,18 +355,21 @@ void mapIdentifier(ebucoreIdentifier *source, identifierType& dest) {
 }
 
 void mapDescription(ebucoreDescription *source, descriptionType& dest) {
-	SIMPLE_RMAP(source, getdescriptionValue, dest, description)
-	SIMPLE_RMAP(source, getdescriptionLanguage, dest, description().lang)
+
+	NEW_VECTOR_AND_RASSIGN(source, getdescriptionValue, descriptionType::description_type, descriptionType::description_sequence, 
+		std::vector<ebucoreTextualAnnotation*>, mapTextualAnnotation, dest, description)
 
 	RMAP_TYPE_GROUP(source->getdescriptionTypeGroup(), dest, descriptionType::typeDefinition_type, descriptionType::typeLabel_type, descriptionType::typeLink_type)
+
+	// map note
 }
 
 void mapSubject(ebucoreSubject *source, subjectType& dest) {
 	// [TODO] KLV Subject defines batch multiple attributors, XSD (0..1), used a single one in dictionary
 	// [FIX?] Updated cardinality
 
-	SIMPLE_RMAP(source, getsubjectValue, dest, subject)
-	SIMPLE_RMAP(source, getsubjectLanguage, dest, subject().lang)
+	NEW_OBJECT_AND_RASSIGN(source, getsubjectValue, subjectType::subject_type, mapTextualAnnotation, dest, subject)
+
 	SIMPLE_RMAP_OPTIONAL(source, havesubjectCode, getsubjectCode, dest, subjectCode)
 	SIMPLE_RMAP_OPTIONAL(source, havesubjectDefinition, getsubjectDefinition, dest, subjectDefinition)
 
@@ -387,7 +402,8 @@ void mapVersion(ebucoreVersion *source, coreMetadataType::version_type& dest) {
 }
 
 void mapLanguage(ebucoreLanguage *source, languageType& dest) {
-	SIMPLE_RMAP(source, getlanguageName, dest, language)
+
+	SIMPLE_RMAP(source, getlanguageLanguage, dest, language)
 	SIMPLE_RMAP(source, getlanguageCode, dest, language().get().lang)
 
 	RMAP_TYPE_GROUP( source->getlanguagePurposeSet(), 
@@ -422,19 +438,17 @@ void mapType(ebucoreType *source, typeType& dest) {
 	dest.genre(gens);
 }
 
+void mapDateType(ebucoreDateType *source, alternative& dest) {
+	if (source->havedateValue()) {
+		dest.startDate(std::auto_ptr<xml_schema::date>( convert_timestamp_date(source->getdateValue()) ));
+	}
+	RMAP_TYPE_GROUP( source->getdateTypeGroup(), dest, dateType::alternative_type::typeDefinition_type, dateType::alternative_type::typeLabel_type, dateType::alternative_type::typeLink_type)
+}
+
 void mapDate(ebucoreDate* source, dateType& dest) {
 	// Reserve mapping operation of date:
 	// Map each of the regular dates to their counterpart in XSD,
-	if (source->haveotherDate() || source->haveotherYear()) {
-		dateType::alternative_sequence alts;
-		std::auto_ptr<dateType::alternative_type> p ( new dateType::alternative_type() );
-		if (source->haveotherDate())
-			p->startDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(source->getotherDate()) ) );
-		if (source->haveotherYear())
-			p->startYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(source->getotherYear()) ) );
-		RMAP_TYPE_GROUP( source->getdateTypeGroup(), (*p), dateType::alternative_type::typeDefinition_type, dateType::alternative_type::typeLabel_type, dateType::alternative_type::typeLink_type)
-		dest.alternative(alts);
-	}
+	NEW_VECTOR_AND_RASSIGN(source, getalternativeDate, alternative, dateType::alternative_sequence, std::vector<ebucoreDateType*>, mapDateType, dest, alternative)
 
 	if (source->havedateCreated() || source->haveyearCreated()) {
 		std::auto_ptr<dateType::created_type> p ( new dateType::created_type() );
@@ -475,7 +489,8 @@ void mapDate(ebucoreDate* source, dateType& dest) {
 }
 
 void mapPeriodOfTime(ebucorePeriodOfTime* source, PeriodOfTime& dest) {
-	SIMPLE_RMAP_OPTIONAL(source, haveperiodId, getperiodId, dest, period)
+	// [TODO] Fix correct location of periodId!
+	//SIMPLE_RMAP_OPTIONAL(source, haveperiodId, getperiodId, dest, period)
 	if (source->haveperiodName()) 
 		dest.periodName( std::auto_ptr<PeriodOfTime::periodName_type>( new PeriodOfTime::periodName_type( source->getperiodName() ) ) );
 	if (source->haveperiodStartYear())
@@ -510,7 +525,7 @@ void mapSpatial(ebucoreSpatial *source, spatial& dest) {
 		SIMPLE_RMAP_OPTIONAL_POINTER(loc, havelocationId, getlocationId, p, locationId)
 		SIMPLE_RMAP_OPTIONAL_POINTER(loc, havelocationName, getlocationName, p, name)
 		SIMPLE_RMAP_OPTIONAL_POINTER(loc, havelocationCode, getlocationCode, p, code)
-		RMAP_TYPE_GROUP(loc->getlocationKindGroup(), (*p), location::typeDefinition_type, location::typeLabel_type, location::typeLink_type)
+		RMAP_TYPE_GROUP(loc->getlocationTypeGroup(), (*p), location::typeDefinition_type, location::typeLabel_type, location::typeLink_type)
 
 		dest.location().push_back(p);
 	}
@@ -556,27 +571,35 @@ void mapRights(ebucoreRights *source, rightsType& dest) {
 	// [TODO] KLV RightsId is a string, XSD rights id is an identitytype, not clear how te map...
 	// [TODO] KLV rightsAttributedID is nowhere to be found in EBU Core?
 	
-	SIMPLE_RMAP_OPTIONAL(source, haverightsValue, getrightsValue, dest, rights)
-	SIMPLE_RMAP_OPTIONAL(source, haverightsLanguage, getrightsLanguage, dest, rights().get().lang)
+	if (source->haverightsValue()) {
+		NEW_VECTOR_AND_RASSIGN(source, getrightsValue, rightsType::rights_type, rightsType::rights_sequence, 
+			std::vector<ebucoreTextualAnnotation*>, mapTextualAnnotation, dest, rights)
+	}
+
 	SIMPLE_RMAP_OPTIONAL(source, haverightsClearanceFlag, getrightsClearanceFlag, dest, rightsClearanceFlag)
 
-	if (source->haverightsFormatIDRef())
-		dest.formatIDRefs( std::auto_ptr<rightsType::formatIDRefs_type>( convert_idrefs(source->getrightsFormatIDRef())));
+	if (source->haverightsFormatReferences()) {
+		// resolve formats!
+		//dest.formatIDRefs( std::auto_ptr<rightsType::formatIDRefs_type>( convert_idrefs(source->getrightsFormatIDRef())));
+	}
+	
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haveexploitationIssues, getexploitationIssues, rightsType::exploitationIssues_type, mapTextualAnnotation, dest, exploitationIssues)
 
-	SIMPLE_RMAP_OPTIONAL(source, haveexploitationIssues, getexploitationIssues, dest, exploitationIssues)
 	SIMPLE_RMAP_OPTIONAL(source, haverightsLink, getrightsLink, dest, rightsLink)
 
 	// [FIX?] Updated cardinality
 	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haverightsCoverage, getrightsCoverage, coverageType, mapMetadataCoverage, dest, coverage)
 
-	// [FIX?] Updated cardinality
-	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haverightsHolderEntity, getrightsHolderEntity, entityType, mapEntity, dest, rightsHolder)
+	if (source->haverightsHolderEntity()) {
+		NEW_VECTOR_AND_RASSIGN(source, getrightsHolderEntity, entityType, rightsType::rightsHolder_sequence, 
+			std::vector<ebucoreEntity*>, mapEntity, dest, rightsHolder)
+	}
 
 	if (source->haverightsContacts()) {
 		NEW_VECTOR_AND_RASSIGN(source, getrightsContacts, contactDetailsType, rightsType::contactDetails_sequence, std::vector<ebucoreContact*>, mapContact, dest, contactDetails)
 	}
 
-	RMAP_TYPE_GROUP(source->getrightsKindGroup() , dest, rightsType::typeDefinition_type, rightsType::typeLabel_type, rightsType::typeLink_type)
+	RMAP_TYPE_GROUP(source->getrightsTypeGroup() , dest, rightsType::typeDefinition_type, rightsType::typeLabel_type, rightsType::typeLink_type)
 }
 
 void mapPublicationHistoryEvent(ebucorePublicationHistoryEvent* source, publicationEvent& dest) {
@@ -627,7 +650,7 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 	NEW_VECTOR_AND_RASSIGN(source, gettitle, titleType, coreMetadataType::title_sequence, std::vector<ebucoreTitle*>, mapTitle, dest, title)
 	NEW_VECTOR_AND_RASSIGN(source, getalternativeTitle, alternativeTitleType, coreMetadataType::alternativeTitle_sequence, 
 		std::vector<ebucoreAlternativeTitle*>, mapAlternativeTitle, dest, alternativeTitle)
-	NEW_VECTOR_AND_RASSIGN_WITH_DC(source, getdescription, descriptionType, coreMetadataType::description_sequence, std::vector<ebucoreDescription*>, mapDescription, dest, description)
+	NEW_VECTOR_AND_RASSIGN(source, getdescription, descriptionType, coreMetadataType::description_sequence, std::vector<ebucoreDescription*>, mapDescription, dest, description)
 
 	NEW_VECTOR_AND_RASSIGN(source, getcreator, entityType, coreMetadataType::creator_sequence, std::vector<ebucoreEntity*>, mapEntity, dest, creator)
 	NEW_VECTOR_AND_RASSIGN(source, getpublisher, entityType, coreMetadataType::publisher_sequence, std::vector<ebucoreEntity*>, mapEntity, dest, publisher)

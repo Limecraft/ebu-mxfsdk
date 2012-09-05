@@ -61,7 +61,8 @@ public:
    std::string getsubjectDefinition() const;
    bool havesubjectNote() const;
    std::string getsubjectNote() const;
-   std::vector<ebucoreTextualAnnotation*> getsubjectValue() const;
+   ebucoreTextualAnnotation* getsubjectValue() const;
+   bool havesubjectTypeGroup() const;
    ebucoreTypeGroup* getsubjectTypeGroup() const;
    bool havesubjectAttributorEntity() const;
    ebucoreEntity* getsubjectAttributorEntity() const;
@@ -72,8 +73,7 @@ public:
    void setsubjectCode(std::string value);
    void setsubjectDefinition(std::string value);
    void setsubjectNote(std::string value);
-   void setsubjectValue(const std::vector<ebucoreTextualAnnotation*>& value);
-   void appendsubjectValue(ebucoreTextualAnnotation* value);
+   void setsubjectValue(ebucoreTextualAnnotation* value);
    void setsubjectTypeGroup(ebucoreTypeGroup* value);
    void setsubjectAttributorEntity(ebucoreEntity* value);
 

@@ -79,7 +79,7 @@
     </ClCompile>
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\EBUCoreReverseMapping.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\EBU_CORE_20110915.cxx" />
-    <ClCompile Include="..\..\..\EBUCoreProcessor\src\EBU_CORE_20120403.cxx" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\EBU_CORE_20120817.cxx" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreAddressBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreAlternativeTitleBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreBasicRelationBase.cpp" />
@@ -93,6 +93,7 @@
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreDateTypeBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreDescriptionBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreEntityBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreFormatBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreFormatGroupBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreGenreBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreIdentifierBase.cpp" />
@@ -145,6 +146,7 @@
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreDescription.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\EBUCoreDMS++.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreEntity.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreFormat.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreFormatGroup.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreGenre.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreIdentifier.cpp" />
@@ -190,7 +192,7 @@
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\EBUCoreMapping.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\EBUCoreProcessor.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\EBU_CORE_20110915.hxx" />
-    <ClInclude Include="..\..\..\EBUCoreProcessor\include\EBU_CORE_20120403.hxx" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\EBU_CORE_20120817.hxx" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreAddressBase.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreContactBase.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreContactDetailsBase.h" />

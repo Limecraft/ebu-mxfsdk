@@ -74,6 +74,8 @@ public:
    ebucoreTypeGroup* getrightsTypeGroup() const;
    bool haverightsAttributeID() const;
    std::vector<ebucoreIdentifier*> getrightsAttributeID() const;
+   bool haverightsFormatReferences() const;
+   std::vector<ebucoreFormat*> getrightsFormatReferences() const;
 
 
    // setters
@@ -92,6 +94,8 @@ public:
    void setrightsTypeGroup(ebucoreTypeGroup* value);
    void setrightsAttributeID(const std::vector<ebucoreIdentifier*>& value);
    void appendrightsAttributeID(ebucoreIdentifier* value);
+   void setrightsFormatReferences(const std::vector<ebucoreFormat*>& value);
+   void appendrightsFormatReferences(ebucoreFormat* value);
 
 
 protected:

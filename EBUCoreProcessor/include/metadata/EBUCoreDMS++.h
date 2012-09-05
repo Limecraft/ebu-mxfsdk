@@ -41,7 +41,7 @@ namespace EBUCore
 {
 	namespace KLV {
 		class ebucoreContact;
-		class ebucoreRole;
+		//class ebucoreRole;
 		class ebucoreOrganisation;
 		class ebucoreMetadataSchemeInformation;
 		class ebucoreEntity;
@@ -66,6 +66,7 @@ namespace EBUCore
 #include <metadata/ebucoreTechnicalAttributeUInt32.h>
 #include <metadata/ebucoreTechnicalAttributeUInt64.h>
 #include <metadata/ebucoreTechnicalAttributeUInt8.h>
+#include <metadata/ebucoreFormat.h>
 
 #include <metadata/ebucoreAddress.h>
 #include <metadata/ebucoreContactDetails.h>

@@ -56,15 +56,15 @@ public:
    // getters
 
    bool havelocation() const;
-   std::vector<ebucoreTextualAnnotation*> getlocation() const;
+   std::vector<ebucoreLocation*> getlocation() const;
    bool havecoordinates() const;
    std::vector<ebucoreCoordinates*> getcoordinates() const;
 
 
    // setters
 
-   void setlocation(const std::vector<ebucoreTextualAnnotation*>& value);
-   void appendlocation(ebucoreTextualAnnotation* value);
+   void setlocation(const std::vector<ebucoreLocation*>& value);
+   void appendlocation(ebucoreLocation* value);
    void setcoordinates(const std::vector<ebucoreCoordinates*>& value);
    void appendcoordinates(ebucoreCoordinates* value);
 

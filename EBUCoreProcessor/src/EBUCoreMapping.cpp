@@ -27,6 +27,13 @@ namespace EBUCore {
 	if (source.sourceProperty().present())	\
 		dest->destProperty(convertFunction(source.sourceProperty().get()));
 
+#define NEW_OBJECT_AND_ASSIGN(source, sourceProperty, destType, mapMethod, dest, destProperty) \
+	{	\
+		destType *obj = newAndModifyObject<destType>(dest->getHeaderMetadata(), mod);	\
+		mapMethod(source.sourceProperty(), obj, mod);	\
+		dest->destProperty(obj);	\
+	}
+
 #define NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, sourceProperty, destType, mapMethod, dest, destProperty) \
 	if (source.sourceProperty().present()) {	\
 		destType *obj = newAndModifyObject<destType>(dest->getHeaderMetadata(), mod);	\
@@ -112,15 +119,19 @@ template <class T> T* newAndModifyObject(HeaderMetadata *headerMetadata, ObjectM
 	return obj;
 }
 
-void mapRole(role& source, ebucoreRole *dest, ObjectModifier* mod = NULL) {
-	ebucoreTypeGroup *obj = newAndModifyObject<ebucoreTypeGroup>(dest->getHeaderMetadata(), mod);
-	MAP_TYPE_GROUP(source, obj)
-	dest->setroleType(obj);
+void mapRole(role& source, ebucoreTypeGroup *dest, ObjectModifier* mod = NULL) {
+	MAP_TYPE_GROUP(source, dest)
 }
 
 void mapTextualAnnotation(std::string source, ebucoreTextualAnnotation *dest, ObjectModifier* mod = NULL) {
 	/* deal with lang! */
 	dest->settext(source);
+}
+
+void mapTextualAnnotation(dc::elementType source, ebucoreTextualAnnotation *dest, ObjectModifier* mod = NULL) {
+	/* deal with lang! */
+	dest->settext(source);
+	dest->settextLanguage(source.lang());
 }
 
 void mapAddress(addressType& source, ebucoreAddress *dest, ObjectModifier* mod = NULL) {
@@ -256,9 +267,7 @@ void mapOrganisation(organisationDetailsType& source, ebucoreOrganisation *dest,
 	//		- KLV defines a typegroup, which is not present in XSD
 	//		- KLV organizationRelatedContacts refers to contacts, XSD refers to entities
 
-	if (source.organisationName().size() > 0) {
-		dest->setorganisationName(source.organisationName()[0]);
-	}
+	NEW_VECTOR_AND_ASSIGN(source, organisationName, ebucoreTextualAnnotation, organisationDetailsType::organisationName_iterator, mapTextualAnnotation, dest, setorganisationName)
 
 	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, organisationDepartment, ebucoreOrganisationDepartment, mapOrganisationDepartment, dest, setorganisationDepartment)
 
@@ -292,7 +301,7 @@ void mapEntity(entityType& source, ebucoreEntity *dest, ObjectModifier* mod) {
 
 	// [TODO] The KLV mapping lists a single role, while the XSD specifies a sequence
 	// [FIX?] Updated to sequence
-	NEW_VECTOR_AND_ASSIGN(source, role, ebucoreRole, entityType::role_iterator, mapRole, dest, setentityRole)
+	NEW_VECTOR_AND_ASSIGN(source, role, ebucoreTypeGroup, entityType::role_iterator, mapRole, dest, setentityRole)
 
 	// [TODO] We skip entityId for now, KLV mapping refers to an UID, while the XSD refers to anyURI type
 }
@@ -410,11 +419,8 @@ void mapTitle(titleType& source, ebucoreTitle *dest, ObjectModifier* mod = NULL)
 	SIMPLE_MAP_NO_GET(source, title, dest, settitleValue)
 	SIMPLE_MAP_NO_GET(source, title().lang, dest, settitleLanguage)
 	*/
-	if (source.title().size() > 0) {
-		titleType::title_type& title = source.title()[0];
-		dest->settitleValue(title);
-		SIMPLE_MAP_NO_GET(title, lang, dest, settitleLanguage)
-	}
+
+	NEW_VECTOR_AND_ASSIGN(source, title, ebucoreTextualAnnotation, titleType::title_iterator, mapTextualAnnotation, dest, settitleValue)
 
 	SIMPLE_MAP_OPTIONAL(source, note, dest, settitleNote)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, attributiondate, dest, settitleAttributionDate, convert_timestamp)
@@ -444,11 +450,8 @@ void mapAlternativeTitle(alternativeTitleType& source, ebucoreAlternativeTitle *
 	SIMPLE_MAP_NO_GET(source, title, dest, setalternativeTitleValue)
 	SIMPLE_MAP_NO_GET(source, title().lang, dest, setalternativeTitleLanguage)
 	*/
-	if (source.title().size() > 0) {
-		titleType::title_type& title = source.title()[0];
-		dest->setalternativeTitleValue(title);
-		SIMPLE_MAP_NO_GET(title, lang, dest, setalternativeTitleLanguage)
-	}
+
+	NEW_VECTOR_AND_ASSIGN(source, title, ebucoreTextualAnnotation, alternativeTitleType::title_iterator, mapTextualAnnotation, dest, setalternativeTitleValue)
 
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, startDate, dest, setalternativeTitleAttributionDate, convert_timestamp)
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setalternativeTitleTypeGroup)
@@ -497,9 +500,10 @@ void mapDescription(descriptionType& source, ebucoreDescription *dest, ObjectMod
 		</attribute>
 	</complexType>
 	*/
-	SIMPLE_MAP_NO_GET(source, description, dest, setdescriptionValue)
-	SIMPLE_MAP_NO_GET(source, description().lang, dest, setdescriptionLanguage)
+
+	NEW_VECTOR_AND_ASSIGN(source, description, ebucoreTextualAnnotation, descriptionType::description_iterator, mapTextualAnnotation, dest, setdescriptionValue)
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setdescriptionTypeGroup)
+	// map note
 }
 
 void mapSubject(subjectType& source, ebucoreSubject *dest, ObjectModifier* mod = NULL) {
@@ -523,8 +527,9 @@ void mapSubject(subjectType& source, ebucoreSubject *dest, ObjectModifier* mod =
 	// [TODO] KLV Subject defines batch multiple attributors, XSD (0..1), used a single one in dictionary
 	// [FIX?] Updated cardinality
 
-	SIMPLE_MAP_NO_GET(source, subject, dest, setsubjectValue)
-	SIMPLE_MAP_NO_GET(source, subject().lang, dest, setsubjectLanguage)
+	//NEW_VECTOR_AND_ASSIGN(source, subject, ebucoreTextualAnnotation, subjectType::subject descriptionType::description_iterator, mapTextualAnnotation, dest, setdescriptionValue)
+	NEW_OBJECT_AND_ASSIGN(source, subject, ebucoreTextualAnnotation, mapTextualAnnotation, dest, setsubjectValue)
+
 	SIMPLE_MAP_OPTIONAL(source, subjectCode, dest, setsubjectCode)
 	SIMPLE_MAP_OPTIONAL(source, subjectDefinition, dest, setsubjectDefinition)
 
@@ -587,7 +592,7 @@ void mapLanguage(languageType& source, ebucoreLanguage *dest, ObjectModifier* mo
 
 	// TODO: KLV Language has an indirection for languagepurpose via a languagepurposeset which contains
 	// only a reference to the typegroup, required?
-	SIMPLE_MAP_OPTIONAL(source, language, dest, setlanguageName)
+	SIMPLE_MAP_OPTIONAL(source, language, dest, setlanguageLanguage)
 	dest->setlanguageCode(source.language().get().lang());
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setlanguagePurposeSet)
 }
@@ -649,7 +654,12 @@ void mapType(typeType& source, ebucoreType *dest, ObjectModifier* mod = NULL) {
 	dest->setgenre(v2);
 }
 
-void mapDate(dateType& source, std::vector<ebucoreDate*>& dest, mxfpp::HeaderMetadata *header_metadata, ObjectModifier* mod = NULL) {
+void mapDateType(alternative& source, ebucoreDateType *dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, startDate, dest, setdateValue, convert_timestamp)
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setdateTypeGroup)
+}
+
+void mapDate(dateType& source, ebucoreDate* dest, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
 			<element ref="dc:date" minOccurs="0" maxOccurs="unbounded">
@@ -686,37 +696,31 @@ void mapDate(dateType& source, std::vector<ebucoreDate*>& dest, mxfpp::HeaderMet
 	// One XSD EBU Core data is converted to one KLV ebucoreDate + one KLV ebucoreDate per XSD alternative date 
 	// (there can be only a single alternative date typegroup def)
 	// Only start* attributes are used to map date
-	ebucoreDate *obj = newAndModifyObject<ebucoreDate>(header_metadata, mod);
 	if (source.created().present()) {
 		dateType::created_type& date = source.created().get();
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setyearCreated, convert_timestamp)
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setdateCreated, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, dest, setyearCreated, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, dest, setdateCreated, convert_timestamp)
 	}
 	if (source.issued().present()) {
 		dateType::issued_type& date = source.issued().get();
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setyearIssued, convert_timestamp)
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setdateIssued, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, dest, setyearIssued, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, dest, setdateIssued, convert_timestamp)
 	}
 	if (source.modified().present()) {
 		dateType::modified_type& date = source.modified().get();
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setyearModified, convert_timestamp)
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setdateModified, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, dest, setyearModified, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, dest, setdateModified, convert_timestamp)
 	}
 	if (source.digitised().present()) {
 		dateType::digitised_type& date = source.digitised().get();
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setyearDigitized, convert_timestamp)
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setdateDigitized, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, dest, setyearDigitized, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, dest, setdateDigitized, convert_timestamp)
 	}
-	dest.push_back(obj);
 
-	for (dateType::alternative_iterator it = source.alternative().begin(); it != source.alternative().end(); it++) {
-		ebucoreDate *obj = newAndModifyObject<ebucoreDate>(header_metadata, mod);
-		dateType::alternative_type& date = (*it);
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, obj, setotherYear, convert_timestamp)
-		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, obj, setotherDate, convert_timestamp)
-		MAP_NEW_TYPE_GROUP_AND_ASSIGN(date, obj, setdateTypeGroup)
-		dest.push_back(obj);
-	}
+	NEW_VECTOR_AND_ASSIGN(source, alternative, ebucoreDateType, dateType::alternative_iterator, mapDateType, dest, setalternativeDate)
+
+	// map note
+
 }
 
 void mapTemporal(temporal& source, ebucoreTemporal *dest, ObjectModifier* mod = NULL) {
@@ -754,14 +758,22 @@ void mapTemporal(temporal& source, ebucoreTemporal *dest, ObjectModifier* mod = 
 }
 
 void mapPeriodOfTime(PeriodOfTime& source, ebucorePeriodOfTime* dest, ObjectModifier* mod = NULL) {
-	SIMPLE_MAP_OPTIONAL(source, period, dest, setperiodId)
-	SIMPLE_MAP_OPTIONAL(source, period, dest, setperiodName)
+	// [TODO] PeriodId is at temporal level
+	//SIMPLE_MAP_OPTIONAL(source, period, dest, setperiodId)
+	SIMPLE_MAP_OPTIONAL(source, periodName, dest, setperiodName)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, startYear, dest, setperiodStartYear, convert_timestamp)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, startDate, dest, setperiodStartDate, convert_timestamp)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, startTime, dest, setperiodStartTime, convert_timestamp)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, endYear, dest, setperiodEndYear, convert_timestamp)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, endDate, dest, setperiodEndDate, convert_timestamp)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, endTime, dest, setperiodEndTime, convert_timestamp)
+}
+
+void mapLocation(spatial::location_type& source, ebucoreLocation *dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, locationId, dest, setlocationId)
+	SIMPLE_MAP_OPTIONAL(source, name, dest, setlocationName)
+	SIMPLE_MAP_OPTIONAL(source, code, dest, setlocationCode)
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setlocationTypeGroup)
 }
 
 void mapSpatial(spatial& source, ebucoreSpatial *dest, ObjectModifier* mod = NULL) {
@@ -799,19 +811,8 @@ void mapSpatial(spatial& source, ebucoreSpatial *dest, ObjectModifier* mod = NUL
 
 	// [TODO] KLV rep. has a batch of locations and coordinates, the XSD rep only has a location, in which (0..1) coordinates can be nested
 	// The proper way to reliably link coordinates and locations must be defined, until then, only locations are mapped
-	if (source.location().size() > 0) {
-		std::vector<ebucoreLocation*> v;
-		for (spatial::location_iterator it = source.location().begin(); it != source.location().end(); it++) {
-			ebucoreLocation *obj = newAndModifyObject<ebucoreLocation>(dest->getHeaderMetadata(), mod);
-			SIMPLE_MAP_OPTIONAL((*it), locationId, obj, setlocationId)
-			SIMPLE_MAP_OPTIONAL((*it), name, obj, setlocationName)
-			SIMPLE_MAP_OPTIONAL((*it), code, obj, setlocationCode)
-			MAP_NEW_TYPE_GROUP_AND_ASSIGN((*it), obj, setlocationKindGroup)
 
-			v.push_back(obj);
-		}
-		dest->setlocation(v);
-	}
+	NEW_VECTOR_AND_ASSIGN(source, location, ebucoreLocation, spatial::location_iterator, mapLocation, dest, setlocation)
 }
 
 void mapMetadataCoverage(coverageType& source, ebucoreCoverage *dest, ObjectModifier* mod = NULL) {
@@ -863,14 +864,11 @@ void mapRights(rightsType& source, ebucoreRights *dest, ObjectModifier* mod = NU
 
 	// [TODO] KLV RightsId is a string, XSD rights id is an identitytype, not clear how to map...
 	// [TODO] KLV rightsAttributedID is nowhere to be found in EBU Core?
-
-	SIMPLE_MAP_OPTIONAL(source, rights, dest, setrightsValue)
-	if (source.rights().present()) {
-		dest->setrightsLanguage(source.rights().get().lang());
-	}
+	NEW_VECTOR_AND_ASSIGN(source, rights, ebucoreTextualAnnotation, rightsType::rights_iterator, mapTextualAnnotation, dest, setrightsValue)
 	SIMPLE_MAP_OPTIONAL(source, rightsClearanceFlag, dest, setrightsClearanceFlag)
-	SIMPLE_MAP_OPTIONAL_CONVERT(source, formatIDRefs, dest, setrightsFormatIDRef, convert)
-	SIMPLE_MAP_OPTIONAL(source, exploitationIssues, dest, setexploitationIssues)
+	// [TODO] Deal with format references
+	//SIMPLE_MAP_OPTIONAL_CONVERT(source, formatIDRefs, dest, setrightsFormatIDRef, convert)
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, exploitationIssues, ebucoreTextualAnnotation, mapTextualAnnotation, dest, setexploitationIssues)
 	SIMPLE_MAP_OPTIONAL(source, rightsLink, dest, setrightsLink)
 
 	// [TODO] KLV coverage is a vector while XSD coverage is a single optional element
@@ -879,10 +877,10 @@ void mapRights(rightsType& source, ebucoreRights *dest, ObjectModifier* mod = NU
 
 	// [TODO] KLV rightsholder is a vector while XSD rightsholder is a single optional element
 	// [FIX?] Updated cardinality
-	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, rightsHolder, ebucoreEntity, mapEntity, dest, setrightsHolderEntity)
+	NEW_VECTOR_AND_ASSIGN(source, rightsHolder, ebucoreEntity, rightsType::rightsHolder_iterator, mapEntity, dest, setrightsHolderEntity)
 
 	NEW_VECTOR_AND_ASSIGN(source, contactDetails, ebucoreContact, rightsType::contactDetails_sequence::iterator, mapContact, dest, setrightsContacts)
-	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setrightsKindGroup)
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setrightsTypeGroup)
 }
 
 bool nodeOrdering(xsd::cxx::tree::type *a, xsd::cxx::tree::type *b) 
@@ -989,13 +987,7 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, Object
 	NEW_VECTOR_AND_ASSIGN(source, description, ebucoreDescription, coreMetadataType::description_iterator, mapDescription, dest, setdescription)
 	NEW_VECTOR_AND_ASSIGN(source, publisher, ebucoreEntity, coreMetadataType::publisher_iterator, mapEntity, dest, setpublisher)
 	NEW_VECTOR_AND_ASSIGN(source, contributor, ebucoreEntity, coreMetadataType::contributor_iterator, mapEntity, dest, setcontributor)
-
-	std::vector<ebucoreDate*> vec_dates;
-	for (coreMetadataType::date_iterator it = source.date().begin(); it != source.date().end(); it++) {
-		mapDate(*it, vec_dates, dest->getHeaderMetadata());
-	}
-	dest->setdate(vec_dates);
-
+	NEW_VECTOR_AND_ASSIGN(source, date, ebucoreDate, coreMetadataType::date_iterator, mapDate, dest, setdate)
 	NEW_VECTOR_AND_ASSIGN(source, type, ebucoreType, coreMetadataType::type_iterator, mapType, dest, settype)
 	NEW_VECTOR_AND_ASSIGN(source, identifier, ebucoreIdentifier, coreMetadataType::identifier_iterator, mapIdentifier, dest, setidentifier)
 	NEW_VECTOR_AND_ASSIGN(source, language, ebucoreLanguage, coreMetadataType::language_iterator, mapLanguage, dest, setlanguage)

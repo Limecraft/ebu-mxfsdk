@@ -190,6 +190,23 @@ std::vector<ebucoreIdentifier*> ebucoreRightsBase::getrightsAttributeID() const
     return result;
 }
 
+bool ebucoreRightsBase::haverightsFormatReferences() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsFormatReferences));
+}
+
+std::vector<ebucoreFormat*> ebucoreRightsBase::getrightsFormatReferences() const
+{
+    vector<ebucoreFormat*> result;
+    auto_ptr<ObjectIterator> iter(getWeakRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsFormatReferences)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreFormat*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreFormat*>(iter->get()));
+    }
+    return result;
+}
+
 void ebucoreRightsBase::setrightsId(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreRights, rightsId), value);
@@ -262,5 +279,16 @@ void ebucoreRightsBase::setrightsAttributeID(const std::vector<ebucoreIdentifier
 void ebucoreRightsBase::appendrightsAttributeID(ebucoreIdentifier* value)
 {
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsAttributeID), value);
+}
+
+void ebucoreRightsBase::setrightsFormatReferences(const std::vector<ebucoreFormat*>& value)
+{
+    WrapObjectVectorIterator<ebucoreFormat> iter(value);
+    setWeakRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsFormatReferences), &iter);
+}
+
+void ebucoreRightsBase::appendrightsFormatReferences(ebucoreFormat* value)
+{
+    appendWeakRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsFormatReferences), value);
 }
 
