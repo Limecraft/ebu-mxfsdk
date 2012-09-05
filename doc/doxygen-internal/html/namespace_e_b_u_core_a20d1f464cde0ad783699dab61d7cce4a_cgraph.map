@@ -1,0 +1,8 @@
+<map id="EBUCore::mapType" name="EBUCore::mapType">
+<area shape="rect" id="node4" href="$classebu_core__2011_1_1type_type.html#ac8f42fbe5dd41f12c2d831252314f452" title="ebuCore_2011::typeType\l::objectType" alt="" coords="205,5,371,46"/>
+<area shape="rect" id="node6" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_type_base.html#a5f86f9763f0425f803b51ff5b4842d4d" title="EBUCore::KLV::ebucoreType\lBase::setobjectType" alt="" coords="193,70,383,111"/>
+<area shape="rect" id="node8" href="$classebu_core__2011_1_1type_type.html#a4364191e5ff87a713b7fcfaf90626833" title="ebuCore_2011::typeType\l::targetAudience" alt="" coords="205,135,371,177"/>
+<area shape="rect" id="node10" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_type_base.html#aaeff6cbdffe63fa68fcf7e8653c43a8c" title="EBUCore::KLV::ebucoreType\lBase::settargetAudience" alt="" coords="193,201,383,242"/>
+<area shape="rect" id="node12" href="$classebu_core__2011_1_1type_type.html#a13cb72e4d47f752869487e9bfeb7cc0d" title="ebuCore_2011::typeType\l::genre" alt="" coords="205,266,371,307"/>
+<area shape="rect" id="node14" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_type_base.html#aa2b5bec9aa3d297b13873d6dc14cda68" title="EBUCore::KLV::ebucoreType\lBase::setgenre" alt="" coords="193,331,383,373"/>
+</map>

@@ -1,0 +1,10 @@
+<map id="EBUCore::mapRating" name="EBUCore::mapRating">
+<area shape="rect" id="node3" href="$namespace_e_b_u_core.html#a74af4bec2d90dfe9491cd21e50277a20" title="EBUCore::mapRating" alt="" coords="228,29,375,56"/>
+<area shape="rect" id="node6" href="$namespace_e_b_u_core.html#a08045b816d66b376c9cc45e39b082564" title="EBUCore::mapEntity" alt="" coords="451,55,594,81"/>
+<area shape="rect" id="node10" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_rating_base.html#ab9716767c507be1fde25777925476873" title="EBUCore::KLV::ebucoreRating\lBase::getratingProviderEntity" alt="" coords="201,131,401,173"/>
+<area shape="rect" id="node12" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_rating_base.html#a304a8189f998afa119613ccdcf715d5c" title="EBUCore::KLV::ebucoreRating\lBase::getratingValue" alt="" coords="201,197,401,238"/>
+<area shape="rect" id="node14" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_rating_base.html#aee91accc290804ceef8f6ef60ff7c6f2" title="EBUCore::KLV::ebucoreRating\lBase::getratingScaleMinValue" alt="" coords="201,262,401,303"/>
+<area shape="rect" id="node16" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_rating_base.html#ad144a83fc73800a786cf983dd62f4438" title="EBUCore::KLV::ebucoreRating\lBase::getratingScaleMaxValue" alt="" coords="201,327,402,369"/>
+<area shape="rect" id="node18" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_rating_base.html#a0fa136b054639bc9ba441136df1f3017" title="EBUCore::KLV::ebucoreRating\lBase::getratingTypeGroup" alt="" coords="201,393,401,434"/>
+<area shape="rect" id="node20" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_rating_base.html#a583c1c93ac5216e4f4008406cc45f0a5" title="EBUCore::KLV::ebucoreRating\lBase::getratingFormatGroup" alt="" coords="201,458,401,499"/>
+</map>

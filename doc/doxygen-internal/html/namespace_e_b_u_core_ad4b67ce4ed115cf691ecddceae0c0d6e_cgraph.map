@@ -1,0 +1,5 @@
+<map id="EBUCore::GenerateSideCarFramework" name="EBUCore::GenerateSideCarFramework">
+<area shape="rect" id="node4" href="$class_e_b_u_core_1_1_generation_u_i_d_appender.html#a615b23b7a5f9def558449373c682a8d2" title="EBUCore::GenerationUIDAppender\l::Modify" alt="" coords="247,5,470,46"/>
+<area shape="rect" id="node6" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_main_framework_base.html#ad64848cc11ff948349b1926b8a053bf1" title="EBUCore::KLV::ebucoreMain\lFrameworkBase::setdocumentId" alt="" coords="254,70,463,111"/>
+<area shape="rect" id="node8" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_main_framework_base.html#a205a3e37cb2aa75396c99a6dd8f5a265" title="EBUCore::KLV::ebucoreMain\lFrameworkBase::setdocumentLocator" alt="" coords="237,135,480,177"/>
+</map>

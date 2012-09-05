@@ -1,0 +1,7 @@
+<map id="EBUCore::mapOrganisation" name="EBUCore::mapOrganisation">
+<area shape="rect" id="node4" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_organisation_base.html#abc9fffa5567ace081aa0329869988590" title="EBUCore::KLV::ebucoreOrganisation\lBase::setorganisationName" alt="" coords="238,5,474,46"/>
+<area shape="rect" id="node6" href="$classebu_core__2011_1_1organisation_details_type.html#a6ff6f13f0be3fa32d033f56c3af3550d" title="ebuCore_2011::organisation\lDetailsType::organisationName" alt="" coords="255,70,457,111"/>
+<area shape="rect" id="node8" href="$namespace_e_b_u_core.html#a4ee6c4e0815531bc2d2ba0586e67cade" title="EBUCore::mapOrganisation\lDepartment" alt="" coords="265,159,447,201"/>
+<area shape="rect" id="node11" href="$namespace_e_b_u_core.html#a69422b405209111c66043b992cc2a45b" title="EBUCore::mapDetails" alt="" coords="281,249,431,276"/>
+<area shape="rect" id="node14" href="$namespace_e_b_u_core.html#a08045b816d66b376c9cc45e39b082564" title="EBUCore::mapEntity" alt="" coords="285,324,427,351"/>
+</map>

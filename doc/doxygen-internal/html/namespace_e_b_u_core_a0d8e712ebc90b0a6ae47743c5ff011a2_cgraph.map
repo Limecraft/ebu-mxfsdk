@@ -1,0 +1,27 @@
+<map id="EBUCore::mapPeriodOfTime" name="EBUCore::mapPeriodOfTime">
+<area shape="rect" id="node3" href="$namespace_e_b_u_core.html#a5723aa3fc1b5bb3e5ffda89a46083329" title="EBUCore::mapPeriodOfTime" alt="" coords="260,29,447,56"/>
+<area shape="rect" id="node6" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_period_of_time_base.html#afd4bc96b7a0374937e1b11ff431f7d1b" title="EBUCore::KLV::ebucorePeriod\lOfTimeBase::haveperiodName" alt="" coords="253,81,453,122"/>
+<area shape="rect" id="node8" href="$classebu_core__2011_1_1_period_of_time.html#aa10b0df03707298ca6965efe7ab65df1" title="ebuCore_2011::PeriodOfTime\l::period" alt="" coords="258,146,449,187"/>
+<area shape="rect" id="node10" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_period_of_time_base.html#a187886185000b92ea26d58999a95c845" title="EBUCore::KLV::ebucorePeriod\lOfTimeBase::getperiodName" alt="" coords="253,211,453,253"/>
+<area shape="rect" id="node12" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_period_of_time_base.html#ab993a1e4f380b781f8b4e53591503cc9" title="EBUCore::KLV::ebucorePeriod\lOfTimeBase::haveperiodStartYear" alt="" coords="245,277,462,318"/>
+<area shape="rect" id="node14" href="$classebu_core__2011_1_1_period_of_time.html#a1ece32fdf0ba7aab6125b38d26de71d2" title="ebuCore_2011::PeriodOfTime\l::startYear" alt="" coords="258,342,449,383"/>
+<area shape="rect" id="node16" href="$namespace_e_b_u_core.html#a10b7eb5d2591a35a3a3f625f2e5370d1" title="EBUCore::convert_timestamp_year" alt="" coords="241,432,466,459"/>
+<area shape="rect" id="node19" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_period_of_time_base.html#abcc973db2e7911a0144315ef3b63ef63" title="EBUCore::KLV::ebucorePeriod\lOfTimeBase::getperiodStartYear" alt="" coords="249,483,458,525"/>
+<area shape="rect" id="node21" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_period_of_time_base.html#afffabd97b43b909b19c62b02ef62d96e" title="EBUCore::KLV::ebucorePeriod\lOfTimeBase::haveperiodStartDate" alt="" coords="245,549,462,590"/>
+<area shape="rect" id="node23" href="$classebu_core__2011_1_1_period_of_time.html#acb4a3a30587d757fe6d6390c12032552" title="ebuCore_2011::PeriodOfTime\l::startDate" alt="" coords="258,614,449,655"/>
+<area shape="rect" id="node25" href="$namespace_e_b_u_core.html#a2612372fecfbbe7c7b4906065d60ccd2" title="EBUCore::convert_timestamp_date" alt="" coords="241,704,466,731"/>
+<area shape="rect" id="node28" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_period_of_time_base.html#a3126f6a7a498aa0b3dca79d79fa2e3bf" title="EBUCore::KLV::ebucorePeriod\lOfTimeBase::getperiodStartDate" alt="" coords="249,755,458,797"/>
+<area shape="rect" id="node30" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_period_of_time_base.html#a15f6d8244a130b6c165ca6a011304f91" title="EBUCore::KLV::ebucorePeriod\lOfTimeBase::haveperiodStartTime" alt="" coords="244,821,463,862"/>
+<area shape="rect" id="node32" href="$classebu_core__2011_1_1_period_of_time.html#ac6209e4eaf377d817d177cf36bfb5c43" title="ebuCore_2011::PeriodOfTime\l::startTime" alt="" coords="258,886,449,927"/>
+<area shape="rect" id="node34" href="$namespace_e_b_u_core.html#a27fc09b5e2898ccba0a296436db8173f" title="EBUCore::convert_timestamp_time" alt="" coords="241,976,466,1003"/>
+<area shape="rect" id="node37" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_period_of_time_base.html#ab480a148f1220768b421d1cc11f75067" title="EBUCore::KLV::ebucorePeriod\lOfTimeBase::getperiodStartTime" alt="" coords="248,1027,459,1069"/>
+<area shape="rect" id="node39" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_period_of_time_base.html#a405e13ce9a507f163f65de347c3d9b95" title="EBUCore::KLV::ebucorePeriod\lOfTimeBase::haveperiodEndYear" alt="" coords="247,1093,459,1134"/>
+<area shape="rect" id="node41" href="$classebu_core__2011_1_1_period_of_time.html#a1fd1587fd86958a60447fe8993e263b2" title="ebuCore_2011::PeriodOfTime\l::endYear" alt="" coords="258,1158,449,1199"/>
+<area shape="rect" id="node43" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_period_of_time_base.html#a0c4ed29f58851526bac38adecc5478e1" title="EBUCore::KLV::ebucorePeriod\lOfTimeBase::getperiodEndYear" alt="" coords="251,1223,455,1265"/>
+<area shape="rect" id="node45" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_period_of_time_base.html#a2766872973ee0333af68b418ce67ce0d" title="EBUCore::KLV::ebucorePeriod\lOfTimeBase::haveperiodEndDate" alt="" coords="247,1289,459,1330"/>
+<area shape="rect" id="node47" href="$classebu_core__2011_1_1_period_of_time.html#aa735e5485631798ffcd72f5b3ff1aab1" title="ebuCore_2011::PeriodOfTime\l::endDate" alt="" coords="258,1354,449,1395"/>
+<area shape="rect" id="node49" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_period_of_time_base.html#a72f4e44542c14fbaea27187e8e6cd10b" title="EBUCore::KLV::ebucorePeriod\lOfTimeBase::getperiodEndDate" alt="" coords="251,1419,455,1461"/>
+<area shape="rect" id="node51" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_period_of_time_base.html#a8432bf64a568242a602523607ca70187" title="EBUCore::KLV::ebucorePeriod\lOfTimeBase::haveperiodEndTime" alt="" coords="247,1485,460,1526"/>
+<area shape="rect" id="node53" href="$classebu_core__2011_1_1_period_of_time.html#a24ac0bd9a4c5e7a75c1d6ed1f8a34324" title="ebuCore_2011::PeriodOfTime\l::endTime" alt="" coords="258,1550,449,1591"/>
+<area shape="rect" id="node55" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_period_of_time_base.html#a4605d8d950e1e4f8b9378cff965d5f33" title="EBUCore::KLV::ebucorePeriod\lOfTimeBase::getperiodEndTime" alt="" coords="251,1615,456,1657"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="EBUCore::mapSpatial" name="EBUCore::mapSpatial">
+<area shape="rect" id="node3" href="$namespace_e_b_u_core.html#a3a6158cf50879cd39592a041a8ef3c9f" title="EBUCore::mapSpatial" alt="" coords="235,29,384,56"/>
+<area shape="rect" id="node6" href="$classebu_core__2011_1_1spatial.html#a0a8ace9f74e95a74fc5da738e143558e" title="ebuCore_2011::spatial\l::location" alt="" coords="465,47,615,89"/>
+<area shape="rect" id="node8" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_spatial_base.html#a8d238e084f9e306fa18a24626cd3b8d5" title="EBUCore::KLV::ebucoreSpatial\lBase::getlocation" alt="" coords="208,131,411,173"/>
+<area shape="rect" id="node10" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_location_base.html#a20c6aaf522b80153fcb0c87e4425293b" title="EBUCore::KLV::ebucoreLocation\lBase::getlocationKindGroup" alt="" coords="203,197,415,238"/>
+</map>

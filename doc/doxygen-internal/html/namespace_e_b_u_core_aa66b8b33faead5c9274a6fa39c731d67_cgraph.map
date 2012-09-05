@@ -1,0 +1,23 @@
+<map id="EBUCore::mapCoreMetadata" name="EBUCore::mapCoreMetadata">
+<area shape="rect" id="node4" href="$namespace_e_b_u_core.html#a177465915f7b4a33eac531425b922b3a" title="EBUCore::mapTitle" alt="" coords="312,29,445,56"/>
+<area shape="rect" id="node7" href="$namespace_e_b_u_core.html#ae69c32c915a8853c28201bfd91bdf97b" title="EBUCore::mapAlternativeTitle" alt="" coords="282,104,475,131"/>
+<area shape="rect" id="node10" href="$namespace_e_b_u_core.html#a08045b816d66b376c9cc45e39b082564" title="EBUCore::mapEntity" alt="" coords="597,661,739,688"/>
+<area shape="rect" id="node13" href="$namespace_e_b_u_core.html#a5a3a6d9c01986906857e9e90efb18b32" title="EBUCore::mapSubject" alt="" coords="302,229,455,256"/>
+<area shape="rect" id="node17" href="$namespace_e_b_u_core.html#a1bd09183a663944cb8fc317cfe2b2057" title="EBUCore::mapDescription" alt="" coords="291,304,466,331"/>
+<area shape="rect" id="node20" href="$classebu_core__2011_1_1core_metadata_type.html#a217882bd819b2ba630b7a62aa1e6884a" title="ebuCore_2011::coreMetadata\lType::date" alt="" coords="283,355,475,397"/>
+<area shape="rect" id="node22" href="$namespace_e_b_u_core.html#a5b0a735762da4775c9c67d95d649bb35" title="EBUCore::mapDate" alt="" coords="311,445,447,472"/>
+<area shape="rect" id="node25" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_core_metadata_base.html#a017ce52e24a87b87b14286ed77bb62c0" title="EBUCore::KLV::ebucoreCore\lMetadataBase::setdate" alt="" coords="283,497,474,538"/>
+<area shape="rect" id="node27" href="$namespace_e_b_u_core.html#a20d1f464cde0ad783699dab61d7cce4a" title="EBUCore::mapType" alt="" coords="310,587,447,613"/>
+<area shape="rect" id="node30" href="$namespace_e_b_u_core.html#a61e64662a2862b8a297b52e3f9481694" title="EBUCore::mapIdentifier" alt="" coords="300,661,457,688"/>
+<area shape="rect" id="node34" href="$namespace_e_b_u_core.html#a70e5b7d0528fef7e7bc15b713a6a8449" title="EBUCore::mapLanguage" alt="" coords="296,736,461,763"/>
+<area shape="rect" id="node37" href="$namespace_e_b_u_core.html#a400498a0d8f13d757b8a5a79617f7b31" title="EBUCore::mapMetadataCoverage" alt="" coords="560,911,776,937"/>
+<area shape="rect" id="node40" href="$namespace_e_b_u_core.html#a4215c928c29585a488115c21b36c2406" title="EBUCore::mapRights" alt="" coords="305,885,452,912"/>
+<area shape="rect" id="node45" href="$namespace_e_b_u_core.html#a74af4bec2d90dfe9491cd21e50277a20" title="EBUCore::mapRating" alt="" coords="305,811,452,837"/>
+<area shape="rect" id="node49" href="$classebu_core__2011_1_1core_metadata_type.html#afb9d8e54474119877df5535226d0e456" title="ebuCore_2011::coreMetadata\lType::version" alt="" coords="283,987,475,1029"/>
+<area shape="rect" id="node51" href="$namespace_e_b_u_core.html#a61c83af95f1a0f7d6b4cf1bf22658a0a" title="EBUCore::mapVersion" alt="" coords="302,1077,455,1104"/>
+<area shape="rect" id="node54" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_core_metadata_base.html#a3e98fa42013212e167c85706a22ca2cd" title="EBUCore::KLV::ebucoreCore\lMetadataBase::setversion" alt="" coords="283,1129,474,1170"/>
+<area shape="rect" id="node56" href="$classebu_core__2011_1_1core_metadata_type.html#a5b2eab2a0b4cebdb942668a32a1d1998" title="ebuCore_2011::coreMetadata\lType::publicationHistory" alt="" coords="283,1194,475,1235"/>
+<area shape="rect" id="node58" href="$namespace_e_b_u_core.html#a26151345159d16e1013ccfe009ef16af" title="EBUCore::mapPublicationHistory" alt="" coords="271,1284,486,1311"/>
+<area shape="rect" id="node61" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_core_metadata_base.html#ab4095f848b0d65ed782b60a16aa449ea" title="EBUCore::KLV::ebucoreCore\lMetadataBase::setpublicationHistoryEvent" alt="" coords="245,1335,512,1377"/>
+<area shape="rect" id="node63" href="$namespace_e_b_u_core.html#a4b5f1397850753bfca04e7dbf4b5e5d4" title="EBUCore::mapCustomRelation" alt="" coords="278,1425,479,1452"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="EBUCore::mapRights" name="EBUCore::mapRights">
+<area shape="rect" id="node4" href="$classebu_core__2011_1_1rights_type.html#a7adf815ad25101c29b7d6d00e2628764" title="ebuCore_2011::rightsType\l::rights" alt="" coords="221,5,395,46"/>
+<area shape="rect" id="node6" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_rights_base.html#aa1a0b458b4e3e24d3e388de9f7c11bbf" title="EBUCore::KLV::ebucoreRights\lBase::setrightsLanguage" alt="" coords="208,70,408,111"/>
+<area shape="rect" id="node8" href="$namespace_e_b_u_core.html#a17c88afe8c64a1fdfe0fd7b65a016548" title="EBUCore::convert" alt="" coords="245,160,371,187"/>
+<area shape="rect" id="node11" href="$namespace_e_b_u_core.html#a400498a0d8f13d757b8a5a79617f7b31" title="EBUCore::mapMetadataCoverage" alt="" coords="200,235,416,261"/>
+<area shape="rect" id="node14" href="$namespace_e_b_u_core.html#a08045b816d66b376c9cc45e39b082564" title="EBUCore::mapEntity" alt="" coords="237,309,379,336"/>
+<area shape="rect" id="node17" href="$namespace_e_b_u_core.html#ae4e601a94f6e46b14aa1b0acf8b7abff" title="EBUCore::mapContact" alt="" coords="464,309,619,336"/>
+</map>

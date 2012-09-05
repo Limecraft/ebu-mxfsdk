@@ -1,0 +1,25 @@
+<map id="ebuCore_2011::operator&lt;&lt;" name="ebuCore_2011::operator&lt;&lt;">
+<area shape="rect" id="node3" href="$classebu_core__2011_1_1video_format_type.html#af93182e1892c04097b1fe76c0a827519" title="ebuCore_2011::videoFormat\lType::regionDelimX" alt="" coords="261,5,443,46"/>
+<area shape="rect" id="node5" href="$classebu_core__2011_1_1video_format_type.html#aa23ae99424c68841e3bda02471319ac6" title="ebuCore_2011::videoFormat\lType::regionDelimY" alt="" coords="261,70,443,111"/>
+<area shape="rect" id="node7" href="$classebu_core__2011_1_1video_format_type.html#a61ab8ab7e6e4b6b7ea0d68da5658480e" title="ebuCore_2011::videoFormat\lType::width" alt="" coords="261,135,443,177"/>
+<area shape="rect" id="node9" href="$classebu_core__2011_1_1video_format_type.html#a197e2992cffb53ea0885c34043b25324" title="ebuCore_2011::videoFormat\lType::height" alt="" coords="261,201,443,242"/>
+<area shape="rect" id="node11" href="$classebu_core__2011_1_1video_format_type.html#afb510e74caf776147fd58849b30d7977" title="ebuCore_2011::videoFormat\lType::aspectRatio" alt="" coords="261,266,443,307"/>
+<area shape="rect" id="node13" href="$classebu_core__2011_1_1video_format_type.html#a3e6ca44ab5db1ac65d086a18b57351aa" title="ebuCore_2011::videoFormat\lType::videoEncoding" alt="" coords="261,331,443,373"/>
+<area shape="rect" id="node15" href="$classebu_core__2011_1_1video_format_type.html#a1d693707a3e09f1820b89ee42626c736" title="ebuCore_2011::videoFormat\lType::videoTrack" alt="" coords="261,397,443,438"/>
+<area shape="rect" id="node17" href="$classebu_core__2011_1_1video_format_type.html#aec3a4a8cf98bf8b3820d3535b53d37c8" title="ebuCore_2011::videoFormat\lType::technicalAttributeString" alt="" coords="255,462,449,503"/>
+<area shape="rect" id="node19" href="$classebu_core__2011_1_1video_format_type.html#aaba971c6e5d7e813ba38c972da16b805" title="ebuCore_2011::videoFormat\lType::technicalAttributeByte" alt="" coords="259,527,445,569"/>
+<area shape="rect" id="node21" href="$classebu_core__2011_1_1video_format_type.html#a2b7e2404f70163a0d23447ba51e51d8e" title="ebuCore_2011::videoFormat\lType::technicalAttributeShort" alt="" coords="257,593,447,634"/>
+<area shape="rect" id="node23" href="$classebu_core__2011_1_1video_format_type.html#a189bebc26fb3a6713fb9da56e02895f8" title="ebuCore_2011::videoFormat\lType::technicalAttributeInteger" alt="" coords="253,658,451,699"/>
+<area shape="rect" id="node25" href="$classebu_core__2011_1_1video_format_type.html#a026d50fafdd00a7f71f592edb22a35f9" title="ebuCore_2011::videoFormat\lType::technicalAttributeLong" alt="" coords="259,723,445,765"/>
+<area shape="rect" id="node27" href="$classebu_core__2011_1_1video_format_type.html#aef492bc16b171edab08b375eb47e9d89" title="ebuCore_2011::videoFormat\lType::technicalAttributeUnsignedByte" alt="" coords="232,789,472,830"/>
+<area shape="rect" id="node29" href="$classebu_core__2011_1_1video_format_type.html#ad124b55ab6fa70bb519ee232fb7a7843" title="ebuCore_2011::videoFormat\lType::technicalAttributeUnsignedShort" alt="" coords="230,854,474,895"/>
+<area shape="rect" id="node31" href="$classebu_core__2011_1_1video_format_type.html#aa7c63fc25bb5479e5f97e654b25f4a26" title="ebuCore_2011::videoFormat\lType::technicalAttributeUnsigned\lInteger" alt="" coords="245,920,459,976"/>
+<area shape="rect" id="node33" href="$classebu_core__2011_1_1video_format_type.html#aabb9a804c0b6e0e8922767b0e7d98fe8" title="ebuCore_2011::videoFormat\lType::technicalAttributeUnsignedLong" alt="" coords="231,1001,473,1042"/>
+<area shape="rect" id="node35" href="$classebu_core__2011_1_1video_format_type.html#a8b4981b77d88f24e2fd581a77dd1458b" title="ebuCore_2011::videoFormat\lType::technicalAttributeBoolean" alt="" coords="249,1066,455,1107"/>
+<area shape="rect" id="node37" href="$classebu_core__2011_1_1video_format_type.html#af64da8b3821e9db9f4380a2a7b9e65ec" title="ebuCore_2011::videoFormat\lType::technicalAttributeFloat" alt="" coords="258,1131,446,1173"/>
+<area shape="rect" id="node39" href="$classebu_core__2011_1_1video_format_type.html#a10c2b42c9d7e37ab9d7f7711410d5332" title="ebuCore_2011::videoFormat\lType::technicalAttributeRational" alt="" coords="249,1197,455,1238"/>
+<area shape="rect" id="node41" href="$classebu_core__2011_1_1video_format_type.html#ac63c4528b2e7ca2fca16ccbb738f84f4" title="ebuCore_2011::videoFormat\lType::technicalAttributeUri" alt="" coords="261,1262,443,1303"/>
+<area shape="rect" id="node43" href="$classebu_core__2011_1_1video_format_type.html#ab24110ee160603b66dbf48805986a0a6" title="ebuCore_2011::videoFormat\lType::videoFormatId" alt="" coords="261,1327,443,1369"/>
+<area shape="rect" id="node45" href="$classebu_core__2011_1_1video_format_type.html#aef23786ddea9c0053fd302f01cce0d4d" title="ebuCore_2011::videoFormat\lType::videoFormatName" alt="" coords="261,1393,443,1434"/>
+<area shape="rect" id="node47" href="$classebu_core__2011_1_1video_format_type.html#a6cdacd472b12edfd2bc5de4c82f86586" title="ebuCore_2011::videoFormat\lType::videoFormatDefinition" alt="" coords="261,1458,443,1499"/>
+</map>

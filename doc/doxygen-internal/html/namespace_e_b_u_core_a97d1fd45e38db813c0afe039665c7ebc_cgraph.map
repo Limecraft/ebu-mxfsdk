@@ -1,0 +1,11 @@
+<map id="EBUCore::mapEntity" name="EBUCore::mapEntity">
+<area shape="rect" id="node3" href="$namespace_e_b_u_core.html#a08045b816d66b376c9cc45e39b082564" title="EBUCore::mapEntity" alt="" coords="225,79,367,105"/>
+<area shape="rect" id="node6" href="$namespace_e_b_u_core.html#ae4e601a94f6e46b14aa1b0acf8b7abff" title="EBUCore::mapContact" alt="" coords="457,29,612,56"/>
+<area shape="rect" id="node10" href="$namespace_e_b_u_core.html#a9d7ecf764851f9c05da65ee3444625ed" title="EBUCore::mapOrganisation" alt="" coords="443,104,626,131"/>
+<area shape="rect" id="node14" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_entity_base.html#a080e676dc90fab9b19aaa518172815a0" title="EBUCore::KLV::ebucoreEntity\lBase::haveentityContact" alt="" coords="197,181,395,222"/>
+<area shape="rect" id="node17" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_entity_base.html#afaf1c6c3ea12905fc2ed93a9bbcb2c50" title="EBUCore::KLV::ebucoreEntity\lBase::haveentityOrganisation" alt="" coords="197,246,395,287"/>
+<area shape="rect" id="node19" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_entity_base.html#a1d47628f67505a95a73e89e2a6cfad22" title="EBUCore::KLV::ebucoreEntity\lBase::getentityOrganisation" alt="" coords="197,311,395,353"/>
+<area shape="rect" id="node22" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_entity_base.html#a72df98d915a0d94e7c97e8a7f5169061" title="EBUCore::KLV::ebucoreEntity\lBase::haveentityRole" alt="" coords="197,377,395,418"/>
+<area shape="rect" id="node24" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_entity_base.html#aa70bf1783a7a4982faeee66a27478dad" title="EBUCore::KLV::ebucoreEntity\lBase::getentityRole" alt="" coords="197,442,395,483"/>
+<area shape="rect" id="node26" href="$classebu_core__2011_1_1entity_type.html#a7da5db9c5f2766fe0b88633fddaa20d4" title="ebuCore_2011::entityType\l::role" alt="" coords="209,507,383,549"/>
+</map>

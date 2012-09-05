@@ -273,13 +273,11 @@ namespace st434
 
 #include <xsd/cxx/xml/dom/parsing-header.hxx>
 
-#include "dataTypes/s377m_types.hxx"
-
-#include "dictionary/rp210.hxx"
-
 #include "groups/s377m_metadata.hxx"
 
 #include "groups/s381m_metadata.hxx"
+
+#include "groups/s382m_metadata.hxx"
 
 #include "groups/s385m_metadata.hxx"
 
@@ -288,6 +286,14 @@ namespace st434
 #include "groups/s422m_metadata.hxx"
 
 #include "groups/s429-6_metadata.hxx"
+
+#include "groups/s436m_metadata.hxx"
+
+#include "groups/s2037_metadata.hxx"
+
+#include "dictionary/rp210.hxx"
+
+#include "dataTypes/s377m_types.hxx"
 
 namespace st434
 {

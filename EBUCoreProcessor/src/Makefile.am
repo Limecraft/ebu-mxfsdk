@@ -2,7 +2,6 @@ noinst_LTLIBRARIES = libebucore.la
 
 libebucore_la_SOURCES = \
 	metadata/base/ebucoreAddressBase.cpp \
-	metadata/base/ebucoreAddressLineBase.cpp \
 	metadata/base/ebucoreAlternativeTitleBase.cpp \
 	metadata/base/ebucoreBasicRelationBase.cpp \
 	metadata/base/ebucoreContactBase.cpp \
@@ -18,11 +17,11 @@ libebucore_la_SOURCES = \
 	metadata/base/ebucoreGenreBase.cpp \
 	metadata/base/ebucoreIdentifierBase.cpp \
 	metadata/base/ebucoreLanguageBase.cpp \
-	metadata/base/ebucoreLanguagePurposeBase.cpp \
 	metadata/base/ebucoreLocationBase.cpp \
 	metadata/base/ebucoreMainFrameworkBase.cpp \
 	metadata/base/ebucoreMetadataSchemeInformationBase.cpp \
 	metadata/base/ebucoreObjectTypeBase.cpp \
+	metadata/base/ebucoreOrganisationDepartmentBase.cpp \
 	metadata/base/ebucoreOrganisationBase.cpp \
 	metadata/base/ebucorePeriodOfTimeBase.cpp \
 	metadata/base/ebucorePublicationHistoryEventBase.cpp \
@@ -34,12 +33,12 @@ libebucore_la_SOURCES = \
 	metadata/base/ebucoreSubjectBase.cpp \
 	metadata/base/ebucoreTargetAudienceBase.cpp \
 	metadata/base/ebucoreTemporalBase.cpp \
+	metadata/base/ebucoreTextualAnnotationBase.cpp \
 	metadata/base/ebucoreTitleBase.cpp \
 	metadata/base/ebucoreTypeBase.cpp \
 	metadata/base/ebucoreTypeGroupBase.cpp \
 	metadata/base/ebucoreVersionBase.cpp \
 	metadata/ebucoreAddress.cpp \
-	metadata/ebucoreAddressLine.cpp \
 	metadata/ebucoreAlternativeTitle.cpp \
 	metadata/ebucoreBasicRelation.cpp \
 	metadata/ebucoreContact.cpp \
@@ -56,11 +55,11 @@ libebucore_la_SOURCES = \
 	metadata/ebucoreGenre.cpp \
 	metadata/ebucoreIdentifier.cpp \
 	metadata/ebucoreLanguage.cpp \
-	metadata/ebucoreLanguagePurpose.cpp \
 	metadata/ebucoreLocation.cpp \
 	metadata/ebucoreMainFramework.cpp \
 	metadata/ebucoreMetadataSchemeInformation.cpp \
 	metadata/ebucoreObjectType.cpp \
+	metadata/ebucoreOrganisationDepartment.cpp \
 	metadata/ebucoreOrganisation.cpp \
 	metadata/ebucorePeriodOfTime.cpp \
 	metadata/ebucorePublicationHistoryEvent.cpp \
@@ -72,6 +71,7 @@ libebucore_la_SOURCES = \
 	metadata/ebucoreSubject.cpp \
 	metadata/ebucoreTargetAudience.cpp \
 	metadata/ebucoreTemporal.cpp \
+	metadata/ebucoreTextualAnnotation.cpp \
 	metadata/ebucoreTitle.cpp \
 	metadata/ebucoreType.cpp \
 	metadata/ebucoreTypeGroup.cpp \

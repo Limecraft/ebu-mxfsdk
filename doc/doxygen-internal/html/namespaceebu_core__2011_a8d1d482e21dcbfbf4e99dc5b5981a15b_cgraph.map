@@ -1,0 +1,24 @@
+<map id="ebuCore_2011::operator&lt;&lt;" name="ebuCore_2011::operator&lt;&lt;">
+<area shape="rect" id="node3" href="$classebu_core__2011_1_1image_format_type.html#a175546c393e38995fa4c58e3d0b2fa81" title="ebuCore_2011::imageFormat\lType::regionDelimX" alt="" coords="257,5,447,46"/>
+<area shape="rect" id="node5" href="$classebu_core__2011_1_1image_format_type.html#a671a1a04c2d27a45866a476a67bdf38e" title="ebuCore_2011::imageFormat\lType::regionDelimY" alt="" coords="257,70,447,111"/>
+<area shape="rect" id="node7" href="$classebu_core__2011_1_1image_format_type.html#a6006c7c12e335cb45f0434e8c5e071de" title="ebuCore_2011::imageFormat\lType::width" alt="" coords="257,135,447,177"/>
+<area shape="rect" id="node9" href="$classebu_core__2011_1_1image_format_type.html#a3d3ae4cd43ed167369674e08143168f6" title="ebuCore_2011::imageFormat\lType::height" alt="" coords="257,201,447,242"/>
+<area shape="rect" id="node11" href="$classebu_core__2011_1_1image_format_type.html#aa4a546e2e0585d1d9c49dd2695465963" title="ebuCore_2011::imageFormat\lType::orientation" alt="" coords="257,266,447,307"/>
+<area shape="rect" id="node13" href="$classebu_core__2011_1_1image_format_type.html#a4635b23dd897689b7eeecf8ae168c79b" title="ebuCore_2011::imageFormat\lType::imageEncoding" alt="" coords="257,331,447,373"/>
+<area shape="rect" id="node15" href="$classebu_core__2011_1_1image_format_type.html#a1bc47b479c4bbd84ab5faedfb8d33c47" title="ebuCore_2011::imageFormat\lType::technicalAttributeString" alt="" coords="255,397,449,438"/>
+<area shape="rect" id="node17" href="$classebu_core__2011_1_1image_format_type.html#ac4f88aeae36fc99f6f50418768f7e4a6" title="ebuCore_2011::imageFormat\lType::technicalAttributeByte" alt="" coords="257,462,447,503"/>
+<area shape="rect" id="node19" href="$classebu_core__2011_1_1image_format_type.html#aa98942d6ed4d77a6feb1e56c92991384" title="ebuCore_2011::imageFormat\lType::technicalAttributeShort" alt="" coords="257,527,447,569"/>
+<area shape="rect" id="node21" href="$classebu_core__2011_1_1image_format_type.html#ac415b1bc2e980039d6bf8c765a229875" title="ebuCore_2011::imageFormat\lType::technicalAttributeInteger" alt="" coords="253,593,451,634"/>
+<area shape="rect" id="node23" href="$classebu_core__2011_1_1image_format_type.html#a53372c957d5d43ffbbce0af4f9714546" title="ebuCore_2011::imageFormat\lType::technicalAttributeLong" alt="" coords="257,658,447,699"/>
+<area shape="rect" id="node25" href="$classebu_core__2011_1_1image_format_type.html#a69fdf39e96d52bc022dc6c160bd2b91d" title="ebuCore_2011::imageFormat\lType::technicalAttributeUnsignedByte" alt="" coords="232,723,472,765"/>
+<area shape="rect" id="node27" href="$classebu_core__2011_1_1image_format_type.html#a7ccdbd9f4fd4b516c66582e1cdaaab67" title="ebuCore_2011::imageFormat\lType::technicalAttributeUnsignedShort" alt="" coords="230,789,474,830"/>
+<area shape="rect" id="node29" href="$classebu_core__2011_1_1image_format_type.html#a9b6e8833ee224159713feeb6e1d9dc2e" title="ebuCore_2011::imageFormat\lType::technicalAttributeUnsigned\lInteger" alt="" coords="245,855,459,911"/>
+<area shape="rect" id="node31" href="$classebu_core__2011_1_1image_format_type.html#abe507385768850483a091e3cfe3eb516" title="ebuCore_2011::imageFormat\lType::technicalAttributeUnsignedLong" alt="" coords="231,935,473,977"/>
+<area shape="rect" id="node33" href="$classebu_core__2011_1_1image_format_type.html#ace03cca648312a01557975358b53da53" title="ebuCore_2011::imageFormat\lType::technicalAttributeBoolean" alt="" coords="249,1001,455,1042"/>
+<area shape="rect" id="node35" href="$classebu_core__2011_1_1image_format_type.html#ad51c8ec671f6e70d8db52a0d796414fc" title="ebuCore_2011::imageFormat\lType::technicalAttributeFloat" alt="" coords="257,1066,447,1107"/>
+<area shape="rect" id="node37" href="$classebu_core__2011_1_1image_format_type.html#a801ec629041a990d3f65767d8a653583" title="ebuCore_2011::imageFormat\lType::technicalAttributeRational" alt="" coords="249,1131,455,1173"/>
+<area shape="rect" id="node39" href="$classebu_core__2011_1_1image_format_type.html#af9b668db86abb0949d1150638d33d942" title="ebuCore_2011::imageFormat\lType::technicalAttributeUri" alt="" coords="257,1197,447,1238"/>
+<area shape="rect" id="node41" href="$classebu_core__2011_1_1image_format_type.html#a7aed21f0f06675d2dda8646605bffd4e" title="ebuCore_2011::imageFormat\lType::imageFormatId" alt="" coords="257,1262,447,1303"/>
+<area shape="rect" id="node43" href="$classebu_core__2011_1_1image_format_type.html#aee3684c401a0d9309ac5fbcd786f049a" title="ebuCore_2011::imageFormat\lType::imageFormatName" alt="" coords="257,1327,447,1369"/>
+<area shape="rect" id="node45" href="$classebu_core__2011_1_1image_format_type.html#a281e034e9a11448aba35a605df2d7024" title="ebuCore_2011::imageFormat\lType::imageFormatDefinition" alt="" coords="257,1393,447,1434"/>
+</map>

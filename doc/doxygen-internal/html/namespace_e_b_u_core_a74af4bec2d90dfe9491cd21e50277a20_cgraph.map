@@ -1,0 +1,5 @@
+<map id="EBUCore::mapRating" name="EBUCore::mapRating">
+<area shape="rect" id="node4" href="$namespace_e_b_u_core.html#a08045b816d66b376c9cc45e39b082564" title="EBUCore::mapEntity" alt="" coords="229,29,371,56"/>
+<area shape="rect" id="node7" href="$classebu_core__2011_1_1rating_type.html#adf0306bb74c5cd2320b44904f32ed629" title="ebuCore_2011::ratingType\l::ratingProvider" alt="" coords="213,81,387,122"/>
+<area shape="rect" id="node9" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_rating_base.html#aa126c67a44d0c0978bea117332b6c301" title="EBUCore::KLV::ebucoreRating\lBase::setratingProviderEntity" alt="" coords="200,146,400,187"/>
+</map>

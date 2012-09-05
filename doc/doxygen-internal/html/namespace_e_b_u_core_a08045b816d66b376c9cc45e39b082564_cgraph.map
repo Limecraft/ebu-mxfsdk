@@ -1,0 +1,5 @@
+<map id="EBUCore::mapEntity" name="EBUCore::mapEntity">
+<area shape="rect" id="node4" href="$namespace_e_b_u_core.html#ae4e601a94f6e46b14aa1b0acf8b7abff" title="EBUCore::mapContact" alt="" coords="212,29,367,56"/>
+<area shape="rect" id="node8" href="$namespace_e_b_u_core.html#a9d7ecf764851f9c05da65ee3444625ed" title="EBUCore::mapOrganisation" alt="" coords="198,104,381,131"/>
+<area shape="rect" id="node12" href="$namespace_e_b_u_core.html#a150b2457cc48cbb0907324a8a48fbe6e" title="EBUCore::mapRole" alt="" coords="222,179,357,205"/>
+</map>

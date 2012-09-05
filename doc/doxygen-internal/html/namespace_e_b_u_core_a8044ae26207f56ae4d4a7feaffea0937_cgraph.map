@@ -1,0 +1,7 @@
+<map id="EBUCore::mapMetadataSchemeInformation" name="EBUCore::mapMetadataSchemeInformation">
+<area shape="rect" id="node4" href="$namespace_e_b_u_core.html#a08045b816d66b376c9cc45e39b082564" title="EBUCore::mapEntity" alt="" coords="310,29,453,56"/>
+<area shape="rect" id="node7" href="$classebu_core__2011_1_1ebu_core_main_type.html#a05165873fb58abd8710aa824471ab060" title="ebuCore_2011::ebuCoreMain\lType::version" alt="" coords="287,81,476,122"/>
+<area shape="rect" id="node9" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_metadata_scheme_information_base.html#a5fa48f9dfcda27a8f3990bab326208fa" title="EBUCore::KLV::ebucoreMetadata\lSchemeInformationBase::setebucore\lMetadataSchemeVersion" alt="" coords="264,147,499,203"/>
+<area shape="rect" id="node11" href="$classebu_core__2011_1_1ebu_core_main_type.html#a15d5ca363815490e73b339886e139a0c" title="ebuCore_2011::ebuCoreMain\lType::schema" alt="" coords="287,227,476,269"/>
+<area shape="rect" id="node13" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_metadata_scheme_information_base.html#a0402e89a786f3bc5a84b55d565d5f358" title="EBUCore::KLV::ebucoreMetadata\lSchemeInformationBase::setebucore\lMetadataScheme" alt="" coords="264,293,499,349"/>
+</map>

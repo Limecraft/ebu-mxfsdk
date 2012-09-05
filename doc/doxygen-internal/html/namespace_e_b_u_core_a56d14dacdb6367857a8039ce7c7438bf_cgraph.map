@@ -1,0 +1,6 @@
+<map id="EBUCore::mapTemporal" name="EBUCore::mapTemporal">
+<area shape="rect" id="node4" href="$classebu_core__2011_1_1temporal.html#adb8368343d24e17b24b25636cdc333e8" title="ebuCore_2011::temporal\l::periodId" alt="" coords="243,5,405,46"/>
+<area shape="rect" id="node6" href="$classebu_core__2011_1_1temporal.html#ae6beb60bba409042006a595e862e861f" title="ebuCore_2011::temporal\l::PeriodOfTime" alt="" coords="243,70,405,111"/>
+<area shape="rect" id="node8" href="$namespace_e_b_u_core.html#a5723aa3fc1b5bb3e5ffda89a46083329" title="EBUCore::mapPeriodOfTime" alt="" coords="231,160,417,187"/>
+<area shape="rect" id="node11" href="$class_e_b_u_core_1_1_k_l_v_1_1ebucore_temporal_base.html#ae31b189bfc2e846266bcd2841e6bc060" title="EBUCore::KLV::ebucoreTemporal\lBase::getperiodOfTime" alt="" coords="216,211,432,253"/>
+</map>
