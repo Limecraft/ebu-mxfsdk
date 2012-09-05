@@ -1,8 +1,8 @@
 noinst_LTLIBRARIES = libebucore.la
 
 libebucore_la_SOURCES = \
+	metadata/base/ebucoreTextualAnnotationBase.cpp \
 	metadata/base/ebucoreAddressBase.cpp \
-	metadata/base/ebucoreAddressLineBase.cpp \
 	metadata/base/ebucoreAlternativeTitleBase.cpp \
 	metadata/base/ebucoreBasicRelationBase.cpp \
 	metadata/base/ebucoreContactBase.cpp \
@@ -11,6 +11,7 @@ libebucore_la_SOURCES = \
 	metadata/base/ebucoreCoreMetadataBase.cpp \
 	metadata/base/ebucoreCoverageBase.cpp \
 	metadata/base/ebucoreCustomRelationBase.cpp \
+	metadata/base/ebucoreDateTypeBase.cpp \
 	metadata/base/ebucoreDateBase.cpp \
 	metadata/base/ebucoreDescriptionBase.cpp \
 	metadata/base/ebucoreEntityBase.cpp \
@@ -18,17 +19,17 @@ libebucore_la_SOURCES = \
 	metadata/base/ebucoreGenreBase.cpp \
 	metadata/base/ebucoreIdentifierBase.cpp \
 	metadata/base/ebucoreLanguageBase.cpp \
-	metadata/base/ebucoreLanguagePurposeBase.cpp \
 	metadata/base/ebucoreLocationBase.cpp \
 	metadata/base/ebucoreMainFrameworkBase.cpp \
 	metadata/base/ebucoreMetadataSchemeInformationBase.cpp \
 	metadata/base/ebucoreObjectTypeBase.cpp \
+	metadata/base/ebucoreOrganisationDepartmentBase.cpp \
 	metadata/base/ebucoreOrganisationBase.cpp \
 	metadata/base/ebucorePeriodOfTimeBase.cpp \
+	metadata/base/ebucoreFormatBase.cpp \
 	metadata/base/ebucorePublicationHistoryEventBase.cpp \
 	metadata/base/ebucoreRatingBase.cpp \
 	metadata/base/ebucoreRightsBase.cpp \
-	metadata/base/ebucoreRoleBase.cpp \
 	metadata/base/ebucoreSpatialBase.cpp \
 	metadata/base/ebucoreStatusGroupBase.cpp \
 	metadata/base/ebucoreSubjectBase.cpp \
@@ -38,8 +39,8 @@ libebucore_la_SOURCES = \
 	metadata/base/ebucoreTypeBase.cpp \
 	metadata/base/ebucoreTypeGroupBase.cpp \
 	metadata/base/ebucoreVersionBase.cpp \
+	metadata/ebucoreTextualAnnotation.cpp \
 	metadata/ebucoreAddress.cpp \
-	metadata/ebucoreAddressLine.cpp \
 	metadata/ebucoreAlternativeTitle.cpp \
 	metadata/ebucoreBasicRelation.cpp \
 	metadata/ebucoreContact.cpp \
@@ -49,6 +50,7 @@ libebucore_la_SOURCES = \
 	metadata/ebucoreCoverage.cpp \
 	metadata/ebucoreCustomRelation.cpp \
 	metadata/ebucoreDate.cpp \
+	metadata/ebucoreDateType.cpp \
 	metadata/ebucoreDescription.cpp \
 	metadata/EBUCoreDMS++.cpp \
 	metadata/ebucoreEntity.cpp \
@@ -56,17 +58,17 @@ libebucore_la_SOURCES = \
 	metadata/ebucoreGenre.cpp \
 	metadata/ebucoreIdentifier.cpp \
 	metadata/ebucoreLanguage.cpp \
-	metadata/ebucoreLanguagePurpose.cpp \
 	metadata/ebucoreLocation.cpp \
 	metadata/ebucoreMainFramework.cpp \
 	metadata/ebucoreMetadataSchemeInformation.cpp \
 	metadata/ebucoreObjectType.cpp \
+	metadata/ebucoreOrganisationDepartment.cpp \
 	metadata/ebucoreOrganisation.cpp \
 	metadata/ebucorePeriodOfTime.cpp \
+	metadata/ebucoreFormat.cpp \
 	metadata/ebucorePublicationHistoryEvent.cpp \
 	metadata/ebucoreRating.cpp \
 	metadata/ebucoreRights.cpp \
-	metadata/ebucoreRole.cpp \
 	metadata/ebucoreSpatial.cpp \
 	metadata/ebucoreStatusGroup.cpp \
 	metadata/ebucoreSubject.cpp \
@@ -76,7 +78,7 @@ libebucore_la_SOURCES = \
 	metadata/ebucoreType.cpp \
 	metadata/ebucoreTypeGroup.cpp \
 	metadata/ebucoreVersion.cpp \
-	EBU_CORE_20110915.cxx \
+	EBU_CORE_20120817.cxx \
 	simpledc20021212.cxx \
 	xml.cxx \
 	EBUCoreMapping.cpp \
