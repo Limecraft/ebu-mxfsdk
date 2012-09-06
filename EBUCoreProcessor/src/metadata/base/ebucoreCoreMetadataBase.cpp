@@ -362,6 +362,40 @@ std::vector<ebucoreBasicRelation*> ebucoreCoreMetadataBase::getbasicRelation() c
     return result;
 }
 
+bool ebucoreCoreMetadataBase::haveformat() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreCoreMetadata, format));
+}
+
+std::vector<ebucoreFormat*> ebucoreCoreMetadataBase::getformat() const
+{
+    vector<ebucoreFormat*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoreMetadata, format)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreFormat*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreFormat*>(iter->get()));
+    }
+    return result;
+}
+
+bool ebucoreCoreMetadataBase::havepart() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreCoreMetadata, part));
+}
+
+std::vector<ebucorePartMetadata*> ebucoreCoreMetadataBase::getpart() const
+{
+    vector<ebucorePartMetadata*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoreMetadata, part)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucorePartMetadata*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucorePartMetadata*>(iter->get()));
+    }
+    return result;
+}
+
 void ebucoreCoreMetadataBase::setidentifier(const std::vector<ebucoreIdentifier*>& value)
 {
     WrapObjectVectorIterator<ebucoreIdentifier> iter(value);
@@ -552,5 +586,27 @@ void ebucoreCoreMetadataBase::setbasicRelation(const std::vector<ebucoreBasicRel
 void ebucoreCoreMetadataBase::appendbasicRelation(ebucoreBasicRelation* value)
 {
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoreMetadata, basicRelation), value);
+}
+
+void ebucoreCoreMetadataBase::setformat(const std::vector<ebucoreFormat*>& value)
+{
+    WrapObjectVectorIterator<ebucoreFormat> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoreMetadata, format), &iter);
+}
+
+void ebucoreCoreMetadataBase::appendformat(ebucoreFormat* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoreMetadata, format), value);
+}
+
+void ebucoreCoreMetadataBase::setpart(const std::vector<ebucorePartMetadata*>& value)
+{
+    WrapObjectVectorIterator<ebucorePartMetadata> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoreMetadata, part), &iter);
+}
+
+void ebucoreCoreMetadataBase::appendpart(ebucorePartMetadata* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoreMetadata, part), value);
 }
 

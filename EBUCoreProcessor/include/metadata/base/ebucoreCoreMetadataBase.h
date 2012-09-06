@@ -91,6 +91,10 @@ public:
    std::vector<ebucoreCustomRelation*> getcustomRelation() const;
    bool havebasicRelation() const;
    std::vector<ebucoreBasicRelation*> getbasicRelation() const;
+   bool haveformat() const;
+   std::vector<ebucoreFormat*> getformat() const;
+   bool havepart() const;
+   std::vector<ebucorePartMetadata*> getpart() const;
 
 
    // setters
@@ -130,6 +134,10 @@ public:
    void appendcustomRelation(ebucoreCustomRelation* value);
    void setbasicRelation(const std::vector<ebucoreBasicRelation*>& value);
    void appendbasicRelation(ebucoreBasicRelation* value);
+   void setformat(const std::vector<ebucoreFormat*>& value);
+   void appendformat(ebucoreFormat* value);
+   void setpart(const std::vector<ebucorePartMetadata*>& value);
+   void appendpart(ebucorePartMetadata* value);
 
 
 protected:

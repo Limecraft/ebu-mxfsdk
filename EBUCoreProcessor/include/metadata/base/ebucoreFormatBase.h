@@ -53,6 +53,127 @@ public:
     virtual ~ebucoreFormatBase();
 
 
+   // getters
+
+   bool haveformatID() const;
+   std::string getformatID() const;
+   bool haveformatVersionID() const;
+   std::string getformatVersionID() const;
+   bool haveformatName() const;
+   std::string getformatName() const;
+   bool haveformatDefinition() const;
+   std::string getformatDefinition() const;
+   bool haveformatYearCreated() const;
+   mxfTimestamp getformatYearCreated() const;
+   bool haveformatDateCreated() const;
+   mxfTimestamp getformatDateCreated() const;
+   bool haveoverallDurationTime() const;
+   mxfRational getoverallDurationTime() const;
+   bool haveoverallDurationEditUnit() const;
+   int64_t getoverallDurationEditUnit() const;
+   bool haveoverallEditrate() const;
+   mxfRational getoverallEditrate() const;
+   bool havecontainerFormat() const;
+   std::vector<ebucoreContainerFormat*> getcontainerFormat() const;
+   bool havemedium() const;
+   std::vector<ebucoreMedium*> getmedium() const;
+   bool havepackageInfo() const;
+   std::vector<ebucorePackageInfo*> getpackageInfo() const;
+   bool havemimeType() const;
+   std::vector<ebucoreMimeType*> getmimeType() const;
+   bool havematerialAudioFormat() const;
+   std::vector<ebucoreAudioFormat*> getmaterialAudioFormat() const;
+   bool havematerialVideoFormat() const;
+   std::vector<ebucoreVideoFormat*> getmaterialVideoFormat() const;
+   bool havematerialImageFormat() const;
+   std::vector<ebucoreImageFormat*> getmaterialImageFormat() const;
+   bool havematerialDataFormat() const;
+   std::vector<ebucoreDataFormat*> getmaterialDataFormat() const;
+   bool havematerialSigningFormat() const;
+   std::vector<ebucoreSigningFormat*> getmaterialSigningFormat() const;
+   bool havematerialTechnicalAttributeString() const;
+   std::vector<ebucoreTechnicalAttributeString*> getmaterialTechnicalAttributeString() const;
+   bool havematerialTechnicalAttributeInt8() const;
+   std::vector<ebucoreTechnicalAttributeInt8*> getmaterialTechnicalAttributeInt8() const;
+   bool havematerialTechnicalAttributeInt16() const;
+   std::vector<ebucoreTechnicalAttributeInt16*> getmaterialTechnicalAttributeInt16() const;
+   bool havematerialTechnicalAttributeInt32() const;
+   std::vector<ebucoreTechnicalAttributeInt32*> getmaterialTechnicalAttributeInt32() const;
+   bool havematerialTechnicalAttributeInt64() const;
+   std::vector<ebucoreTechnicalAttributeInt64*> getmaterialTechnicalAttributeInt64() const;
+   bool havematerialTechnicalAttributeUInt8() const;
+   std::vector<ebucoreTechnicalAttributeUInt8*> getmaterialTechnicalAttributeUInt8() const;
+   bool havematerialTechnicalAttributeUInt16() const;
+   std::vector<ebucoreTechnicalAttributeUInt16*> getmaterialTechnicalAttributeUInt16() const;
+   bool havematerialTechnicalAttributeUInt32() const;
+   std::vector<ebucoreTechnicalAttributeUInt32*> getmaterialTechnicalAttributeUInt32() const;
+   bool havematerialTechnicalAttributeUInt64() const;
+   std::vector<ebucoreTechnicalAttributeUInt64*> getmaterialTechnicalAttributeUInt64() const;
+   bool havematerialTechnicalAttributeFloat() const;
+   std::vector<ebucoreTechnicalAttributeFloat*> getmaterialTechnicalAttributeFloat() const;
+   bool havematerialTechnicalAttributeRational() const;
+   std::vector<ebucoreTechnicalAttributeRational*> getmaterialTechnicalAttributeRational() const;
+   bool havematerialTechnicalAttributeAnyURI() const;
+   std::vector<ebucoreTechnicalAttributeAnyURI*> getmaterialTechnicalAttributeAnyURI() const;
+   bool havematerialTechnicalAttributeBoolean() const;
+   std::vector<ebucoreTechnicalAttributeBoolean*> getmaterialTechnicalAttributeBoolean() const;
+
+
+   // setters
+
+   void setformatID(std::string value);
+   void setformatVersionID(std::string value);
+   void setformatName(std::string value);
+   void setformatDefinition(std::string value);
+   void setformatYearCreated(mxfTimestamp value);
+   void setformatDateCreated(mxfTimestamp value);
+   void setoverallDurationTime(mxfRational value);
+   void setoverallDurationEditUnit(int64_t value);
+   void setoverallEditrate(mxfRational value);
+   void setcontainerFormat(const std::vector<ebucoreContainerFormat*>& value);
+   void appendcontainerFormat(ebucoreContainerFormat* value);
+   void setmedium(const std::vector<ebucoreMedium*>& value);
+   void appendmedium(ebucoreMedium* value);
+   void setpackageInfo(const std::vector<ebucorePackageInfo*>& value);
+   void appendpackageInfo(ebucorePackageInfo* value);
+   void setmimeType(const std::vector<ebucoreMimeType*>& value);
+   void appendmimeType(ebucoreMimeType* value);
+   void setmaterialAudioFormat(const std::vector<ebucoreAudioFormat*>& value);
+   void appendmaterialAudioFormat(ebucoreAudioFormat* value);
+   void setmaterialVideoFormat(const std::vector<ebucoreVideoFormat*>& value);
+   void appendmaterialVideoFormat(ebucoreVideoFormat* value);
+   void setmaterialImageFormat(const std::vector<ebucoreImageFormat*>& value);
+   void appendmaterialImageFormat(ebucoreImageFormat* value);
+   void setmaterialDataFormat(const std::vector<ebucoreDataFormat*>& value);
+   void appendmaterialDataFormat(ebucoreDataFormat* value);
+   void setmaterialSigningFormat(const std::vector<ebucoreSigningFormat*>& value);
+   void appendmaterialSigningFormat(ebucoreSigningFormat* value);
+   void setmaterialTechnicalAttributeString(const std::vector<ebucoreTechnicalAttributeString*>& value);
+   void appendmaterialTechnicalAttributeString(ebucoreTechnicalAttributeString* value);
+   void setmaterialTechnicalAttributeInt8(const std::vector<ebucoreTechnicalAttributeInt8*>& value);
+   void appendmaterialTechnicalAttributeInt8(ebucoreTechnicalAttributeInt8* value);
+   void setmaterialTechnicalAttributeInt16(const std::vector<ebucoreTechnicalAttributeInt16*>& value);
+   void appendmaterialTechnicalAttributeInt16(ebucoreTechnicalAttributeInt16* value);
+   void setmaterialTechnicalAttributeInt32(const std::vector<ebucoreTechnicalAttributeInt32*>& value);
+   void appendmaterialTechnicalAttributeInt32(ebucoreTechnicalAttributeInt32* value);
+   void setmaterialTechnicalAttributeInt64(const std::vector<ebucoreTechnicalAttributeInt64*>& value);
+   void appendmaterialTechnicalAttributeInt64(ebucoreTechnicalAttributeInt64* value);
+   void setmaterialTechnicalAttributeUInt8(const std::vector<ebucoreTechnicalAttributeUInt8*>& value);
+   void appendmaterialTechnicalAttributeUInt8(ebucoreTechnicalAttributeUInt8* value);
+   void setmaterialTechnicalAttributeUInt16(const std::vector<ebucoreTechnicalAttributeUInt16*>& value);
+   void appendmaterialTechnicalAttributeUInt16(ebucoreTechnicalAttributeUInt16* value);
+   void setmaterialTechnicalAttributeUInt32(const std::vector<ebucoreTechnicalAttributeUInt32*>& value);
+   void appendmaterialTechnicalAttributeUInt32(ebucoreTechnicalAttributeUInt32* value);
+   void setmaterialTechnicalAttributeUInt64(const std::vector<ebucoreTechnicalAttributeUInt64*>& value);
+   void appendmaterialTechnicalAttributeUInt64(ebucoreTechnicalAttributeUInt64* value);
+   void setmaterialTechnicalAttributeFloat(const std::vector<ebucoreTechnicalAttributeFloat*>& value);
+   void appendmaterialTechnicalAttributeFloat(ebucoreTechnicalAttributeFloat* value);
+   void setmaterialTechnicalAttributeRational(const std::vector<ebucoreTechnicalAttributeRational*>& value);
+   void appendmaterialTechnicalAttributeRational(ebucoreTechnicalAttributeRational* value);
+   void setmaterialTechnicalAttributeAnyURI(const std::vector<ebucoreTechnicalAttributeAnyURI*>& value);
+   void appendmaterialTechnicalAttributeAnyURI(ebucoreTechnicalAttributeAnyURI* value);
+   void setmaterialTechnicalAttributeBoolean(const std::vector<ebucoreTechnicalAttributeBoolean*>& value);
+   void appendmaterialTechnicalAttributeBoolean(ebucoreTechnicalAttributeBoolean* value);
 
 
 protected:

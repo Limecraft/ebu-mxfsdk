@@ -39,7 +39,43 @@ libebucore_la_SOURCES = \
 	metadata/base/ebucoreTitleBase.cpp \
 	metadata/base/ebucoreTypeBase.cpp \
 	metadata/base/ebucoreTypeGroupBase.cpp \
-	metadata/base/ebucoreVersionBase.cpp \
+	metadata/base/ebucoreVersionBase.cpp \    
+    metadata/base/ebucoreAncillaryDataBase.cpp \
+    metadata/base/ebucoreAspectRatioBase.cpp \
+    metadata/base/ebucoreAudioFormatBase.cpp \
+    metadata/base/ebucoreCaptioningBase.cpp \
+    metadata/base/ebucoreCodecBase.cpp \
+    metadata/base/ebucoreContainerFormatBase.cpp \
+    metadata/base/ebucoreDataFormatBase.cpp \
+    metadata/base/ebucoreDimensionBase.cpp \
+    metadata/base/ebucoreEncodingBase.cpp \
+    metadata/base/ebucoreImageFormatBase.cpp \
+    metadata/base/ebucoreMediumBase.cpp \
+    metadata/base/ebucoreMimeTypeBase.cpp \
+    metadata/base/ebucorePackageInfoBase.cpp \
+    metadata/base/ebucorePartFrameworkBase.cpp \
+    metadata/base/ebucoreRationalBase.cpp \
+    metadata/base/ebucoreSigningFormatBase.cpp \
+    metadata/base/ebucoreTrackBase.cpp \
+    metadata/base/ebucoreVideoFormatBase.cpp \
+    metadata/ebucoreAncillaryData.cpp \
+    metadata/ebucoreAspectRatio.cpp \
+    metadata/ebucoreAudioFormat.cpp \
+    metadata/ebucoreCaptioning.cpp \
+    metadata/ebucoreCodec.cpp \
+    metadata/ebucoreContainerFormat.cpp \
+    metadata/ebucoreDataFormat.cpp \
+    metadata/ebucoreDimension.cpp \
+    metadata/ebucoreEncoding.cpp \
+    metadata/ebucoreImageFormat.cpp \
+    metadata/ebucoreMedium.cpp \
+    metadata/ebucoreMimeType.cpp \
+    metadata/ebucorePackageInfo.cpp \
+    metadata/ebucorePartFramework.cpp \
+    metadata/ebucoreRational.cpp \
+    metadata/ebucoreSigningFormat.cpp \
+    metadata/ebucoreTrack.cpp \
+    metadata/ebucoreVideoFormat.cpp \
 	metadata/ebucoreTextualAnnotation.cpp \
 	metadata/ebucoreAddress.cpp \
 	metadata/ebucoreAlternativeTitle.cpp \
