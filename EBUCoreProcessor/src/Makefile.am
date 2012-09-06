@@ -39,7 +39,7 @@ libebucore_la_SOURCES = \
 	metadata/base/ebucoreTitleBase.cpp \
 	metadata/base/ebucoreTypeBase.cpp \
 	metadata/base/ebucoreTypeGroupBase.cpp \
-	metadata/base/ebucoreVersionBase.cpp \    
+	metadata/base/ebucoreVersionBase.cpp \
     metadata/base/ebucoreAncillaryDataBase.cpp \
     metadata/base/ebucoreAspectRatioBase.cpp \
     metadata/base/ebucoreAudioFormatBase.cpp \
