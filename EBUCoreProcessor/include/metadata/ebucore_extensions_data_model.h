@@ -2473,7 +2473,7 @@ MXF_SET_DEFINITION(ebucoreTypeGroup, ebucoreTechnicalAttributeFloat,
 	MXF_ITEM_DEFINITION(ebucoreTechnicalAttributeFloat, technicalAttributeFloatValue,
 		MXF_LABEL(0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x0A,0x01),
 		0x0000,
-		MXF_RATIONAL_TYPE,
+		MXF_FLOAT_TYPE,
 		1
 	);
 MXF_SET_DEFINITION(ebucoreTypeGroup, ebucoreTechnicalAttributeRational, 

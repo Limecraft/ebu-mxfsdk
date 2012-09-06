@@ -55,12 +55,12 @@ public:
 
    // getters
 
-   mxfRational gettechnicalAttributeFloatValue() const;
+   float gettechnicalAttributeFloatValue() const;
 
 
    // setters
 
-   void settechnicalAttributeFloatValue(mxfRational value);
+   void settechnicalAttributeFloatValue(float value);
 
 
 protected:

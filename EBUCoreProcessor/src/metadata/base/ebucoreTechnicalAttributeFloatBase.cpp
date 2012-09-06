@@ -61,13 +61,13 @@ ebucoreTechnicalAttributeFloatBase::~ebucoreTechnicalAttributeFloatBase()
 {}
 
 
-mxfRational ebucoreTechnicalAttributeFloatBase::gettechnicalAttributeFloatValue() const
+float ebucoreTechnicalAttributeFloatBase::gettechnicalAttributeFloatValue() const
 {
-    return getRationalItem(&MXF_ITEM_K(ebucoreTechnicalAttributeFloat, technicalAttributeFloatValue));
+    return getFloatItem(&MXF_ITEM_K(ebucoreTechnicalAttributeFloat, technicalAttributeFloatValue));
 }
 
-void ebucoreTechnicalAttributeFloatBase::settechnicalAttributeFloatValue(mxfRational value)
+void ebucoreTechnicalAttributeFloatBase::settechnicalAttributeFloatValue(float value)
 {
-    setRationalItem(&MXF_ITEM_K(ebucoreTechnicalAttributeFloat, technicalAttributeFloatValue), value);
+    setFloatItem(&MXF_ITEM_K(ebucoreTechnicalAttributeFloat, technicalAttributeFloatValue), value);
 }
 
