@@ -91,6 +91,16 @@ std::string ebucorePartMetadataBase::getpartDefinition() const
     return getStringItem(&MXF_ITEM_K(ebucorePartMetadata, partDefinition));
 }
 
+bool ebucorePartMetadataBase::havepartStartTimecode() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePartMetadata, partStartTimecode));
+}
+
+std::string ebucorePartMetadataBase::getpartStartTimecode() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucorePartMetadata, partStartTimecode));
+}
+
 bool ebucorePartMetadataBase::havepartStartTime() const
 {
     return haveItem(&MXF_ITEM_K(ebucorePartMetadata, partStartTime));
@@ -111,6 +121,16 @@ int64_t ebucorePartMetadataBase::getpartStartEditUnitNumber() const
     return getLengthItem(&MXF_ITEM_K(ebucorePartMetadata, partStartEditUnitNumber));
 }
 
+bool ebucorePartMetadataBase::havepartEndTimecode() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePartMetadata, partEndTimecode));
+}
+
+std::string ebucorePartMetadataBase::getpartEndTimecode() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucorePartMetadata, partEndTimecode));
+}
+
 bool ebucorePartMetadataBase::havepartEndTime() const
 {
     return haveItem(&MXF_ITEM_K(ebucorePartMetadata, partEndTime));
@@ -129,6 +149,16 @@ bool ebucorePartMetadataBase::havepartEndEditUnitNumber() const
 int64_t ebucorePartMetadataBase::getpartEndEditUnitNumber() const
 {
     return getLengthItem(&MXF_ITEM_K(ebucorePartMetadata, partEndEditUnitNumber));
+}
+
+bool ebucorePartMetadataBase::havepartDurationTimecode() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePartMetadata, partDurationTimecode));
+}
+
+std::string ebucorePartMetadataBase::getpartDurationTimecode() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucorePartMetadata, partDurationTimecode));
 }
 
 bool ebucorePartMetadataBase::havepartDurationTime() const
@@ -190,6 +220,11 @@ void ebucorePartMetadataBase::setpartDefinition(std::string value)
     setStringItem(&MXF_ITEM_K(ebucorePartMetadata, partDefinition), value);
 }
 
+void ebucorePartMetadataBase::setpartStartTimecode(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucorePartMetadata, partStartTimecode), value);
+}
+
 void ebucorePartMetadataBase::setpartStartTime(mxfRational value)
 {
     setRationalItem(&MXF_ITEM_K(ebucorePartMetadata, partStartTime), value);
@@ -200,6 +235,11 @@ void ebucorePartMetadataBase::setpartStartEditUnitNumber(int64_t value)
     setLengthItem(&MXF_ITEM_K(ebucorePartMetadata, partStartEditUnitNumber), value);
 }
 
+void ebucorePartMetadataBase::setpartEndTimecode(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucorePartMetadata, partEndTimecode), value);
+}
+
 void ebucorePartMetadataBase::setpartEndTime(mxfRational value)
 {
     setRationalItem(&MXF_ITEM_K(ebucorePartMetadata, partEndTime), value);
@@ -208,6 +248,11 @@ void ebucorePartMetadataBase::setpartEndTime(mxfRational value)
 void ebucorePartMetadataBase::setpartEndEditUnitNumber(int64_t value)
 {
     setLengthItem(&MXF_ITEM_K(ebucorePartMetadata, partEndEditUnitNumber), value);
+}
+
+void ebucorePartMetadataBase::setpartDurationTimecode(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucorePartMetadata, partDurationTimecode), value);
 }
 
 void ebucorePartMetadataBase::setpartDurationTime(mxfRational value)

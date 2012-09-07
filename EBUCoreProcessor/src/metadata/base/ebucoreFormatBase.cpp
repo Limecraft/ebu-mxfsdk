@@ -121,6 +121,16 @@ mxfTimestamp ebucoreFormatBase::getformatDateCreated() const
     return getTimestampItem(&MXF_ITEM_K(ebucoreFormat, formatDateCreated));
 }
 
+bool ebucoreFormatBase::haveoverallDurationTimecode() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallDurationTimecode));
+}
+
+std::string ebucoreFormatBase::getoverallDurationTimecode() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreFormat, overallDurationTimecode));
+}
+
 bool ebucoreFormatBase::haveoverallDurationTime() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreFormat, overallDurationTime));
@@ -141,14 +151,74 @@ int64_t ebucoreFormatBase::getoverallDurationEditUnit() const
     return getLengthItem(&MXF_ITEM_K(ebucoreFormat, overallDurationEditUnit));
 }
 
-bool ebucoreFormatBase::haveoverallEditrate() const
+bool ebucoreFormatBase::haveoverallEditRate() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallEditrate));
+    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallEditRate));
 }
 
-mxfRational ebucoreFormatBase::getoverallEditrate() const
+mxfRational ebucoreFormatBase::getoverallEditRate() const
 {
-    return getRationalItem(&MXF_ITEM_K(ebucoreFormat, overallEditrate));
+    return getRationalItem(&MXF_ITEM_K(ebucoreFormat, overallEditRate));
+}
+
+bool ebucoreFormatBase::haveoverallStartTimecode() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallStartTimecode));
+}
+
+std::string ebucoreFormatBase::getoverallStartTimecode() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreFormat, overallStartTimecode));
+}
+
+bool ebucoreFormatBase::haveoverallStartTime() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallStartTime));
+}
+
+mxfRational ebucoreFormatBase::getoverallStartTime() const
+{
+    return getRationalItem(&MXF_ITEM_K(ebucoreFormat, overallStartTime));
+}
+
+bool ebucoreFormatBase::haveoverallStartEditUnit() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallStartEditUnit));
+}
+
+int64_t ebucoreFormatBase::getoverallStartEditUnit() const
+{
+    return getLengthItem(&MXF_ITEM_K(ebucoreFormat, overallStartEditUnit));
+}
+
+bool ebucoreFormatBase::haveoverallEndTimecode() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallEndTimecode));
+}
+
+std::string ebucoreFormatBase::getoverallEndTimecode() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreFormat, overallEndTimecode));
+}
+
+bool ebucoreFormatBase::haveoverallEndTime() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallEndTime));
+}
+
+mxfRational ebucoreFormatBase::getoverallEndTime() const
+{
+    return getRationalItem(&MXF_ITEM_K(ebucoreFormat, overallEndTime));
+}
+
+bool ebucoreFormatBase::haveoverallEndEditUnit() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallEndEditUnit));
+}
+
+int64_t ebucoreFormatBase::getoverallEndEditUnit() const
+{
+    return getLengthItem(&MXF_ITEM_K(ebucoreFormat, overallEndEditUnit));
 }
 
 bool ebucoreFormatBase::havecontainerFormat() const
@@ -550,6 +620,11 @@ void ebucoreFormatBase::setformatDateCreated(mxfTimestamp value)
     setTimestampItem(&MXF_ITEM_K(ebucoreFormat, formatDateCreated), value);
 }
 
+void ebucoreFormatBase::setoverallDurationTimecode(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreFormat, overallDurationTimecode), value);
+}
+
 void ebucoreFormatBase::setoverallDurationTime(mxfRational value)
 {
     setRationalItem(&MXF_ITEM_K(ebucoreFormat, overallDurationTime), value);
@@ -560,9 +635,39 @@ void ebucoreFormatBase::setoverallDurationEditUnit(int64_t value)
     setLengthItem(&MXF_ITEM_K(ebucoreFormat, overallDurationEditUnit), value);
 }
 
-void ebucoreFormatBase::setoverallEditrate(mxfRational value)
+void ebucoreFormatBase::setoverallEditRate(mxfRational value)
 {
-    setRationalItem(&MXF_ITEM_K(ebucoreFormat, overallEditrate), value);
+    setRationalItem(&MXF_ITEM_K(ebucoreFormat, overallEditRate), value);
+}
+
+void ebucoreFormatBase::setoverallStartTimecode(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreFormat, overallStartTimecode), value);
+}
+
+void ebucoreFormatBase::setoverallStartTime(mxfRational value)
+{
+    setRationalItem(&MXF_ITEM_K(ebucoreFormat, overallStartTime), value);
+}
+
+void ebucoreFormatBase::setoverallStartEditUnit(int64_t value)
+{
+    setLengthItem(&MXF_ITEM_K(ebucoreFormat, overallStartEditUnit), value);
+}
+
+void ebucoreFormatBase::setoverallEndTimecode(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreFormat, overallEndTimecode), value);
+}
+
+void ebucoreFormatBase::setoverallEndTime(mxfRational value)
+{
+    setRationalItem(&MXF_ITEM_K(ebucoreFormat, overallEndTime), value);
+}
+
+void ebucoreFormatBase::setoverallEndEditUnit(int64_t value)
+{
+    setLengthItem(&MXF_ITEM_K(ebucoreFormat, overallEndEditUnit), value);
 }
 
 void ebucoreFormatBase::setcontainerFormat(const std::vector<ebucoreContainerFormat*>& value)

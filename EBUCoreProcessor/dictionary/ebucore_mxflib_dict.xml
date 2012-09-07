@@ -429,15 +429,17 @@
 	<partId                			type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 01 00 00"/>
     <partName                     	type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 02 00 00"/>
     <partDefinition                 type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 03 00 00"/>
-	<!--<partStartTimecode              type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 01 A0 01 00"/>-->
+    
+	<partStartTimecode              type="ISO7String"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 04 00 00"/>
     <partStartTime                  type="Rational"          	use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 05 00 00"/>
-    <partStartEditUnitNumber        type="Length"               use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 06 00 00"/>
-    <!--<partEndTimecode                type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 01 A0 01 00"/>-->
-	<partEndTime                    type="Rational"              use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 09 00 00"/>
-    <partEndEditUnitNumber          type="Length"               use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 0A 00 00"/>
-    <!--<partDurationTimecode           type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 01 A0 01 00"/>-->
-	<partDurationTime               type="Rational"              use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 0C 00 00"/>
-    <partDurationEditUnitNumber     type="Length"               use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 0D 00 00"/>
+    <partStartEditUnitNumber        type="LengthType"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 06 00 00"/>
+    <partEndTimecode                type="ISO7String"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 07 00 00"/>
+	<partEndTime                    type="Rational"             use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 09 00 00"/>
+    <partEndEditUnitNumber          type="LengthType"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 0A 00 00"/>
+    <partDurationTimecode           type="ISO7String"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 0B 00 00"/>
+	<partDurationTime               type="Rational"             use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 0C 00 00"/>
+    <partDurationEditUnitNumber     type="LengthType"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 0D 00 00"/>
+
     <partTypeGroup                  type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 A0 01 00" target="ebucoreTypeGroup"/>
     <partMeta                       type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 A0 02 00" target="ebucoreCoreMetadata"/>
   </ebucorePartMetadata>
@@ -449,10 +451,19 @@
     <formatDefinition type="UTF16String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 04 00 00"/>
     <formatYearCreated type="Timestamp" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 05 00 00"/>
     <formatDateCreated type="Timestamp" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 06 00 00"/>
-    <!--<overallDurationTimecode type="" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 07 00 00"/>-->
-    <overallDurationTime type="Rational" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 08 00 00"/>
-    <overallDurationEditUnit type="Length" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 09 00 00"/>
-    <overallEditrate type="Rational" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 0A 00 00"/>
+    
+    <overallDurationTimecode type="ISO7String" use="optional"                   globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 07 00 00"/>
+    <overallDurationTime type="Rational" use="optional"                         globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 08 00 00"/>
+    <overallDurationEditUnit type="LengthType" use="optional"                   globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 09 00 00"/>
+    <overallEditRate type="Rational" use="optional"                             globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 0A 00 00"/>
+
+    <overallStartTimecode type="ISO7String" use="optional"                      globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 0B 00 00"/>
+    <overallStartTime type="Rational" use="optional"                            globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 0C 00 00"/>
+    <overallStartEditUnit type="LengthType" use="optional"                      globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 0D 00 00"/>
+    <overallEndTimecode type="ISO7String" use="optional"                        globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 0E 00 00"/>
+    <overallEndTime type="Rational" use="optional"                              globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 0F 00 00"/>
+    <overallEndEditUnit type="LengthType" use="optional"                        globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 10 00 00"/>
+
     <containerFormat type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 A0 01 00" target="ebucoreContainerFormat"/>
     <medium type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 A0 02 00" target="ebucoreMedium"/>
     <packageInfo type="StrongRef" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 A0 03 00" target="ebucorePackageInfo"/>
@@ -660,7 +671,7 @@
   </ebucoreTechnicalAttributeUInt64>
  
   <ebucoreTechnicalAttributeFloat base="ebucoreTypeGroup" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 B0 01 0A 00">
-	<technicalAttributeFloatValue  type="Float"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 B0 01 0A 01"/>
+	<technicalAttributeFloatValue  type="Float32"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 B0 01 0A 01"/>
   </ebucoreTechnicalAttributeFloat>
  
   <ebucoreTechnicalAttributeRational base="ebucoreTypeGroup" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 B0 01 0B 00">

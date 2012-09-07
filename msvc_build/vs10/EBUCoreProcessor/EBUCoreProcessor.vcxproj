@@ -71,6 +71,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\AppUtils.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\EBUCoreMapping.cpp">
       <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</PreprocessToFile>
     </ClCompile>
@@ -110,6 +111,7 @@
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreLanguageBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreLocationBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreMainFrameworkBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreMediumBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreMetadataSchemeInformationBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreMimeTypeBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreObjectTypeBase.cpp" />

@@ -157,12 +157,15 @@ DMFramework* Process(std::auto_ptr<ebuCoreMainType> metadata, const char* metada
 	appender->Modify(framework);
 	framework->setdocumentId(metadataLocation);	// use the file location as document id
 
+	std::vector<ebucorePartMetadata*> timelineParts;
+	mxfRational r = { 25, 1 };
+
 	ebucoreCoreMetadata *core = new ebucoreCoreMetadata(destination);
 	appender->Modify(core);
 	if (appender != NULL)
-		mapCoreMetadata(metadata->coreMetadata(), core, appender);
+		mapCoreMetadata(metadata->coreMetadata(), core, r, timelineParts, appender);
 	else
-		mapCoreMetadata(metadata->coreMetadata(), core);
+		mapCoreMetadata(metadata->coreMetadata(), core, r, timelineParts);
 
 	ebucoreMetadataSchemeInformation *info = new ebucoreMetadataSchemeInformation(destination);
 	appender->Modify(info);

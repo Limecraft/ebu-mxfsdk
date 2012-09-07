@@ -6,6 +6,7 @@
 #include <bmx/Logging.h>*/
 
 #include "EBUCoreMapping.h"
+#include "AppUtils.h"
 
 #include <xercesc/util/TransService.hpp>
 
@@ -413,6 +414,27 @@ std::string convert_to_string(::xml_schema::integer& source) {
 	std::stringstream ss;
 	ss << source;
 	return ss.str();
+}
+
+mxfRational convert_rational(xml_schema::duration& source) {
+	mxfRational r = { 
+	   (source.years() * 365 * 86400 + 
+		source.months() * 30 * 86400 + 
+		source.days() * 86400 + 
+		source.hours() * 3600 + 
+		source.minutes() * 60 + 
+		source.seconds()) * 100,
+	100};
+	return r;
+}
+
+mxfRational convert_rational(xml_schema::time& source) {
+	mxfRational r = { 
+	   (source.hours() * 3600 + 
+		source.minutes() * 60 + 
+		source.seconds()) * 100,
+	100};
+	return r;
 }
 
 void mapTitle(titleType& source, ebucoreTitle *dest, ObjectModifier* mod = NULL) {
@@ -1326,9 +1348,22 @@ void mapFormat(formatType& source, ebucoreFormat *dest, ObjectModifier* mod = NU
 	}
 
 	if (source.duration().present()) {
-		// [TODO] Cannot clearly map durations as XSD durations are strings, while KLV durations are numeric
-		// [TODO] Cannot clearly map timecodes as no clear type consensus exists on either side
+		// [NOTE] Mapped playtime as duration because we need a numeric value (rational) # of seconds.
+		// [NOTE] We just map the timecode as a string to the KLV representation
 		SIMPLE_MAP_OPTIONAL(source, duration().get().editUnitNumber, dest, setoverallDurationEditUnit)
+		SIMPLE_MAP_OPTIONAL(source, duration().get().timecode, dest, setoverallDurationTimecode)
+		SIMPLE_MAP_OPTIONAL_CONVERT(source, duration().get().normalPlayTime, dest, setoverallDurationTime, convert_rational)
+	}
+
+	if (source.start().present()) {
+		SIMPLE_MAP_OPTIONAL(source, start().get().editUnitNumber, dest, setoverallStartEditUnit)
+		SIMPLE_MAP_OPTIONAL(source, start().get().timecode, dest, setoverallStartTimecode)
+		SIMPLE_MAP_OPTIONAL_CONVERT(source, start().get().normalPlayTime, dest, setoverallStartTime, convert_rational)
+	}
+	if (source.end().present()) {
+		SIMPLE_MAP_OPTIONAL(source, end().get().editUnitNumber, dest, setoverallEndEditUnit)
+		SIMPLE_MAP_OPTIONAL(source, end().get().timecode, dest, setoverallEndTimecode)
+		SIMPLE_MAP_OPTIONAL_CONVERT(source, end().get().normalPlayTime, dest, setoverallEndTime, convert_rational)
 	}
 
 	NEW_VECTOR_AND_ASSIGN(source, containerFormat, ebucoreContainerFormat, formatType::containerFormat_iterator, mapContainerFormat, dest, setcontainerFormat)
@@ -1377,9 +1412,7 @@ void mapFormat(formatType& source, ebucoreFormat *dest, ObjectModifier* mod = NU
 		formatType::technicalAttributeBoolean_iterator, mapTechnicalAttributeBoolean, dest, setmaterialTechnicalAttributeBoolean)
 }
 
-void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, ObjectModifier* mod);
-
-void mapPart(partType& source, ebucorePartMetadata *dest, ObjectModifier* mod) {
+void mapPart(partType& source, ebucorePartMetadata *dest, mxfRational overallFrameRate, std::vector<ebucorePartMetadata*>& timelineParts, ObjectModifier* mod) {
 	SIMPLE_MAP_OPTIONAL(source, partId, dest, setpartId)
 	SIMPLE_MAP_OPTIONAL(source, partName, dest, setpartName)
 	SIMPLE_MAP_OPTIONAL(source, partDefinition, dest, setpartDefinition)
@@ -1387,11 +1420,11 @@ void mapPart(partType& source, ebucorePartMetadata *dest, ObjectModifier* mod) {
 
 	// map ourselves (we are an extension of the coreMetadataType) onto a new ebucoreCoreMetadata object
 	ebucoreCoreMetadata *obj = newAndModifyObject<ebucoreCoreMetadata>(dest->getHeaderMetadata(), mod);
-	mapCoreMetadata(source, obj, mod);
+	mapCoreMetadata(source, obj, overallFrameRate, timelineParts, mod);
 	dest->setpartMeta(obj);
 }
 
-void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, ObjectModifier* mod) {
+void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, mxfRational overallFrameRate, std::vector<ebucorePartMetadata*>& timelineParts, ObjectModifier* mod) {
 
 	NEW_VECTOR_AND_ASSIGN(source, title, ebucoreTitle, coreMetadataType::title_iterator, mapTitle, dest, settitle)	
 	NEW_VECTOR_AND_ASSIGN(source, alternativeTitle, ebucoreAlternativeTitle, coreMetadataType::alternativeTitle_iterator, mapAlternativeTitle, dest, setalternativeTitle)
@@ -1423,7 +1456,80 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, Object
 	NEW_VECTOR_AND_ASSIGN(source, relation, ebucoreCustomRelation, coreMetadataType::relation_iterator, mapCustomRelation, dest, setcustomRelation)
 
 	NEW_VECTOR_AND_ASSIGN(source, format, ebucoreFormat, coreMetadataType::format_iterator, mapFormat, dest, setformat)
-	NEW_VECTOR_AND_ASSIGN(source, part, ebucorePartMetadata, coreMetadataType::part_iterator, mapPart, dest, setpart)
+
+	std::vector<ebucorePartMetadata*> vec_parts;
+	for (coreMetadataType::part_iterator it = source.part().begin(); it != source.part().end(); it++) {
+		ebucorePartMetadata *obj = newAndModifyObject<ebucorePartMetadata>(dest->getHeaderMetadata(), mod);
+		mapPart(*it, obj, overallFrameRate, timelineParts, mod);
+		vec_parts.push_back(obj);
+
+		// set extremes to start with
+		mxfPosition partStart = 0x7FFFFFFFFFFFFFFF;
+		mxfLength partEnd = 0;
+
+		// determine which of our parts belong on a timeline
+		partType& part = *it;
+		for (partType::format_iterator it2 = part.format().begin(); it2 != part.format().end(); it2++) {
+			formatType& format = *it2;
+			if (format.start().present() && (format.duration().present() || format.end().present())) {
+				formatType::start_type &start = format.start().get();
+				// sensible values are present!
+				mxfPosition formatStart;
+				mxfLength formatDuration;
+				if (start.editUnitNumber().present()) {
+					formatStart = start.editUnitNumber().get();
+				} else if (start.normalPlayTime().present()) {
+					// convert a duration
+					mxfRational d = convert_rational(start.normalPlayTime().get());
+					formatStart = (d.numerator * overallFrameRate.numerator) / (d.denominator * overallFrameRate.denominator);
+				} else {
+					// convert a time code
+					bmx::Timecode tc;
+					bmx::parse_timecode(start.timecode().get().c_str(), overallFrameRate, &tc);
+					formatStart = tc.GetOffset();
+				}
+				if (format.duration().present()) {
+					formatType::duration_type &dur = format.duration().get();
+					if (dur.editUnitNumber().present()) {
+						formatDuration = dur.editUnitNumber().get();
+					} else if (dur.normalPlayTime().present()) {
+						// convert a duration
+						mxfRational d = convert_rational(dur.normalPlayTime().get());
+						formatDuration = (d.numerator * overallFrameRate.numerator) / (d.denominator * overallFrameRate.denominator);
+					} else {
+						// convert a time code
+						bmx::Timecode tc;
+						bmx::parse_timecode(dur.timecode().get().c_str(), overallFrameRate, &tc);
+						formatDuration = tc.GetOffset();
+					}
+				} else {
+					formatType::end_type &end = format.end().get();
+					if (end.editUnitNumber().present()) {
+						formatDuration = end.editUnitNumber().get() - formatStart;
+					} else if (end.normalPlayTime().present()) {
+						// convert a duration
+						mxfRational d = convert_rational(end.normalPlayTime().get());
+						formatStart = (d.numerator * overallFrameRate.numerator) / (d.denominator * overallFrameRate.denominator) - formatStart;
+					} else {
+						// convert a time code
+						bmx::Timecode tc;
+						bmx::parse_timecode(end.timecode().get().c_str(), overallFrameRate, &tc);
+						formatDuration = tc.GetOffset() - formatStart;
+					}
+				}
+				if (formatStart < partStart) partStart = formatStart;
+				if (formatStart + formatDuration > partEnd) partEnd = formatStart + formatDuration;
+			}
+		}
+
+		if (partStart != 0x7FFFFFFFFFFFFFFF && partEnd != 0) {
+			// this goes onto the timeline!
+			obj->setpartStartEditUnitNumber(partStart);
+			obj->setpartDurationEditUnitNumber(partEnd - partStart);
+			timelineParts.push_back(obj);
+		}
+	}
+	dest->setpart(vec_parts); 
 	
 	/*
 	[TODO]:
