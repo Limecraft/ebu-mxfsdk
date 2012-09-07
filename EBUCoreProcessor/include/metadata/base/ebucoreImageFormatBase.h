@@ -64,7 +64,7 @@ public:
    bool haveimageOrientation() const;
    std::string getimageOrientation() const;
    bool haveimageAspectRatio() const;
-   mxfRational getimageAspectRatio() const;
+   ebucoreAspectRatio* getimageAspectRatio() const;
    bool haveimageEncoding() const;
    std::vector<ebucoreEncoding*> getimageEncoding() const;
    bool haveimageCodec() const;
@@ -107,7 +107,7 @@ public:
    void setimageFormatName(std::string value);
    void setimageFormatDefinition(std::string value);
    void setimageOrientation(std::string value);
-   void setimageAspectRatio(mxfRational value);
+   void setimageAspectRatio(ebucoreAspectRatio* value);
    void setimageEncoding(const std::vector<ebucoreEncoding*>& value);
    void appendimageEncoding(ebucoreEncoding* value);
    void setimageCodec(ebucoreCodec* value);

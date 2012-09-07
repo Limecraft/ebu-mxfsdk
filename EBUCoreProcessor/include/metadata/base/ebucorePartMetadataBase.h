@@ -55,7 +55,9 @@ public:
 
    // getters
 
+   bool havepartId() const;
    std::string getpartId() const;
+   bool havepartName() const;
    std::string getpartName() const;
    bool havepartDefinition() const;
    std::string getpartDefinition() const;
@@ -71,7 +73,9 @@ public:
    mxfRational getpartDurationTime() const;
    bool havepartDurationEditUnitNumber() const;
    int64_t getpartDurationEditUnitNumber() const;
-   std::string getpartTypeGroup() const;
+   bool havepartTypeGroup() const;
+   ebucoreTypeGroup* getpartTypeGroup() const;
+   bool havepartMeta() const;
    ebucoreCoreMetadata* getpartMeta() const;
 
 
@@ -86,7 +90,7 @@ public:
    void setpartEndEditUnitNumber(int64_t value);
    void setpartDurationTime(mxfRational value);
    void setpartDurationEditUnitNumber(int64_t value);
-   void setpartTypeGroup(std::string value);
+   void setpartTypeGroup(ebucoreTypeGroup* value);
    void setpartMeta(ebucoreCoreMetadata* value);
 
 

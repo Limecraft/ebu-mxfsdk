@@ -60,14 +60,15 @@ public:
    bool havepackageName() const;
    std::string getpackageName() const;
    bool havepackageLocator() const;
-   std::string getpackageLocator() const;
+   std::vector<ebucoreTypeGroup*> getpackageLocator() const;
 
 
    // setters
 
    void setpackageSize(uint64_t value);
    void setpackageName(std::string value);
-   void setpackageLocator(std::string value);
+   void setpackageLocator(const std::vector<ebucoreTypeGroup*>& value);
+   void appendpackageLocator(ebucoreTypeGroup* value);
 
 
 protected:

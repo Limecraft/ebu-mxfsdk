@@ -61,11 +61,6 @@ ebucoreDimensionBase::~ebucoreDimensionBase()
 {}
 
 
-bool ebucoreDimensionBase::havedimensionValue() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreDimension, dimensionValue));
-}
-
 uint64_t ebucoreDimensionBase::getdimensionValue() const
 {
     return getUInt64Item(&MXF_ITEM_K(ebucoreDimension, dimensionValue));

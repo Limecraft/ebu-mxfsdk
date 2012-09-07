@@ -190,16 +190,11 @@ bool ebucoreFormatBase::havepackageInfo() const
     return haveItem(&MXF_ITEM_K(ebucoreFormat, packageInfo));
 }
 
-std::vector<ebucorePackageInfo*> ebucoreFormatBase::getpackageInfo() const
+ebucorePackageInfo* ebucoreFormatBase::getpackageInfo() const
 {
-    vector<ebucorePackageInfo*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreFormat, packageInfo)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucorePackageInfo*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucorePackageInfo*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreFormat, packageInfo)));
+    MXFPP_CHECK(dynamic_cast<ebucorePackageInfo*>(obj.get()) != 0);
+    return dynamic_cast<ebucorePackageInfo*>(obj.release());
 }
 
 bool ebucoreFormatBase::havemimeType() const
@@ -592,15 +587,9 @@ void ebucoreFormatBase::appendmedium(ebucoreMedium* value)
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreFormat, medium), value);
 }
 
-void ebucoreFormatBase::setpackageInfo(const std::vector<ebucorePackageInfo*>& value)
+void ebucoreFormatBase::setpackageInfo(ebucorePackageInfo* value)
 {
-    WrapObjectVectorIterator<ebucorePackageInfo> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreFormat, packageInfo), &iter);
-}
-
-void ebucoreFormatBase::appendpackageInfo(ebucorePackageInfo* value)
-{
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreFormat, packageInfo), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreFormat, packageInfo), value);
 }
 
 void ebucoreFormatBase::setmimeType(const std::vector<ebucoreMimeType*>& value)

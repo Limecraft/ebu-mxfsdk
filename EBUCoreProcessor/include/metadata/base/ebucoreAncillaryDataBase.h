@@ -56,20 +56,21 @@ public:
    // getters
 
    bool haveDID() const;
-   std::string getDID() const;
+   uint32_t getDID() const;
    bool haveSDID() const;
-   std::string getSDID() const;
+   uint32_t getSDID() const;
    bool havelineNumber() const;
-   uint32_t getlineNumber() const;
+   std::vector<uint32_t> getlineNumber() const;
    bool haveANCWrappingType() const;
    ebucoreTypeGroup* getANCWrappingType() const;
 
 
    // setters
 
-   void setDID(std::string value);
-   void setSDID(std::string value);
-   void setlineNumber(uint32_t value);
+   void setDID(uint32_t value);
+   void setSDID(uint32_t value);
+   void setlineNumber(const std::vector<uint32_t>& value);
+   void appendlineNumber(uint32_t value);
    void setANCWrappingType(ebucoreTypeGroup* value);
 
 

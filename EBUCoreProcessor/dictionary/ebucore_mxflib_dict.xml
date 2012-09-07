@@ -426,20 +426,20 @@
   </ebucoreBasicRelation>
 
   <ebucorePartMetadata base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 00 00 00">
-	<partId                			type="UTF16String"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 01 00 00"/>
-    <partName                     	type="UTF16String"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 02 00 00"/>
+	<partId                			type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 01 00 00"/>
+    <partName                     	type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 02 00 00"/>
     <partDefinition                 type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 03 00 00"/>
 	<!--<partStartTimecode              type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 01 A0 01 00"/>-->
     <partStartTime                  type="Rational"          	use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 05 00 00"/>
-    <partStartEditUnitNumber        type="Length"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 06 00 00"/>
+    <partStartEditUnitNumber        type="Length"               use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 06 00 00"/>
     <!--<partEndTimecode                type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 01 A0 01 00"/>-->
 	<partEndTime                    type="Rational"              use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 09 00 00"/>
-    <partEndEditUnitNumber          type="Length"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 0A 00 00"/>
+    <partEndEditUnitNumber          type="Length"               use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 0A 00 00"/>
     <!--<partDurationTimecode           type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 01 A0 01 00"/>-->
 	<partDurationTime               type="Rational"              use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 0C 00 00"/>
-    <partDurationEditUnitNumber     type="Length"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 0D 00 00"/>
-    <partTypeGroup                  type="UTF16String"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 A0 01 00"/>
-    <partMeta                       type="StrongRef"            use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 A0 02 00" target="ebucoreCoreMetadata"/>
+    <partDurationEditUnitNumber     type="Length"               use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 0D 00 00"/>
+    <partTypeGroup                  type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 A0 01 00" target="ebucoreTypeGroup"/>
+    <partMeta                       type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 E0 A0 02 00" target="ebucoreCoreMetadata"/>
   </ebucorePartMetadata>
 
   <ebucoreFormat base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 00 00 00">
@@ -455,7 +455,7 @@
     <overallEditrate type="Rational" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 0A 00 00"/>
     <containerFormat type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 A0 01 00" target="ebucoreContainerFormat"/>
     <medium type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 A0 02 00" target="ebucoreMedium"/>
-    <packageInfo type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 A0 03 00" target="ebucorePackageInfo"/>
+    <packageInfo type="StrongRef" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 A0 03 00" target="ebucorePackageInfo"/>
     <mimeType type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 A0 04 00" target="ebucoreMimeType"/>
     <materialAudioFormat type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 A0 05 00" target="ebucoreAudioFormat"/>
     <materialVideoFormat type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 50 A0 06 00" target="ebucoreVideoFormat"/>
@@ -514,7 +514,7 @@
     <imageFormatName type="UTF16String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 65 02 00 00"/>
     <imageFormatDefinition type="UTF16String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 65 03 00 00"/>
     <imageOrientation type="UTF16String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 65 04 00 00"/>
-    <imageAspectRatio type="Rational" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 65 A0 01 00"/>
+    <imageAspectRatio type="StrongRef" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 65 A0 01 00" target="ebucoreAspectRatio"/>
     <imageEncoding type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 65 A0 02 00" target="ebucoreEncoding"/>
     <imageCodec type="StrongRef" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 65 A0 03 00" target="ebucoreCodec"/>
     <imageHeight type="StrongRef" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 65 A0 04 00" target="ebucoreDimension"/>
@@ -538,16 +538,16 @@
     <audioFormatID type="ISO7String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 01 00 00"/>
     <audioFormatName type="UTF16String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 02 00 00"/>
     <audioFormatDefinition type="UTF16String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 03 00 00"/>
-    <audioTrackConfiguration type="UTF16String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 04 00 00"/>
+    <audioTrackConfiguration type="StrongRef" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 04 00 00" target="ebucoreTypeGroup"/>
     <audioSamplingSize type="UInt16" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 06 00 00"/>
     <audioSamplingType type="UTF16String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 07 00 00"/>
     <audioTotalNumberOfChannels type="UInt16" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 08 00 00"/>
     <audioBitRate type="UInt64" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 09 00 00"/>
     <audioBitRateMode type="UTF16String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 0A 00 00"/>
     <audioSamplingRate type="Rational" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 A0 01 00"/>
-    <audioEncoding type="StrongRef" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 A0 02 00" target="ebucoreEncoding"/>
+    <audioEncoding type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 A0 02 00" target="ebucoreEncoding"/>
     <audioCodec type="StrongRef" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 A0 03 00" target="ebucoreCodec"/>
-    <audioTrack type="StrongRef" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 A0 04 00" target="ebucoreTrack"/>
+    <audioTrack type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 A0 04 00" target="ebucoreTrack"/>
     <audioTechnicalAttributeString type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 A0 05 00" target="ebucoreTechnicalAttributeString"/>
     <audioTechnicalAttributeInt8 type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 A0 06 00" target="ebucoreTechnicalAttributeInt8"/>
     <audioTechnicalAttributeInt16 type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 70 A0 07 00" target="ebucoreTechnicalAttributeInt16"/>
@@ -607,9 +607,9 @@
   </ebucoreCaptioning>
 
   <ebucoreAncillaryData base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 91 02 00 00">
-    <DID type="ISO7String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 91 02 01 00"/>
-    <SDID type="ISO7String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 91 02 02 00"/>
-    <lineNumber type="UInt32" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 91 02 03 00"/>
+    <DID type="UInt32" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 91 02 01 00"/>
+    <SDID type="UInt32" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 91 02 02 00"/>
+    <lineNumber type="UInt32Array" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 91 02 03 00"/>
     <ANCWrappingType type="StrongRef" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 91 02 04 00" target="ebucoreTypeGroup"/>
   </ebucoreAncillaryData>
 
@@ -676,7 +676,7 @@
   </ebucoreTechnicalAttributeBoolean>
 
   <ebucoreDimension base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 B0 03 00 00">
-    <dimensionValue type="UInt64" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 B0 03 01 00"/>
+    <dimensionValue type="UInt64" use="required" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 B0 03 01 00"/>
     <dimensionUnit type="UTF16String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 B0 03 02 00"/>
   </ebucoreDimension>
 
@@ -687,7 +687,7 @@
   <ebucorePackageInfo base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 C0 00 00 00">
     <packageSize type="UInt64" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 C0 0A 00 00"/>
     <packageName type="UTF16String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 C0 02 00 00"/>
-    <packageLocator type="UTF16String" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 C0 03 00 00"/>
+    <packageLocator type="StrongRefBatch" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 C0 03 00 00" target="ebucoreTypeGroup"/>
   </ebucorePackageInfo>
 
   <ebucoreContainerFormat base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 C0 04 00 00">
@@ -714,8 +714,8 @@
   </ebucoreRational>
 
   <ebucoreAspectRatio base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 C0 08 00 00">
-    <aspectRatioFactorNumerator type="UInt64" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 C0 08 01 00"/>
-    <aspectRatioFactorDenominator type="UInt64" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 C0 08 02 00"/>
+    <aspectRatioFactorNumerator type="UInt64" use="required" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 C0 08 01 00"/>
+    <aspectRatioFactorDenominator type="UInt64" use="required" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 C0 08 02 00"/>
     <aspectRatioTypeGroup type="StrongRef" use="optional" globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 C0 08 A0 01" target="ebucoreTypeGroup"/>
   </ebucoreAspectRatio>  
   

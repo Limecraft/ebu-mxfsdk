@@ -55,7 +55,6 @@ public:
 
    // getters
 
-   bool havedimensionValue() const;
    uint64_t getdimensionValue() const;
    bool havedimensionUnit() const;
    std::string getdimensionUnit() const;

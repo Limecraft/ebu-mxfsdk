@@ -55,9 +55,7 @@ public:
 
    // getters
 
-   bool haveaspectRatioFactorNumerator() const;
    uint64_t getaspectRatioFactorNumerator() const;
-   bool haveaspectRatioFactorDenominator() const;
    uint64_t getaspectRatioFactorDenominator() const;
    bool haveaspectRatioTypeGroup() const;
    ebucoreTypeGroup* getaspectRatioTypeGroup() const;

@@ -78,7 +78,7 @@ public:
    bool havemedium() const;
    std::vector<ebucoreMedium*> getmedium() const;
    bool havepackageInfo() const;
-   std::vector<ebucorePackageInfo*> getpackageInfo() const;
+   ebucorePackageInfo* getpackageInfo() const;
    bool havemimeType() const;
    std::vector<ebucoreMimeType*> getmimeType() const;
    bool havematerialAudioFormat() const;
@@ -134,8 +134,7 @@ public:
    void appendcontainerFormat(ebucoreContainerFormat* value);
    void setmedium(const std::vector<ebucoreMedium*>& value);
    void appendmedium(ebucoreMedium* value);
-   void setpackageInfo(const std::vector<ebucorePackageInfo*>& value);
-   void appendpackageInfo(ebucorePackageInfo* value);
+   void setpackageInfo(ebucorePackageInfo* value);
    void setmimeType(const std::vector<ebucoreMimeType*>& value);
    void appendmimeType(ebucoreMimeType* value);
    void setmaterialAudioFormat(const std::vector<ebucoreAudioFormat*>& value);

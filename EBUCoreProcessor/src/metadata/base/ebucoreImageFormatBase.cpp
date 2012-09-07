@@ -106,9 +106,11 @@ bool ebucoreImageFormatBase::haveimageAspectRatio() const
     return haveItem(&MXF_ITEM_K(ebucoreImageFormat, imageAspectRatio));
 }
 
-mxfRational ebucoreImageFormatBase::getimageAspectRatio() const
+ebucoreAspectRatio* ebucoreImageFormatBase::getimageAspectRatio() const
 {
-    return getRationalItem(&MXF_ITEM_K(ebucoreImageFormat, imageAspectRatio));
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreImageFormat, imageAspectRatio)));
+    MXFPP_CHECK(dynamic_cast<ebucoreAspectRatio*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreAspectRatio*>(obj.release());
 }
 
 bool ebucoreImageFormatBase::haveimageEncoding() const
@@ -405,9 +407,9 @@ void ebucoreImageFormatBase::setimageOrientation(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreImageFormat, imageOrientation), value);
 }
 
-void ebucoreImageFormatBase::setimageAspectRatio(mxfRational value)
+void ebucoreImageFormatBase::setimageAspectRatio(ebucoreAspectRatio* value)
 {
-    setRationalItem(&MXF_ITEM_K(ebucoreImageFormat, imageAspectRatio), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreImageFormat, imageAspectRatio), value);
 }
 
 void ebucoreImageFormatBase::setimageEncoding(const std::vector<ebucoreEncoding*>& value)

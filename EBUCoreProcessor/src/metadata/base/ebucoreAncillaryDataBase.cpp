@@ -66,9 +66,9 @@ bool ebucoreAncillaryDataBase::haveDID() const
     return haveItem(&MXF_ITEM_K(ebucoreAncillaryData, DID));
 }
 
-std::string ebucoreAncillaryDataBase::getDID() const
+uint32_t ebucoreAncillaryDataBase::getDID() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreAncillaryData, DID));
+    return getUInt32Item(&MXF_ITEM_K(ebucoreAncillaryData, DID));
 }
 
 bool ebucoreAncillaryDataBase::haveSDID() const
@@ -76,9 +76,9 @@ bool ebucoreAncillaryDataBase::haveSDID() const
     return haveItem(&MXF_ITEM_K(ebucoreAncillaryData, SDID));
 }
 
-std::string ebucoreAncillaryDataBase::getSDID() const
+uint32_t ebucoreAncillaryDataBase::getSDID() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreAncillaryData, SDID));
+    return getUInt32Item(&MXF_ITEM_K(ebucoreAncillaryData, SDID));
 }
 
 bool ebucoreAncillaryDataBase::havelineNumber() const
@@ -86,9 +86,9 @@ bool ebucoreAncillaryDataBase::havelineNumber() const
     return haveItem(&MXF_ITEM_K(ebucoreAncillaryData, lineNumber));
 }
 
-uint32_t ebucoreAncillaryDataBase::getlineNumber() const
+std::vector<uint32_t> ebucoreAncillaryDataBase::getlineNumber() const
 {
-    return getUInt32Item(&MXF_ITEM_K(ebucoreAncillaryData, lineNumber));
+    return getUInt32ArrayItem(&MXF_ITEM_K(ebucoreAncillaryData, lineNumber));
 }
 
 bool ebucoreAncillaryDataBase::haveANCWrappingType() const
@@ -103,19 +103,24 @@ ebucoreTypeGroup* ebucoreAncillaryDataBase::getANCWrappingType() const
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
-void ebucoreAncillaryDataBase::setDID(std::string value)
+void ebucoreAncillaryDataBase::setDID(uint32_t value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreAncillaryData, DID), value);
+    setUInt32Item(&MXF_ITEM_K(ebucoreAncillaryData, DID), value);
 }
 
-void ebucoreAncillaryDataBase::setSDID(std::string value)
+void ebucoreAncillaryDataBase::setSDID(uint32_t value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreAncillaryData, SDID), value);
+    setUInt32Item(&MXF_ITEM_K(ebucoreAncillaryData, SDID), value);
 }
 
-void ebucoreAncillaryDataBase::setlineNumber(uint32_t value)
+void ebucoreAncillaryDataBase::setlineNumber(const std::vector<uint32_t>& value)
 {
-    setUInt32Item(&MXF_ITEM_K(ebucoreAncillaryData, lineNumber), value);
+    setUInt32ArrayItem(&MXF_ITEM_K(ebucoreAncillaryData, lineNumber), value);
+}
+
+void ebucoreAncillaryDataBase::appendlineNumber(uint32_t value)
+{
+    appendUInt32ArrayItem(&MXF_ITEM_K(ebucoreAncillaryData, lineNumber), value);
 }
 
 void ebucoreAncillaryDataBase::setANCWrappingType(ebucoreTypeGroup* value)

@@ -61,19 +61,9 @@ ebucoreAspectRatioBase::~ebucoreAspectRatioBase()
 {}
 
 
-bool ebucoreAspectRatioBase::haveaspectRatioFactorNumerator() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreAspectRatio, aspectRatioFactorNumerator));
-}
-
 uint64_t ebucoreAspectRatioBase::getaspectRatioFactorNumerator() const
 {
     return getUInt64Item(&MXF_ITEM_K(ebucoreAspectRatio, aspectRatioFactorNumerator));
-}
-
-bool ebucoreAspectRatioBase::haveaspectRatioFactorDenominator() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreAspectRatio, aspectRatioFactorDenominator));
 }
 
 uint64_t ebucoreAspectRatioBase::getaspectRatioFactorDenominator() const

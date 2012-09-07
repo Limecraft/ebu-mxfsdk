@@ -404,6 +404,17 @@ std::string convert(xml_schema::idrefs& source) {
 	return ss.str();
 }
 
+mxfRational convert(xml_schema::long_& source) {
+	mxfRational r = {source, 1};
+	return r;
+}
+
+std::string convert_to_string(::xml_schema::integer& source) {
+	std::stringstream ss;
+	ss << source;
+	return ss.str();
+}
+
 void mapTitle(titleType& source, ebucoreTitle *dest, ObjectModifier* mod = NULL) {
 	/*
 		<sequence>
@@ -978,6 +989,408 @@ void mapCustomRelation(relationType& source, ebucoreCustomRelation *dest, Object
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setcustomRelationTypeGroup)
 }
 
+#define MAP_TECHNICAL_ATTRIBUTE_FUNCTION(functionName, sourceType, destType, destProperty) \
+	void functionName(sourceType& source, destType *dest, ObjectModifier* mod) { \
+		dest->destProperty(source);	\
+		MAP_TYPE_GROUP(source, dest)	\
+	}
+
+MAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeString, String, ebucoreTechnicalAttributeString, settechnicalAttributeStringValue)
+MAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeInt8, Int8, ebucoreTechnicalAttributeInt8, settechnicalAttributeInt8Value)
+MAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeInt16, Int16, ebucoreTechnicalAttributeInt16, settechnicalAttributeInt16Value)
+MAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeInt32, Int32, ebucoreTechnicalAttributeInt32, settechnicalAttributeInt32Value)
+MAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeInt64, Int64, ebucoreTechnicalAttributeInt64, settechnicalAttributeInt64Value)
+MAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeUInt8, UInt8, ebucoreTechnicalAttributeUInt8, settechnicalAttributeUInt8Value)
+MAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeUInt16, UInt16, ebucoreTechnicalAttributeUInt16, settechnicalAttributeUInt16Value)
+MAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeUInt32, UInt32, ebucoreTechnicalAttributeUInt32, settechnicalAttributeUInt32Value)
+MAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeUInt64, UInt64, ebucoreTechnicalAttributeUInt64, settechnicalAttributeUInt64Value)
+MAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeFloat, Float, ebucoreTechnicalAttributeFloat, settechnicalAttributeFloatValue)
+MAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeAnyURI, technicalAttributeUriType, ebucoreTechnicalAttributeAnyURI, settechnicalAttributeAnyURIValue)
+MAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeBoolean, Boolean, ebucoreTechnicalAttributeBoolean, settechnicalAttributeBooleanValue)
+
+void mapTechnicalAttributeRational(technicalAttributeRationalType& source, ebucoreTechnicalAttributeRational *dest, ObjectModifier* mod) {
+	mxfRational r = { source.factorNumerator(), source.factorDenominator() };
+	dest->settechnicalAttributeRationalValue(r);
+	MAP_TYPE_GROUP(source, dest)
+}
+
+void mapMIMEType(mimeType& source, ebucoreMimeType *dest, ObjectModifier* mod = NULL) {
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setmimeTypeGroup)
+}
+
+void mapContainerFormat(formatType::containerFormat_type& source, ebucoreContainerFormat *dest, ObjectModifier* mod = NULL) {
+	MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, setcontainerFormatGroup)
+}
+
+void mapMedium(medium& source, ebucoreMedium *dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, mediumId, dest, setmediumID)
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setmediumTypeGroup)
+}
+
+void mapPackageInfo(formatType& source, ebucorePackageInfo *dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, fileName, dest, setpackageName)
+	SIMPLE_MAP_OPTIONAL(source, fileSize, dest, setpackageSize)
+
+	std::vector<ebucoreTypeGroup*> vec_locs;
+	for (formatType::locator_iterator it = source.locator().begin(); it != source.locator().end(); it++) {
+		ebucoreTypeGroup *typeGroup = newAndModifyObject<ebucoreTypeGroup>(dest->getHeaderMetadata(), mod);	\
+		MAP_TYPE_GROUP((*it), typeGroup)
+		vec_locs.push_back(typeGroup);
+	}
+	dest->setpackageLocator(vec_locs);
+}
+
+void mapSigningFormat(signingFormat& source, ebucoreSigningFormat *dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, trackId, dest, setsigningTrackID)
+	SIMPLE_MAP_OPTIONAL(source, trackName, dest, setsigningTrackName)
+	SIMPLE_MAP_OPTIONAL(source, language, dest, setsigningTrackLanguageName)
+	SIMPLE_MAP_OPTIONAL(source, language, dest, setsigningTrackLanguageCode) /* find alternative? */
+	SIMPLE_MAP_OPTIONAL(source, signingSourceUri, dest, setsigningSourceUri)
+
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setsigningTypeGroup)
+	MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, setsigningFormatGroup)
+}
+
+void mapCodec(codecType& source, ebucoreCodec *dest, ObjectModifier* mod = NULL) {	
+	SIMPLE_MAP_OPTIONAL(source, name, dest, setname)
+	SIMPLE_MAP_OPTIONAL(source, vendor, dest, setvendor)
+	SIMPLE_MAP_OPTIONAL(source, version, dest, setversion)
+	SIMPLE_MAP_OPTIONAL(source, family, dest, setfamily)
+	// [TODO] XSD Codec identifier is an identifiertype, KLV is string
+	//SIMPLE_MAP_OPTIONAL(source, codecIdentifier, dest, setcodecIdentifier)
+}
+
+void mapAudioTrack(audioTrack& source, ebucoreTrack *dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, trackId, dest, settrackID)
+	SIMPLE_MAP_OPTIONAL(source, trackName, dest, settrackName)
+
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, settrackTypeGroup)
+}
+
+void mapVideoTrack(videoTrack& source, ebucoreTrack *dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, trackId, dest, settrackID)
+	SIMPLE_MAP_OPTIONAL(source, trackName, dest, settrackName)
+
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, settrackTypeGroup)
+}
+
+void mapAudioEncoding(audioFormatType::audioEncoding_type& source, ebucoreEncoding *dest, ObjectModifier* mod = NULL) {
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setencodingTypeGroup)
+}
+
+void mapAudioFormat(audioFormatType& source, ebucoreAudioFormat *dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, audioFormatId, dest, setaudioFormatID)
+	SIMPLE_MAP_OPTIONAL(source, audioFormatName, dest, setaudioFormatName)
+	SIMPLE_MAP_OPTIONAL(source, audioFormatDefinition, dest, setaudioFormatDefinition)
+
+	if (source.audioTrackConfiguration().present()) {
+		MAP_NEW_TYPE_GROUP_AND_ASSIGN(source.audioTrackConfiguration().get(), dest, setaudioTrackConfiguration)
+	}
+
+	SIMPLE_MAP_OPTIONAL(source, sampleSize, dest, setaudioSamplingSize)
+	SIMPLE_MAP_OPTIONAL(source, sampleType, dest, setaudioSamplingType)
+	SIMPLE_MAP_OPTIONAL(source, channels, dest, setaudioTotalNumberOfChannels)
+	SIMPLE_MAP_OPTIONAL(source, bitRate, dest, setaudioBitRate)
+	SIMPLE_MAP_OPTIONAL(source, bitRateMode, dest, setaudioBitRateMode)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, samplingRate, dest, setaudioSamplingRate, convert)
+	
+	NEW_VECTOR_AND_ASSIGN(source, audioEncoding, ebucoreEncoding, audioFormatType::audioEncoding_iterator, mapAudioEncoding, dest, setaudioEncoding)
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, codec, ebucoreCodec, mapCodec, dest, setaudioCodec)
+	NEW_VECTOR_AND_ASSIGN(source, audioTrack, ebucoreTrack, audioFormatType::audioTrack_iterator, mapAudioTrack, dest, setaudioTrack)
+
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeString, ebucoreTechnicalAttributeString, 
+		audioFormatType::technicalAttributeString_iterator, mapTechnicalAttributeString, dest, setaudioTechnicalAttributeString)
+	
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeByte, ebucoreTechnicalAttributeInt8, 
+		audioFormatType::technicalAttributeByte_iterator, mapTechnicalAttributeInt8, dest, setaudioTechnicalAttributeInt8)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeShort, ebucoreTechnicalAttributeInt16, 
+		audioFormatType::technicalAttributeShort_iterator, mapTechnicalAttributeInt16, dest, setaudioTechnicalAttributeInt16)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeInteger, ebucoreTechnicalAttributeInt32, 
+		audioFormatType::technicalAttributeInteger_iterator, mapTechnicalAttributeInt32, dest, setaudioTechnicalAttributeInt32)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeLong, ebucoreTechnicalAttributeInt64, 
+		audioFormatType::technicalAttributeLong_iterator, mapTechnicalAttributeInt64, dest, setaudioTechnicalAttributeInt64)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedByte, ebucoreTechnicalAttributeUInt8, 
+		audioFormatType::technicalAttributeUnsignedByte_iterator, mapTechnicalAttributeUInt8, dest, setaudioTechnicalAttributeUInt8)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedShort, ebucoreTechnicalAttributeUInt16, 
+		audioFormatType::technicalAttributeUnsignedShort_iterator, mapTechnicalAttributeUInt16, dest, setaudioTechnicalAttributeUInt16)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedInteger, ebucoreTechnicalAttributeUInt32, 
+		audioFormatType::technicalAttributeUnsignedInteger_iterator, mapTechnicalAttributeUInt32, dest, setaudioTechnicalAttributeUInt32)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedLong, ebucoreTechnicalAttributeUInt64, 
+		audioFormatType::technicalAttributeUnsignedLong_iterator, mapTechnicalAttributeUInt64, dest, setaudioTechnicalAttributeUInt64)
+
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeFloat, ebucoreTechnicalAttributeFloat, 
+		audioFormatType::technicalAttributeFloat_iterator, mapTechnicalAttributeFloat, dest, setaudioTechnicalAttributeFloat)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeRational, ebucoreTechnicalAttributeRational, 
+		audioFormatType::technicalAttributeRational_iterator, mapTechnicalAttributeRational, dest, setaudioTechnicalAttributeRational)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUri, ebucoreTechnicalAttributeAnyURI, 
+		audioFormatType::technicalAttributeUri_iterator, mapTechnicalAttributeAnyURI, dest, setaudioTechnicalAttributeAnyURI)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeBoolean, ebucoreTechnicalAttributeBoolean, 
+		audioFormatType::technicalAttributeBoolean_iterator, mapTechnicalAttributeBoolean, dest, setaudioTechnicalAttributeBoolean)
+}
+
+void mapImageEncoding(imageFormatType::imageEncoding_type& source, ebucoreEncoding *dest, ObjectModifier* mod = NULL) {
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setencodingTypeGroup)
+}
+
+void mapAspectRatio(aspectRatioType& source, ebucoreAspectRatio *dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_NO_GET(source, factorNumerator, dest, setaspectRatioFactorNumerator)
+	SIMPLE_MAP_NO_GET(source, factorDenominator, dest, setaspectRatioFactorDenominator)
+
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setaspectRatioTypeGroup)
+}
+
+void mapDimension(lengthType& source, ebucoreDimension *dest, ObjectModifier* mod = NULL) {
+	dest->setdimensionValue(source);
+	SIMPLE_MAP_OPTIONAL(source, unit, dest, setdimensionUnit)
+}
+
+void mapImageFormat(imageFormatType& source, ebucoreImageFormat *dest, ObjectModifier* mod = NULL) {
+
+	SIMPLE_MAP_OPTIONAL(source, imageFormatId, dest, setimageFormatID)
+	SIMPLE_MAP_OPTIONAL(source, imageFormatName, dest, setimageFormatName)
+	SIMPLE_MAP_OPTIONAL(source, imageFormatDefinition, dest, setimageFormatDefinition)
+	SIMPLE_MAP_OPTIONAL(source, orientation, dest, setimageOrientation)
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, aspectRatio, ebucoreAspectRatio, mapAspectRatio, dest, setimageAspectRatio)
+	
+	NEW_VECTOR_AND_ASSIGN(source, imageEncoding, ebucoreEncoding, imageFormatType::imageEncoding_iterator, mapImageEncoding, dest, setimageEncoding)
+
+	/* [TODO] XSD is missing image codec
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, codec, ebucoreCodec, mapCodec, dest, setimageCodec) */
+
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, width, ebucoreDimension, mapDimension, dest, setimageWidth)
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, height, ebucoreDimension, mapDimension, dest, setimageHeight)
+
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeString, ebucoreTechnicalAttributeString, 
+		imageFormatType::technicalAttributeString_iterator, mapTechnicalAttributeString, dest, setimageTechnicalAttributeString)
+	
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeByte, ebucoreTechnicalAttributeInt8, 
+		imageFormatType::technicalAttributeByte_iterator, mapTechnicalAttributeInt8, dest, setimageTechnicalAttributeInt8)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeShort, ebucoreTechnicalAttributeInt16, 
+		imageFormatType::technicalAttributeShort_iterator, mapTechnicalAttributeInt16, dest, setimageTechnicalAttributeInt16)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeInteger, ebucoreTechnicalAttributeInt32, 
+		imageFormatType::technicalAttributeInteger_iterator, mapTechnicalAttributeInt32, dest, setimageTechnicalAttributeInt32)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeLong, ebucoreTechnicalAttributeInt64, 
+		imageFormatType::technicalAttributeLong_iterator, mapTechnicalAttributeInt64, dest, setimageTechnicalAttributeInt64)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedByte, ebucoreTechnicalAttributeUInt8, 
+		imageFormatType::technicalAttributeUnsignedByte_iterator, mapTechnicalAttributeUInt8, dest, setimageTechnicalAttributeUInt8)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedShort, ebucoreTechnicalAttributeUInt16, 
+		imageFormatType::technicalAttributeUnsignedShort_iterator, mapTechnicalAttributeUInt16, dest, setimageTechnicalAttributeUInt16)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedInteger, ebucoreTechnicalAttributeUInt32, 
+		imageFormatType::technicalAttributeUnsignedInteger_iterator, mapTechnicalAttributeUInt32, dest, setimageTechnicalAttributeUInt32)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedLong, ebucoreTechnicalAttributeUInt64, 
+		imageFormatType::technicalAttributeUnsignedLong_iterator, mapTechnicalAttributeUInt64, dest, setimageTechnicalAttributeUInt64)
+
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeFloat, ebucoreTechnicalAttributeFloat, 
+		imageFormatType::technicalAttributeFloat_iterator, mapTechnicalAttributeFloat, dest, setimageTechnicalAttributeFloat)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeRational, ebucoreTechnicalAttributeRational, 
+		imageFormatType::technicalAttributeRational_iterator, mapTechnicalAttributeRational, dest, setimageTechnicalAttributeRational)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUri, ebucoreTechnicalAttributeAnyURI, 
+		imageFormatType::technicalAttributeUri_iterator, mapTechnicalAttributeAnyURI, dest, setimageTechnicalAttributeAnyURI)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeBoolean, ebucoreTechnicalAttributeBoolean, 
+		imageFormatType::technicalAttributeBoolean_iterator, mapTechnicalAttributeBoolean, dest, setimageTechnicalAttributeBoolean)
+}
+
+void mapVideoEncoding(videoFormatType::videoEncoding_type& source, ebucoreEncoding *dest, ObjectModifier* mod = NULL) {
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setencodingTypeGroup)
+}
+
+void mapVideoFormat(videoFormatType& source, ebucoreVideoFormat *dest, ObjectModifier* mod = NULL) {
+
+	SIMPLE_MAP_OPTIONAL(source, videoFormatId, dest, setvideoFormatID)
+	SIMPLE_MAP_OPTIONAL(source, videoFormatName, dest, setvideoFormatName)
+	SIMPLE_MAP_OPTIONAL(source, videoFormatDefinition, dest, setvideoFormatDefinition)
+	
+	SIMPLE_MAP_OPTIONAL(source, bitRate, dest, setvideoBitRate)
+	SIMPLE_MAP_OPTIONAL(source, bitRateMode, dest, setvideoBitRateMode)
+	SIMPLE_MAP_OPTIONAL(source, scanningFormat, dest, setvideoSamplingFormat)
+	SIMPLE_MAP_OPTIONAL(source, scanningOrder, dest, setvideoScanningOrder)
+	SIMPLE_MAP_OPTIONAL(source, lines, dest, setvideoActiveLines)
+	SIMPLE_MAP_OPTIONAL(source, noiseFilter, dest, setvideoNoiseFilterFlag)
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, aspectRatio, ebucoreAspectRatio, mapAspectRatio, dest, setvideoAspectRatio)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, frameRate, dest, setvideoFrameRate, convert)
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, width, ebucoreDimension, mapDimension, dest, setvideoWidth)
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, height, ebucoreDimension, mapDimension, dest, setvideoHeight)
+
+	NEW_VECTOR_AND_ASSIGN(source, videoEncoding, ebucoreEncoding, videoFormatType::videoEncoding_iterator, mapVideoEncoding, dest, setvideoEncoding)
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, codec, ebucoreCodec, mapCodec, dest, setvideoCodectype)
+	NEW_VECTOR_AND_ASSIGN(source, videoTrack, ebucoreTrack, videoFormatType::videoTrack_iterator, mapVideoTrack, dest, setvideoTrack)
+
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeString, ebucoreTechnicalAttributeString, 
+		videoFormatType::technicalAttributeString_iterator, mapTechnicalAttributeString, dest, setvideoTechnicalAttributeString)
+	
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeByte, ebucoreTechnicalAttributeInt8, 
+		videoFormatType::technicalAttributeByte_iterator, mapTechnicalAttributeInt8, dest, setvideoTechnicalAttributeInt8)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeShort, ebucoreTechnicalAttributeInt16, 
+		videoFormatType::technicalAttributeShort_iterator, mapTechnicalAttributeInt16, dest, setvideoTechnicalAttributeInt16)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeInteger, ebucoreTechnicalAttributeInt32, 
+		videoFormatType::technicalAttributeInteger_iterator, mapTechnicalAttributeInt32, dest, setvideoTechnicalAttributeInt32)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeLong, ebucoreTechnicalAttributeInt64, 
+		videoFormatType::technicalAttributeLong_iterator, mapTechnicalAttributeInt64, dest, setvideoTechnicalAttributeInt64)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedByte, ebucoreTechnicalAttributeUInt8, 
+		videoFormatType::technicalAttributeUnsignedByte_iterator, mapTechnicalAttributeUInt8, dest, setvideoTechnicalAttributeUInt8)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedShort, ebucoreTechnicalAttributeUInt16, 
+		videoFormatType::technicalAttributeUnsignedShort_iterator, mapTechnicalAttributeUInt16, dest, setvideoTechnicalAttributeUInt16)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedInteger, ebucoreTechnicalAttributeUInt32, 
+		videoFormatType::technicalAttributeUnsignedInteger_iterator, mapTechnicalAttributeUInt32, dest, setvideoTechnicalAttributeUInt32)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedLong, ebucoreTechnicalAttributeUInt64, 
+		videoFormatType::technicalAttributeUnsignedLong_iterator, mapTechnicalAttributeUInt64, dest, setvideoTechnicalAttributeUInt64)
+
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeFloat, ebucoreTechnicalAttributeFloat, 
+		videoFormatType::technicalAttributeFloat_iterator, mapTechnicalAttributeFloat, dest, setvideoTechnicalAttributeFloat)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeRational, ebucoreTechnicalAttributeRational, 
+		videoFormatType::technicalAttributeRational_iterator, mapTechnicalAttributeRational, dest, setvideoTechnicalAttributeRational)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUri, ebucoreTechnicalAttributeAnyURI, 
+		videoFormatType::technicalAttributeUri_iterator, mapTechnicalAttributeAnyURI, dest, setvideoTechnicalAttributeAnyURI)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeBoolean, ebucoreTechnicalAttributeBoolean, 
+		videoFormatType::technicalAttributeBoolean_iterator, mapTechnicalAttributeBoolean, dest, setvideoTechnicalAttributeBoolean)
+}
+
+void mapCaptioning(captioningFormat& source, ebucoreCaptioning* dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, captioningFormatId, dest, setcaptioningFormatID)
+	SIMPLE_MAP_OPTIONAL(source, captioningFormatName, dest, setcaptioningFormatName)
+	SIMPLE_MAP_OPTIONAL(source, formatDefinition, dest, setcaptioningFormatDefinition)
+	SIMPLE_MAP_OPTIONAL(source, captioningSourceUri, dest, setcaptioningSourceUri)
+	SIMPLE_MAP_OPTIONAL(source, formatDefinition, dest, setcaptioningFormatDefinition)
+	SIMPLE_MAP_OPTIONAL(source, language, dest, setcaptioningLanguageName)
+	SIMPLE_MAP_OPTIONAL(source, language, dest, setcaptioningLanguageCode)
+
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setcaptioningTypeGroup)
+}
+
+void mapAncillaryData(ancillaryDataFormat& source, ebucoreAncillaryData* dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, DID, dest, setDID)
+	SIMPLE_MAP_OPTIONAL(source, SDID, dest, setSDID)
+
+	std::vector<uint32_t> vec_lines;
+	for (ancillaryDataFormat::lineNumber_const_iterator it = source.lineNumber().begin(); it != source.lineNumber().end(); it++) {
+		vec_lines.push_back(*it);
+	}
+	dest->setlineNumber(vec_lines);
+
+	ebucoreTypeGroup *obj = newAndModifyObject<ebucoreTypeGroup>(dest->getHeaderMetadata(), mod);
+	// source is only an integer to map from, lets be creative
+	SIMPLE_MAP_OPTIONAL(source, ancillaryDataFormatName, obj, settypeGroupLabel)
+	SIMPLE_MAP_OPTIONAL(source, ancillaryDataFormatId, obj, settypeGroupLink)
+	SIMPLE_MAP_OPTIONAL_CONVERT(source, wrappingType, obj, settypeGroupDefinition, convert_to_string)
+}
+
+void mapDataFormat(dataFormatType& source, ebucoreDataFormat *dest, ObjectModifier* mod = NULL) {
+
+	SIMPLE_MAP_OPTIONAL(source, dataFormatId, dest, setdataFormatID)
+	SIMPLE_MAP_OPTIONAL(source, dataFormatName, dest, setdataFormatName)
+	SIMPLE_MAP_OPTIONAL(source, dataFormatDefinition, dest, setdataFormatDefinition)
+	
+	NEW_VECTOR_AND_ASSIGN(source, captioningFormat, ebucoreCaptioning, dataFormatType::captioningFormat_iterator, mapCaptioning, dest, setcaptioning)
+	NEW_VECTOR_AND_ASSIGN(source, ancillaryDataFormat, ebucoreAncillaryData, dataFormatType::ancillaryDataFormat_iterator, mapAncillaryData, dest, setancillaryData)
+
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeString, ebucoreTechnicalAttributeString, 
+		dataFormatType::technicalAttributeString_iterator, mapTechnicalAttributeString, dest, setdataTechnicalAttributeString)
+	
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeByte, ebucoreTechnicalAttributeInt8, 
+		dataFormatType::technicalAttributeByte_iterator, mapTechnicalAttributeInt8, dest, setdataTechnicalAttributeInt8)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeShort, ebucoreTechnicalAttributeInt16, 
+		dataFormatType::technicalAttributeShort_iterator, mapTechnicalAttributeInt16, dest, setdataTechnicalAttributeInt16)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeInteger, ebucoreTechnicalAttributeInt32, 
+		dataFormatType::technicalAttributeInteger_iterator, mapTechnicalAttributeInt32, dest, setdataTechnicalAttributeInt32)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeLong, ebucoreTechnicalAttributeInt64, 
+		dataFormatType::technicalAttributeLong_iterator, mapTechnicalAttributeInt64, dest, setdataTechnicalAttributeInt64)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedByte, ebucoreTechnicalAttributeUInt8, 
+		dataFormatType::technicalAttributeUnsignedByte_iterator, mapTechnicalAttributeUInt8, dest, setdataTechnicalAttributeUInt8)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedShort, ebucoreTechnicalAttributeUInt16, 
+		dataFormatType::technicalAttributeUnsignedShort_iterator, mapTechnicalAttributeUInt16, dest, setdataTechnicalAttributeUInt16)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedInteger, ebucoreTechnicalAttributeUInt32, 
+		dataFormatType::technicalAttributeUnsignedInteger_iterator, mapTechnicalAttributeUInt32, dest, setdataTechnicalAttributeUInt32)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedLong, ebucoreTechnicalAttributeUInt64, 
+		dataFormatType::technicalAttributeUnsignedLong_iterator, mapTechnicalAttributeUInt64, dest, setdataTechnicalAttributeUInt64)
+
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeFloat, ebucoreTechnicalAttributeFloat, 
+		dataFormatType::technicalAttributeFloat_iterator, mapTechnicalAttributeFloat, dest, setdataTechnicalAttributeFloat)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeRational, ebucoreTechnicalAttributeRational, 
+		dataFormatType::technicalAttributeRational_iterator, mapTechnicalAttributeRational, dest, setdataTechnicalAttributeRational)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUri, ebucoreTechnicalAttributeAnyURI, 
+		dataFormatType::technicalAttributeUri_iterator, mapTechnicalAttributeAnyURI, dest, setdataTechnicalAttributeAnyURI)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeBoolean, ebucoreTechnicalAttributeBoolean, 
+		dataFormatType::technicalAttributeBoolean_iterator, mapTechnicalAttributeBoolean, dest, setdataTechnicalAttributeBoolean)
+}
+
+void mapFormat(formatType& source, ebucoreFormat *dest, ObjectModifier* mod = NULL) {
+
+	SIMPLE_MAP_OPTIONAL(source, formatId, dest, setformatID)
+	SIMPLE_MAP_OPTIONAL(source, formatVersionId, dest, setformatVersionID)
+	SIMPLE_MAP_OPTIONAL(source, formatName, dest, setformatName)
+	SIMPLE_MAP_OPTIONAL(source, formatDefinition, dest, setformatDefinition)
+	
+	if (source.dateCreated().present()) {
+		SIMPLE_MAP_OPTIONAL_CONVERT(source, dateCreated().get().startYear, dest, setformatYearCreated, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(source, dateCreated().get().startDate, dest, setformatDateCreated, convert_timestamp)
+	}
+
+	if (source.duration().present()) {
+		// [TODO] Cannot clearly map durations as XSD durations are strings, while KLV durations are numeric
+		// [TODO] Cannot clearly map timecodes as no clear type consensus exists on either side
+		SIMPLE_MAP_OPTIONAL(source, duration().get().editUnitNumber, dest, setoverallDurationEditUnit)
+	}
+
+	NEW_VECTOR_AND_ASSIGN(source, containerFormat, ebucoreContainerFormat, formatType::containerFormat_iterator, mapContainerFormat, dest, setcontainerFormat)
+	NEW_VECTOR_AND_ASSIGN(source, medium, ebucoreMedium, formatType::medium_iterator, mapMedium, dest, setmedium)
+	
+	ebucorePackageInfo *obj = newAndModifyObject<ebucorePackageInfo>(dest->getHeaderMetadata(), mod);
+	mapPackageInfo(source, obj, mod);
+	dest->setpackageInfo(obj);
+
+	NEW_VECTOR_AND_ASSIGN(source, mimeType, ebucoreMimeType, formatType::mimeType_iterator, mapMIMEType, dest, setmimeType)
+	NEW_VECTOR_AND_ASSIGN(source, medium, ebucoreMedium, formatType::medium_iterator, mapMedium, dest, setmedium)
+
+	NEW_VECTOR_AND_ASSIGN(source, audioFormat, ebucoreAudioFormat, formatType::audioFormat_iterator, mapAudioFormat, dest, setmaterialAudioFormat)
+	NEW_VECTOR_AND_ASSIGN(source, videoFormat, ebucoreVideoFormat, formatType::videoFormat_iterator, mapVideoFormat, dest, setmaterialVideoFormat)
+	NEW_VECTOR_AND_ASSIGN(source, imageFormat, ebucoreImageFormat, formatType::imageFormat_iterator, mapImageFormat, dest, setmaterialImageFormat)
+	NEW_VECTOR_AND_ASSIGN(source, dataFormat, ebucoreDataFormat, formatType::dataFormat_iterator, mapDataFormat, dest, setmaterialDataFormat)
+	NEW_VECTOR_AND_ASSIGN(source, signingFormat, ebucoreSigningFormat, formatType::signingFormat_iterator, mapSigningFormat, dest, setmaterialSigningFormat)
+
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeString, ebucoreTechnicalAttributeString, 
+		formatType::technicalAttributeString_iterator, mapTechnicalAttributeString, dest, setmaterialTechnicalAttributeString)
+	
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeByte, ebucoreTechnicalAttributeInt8, 
+		formatType::technicalAttributeByte_iterator, mapTechnicalAttributeInt8, dest, setmaterialTechnicalAttributeInt8)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeShort, ebucoreTechnicalAttributeInt16, 
+		formatType::technicalAttributeShort_iterator, mapTechnicalAttributeInt16, dest, setmaterialTechnicalAttributeInt16)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeInteger, ebucoreTechnicalAttributeInt32, 
+		formatType::technicalAttributeInteger_iterator, mapTechnicalAttributeInt32, dest, setmaterialTechnicalAttributeInt32)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeLong, ebucoreTechnicalAttributeInt64, 
+		formatType::technicalAttributeLong_iterator, mapTechnicalAttributeInt64, dest, setmaterialTechnicalAttributeInt64)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedByte, ebucoreTechnicalAttributeUInt8, 
+		formatType::technicalAttributeUnsignedByte_iterator, mapTechnicalAttributeUInt8, dest, setmaterialTechnicalAttributeUInt8)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedShort, ebucoreTechnicalAttributeUInt16, 
+		formatType::technicalAttributeUnsignedShort_iterator, mapTechnicalAttributeUInt16, dest, setmaterialTechnicalAttributeUInt16)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedInteger, ebucoreTechnicalAttributeUInt32, 
+		formatType::technicalAttributeUnsignedInteger_iterator, mapTechnicalAttributeUInt32, dest, setmaterialTechnicalAttributeUInt32)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUnsignedLong, ebucoreTechnicalAttributeUInt64, 
+		formatType::technicalAttributeUnsignedLong_iterator, mapTechnicalAttributeUInt64, dest, setmaterialTechnicalAttributeUInt64)
+
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeFloat, ebucoreTechnicalAttributeFloat, 
+		formatType::technicalAttributeFloat_iterator, mapTechnicalAttributeFloat, dest, setmaterialTechnicalAttributeFloat)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeRational, ebucoreTechnicalAttributeRational, 
+		formatType::technicalAttributeRational_iterator, mapTechnicalAttributeRational, dest, setmaterialTechnicalAttributeRational)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeUri, ebucoreTechnicalAttributeAnyURI, 
+		formatType::technicalAttributeUri_iterator, mapTechnicalAttributeAnyURI, dest, setmaterialTechnicalAttributeAnyURI)
+	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeBoolean, ebucoreTechnicalAttributeBoolean, 
+		formatType::technicalAttributeBoolean_iterator, mapTechnicalAttributeBoolean, dest, setmaterialTechnicalAttributeBoolean)
+}
+
+void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, ObjectModifier* mod);
+
+void mapPart(partType& source, ebucorePartMetadata *dest, ObjectModifier* mod) {
+	SIMPLE_MAP_OPTIONAL(source, partId, dest, setpartId)
+	SIMPLE_MAP_OPTIONAL(source, partName, dest, setpartName)
+	SIMPLE_MAP_OPTIONAL(source, partDefinition, dest, setpartDefinition)
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setpartTypeGroup)
+
+	// map ourselves (we are an extension of the coreMetadataType) onto a new ebucoreCoreMetadata object
+	ebucoreCoreMetadata *obj = newAndModifyObject<ebucoreCoreMetadata>(dest->getHeaderMetadata(), mod);
+	mapCoreMetadata(source, obj, mod);
+	dest->setpartMeta(obj);
+}
+
 void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, ObjectModifier* mod) {
 
 	NEW_VECTOR_AND_ASSIGN(source, title, ebucoreTitle, coreMetadataType::title_iterator, mapTitle, dest, settitle)	
@@ -1009,17 +1422,13 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, Object
 
 	NEW_VECTOR_AND_ASSIGN(source, relation, ebucoreCustomRelation, coreMetadataType::relation_iterator, mapCustomRelation, dest, setcustomRelation)
 
+	NEW_VECTOR_AND_ASSIGN(source, format, ebucoreFormat, coreMetadataType::format_iterator, mapFormat, dest, setformat)
+	NEW_VECTOR_AND_ASSIGN(source, part, ebucorePartMetadata, coreMetadataType::part_iterator, mapPart, dest, setpart)
+	
 	/*
 	[TODO]:
 		basicRelation sets
-		format sets
-		part sets
 	*/
 }
-
-/*void mapPart(part& source, ebucorePartMetadata *dest, ObjectModifier* mod) {
-
-	//MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setpartTypeGroup)
-}*/
 
 }

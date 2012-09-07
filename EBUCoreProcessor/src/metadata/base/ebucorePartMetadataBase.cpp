@@ -61,9 +61,19 @@ ebucorePartMetadataBase::~ebucorePartMetadataBase()
 {}
 
 
+bool ebucorePartMetadataBase::havepartId() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePartMetadata, partId));
+}
+
 std::string ebucorePartMetadataBase::getpartId() const
 {
     return getStringItem(&MXF_ITEM_K(ebucorePartMetadata, partId));
+}
+
+bool ebucorePartMetadataBase::havepartName() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePartMetadata, partName));
 }
 
 std::string ebucorePartMetadataBase::getpartName() const
@@ -141,9 +151,21 @@ int64_t ebucorePartMetadataBase::getpartDurationEditUnitNumber() const
     return getLengthItem(&MXF_ITEM_K(ebucorePartMetadata, partDurationEditUnitNumber));
 }
 
-std::string ebucorePartMetadataBase::getpartTypeGroup() const
+bool ebucorePartMetadataBase::havepartTypeGroup() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucorePartMetadata, partTypeGroup));
+    return haveItem(&MXF_ITEM_K(ebucorePartMetadata, partTypeGroup));
+}
+
+ebucoreTypeGroup* ebucorePartMetadataBase::getpartTypeGroup() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucorePartMetadata, partTypeGroup)));
+    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+}
+
+bool ebucorePartMetadataBase::havepartMeta() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePartMetadata, partMeta));
 }
 
 ebucoreCoreMetadata* ebucorePartMetadataBase::getpartMeta() const
@@ -198,9 +220,9 @@ void ebucorePartMetadataBase::setpartDurationEditUnitNumber(int64_t value)
     setLengthItem(&MXF_ITEM_K(ebucorePartMetadata, partDurationEditUnitNumber), value);
 }
 
-void ebucorePartMetadataBase::setpartTypeGroup(std::string value)
+void ebucorePartMetadataBase::setpartTypeGroup(ebucoreTypeGroup* value)
 {
-    setStringItem(&MXF_ITEM_K(ebucorePartMetadata, partTypeGroup), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucorePartMetadata, partTypeGroup), value);
 }
 
 void ebucorePartMetadataBase::setpartMeta(ebucoreCoreMetadata* value)
