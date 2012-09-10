@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __EBUCORE_DMS_H__
-#define __EBUCORE_DMS_H__
+#ifndef __EBUSDK_EBUCORE_DMS_H__
+#define __EBUSDK_EBUCORE_DMS_H__
 
 #define MXF_LABEL(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15) \
     {d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15}
@@ -49,6 +49,7 @@ static const mxfUL MXF_DM_L(EBUCoreDescriptiveScheme) =
 static const mxfUL keyEBUCoreDarkMetadata =
 	{ 0x06, 0x0E, 0x2B, 0x34, 0x01, 0x01, 0x01, 0x05, 0x0D, 0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x01 };
 
+namespace EBUSDK {
 namespace EBUCore
 {
 
@@ -61,8 +62,8 @@ public:
 
 
 
-};
-
+}
+}
 
 #endif
 

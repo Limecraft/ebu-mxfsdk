@@ -41,7 +41,7 @@
 
 using namespace std;
 using namespace mxfpp;
-using namespace EBUCore::KLV;
+using namespace EBUSDK::EBUCore::KLV;
 
 
 const mxfKey ebucoreAlternativeTitleBase::setKey = MXF_SET_K(ebucoreAlternativeTitle);

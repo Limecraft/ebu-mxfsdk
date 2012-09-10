@@ -67,6 +67,8 @@ using namespace std;
 using namespace bmx;
 using namespace mxfpp;
 
+using namespace EBUSDK;
+
 static const uint32_t MEMORY_WRITE_CHUNK_SIZE   = 8192;
 
 static char* get_label_string(mxfUL label, char *buf)

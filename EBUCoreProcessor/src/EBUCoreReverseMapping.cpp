@@ -13,6 +13,7 @@ using namespace ebuCore_2012;
 using namespace mxfpp;
 //using namespace bmx;
 
+namespace EBUSDK {
 namespace EBUCore {
 
 #define	SIMPLE_RMAP(source, sourceProperty, dest, destProperty)	\
@@ -690,4 +691,5 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 
 }
 
-}
+} // namespace EBUCore
+} // namespace EBUSDK

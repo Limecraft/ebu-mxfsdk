@@ -72,6 +72,7 @@ using namespace std;
 using namespace bmx;
 using namespace mxfpp;
 
+using namespace EBUSDK;
 
 
 typedef enum

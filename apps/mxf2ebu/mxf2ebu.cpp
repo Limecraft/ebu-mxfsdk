@@ -36,6 +36,8 @@ using namespace std;
 using namespace bmx;
 using namespace mxfpp;
 
+using namespace EBUSDK;
+
 static string get_version_info()
 {
     char buffer[256];

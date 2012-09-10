@@ -222,7 +222,9 @@
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreTypeGroup.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreVersion.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreVideoFormat.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\MXFCustomMetadata.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\simpledc20021212.cxx" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\XercesUtils.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\xml.cxx" />
   </ItemGroup>
   <ItemGroup>
@@ -251,6 +253,7 @@
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreRole.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreTypeGroup.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucore_extensions_data_model.h" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\MXFCustomMetadata.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\simpledc20021212.hxx" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\xml.hxx" />
   </ItemGroup>

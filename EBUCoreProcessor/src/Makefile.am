@@ -119,6 +119,8 @@ libebucore_la_SOURCES = \
 	EBU_CORE_20120817.cxx \
 	simpledc20021212.cxx \
 	xml.cxx \
+    XercesUtils.cpp \
+    MXFCustomMetadata.cpp \
 	EBUCoreMapping.cpp \
 	EBUCoreReverseMapping.cpp \
 	EBUCoreProcessor.cpp

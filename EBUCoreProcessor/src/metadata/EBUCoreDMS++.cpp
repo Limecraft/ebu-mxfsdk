@@ -1,8 +1,9 @@
 
 #include <metadata/EBUCoreDMS++.h>
 
-using namespace EBUCore::KLV;
+using namespace EBUSDK::EBUCore::KLV;
 
+namespace EBUSDK {
 namespace EBUCore {
 
 void RegisterExtensions(DataModel *data_model)
@@ -81,4 +82,5 @@ void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata)
 	header_metadata->registerObjectFactory(&ebucoreMetadataSchemeInformation::setKey, new MetadataSetFactory<ebucoreMetadataSchemeInformation>());
 }
 
-};
+} // namespace EBUCore
+} // namespace EBUSDK

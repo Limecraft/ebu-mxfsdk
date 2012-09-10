@@ -65,7 +65,7 @@ using namespace std;
 using namespace bmx;
 using namespace mxfpp;
 
-
+using namespace EBUSDK;
 
 static char* get_label_string(mxfUL label, char *buf)
 {

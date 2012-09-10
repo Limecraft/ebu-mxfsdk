@@ -36,9 +36,16 @@
 
 #include <metadata/EBUCoreDMS.h>
 
+using namespace mxfpp;
+
+// declare our global metadata functions and
 // forward declare circularly referenced classes
+namespace EBUSDK {
 namespace EBUCore
 {
+	void RegisterExtensions(DataModel *dataModel);
+	void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata);
+
 	namespace KLV {
 		class ebucoreContact;
 		class ebucoreOrganisation;
@@ -48,6 +55,7 @@ namespace EBUCore
 		class ebucorePartMetadata;
 		class ebucoreCoreMetadata;
 	}
+}
 }
 
 #include <metadata/ebucoreTextualAnnotation.h>
@@ -126,13 +134,5 @@ namespace EBUCore
 #include <metadata/ebucorePartFramework.h>
 
 #endif
-
-using namespace mxfpp;
-
-namespace EBUCore
-{
-	void RegisterExtensions(DataModel *dataModel);
-	void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata);
-};
 
 
