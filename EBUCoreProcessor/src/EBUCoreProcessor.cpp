@@ -1035,6 +1035,47 @@ void InsertFramework(HeaderMetadata *header_metadata, uint32_t track_id, std::st
     dm_segment->setDMFramework(framework);
 }
 
+void InsertEventFrameworks(HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, std::vector<EventInput> &frameworks, ObjectModifier *mod = NULL)
+{
+    BMX_ASSERT(header_metadata);
+
+    MaterialPackage *material_package = header_metadata->getPreface()->findMaterialPackage();
+    BMX_ASSERT(material_package);
+
+    // Preface - ContentStorage - Package - DM Track
+	EventTrack *dm_track = new EventTrack(header_metadata);
+	if (mod!=NULL) mod->Modify(dm_track);
+    material_package->appendTracks(dm_track);
+    dm_track->setTrackName(track_name);
+    dm_track->setTrackID(track_id);
+    dm_track->setTrackNumber(0);
+
+    // Preface - ContentStorage - Package - DM Track - Sequence
+    Sequence *sequence = new Sequence(header_metadata);
+	if (mod!=NULL) mod->Modify(sequence);
+    dm_track->setSequence(sequence);
+    sequence->setDataDefinition(MXF_DDEF_L(DescriptiveMetadata));
+
+	for (std::vector<EventInput>::iterator it = frameworks.begin(); it != frameworks.end(); it++) {
+		EventInput& ev = *it;
+		// Preface - ContentStorage - Package - DM Track - Sequence - DMSegment
+		DMSegment *dm_segment = new DMSegment(header_metadata);
+		if (mod!=NULL) mod->Modify(dm_segment);
+		sequence->appendStructuralComponents(dm_segment);
+		dm_segment->setDataDefinition(MXF_DDEF_L(DescriptiveMetadata));
+		dm_segment->setEventStartPosition(ev.start);
+		dm_segment->setDuration(ev.duration);
+
+		// move the framework set after the dm degment set
+		mxf_remove_set(header_metadata->getCHeaderMetadata(), ev.framework->getCMetadataSet());
+		BMX_CHECK(mxf_add_set(header_metadata->getCHeaderMetadata(), ev.framework->getCMetadataSet()));
+
+		// Preface - ContentStorage - Package - DM Track - Sequence - DMSegment - DMFramework
+		dm_segment->setDMFramework(ev.framework);
+	}
+
+}
+
 void AppendDMSLabel(HeaderMetadata *header_metadata, mxfUL scheme_label)
 {
     BMX_ASSERT(header_metadata);

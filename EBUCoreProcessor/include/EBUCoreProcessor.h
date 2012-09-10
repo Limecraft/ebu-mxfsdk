@@ -72,6 +72,12 @@ namespace EBUCore
 	*/
 	void InsertEBUCoreFramework(mxfpp::HeaderMetadata *header_metadata, mxfpp::DMFramework *framework, mxfpp::Identification *identificationToAppend = NULL);
 
+	struct EventInput {
+		mxfPosition start;
+		mxfLength duration;
+		mxfpp::DMFramework *framework;
+	};
+
 	/**
 	*	Buffers the index entries of the given __partition__ in a ByteArray and returns the size of the index 
 		entries buffered and the first byte of the header metadata in the given __partition__.
