@@ -3,6 +3,7 @@
 #define __EBUSDK_MXFCUSTOMMETADATA_H__
 
 #include <fstream>
+#include <memory>
 
 #include <libMXF++/MXF.h>
 #include <bmx/ByteArray.h>

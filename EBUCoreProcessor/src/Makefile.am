@@ -9,6 +9,7 @@ libebucore_la_SOURCES = \
 	metadata/base/ebucoreContactDetailsBase.cpp \
 	metadata/base/ebucoreCoordinatesBase.cpp \
 	metadata/base/ebucoreCoreMetadataBase.cpp \
+	metadata/base/ebucorePartMetadataBase.cpp \
 	metadata/base/ebucoreCoverageBase.cpp \
 	metadata/base/ebucoreCustomRelationBase.cpp \
 	metadata/base/ebucoreDateTypeBase.cpp \
@@ -58,6 +59,19 @@ libebucore_la_SOURCES = \
     metadata/base/ebucoreSigningFormatBase.cpp \
     metadata/base/ebucoreTrackBase.cpp \
     metadata/base/ebucoreVideoFormatBase.cpp \
+	metadata/base/ebucoreTechnicalAttributeAnyURIBase.cpp \
+	metadata/base/ebucoreTechnicalAttributeBooleanBase.cpp \
+	metadata/base/ebucoreTechnicalAttributeFloatBase.cpp \
+	metadata/base/ebucoreTechnicalAttributeInt16Base.cpp \
+	metadata/base/ebucoreTechnicalAttributeInt32Base.cpp \
+	metadata/base/ebucoreTechnicalAttributeInt64Base.cpp \
+	metadata/base/ebucoreTechnicalAttributeInt8Base.cpp \
+	metadata/base/ebucoreTechnicalAttributeRationalBase.cpp \
+	metadata/base/ebucoreTechnicalAttributeStringBase.cpp \
+	metadata/base/ebucoreTechnicalAttributeUInt16Base.cpp \
+	metadata/base/ebucoreTechnicalAttributeUInt32Base.cpp \
+	metadata/base/ebucoreTechnicalAttributeUInt64Base.cpp \
+	metadata/base/ebucoreTechnicalAttributeUInt8Base.cpp \
     metadata/ebucoreAncillaryData.cpp \
     metadata/ebucoreAspectRatio.cpp \
     metadata/ebucoreAudioFormat.cpp \
@@ -76,6 +90,19 @@ libebucore_la_SOURCES = \
     metadata/ebucoreSigningFormat.cpp \
     metadata/ebucoreTrack.cpp \
     metadata/ebucoreVideoFormat.cpp \
+	metadata/ebucoreTechnicalAttributeAnyURI.cpp \
+	metadata/ebucoreTechnicalAttributeBoolean.cpp \
+	metadata/ebucoreTechnicalAttributeFloat.cpp \
+	metadata/ebucoreTechnicalAttributeInt16.cpp \
+	metadata/ebucoreTechnicalAttributeInt32.cpp \
+	metadata/ebucoreTechnicalAttributeInt64.cpp \
+	metadata/ebucoreTechnicalAttributeInt8.cpp \
+	metadata/ebucoreTechnicalAttributeRational.cpp \
+	metadata/ebucoreTechnicalAttributeString.cpp \
+	metadata/ebucoreTechnicalAttributeUInt16.cpp \
+	metadata/ebucoreTechnicalAttributeUInt32.cpp \
+	metadata/ebucoreTechnicalAttributeUInt64.cpp \
+	metadata/ebucoreTechnicalAttributeUInt8.cpp \
 	metadata/ebucoreTextualAnnotation.cpp \
 	metadata/ebucoreAddress.cpp \
 	metadata/ebucoreAlternativeTitle.cpp \
@@ -84,6 +111,7 @@ libebucore_la_SOURCES = \
 	metadata/ebucoreContactDetails.cpp \
 	metadata/ebucoreCoordinates.cpp \
 	metadata/ebucoreCoreMetadata.cpp \
+	metadata/ebucorePartMetadata.cpp \
 	metadata/ebucoreCoverage.cpp \
 	metadata/ebucoreCustomRelation.cpp \
 	metadata/ebucoreDate.cpp \
@@ -123,7 +151,8 @@ libebucore_la_SOURCES = \
     MXFCustomMetadata.cpp \
 	EBUCoreMapping.cpp \
 	EBUCoreReverseMapping.cpp \
-	EBUCoreProcessor.cpp
+	EBUCoreProcessor.cpp \
+	AppUtils.cpp
 
 libebucore_la_CXXFLAGS = $(BMX_CFLAGS)
 
