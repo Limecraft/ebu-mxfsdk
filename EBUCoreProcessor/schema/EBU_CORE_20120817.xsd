@@ -1,0 +1,2495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- EBUCORE v1.4 2012 -->
+<!-- What is new in version 1.4? -->
+
+<!-- 1. Refine contact details: otherGivenName, suffix, etc. -->
+<!-- 2. add typeGroup to Contact and Organisation -->
+<!-- 3. add organisationCode to organisationDetails -->
+<!-- 4. add  totalNumberofGroupMembersand orderedGroupFlag	in relationType -->
+<!-- 5. add language to typeGroup, formatGroup, statusGroup -->
+<!-- 6. add service and publishing medium and publication Element to publicationHistory, to align with CCDM  -->
+<!-- 7. correct / adjust cardinalities -> username, email, etc. comments from Werner -->
+<!-- 8. Make organisationDetails optional as well as name in contactDetails and organisationDetails (in the text explain that both can be simply identified by their respective Ids)-->
+<!-- 9. add periodName to periodOfTime -->
+<!-- 10. ratingValue of elementType for a possible language -->
+<!-- 11. PeriodOfTime cardinality to unbounded -->
+<!-- 12. part number and total number-->
+<!-- 13 remove height and width in format root -->
+<!-- 14 add source and destination id to hasTrackPart -->
+<!-- 15 add typeGroup to Part element-->
+<!-- 16 add the audio and video technical attributes agreed in FIMS -->
+<!-- 17 aspectRatio of aspectRatioType -->
+<!-- 18 Revision of fileInfo to support files and packages to align with FIMS -->
+<!-- 19 add missing relations hasMember and isMemberOf -->
+<!-- 20 change cardinality of dc_title in titleType and alternativeTitleType to allow grouping of titles if a given type in different languages-->
+<!-- 21 add typeGroup to element version and change cardinality to zero to unbounded-->
+<!-- 22 add typeGroup to timeType and durationType -->
+<!-- 23 allow to express start/end and/or duration - remove choice between end and duration -->
+<!-- 24 add comment inc. typeGroup for comment type to videoFormat, audioFormat, dataFormat and documentFormat-->
+<!-- 25 correct dateGroup and remove start and end times and remove period -->
+<!-- 26 create new dateTimeGroup applying only to periodOfTime -->
+<!-- 27 change cardinality of dc:description and dc:rights to unbounded -->
+<!-- 28 add typeGroup to aspectRatio -->
+<!-- 29 add codecIdentifier to codecType -->
+<!-- 30 sampling rate from float to long -->
+<!-- 31 change name of user defined duration -->
+
+<!-- TO BE DISCUSSED FOR 2.0 -->
+<!--  Replace normalplaytime with a count of seconds -> float -->
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:ebucore="urn:ebu:metadata-schema:ebuCore_2012" xmlns:dc="http://purl.org/dc/elements/1.1/"
+	targetNamespace="urn:ebu:metadata-schema:ebuCore_2012" elementFormDefault="qualified">
+	<import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+	<import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="simpledc20021212.xsd"/>
+	<element name="ebuCoreMain" type="ebucore:ebuCoreMainType"/>
+	<annotation>
+		<documentation> The following Creative Commons Rights apply to the use of this EBU resource:
+			http://creativecommons.org/licenses/by-nc-sa/3.0/ Owner: EBU Technical Department
+			Author: Jean-Pierre Evain Contact: evain@ebu.ch </documentation>
+	</annotation>
+	<complexType name="ebuCoreMainType">
+		<annotation>
+			<documentation> ebuCoreMain is the root of a document using the EBU Core metadata set
+			</documentation>
+		</annotation>
+		<sequence>
+			<element name="coreMetadata" type="ebucore:coreMetadataType">
+				<annotation>
+					<documentation>The body of ebucore descriptive metadata </documentation>
+				</annotation>
+			</element>
+			<element name="metadataProvider" type="ebucore:entityType" minOccurs="0">
+				<annotation>
+					<documentation>Identifies the metadata provider, e.g. the contributing archive.
+						The organisation Id or name provide the archive ID or name required for e.g.
+						OAI metadata harvesting operation. </documentation>
+				</annotation>
+			</element>
+		</sequence>
+		<attribute name="schema">
+			<annotation>
+				<documentation> The name of the schema for e.g. OAI management. </documentation>
+			</annotation>
+		</attribute>
+		<attribute name="version" default="1.4">
+			<annotation>
+				<documentation> The version of the schema for e.g. OAI management. </documentation>
+			</annotation>
+		</attribute>
+		<attribute name="dateLastModified" type="date">
+			<annotation>
+				<documentation> The date of edition of the metadata instance for e.g. OAI management
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="documentId" type="NMTOKEN">
+			<annotation>
+				<documentation> The unique Identifier of the metadata instance for e.g. OAI
+					management </documentation>
+			</annotation>
+		</attribute>
+		<attribute name="documentLocation" type="anyURI">
+			<annotation>
+				<documentation> A location at which the document containing the metadata instance
+					can be found </documentation>
+			</annotation>
+		</attribute>
+		<attribute ref="xml:lang">
+			<annotation>
+				<documentation> An attribute to specify the dominant language used to express
+					metadata information in the document, which can be superceded each time an
+					language attribute or element is available a different levels of description
+					granularity </documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+	<complexType name="coreMetadataType">
+		<annotation>
+			<documentation>The document containing all the core descriptive information regarding
+				the resource</documentation>
+		</annotation>
+		<sequence>
+			<element name="title" type="ebucore:titleType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>A Title is the ‘main’ name given to a resource e.g. a media item,
+						a media object, or a sequence as specified by the associated title type. It
+						corresponds for a series to the series title, for a programme to the
+						programme title, for an item to the item title, etc. Titles are recorded as
+						they appear. The Title is the name by which a resource is formally known and
+						that everyone should use to refer to or search for that particular resource.
+						The Title may be provided in several languages. If present, the
+						attributionDate attribute indicates when the Title was attributed. A Title
+						is the ‘main’ name given to a resource e.g. a media item, a media object, or
+						a sequence as specified by the associated title type. It corresponds for a
+						series to the series title, for a programme to the programme title, for an
+						item to the item title, etc. Titles are recorded as they appear. The Title
+						is the name by which a resource is formally known and that everyone should
+						use to refer to or search for that particular resource. The Title may be
+						provided in several languages. If present, the attributionDate attribute
+						indicates when the Title was attributed. </documentation>
+				</annotation>
+			</element>
+			<element name="alternativeTitle" type="ebucore:alternativeTitleType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation>An Alternative Title is the name other than the ‘main’ Title
+						given to a resource. The type of title is defined by the typeGroup of
+						attributes. The status of the title is defined by the statusGroup of
+						attributes. Alternative Titles are recorded as they appear. An Alternative
+						Title may be attributed to a resource for several reasons described using
+						the status (e.g. working title) and type (e.g. series title) attributes. The
+						alternativeTitle may be provided in several languages. It is sometimes
+						common practice to put dates into the alternativeTitle. If present, the
+						attributionDate (indicating when the alternativeTitle was attributed) in the
+						date attribute should be consistent. </documentation>
+				</annotation>
+			</element>
+			<element name="creator" type="ebucore:entityType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> The descriptor creator identifies an ‘entity’ (a person, group
+						of persons or organisation) primarily responsible for creating the content
+						of the resource - behind the camera. Different roles may be considered as
+						representing a creator, e.g. a producer, an author, etc. Creator is a
+						sub-class of Contributor. </documentation>
+				</annotation>
+			</element>
+			<element name="subject" type="ebucore:subjectType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> The generalised topic that represents the intellectual content
+						of the resource. Typically, a subject is expressed by keywords, key phrases.
+						Free text, controlled vocabularies, authorities, or formal classification
+						schemes (codes) may be employed when selecting descriptive subject terms.
+						Persons as subjects are also placed here. Genre of the content is defined
+						under element “ebucore:type/ebucore:genre” </documentation>
+				</annotation>
+			</element>
+			<element name="description" type="ebucore:descriptionType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation>Free-form text or a narrative to report general notes, abstracts,
+						or summaries about the intellectual content of a resource. The information
+						may be in the form of a paragraph giving an individual program description,
+						anecdotal interpretations, or brief content reviews. The description may
+						also consist of outlines, lists, bullet points, edit decision lists,
+						indexes, or tables of content, a reference to a graphical representation of
+						content or even a pointer (URI, URL) to an external resource. A running
+						order can also be provided as a description. For a Radio or television
+						programme a running order can be used as description. A description can be
+						provided in different languages. </documentation>
+				</annotation>
+			</element>
+			<element name="publisher" type="ebucore:entityType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>A publisher is a person, an organization, or a service.
+						Typically, the name of a Publisher should be used to indicate the entity
+						primarily responsible for distributing or making a resource available to
+						others e.g. by broadcasting, selling, leasing, renting and other modes of
+						distribution.</documentation>
+				</annotation>
+			</element>
+			<element name="contributor" type="ebucore:entityType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> The descriptor contributor identifies a person or organization
+						that has made substantial creative contributions to the content of a
+						resource. Refers particularly (but not only) to participation in front of
+						the camera. If in doubt whether an entity is a creator or contributor use
+						the element contributor.</documentation>
+				</annotation>
+			</element>
+			<element name="date" type="ebucore:dateType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> Dates associated with events occurring during the life of the
+						resource. Typically, Date will be associated with the creation, modification
+						or availability of the resource.</documentation>
+				</annotation>
+			</element>
+			<element name="type" type="ebucore:typeType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>The nature or genre of the resource. Type includes terms
+						describing general categories, functions, genres, or aggregation levels for
+						content. Recommended best practice is to select a value from a controlled
+						vocabulary. To describe the physical or digital manifestation of the
+						resource, use the FORMAT element.</documentation>
+				</annotation>
+			</element>
+			<element name="format" type="ebucore:formatType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> The physical or digital manifestation of the resource. Use the
+						descriptor Format to identify the format of a particular resource as it
+						exists in its physical or digital form. Physical form = an actual physical
+						form that occupies physical space, e.g. a tape. Digital form = a digital
+						file residing on a server or hard drive. Format may be used to determine the
+						software, hardware or other equipment needed to display or operate the
+						resource.</documentation>
+				</annotation>
+			</element>
+			<element name="identifier" type="ebucore:identifierType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> A unique, unambiguous reference or identifier for a resource
+						within a given context. Best practice is to identify the resource (whether
+						analogue or digital) by means of a string or number corresponding to an
+						established or formal identification system if one exists. Otherwise, use an
+						identification method that is in use within your agency, station, production
+						company, office, or institution. It is also possible to enter more than one,
+						different but still unique, identifier for the same
+						resource.</documentation>
+				</annotation>
+			</element>
+			<element ref="dc:source" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>Reference to the resource (s) from which the current resource is
+						derived in whole or in part. If no label or number is available, the title
+						and/or the statement of responsibility etc. of the digitized recording is
+						recorded here. For a digitized radio programme the production number is
+						normally given here. The Recommended best practice is to use a unique
+						identifier to identify the physical source that has been used to create the
+						digital resource. In the case of a digitized analogue recording, it is the
+						recording used for digitization which is the source. For commercial
+						recordings the label and number is normally given here. Example: Eurovision
+						feed 2007-07-16T19:20:30.45+01:00</documentation>
+				</annotation>
+			</element>
+			<element name="language" type="ebucore:languageType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> Identifies languages and their use in the intellectual content
+						of the resource. Recommended best practice for the values of the Language
+						element is defined by RFC 1766, which includes a two-letter Language Code
+						(taken from the ISO Standard 639), followed optionally, by a two-letter
+						Country Code (taken from the ISO Standard 3166). For example, 'en' for
+						English, 'fr' for French, or 'en-uk' for English used in the United Kingdom.
+						More contextual information can be provided using the “note”
+						attribute.</documentation>
+				</annotation>
+			</element>
+			<element name="relation" type="ebucore:relationType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> Recommended best practice is to reference the resource (to which
+						the current resource under description is related) by means of a string or
+						number conforming to a formal identification system. Relation is used to
+						show the relation in content to another resource. For example, "IsPartOf" is
+						used to show the relation between a part of a radio programme and the whole
+						programme or between a track and a record album. A resource can be
+						identified by its title, or an identifier (possibly a URI). The related item
+						has its own separate metadata record. Relation is used to provide a name, an
+						identification number or ID, or a locator where the related item can be
+						found.</documentation>
+				</annotation>
+			</element>
+			<element name="isVersionOf" type="ebucore:relationType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> A reference to the resource that the current resource is a
+						version of </documentation>
+				</annotation>
+			</element>
+			<element name="hasVersion" type="ebucore:relationType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> A reference to another version of the resource </documentation>
+				</annotation>
+			</element>
+			<element name="isReplacedBy" type="ebucore:relationType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> A reference to a resource replacing the current resource
+					</documentation>
+				</annotation>
+			</element>
+			<element name="replaces" type="ebucore:relationType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> A reference to a resource that the current resource replaces
+					</documentation>
+				</annotation>
+			</element>
+			<element name="isRequiredBy" type="ebucore:relationType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> A reference to a resource requiring the current resource
+					</documentation>
+				</annotation>
+			</element>
+			<element name="requires" type="ebucore:relationType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> A reference to a resource that the current resource requires
+					</documentation>
+				</annotation>
+			</element>
+			<element name="isPartOf" type="ebucore:relationType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> A reference to a resource that the current resource is a part of
+					</documentation>
+				</annotation>
+			</element>
+			<element name="hasPart" type="ebucore:relationType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> A reference to a resource that forms part of the current
+						resource </documentation>
+				</annotation>
+			</element>
+			<element name="hasTrackPart" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> An element to identify a part of a track by a title, a start
+						time and an end time in both the media source and media destination
+					</documentation>
+				</annotation>
+				<complexType>
+					<complexContent>
+						<extension base="ebucore:relationType">
+							<sequence>
+								<element name="trackPartTitle" type="ebucore:alternativeTitleType"/>
+								<element name="destinationId" type="anyURI" minOccurs="0"/>
+								<element name="destinationStart" type="ebucore:timeType"
+									minOccurs="0"/>
+								<element name="destinationEnd" type="ebucore:timeType" minOccurs="0"/>
+								<element name="sourceId" type="anyURI" minOccurs="0"/>
+								<element name="sourceStart" type="ebucore:timeType" minOccurs="0"/>
+								<element name="sourceEnd" type="ebucore:timeType" minOccurs="0"/>
+							</sequence>
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+			<element name="isReferencedBy" type="ebucore:relationType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> A reference to a resource that references the current resource
+					</documentation>
+				</annotation>
+			</element>
+			<element name="references" type="ebucore:relationType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> A reference to a resource that the current resource references
+					</documentation>
+				</annotation>
+			</element>
+			<element name="isFormatOf" type="ebucore:relationType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> A reference to a resource with which the current resource shares
+						a format </documentation>
+				</annotation>
+			</element>
+			<element name="hasFormat" type="ebucore:relationType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> A format in which the resource is also available
+					</documentation>
+				</annotation>
+			</element>
+			<element name="isEpisodeOf" type="ebucore:relationType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> A reference to a series the current resource is an episode of
+					</documentation>
+				</annotation>
+			</element>
+			<element name="isMemberOf" type="ebucore:relationType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> A reference to a group e.g. a brand, the current resource is an
+						member of </documentation>
+				</annotation>
+			</element>
+			<element name="hasMember" type="ebucore:relationType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> A reference to members of a group </documentation>
+				</annotation>
+			</element>
+			<element name="coverage" type="ebucore:coverageType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>Coverage is used to show various time and place aspects of the
+						subject of the content. Coverage will typically include spatial location (a
+						place name or geographic coordinates), temporal period (a period label,
+						date, or date range) or jurisdiction (such as a named administrative
+						entity). Recommended best practice is to select a value from a controlled
+						vocabulary (for example, the Thesaurus of Geographic Names) and that, where
+						appropriate, named places or time periods be used in preference to numeric
+						identifiers such as sets of coordinates or date ranges.</documentation>
+				</annotation>
+			</element>
+			<element name="rights" type="ebucore:rightsType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>An all-purpose field to identify information (rights management
+						statement or reference to a service providing such information e.g. via a
+						URL) about copyright, intellectual property rights or other property rights
+						held in and over a resource, stating whether access is open or restricted in
+						some way. If dates, times, territories and availability periods are
+						associated with a right, they should be included. If the Rights element is
+						absent, no assumptions can be made about the status of these and other
+						rights with respect to the resource.</documentation>
+				</annotation>
+			</element>
+			<element name="version" minOccurs="0" maxOccurs="unbounded" type="ebucore:versionType">
+				<annotation>
+					<documentation xml:lang="en">UK Version, US Version, home video version, etc.
+						Mapping to Dublin Core would be made using a description
+						element. There can be mutiple type fo version references.</documentation>
+				</annotation>
+			</element>
+			<element name="publicationHistory" type="ebucore:publicationHistoryType" minOccurs="0">
+				<annotation>
+					<documentation> To provide information on the publication history.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="rating" type="ebucore:ratingType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> An element to provide rating values attributed to the media
+						resource. </documentation>
+				</annotation>
+			</element>
+			<element name="part" type="ebucore:partType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>To identify parts/segments/fragments within the
+						resource.</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="partType">
+		<complexContent>
+			<extension base="ebucore:coreMetadataType">
+				<attribute name="partId" type="NMTOKEN"/>
+				<attribute name="partName" type="string"/>
+				<attribute name="partDefinition" type="string"/>
+				<attribute name="partNumber" type="integer"/>
+				<attribute name="partTotalNumber" type="integer"/>
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="titleType">
+		<annotation>
+			<documentation> The name given to a resource e.g. a media item, media object, sequence.
+				For a series – use the series title; for a programme – a programme title; for an
+				item – an item title. etc. Titles are recorded as they appear.</documentation>
+		</annotation>
+		<sequence>
+			<element ref="dc:title" minOccurs="1" maxOccurs="unbounded">
+				<annotation>
+					<documentation> The EBU core metadata set is built as a refinement of the Dublin
+						Core. Free-text to provide the main title by which the resource is known.
+						The title can be provided in different languages. The language in which the
+						title is provided can be provided using elementType’s lang attribute.
+						Example: ‘the fifth element’ </documentation>
+				</annotation>
+			</element>
+		</sequence>
+		<attribute name="attributiondate" type="date">
+			<annotation>
+				<documentation> Defines the date of attribution of this Title. </documentation>
+			</annotation>
+		</attribute>
+		<attribute name="note" type="string">
+			<annotation>
+				<documentation> Optional additional contextual information. </documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+	<complexType name="alternativeTitleType">
+		<annotation>
+			<documentation> The name given to a resource e.g. a media item, media object, sequence.
+				For a series – use the series title; for a programme – a programme title; for an
+				item – an item title. etc. Titles are recorded as they appear.</documentation>
+		</annotation>
+		<sequence>
+			<element ref="dc:title" minOccurs="1" maxOccurs="unbounded">
+				<annotation>
+					<documentation> The EBU core metadata set is built as a refinement of the Dublin
+						Core. Free-text to provide alternative titles by which the resource is
+						known. The language in which the title is provided can be provided using
+						elementType’s lang attribute. Example: ‘the fifth element’ </documentation>
+				</annotation>
+			</element>
+		</sequence>
+		<attributeGroup ref="ebucore:typeGroup">
+			<annotation>
+				<documentation> The typeGroup is used to define the type of alternative title. This
+					can be an associated title like a series title.</documentation>
+			</annotation>
+		</attributeGroup>
+		<attributeGroup ref="ebucore:statusGroup">
+			<annotation>
+				<documentation> The statusGroup is used to define the status of the Title such as
+					short, long, full, abridged, working, transmission, published, international,
+					subtitle, original, secondary, alternative, pledged, etc. The name of the format
+					can be provided in the form of a text label, or a link to a code of a
+					classification scheme, optionally accompanied by a definition. the status 'main'
+					shall not be used for alternativeTitle as this applies to the Title
+					only.</documentation>
+			</annotation>
+		</attributeGroup>
+		<attributeGroup ref="ebucore:dateGroup">
+			<annotation>
+				<documentation> Defines the date of attribution of this Title. </documentation>
+			</annotation>
+		</attributeGroup>
+		<attribute name="note" type="string">
+			<annotation>
+				<documentation> Optional additional contextual information. </documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+	<complexType name="identifierType">
+		<annotation>
+			<documentation> A unique, unambiguous reference or identifier for a resource within a
+				given context. Best practice is to identify the resource (whether analogue or
+				digital) by means of a string or number corresponding to an established or formal
+				identification system if one exists. Otherwise, use an identification method that is
+				in use within your agency, station, production company, office, or institution. It
+				is also possible to enter different but unique identifiers for the same resource.
+			</documentation>
+		</annotation>
+		<sequence>
+			<element ref="dc:identifier">
+				<annotation>
+					<documentation> The EBU core metadata set is built as a refinement of the Dublin
+						Core. Free text to provide an identifier. Example: 06.0A.2B.34.01.01.01.01
+					</documentation>
+				</annotation>
+			</element>
+			<element name="attributor" type="ebucore:entityType" minOccurs="0">
+				<annotation>
+					<documentation>To identify the source of attribution of the
+						identifier.</documentation>
+				</annotation>
+			</element>
+		</sequence>
+		<attributeGroup ref="ebucore:typeGroup">
+			<annotation>
+				<documentation> The typeGroup is used to define the type of Identifier e.g. Main or
+					Alternative </documentation>
+			</annotation>
+		</attributeGroup>
+		<attributeGroup ref="ebucore:formatGroup">
+			<annotation>
+				<documentation> Use to define the format and possibly syntax of the identifier. Used
+					in combination with the resource Identifier. It can denote the agency or
+					institution which specified or assigned it e.g. SMPTE UMID, ISO ISAN, IETF URI,
+					ISRC, custom.</documentation>
+			</annotation>
+		</attributeGroup>
+		<attribute name="note" type="string">
+			<annotation>
+				<documentation> Optional additional contextual information. </documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+	<complexType name="subjectType">
+		<annotation>
+			<documentation>The generalised topic of that represents the intellectual content of the
+				resource. Typically, a subject is expressed by keywords, key phrases, or even
+				specific classification codes. Controlled vocabularies, authorities, or formal
+				classification schemes may be employed when selecting descriptive subject terms. It
+				is possible to employ both keywords, derived from a formal classification scheme,
+				such as Dewey or UDC, and genres/subgenres such as those produced by TV-Anytime or
+				Escort, to cover Subject(s) and Genre(s) and enter as appropriate Subject Type
+				below. Persons as subjects are also placed here. Genre of the content is placed
+				under element Type. </documentation>
+		</annotation>
+		<sequence>
+			<element ref="dc:subject">
+				<annotation>
+					<documentation>To express the subject in the form of free text. </documentation>
+				</annotation>
+			</element>
+			<element name="subjectCode" type="anyURI" minOccurs="0">
+				<annotation>
+					<documentation>To alternatively express the subject using predefined terms
+						expressed by classification codes. Reference data: - Library of Congress
+						Subject Heading (LCSH), Library of Congress Classification (LCC), Medical
+						Subject Headings (MeSH), Dewey Decimal Classification (DDC), Dansk
+						decimalklassedeling 5.utgave (DK5), Klassifikasjonssystem för svenska
+						bibliotek (SAB), Universal Decimal Classification (UDC), Norske emneord -
+						http://cv.iptc.org/newscodes/subjectcode/. Example:
+						http://cv.iptc.org/newscodes/subjectcode/#15065000 </documentation>
+				</annotation>
+			</element>
+			<element name="subjectDefinition" type="dc:elementType" minOccurs="0">
+				<annotation>
+					<documentation>An optional definition. Example: ‘the subject is about tennis
+						(sport, game)’ </documentation>
+				</annotation>
+			</element>
+			<element name="attributor" type="ebucore:entityType" minOccurs="0">
+				<annotation>
+					<documentation>To identify the source of attribution of the
+						subject/tag.</documentation>
+				</annotation>
+			</element>
+		</sequence>
+		<attributeGroup ref="ebucore:typeGroup">
+			<annotation>
+				<documentation>To define the source of reference for subject such as a reference
+					document or classification scheme or the framework within which a tag has been
+					attributed.</documentation>
+			</annotation>
+		</attributeGroup>
+		<attribute name="note" type="string">
+			<annotation>
+				<documentation> Optional additional contextual information. </documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+	<complexType name="typeType">
+		<annotation>
+			<documentation>The nature or genre of the content of the resource. Type includes terms
+				describing general categories, functions, genres, or aggregation levels for content.
+				Recommended best practice is to select a value from a controlled vocabulary. To
+				describe the physical or digital manifestation of the resource, use the FORMAT
+				element. </documentation>
+		</annotation>
+		<sequence>
+			<element ref="dc:type" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> The EBU core metadata set is built as a refinement of the Dublin
+						Core. </documentation>
+				</annotation>
+			</element>
+			<element name="genre" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>A type element specifically dedicated to the description of a
+						resource genre</documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:typeGroup">
+						<annotation>
+							<documentation>To define the Type reference data.</documentation>
+						</annotation>
+					</attributeGroup>
+				</complexType>
+			</element>
+			<element name="objectType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>A type element specifically dedicated to the description of type
+						of resource being describe e.g. programme, item, episode</documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:typeGroup">
+						<annotation>
+							<documentation>To define the Type reference data.</documentation>
+						</annotation>
+					</attributeGroup>
+				</complexType>
+			</element>
+			<element name="targetAudience" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>A type element specifically dedicated to the description of a
+						resource target audience e.g. parental guidance or geographical/occupational
+						group</documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:typeGroup">
+						<annotation>
+							<documentation>To define the Type reference data.</documentation>
+						</annotation>
+					</attributeGroup>
+				</complexType>
+			</element>
+		</sequence>
+		<attribute name="note" type="string">
+			<annotation>
+				<documentation> Optional additional contextual information. </documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+	<complexType name="descriptionType">
+		<annotation>
+			<documentation>Free-form text or a narrative to report general notes, abstracts, or
+				summaries about the intellectual content of a resource. The information may be in
+				the form of a paragraph giving an individual program description, anecdotal
+				interpretations, or brief content reviews. The description may also consist of
+				outlines, lists, bullet points, edit decision lists, indexes, or tables of content,
+				a reference to a graphical representation of content or even a pointer (URI, URL) to
+				an external resource. For a Radio or television programme a running order can be
+				used as description. A description can be provided in different languages.
+			</documentation>
+		</annotation>
+		<sequence>
+			<element ref="dc:description" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> The EBU core metadata set is built as a refinement of the Dublin
+						Core. Free text to provide a description of the resource. The description
+						can be repeated in different languages as specified by the entityType’s lang
+						attribute. The type of description is defined in the type group of
+						attributes.</documentation>
+				</annotation>
+			</element>
+		</sequence>
+		<attributeGroup ref="ebucore:typeGroup">
+			<annotation>
+				<documentation> To define the form of presentation for the information: Annotation,
+					abstract, summary, review, table of content, synopsis, shot list, edit decision
+					list, promotional information, purpose, script, outline, rundown,
+					selection/excerpt, transcript, bookmarks, theme, highlights, running order, etc.
+				</documentation>
+			</annotation>
+		</attributeGroup>
+		<attribute name="note" type="string">
+			<annotation>
+				<documentation> Optional additional contextual information. </documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+	<complexType name="coverageType">
+		<annotation>
+			<documentation>Coverage will typically include spatial location (a place name or
+				geographic coordinates), temporal period (a period label, date, or date range) or
+				jurisdiction (such as a named administrative entity). Recommended best practice is
+				to select a value from a controlled vocabulary (for example, the Thesaurus of
+				Geographic Names) and that, where appropriate, named places or time periods be used
+				in preference to numeric identifiers such as sets of coordinates or date
+				ranges.</documentation>
+		</annotation>
+		<sequence>
+			<element ref="dc:coverage" minOccurs="0">
+				<annotation>
+					<documentation> The EBU core metadata set is built as a refinement of the Dublin
+						Core. </documentation>
+				</annotation>
+			</element>
+			<element name="temporal" minOccurs="0">
+				<annotation>
+					<documentation>Temporal characteristics of the content of the resource. To
+						indicate e.g. specific date, time or period aspects of the subject of the
+						resource in complement to Description. </documentation>
+				</annotation>
+				<complexType>
+					<sequence>
+						<element name="PeriodOfTime" minOccurs="0" maxOccurs="unbounded">
+							<complexType>
+								<sequence>
+									<element name="periodName" type="dc:elementType" minOccurs="0"/>
+								</sequence>
+								<attributeGroup ref="ebucore:dateTimeGroup">
+									<annotation>
+										<documentation>The period of time depicted in the
+											resource.</documentation>
+									</annotation>
+								</attributeGroup>
+							</complexType>
+						</element>
+					</sequence>
+					<attributeGroup ref="ebucore:typeGroup">
+						<annotation>
+							<documentation> To precise the type of temporal information
+								provided.</documentation>
+						</annotation>
+					</attributeGroup>
+					<attribute name="note" type="string">
+						<annotation>
+							<documentation> Optional additional contextual information.
+							</documentation>
+						</annotation>
+					</attribute>
+					<attribute name="periodId" type="anyURI">
+						<annotation>
+							<documentation>An identifier to support the management of time periods
+								(e.g. historical or repetitive event) in databases and
+								RDF</documentation>
+						</annotation>
+					</attribute>
+				</complexType>
+			</element>
+			<element name="spatial" minOccurs="0">
+				<annotation>
+					<documentation>Spatial characteristics of the content of the resource. To
+						indicate e.g. specific place and location aspects of the subject of the
+						resource in complement to Description. </documentation>
+				</annotation>
+				<complexType>
+					<sequence>
+						<element name="location" minOccurs="0" maxOccurs="unbounded">
+							<annotation>
+								<documentation>To indicate e.g. specific place and location aspects
+									of the resource in complement to Description.</documentation>
+							</annotation>
+							<complexType>
+								<sequence>
+									<element name="name" type="dc:elementType" minOccurs="0">
+										<annotation>
+											<documentation>Any location name in free
+												text</documentation>
+										</annotation>
+									</element>
+									<element name="coordinates" minOccurs="0">
+										<annotation>
+											<documentation> Optional geospatial coordinates. 'posy'
+												is the latitude. 'posx' is the longitude. Both are
+												expressed in digital degrees</documentation>
+										</annotation>
+										<complexType>
+											<sequence>
+												<element name="posy" type="float"/>
+												<element name="posx" type="float"/>
+											</sequence>
+											<attributeGroup ref="ebucore:formatGroup"/>
+										</complexType>
+									</element>
+									<element name="code" type="anyURI" minOccurs="0">
+										<annotation>
+											<documentation>A location identified by a code from a
+												predefined list of locations.</documentation>
+										</annotation>
+									</element>
+								</sequence>
+								<attributeGroup ref="ebucore:typeGroup">
+									<annotation>
+										<documentation>To precise the type of place and
+											location.</documentation>
+									</annotation>
+								</attributeGroup>
+								<attribute name="note" type="string">
+									<annotation>
+										<documentation>To provide additional information on the type
+											of location described, e.g. countries, regions,
+											cities</documentation>
+									</annotation>
+								</attribute>
+								<attribute name="locationId" type="anyURI">
+									<annotation>
+										<documentation>An identifier to support the management of
+											location in databases and RDF</documentation>
+									</annotation>
+								</attribute>
+							</complexType>
+						</element>
+					</sequence>
+
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="rightsType">
+		<annotation>
+			<documentation>An all-purpose field to identify information (rights management statement
+				or reference to a service providing such information e.g. via a URL) about
+				copyright, intellectual property rights or other property rights held in and over a
+				resource, stating whether open access or restricted in some way. If dates, times,
+				territories and availability periods are associated with a right, they should be
+				included. If the Rights element is absent, no assumptions can be made about the
+				status of these and other rights with respect to the resource. </documentation>
+		</annotation>
+		<sequence>
+			<element ref="dc:rights" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> The EBU core metadata set is built as a refinement of the Dublin
+						Core. An element to express any form of rights related
+						matters.</documentation>
+				</annotation>
+			</element>
+			<element name="rightsLink" type="anyURI" minOccurs="0">
+				<annotation>
+					<documentation>A url pointing to a declaration of rights</documentation>
+				</annotation>
+			</element>
+			<element name="rightsHolder" type="ebucore:entityType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>To identify the person or organisation holding or managing the
+						rights related to the resource. </documentation>
+				</annotation>
+			</element>
+			<element name="exploitationIssues" type="dc:elementType" minOccurs="0">
+				<annotation>
+					<documentation>Use to state any other restrictions, such as non-rights ones,
+						e.g. legal. State by media, territory, scope (restriction on whole item or
+						extracts) and possibly language. The presence of this information can be
+						used by asset management system implementing traffic lights like mechanism
+						to signal that content may be subject to particular restrictions to be
+						clarified before exploitation. </documentation>
+				</annotation>
+			</element>
+			<element name="coverage" type="ebucore:coverageType" minOccurs="0">
+				<annotation>
+					<documentation> Specifies a specific start date, end date or period for the
+						availability of the item or the date from which the rights or exploitation
+						issues apply. It may refer to start dates for the availability of an item
+						that is used within a particular geographical area e.g. broadcast locally,
+						regionally, nationally or internationally, or for web-based distribution. A
+						specific time may also be associated with the date.</documentation>
+				</annotation>
+			</element>
+			<element name="rightsClearanceFlag" type="boolean" minOccurs="0">
+				<annotation>
+					<documentation> A flag to signal if content is subject to rights open issues
+					</documentation>
+				</annotation>
+			</element>
+			<element name="disclaimer" type="dc:elementType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> A field for a disclaimer about the content, its content, and its
+						use. </documentation>
+				</annotation>
+			</element>
+			<element name="rightsAttributedId" type="ebucore:identifierType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> A identifier related to rights, e.g. attributed for a particular
+						purpose by a specific agency in the context of use and exploitation.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="contactDetails" type="ebucore:contactDetailsType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> Minimum information providing means to further identify and
+						contact the rights manager for the resource in the organisation.
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+		<attributeGroup ref="ebucore:typeGroup">
+			<annotation>
+				<documentation> To define the type of rights information provided.</documentation>
+			</annotation>
+		</attributeGroup>
+		<attribute name="note" type="string">
+			<annotation>
+				<documentation> Optional additional contextual information. </documentation>
+			</annotation>
+		</attribute>
+		<attribute name="formatIDRefs" type="IDREFS">
+			<annotation>
+				<documentation> A list of ID references identifying formats in which the content is
+					available and to which the set of rights apply. </documentation>
+			</annotation>
+		</attribute>
+		<attribute name="rightsID" type="ID">
+			<annotation>
+				<documentation> An ID to be used as reference to the associated rights
+				</documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+	<complexType name="formatType">
+		<annotation>
+			<documentation>The physical or digital manifestation of the resource. Use the descriptor
+				Format to identify the format of a particular resource as it exists in its physical
+				or digital form. Physical form = an actual physical form that occupies physical
+				space, e.g. a tape. Digital form = a digital file residing on a server or hard
+				drive. Format may be used to determine the software, hardware or other equipment
+				needed to display or operate the resource. </documentation>
+		</annotation>
+		<sequence>
+			<element ref="dc:format" minOccurs="0">
+				<annotation>
+					<documentation> The EBU core metadata set is built as a refinement of the Dublin
+						Core. Free text to provide information on the format.</documentation>
+				</annotation>
+			</element>
+			<element name="medium" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>The material or physical carrier of the resource. If a file, it
+						should be the carrier format.</documentation>
+				</annotation>
+				<complexType>
+					<attribute name="mediumId" type="anyURI"/>
+					<attributeGroup ref="ebucore:typeGroup"/>
+				</complexType>
+			</element>
+			<element name="imageFormat" type="ebucore:imageFormatType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> used ot list the characteristics of an image </documentation>
+				</annotation>
+			</element>
+			<element name="videoFormat" type="ebucore:videoFormatType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> used to list all the characteristics of the video signal
+					</documentation>
+				</annotation>
+			</element>
+			<element name="audioFormat" type="ebucore:audioFormatType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> used to list all the characteristics of the audio signal
+					</documentation>
+				</annotation>
+			</element>
+			<element name="containerFormat" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>To provide information on the wrapper format in complement to the
+						stream encoding information provided in 'channel', e.g. mp3, wave,
+						Quicktime, ogg.</documentation>
+				</annotation>
+				<complexType>
+					<sequence>
+						<element name="comment" type="dc:elementType" maxOccurs="unbounded"
+							minOccurs="0"/>
+					</sequence>
+					<attributeGroup ref="ebucore:formatGroup"/>
+				</complexType>
+			</element>
+			<element name="dataFormat" type="ebucore:dataFormatType" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<element name="signingFormat" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> Used to provide information on the signing format and purpose
+					</documentation>
+				</annotation>
+				<complexType>
+					<annotation>
+						<documentation> To provide information to the language used for signing and
+							its purpose </documentation>
+					</annotation>
+					<attribute name="trackId" type="NMTOKEN">
+						<annotation>
+							<documentation> The track number </documentation>
+						</annotation>
+					</attribute>
+					<attribute name="trackName" type="string">
+						<annotation>
+							<documentation> The track name</documentation>
+						</annotation>
+					</attribute>
+					<attribute name="language" type="language"/>
+					<attributeGroup ref="ebucore:typeGroup"/>
+					<attributeGroup ref="ebucore:formatGroup">
+						<annotation>
+							<documentation>To specify the format of signing being used e.g. living
+								person or avatar</documentation>
+						</annotation>
+					</attributeGroup>
+					<attribute name="signingSourceUri" type="anyURI">
+						<annotation>
+							<documentation>A pointer to the file with the signing in available as a
+								separte resource.</documentation>
+						</annotation>
+					</attribute>
+					<attribute name="signingFormatId" type="anyURI"/>
+					<attribute name="signingFormatVersionId" type="string"/>
+					<attribute name="signingFormatName" type="string"/>
+					<attribute name="signingFormatDefinition" type="string"/>
+				</complexType>
+			</element>
+			<element name="start" type="ebucore:timeType" minOccurs="0">
+				<annotation>
+					<documentation>The beginning point for playback of a time-based media item, such
+						as digital video or audio. Use in combination with end or duration to
+						identify a sequence or segment of a media item that has a fixed start time
+						and end time.</documentation>
+				</annotation>
+			</element>
+			<element name="end" type="ebucore:timeType" minOccurs="0">
+				<annotation>
+					<documentation>The ending point for playback of a time-based media item,
+							such as digital video or audio. </documentation>
+				</annotation>
+			</element>
+			<element name="duration" type="ebucore:durationType" minOccurs="0">
+				<annotation>
+					<documentation>The duration of the resource or part of a
+							resource.</documentation>
+				</annotation>
+			</element>
+			<group ref="ebucore:fileInfo" minOccurs="0"/>
+			<element name="documentFormat" type="ebucore:documentFormatType" minOccurs="0">
+				<annotation>
+					<documentation>An element to provide a description of a document</documentation>
+				</annotation>
+			</element>
+			<group ref="ebucore:technicalAttributes"/>
+			<element name="dateCreated" minOccurs="0">
+				<complexType>
+					<attributeGroup ref="ebucore:dateGroup"/>
+				</complexType>
+			</element>
+			<element name="dateModified" minOccurs="0">
+				<complexType>
+					<attributeGroup ref="ebucore:dateGroup"/>
+				</complexType>
+			</element>
+		</sequence>
+		<attribute name="formatId" type="ID"/>
+		<attribute name="formatVersionId" type="string"/>
+		<attribute name="formatName" type="string"/>
+		<attribute name="formatDefinition" type="string"/>
+	</complexType>
+	<complexType name="relationType">
+		<annotation>
+			<documentation>Recommended best practice is to reference the resource by means of a
+				string or number conforming to a formal identification system. Relation is used to
+				show the relation in content to another resource. For example, "IsPartOf" is used to
+				show the relation between a part of a radio programme and the whole programme, or
+				between a track and a record album. A resource can be identified by its title, or
+				preferably by an identifier. Relation is used to provide a name, locator, accession,
+				identification number or ID where the related item can be obtained or found.
+			</documentation>
+		</annotation>
+		<choice>
+			<element ref="dc:relation">
+				<annotation>
+					<documentation> The EBU core metadata set is built as a refinement of the Dublin
+						Core. A title would be given using this element.</documentation>
+				</annotation>
+			</element>
+			<element name="relationIdentifier" type="ebucore:identifierType">
+				<annotation>
+					<documentation> An identifier would be given using this element.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="relationLink" type="anyURI">
+				<annotation>
+					<documentation> A link to related material. </documentation>
+				</annotation>
+			</element>
+		</choice>
+		<attributeGroup ref="ebucore:typeGroup">
+			<annotation>
+				<documentation>To show the type of relation to another resource, e.g. identifies
+					ways in which the resource is related by intellectual content to some other
+					resource.</documentation>
+			</annotation>
+		</attributeGroup>
+		<attribute name="runningOrderNumber" type="integer">
+			<annotation>
+				<documentation> If exists, it provides the ranking/running order within an ordered
+					list.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="totalNumberOfGroupMembers" type="integer"/>
+		<attribute name="orderedGroupFlag" type="boolean"/>
+		<attribute name="note" type="string">
+			<annotation>
+				<documentation> Optional additional contextual information. </documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+	<complexType name="languageType">
+		<annotation>
+			<documentation> MODIF VERSION 1.2</documentation>
+			<documentation>Identifies languages and their use in the intellectual content of the
+				resource. Recommended best practice for the values of the Language element is
+				defined by RFC 1766, which includes a two-letter Language Code (taken from the ISO
+				Standard 639), followed optionally, by a two-letter Country Code (taken from the ISO
+				Standard 3166). For example, 'en' for English, 'fr' for French, or 'en-UK' for
+				English used in the United Kingdom. The usage of the language is also defined.
+			</documentation>
+		</annotation>
+		<sequence>
+			<element ref="dc:language" minOccurs="0">
+				<annotation>
+					<documentation> The EBU core metadata set is built as a refinement of the Dublin
+						Core. </documentation>
+				</annotation>
+			</element>
+		</sequence>
+		<attributeGroup ref="ebucore:typeGroup">
+			<annotation>
+				<documentation> Indicates the purpose of the language described by the Language
+					element e.g. Main original language, main dubbed language, additional original
+					language, additional dubbed language, descriptive video information,
+					supplemental commentary, Director's commentary, audio description, supplementary
+					audio programme, educational notes, voice over, original commentary, dubbed
+					commentary, original narration, dubbed narration, dubbed dialogue, interviewer
+					language, interviewee language, text description for the hard-of-hearing,
+					titles, subtitles, song lyrics, sign language, dubbed sign language, transcript,
+					caption, open caption, closed caption.</documentation>
+			</annotation>
+		</attributeGroup>
+		<attribute name="note" type="string">
+			<annotation>
+				<documentation> Optional additional contextual information. </documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+
+	<complexType name="dateType">
+		<annotation>
+			<documentation>Dates associated with events occurring during the life of the resource.
+				Typically, Date will be associated e.g. with the creation or availability of the
+				resource. </documentation>
+		</annotation>
+
+		<sequence>
+			<element ref="dc:date" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> The EBU core metadata set is built as a refinement of the Dublin
+						Core. </documentation>
+				</annotation>
+			</element>
+			<element name="created" minOccurs="0">
+				<annotation>
+					<documentation>To specify the creation date for a particular version or
+						rendition of a resource across its life cycle. It is the moment in time that
+						the resource was finalized during its production process and is forwarded to
+						other divisions or agencies to make it ready for publication or
+						distribution. A specific time may also be associated with the
+						date.</documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:dateGroup"/>
+				</complexType>
+			</element>
+			<element name="issued" minOccurs="0">
+				<annotation>
+					<documentation>Date of formal issuance (e.g. publication) of the resource.
+						Specifies the formal date for a particular version or rendition of a
+						resource has been made ready or officially released for distribution,
+						publication or consumption, e.g. the broadcasting date of a radio programme.
+						A specific time may also be associated with the date. </documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:dateGroup"/>
+				</complexType>
+			</element>
+			<element name="modified" minOccurs="0">
+				<annotation>
+					<documentation>The date when the resource was last modified</documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:dateGroup"/>
+				</complexType>
+			</element>
+			<element name="digitised" minOccurs="0">
+				<annotation>
+					<documentation>The date when the resource was digitised</documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:dateGroup"/>
+				</complexType>
+			</element>
+			<element name="alternative" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>An alternative particular date for which the type can be
+						defined.</documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:dateGroup"/>
+					<attributeGroup ref="ebucore:typeGroup"/>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="publicationHistoryType">
+		<annotation>
+			<documentation>To provide information about the publication history which falls outside
+				the entries under transmission date/times below. </documentation>
+		</annotation>
+		<sequence>
+			<element name="publicationEvent" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+
+						<element name="publicationDate" type="date" minOccurs="0">
+							<annotation>
+								<documentation>The first transmission date</documentation>
+							</annotation>
+						</element>
+						<element name="publicationTime" type="time" minOccurs="0">
+							<annotation>
+								<documentation>The first transmission time</documentation>
+							</annotation>
+						</element>
+						<element name="publicationService" minOccurs="0" type="string">
+							<annotation>
+								<documentation>The service to which the channel is
+									attached</documentation>
+							</annotation>
+						</element>
+						<element name="publicationMedium" minOccurs="0">
+							<annotation>
+								<documentation> the medium used for publication e.g. online,
+									Internet, terrestrial broadcast </documentation>
+							</annotation>
+							<complexType>
+								<attributeGroup ref="ebucore:typeGroup"/>
+							</complexType>
+						</element>
+						<element name="publicationChannel" minOccurs="0">
+							<annotation>
+								<documentation>The channel on which the title was first
+									transmitted</documentation>
+							</annotation>
+							<complexType>
+								<simpleContent>
+									<extension base="string"> </extension>
+								</simpleContent>
+							</complexType>
+						</element>
+					</sequence>
+					<attribute name="firstShowing" type="boolean"/>
+					<attribute name="live" type="boolean"/>
+					<attribute name="free" type="boolean"/>
+					<attribute name="formatIdRef" type="IDREF">
+						<annotation>
+							<documentation>to identify the format in which content has been
+								published</documentation>
+						</annotation>
+					</attribute>
+					<attribute name="rightsIDRefs" type="IDREFS">
+						<annotation>
+							<documentation>to identify all the rights associated with the
+								publication event</documentation>
+						</annotation>
+					</attribute>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="entityType">
+		<annotation>
+			<documentation>To identify a person, group of persons or organisation</documentation>
+		</annotation>
+		<sequence>
+			<element name="contactDetails" type="ebucore:contactDetailsType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> Minimum information providing means to further identify and
+						contact the entity. </documentation>
+				</annotation>
+			</element>
+			<element name="organisationDetails" type="ebucore:organisationDetailsType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation>Minimum information providing means to further identify and
+						contact the entity as an organisation. Cardinality is '1'. Only one
+						organisation is acting as an entity or only one organisation is associated
+						to a person in relation to is occupation in the context of the current
+						content description</documentation>
+				</annotation>
+			</element>
+			<element name="role" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> Used to identify the function fulfilled by the person, group or
+						organisation described as an entity. This is used to detail the role of a
+						'contributor'. This also applies to e.g. 'creator' as several functions can
+						be seen as participating to the creative process </documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:typeGroup"/>
+				</complexType>
+			</element>
+		</sequence>
+		<attribute name="entityId" type="anyURI"/>
+	</complexType>
+	<complexType name="contactDetailsType">
+		<sequence>
+			<choice>
+				<element name="name" type="string">
+					<annotation>
+						<documentation>The contact name is optional as a contact maybe identified by
+							its contactId</documentation>
+					</annotation>
+				</element>
+				<sequence>
+					<element name="givenName" type="string" minOccurs="0"/>
+					<element name="familyName" type="string" minOccurs="0"/>
+					<element name="otherGivenName" type="string" minOccurs="0" maxOccurs="unbounded"/>
+					<element name="suffix" type="string" minOccurs="0"/>
+					<element name="salutation" type="string" minOccurs="0"/>
+				</sequence>
+			</choice>
+			<element name="username" type="dc:elementType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="occupation" type="dc:elementType" minOccurs="0">
+				<annotation>
+					<documentation>The job function of the contact</documentation>
+				</annotation>
+			</element>
+			<element name="details" type="ebucore:detailsType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="stageName" type="dc:elementType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>For example, in the case the contact is a performing
+						actor/actress, the stage name will be the fictitious character's
+						name</documentation>
+				</annotation>
+			</element>
+			<element name="relatedContacts" type="ebucore:entityType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation> This is used to identify contacts related to the contact being
+						described </documentation>
+				</annotation>
+			</element>
+		</sequence>
+		<attribute name="contactId" type="anyURI"/>
+		<attributeGroup ref="ebucore:typeGroup"/>
+	</complexType>
+	<complexType name="organisationDetailsType">
+		<sequence>
+			<element name="organisationName" type="dc:elementType" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation>The organisation name is optional as an organisation maybe
+						identified by its OrganisationId</documentation>
+				</annotation>
+			</element>
+			<element name="organisationCode" type="anyURI" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="organisationDepartment" minOccurs="0">
+				<annotation>
+					<documentation>To identify one or more production area / department / service
+						where the resource was created/originated, in free text</documentation>
+				</annotation>
+				<complexType>
+					<complexContent>
+						<extension base="dc:elementType">
+							<attribute name="departmentId" type="anyURI"/>
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+			<element name="details" type="ebucore:detailsType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="contacts" type="ebucore:entityType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> Useful to provide contact information particularly is no other
+						person information is otherwise provided. </documentation>
+				</annotation>
+			</element>
+		</sequence>
+		<attribute name="organisationId" type="anyURI"/>
+		<attributeGroup ref="ebucore:typeGroup"/>
+	</complexType>
+	<complexType name="detailsType">
+		<sequence>
+			<element name="emailAddress" type="string" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>The e-mail address through which the contact can be directly
+						accessed</documentation>
+				</annotation>
+			</element>
+			<element name="webAddress" type="string" minOccurs="0">
+				<annotation>
+					<documentation> The web address where additional information can be found
+						regarding the company </documentation>
+				</annotation>
+			</element>
+			<element name="address" type="ebucore:addressType" minOccurs="0">
+				<annotation>
+					<documentation>The organisation address is also the professional address of the
+						contact in the context of the content being described and in relation to the
+						contact occupation provided in the contact details</documentation>
+				</annotation>
+			</element>
+			<element name="telephoneNumber" type="string" minOccurs="0"/>
+			<element name="mobileTelephoneNumber" type="string" minOccurs="0"/>
+		</sequence>
+		<attributeGroup ref="ebucore:typeGroup"/>
+	</complexType>
+	<complexType name="addressType">
+		<annotation>
+			<documentation xml:lang="EN"> Provides address details for an organisation
+			</documentation>
+		</annotation>
+		<sequence>
+			<element name="addressLine" minOccurs="0" type="dc:elementType" maxOccurs="unbounded"/>
+			<element name="addressTownCity" type="dc:elementType" minOccurs="0"/>
+			<element name="addressCountyState" type="dc:elementType" minOccurs="0"/>
+			<element name="addressDeliveryCode" type="string" minOccurs="0"/>
+			<element name="country" minOccurs="0">
+				<complexType>
+					<attributeGroup ref="ebucore:typeGroup"/>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="editUnitNumberType">
+		<annotation>
+			<documentation>A complex type to express a number of edit units. An editUnit is the
+				inverse of the edit rate, or corrected edit rate as the result of
+				editUnit=1/(editrate*(factorNumerator/factorDenominator))</documentation>
+		</annotation>
+		<simpleContent>
+			<extension base="long">
+				<attribute name="editRate" type="positiveInteger">
+					<annotation>
+						<documentation>The base number of frames or samples per seconds. This base
+							number can be corrected by a factor calculated as the result of
+							'factorNumerator/factorDenominator' </documentation>
+					</annotation>
+				</attribute>
+				<attribute name="factorNumerator" type="positiveInteger" default="1">
+					<annotation>
+						<documentation>The numerator of the correction factor</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="factorDenominator" type="positiveInteger" default="1">
+					<annotation>
+						<documentation>The denominator of the correction factor</documentation>
+					</annotation>
+				</attribute>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType name="ratingType">
+		<sequence>
+			<element name="ratingValue" type="dc:elementType"/>
+			<element name="ratingScaleMaxValue" type="string"/>
+			<element name="ratingScaleMinValue" type="string"/>
+			<element name="ratingProvider" type="ebucore:entityType"/>
+		</sequence>
+		<attributeGroup ref="ebucore:typeGroup"/>
+		<attributeGroup ref="ebucore:formatGroup"/>
+	</complexType>
+
+	<attributeGroup name="typeGroup">
+		<attribute name="typeLabel" type="string"/>
+		<attribute name="typeDefinition" type="string"/>
+		<attribute name="typeLink" type="anyURI"/>
+		<attribute name="typeLanguage" type="language"/>
+	</attributeGroup>
+	<attributeGroup name="formatGroup">
+		<attribute name="formatLabel" type="string"/>
+		<attribute name="formatDefinition" type="string"/>
+		<attribute name="formatLink" type="anyURI"/>
+		<attribute name="formatLanguage" type="language"/>
+	</attributeGroup>
+	<attributeGroup name="statusGroup">
+		<attribute name="statusLabel" type="string"/>
+		<attribute name="statusDefinition" type="string"/>
+		<attribute name="statusLink" type="anyURI"/>
+		<attribute name="statusLanguage" type="language"/>
+	</attributeGroup>
+	<attributeGroup name="dateGroup">
+		<attribute name="startYear" type="gYear"/>
+		<attribute name="startDate" type="date"/>
+		<attribute name="endYear" type="gYear"/>
+		<attribute name="endDate" type="date"/>
+	</attributeGroup>
+	<attributeGroup name="dateTimeGroup">
+		<attribute name="startYear" type="gYear"/>
+		<attribute name="startDate" type="date"/>
+		<attribute name="startTime" type="time"/>
+		<attribute name="endYear" type="gYear"/>
+		<attribute name="endDate" type="date"/>
+		<attribute name="endTime" type="time"/>
+	</attributeGroup>
+	<complexType name="lengthType">
+		<simpleContent>
+			<extension base="nonNegativeInteger">
+				<attribute name="unit" type="string">
+					<annotation>
+						<documentation> An attribute to specify the unit in which the width is
+							expressed. </documentation>
+					</annotation>
+				</attribute>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<!-- ############################# SEE IF USEFUL TO EXPRESS DIMENSIONS OTHER THAN  LENGTH #######################-->
+	<complexType name="dimensionType">
+		<simpleContent>
+			<extension base="nonNegativeInteger">
+				<attribute name="unit" type="string">
+					<annotation>
+						<documentation> An attribute to specify the unit in which the width is
+							expressed. </documentation>
+					</annotation>
+				</attribute>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType name="imageFormatType">
+		<sequence>
+			<element name="regionDelimX" type="nonNegativeInteger" minOccurs="0">
+				<annotation>
+					<documentation>The identification of a region in a document, an image or a video
+						is done by defining the coordinates of the bottom left corner of the region.
+						The region is defined from this point of reference using the width and
+						height properties. regionDelimX uses the same unit as width.</documentation>
+				</annotation>
+			</element>
+			<element name="regionDelimY" type="nonNegativeInteger" minOccurs="0">
+				<annotation>
+					<documentation>The identification of a region in a document, an image or a video
+						is done by defining the coordinates of the bottom left corner of the region.
+						The region is defined from this point of reference using the width and
+						height properties. regionDelimY uses the same unit as
+						height.</documentation>
+				</annotation>
+			</element>
+			<element name="width" type="ebucore:lengthType" minOccurs="0">
+				<annotation>
+					<documentation> To express the width of an image </documentation>
+				</annotation>
+			</element>
+			<element name="height" type="ebucore:lengthType" minOccurs="0">
+				<annotation>
+					<documentation> To express the height of an image </documentation>
+				</annotation>
+			</element>
+			<element name="orientation" minOccurs="0">
+				<annotation>
+					<documentation> To express the orientation of the image </documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="landscape"/>
+						<enumeration value="portrait"/>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="aspectRatio"  type="ebucore:aspectRatioType" minOccurs="0">
+				<annotation>
+					<documentation>A string to define e.g. the ratio of the picture (the width by
+						the height), for instance '4:3' or '16:9' (rational).</documentation>
+				</annotation>
+			</element>
+			<element name="imageEncoding" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> Used to express the encoding parameters of the resource e.g.
+						jpg.</documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:typeGroup"/>
+				</complexType>
+			</element>
+			<group ref="ebucore:technicalAttributes"/>
+			<element name="comment" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<complexContent>
+						<extension base="dc:elementType">
+							<attributeGroup ref="ebucore:typeGroup"/>
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+		</sequence>
+		<attribute name="imageFormatId" type="anyURI"/>
+		<attribute name="imageFormatVersionId" type="string"/>
+		<attribute name="imageFormatName" type="string"/>
+		<attribute name="imageFormatDefinition" type="string"/>
+	</complexType>
+	<complexType name="videoFormatType">
+		<sequence>
+			<element name="regionDelimX" type="nonNegativeInteger" minOccurs="0">
+				<annotation>
+					<documentation>The identification of a region in a document, an image or a video
+						is done by defining the coordinates of the bottom left corner of the region.
+						The region is defined from this point of reference using the width and
+						height properties. regionDelimX uses the same unit as width.</documentation>
+				</annotation>
+			</element>
+			<element name="regionDelimY" type="nonNegativeInteger" minOccurs="0">
+				<annotation>
+					<documentation>The identification of a region in a document, an image or a video
+						is done by defining the coordinates of the bottom left corner of the region.
+						The region is defined from this point of reference using the width and
+						height properties. regionDelimY uses the same unit as
+						height.</documentation>
+				</annotation>
+			</element>
+			<element name="width" type="ebucore:lengthType" minOccurs="0">
+				<annotation>
+					<documentation> To define the display width of a video image </documentation>
+				</annotation>
+			</element>
+			<element name="height" type="ebucore:lengthType" minOccurs="0">
+				<annotation>
+					<documentation> To define the display height of a video image </documentation>
+				</annotation>
+			</element>
+			<element name="lines" type="nonNegativeInteger" minOccurs="0">
+				<annotation>
+					<documentation>The number of lines or resolution height e.g. 1080, 720,
+						etc.</documentation>
+				</annotation>
+			</element>
+			<element name="frameRate" type="ebucore:rationalType" minOccurs="0">
+				<annotation>
+					<documentation> the frequencey at which frames are sampled in frame per
+						second</documentation>
+				</annotation>
+			</element>
+			<element name="aspectRatio"  type="ebucore:aspectRatioType" minOccurs="0">
+				<annotation>
+					<documentation>A string to define e.g. the ratio of the picture (the width by
+						the height), for instance '4:3' or '16:9' (rational).</documentation>
+				</annotation>
+			</element>
+			<element name="videoEncoding" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> Used to express the encoding parameters of the resource e.g.
+						H264 for a video channel.</documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:typeGroup"/>
+				</complexType>
+			</element>
+			<element name="codec" type="ebucore:codecType" minOccurs="0">
+				<annotation>
+					<documentation>To identify the product (hardware / software) used to encode
+						content in the specified encoding format</documentation>
+				</annotation>
+			</element>
+			<element name="bitRate" type="nonNegativeInteger" minOccurs="0">
+				<annotation>
+					<documentation> the video bit rate in bits per second </documentation>
+				</annotation>
+			</element>
+			<element name="bitRateMode" minOccurs="0">
+				<annotation>
+					<documentation>To indicate if if the bit rate is constant or
+						variable</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="none"/>
+						<enumeration value="constant"/>
+						<enumeration value="variable"/>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="scanningFormat" minOccurs="0">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="none"/>
+						<enumeration value="interlaced"/>
+						<enumeration value="progressive"/>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="scanningOrder" minOccurs="0">
+				<annotation>
+					<documentation>the order in which the image is scanned </documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="none"/>
+						<enumeration value="top"/>
+						<enumeration value="bottom"/>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="noiseFilter" type="boolean" minOccurs="0">
+				<annotation>
+					<documentation>a flag to indicate if a noise filter has been
+						used</documentation>
+				</annotation>
+			</element>
+			<element name="videoTrack" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>To describe the main features of video tracks such as in
+						mutliview systems</documentation>
+				</annotation>
+				<complexType>
+					<attribute name="trackId" type="NMTOKEN">
+						<annotation>
+							<documentation> The track ID or track number </documentation>
+						</annotation>
+					</attribute>
+					<attribute name="trackName" type="string">
+						<annotation>
+							<documentation> The track name </documentation>
+						</annotation>
+					</attribute>
+					<attributeGroup ref="ebucore:typeGroup">
+						<annotation>
+							<documentation> The type of video track e.g. particular view angle.
+							</documentation>
+						</annotation>
+					</attributeGroup>
+				</complexType>
+			</element>
+			<group ref="ebucore:technicalAttributes"/>
+			<element name="comment" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<complexContent>
+						<extension base="dc:elementType">
+							<attributeGroup ref="ebucore:typeGroup"/>
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+		</sequence>
+		<attribute name="videoFormatId" type="anyURI"/>
+		<attribute name="videoFormatVersionId" type="string"/>
+		<attribute name="videoFormatName" type="string"/>
+		<attribute name="videoFormatDefinition" type="string"/>
+	</complexType>
+<!-- @@@@@@@@@@@@ subject to revision by audio group -->
+	<complexType name="audioFormatType">
+		<sequence>
+			<element name="audioEncoding" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> To define the audio compression format of the resource e.g. AAC
+						for an audio channel.</documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:typeGroup"/>
+				</complexType>
+			</element>
+			<element name="codec" type="ebucore:codecType" minOccurs="0">
+				<annotation>
+					<documentation>To identify the hardware / software used</documentation>
+				</annotation>
+			</element>
+			<element name="audioTrackConfiguration" minOccurs="0">
+				<annotation>
+					<documentation> To define the audio track configuration. Used to express the
+						arrangement or audio tracks e.g. 'stereo', '2+1', 'surround', 'surround
+						(7+1)'</documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:typeGroup"/>
+				</complexType>
+			</element>
+			<element name="samplingRate" type="long" minOccurs="0">
+				<annotation>
+					<documentation>the frequency at which audio is being sampled in samples per
+						second</documentation>
+				</annotation>
+			</element>
+			<element name="sampleSize" type="nonNegativeInteger" minOccurs="0">
+				<annotation>
+					<documentation>The size of each audio sample</documentation>
+				</annotation>
+			</element>
+			<element name="sampleType" minOccurs="0">
+				<annotation>
+					<documentation>The type of audio sample</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="float"/>
+						<enumeration value="integer"/>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="bitRate" type="nonNegativeInteger" minOccurs="0">
+				<annotation>
+					<documentation> the audio bit rate in bits per second </documentation>
+				</annotation>
+			</element>
+			<element name="bitRateMode" minOccurs="0">
+				<annotation>
+					<documentation>To indicate if if the bit rate is constant or
+						variable</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="none"/>
+						<enumeration value="constant"/>
+						<enumeration value="variable"/>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="audioTrack" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> To describe the track allocation e.g. in conformance with EBU
+						R123 </documentation>
+				</annotation>
+				<complexType>
+					<attribute name="trackLanguage" type="language">
+						<annotation>
+							<documentation> The track language </documentation>
+						</annotation>
+					</attribute>
+					<attribute name="trackId" type="NMTOKEN">
+						<annotation>
+							<documentation> The track number </documentation>
+						</annotation>
+					</attribute>
+					<attribute name="trackName" type="string">
+						<annotation>
+							<documentation> The track name</documentation>
+						</annotation>
+					</attribute>
+					<attributeGroup ref="ebucore:typeGroup">
+						<annotation>
+							<documentation> The track type </documentation>
+						</annotation>
+					</attributeGroup>
+				</complexType>
+			</element>
+			<element name="channels" type="nonNegativeInteger" minOccurs="0">
+				<annotation>
+					<documentation>the total number of audio channels</documentation>
+				</annotation>
+			</element>
+			<group ref="ebucore:technicalAttributes"/>
+			<element name="comment" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<complexContent>
+						<extension base="dc:elementType">
+							<attributeGroup ref="ebucore:typeGroup"/>
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+		</sequence>
+		<attribute name="audioFormatId" type="anyURI"/>
+		<attribute name="audioFormatVersionId" type="string"/>
+		<attribute name="audioFormatName" type="string"/>
+		<attribute name="audioFormatDefinition" type="string"/>
+	</complexType>
+	<complexType name="dataFormatType">
+		<sequence>
+			<element name="captioningFormat" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation> Used to provide information on the captioning format and purpose
+					</documentation>
+				</annotation>
+				<complexType>
+					<annotation>
+						<documentation> To provide information to the language used for captioning
+							and its purpose </documentation>
+					</annotation>
+					<attribute name="trackId" type="NMTOKEN">
+						<annotation>
+							<documentation> The track number </documentation>
+						</annotation>
+					</attribute>
+					<attribute name="trackName" type="string">
+						<annotation>
+							<documentation> The track name</documentation>
+						</annotation>
+					</attribute>
+					<attribute name="language" type="language"/>
+					<attributeGroup ref="ebucore:typeGroup">
+						<annotation>
+							<documentation>To specify the format of captioning / subtitling being
+								used</documentation>
+						</annotation>
+					</attributeGroup>
+					<attributeGroup ref="ebucore:formatGroup"> </attributeGroup>
+					<attribute name="captioningSourceUri" type="anyURI">
+						<annotation>
+							<documentation>A pointer to the file with the captioning /
+								subtitling.</documentation>
+						</annotation>
+					</attribute>
+					<attribute name="captioningFormatId" type="anyURI"/>
+					<attribute name="captioningFormatName" type="string"/>
+				</complexType>
+			</element>
+			<element name="ancillaryDataFormat" maxOccurs="unbounded" minOccurs="0" >
+				<annotation>
+					<documentation>Used to provide information on ancillary data format and purpose.
+						This type provides inforamtion on the Ancillary Data packet type. See SMPTE
+						291M, SMPTE 436M</documentation>
+				</annotation>
+				<complexType>
+					<sequence>
+						<element name="DID" type="integer" minOccurs="0">
+							<annotation>
+								<documentation>ANC DID Value.</documentation>
+							</annotation>
+						</element>
+						<element name="SDID" type="integer" minOccurs="0">
+							<annotation>
+								<documentation>ANC SDID Value.</documentation>
+							</annotation>
+						</element>
+						<element name="lineNumber" type="integer" minOccurs="0"
+							maxOccurs="unbounded">
+							<annotation>
+								<documentation>Video line number containing the ANC packets of this
+									type.</documentation>
+							</annotation>
+						</element>
+						<element name="wrappingType" type="integer" minOccurs="0">
+							<annotation>
+								<documentation>Indicates HANC or VANC, and what field in which
+									packets should be stored. See SMPTE 436M for legal values.
+								</documentation>
+							</annotation>
+						</element>
+					</sequence>
+					<attribute name="ancillaryDataFormatId" type="anyURI"/>
+					<attribute name="ancillaryDataFormatName" type="string"/>
+				</complexType>
+			</element>
+			<group ref="ebucore:technicalAttributes"/>
+			<element name="comment" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<complexContent>
+						<extension base="dc:elementType">
+							<attributeGroup ref="ebucore:typeGroup"/>
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+		</sequence>
+		<attribute name="dataFormatId" type="anyURI"/>
+		<attribute name="dataFormatVersionId" type="string"/>
+		<attribute name="dataFormatName" type="string"/>
+		<attribute name="dataFormatDefinition" type="string"/>
+	</complexType>
+	<complexType name="documentFormatType">
+		<sequence>
+			<element name="wordCount" type="integer" minOccurs="0">
+				<annotation>
+					<documentation>To provide a word count for the document</documentation>
+				</annotation>
+			</element>
+			<element name="regionDelimX" type="nonNegativeInteger" minOccurs="0">
+				<annotation>
+					<documentation>The identification of a region in a document, an image or a video
+						is done by defining the coordinates of the bottom left corner of the region.
+						The region is defined from this point of reference using the width and
+						height properties. regionDelimX uses the same unit as width.</documentation>
+				</annotation>
+			</element>
+			<element name="regionDelimY" type="nonNegativeInteger" minOccurs="0">
+				<annotation>
+					<documentation>The identification of a region in a document, an image or a video
+						is done by defining the coordinates of the bottom left corner of the region.
+						The region is defined from this point of reference using the width and
+						height properties. regionDelimY uses the same unit as
+						height.</documentation>
+				</annotation>
+			</element>
+			<element name="width" type="ebucore:lengthType" minOccurs="0">
+				<annotation>
+					<documentation>The width of an image, video or document.</documentation>
+				</annotation>
+			</element>
+			<element name="height" type="ebucore:lengthType" minOccurs="0">
+				<annotation>
+					<documentation>The height of an image, video or document.</documentation>
+				</annotation>
+			</element>
+			<group ref="ebucore:technicalAttributes"/>
+			<element name="comment" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<complexContent>
+						<extension base="dc:elementType">
+							<attributeGroup ref="ebucore:typeGroup"/>
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+		</sequence>
+		<attributeGroup ref="ebucore:formatGroup"/>
+		<attributeGroup ref="ebucore:typeGroup"/>
+		<attribute name="documentFormatId" type="anyURI"/>
+		<attribute name="documentFormatVersionId" type="string"/>
+		<attribute name="documentFormatName" type="string"/>
+		<attribute name="documentFormatDefinition" type="string"/>
+	</complexType>
+	<complexType name="codecType">
+		<sequence>
+			<element name="codecIdentifier" minOccurs="0" type="ebucore:identifierType">
+				<annotation>
+					<documentation>the commercial name of the codec used</documentation>
+				</annotation>
+			</element>
+			<element name="name" minOccurs="0" type="string">
+				<annotation>
+					<documentation>the commercial name of the codec used</documentation>
+				</annotation>
+			</element>
+			<element name="vendor" minOccurs="0" type="string">
+				<annotation>
+					<documentation>the name of the vendor</documentation>
+				</annotation>
+			</element>
+			<element name="version" minOccurs="0" type="string">
+				<annotation>
+					<documentation>the version of the product</documentation>
+				</annotation>
+			</element>
+			<element name="family" minOccurs="0" type="string">
+				<annotation>
+					<documentation>the family of products to which the codec belongs
+						to</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="timeType">
+		<choice>
+			<element name="timecode">
+				<annotation>
+					<documentation>To express the start time using timecode compliant with SMPTE ST
+						12-1:2008</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<pattern
+							value="(([0-1][0-9])|([2][0-3])):[0-5][0-9]:[0-5][0-9](([.,])|([:;]))[0-2][0-9]"
+						/>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="normalPlayTime" type="time">
+				<annotation>
+					<documentation>To express the start time  as a number of second in the form HH:MM:SS.S</documentation>
+				</annotation>
+			</element>
+			<element name="editUnitNumber" type="ebucore:editUnitNumberType">
+				<annotation>
+					<documentation> The express the start time as a number of edit Units
+					</documentation>
+				</annotation>
+			</element>
+			<element name="time">
+				<annotation>
+					<documentation>To express the start time in a user defined time
+						format e.g. in a number of seconds</documentation>
+				</annotation>
+				<complexType>
+					<simpleContent>
+						<extension base="string">
+							<attributeGroup ref="ebucore:formatGroup"/>
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+		</choice>
+		<attributeGroup ref="ebucore:typeGroup"/>
+	</complexType>
+	<complexType name="durationType">
+		<choice>
+			<element name="timecode">
+				<annotation>
+					<documentation>To express the duration using timecode compliant with SMPTE ST
+						2021-1:2009</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<pattern value="[0-9][0-9]:[0-5][0-9]:[0-5][0-9]:[0-9][0-9]"/>
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="normalPlayTime" type="duration">
+				<annotation>
+					<documentation>To express the duration in the format HH:MM:SS.S</documentation>
+				</annotation>
+			</element>
+			<element name="editUnitNumber" type="ebucore:editUnitNumberType">
+				<annotation>
+					<documentation> The express the duration as a number of edit Units
+					</documentation>
+				</annotation>
+			</element>
+			<element name="duration">
+				<annotation>
+					<documentation>To express the duration in a user defined time
+						format e.g. in a number seconds</documentation>
+				</annotation>
+				<complexType>
+					<simpleContent>
+						<extension base="string">
+							<attributeGroup ref="ebucore:formatGroup"/>
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+		</choice>
+		<attributeGroup ref="ebucore:typeGroup"/>
+	</complexType>
+	<complexType name="hashType">
+		<sequence>
+			<element name="hashValue" type="hexBinary" minOccurs="1">
+				<annotation>
+					<documentation> The value calculated for the hash code using the hash function
+					</documentation>
+				</annotation>
+			</element>
+			<element name="hashFunction" minOccurs="1">
+				<annotation>
+					<documentation>The algorythm used to calculate the hash code associated with an
+						essence file</documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:typeGroup"/>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<group name="fileInfo">
+		<sequence>
+			<element name="fileSize" type="long" minOccurs="0">
+				<annotation>
+					<documentation>To indicate the storage requirements or file size of a digital
+						resource. The file size is expressed in bytes.</documentation>
+				</annotation>
+			</element>
+			<element name="fileName" type="string" minOccurs="0">
+				<annotation>
+					<documentation> The name of the file as it appears in the location path or url.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="mimeType" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>Define the main MIME type as defined by IANA: e.g. audio, video,
+						text, application, or a container MIME type</documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:typeGroup"/>
+				</complexType>
+			</element>
+			<element name="locator" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>An "address for a resource". For an organisation or producer
+						acting as caretaker for a media resource, Format Location may contain
+						information about a specific shelf location for an asset, including an
+						organisation's name, departmental name, shelf id. and contact information.
+						The Format Location for a data file or web page may include a complete URI
+						with a domain, path, filename or html URL. Examples: "Archives Building A,
+						Row J, Shelf 2", "d://playout/server/content.mpg",
+						"http://www.ebu.ch/CorporateVideo.avi". The storage structure to be found at
+						the locator address may be complex and form of sub-directories e.g. for
+						video, audio and data. </documentation>
+				</annotation>
+				<complexType>
+					<attributeGroup ref="ebucore:typeGroup">
+						<annotation>
+							<documentation>The typeGroup can be used to define e.g. the storage type
+								from a predefined list. or as a term. The definition can be used to
+								provide any additional information as deemed necessary e.g. on the
+								location and/ or managing entity. </documentation>
+						</annotation>
+					</attributeGroup>
+				</complexType>
+			</element>
+			<element name="hash" type="ebucore:hashType" minOccurs="0">
+				<annotation>
+					<documentation>A hash code to verify the integrity of an essence
+						file</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</group>
+
+	<!-- ############################## -->
+	<!-- TECHNICAL ATTRIBUTES GROUP       -->
+	<!-- ############################## -->
+	<group name="technicalAttributes">
+		<sequence>
+			<element name="technicalAttributeString" type="ebucore:String" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<element name="technicalAttributeByte" type="ebucore:Int8" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<element name="technicalAttributeShort" type="ebucore:Int16" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<element name="technicalAttributeInteger" type="ebucore:Int32" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<element name="technicalAttributeLong" type="ebucore:Int64" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<element name="technicalAttributeUnsignedByte" type="ebucore:UInt8" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<element name="technicalAttributeUnsignedShort" type="ebucore:UInt16" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<element name="technicalAttributeUnsignedInteger" type="ebucore:UInt32" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<element name="technicalAttributeUnsignedLong" type="ebucore:UInt64" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<element name="technicalAttributeBoolean" type="ebucore:Boolean" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<element name="technicalAttributeFloat" type="ebucore:Float" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<element name="technicalAttributeRational" type="ebucore:technicalAttributeRationalType"
+				minOccurs="0" maxOccurs="unbounded"/>
+			<element name="technicalAttributeUri" type="ebucore:technicalAttributeUriType"
+				minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</group>
+
+	<!-- ######################################### -->
+	<!-- SMPTE S377 SIMPLE DATA TYPES  -->
+	<!-- ######################################## -->
+	<complexType name="String">
+		<annotation>
+			<documentation>FrameLayout, VideoSamplingRaster, VideoEncoding</documentation>
+		</annotation>
+		<simpleContent>
+			<extension base="string">
+				<attributeGroup ref="ebucore:typeGroup"/>
+				<attributeGroup ref="ebucore:formatGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<!-- - -->
+	<!-- - -->
+	<complexType name="Boolean">
+		<annotation>
+			<documentation>IEEE 754 floating point number</documentation>
+			<appinfo source="http://www.smpte-ra.org/schemas/434/Types/TypeName">Floating
+				Point</appinfo>
+		</annotation>
+		<simpleContent>
+			<extension base="boolean">
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<!-- - -->
+	<!-- - -->
+	<complexType name="Float">
+		<annotation>
+			<documentation>IEEE 754 floating point number</documentation>
+			<appinfo source="http://www.smpte-ra.org/schemas/434/Types/TypeName">Floating
+				Point</appinfo>
+		</annotation>
+		<simpleContent>
+			<extension base="double">
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<!-- -->
+	<!-- -->
+	<complexType name="Int8">
+		<annotation>
+			<documentation>Signed 8 bit integer</documentation>
+			<appinfo source="http://www.smpte-ra.org/schemas/434/Types/TypeName">Int8</appinfo>
+		</annotation>
+		<simpleContent>
+			<extension base="byte">
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<!-- -->
+	<!-- -->
+	<complexType name="Int16">
+		<annotation>
+			<documentation>Signed 16 bit integer</documentation>
+			<appinfo source="http://www.smpte-ra.org/schemas/434/Types/TypeName">Int16</appinfo>
+		</annotation>
+		<simpleContent>
+			<extension base="short">
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<!-- -->
+	<!-- -->
+	<complexType name="Int32">
+		<annotation>
+			<documentation>Signed 32 bit integer</documentation>
+			<appinfo source="http://www.smpte-ra.org/schemas/434/Types/TypeName">Int32</appinfo>
+		</annotation>
+		<simpleContent>
+			<extension base="integer">
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<!-- -->
+	<!-- -->
+	<complexType name="Int64">
+		<annotation>
+			<documentation>Signed 64 bit integer</documentation>
+			<appinfo source="http://www.smpte-ra.org/schemas/434/Types/TypeName">Int64</appinfo>
+		</annotation>
+		<simpleContent>
+			<extension base="long">
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<!-- -->
+	<!-- -->
+	<complexType name="UInt8">
+		<annotation>
+			<documentation>Unsigned 8 bit integer</documentation>
+			<appinfo source="http://www.smpte-ra.org/schemas/434/Types/TypeName">UInt8</appinfo>
+		</annotation>
+		<simpleContent>
+			<extension base="unsignedByte">
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<!-- -->
+	<!-- -->
+	<complexType name="UInt16">
+		<annotation>
+			<documentation>Unsigned 16 bit integer</documentation>
+			<appinfo source="http://www.smpte-ra.org/schemas/434/Types/TypeName">UInt16</appinfo>
+		</annotation>
+		<simpleContent>
+			<extension base="unsignedShort">
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<!-- -->
+	<!-- -->
+	<complexType name="UInt32">
+		<annotation>
+			<documentation>Unsigned 32 bit integer</documentation>
+			<appinfo source="http://www.smpte-ra.org/schemas/434/Types/TypeName">Uint32</appinfo>
+		</annotation>
+		<simpleContent>
+			<extension base="unsignedInt">
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<!-- -->
+	<!-- -->
+	<complexType name="UInt64">
+		<annotation>
+			<documentation>Unsigned 64 bit integer</documentation>
+			<appinfo source="http://www.smpte-ra.org/schemas/434/Types/TypeName">Uint64</appinfo>
+		</annotation>
+		<simpleContent>
+			<extension base="unsignedLong">
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+
+	<!-- ######################################### -->
+	<!-- EBU SIMPLE DATA TYPES  -->
+	<!-- ######################################## -->
+
+	<complexType name="rationalType">
+		<annotation>
+			<documentation> A complex Type defining the structure of a technical attribute ot type
+				rational </documentation>
+		</annotation>
+		<simpleContent>
+			<extension base="long">
+				<attribute name="factorNumerator" default="1" type="integer"/>
+				<attribute name="factorDenominator" default="1" type="integer"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+
+	<complexType name="aspectRatioType">
+		<annotation>
+			<documentation> A complex Type defining the structure of a technical attribute ot type
+				rational </documentation>
+		</annotation>
+		<sequence>
+			<element name="factorNumerator" default="1" type="integer"/>
+			<element name="factorDenominator" default="1" type="integer"/>
+		</sequence>
+		<attributeGroup ref="ebucore:typeGroup"/>
+	</complexType>
+	
+	<complexType name="technicalAttributeRationalType">
+		<annotation>
+			<documentation> A complex Type defining the structure of a technical attribute ot type
+				rational </documentation>
+		</annotation>
+		<complexContent>
+			<extension base="ebucore:rationalType">
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!-- -->
+	<!-- -->
+	<complexType name="technicalAttributeUriType">
+		<simpleContent>
+			<extension base="anyURI">
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+
+	<complexType name="versionType">
+		<complexContent>
+			<extension base="dc:elementType">
+				<attributeGroup ref="ebucore:typeGroup"/>
+			</extension>
+		</complexContent>
+	</complexType>
+</schema>
