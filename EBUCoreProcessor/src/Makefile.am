@@ -144,9 +144,9 @@ libebucore_la_SOURCES = \
 	metadata/ebucoreType.cpp \
 	metadata/ebucoreTypeGroup.cpp \
 	metadata/ebucoreVersion.cpp \
-	EBU_CORE_20120817.cxx \
-	simpledc20021212.cxx \
-	xml.cxx \
+	xsd/EBU_CORE_20120817.cxx \
+	xsd/simpledc20021212.cxx \
+	xsd/xml.cxx \
     XercesUtils.cpp \
     MXFCustomMetadata.cpp \
 	EBUCoreMapping.cpp \

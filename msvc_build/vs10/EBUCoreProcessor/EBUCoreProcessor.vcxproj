@@ -45,7 +45,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\EBUCoreProcessor\include;..\..\..\..\ebu-libmxf;..\..\..\..\ebu-libMXFpp;..\..\..\include;..\..\..\..\ebu-libMXFpp\msvc_build\vs10;..\..\..\..\uriparser\include;C:\code\EBU-SDK\xsd-3.3.0-i686-windows\libxsd;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\EBUCoreProcessor\include;..\..\..\EBUCoreProcessor\include\xsd;..\..\..\..\ebu-libmxf;..\..\..\..\ebu-libMXFpp;..\..\..\include;..\..\..\..\ebu-libMXFpp\msvc_build\vs10;..\..\..\..\uriparser\include;C:\code\EBU-SDK\xsd-3.3.0-i686-windows\libxsd;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
@@ -79,8 +79,6 @@
       <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</PreprocessToFile>
     </ClCompile>
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\EBUCoreReverseMapping.cpp" />
-    <ClCompile Include="..\..\..\EBUCoreProcessor\src\EBU_CORE_20110915.cxx" />
-    <ClCompile Include="..\..\..\EBUCoreProcessor\src\EBU_CORE_20120817.cxx" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreAddressBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreAlternativeTitleBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreAncillaryDataBase.cpp" />
@@ -223,15 +221,15 @@
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreVersion.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreVideoFormat.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\MXFCustomMetadata.cpp" />
-    <ClCompile Include="..\..\..\EBUCoreProcessor\src\simpledc20021212.cxx" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\XercesUtils.cpp" />
-    <ClCompile Include="..\..\..\EBUCoreProcessor\src\xml.cxx" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\xsd\EBU_CORE_20110915.cxx" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\xsd\EBU_CORE_20120817.cxx" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\xsd\simpledc20021212.cxx" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\xsd\xml.cxx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\EBUCoreMapping.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\EBUCoreProcessor.h" />
-    <ClInclude Include="..\..\..\EBUCoreProcessor\include\EBU_CORE_20110915.hxx" />
-    <ClInclude Include="..\..\..\EBUCoreProcessor\include\EBU_CORE_20120817.hxx" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreAddressBase.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreContactBase.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\base\ebucoreContactDetailsBase.h" />
@@ -254,8 +252,10 @@
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreTypeGroup.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucore_extensions_data_model.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\MXFCustomMetadata.h" />
-    <ClInclude Include="..\..\..\EBUCoreProcessor\include\simpledc20021212.hxx" />
-    <ClInclude Include="..\..\..\EBUCoreProcessor\include\xml.hxx" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\xsd\EBU_CORE_20110915.hxx" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\xsd\EBU_CORE_20120817.hxx" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\xsd\simpledc20021212.hxx" />
+    <ClInclude Include="..\..\..\EBUCoreProcessor\include\xsd\xml.hxx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

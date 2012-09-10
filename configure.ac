@@ -187,7 +187,7 @@ fi
 AC_SUBST(WARN_CFLAGS)
 
 BMX_CFLAGS="${WARN_CFLAGS} ${LIBMXF_CFLAGS} ${LIBMXFPP_CFLAGS} \
-	${LIBURIPARSER_CFLAGS} -I\$(top_srcdir)/include -I\$(top_srcdir)/EBUCoreProcessor/include"
+	${LIBURIPARSER_CFLAGS} -I\$(top_srcdir)/include -I\$(top_srcdir)/EBUCoreProcessor/include -I\$(top_srcdir)/EBUCoreProcessor/include/xsd"
 AC_SUBST(BMX_CFLAGS)
 
 BMX_LIBADDLIBS="${UUIDLIB} ${LIBURIPARSER_LIBS} ${LIBMXF_LIBS} ${LIBMXFPP_LIBS}"
