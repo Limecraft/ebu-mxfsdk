@@ -494,7 +494,7 @@ void InsertFramework(HeaderMetadata *header_metadata, uint32_t track_id, std::st
     dm_segment->setDMFramework(framework);
 }
 
-void InsertEventFrameworks(HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, std::vector<EventInput> &frameworks, ObjectModifier *mod = NULL)
+void InsertEventFrameworks(HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, std::vector<EventInput> &frameworks, ObjectModifier *mod)
 {
     BMX_ASSERT(header_metadata);
 

@@ -82,7 +82,7 @@
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">using namespace </span>mxfpp;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">namespace </span>EBUCore { <span class="keyword">namespace </span>KLV</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">namespace </span>EBUSDK { <span class="keyword">namespace </span>EBUCore { <span class="keyword">namespace </span>KLV</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
@@ -135,60 +135,68 @@
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;   std::vector&lt;ebucoreCustomRelation*&gt; getcustomRelation() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;   <span class="keywordtype">bool</span> havebasicRelation() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;   std::vector&lt;ebucoreBasicRelation*&gt; getbasicRelation() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;   <span class="comment">// setters</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;   <span class="keywordtype">void</span> setidentifier(<span class="keyword">const</span> std::vector&lt;ebucoreIdentifier*&gt;&amp; value);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;   <span class="keywordtype">void</span> appendidentifier(ebucoreIdentifier* value);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;   <span class="keywordtype">void</span> settitle(<span class="keyword">const</span> std::vector&lt;ebucoreTitle*&gt;&amp; value);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;   <span class="keywordtype">void</span> appendtitle(ebucoreTitle* value);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;   <span class="keywordtype">void</span> setalternativeTitle(<span class="keyword">const</span> std::vector&lt;ebucoreAlternativeTitle*&gt;&amp; value);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;   <span class="keywordtype">void</span> appendalternativeTitle(ebucoreAlternativeTitle* value);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;   <span class="keywordtype">void</span> setcreator(<span class="keyword">const</span> std::vector&lt;ebucoreEntity*&gt;&amp; value);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;   <span class="keywordtype">void</span> appendcreator(ebucoreEntity* value);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   <span class="keywordtype">void</span> setsubject(<span class="keyword">const</span> std::vector&lt;ebucoreSubject*&gt;&amp; value);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   <span class="keywordtype">void</span> appendsubject(ebucoreSubject* value);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;   <span class="keywordtype">void</span> setdescription(<span class="keyword">const</span> std::vector&lt;ebucoreDescription*&gt;&amp; value);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;   <span class="keywordtype">void</span> appenddescription(ebucoreDescription* value);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;   <span class="keywordtype">void</span> setpublisher(<span class="keyword">const</span> std::vector&lt;ebucoreEntity*&gt;&amp; value);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;   <span class="keywordtype">void</span> appendpublisher(ebucoreEntity* value);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;   <span class="keywordtype">void</span> setcontributor(<span class="keyword">const</span> std::vector&lt;ebucoreEntity*&gt;&amp; value);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;   <span class="keywordtype">void</span> appendcontributor(ebucoreEntity* value);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;   <span class="keywordtype">void</span> setdate(<span class="keyword">const</span> std::vector&lt;ebucoreDate*&gt;&amp; value);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;   <span class="keywordtype">void</span> appenddate(ebucoreDate* value);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;   <span class="keywordtype">void</span> settype(<span class="keyword">const</span> std::vector&lt;ebucoreType*&gt;&amp; value);</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;   <span class="keywordtype">void</span> appendtype(ebucoreType* value);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;   <span class="keywordtype">void</span> setlanguage(<span class="keyword">const</span> std::vector&lt;ebucoreLanguage*&gt;&amp; value);</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;   <span class="keywordtype">void</span> appendlanguage(ebucoreLanguage* value);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;   <span class="keywordtype">void</span> setcoverage(<span class="keyword">const</span> std::vector&lt;ebucoreCoverage*&gt;&amp; value);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;   <span class="keywordtype">void</span> appendcoverage(ebucoreCoverage* value);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;   <span class="keywordtype">void</span> setrights(<span class="keyword">const</span> std::vector&lt;ebucoreRights*&gt;&amp; value);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;   <span class="keywordtype">void</span> appendrights(ebucoreRights* value);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;   <span class="keywordtype">void</span> setrating(<span class="keyword">const</span> std::vector&lt;ebucoreRating*&gt;&amp; value);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;   <span class="keywordtype">void</span> appendrating(ebucoreRating* value);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;   <span class="keywordtype">void</span> setversion(ebucoreVersion* value);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;   <span class="keywordtype">void</span> setpublicationHistoryEvent(<span class="keyword">const</span> std::vector&lt;ebucorePublicationHistoryEvent*&gt;&amp; value);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;   <span class="keywordtype">void</span> appendpublicationHistoryEvent(ebucorePublicationHistoryEvent* value);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;   <span class="keywordtype">void</span> setcustomRelation(<span class="keyword">const</span> std::vector&lt;ebucoreCustomRelation*&gt;&amp; value);</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;   <span class="keywordtype">void</span> appendcustomRelation(ebucoreCustomRelation* value);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;   <span class="keywordtype">void</span> setbasicRelation(<span class="keyword">const</span> std::vector&lt;ebucoreBasicRelation*&gt;&amp; value);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;   <span class="keywordtype">void</span> appendbasicRelation(ebucoreBasicRelation* value);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    ebucoreCoreMetadataBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;};</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;}};</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;   <span class="keywordtype">bool</span> haveformat() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;   std::vector&lt;ebucoreFormat*&gt; getformat() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;   <span class="keywordtype">bool</span> havepart() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;   std::vector&lt;ebucorePartMetadata*&gt; getpart() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;   <span class="comment">// setters</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;   <span class="keywordtype">void</span> setidentifier(<span class="keyword">const</span> std::vector&lt;ebucoreIdentifier*&gt;&amp; value);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;   <span class="keywordtype">void</span> appendidentifier(ebucoreIdentifier* value);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;   <span class="keywordtype">void</span> settitle(<span class="keyword">const</span> std::vector&lt;ebucoreTitle*&gt;&amp; value);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;   <span class="keywordtype">void</span> appendtitle(ebucoreTitle* value);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   <span class="keywordtype">void</span> setalternativeTitle(<span class="keyword">const</span> std::vector&lt;ebucoreAlternativeTitle*&gt;&amp; value);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   <span class="keywordtype">void</span> appendalternativeTitle(ebucoreAlternativeTitle* value);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;   <span class="keywordtype">void</span> setcreator(<span class="keyword">const</span> std::vector&lt;ebucoreEntity*&gt;&amp; value);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;   <span class="keywordtype">void</span> appendcreator(ebucoreEntity* value);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;   <span class="keywordtype">void</span> setsubject(<span class="keyword">const</span> std::vector&lt;ebucoreSubject*&gt;&amp; value);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;   <span class="keywordtype">void</span> appendsubject(ebucoreSubject* value);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;   <span class="keywordtype">void</span> setdescription(<span class="keyword">const</span> std::vector&lt;ebucoreDescription*&gt;&amp; value);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;   <span class="keywordtype">void</span> appenddescription(ebucoreDescription* value);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;   <span class="keywordtype">void</span> setpublisher(<span class="keyword">const</span> std::vector&lt;ebucoreEntity*&gt;&amp; value);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;   <span class="keywordtype">void</span> appendpublisher(ebucoreEntity* value);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;   <span class="keywordtype">void</span> setcontributor(<span class="keyword">const</span> std::vector&lt;ebucoreEntity*&gt;&amp; value);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;   <span class="keywordtype">void</span> appendcontributor(ebucoreEntity* value);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;   <span class="keywordtype">void</span> setdate(<span class="keyword">const</span> std::vector&lt;ebucoreDate*&gt;&amp; value);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;   <span class="keywordtype">void</span> appenddate(ebucoreDate* value);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;   <span class="keywordtype">void</span> settype(<span class="keyword">const</span> std::vector&lt;ebucoreType*&gt;&amp; value);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;   <span class="keywordtype">void</span> appendtype(ebucoreType* value);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;   <span class="keywordtype">void</span> setlanguage(<span class="keyword">const</span> std::vector&lt;ebucoreLanguage*&gt;&amp; value);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;   <span class="keywordtype">void</span> appendlanguage(ebucoreLanguage* value);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;   <span class="keywordtype">void</span> setcoverage(<span class="keyword">const</span> std::vector&lt;ebucoreCoverage*&gt;&amp; value);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;   <span class="keywordtype">void</span> appendcoverage(ebucoreCoverage* value);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;   <span class="keywordtype">void</span> setrights(<span class="keyword">const</span> std::vector&lt;ebucoreRights*&gt;&amp; value);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;   <span class="keywordtype">void</span> appendrights(ebucoreRights* value);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;   <span class="keywordtype">void</span> setrating(<span class="keyword">const</span> std::vector&lt;ebucoreRating*&gt;&amp; value);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;   <span class="keywordtype">void</span> appendrating(ebucoreRating* value);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;   <span class="keywordtype">void</span> setversion(ebucoreVersion* value);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;   <span class="keywordtype">void</span> setpublicationHistoryEvent(<span class="keyword">const</span> std::vector&lt;ebucorePublicationHistoryEvent*&gt;&amp; value);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;   <span class="keywordtype">void</span> appendpublicationHistoryEvent(ebucorePublicationHistoryEvent* value);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;   <span class="keywordtype">void</span> setcustomRelation(<span class="keyword">const</span> std::vector&lt;ebucoreCustomRelation*&gt;&amp; value);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;   <span class="keywordtype">void</span> appendcustomRelation(ebucoreCustomRelation* value);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;   <span class="keywordtype">void</span> setbasicRelation(<span class="keyword">const</span> std::vector&lt;ebucoreBasicRelation*&gt;&amp; value);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;   <span class="keywordtype">void</span> appendbasicRelation(ebucoreBasicRelation* value);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;   <span class="keywordtype">void</span> setformat(<span class="keyword">const</span> std::vector&lt;ebucoreFormat*&gt;&amp; value);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;   <span class="keywordtype">void</span> appendformat(ebucoreFormat* value);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;   <span class="keywordtype">void</span> setpart(<span class="keyword">const</span> std::vector&lt;ebucorePartMetadata*&gt;&amp; value);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;   <span class="keywordtype">void</span> appendpart(ebucorePartMetadata* value);</div>
 <div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    ebucoreCoreMetadataBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;};</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;}}};</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 28 2012 21:35:13 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 11 2012 03:10:18 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

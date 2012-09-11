@@ -4,10 +4,13 @@
 #include <xercesc/dom/DOMDocument.hpp>
 
 /**
-*	EBU MXF SDK main namespace for EBUCore functionality.
+*	EBU MXF SDK main namespace.
 */
 namespace EBUSDK {
 
+	/**
+	 *	EBU MXF SDK namespace for EBUCore-specific functionality.
+	 */
 	namespace EBUCore {
 
 	/**

@@ -9,17 +9,27 @@
 #include <bmx/ByteArray.h>
 
 /**
-*	EBU MXF SDK main namespace for EBUCore functionality.
+*	EBU MXF SDK main namespace.
 */
 namespace EBUSDK {
 
+	/**
+	 *	EBU MXF SDK Namespace for generic functionality that deals with custom MXF metadata.
+	 */
 	namespace MXFCustomMetadata {
 
+	/**
+	*	Abstract utility class which defines an interface for modifying instances of the MXF InterchangeObject and its subclasses.
+	*/
 	class ObjectModifier {
 	public:
+		/** Modify the given InterchangeObject in a subclass-specific fashion. */
 		virtual void Modify(mxfpp::InterchangeObject *obj) = 0;
 	};
 
+	/**
+	*	Class which modifies MXF InterchangeObjects by setting their GenerationUID field to a value given during construction.
+	*/
 	class GenerationUIDAppender : public ObjectModifier {
 		mxfUUID _generationUID;
 	public:
@@ -29,12 +39,6 @@ namespace EBUSDK {
 		void Modify(mxfpp::InterchangeObject *obj) {
 			obj->setGenerationUID(_generationUID);
 		}
-	};
-
-	struct EventInput {
-		mxfPosition start;
-		mxfLength duration;
-		mxfpp::DMFramework *framework;
 	};
 
 	/**
@@ -91,7 +95,7 @@ namespace EBUSDK {
 	uint64_t WriteMetadataToFile(mxfpp::File* mFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, mxfpp::Partition* metadataDestinationPartition, mxfpp::Partition* metadataSourcePartition);
 
 	/**
-	*	Abstract Utility class that defines an interface for writing dark metadata (i.e., blobs of bytes) to an MXF file.
+	*	Abstract utility class which defines an interface for writing dark metadata (i.e., blobs of bytes) to an MXF file.
 	*/
 	class MXFFileDarkSerializer {
 	public:
@@ -131,6 +135,7 @@ namespace EBUSDK {
 		@param mFile The base MXF file structure opened with read/write access.
 		@param destMemFile A pointer that will receive a reference to the memory-backed MXF file structure created during the serialization process.
 		@param metadata The dark metadata serializer that will write to the memory-backed file.
+		@param darkMetadataSetKey The key to use as dark metadata KLV packet key.
 		@param metadata_read_position The offset in the __mFile__ from where the original header metadata is to be read. This is the actual starting position
 		of the metadata, beyond any preceeding KLV Filler elements.
 		@param metadata_write_position The offset in the __mFile__ where the new header metadata is to be written. This is the actual starting position
@@ -146,6 +151,7 @@ namespace EBUSDK {
 		@returns Returns the total header metadata bytes written to the MXF file.
 		@param mFile The base MXF file structure opened with read/write access.
 		@param metadata The dark metadata serializer that will write to the memory-backed file.
+		@param darkMetadataSetKey The key to use as dark metadata KLV packet key.
 		@param metadata_read_position The offset in the __mFile__ from where the original header metadata is to be read. This is the actual starting position
 		of the metadata, beyond any preceeding KLV Filler elements.
 		@param metadata_write_position The offset in the __mFile__ where the new header metadata is to be written. This is the actual starting position
@@ -197,9 +203,49 @@ namespace EBUSDK {
 	*/
 	mxfpp::Partition* FindPreferredMetadataPartition(const std::vector<mxfpp::Partition*>& partitions, mxfpp::Partition** headerPartition, mxfpp::Partition** footerPartition);
 
+	/**
+	*	Appends a descriptive metadata scheme Universal Label to the given header metadata object, where it is written into the Preface metadata set.
+		
+		@param header_metadata The header metadata to which to append the DM framework.
+		@param scheme_label The Universal Label of the descriptive metadata scheme.
+	*/
 	void AppendDMSLabel(mxfpp::HeaderMetadata *header_metadata, mxfUL scheme_label);
 
+	/**
+	*	Inserts the given descriptive metadata framework into the MXF timeline of the provided header metadata.\n
+		The framework is inserted as the framework for a newly created DM Static Track (identified by the __track_id__ and __track_name__ parameters) in the Material Package of the metadata. 
+		The structure built is as follows: [Preface] -> [ContentStorage] -> [Material Package] -> [DM Static Track] -> [Sequence] -> [DMSegment] -> [__framework__].
+		
+		@param header_metadata The header metadata to which to append the DM framework.
+		@param track_id The identifier given to the newly created Static Track.
+		@param track_name The name given to the newly created Static Track.
+		@param framework The framework attached to DM Segment of the Static Track.
+		@param mod An optional object modifier which updates all metadata objects created by this function, e.g., for unique identification purposes.
+	*/
 	void InsertFramework(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, mxfpp::DMFramework *framework, ObjectModifier *mod = NULL);
+
+	/**
+	  *	Structure for defining temporal location of a DM framework on an MXF timeline. Used as input to the __InsertEventFrameworks__ function.
+	  */
+	struct EventInput {
+		mxfPosition start;
+		mxfLength duration;
+		mxfpp::DMFramework *framework;
+	};
+
+	/**
+	*	Inserts a given list of descriptive metadata frameworks into the MXF timeline of the provided header metadata.\n
+		The frameworks are attached to a newly created DM Event Track (identified by the __track_id__ and __track_name__ parameters) in the Material Package of the metadata. 
+		The structure built is as follows: [Preface] -> [ContentStorage] -> [Material Package] -> [DM Event Track] -> [Sequence] -> [DMSegment],... -> [__frameworks__[i]]. 
+		The EventInput members are used to properly position the created DMSegments on the Event timeline.
+		
+		@param header_metadata The header metadata to which to append the DM framework.
+		@param track_id The identifier given to the newly created Event Track.
+		@param track_name The name given to the newly created Event Track.
+		@param frameworks A list of frameworks to be attached to series of DM Segments of the Event Track.
+		@param mod An optional object modifier which updates all metadata objects created by this function, e.g., for unique identification purposes.
+	*/
+	void InsertEventFrameworks(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, std::vector<EventInput> &frameworks, ObjectModifier *mod = NULL);
 
 
 	} // namespace MXFCustomMetadata
