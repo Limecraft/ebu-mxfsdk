@@ -411,6 +411,11 @@ mxfRational convert(xml_schema::long_& source) {
 	return r;
 }
 
+mxfRational convert(rationalType& source) {
+	mxfRational r = {source.factorNumerator(), source.factorDenominator()};
+	return r;
+}
+
 std::string convert_to_string(::xml_schema::integer& source) {
 	std::stringstream ss;
 	ss << source;
@@ -1050,17 +1055,19 @@ void mapMedium(medium& source, ebucoreMedium *dest, ObjectModifier* mod = NULL) 
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setmediumTypeGroup)
 }
 
+void mapLocator(formatType::locator_type& source, ebucoreLocator *dest, ObjectModifier* mod = NULL) {
+	// [TODO] In XSD, provide a locator string that can be mapped to the KLV locatorLocation field
+	//SIMPLE_MAP(source, <<locator value>>, dest, setlocatorLocation)
+	dest->setlocatorLocation("");
+
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setlocatorTypeGroup)
+}
+
 void mapPackageInfo(formatType& source, ebucorePackageInfo *dest, ObjectModifier* mod = NULL) {
 	SIMPLE_MAP_OPTIONAL(source, fileName, dest, setpackageName)
 	SIMPLE_MAP_OPTIONAL(source, fileSize, dest, setpackageSize)
 
-	std::vector<ebucoreTypeGroup*> vec_locs;
-	for (formatType::locator_iterator it = source.locator().begin(); it != source.locator().end(); it++) {
-		ebucoreTypeGroup *typeGroup = newAndModifyObject<ebucoreTypeGroup>(dest->getHeaderMetadata(), mod);	\
-		MAP_TYPE_GROUP((*it), typeGroup)
-		vec_locs.push_back(typeGroup);
-	}
-	dest->setpackageLocator(vec_locs);
+	NEW_VECTOR_AND_ASSIGN(source, locator, ebucoreLocator, formatType::locator_iterator, mapLocator, dest, setpackageLocator)
 }
 
 void mapSigningFormat(signingFormat& source, ebucoreSigningFormat *dest, ObjectModifier* mod = NULL) {
@@ -1117,6 +1124,7 @@ void mapAudioFormat(audioFormatType& source, ebucoreAudioFormat *dest, ObjectMod
 	SIMPLE_MAP_OPTIONAL(source, bitRateMode, dest, setaudioBitRateMode)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, samplingRate, dest, setaudioSamplingRate, convert)
 	
+
 	NEW_VECTOR_AND_ASSIGN(source, audioEncoding, ebucoreEncoding, audioFormatType::audioEncoding_iterator, mapAudioEncoding, dest, setaudioEncoding)
 	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, codec, ebucoreCodec, mapCodec, dest, setaudioCodec)
 	NEW_VECTOR_AND_ASSIGN(source, audioTrack, ebucoreTrack, audioFormatType::audioTrack_iterator, mapAudioTrack, dest, setaudioTrack)
@@ -1375,7 +1383,6 @@ void mapFormat(formatType& source, ebucoreFormat *dest, ObjectModifier* mod = NU
 	dest->setpackageInfo(obj);
 
 	NEW_VECTOR_AND_ASSIGN(source, mimeType, ebucoreMimeType, formatType::mimeType_iterator, mapMIMEType, dest, setmimeType)
-	NEW_VECTOR_AND_ASSIGN(source, medium, ebucoreMedium, formatType::medium_iterator, mapMedium, dest, setmedium)
 
 	NEW_VECTOR_AND_ASSIGN(source, audioFormat, ebucoreAudioFormat, formatType::audioFormat_iterator, mapAudioFormat, dest, setmaterialAudioFormat)
 	NEW_VECTOR_AND_ASSIGN(source, videoFormat, ebucoreVideoFormat, formatType::videoFormat_iterator, mapVideoFormat, dest, setmaterialVideoFormat)

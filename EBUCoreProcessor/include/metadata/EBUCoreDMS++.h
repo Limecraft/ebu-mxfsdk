@@ -114,6 +114,7 @@ namespace EBUCore
 #include <metadata/ebucoreEncoding.h>
 #include <metadata/ebucoreMedium.h>
 #include <metadata/ebucoreMimeType.h>
+#include <metadata/ebucoreLocator.h>
 #include <metadata/ebucorePackageInfo.h>
 #include <metadata/ebucoreRational.h>
 #include <metadata/ebucoreSigningFormat.h>

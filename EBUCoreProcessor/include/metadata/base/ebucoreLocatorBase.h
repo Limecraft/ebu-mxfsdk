@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCOREPACKAGEINFO_BASE_H__
-#define __MXFPP_EBUCOREPACKAGEINFO_BASE_H__
+#ifndef __MXFPP_EBUCORELOCATOR_BASE_H__
+#define __MXFPP_EBUCORELOCATOR_BASE_H__
 
 
 
@@ -42,37 +42,32 @@ namespace EBUSDK { namespace EBUCore { namespace KLV
 {
 
 
-class ebucorePackageInfoBase : public InterchangeObject
+class ebucoreLocatorBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucorePackageInfoBase>;
+    friend class MetadataSetFactory<ebucoreLocatorBase>;
     static const mxfKey setKey;
 
 public:
-    ebucorePackageInfoBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucorePackageInfoBase();
+    ebucoreLocatorBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreLocatorBase();
 
 
    // getters
 
-   bool havepackageSize() const;
-   uint64_t getpackageSize() const;
-   bool havepackageName() const;
-   std::string getpackageName() const;
-   bool havepackageLocator() const;
-   std::vector<ebucoreLocator*> getpackageLocator() const;
+   std::string getlocatorLocation() const;
+   bool havelocatorTypeGroup() const;
+   ebucoreTypeGroup* getlocatorTypeGroup() const;
 
 
    // setters
 
-   void setpackageSize(uint64_t value);
-   void setpackageName(std::string value);
-   void setpackageLocator(const std::vector<ebucoreLocator*>& value);
-   void appendpackageLocator(ebucoreLocator* value);
+   void setlocatorLocation(std::string value);
+   void setlocatorTypeGroup(ebucoreTypeGroup* value);
 
 
 protected:
-    ebucorePackageInfoBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreLocatorBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

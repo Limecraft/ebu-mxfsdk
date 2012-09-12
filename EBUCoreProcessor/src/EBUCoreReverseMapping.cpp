@@ -27,9 +27,9 @@ namespace EBUCore {
 #define	SIMPLE_RMAP_OPTIONAL_POINTER(source, haveSourceProperty, getSourceProperty, dest, destProperty)	\
 	if (source->haveSourceProperty())	\
 		dest->destProperty() = source->getSourceProperty();
-#define	SIMPLE_MAP_OPTIONAL_CONVERT(source, sourceProperty, dest, destProperty, convertFunction)	\
-	if (source.sourceProperty().present())	\
-		dest->destProperty(convertFunction(source.sourceProperty().get()));
+#define	SIMPLE_RMAP_OPTIONAL_CONVERT(source, haveSourceProperty, getSourceProperty, dest, destProperty, convertFunction)	\
+	if (source->haveSourceProperty())	\
+		dest.destProperty() = convertFunction(source->getSourceProperty());
 
 #define NEW_OBJECT_AND_RASSIGN(source, getSourceProperty, destType, mapMethod, dest, destProperty) \
 	{	\
@@ -38,8 +38,10 @@ namespace EBUCore {
 		dest.destProperty(p);	\
 	}
 #define NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haveSourceProperty, getSourceProperty, destType, mapMethod, dest, destProperty) \
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL_CARGS(source, haveSourceProperty, getSourceProperty, destType, mapMethod, dest, destProperty,)
+#define NEW_OBJECT_AND_RASSIGN_OPTIONAL_CARGS(source, haveSourceProperty, getSourceProperty, destType, mapMethod, dest, destProperty, constructorArgs) \
 	if (source->haveSourceProperty()) {	\
-		std::auto_ptr<destType> p( new destType() );	\
+		std::auto_ptr<destType> p( new destType(constructorArgs) );	\
 		mapMethod(source->getSourceProperty(), *p);	\
 		dest.destProperty(p);	\
 	}
@@ -68,6 +70,18 @@ namespace EBUCore {
 
 #define NEW_VECTOR_AND_RASSIGN_CARGS(source, sourceProperty, destType, destSequenceType, vectorType, mapMethod, dest, destProperty, constructorArgs)	\
 	NEW_VECTOR_AND_RASSIGN_CARGS_PREFIXCODE(source, sourceProperty, destType, destSequenceType, vectorType, mapMethod, dest, destProperty,,constructorArgs)
+
+#define RMAP_TYPE_GROUP_GET_OPTIONAL(source, haveTypeGroupProperty, getTypeGroupProperty, dest, destType)	\
+	if (source->haveTypeGroupProperty()) { \
+		ebucoreTypeGroup *tg = source->getTypeGroupProperty(); \
+		RMAP_TYPE_GROUP(tg, dest, destType::typeDefinition_type, destType::typeLabel_type, destType::typeLink_type) \
+	}
+#define RMAP_FORMAT_GROUP_GET_OPTIONAL(source, haveFormatGroupProperty, getFormatGroupProperty, dest, destType)	\
+	if (source->haveFormatGroupProperty()) { \
+		ebucoreFormatGroup *g = source->getFormatGroupProperty(); \
+		RMAP_FORMAT_GROUP(g, dest, destType::formatDefinition_type, destType::formatLabel_type, destType::formatLink_type) \
+	}
+
 
 #define RMAP_TYPE_GROUP(source, dest, definitionType, labelType, linkType)	\
 	if (source->havetypeGroupDefinition()) {	\
@@ -303,6 +317,14 @@ xml_schema::idrefs* convert_idrefs(const std::string& source) {
         pos = source.find_first_of(delims, lastPos);
     }
 	return dest;
+}
+
+int32_t convert_to_int(const std::string& source) {
+	int32_t out;
+	std::stringstream ss;
+	ss << source;
+	ss >> out;
+	return out;
 }
 
 void mapTitle(ebucoreTitle *source, titleType& dest) {
@@ -647,6 +669,512 @@ void mapCustomRelation(ebucoreCustomRelation *source, relationType& dest) {
 	}
 }
 
+#define RMAP_TECHNICAL_ATTRIBUTE_FUNCTION(functionName, sourceType, sourceProperty, destType) \
+	void functionName(sourceType *source, destType& dest) { \
+		dest = source->sourceProperty();	\
+		RMAP_TYPE_GROUP(source, dest, destType::typeDefinition_type, destType::typeLabel_type, destType::typeLink_type)	\
+	}
+
+RMAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeString, ebucoreTechnicalAttributeString, gettechnicalAttributeStringValue, String)
+RMAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeInt8, ebucoreTechnicalAttributeInt8, gettechnicalAttributeInt8Value, Int8)
+RMAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeInt16, ebucoreTechnicalAttributeInt16, gettechnicalAttributeInt16Value, Int16)
+RMAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeInt32, ebucoreTechnicalAttributeInt32, gettechnicalAttributeInt32Value, Int32)
+RMAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeInt64, ebucoreTechnicalAttributeInt64, gettechnicalAttributeInt64Value, Int64)
+RMAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeUInt8, ebucoreTechnicalAttributeUInt8, gettechnicalAttributeUInt8Value, UInt8)
+RMAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeUInt16, ebucoreTechnicalAttributeUInt16, gettechnicalAttributeUInt16Value, UInt16)
+RMAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeUInt32, ebucoreTechnicalAttributeUInt32, gettechnicalAttributeUInt32Value, UInt32)
+RMAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeUInt64, ebucoreTechnicalAttributeUInt64, gettechnicalAttributeUInt64Value, UInt64)
+RMAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeFloat, ebucoreTechnicalAttributeFloat, gettechnicalAttributeFloatValue, Float)
+RMAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeBoolean, ebucoreTechnicalAttributeBoolean, gettechnicalAttributeBooleanValue, Boolean)
+
+void mapTechnicalAttributeRational(ebucoreTechnicalAttributeRational *source, technicalAttributeRationalType& dest) {
+	mxfRational r = source->gettechnicalAttributeRationalValue();
+	dest.factorNumerator() = r.numerator;
+	dest.factorDenominator() = r.denominator;
+	RMAP_TYPE_GROUP(source, dest, technicalAttributeRationalType::typeDefinition_type, technicalAttributeRationalType::typeLabel_type, technicalAttributeRationalType::typeLink_type)
+}
+
+void mapTechnicalAttributeAnyURI(ebucoreTechnicalAttributeAnyURI *source, technicalAttributeUriType& dest) {
+	dest.assign(source->gettechnicalAttributeAnyURIValue()); // use assign as no more convenient operator works
+	RMAP_TYPE_GROUP(source, dest, technicalAttributeUriType::typeDefinition_type, technicalAttributeUriType::typeLabel_type, technicalAttributeUriType::typeLink_type)
+}
+
+void mapMIMEType(ebucoreMimeType *source, mimeType& dest) {
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havemimeTypeGroup, getmimeTypeGroup, dest, mimeType)
+}
+
+void mapContainerFormat(ebucoreContainerFormat *source, formatType::containerFormat_type& dest) {
+	RMAP_FORMAT_GROUP_GET_OPTIONAL(source, havecontainerFormatGroup, getcontainerFormatGroup, dest, formatType::containerFormat_type)
+}
+
+void mapMedium(ebucoreMedium *source, medium& dest) {
+	SIMPLE_RMAP_OPTIONAL(source, havemediumID, getmediumID, dest, mediumId)
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havemediumTypeGroup, getmediumTypeGroup, dest, medium)
+}
+
+void mapLocator(ebucoreLocator *source, formatType::locator_type& dest) {
+	// [TODO] In XSD, provide a locator string that can be mapped to the KLV locatorLocation field
+	//SIMPLE_RMAP(source, getlocatorLocation, dest, <<locator value>>
+
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havelocatorTypeGroup, getlocatorTypeGroup , dest, formatType::locator_type)
+}
+
+void mapPackageInfo(ebucorePackageInfo *source, formatType& dest) {
+	SIMPLE_RMAP_OPTIONAL(source, havepackageName, getpackageName, dest, fileName)
+	SIMPLE_RMAP_OPTIONAL(source, havepackageSize, getpackageSize, dest, fileSize)
+
+	NEW_VECTOR_AND_RASSIGN(source, getpackageLocator, formatType::locator_type, formatType::locator_sequence, std::vector<ebucoreLocator*>, mapLocator, dest, locator)
+}
+
+void mapSigningFormat(ebucoreSigningFormat *source, signingFormat& dest) {
+	SIMPLE_RMAP_OPTIONAL(source, havesigningTrackID, getsigningTrackID, dest, trackId)
+	SIMPLE_RMAP_OPTIONAL(source, havesigningTrackName, getsigningTrackName, dest, trackName)
+	SIMPLE_RMAP_OPTIONAL(source, havesigningTrackLanguageCode, getsigningTrackLanguageCode, dest, language)
+	SIMPLE_RMAP_OPTIONAL(source, havesigningTrackLanguageName, getsigningTrackLanguageName, dest, language)
+	SIMPLE_RMAP_OPTIONAL(source, havesigningSourceUri, getsigningSourceUri, dest, signingSourceUri)
+
+
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havesigningTypeGroup, getsigningTypeGroup, dest, signingFormat)
+	RMAP_FORMAT_GROUP_GET_OPTIONAL(source, havesigningFormatGroup, getsigningFormatGroup, dest, signingFormat)
+}
+
+void mapCodec(ebucoreCodec *source, codecType& dest) {
+	SIMPLE_RMAP_OPTIONAL(source, havename, getname, dest, name)
+	SIMPLE_RMAP_OPTIONAL(source, havevendor, getvendor, dest, vendor)
+	SIMPLE_RMAP_OPTIONAL(source, haveversion, getversion, dest, version)
+	SIMPLE_RMAP_OPTIONAL(source, havefamily, getfamily, dest, family)
+	// [TODO] XSD Codec identifier is an identifiertype, KLV is string
+	//SIMPLE_RMAP_OPTIONAL(source, codecIdentifier, dest, setcodecIdentifier)
+}
+
+void mapAudioTrack(ebucoreTrack *source, audioTrack& dest) {
+	SIMPLE_RMAP_OPTIONAL(source, havetrackID, gettrackID, dest, trackId)
+	SIMPLE_RMAP_OPTIONAL(source, havetrackName, gettrackName, dest, trackName)
+
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havetrackTypeGroup, gettrackTypeGroup, dest, audioTrack)
+}
+
+void mapVideoTrack(ebucoreTrack *source, videoTrack& dest) {
+	SIMPLE_RMAP_OPTIONAL(source, havetrackID, gettrackID, dest, trackId)
+	SIMPLE_RMAP_OPTIONAL(source, havetrackName, gettrackName, dest, trackName)
+
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havetrackTypeGroup, gettrackTypeGroup, dest, videoTrack)
+}
+
+void mapAudioEncoding(ebucoreEncoding *source, audioFormatType::audioEncoding_type& dest) {
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, haveencodingTypeGroup, getencodingTypeGroup, dest, audioFormatType::audioEncoding_type)
+}
+
+xml_schema::long_ convert(mxfRational source) {
+	return source.numerator;
+}
+
+void mapAudioFormat(ebucoreAudioFormat *source, audioFormatType& dest) {
+	SIMPLE_RMAP_OPTIONAL(source, haveaudioFormatID, getaudioFormatID, dest, audioFormatId)
+	SIMPLE_RMAP_OPTIONAL(source, haveaudioFormatName, getaudioFormatName, dest, audioFormatName)
+	SIMPLE_RMAP_OPTIONAL(source, haveaudioFormatDefinition, getaudioFormatDefinition, dest, audioFormatDefinition)
+
+	std::auto_ptr<audioTrackConfiguration> p( new audioTrackConfiguration() );
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, haveaudioTrackConfiguration, getaudioTrackConfiguration, (*p), audioTrackConfiguration)
+	dest.audioTrackConfiguration(p);
+
+	SIMPLE_RMAP_OPTIONAL(source, haveaudioSamplingSize, getaudioSamplingSize, dest, sampleSize)
+	SIMPLE_RMAP_OPTIONAL(source, haveaudioSamplingType, getaudioSamplingType, dest, sampleType)
+	SIMPLE_RMAP_OPTIONAL(source, haveaudioTotalNumberOfChannels, getaudioTotalNumberOfChannels, dest, channels)
+	SIMPLE_RMAP_OPTIONAL(source, haveaudioBitRate, getaudioBitRate, dest, bitRate)
+	SIMPLE_RMAP_OPTIONAL(source, haveaudioBitRateMode, getaudioBitRateMode, dest, bitRateMode)
+	SIMPLE_RMAP_OPTIONAL_CONVERT(source, haveaudioSamplingRate, getaudioSamplingRate, dest, samplingRate, convert)
+
+	NEW_VECTOR_AND_RASSIGN(source, getaudioEncoding, audioEncoding, audioFormatType::audioEncoding_sequence, std::vector<ebucoreEncoding*>, mapAudioEncoding, dest, audioEncoding)
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haveaudioCodec, getaudioCodec, codecType, mapCodec, dest, codec)
+	NEW_VECTOR_AND_RASSIGN(source, getaudioTrack, audioTrack, audioFormatType::audioTrack_sequence, std::vector<ebucoreTrack*>, mapAudioTrack, dest, audioTrack)
+
+	NEW_VECTOR_AND_RASSIGN(source, getaudioTechnicalAttributeString, String, audioFormatType::technicalAttributeString_sequence, 
+		std::vector<ebucoreTechnicalAttributeString*>, mapTechnicalAttributeString, dest, technicalAttributeString)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getaudioTechnicalAttributeInt8, Int8, audioFormatType::technicalAttributeByte_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt8*>, mapTechnicalAttributeInt8, dest, technicalAttributeByte, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getaudioTechnicalAttributeInt16, Int16, audioFormatType::technicalAttributeShort_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt16*>, mapTechnicalAttributeInt16, dest, technicalAttributeShort, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getaudioTechnicalAttributeInt32, Int32, audioFormatType::technicalAttributeInteger_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt32*>, mapTechnicalAttributeInt32, dest, technicalAttributeInteger, 0 /* initialize value as 0, will be replaced by mapping method */)	
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getaudioTechnicalAttributeInt64, Int64, audioFormatType::technicalAttributeLong_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt64*>, mapTechnicalAttributeInt64, dest, technicalAttributeLong, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getaudioTechnicalAttributeUInt8, UInt8, audioFormatType::technicalAttributeUnsignedByte_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt8*>, mapTechnicalAttributeUInt8, dest, technicalAttributeUnsignedByte, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getaudioTechnicalAttributeUInt16, UInt16, audioFormatType::technicalAttributeUnsignedShort_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt16*>, mapTechnicalAttributeUInt16, dest, technicalAttributeUnsignedShort, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getaudioTechnicalAttributeUInt32, UInt32, audioFormatType::technicalAttributeUnsignedInteger_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt32*>, mapTechnicalAttributeUInt32, dest, technicalAttributeUnsignedInteger, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getaudioTechnicalAttributeUInt64, UInt64, audioFormatType::technicalAttributeUnsignedLong_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt64*>, mapTechnicalAttributeUInt64, dest, technicalAttributeUnsignedLong, 0 /* initialize value as 0, will be replaced by mapping method */)
+
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getaudioTechnicalAttributeFloat, Float, audioFormatType::technicalAttributeFloat_sequence, 
+		std::vector<ebucoreTechnicalAttributeFloat*>, mapTechnicalAttributeFloat, dest, technicalAttributeFloat, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getaudioTechnicalAttributeRational, technicalAttributeRationalType, audioFormatType::technicalAttributeRational_sequence, 
+		std::vector<ebucoreTechnicalAttributeRational*>, mapTechnicalAttributeRational, dest, technicalAttributeRational, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getaudioTechnicalAttributeBoolean, Boolean, audioFormatType::technicalAttributeBoolean_sequence, 
+		std::vector<ebucoreTechnicalAttributeBoolean*>, mapTechnicalAttributeBoolean, dest, technicalAttributeBoolean, false /* initialize value as false, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getaudioTechnicalAttributeAnyURI, technicalAttributeUriType, audioFormatType::technicalAttributeUri_sequence, 
+		std::vector<ebucoreTechnicalAttributeAnyURI*>, mapTechnicalAttributeAnyURI, dest, technicalAttributeUri, "" /* initialize value as "", will be replaced by mapping method */)
+}
+
+void mapImageEncoding(ebucoreEncoding *source, imageFormatType::imageEncoding_type& dest) {
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, haveencodingTypeGroup, getencodingTypeGroup, dest, imageFormatType::imageEncoding_type)
+}
+
+void mapAspectRatio(ebucoreAspectRatio *source, aspectRatioType& dest) {
+	SIMPLE_RMAP(source, getaspectRatioFactorNumerator, dest, factorNumerator)
+	SIMPLE_RMAP(source, getaspectRatioFactorDenominator, dest, factorDenominator)
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, haveaspectRatioTypeGroup, getaspectRatioTypeGroup, dest, aspectRatioType)
+}
+
+void mapDimension(ebucoreDimension *source, lengthType& dest) {
+	dest = source->getdimensionValue();
+	SIMPLE_RMAP_OPTIONAL(source, havedimensionUnit, getdimensionUnit, dest, unit)
+}
+
+void mapImageFormat(ebucoreImageFormat *source, imageFormatType& dest) {
+
+	SIMPLE_RMAP_OPTIONAL(source, haveimageFormatID, getimageFormatID, dest, imageFormatId)
+	SIMPLE_RMAP_OPTIONAL(source, haveimageFormatName, getimageFormatName, dest, imageFormatName)
+	SIMPLE_RMAP_OPTIONAL(source, haveimageFormatDefinition, getimageFormatDefinition, dest, imageFormatDefinition)
+
+	SIMPLE_RMAP_OPTIONAL(source, haveimageOrientation, getimageOrientation, dest, orientation)
+	
+	if (source->haveimageAspectRatio()) {
+		std::auto_ptr<aspectRatioType> p( new aspectRatioType(1,1) );
+		mapAspectRatio(source->getimageAspectRatio(), *p);
+		dest.aspectRatio(p);
+	}
+
+	NEW_VECTOR_AND_RASSIGN(source, getimageEncoding, imageEncoding, imageFormatType::imageEncoding_sequence, 
+		std::vector<ebucoreEncoding*>, mapImageEncoding, dest, imageEncoding)
+
+	/* [TODO] XSD is missing image codec
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, codec, ebucoreCodec, mapCodec, dest, setimageCodec) */
+
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL_CARGS(source, haveimageWidth, getimageWidth, lengthType, mapDimension, dest, width, 0) 
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL_CARGS(source, haveimageHeight, getimageHeight, lengthType, mapDimension, dest, height, 0) 
+
+	NEW_VECTOR_AND_RASSIGN(source, getimageTechnicalAttributeString, String, imageFormatType::technicalAttributeString_sequence, 
+		std::vector<ebucoreTechnicalAttributeString*>, mapTechnicalAttributeString, dest, technicalAttributeString)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getimageTechnicalAttributeInt8, Int8, imageFormatType::technicalAttributeByte_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt8*>, mapTechnicalAttributeInt8, dest, technicalAttributeByte, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getimageTechnicalAttributeInt16, Int16, imageFormatType::technicalAttributeShort_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt16*>, mapTechnicalAttributeInt16, dest, technicalAttributeShort, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getimageTechnicalAttributeInt32, Int32, imageFormatType::technicalAttributeInteger_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt32*>, mapTechnicalAttributeInt32, dest, technicalAttributeInteger, 0 /* initialize value as 0, will be replaced by mapping method */)	
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getimageTechnicalAttributeInt64, Int64, imageFormatType::technicalAttributeLong_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt64*>, mapTechnicalAttributeInt64, dest, technicalAttributeLong, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getimageTechnicalAttributeUInt8, UInt8, imageFormatType::technicalAttributeUnsignedByte_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt8*>, mapTechnicalAttributeUInt8, dest, technicalAttributeUnsignedByte, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getimageTechnicalAttributeUInt16, UInt16, imageFormatType::technicalAttributeUnsignedShort_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt16*>, mapTechnicalAttributeUInt16, dest, technicalAttributeUnsignedShort, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getimageTechnicalAttributeUInt32, UInt32, imageFormatType::technicalAttributeUnsignedInteger_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt32*>, mapTechnicalAttributeUInt32, dest, technicalAttributeUnsignedInteger, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getimageTechnicalAttributeUInt64, UInt64, imageFormatType::technicalAttributeUnsignedLong_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt64*>, mapTechnicalAttributeUInt64, dest, technicalAttributeUnsignedLong, 0 /* initialize value as 0, will be replaced by mapping method */)
+
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getimageTechnicalAttributeFloat, Float, imageFormatType::technicalAttributeFloat_sequence, 
+		std::vector<ebucoreTechnicalAttributeFloat*>, mapTechnicalAttributeFloat, dest, technicalAttributeFloat, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getimageTechnicalAttributeRational, technicalAttributeRationalType, imageFormatType::technicalAttributeRational_sequence, 
+		std::vector<ebucoreTechnicalAttributeRational*>, mapTechnicalAttributeRational, dest, technicalAttributeRational, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getimageTechnicalAttributeBoolean, Boolean, imageFormatType::technicalAttributeBoolean_sequence, 
+		std::vector<ebucoreTechnicalAttributeBoolean*>, mapTechnicalAttributeBoolean, dest, technicalAttributeBoolean, false /* initialize value as false, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getimageTechnicalAttributeAnyURI, technicalAttributeUriType, imageFormatType::technicalAttributeUri_sequence, 
+		std::vector<ebucoreTechnicalAttributeAnyURI*>, mapTechnicalAttributeAnyURI, dest, technicalAttributeUri, "" /* initialize value as "", will be replaced by mapping method */)
+}
+
+void mapVideoEncoding(ebucoreEncoding *source, videoFormatType::videoEncoding_type& dest) {
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, haveencodingTypeGroup, getencodingTypeGroup, dest, videoFormatType::videoEncoding_type)
+}
+
+rationalType convert_rational(mxfRational source) {
+	rationalType r(1);
+	r.factorNumerator() = source.numerator;
+	r.factorDenominator() = source.denominator;
+	return r;
+}
+
+void mapVideoFormat(ebucoreVideoFormat *source, videoFormatType& dest) {
+
+	SIMPLE_RMAP_OPTIONAL(source, havevideoFormatID, getvideoFormatID, dest, videoFormatId)
+	SIMPLE_RMAP_OPTIONAL(source, havevideoFormatName, getvideoFormatName, dest, videoFormatName)
+	SIMPLE_RMAP_OPTIONAL(source, havevideoFormatDefinition, getvideoFormatDefinition, dest, videoFormatDefinition)
+
+	SIMPLE_RMAP_OPTIONAL(source, havevideoBitRate, getvideoBitRate, dest, bitRate)
+	SIMPLE_RMAP_OPTIONAL(source, havevideoBitRateMode, getvideoBitRateMode, dest, bitRateMode)
+	SIMPLE_RMAP_OPTIONAL(source, havevideoSamplingFormat, getvideoSamplingFormat, dest, scanningFormat)
+	SIMPLE_RMAP_OPTIONAL(source, havevideoScanningOrder, getvideoScanningOrder, dest, scanningOrder)
+	SIMPLE_RMAP_OPTIONAL(source, havevideoActiveLines, getvideoActiveLines, dest, lines)
+	SIMPLE_RMAP_OPTIONAL(source, havevideoNoiseFilterFlag, getvideoNoiseFilterFlag, dest, noiseFilter)
+	
+	if (source->havevideoAspectRatio()) {
+		std::auto_ptr<aspectRatioType> p( new aspectRatioType(1,1) );
+		mapAspectRatio(source->getvideoAspectRatio(), *p);
+		dest.aspectRatio(p);
+	}
+	SIMPLE_RMAP_OPTIONAL_CONVERT(source, havevideoFrameRate, getvideoFrameRate, dest, frameRate, convert_rational)
+
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL_CARGS(source, havevideoWidth, getvideoWidth, lengthType, mapDimension, dest, width, 0) 
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL_CARGS(source, havevideoHeight, getvideoHeight, lengthType, mapDimension, dest, height, 0)
+
+	NEW_VECTOR_AND_RASSIGN(source, getvideoEncoding, videoEncoding, videoFormatType::videoEncoding_sequence, std::vector<ebucoreEncoding*>, mapVideoEncoding, dest, videoEncoding)
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, havevideoCodectype, getvideoCodectype, codecType, mapCodec, dest, codec)
+	NEW_VECTOR_AND_RASSIGN(source, getvideoTrack, videoTrack, videoFormatType::videoTrack_sequence, std::vector<ebucoreTrack*>, mapVideoTrack, dest, videoTrack)
+
+	NEW_VECTOR_AND_RASSIGN(source, getvideoTechnicalAttributeString, String, videoFormatType::technicalAttributeString_sequence, 
+		std::vector<ebucoreTechnicalAttributeString*>, mapTechnicalAttributeString, dest, technicalAttributeString)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getvideoTechnicalAttributeInt8, Int8, videoFormatType::technicalAttributeByte_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt8*>, mapTechnicalAttributeInt8, dest, technicalAttributeByte, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getvideoTechnicalAttributeInt16, Int16, videoFormatType::technicalAttributeShort_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt16*>, mapTechnicalAttributeInt16, dest, technicalAttributeShort, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getvideoTechnicalAttributeInt32, Int32, videoFormatType::technicalAttributeInteger_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt32*>, mapTechnicalAttributeInt32, dest, technicalAttributeInteger, 0 /* initialize value as 0, will be replaced by mapping method */)	
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getvideoTechnicalAttributeInt64, Int64, videoFormatType::technicalAttributeLong_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt64*>, mapTechnicalAttributeInt64, dest, technicalAttributeLong, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getvideoTechnicalAttributeUInt8, UInt8, videoFormatType::technicalAttributeUnsignedByte_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt8*>, mapTechnicalAttributeUInt8, dest, technicalAttributeUnsignedByte, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getvideoTechnicalAttributeUInt16, UInt16, videoFormatType::technicalAttributeUnsignedShort_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt16*>, mapTechnicalAttributeUInt16, dest, technicalAttributeUnsignedShort, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getvideoTechnicalAttributeUInt32, UInt32, videoFormatType::technicalAttributeUnsignedInteger_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt32*>, mapTechnicalAttributeUInt32, dest, technicalAttributeUnsignedInteger, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getvideoTechnicalAttributeUInt64, UInt64, videoFormatType::technicalAttributeUnsignedLong_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt64*>, mapTechnicalAttributeUInt64, dest, technicalAttributeUnsignedLong, 0 /* initialize value as 0, will be replaced by mapping method */)
+
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getvideoTechnicalAttributeFloat, Float, videoFormatType::technicalAttributeFloat_sequence, 
+		std::vector<ebucoreTechnicalAttributeFloat*>, mapTechnicalAttributeFloat, dest, technicalAttributeFloat, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getvideoTechnicalAttributeRational, technicalAttributeRationalType, videoFormatType::technicalAttributeRational_sequence, 
+		std::vector<ebucoreTechnicalAttributeRational*>, mapTechnicalAttributeRational, dest, technicalAttributeRational, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getvideoTechnicalAttributeBoolean, Boolean, videoFormatType::technicalAttributeBoolean_sequence, 
+		std::vector<ebucoreTechnicalAttributeBoolean*>, mapTechnicalAttributeBoolean, dest, technicalAttributeBoolean, false /* initialize value as false, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getvideoTechnicalAttributeAnyURI, technicalAttributeUriType, videoFormatType::technicalAttributeUri_sequence, 
+		std::vector<ebucoreTechnicalAttributeAnyURI*>, mapTechnicalAttributeAnyURI, dest, technicalAttributeUri, "" /* initialize value as "", will be replaced by mapping method */)
+}
+
+void mapCaptioning(ebucoreCaptioning* source, captioningFormat& dest) {
+	SIMPLE_RMAP_OPTIONAL(source, havecaptioningFormatID, getcaptioningFormatID, dest, captioningFormatId)
+	SIMPLE_RMAP_OPTIONAL(source, havecaptioningFormatName, getcaptioningFormatName, dest, captioningFormatName)
+	SIMPLE_RMAP_OPTIONAL(source, havecaptioningFormatDefinition, getcaptioningFormatDefinition, dest, formatDefinition)
+	SIMPLE_RMAP_OPTIONAL(source, havecaptioningSourceUri, getcaptioningSourceUri, dest, captioningSourceUri)
+	SIMPLE_RMAP_OPTIONAL(source, havecaptioningLanguageCode, getcaptioningLanguageCode, dest, language)
+	SIMPLE_RMAP_OPTIONAL(source, havecaptioningLanguageName, getcaptioningLanguageName, dest, language)
+
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havecaptioningTypeGroup, getcaptioningTypeGroup, dest, captioningFormat)
+}
+
+void mapAncillaryData(ebucoreAncillaryData* source, ancillaryDataFormat& dest) {
+	SIMPLE_RMAP_OPTIONAL(source, haveDID, getDID, dest, DID)
+	SIMPLE_RMAP_OPTIONAL(source, haveSDID, getSDID, dest, SDID)
+
+	ancillaryDataFormat::lineNumber_sequence destLines;
+	if (source->havelineNumber()) {
+		std::vector<uint32_t>& lines = source->getlineNumber();
+		for (std::vector<uint32_t>::iterator it = lines.begin(); it != lines.end(); it++) {
+			destLines.push_back(*it);
+		}
+		dest.lineNumber(destLines);
+	}
+
+	if (source->haveANCWrappingType()) {
+		ebucoreTypeGroup *tg = source->getANCWrappingType();
+
+		if (tg->havetypeGroupLabel()) {
+			dest.ancillaryDataFormatName() = tg->gettypeGroupLabel();
+		}
+		if (tg->havetypeGroupLabel()) {
+			dest.ancillaryDataFormatId() = tg->gettypeGroupLabel();
+		}	
+		if (tg->havetypeGroupLink()) {
+			dest.wrappingType() = convert_to_int(tg->gettypeGroupDefinition());
+		}
+	}
+}
+
+void mapDataFormat(ebucoreDataFormat *source, dataFormatType& dest) {
+
+	SIMPLE_RMAP_OPTIONAL(source, havedataFormatID, getdataFormatID, dest, dataFormatId)
+	SIMPLE_RMAP_OPTIONAL(source, havedataFormatName, getdataFormatName, dest, dataFormatName)
+	SIMPLE_RMAP_OPTIONAL(source, havedataFormatDefinition, getdataFormatDefinition, dest, dataFormatDefinition)
+
+	NEW_VECTOR_AND_RASSIGN(source, getcaptioning, captioningFormat, dataFormatType::captioningFormat_sequence, std::vector<ebucoreCaptioning*>, mapCaptioning, dest, captioningFormat)
+	NEW_VECTOR_AND_RASSIGN(source, getancillaryData, ancillaryDataFormat, dataFormatType::ancillaryDataFormat_sequence, std::vector<ebucoreAncillaryData*>, mapAncillaryData, dest, ancillaryDataFormat)
+
+	NEW_VECTOR_AND_RASSIGN(source, getdataTechnicalAttributeString, String, dataFormatType::technicalAttributeString_sequence, 
+		std::vector<ebucoreTechnicalAttributeString*>, mapTechnicalAttributeString, dest, technicalAttributeString)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getdataTechnicalAttributeInt8, Int8, dataFormatType::technicalAttributeByte_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt8*>, mapTechnicalAttributeInt8, dest, technicalAttributeByte, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getdataTechnicalAttributeInt16, Int16, dataFormatType::technicalAttributeShort_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt16*>, mapTechnicalAttributeInt16, dest, technicalAttributeShort, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getdataTechnicalAttributeInt32, Int32, dataFormatType::technicalAttributeInteger_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt32*>, mapTechnicalAttributeInt32, dest, technicalAttributeInteger, 0 /* initialize value as 0, will be replaced by mapping method */)	
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getdataTechnicalAttributeInt64, Int64, dataFormatType::technicalAttributeLong_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt64*>, mapTechnicalAttributeInt64, dest, technicalAttributeLong, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getdataTechnicalAttributeUInt8, UInt8, dataFormatType::technicalAttributeUnsignedByte_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt8*>, mapTechnicalAttributeUInt8, dest, technicalAttributeUnsignedByte, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getdataTechnicalAttributeUInt16, UInt16, dataFormatType::technicalAttributeUnsignedShort_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt16*>, mapTechnicalAttributeUInt16, dest, technicalAttributeUnsignedShort, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getdataTechnicalAttributeUInt32, UInt32, dataFormatType::technicalAttributeUnsignedInteger_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt32*>, mapTechnicalAttributeUInt32, dest, technicalAttributeUnsignedInteger, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getdataTechnicalAttributeUInt64, UInt64, dataFormatType::technicalAttributeUnsignedLong_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt64*>, mapTechnicalAttributeUInt64, dest, technicalAttributeUnsignedLong, 0 /* initialize value as 0, will be replaced by mapping method */)
+
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getdataTechnicalAttributeFloat, Float, dataFormatType::technicalAttributeFloat_sequence, 
+		std::vector<ebucoreTechnicalAttributeFloat*>, mapTechnicalAttributeFloat, dest, technicalAttributeFloat, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getdataTechnicalAttributeRational, technicalAttributeRationalType, dataFormatType::technicalAttributeRational_sequence, 
+		std::vector<ebucoreTechnicalAttributeRational*>, mapTechnicalAttributeRational, dest, technicalAttributeRational, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getdataTechnicalAttributeBoolean, Boolean, dataFormatType::technicalAttributeBoolean_sequence, 
+		std::vector<ebucoreTechnicalAttributeBoolean*>, mapTechnicalAttributeBoolean, dest, technicalAttributeBoolean, false /* initialize value as false, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getdataTechnicalAttributeAnyURI, technicalAttributeUriType, dataFormatType::technicalAttributeUri_sequence, 
+		std::vector<ebucoreTechnicalAttributeAnyURI*>, mapTechnicalAttributeAnyURI, dest, technicalAttributeUri, "" /* initialize value as "", will be replaced by mapping method */)
+
+
+}
+
+xml_schema::duration* convert_duration(mxfRational source) {
+	double seconds = source.numerator / source.numerator;
+	int minutes = (int)seconds / 60;
+	int hours = minutes / 60;
+	int days = hours / 24;
+	int months = days / 30;
+	int years = months / 12;
+	return new xml_schema::duration(false, years, months, days, hours, minutes, seconds);
+}
+
+xml_schema::time* convert_time(mxfRational source) {
+	double seconds = source.numerator / source.numerator;
+	int minutes = (int)seconds / 60;
+	int hours = minutes / 60;
+	return new xml_schema::time(hours, minutes, seconds);
+}
+
+void mapFormat(ebucoreFormat *source, formatType& dest) {
+
+	SIMPLE_RMAP_OPTIONAL(source, haveformatID, getformatID, dest, formatId)
+	SIMPLE_RMAP_OPTIONAL(source, haveformatVersionID, getformatVersionID, dest, formatVersionId)
+	SIMPLE_RMAP_OPTIONAL(source, haveformatName, getformatName, dest, formatName)
+	SIMPLE_RMAP_OPTIONAL(source, haveformatDefinition, getformatDefinition, dest, formatDefinition)
+	
+	if (source->haveformatDateCreated() || source->haveformatYearCreated()) {
+		std::auto_ptr<dateCreated> p( new dateCreated() );
+		if (source->haveformatDateCreated()) {
+			p->startDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date( source->getformatDateCreated() ) ) );
+		}
+		if (source->haveformatYearCreated()) {
+			p->startYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year( source->getformatYearCreated() ) ) );
+		}
+	}
+
+	if (source->haveoverallDurationEditUnit() || source->haveoverallDurationTime() || source->haveoverallDurationTimecode()) {
+		std::auto_ptr<durationType> p( new durationType() );
+		if (source->haveoverallDurationEditUnit()) {
+			p->editUnitNumber() = source->getoverallDurationEditUnit();
+		}
+		if (source->haveoverallDurationTimecode()) {
+			p->timecode() = source->getoverallDurationTimecode();
+		}
+		if (source->haveoverallDurationTime()) {
+			std::auto_ptr<durationType::normalPlayTime_type> pp( convert_duration(source->getoverallDurationTime()) );
+			p->normalPlayTime(pp);
+		}
+		dest.duration(p);
+	}
+
+	if (source->haveoverallStartEditUnit() || source->haveoverallStartTime() || source->haveoverallStartTimecode()) {
+		std::auto_ptr<timeType> p( new timeType() );
+		if (source->haveoverallStartEditUnit()) {
+			p->editUnitNumber() = source->getoverallStartEditUnit();
+		}
+		if (source->haveoverallStartTimecode()) {
+			p->timecode() = source->getoverallStartTimecode();
+		}
+		if (source->haveoverallStartTime()) {
+			std::auto_ptr<timeType::normalPlayTime_type> pp( convert_time(source->getoverallStartTime()) );
+			p->normalPlayTime(pp);
+		}
+		dest.start(p);
+	}
+	if (source->haveoverallEndEditUnit() || source->haveoverallEndTime() || source->haveoverallEndTimecode()) {
+		std::auto_ptr<timeType> p( new timeType() );
+		if (source->haveoverallEndEditUnit()) {
+			p->editUnitNumber() = source->getoverallEndEditUnit();
+		}
+		if (source->haveoverallEndTimecode()) {
+			p->timecode() = source->getoverallEndTimecode();
+		}
+		if (source->haveoverallEndTime()) {
+			std::auto_ptr<timeType::normalPlayTime_type> pp( convert_time(source->getoverallEndTime()) );
+			p->normalPlayTime(pp);
+		}
+		dest.end(p);
+	}
+
+	NEW_VECTOR_AND_RASSIGN(source, getcontainerFormat, containerFormat, formatType::containerFormat_sequence, std::vector<ebucoreContainerFormat*>, 
+		mapContainerFormat, dest, containerFormat)
+	NEW_VECTOR_AND_RASSIGN(source, getmedium, medium, formatType::medium_sequence, std::vector<ebucoreMedium*>, 
+		mapMedium, dest, medium)
+	
+	if (source->havepackageInfo()) {
+		mapPackageInfo(source->getpackageInfo(), dest);
+	}
+
+	NEW_VECTOR_AND_RASSIGN(source, getmimeType, mimeType, formatType::mimeType_sequence, std::vector<ebucoreMimeType*>, 
+		mapMIMEType, dest, mimeType)
+
+	NEW_VECTOR_AND_RASSIGN(source, getmaterialAudioFormat, audioFormatType, formatType::audioFormat_sequence, std::vector<ebucoreAudioFormat*>, 
+		mapAudioFormat, dest, audioFormat)
+	NEW_VECTOR_AND_RASSIGN(source, getmaterialVideoFormat, videoFormatType, formatType::videoFormat_sequence, std::vector<ebucoreVideoFormat*>, 
+		mapVideoFormat, dest, videoFormat)
+	NEW_VECTOR_AND_RASSIGN(source, getmaterialImageFormat, imageFormatType, formatType::imageFormat_sequence, std::vector<ebucoreImageFormat*>, 
+		mapImageFormat, dest, imageFormat)
+	NEW_VECTOR_AND_RASSIGN(source, getmaterialDataFormat, dataFormatType, formatType::dataFormat_sequence, std::vector<ebucoreDataFormat*>, 
+		mapDataFormat, dest, dataFormat)
+	NEW_VECTOR_AND_RASSIGN(source, getmaterialSigningFormat, signingFormat, formatType::signingFormat_sequence, std::vector<ebucoreSigningFormat*>, 
+		mapSigningFormat, dest, signingFormat)
+
+	NEW_VECTOR_AND_RASSIGN(source, getmaterialTechnicalAttributeString, String, formatType::technicalAttributeString_sequence, 
+		std::vector<ebucoreTechnicalAttributeString*>, mapTechnicalAttributeString, dest, technicalAttributeString)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getmaterialTechnicalAttributeInt8, Int8, formatType::technicalAttributeByte_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt8*>, mapTechnicalAttributeInt8, dest, technicalAttributeByte, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getmaterialTechnicalAttributeInt16, Int16, formatType::technicalAttributeShort_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt16*>, mapTechnicalAttributeInt16, dest, technicalAttributeShort, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getmaterialTechnicalAttributeInt32, Int32, formatType::technicalAttributeInteger_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt32*>, mapTechnicalAttributeInt32, dest, technicalAttributeInteger, 0 /* initialize value as 0, will be replaced by mapping method */)	
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getmaterialTechnicalAttributeInt64, Int64, formatType::technicalAttributeLong_sequence, 
+		std::vector<ebucoreTechnicalAttributeInt64*>, mapTechnicalAttributeInt64, dest, technicalAttributeLong, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getmaterialTechnicalAttributeUInt8, UInt8, formatType::technicalAttributeUnsignedByte_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt8*>, mapTechnicalAttributeUInt8, dest, technicalAttributeUnsignedByte, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getmaterialTechnicalAttributeUInt16, UInt16, formatType::technicalAttributeUnsignedShort_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt16*>, mapTechnicalAttributeUInt16, dest, technicalAttributeUnsignedShort, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getmaterialTechnicalAttributeUInt32, UInt32, formatType::technicalAttributeUnsignedInteger_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt32*>, mapTechnicalAttributeUInt32, dest, technicalAttributeUnsignedInteger, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getmaterialTechnicalAttributeUInt64, UInt64, formatType::technicalAttributeUnsignedLong_sequence, 
+		std::vector<ebucoreTechnicalAttributeUInt64*>, mapTechnicalAttributeUInt64, dest, technicalAttributeUnsignedLong, 0 /* initialize value as 0, will be replaced by mapping method */)
+
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getmaterialTechnicalAttributeFloat, Float, formatType::technicalAttributeFloat_sequence, 
+		std::vector<ebucoreTechnicalAttributeFloat*>, mapTechnicalAttributeFloat, dest, technicalAttributeFloat, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getmaterialTechnicalAttributeRational, technicalAttributeRationalType, formatType::technicalAttributeRational_sequence, 
+		std::vector<ebucoreTechnicalAttributeRational*>, mapTechnicalAttributeRational, dest, technicalAttributeRational, 0 /* initialize value as 0, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getmaterialTechnicalAttributeBoolean, Boolean, formatType::technicalAttributeBoolean_sequence, 
+		std::vector<ebucoreTechnicalAttributeBoolean*>, mapTechnicalAttributeBoolean, dest, technicalAttributeBoolean, false /* initialize value as false, will be replaced by mapping method */)
+	NEW_VECTOR_AND_RASSIGN_CARGS(source, getmaterialTechnicalAttributeAnyURI, technicalAttributeUriType, formatType::technicalAttributeUri_sequence, 
+		std::vector<ebucoreTechnicalAttributeAnyURI*>, mapTechnicalAttributeAnyURI, dest, technicalAttributeUri, "" /* initialize value as "", will be replaced by mapping method */)
+
+}
+
+void mapPart(ebucorePartMetadata *source, partType& dest) {
+	SIMPLE_RMAP_OPTIONAL(source, havepartId, getpartId, dest, partId)
+	SIMPLE_RMAP_OPTIONAL(source, havepartName, getpartName, dest, partName)
+	SIMPLE_RMAP_OPTIONAL(source, havepartDefinition, getpartDefinition, dest, partDefinition)
+
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havepartTypeGroup, getpartTypeGroup, dest, partType)
+	
+	// map ourselves (we are an extension of the coreMetadataType) onto the ebucoreCoreMetadata object
+	if (source->havepartMeta()) {
+		mapCoreMetadata(source->getpartMeta(), dest);
+	}
+}
+
 void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 	NEW_VECTOR_AND_RASSIGN(source, gettitle, titleType, coreMetadataType::title_sequence, std::vector<ebucoreTitle*>, mapTitle, dest, title)
 	NEW_VECTOR_AND_RASSIGN(source, getalternativeTitle, alternativeTitleType, coreMetadataType::alternativeTitle_sequence, 
@@ -689,6 +1217,8 @@ void mapCoreMetadata(ebucoreCoreMetadata *source, coreMetadataType& dest) {
 	NEW_VECTOR_AND_RASSIGN(source, getrights, rightsType, coreMetadataType::rights_sequence, std::vector<ebucoreRights*>, mapRights, dest, rights)
 	NEW_VECTOR_AND_RASSIGN(source, getcustomRelation, relationType, coreMetadataType::relation_sequence, std::vector<ebucoreCustomRelation*>, mapCustomRelation, dest, relation)
 
+	NEW_VECTOR_AND_RASSIGN(source, getformat, formatType, coreMetadataType::format_sequence, std::vector<ebucoreFormat*>, mapFormat, dest, format)
+	NEW_VECTOR_AND_RASSIGN(source, getpart, partType, coreMetadataType::part_sequence, std::vector<ebucorePartMetadata*>, mapPart, dest, part)
 }
 
 } // namespace EBUCore

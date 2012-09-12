@@ -29,54 +29,29 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCOREPACKAGEINFO_BASE_H__
-#define __MXFPP_EBUCOREPACKAGEINFO_BASE_H__
-
-
-
-#include <libMXF++/metadata/InterchangeObject.h>
-
-using namespace mxfpp;
-
-namespace EBUSDK { namespace EBUCore { namespace KLV
-{
-
-
-class ebucorePackageInfoBase : public InterchangeObject
-{
-public:
-    friend class MetadataSetFactory<ebucorePackageInfoBase>;
-    static const mxfKey setKey;
-
-public:
-    ebucorePackageInfoBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucorePackageInfoBase();
-
-
-   // getters
-
-   bool havepackageSize() const;
-   uint64_t getpackageSize() const;
-   bool havepackageName() const;
-   std::string getpackageName() const;
-   bool havepackageLocator() const;
-   std::vector<ebucoreLocator*> getpackageLocator() const;
-
-
-   // setters
-
-   void setpackageSize(uint64_t value);
-   void setpackageName(std::string value);
-   void setpackageLocator(const std::vector<ebucoreLocator*>& value);
-   void appendpackageLocator(ebucoreLocator* value);
-
-
-protected:
-    ebucorePackageInfoBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
-};
-
-
-}}};
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
+
+#include <libMXF++/MXF.h>
+#include <metadata/EBUCoreDMS++.h>
+
+
+using namespace std;
+using namespace mxfpp;
+using namespace EBUSDK::EBUCore::KLV;
+
+
+
+ebucoreLocator::ebucoreLocator(HeaderMetadata *headerMetadata)
+: ebucoreLocatorBase(headerMetadata)
+{}
+
+ebucoreLocator::ebucoreLocator(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: ebucoreLocatorBase(headerMetadata, cMetadataSet)
+{}
+
+ebucoreLocator::~ebucoreLocator()
+{}
+
+

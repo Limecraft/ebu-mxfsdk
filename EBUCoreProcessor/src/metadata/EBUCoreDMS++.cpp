@@ -72,6 +72,7 @@ void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata)
 	header_metadata->registerObjectFactory(&ebucoreImageFormat::setKey, new MetadataSetFactory<ebucoreImageFormat>());
 	header_metadata->registerObjectFactory(&ebucoreMedium::setKey, new MetadataSetFactory<ebucoreMedium>());
 	header_metadata->registerObjectFactory(&ebucoreMimeType::setKey, new MetadataSetFactory<ebucoreMimeType>());
+	header_metadata->registerObjectFactory(&ebucoreLocator::setKey, new MetadataSetFactory<ebucoreLocator>());
 	header_metadata->registerObjectFactory(&ebucorePackageInfo::setKey, new MetadataSetFactory<ebucorePackageInfo>());
 	header_metadata->registerObjectFactory(&ebucorePartFramework::setKey, new MetadataSetFactory<ebucorePartFramework>());
 	header_metadata->registerObjectFactory(&ebucoreRational::setKey, new MetadataSetFactory<ebucoreRational>());

@@ -86,14 +86,14 @@ bool ebucorePackageInfoBase::havepackageLocator() const
     return haveItem(&MXF_ITEM_K(ebucorePackageInfo, packageLocator));
 }
 
-std::vector<ebucoreTypeGroup*> ebucorePackageInfoBase::getpackageLocator() const
+std::vector<ebucoreLocator*> ebucorePackageInfoBase::getpackageLocator() const
 {
-    vector<ebucoreTypeGroup*> result;
+    vector<ebucoreLocator*> result;
     auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucorePackageInfo, packageLocator)));
     while (iter->next())
     {
-        MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreTypeGroup*>(iter->get()));
+        MXFPP_CHECK(dynamic_cast<ebucoreLocator*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreLocator*>(iter->get()));
     }
     return result;
 }
@@ -108,13 +108,13 @@ void ebucorePackageInfoBase::setpackageName(std::string value)
     setStringItem(&MXF_ITEM_K(ebucorePackageInfo, packageName), value);
 }
 
-void ebucorePackageInfoBase::setpackageLocator(const std::vector<ebucoreTypeGroup*>& value)
+void ebucorePackageInfoBase::setpackageLocator(const std::vector<ebucoreLocator*>& value)
 {
-    WrapObjectVectorIterator<ebucoreTypeGroup> iter(value);
+    WrapObjectVectorIterator<ebucoreLocator> iter(value);
     setStrongRefArrayItem(&MXF_ITEM_K(ebucorePackageInfo, packageLocator), &iter);
 }
 
-void ebucorePackageInfoBase::appendpackageLocator(ebucoreTypeGroup* value)
+void ebucorePackageInfoBase::appendpackageLocator(ebucoreLocator* value)
 {
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucorePackageInfo, packageLocator), value);
 }

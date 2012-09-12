@@ -108,6 +108,7 @@
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreImageFormatBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreLanguageBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreLocationBase.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreLocatorBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreMainFrameworkBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreMediumBase.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\base\ebucoreMetadataSchemeInformationBase.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreImageFormat.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreLanguage.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreLocation.cpp" />
+    <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreLocator.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreMainFramework.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreMedium.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreMetadataSchemeInformation.cpp" />

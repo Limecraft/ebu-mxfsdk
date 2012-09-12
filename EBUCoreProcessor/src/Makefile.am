@@ -53,6 +53,7 @@ libebucore_la_SOURCES = \
     metadata/base/ebucoreImageFormatBase.cpp \
     metadata/base/ebucoreMediumBase.cpp \
     metadata/base/ebucoreMimeTypeBase.cpp \
+    metadata/base/ebucoreLocatorBase.cpp \
     metadata/base/ebucorePackageInfoBase.cpp \
     metadata/base/ebucorePartFrameworkBase.cpp \
     metadata/base/ebucoreRationalBase.cpp \
@@ -84,6 +85,7 @@ libebucore_la_SOURCES = \
     metadata/ebucoreImageFormat.cpp \
     metadata/ebucoreMedium.cpp \
     metadata/ebucoreMimeType.cpp \
+    metadata/ebucoreLocator.cpp \
     metadata/ebucorePackageInfo.cpp \
     metadata/ebucorePartFramework.cpp \
     metadata/ebucoreRational.cpp \
