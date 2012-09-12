@@ -63,6 +63,7 @@ public:
    std::vector<ebucoreTextualAnnotation*> getorganisationCode() const;
    bool haveorganisationDepartment() const;
    ebucoreOrganisationDepartment* getorganisationDepartment() const;
+   bool haveorganisationType() const;
    ebucoreTypeGroup* getorganisationType() const;
    bool haveorganisationDetails() const;
    std::vector<ebucoreContactDetails*> getorganisationDetails() const;

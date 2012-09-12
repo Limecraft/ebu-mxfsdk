@@ -61,6 +61,11 @@ ebucoreGenreBase::~ebucoreGenreBase()
 {}
 
 
+bool ebucoreGenreBase::havegenreKindGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreGenre, genreKindGroup));
+}
+
 ebucoreTypeGroup* ebucoreGenreBase::getgenreKindGroup() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreGenre, genreKindGroup)));

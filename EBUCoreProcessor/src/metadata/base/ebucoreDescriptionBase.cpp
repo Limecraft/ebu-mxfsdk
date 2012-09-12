@@ -83,6 +83,11 @@ std::vector<ebucoreTextualAnnotation*> ebucoreDescriptionBase::getdescriptionVal
     return result;
 }
 
+bool ebucoreDescriptionBase::havedescriptionTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreDescription, descriptionTypeGroup));
+}
+
 ebucoreTypeGroup* ebucoreDescriptionBase::getdescriptionTypeGroup() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreDescription, descriptionTypeGroup)));

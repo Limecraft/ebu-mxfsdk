@@ -91,6 +91,11 @@ std::string ebucoreContactDetailsBase::getmobileTelephoneNumber() const
     return getStringItem(&MXF_ITEM_K(ebucoreContactDetails, mobileTelephoneNumber));
 }
 
+bool ebucoreContactDetailsBase::havedetailsType() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContactDetails, detailsType));
+}
+
 ebucoreTypeGroup* ebucoreContactDetailsBase::getdetailsType() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreContactDetails, detailsType)));

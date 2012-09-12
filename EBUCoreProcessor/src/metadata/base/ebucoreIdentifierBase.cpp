@@ -71,11 +71,21 @@ std::string ebucoreIdentifierBase::getidentifierNote() const
     return getStringItem(&MXF_ITEM_K(ebucoreIdentifier, identifierNote));
 }
 
+bool ebucoreIdentifierBase::haveidentifierTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreIdentifier, identifierTypeGroup));
+}
+
 ebucoreTypeGroup* ebucoreIdentifierBase::getidentifierTypeGroup() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreIdentifier, identifierTypeGroup)));
     MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+}
+
+bool ebucoreIdentifierBase::haveidentifierFormatGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreIdentifier, identifierFormatGroup));
 }
 
 ebucoreFormatGroup* ebucoreIdentifierBase::getidentifierFormatGroup() const

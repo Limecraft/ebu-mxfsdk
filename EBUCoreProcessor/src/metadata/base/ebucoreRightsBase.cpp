@@ -166,6 +166,11 @@ std::vector<ebucoreContact*> ebucoreRightsBase::getrightsContacts() const
     return result;
 }
 
+bool ebucoreRightsBase::haverightsTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsTypeGroup));
+}
+
 ebucoreTypeGroup* ebucoreRightsBase::getrightsTypeGroup() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRights, rightsTypeGroup)));

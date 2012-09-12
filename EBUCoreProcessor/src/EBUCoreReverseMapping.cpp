@@ -74,16 +74,21 @@ namespace EBUCore {
 #define RMAP_TYPE_GROUP_GET_OPTIONAL(source, haveTypeGroupProperty, getTypeGroupProperty, dest, destType)	\
 	if (source->haveTypeGroupProperty()) { \
 		ebucoreTypeGroup *tg = source->getTypeGroupProperty(); \
-		RMAP_TYPE_GROUP(tg, dest, destType::typeDefinition_type, destType::typeLabel_type, destType::typeLink_type) \
+		RMAP_TYPE_GROUP(tg, dest, destType::typeDefinition_type, destType::typeLabel_type, destType::typeLink_type, destType::typeLanguage_type) \
 	}
 #define RMAP_FORMAT_GROUP_GET_OPTIONAL(source, haveFormatGroupProperty, getFormatGroupProperty, dest, destType)	\
 	if (source->haveFormatGroupProperty()) { \
 		ebucoreFormatGroup *g = source->getFormatGroupProperty(); \
-		RMAP_FORMAT_GROUP(g, dest, destType::formatDefinition_type, destType::formatLabel_type, destType::formatLink_type) \
+		RMAP_FORMAT_GROUP(g, dest, destType::formatDefinition_type, destType::formatLabel_type, destType::formatLink_type, destType::formatLanguage_type) \
+	}
+#define RMAP_STATUS_GROUP_GET_OPTIONAL(source, haveStatusGroupProperty, getStatusGroupProperty, dest, destType)	\
+	if (source->haveStatusGroupProperty()) { \
+		ebucoreStatusGroup *g = source->getStatusGroupProperty(); \
+		RMAP_STATUS_GROUP(g, dest, destType::statusDefinition_type, destType::statusLabel_type, destType::statusLink_type, destType::statusLanguage_type) \
 	}
 
 
-#define RMAP_TYPE_GROUP(source, dest, definitionType, labelType, linkType)	\
+#define RMAP_TYPE_GROUP(source, dest, definitionType, labelType, linkType, languageType)	\
 	if (source->havetypeGroupDefinition()) {	\
 		dest.typeDefinition().set(std::auto_ptr<definitionType>( new definitionType( source->gettypeGroupDefinition() ) ));	\
 	}	\
@@ -92,8 +97,11 @@ namespace EBUCore {
 	}	\
 	if (source->havetypeGroupLink()) {	\
 		dest.typeLink().set( std::auto_ptr<linkType> ( new linkType( source->gettypeGroupLink() ) ));	\
+	}	\
+	if (source->havetypeGroupLanguage()) {	\
+		dest.typeLanguage().set( std::auto_ptr<languageType> ( new languageType( source->gettypeGroupLanguage() ) ));	\
 	}
-#define RMAP_STATUS_GROUP(source, dest, definitionType, labelType, linkType)	\
+#define RMAP_STATUS_GROUP(source, dest, definitionType, labelType, linkType, languageType)	\
 	if (source->havestatusGroupDefinition()) {	\
 		dest.statusDefinition().set(std::auto_ptr<definitionType>( new definitionType( source->getstatusGroupDefinition() ) ));	\
 	}	\
@@ -102,8 +110,11 @@ namespace EBUCore {
 	}	\
 	if (source->havestatusGroupLink()) {	\
 		dest.statusLink().set( std::auto_ptr<linkType> ( new linkType( source->getstatusGroupLink() ) ));	\
+	} \
+	if (source->havestatusGroupLanguage()) {	\
+		dest.statusLanguage().set( std::auto_ptr<languageType> ( new languageType( source->getstatusGroupLanguage() ) ));	\
 	}
-#define RMAP_FORMAT_GROUP(source, dest, definitionType, labelType, linkType)	\
+#define RMAP_FORMAT_GROUP(source, dest, definitionType, labelType, linkType, languageType)	\
 	if (source->haveformatGroupDefinition()) {	\
 		dest.formatDefinition().set(std::auto_ptr<definitionType>( new definitionType( source->getformatGroupDefinition() ) ));	\
 	}	\
@@ -112,6 +123,9 @@ namespace EBUCore {
 	}	\
 	if (source->haveformatGroupLink()) {	\
 		dest.formatLink().set( std::auto_ptr<linkType> ( new linkType( source->getformatGroupLink() ) ));	\
+	} \
+	if (source->haveformatGroupLanguage()) {	\
+		dest.formatLanguage().set( std::auto_ptr<languageType> ( new languageType( source->getformatGroupLanguage() ) ));	\
 	}
 
 void mapTextualAnnotation(ebucoreTextualAnnotation *source, dc::elementType& dest) {
@@ -165,7 +179,7 @@ void mapDetails(ebucoreContactDetails *source, detailsType& dest) {
 	SIMPLE_RMAP_OPTIONAL(source, havetelephoneNumber, gettelephoneNumber, dest, telephoneNumber)
 	SIMPLE_RMAP_OPTIONAL(source, havemobileTelephoneNumber, getmobileTelephoneNumber, dest, mobileTelephoneNumber)
 
-	RMAP_TYPE_GROUP(source->getdetailsType(), dest, detailsType::typeDefinition_type, detailsType::typeLabel_type, detailsType::typeLink_type)
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havedetailsType, getdetailsType, dest, detailsType)
 }
 
 void mapContact(ebucoreContact *source, contactDetailsType& dest) {
@@ -221,7 +235,7 @@ void mapOrganisation(ebucoreOrganisation *source, organisationDetailsType& dest)
 }
 
 void mapRole(ebucoreTypeGroup *source, role& dest) {
-	RMAP_TYPE_GROUP(source, dest, role::typeDefinition_type, role::typeLabel_type, role::typeLink_type)
+	RMAP_TYPE_GROUP(source, dest, role::typeDefinition_type, role::typeLabel_type, role::typeLink_type, role::typeLanguage_type)
 }
 
 void mapEntity(ebucoreEntity *source, entityType& dest) {
@@ -346,10 +360,8 @@ void mapAlternativeTitle(ebucoreAlternativeTitle *source, alternativeTitleType& 
 	NEW_VECTOR_AND_RASSIGN(source, getalternativeTitleValue, alternativeTitleType::title_type, alternativeTitleType::title_sequence, 
 		std::vector<ebucoreTextualAnnotation*>, mapTextualAnnotation, dest, title)
 
-	ebucoreTypeGroup* tg = source->getalternativeTitleTypeGroup();
-	ebucoreStatusGroup* sg = source->getalternativeTitleStatusGroup();
-	RMAP_TYPE_GROUP(tg, dest, alternativeTitleType::typeDefinition_type, alternativeTitleType::typeLabel_type, alternativeTitleType::typeLink_type)
-	RMAP_STATUS_GROUP(sg, dest, alternativeTitleType::statusDefinition_type, alternativeTitleType::statusLabel_type, alternativeTitleType::statusLink_type)
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havealternativeTitleTypeGroup, getalternativeTitleTypeGroup, dest, alternativeTitleType)
+	RMAP_STATUS_GROUP_GET_OPTIONAL(source, havealternativeTitleStatusGroup, getalternativeTitleStatusGroup, dest, alternativeTitleType)
 }
 
 void mapIdentifier(ebucoreIdentifier *source, identifierType& dest) {
@@ -371,8 +383,8 @@ void mapIdentifier(ebucoreIdentifier *source, identifierType& dest) {
 	std::auto_ptr<dc::elementType> dcp( new dc::elementType( source->getidentifierValue() ) );
 	dest.identifier(dcp);
 
-	RMAP_FORMAT_GROUP(source->getidentifierFormatGroup(), dest, identifierType::formatDefinition_type, identifierType::formatLabel_type, identifierType::formatLink_type)
-	RMAP_TYPE_GROUP(source->getidentifierTypeGroup(), dest, identifierType::typeDefinition_type, identifierType::typeLabel_type, identifierType::typeLink_type)
+	RMAP_FORMAT_GROUP_GET_OPTIONAL(source, haveidentifierFormatGroup, getidentifierFormatGroup, dest, identifierType)
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, haveidentifierTypeGroup, getidentifierTypeGroup, dest, identifierType)
 
 	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, haveidentifierAttributorEntity, getidentifierAttributorEntity, entityType, mapEntity, dest, attributor)
 }
@@ -382,7 +394,7 @@ void mapDescription(ebucoreDescription *source, descriptionType& dest) {
 	NEW_VECTOR_AND_RASSIGN(source, getdescriptionValue, descriptionType::description_type, descriptionType::description_sequence, 
 		std::vector<ebucoreTextualAnnotation*>, mapTextualAnnotation, dest, description)
 
-	RMAP_TYPE_GROUP(source->getdescriptionTypeGroup(), dest, descriptionType::typeDefinition_type, descriptionType::typeLabel_type, descriptionType::typeLink_type)
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havedescriptionTypeGroup, getdescriptionTypeGroup, dest, identifierType)
 
 	// map note
 }
@@ -396,7 +408,7 @@ void mapSubject(ebucoreSubject *source, subjectType& dest) {
 	SIMPLE_RMAP_OPTIONAL(source, havesubjectCode, getsubjectCode, dest, subjectCode)
 	SIMPLE_RMAP_OPTIONAL(source, havesubjectDefinition, getsubjectDefinition, dest, subjectDefinition)
 
-	RMAP_TYPE_GROUP(source->getsubjectTypeGroup(), dest, subjectType::typeDefinition_type, subjectType::typeLabel_type, subjectType::typeLink_type)
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havesubjectTypeGroup, getsubjectTypeGroup, dest, identifierType)
 
 	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, havesubjectAttributorEntity, getsubjectAttributorEntity, entityType, mapEntity, dest, attributor)
 }
@@ -414,8 +426,8 @@ std::auto_ptr<ratingType> mapRating(ebucoreRating *source) {
 		source->getratingScaleMaxValue(), 
 		*e) );
 
-	RMAP_TYPE_GROUP(source->getratingTypeGroup(), (*dest), ratingType::typeDefinition_type, ratingType::typeLabel_type, ratingType::typeLink_type)
-	RMAP_FORMAT_GROUP(source->getratingFormatGroup(), (*dest), ratingType::formatDefinition_type, ratingType::formatLabel_type, ratingType::formatLink_type)
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, haveratingTypeGroup, getratingTypeGroup, (*dest), identifierType)
+	RMAP_FORMAT_GROUP_GET_OPTIONAL(source, haveratingFormatGroup, getratingFormatGroup, (*dest), identifierType)
 
 	return dest;
 }
@@ -429,8 +441,7 @@ void mapLanguage(ebucoreLanguage *source, languageType& dest) {
 	SIMPLE_RMAP(source, getlanguageLanguage, dest, language)
 	SIMPLE_RMAP(source, getlanguageCode, dest, language().get().lang)
 
-	RMAP_TYPE_GROUP( source->getlanguagePurposeSet(), 
-		dest, languageType::typeDefinition_type, languageType::typeLabel_type, languageType::typeLink_type)
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havelanguagePurposeSet, getlanguagePurposeSet, dest, languageType)
 }
 
 void mapType(ebucoreType *source, typeType& dest) {
@@ -438,7 +449,7 @@ void mapType(ebucoreType *source, typeType& dest) {
 	std::vector<ebucoreObjectType*> source_obtyps = source->getobjectType();
 	for (std::vector<ebucoreObjectType*>::iterator it = source_obtyps.begin(); it != source_obtyps.end(); it++) {
 		std::auto_ptr<objectType> p( new objectType() );
-		RMAP_TYPE_GROUP((*it)->getobjectTypeGroup(), (*p), objectType::typeDefinition_type, objectType::typeLabel_type, objectType::typeLink_type)
+		RMAP_TYPE_GROUP_GET_OPTIONAL((*it), haveobjectTypeGroup, getobjectTypeGroup, (*p), objectType)
 		dest.objectType().push_back(p);
 	}
 
@@ -446,7 +457,7 @@ void mapType(ebucoreType *source, typeType& dest) {
 	std::vector<ebucoreTargetAudience*> source_tauds = source->gettargetAudience();
 	for (std::vector<ebucoreTargetAudience*>::iterator it = source_tauds.begin(); it != source_tauds.end(); it++) {
 		std::auto_ptr<targetAudience> p( new targetAudience() );
-		RMAP_TYPE_GROUP((*it)->gettargetAudienceKindGroup(), (*p), targetAudience::typeDefinition_type, targetAudience::typeLabel_type, targetAudience::typeLink_type)
+		RMAP_TYPE_GROUP_GET_OPTIONAL((*it), havetargetAudienceKindGroup, gettargetAudienceKindGroup, (*p), targetAudience)
 		tauds.push_back(p);
 	}
 	dest.targetAudience(tauds);
@@ -455,7 +466,7 @@ void mapType(ebucoreType *source, typeType& dest) {
 	std::vector<ebucoreGenre*> source_gens = source->getgenre();
 	for (std::vector<ebucoreGenre*>::iterator it = source_gens.begin(); it != source_gens.end(); it++) {
 		std::auto_ptr<genre> p( new genre() );
-		RMAP_TYPE_GROUP((*it)->getgenreKindGroup(), (*p), genre::typeDefinition_type, genre::typeLabel_type, genre::typeLink_type)
+		RMAP_TYPE_GROUP_GET_OPTIONAL((*it), havegenreKindGroup, getgenreKindGroup, (*p), genre)
 		gens.push_back(p);
 	}
 	dest.genre(gens);
@@ -465,7 +476,7 @@ void mapDateType(ebucoreDateType *source, alternative& dest) {
 	if (source->havedateValue()) {
 		dest.startDate(std::auto_ptr<xml_schema::date>( convert_timestamp_date(source->getdateValue()) ));
 	}
-	RMAP_TYPE_GROUP( source->getdateTypeGroup(), dest, dateType::alternative_type::typeDefinition_type, dateType::alternative_type::typeLabel_type, dateType::alternative_type::typeLink_type)
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havedateTypeGroup, getdateTypeGroup, dest, dateType::alternative_type)
 }
 
 void mapDate(ebucoreDate* source, dateType& dest) {
@@ -536,7 +547,7 @@ void mapTemporal(ebucoreTemporal *source, temporal& dest) {
 	if (source->haveperiodOfTime()) {
 		NEW_VECTOR_AND_RASSIGN(source, getperiodOfTime, PeriodOfTime, temporal::PeriodOfTime_sequence, std::vector<ebucorePeriodOfTime*>, mapPeriodOfTime, dest, PeriodOfTime)
 	}
-	RMAP_TYPE_GROUP(source->gettemporalTypeGroup(), dest, temporal::typeDefinition_type, temporal::typeLabel_type, temporal::typeLink_type)		
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havetemporalTypeGroup, gettemporalTypeGroup, dest, temporal)
 }
 
 void mapSpatial(ebucoreSpatial *source, spatial& dest) {
@@ -548,7 +559,7 @@ void mapSpatial(ebucoreSpatial *source, spatial& dest) {
 		SIMPLE_RMAP_OPTIONAL_POINTER(loc, havelocationId, getlocationId, p, locationId)
 		SIMPLE_RMAP_OPTIONAL_POINTER(loc, havelocationName, getlocationName, p, name)
 		SIMPLE_RMAP_OPTIONAL_POINTER(loc, havelocationCode, getlocationCode, p, code)
-		RMAP_TYPE_GROUP(loc->getlocationTypeGroup(), (*p), location::typeDefinition_type, location::typeLabel_type, location::typeLink_type)
+		RMAP_TYPE_GROUP_GET_OPTIONAL(loc, havelocationTypeGroup, getlocationTypeGroup, (*p), location)
 
 		dest.location().push_back(p);
 	}
@@ -622,7 +633,7 @@ void mapRights(ebucoreRights *source, rightsType& dest) {
 		NEW_VECTOR_AND_RASSIGN(source, getrightsContacts, contactDetailsType, rightsType::contactDetails_sequence, std::vector<ebucoreContact*>, mapContact, dest, contactDetails)
 	}
 
-	RMAP_TYPE_GROUP(source->getrightsTypeGroup() , dest, rightsType::typeDefinition_type, rightsType::typeLabel_type, rightsType::typeLink_type)
+	RMAP_TYPE_GROUP_GET_OPTIONAL(source, haverightsTypeGroup, getrightsTypeGroup, dest, rightsType)
 }
 
 void mapPublicationHistoryEvent(ebucorePublicationHistoryEvent* source, publicationEvent& dest) {
@@ -665,14 +676,14 @@ void mapCustomRelation(ebucoreCustomRelation *source, relationType& dest) {
 	SIMPLE_RMAP_OPTIONAL(source, haverelationLink, getrelationLink, dest, relationLink)
 	SIMPLE_RMAP_OPTIONAL(source, haverunningOrderNumber, getrunningOrderNumber, dest, runningOrderNumber)
 	if (source->havecustomRelationTypeGroup()) { // make this field required just like other typegroups??
-		RMAP_TYPE_GROUP(source->getcustomRelationTypeGroup(), dest, relationType::typeDefinition_type, relationType::typeLabel_type, relationType::typeLink_type)
+		RMAP_TYPE_GROUP_GET_OPTIONAL(source, havecustomRelationTypeGroup, getcustomRelationTypeGroup, dest, relationType)
 	}
 }
 
 #define RMAP_TECHNICAL_ATTRIBUTE_FUNCTION(functionName, sourceType, sourceProperty, destType) \
 	void functionName(sourceType *source, destType& dest) { \
 		dest = source->sourceProperty();	\
-		RMAP_TYPE_GROUP(source, dest, destType::typeDefinition_type, destType::typeLabel_type, destType::typeLink_type)	\
+		RMAP_TYPE_GROUP(source, dest, destType::typeDefinition_type, destType::typeLabel_type, destType::typeLink_type, destType::typeLanguage_type)	\
 	}
 
 RMAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeString, ebucoreTechnicalAttributeString, gettechnicalAttributeStringValue, String)
@@ -691,12 +702,12 @@ void mapTechnicalAttributeRational(ebucoreTechnicalAttributeRational *source, te
 	mxfRational r = source->gettechnicalAttributeRationalValue();
 	dest.factorNumerator() = r.numerator;
 	dest.factorDenominator() = r.denominator;
-	RMAP_TYPE_GROUP(source, dest, technicalAttributeRationalType::typeDefinition_type, technicalAttributeRationalType::typeLabel_type, technicalAttributeRationalType::typeLink_type)
+	RMAP_TYPE_GROUP(source, dest, technicalAttributeRationalType::typeDefinition_type, technicalAttributeRationalType::typeLabel_type, technicalAttributeRationalType::typeLink_type, technicalAttributeRationalType::typeLanguage_type)
 }
 
 void mapTechnicalAttributeAnyURI(ebucoreTechnicalAttributeAnyURI *source, technicalAttributeUriType& dest) {
 	dest.assign(source->gettechnicalAttributeAnyURIValue()); // use assign as no more convenient operator works
-	RMAP_TYPE_GROUP(source, dest, technicalAttributeUriType::typeDefinition_type, technicalAttributeUriType::typeLabel_type, technicalAttributeUriType::typeLink_type)
+	RMAP_TYPE_GROUP(source, dest, technicalAttributeUriType::typeDefinition_type, technicalAttributeUriType::typeLabel_type, technicalAttributeUriType::typeLink_type, technicalAttributeUriType::typeLanguage_type)
 }
 
 void mapMIMEType(ebucoreMimeType *source, mimeType& dest) {

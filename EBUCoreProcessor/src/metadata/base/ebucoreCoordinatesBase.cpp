@@ -71,6 +71,11 @@ std::string ebucoreCoordinatesBase::getposY() const
     return getStringItem(&MXF_ITEM_K(ebucoreCoordinates, posY));
 }
 
+bool ebucoreCoordinatesBase::havecoordinatesTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreCoordinates, coordinatesTypeGroup));
+}
+
 ebucoreTypeGroup* ebucoreCoordinatesBase::getcoordinatesTypeGroup() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreCoordinates, coordinatesTypeGroup)));

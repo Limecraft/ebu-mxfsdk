@@ -93,11 +93,21 @@ std::vector<ebucoreTextualAnnotation*> ebucoreAlternativeTitleBase::getalternati
     return result;
 }
 
+bool ebucoreAlternativeTitleBase::havealternativeTitleTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleTypeGroup));
+}
+
 ebucoreTypeGroup* ebucoreAlternativeTitleBase::getalternativeTitleTypeGroup() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleTypeGroup)));
     MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+}
+
+bool ebucoreAlternativeTitleBase::havealternativeTitleStatusGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleStatusGroup));
 }
 
 ebucoreStatusGroup* ebucoreAlternativeTitleBase::getalternativeTitleStatusGroup() const

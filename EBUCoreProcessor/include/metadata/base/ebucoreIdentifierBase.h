@@ -57,7 +57,9 @@ public:
 
    std::string getidentifierValue() const;
    std::string getidentifierNote() const;
+   bool haveidentifierTypeGroup() const;
    ebucoreTypeGroup* getidentifierTypeGroup() const;
+   bool haveidentifierFormatGroup() const;
    ebucoreFormatGroup* getidentifierFormatGroup() const;
    bool haveidentifierAttributorEntity() const;
    ebucoreEntity* getidentifierAttributorEntity() const;

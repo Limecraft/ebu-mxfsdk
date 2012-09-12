@@ -63,6 +63,7 @@ public:
    std::string getlocationCode() const;
    bool havelocationNote() const;
    std::string getlocationNote() const;
+   bool havelocationTypeGroup() const;
    ebucoreTypeGroup* getlocationTypeGroup() const;
    bool havecoordinateReference() const;
    ebucoreCoordinates* getcoordinateReference() const;

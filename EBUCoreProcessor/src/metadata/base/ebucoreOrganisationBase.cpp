@@ -117,6 +117,11 @@ ebucoreOrganisationDepartment* ebucoreOrganisationBase::getorganisationDepartmen
     return dynamic_cast<ebucoreOrganisationDepartment*>(obj.release());
 }
 
+bool ebucoreOrganisationBase::haveorganisationType() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreOrganisation, organisationType));
+}
+
 ebucoreTypeGroup* ebucoreOrganisationBase::getorganisationType() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreOrganisation, organisationType)));

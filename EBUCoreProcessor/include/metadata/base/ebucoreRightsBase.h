@@ -71,6 +71,7 @@ public:
    std::vector<ebucoreEntity*> getrightsHolderEntity() const;
    bool haverightsContacts() const;
    std::vector<ebucoreContact*> getrightsContacts() const;
+   bool haverightsTypeGroup() const;
    ebucoreTypeGroup* getrightsTypeGroup() const;
    bool haverightsAttributeID() const;
    std::vector<ebucoreIdentifier*> getrightsAttributeID() const;

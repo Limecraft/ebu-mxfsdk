@@ -61,6 +61,11 @@ ebucoreObjectTypeBase::~ebucoreObjectTypeBase()
 {}
 
 
+bool ebucoreObjectTypeBase::haveobjectTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreObjectType, objectTypeGroup));
+}
+
 ebucoreTypeGroup* ebucoreObjectTypeBase::getobjectTypeGroup() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreObjectType, objectTypeGroup)));

@@ -55,6 +55,7 @@ public:
 
    // getters
 
+   bool haveobjectTypeGroup() const;
    ebucoreTypeGroup* getobjectTypeGroup() const;
 
 

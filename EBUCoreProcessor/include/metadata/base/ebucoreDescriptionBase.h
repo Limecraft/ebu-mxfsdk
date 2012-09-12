@@ -58,6 +58,7 @@ public:
    bool havedescriptionNote() const;
    std::string getdescriptionNote() const;
    std::vector<ebucoreTextualAnnotation*> getdescriptionValue() const;
+   bool havedescriptionTypeGroup() const;
    ebucoreTypeGroup* getdescriptionTypeGroup() const;
 
 

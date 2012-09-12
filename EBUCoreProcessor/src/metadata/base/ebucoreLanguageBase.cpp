@@ -76,6 +76,11 @@ std::string ebucoreLanguageBase::getlanguageNote() const
     return getStringItem(&MXF_ITEM_K(ebucoreLanguage, languageNote));
 }
 
+bool ebucoreLanguageBase::havelanguagePurposeSet() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreLanguage, languagePurposeSet));
+}
+
 ebucoreTypeGroup* ebucoreLanguageBase::getlanguagePurposeSet() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreLanguage, languagePurposeSet)));

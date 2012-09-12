@@ -57,6 +57,7 @@ public:
 
    std::string getposX() const;
    std::string getposY() const;
+   bool havecoordinatesTypeGroup() const;
    ebucoreTypeGroup* getcoordinatesTypeGroup() const;
 
 

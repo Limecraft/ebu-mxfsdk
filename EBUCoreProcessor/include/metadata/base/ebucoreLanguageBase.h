@@ -58,6 +58,7 @@ public:
    std::string getlanguageCode() const;
    std::string getlanguageLanguage() const;
    std::string getlanguageNote() const;
+   bool havelanguagePurposeSet() const;
    ebucoreTypeGroup* getlanguagePurposeSet() const;
 
 

@@ -60,7 +60,9 @@ public:
    bool havealternativeTitleNote() const;
    std::string getalternativeTitleNote() const;
    std::vector<ebucoreTextualAnnotation*> getalternativeTitleValue() const;
+   bool havealternativeTitleTypeGroup() const;
    ebucoreTypeGroup* getalternativeTitleTypeGroup() const;
+   bool havealternativeTitleStatusGroup() const;
    ebucoreStatusGroup* getalternativeTitleStatusGroup() const;
 
 

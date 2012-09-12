@@ -55,19 +55,33 @@ public:
 
    // getters
 
+   bool haveisVersionOf() const;
    std::string getisVersionOf() const;
+   bool havehasVersion() const;
    std::string gethasVersion() const;
+   bool haveisReplacedBy() const;
    std::string getisReplacedBy() const;
+   bool havereplaces() const;
    std::string getreplaces() const;
+   bool haveisRequiredBy() const;
    std::string getisRequiredBy() const;
+   bool haverequires() const;
    std::string getrequires() const;
+   bool haveisPartOf() const;
    std::string getisPartOf() const;
+   bool havehasPart() const;
    std::string gethasPart() const;
+   bool haveisReferencedBy() const;
    std::string getisReferencedBy() const;
+   bool havereferences() const;
    std::string getreferences() const;
+   bool haveisFormatOf() const;
    std::string getisFormatOf() const;
+   bool havehasFormat() const;
    std::string gethasFormat() const;
+   bool haveisEpisodeOf() const;
    std::string getisEpisodeOf() const;
+   bool haveisMemberOf() const;
    std::string getisMemberOf() const;
 
 

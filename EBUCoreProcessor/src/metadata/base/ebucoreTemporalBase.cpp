@@ -88,6 +88,11 @@ std::vector<ebucorePeriodOfTime*> ebucoreTemporalBase::getperiodOfTime() const
     return result;
 }
 
+bool ebucoreTemporalBase::havetemporalTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTemporal, temporalTypeGroup));
+}
+
 ebucoreTypeGroup* ebucoreTemporalBase::gettemporalTypeGroup() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreTemporal, temporalTypeGroup)));

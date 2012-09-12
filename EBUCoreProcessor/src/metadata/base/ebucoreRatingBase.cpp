@@ -81,6 +81,11 @@ std::string ebucoreRatingBase::getratingLanguage() const
     return getStringItem(&MXF_ITEM_K(ebucoreRating, ratingLanguage));
 }
 
+bool ebucoreRatingBase::haveratingTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingTypeGroup));
+}
+
 ebucoreTypeGroup* ebucoreRatingBase::getratingTypeGroup() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRating, ratingTypeGroup)));
@@ -88,11 +93,21 @@ ebucoreTypeGroup* ebucoreRatingBase::getratingTypeGroup() const
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
+bool ebucoreRatingBase::haveratingFormatGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingFormatGroup));
+}
+
 ebucoreFormatGroup* ebucoreRatingBase::getratingFormatGroup() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRating, ratingFormatGroup)));
     MXFPP_CHECK(dynamic_cast<ebucoreFormatGroup*>(obj.get()) != 0);
     return dynamic_cast<ebucoreFormatGroup*>(obj.release());
+}
+
+bool ebucoreRatingBase::haveratingProviderEntity() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingProviderEntity));
 }
 
 ebucoreEntity* ebucoreRatingBase::getratingProviderEntity() const

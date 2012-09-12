@@ -55,6 +55,7 @@ public:
 
    // getters
 
+   bool havegenreKindGroup() const;
    ebucoreTypeGroup* getgenreKindGroup() const;
 
 

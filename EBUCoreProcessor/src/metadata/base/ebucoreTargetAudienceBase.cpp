@@ -61,6 +61,11 @@ ebucoreTargetAudienceBase::~ebucoreTargetAudienceBase()
 {}
 
 
+bool ebucoreTargetAudienceBase::havetargetAudienceKindGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceKindGroup));
+}
+
 ebucoreTypeGroup* ebucoreTargetAudienceBase::gettargetAudienceKindGroup() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceKindGroup)));

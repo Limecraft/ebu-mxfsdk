@@ -59,6 +59,7 @@ public:
    std::string gettemporalDefinitionNote() const;
    bool haveperiodOfTime() const;
    std::vector<ebucorePeriodOfTime*> getperiodOfTime() const;
+   bool havetemporalTypeGroup() const;
    ebucoreTypeGroup* gettemporalTypeGroup() const;
 
 

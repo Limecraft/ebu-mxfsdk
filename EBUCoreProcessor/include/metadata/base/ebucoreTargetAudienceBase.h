@@ -55,6 +55,7 @@ public:
 
    // getters
 
+   bool havetargetAudienceKindGroup() const;
    ebucoreTypeGroup* gettargetAudienceKindGroup() const;
 
 

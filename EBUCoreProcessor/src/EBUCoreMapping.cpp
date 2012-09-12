@@ -64,18 +64,14 @@ namespace EBUCore {
 #define MAP_TYPE_GROUP(source, dest)	\
 	SIMPLE_MAP_OPTIONAL(source, typeDefinition, dest, settypeGroupDefinition) \
 	SIMPLE_MAP_OPTIONAL(source, typeLabel, dest, settypeGroupLabel) \
-	SIMPLE_MAP_OPTIONAL(source, typeLink, dest, settypeGroupLink)
+	SIMPLE_MAP_OPTIONAL(source, typeLink, dest, settypeGroupLink) \
+	SIMPLE_MAP_OPTIONAL(source, typeLanguage, dest, settypeGroupLanguage)
 
 	/*
-	<attributeGroup name="typeGroup">
-		<attribute name="typeLabel" type="string"/>
-		<attribute name="typeDefinition" type="string"/>
-		<attribute name="typeLink" type="anyURI"/>
-	</attributeGroup>
-
 	This macro is not defined as a function since typeGroups are not separate types 
 	but are more like duck typing (just a group of included attributes).
-*/
+	Same for other such groups (format-, status-)
+	*/
 
 #define MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, destProperty) \
 	ebucoreTypeGroup *typeGroup = newAndModifyObject<ebucoreTypeGroup>(dest->getHeaderMetadata(), mod);	\
@@ -86,17 +82,8 @@ namespace EBUCore {
 #define MAP_STATUS_GROUP(source, dest)	\
 	SIMPLE_MAP_OPTIONAL(source, statusDefinition, dest, setstatusGroupDefinition) \
 	SIMPLE_MAP_OPTIONAL(source, statusLabel, dest, setstatusGroupLabel) \
-	SIMPLE_MAP_OPTIONAL(source, statusLink, dest, setstatusGroupLink)
-/*
-	<attributeGroup name="statusGroup">
-		<attribute name="statusLabel" type="string"/>
-		<attribute name="statusDefinition" type="string"/>
-		<attribute name="statusLink" type="anyURI"/>
-	</attributeGroup>
-
-	This macro is not defined as a function since statusGroups are not separate types 
-	but are more like duck typing (just a group of included attributes).
-*/
+	SIMPLE_MAP_OPTIONAL(source, statusLink, dest, setstatusGroupLink) \
+	SIMPLE_MAP_OPTIONAL(source, statusLanguage, dest, setstatusGroupLanguage)
 
 #define MAP_NEW_STATUS_GROUP_AND_ASSIGN(source, dest, destProperty) \
 	ebucoreStatusGroup *statusGroup = newAndModifyObject<ebucoreStatusGroup>(dest->getHeaderMetadata(), mod); \
@@ -107,7 +94,8 @@ namespace EBUCore {
 #define MAP_FORMAT_GROUP(source, dest)	\
 	SIMPLE_MAP_OPTIONAL(source, formatDefinition, dest, setformatGroupDefinition) \
 	SIMPLE_MAP_OPTIONAL(source, formatLabel, dest, setformatGroupLabel) \
-	SIMPLE_MAP_OPTIONAL(source, formatLink, dest, setformatGroupLink)
+	SIMPLE_MAP_OPTIONAL(source, formatLink, dest, setformatGroupLink) \
+	SIMPLE_MAP_OPTIONAL(source, formatLanguage, dest, setformatGroupLanguage)
 
 #define MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, destProperty) \
 	ebucoreFormatGroup *statusGroup = newAndModifyObject<ebucoreFormatGroup>(dest->getHeaderMetadata(), mod);	\

@@ -61,9 +61,19 @@ ebucoreBasicRelationBase::~ebucoreBasicRelationBase()
 {}
 
 
+bool ebucoreBasicRelationBase::haveisVersionOf() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreBasicRelation, isVersionOf));
+}
+
 std::string ebucoreBasicRelationBase::getisVersionOf() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isVersionOf));
+}
+
+bool ebucoreBasicRelationBase::havehasVersion() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreBasicRelation, hasVersion));
 }
 
 std::string ebucoreBasicRelationBase::gethasVersion() const
@@ -71,9 +81,19 @@ std::string ebucoreBasicRelationBase::gethasVersion() const
     return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, hasVersion));
 }
 
+bool ebucoreBasicRelationBase::haveisReplacedBy() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreBasicRelation, isReplacedBy));
+}
+
 std::string ebucoreBasicRelationBase::getisReplacedBy() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isReplacedBy));
+}
+
+bool ebucoreBasicRelationBase::havereplaces() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreBasicRelation, replaces));
 }
 
 std::string ebucoreBasicRelationBase::getreplaces() const
@@ -81,9 +101,19 @@ std::string ebucoreBasicRelationBase::getreplaces() const
     return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, replaces));
 }
 
+bool ebucoreBasicRelationBase::haveisRequiredBy() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreBasicRelation, isRequiredBy));
+}
+
 std::string ebucoreBasicRelationBase::getisRequiredBy() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isRequiredBy));
+}
+
+bool ebucoreBasicRelationBase::haverequires() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreBasicRelation, requires));
 }
 
 std::string ebucoreBasicRelationBase::getrequires() const
@@ -91,9 +121,19 @@ std::string ebucoreBasicRelationBase::getrequires() const
     return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, requires));
 }
 
+bool ebucoreBasicRelationBase::haveisPartOf() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreBasicRelation, isPartOf));
+}
+
 std::string ebucoreBasicRelationBase::getisPartOf() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isPartOf));
+}
+
+bool ebucoreBasicRelationBase::havehasPart() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreBasicRelation, hasPart));
 }
 
 std::string ebucoreBasicRelationBase::gethasPart() const
@@ -101,9 +141,19 @@ std::string ebucoreBasicRelationBase::gethasPart() const
     return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, hasPart));
 }
 
+bool ebucoreBasicRelationBase::haveisReferencedBy() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreBasicRelation, isReferencedBy));
+}
+
 std::string ebucoreBasicRelationBase::getisReferencedBy() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isReferencedBy));
+}
+
+bool ebucoreBasicRelationBase::havereferences() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreBasicRelation, references));
 }
 
 std::string ebucoreBasicRelationBase::getreferences() const
@@ -111,9 +161,19 @@ std::string ebucoreBasicRelationBase::getreferences() const
     return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, references));
 }
 
+bool ebucoreBasicRelationBase::haveisFormatOf() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreBasicRelation, isFormatOf));
+}
+
 std::string ebucoreBasicRelationBase::getisFormatOf() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isFormatOf));
+}
+
+bool ebucoreBasicRelationBase::havehasFormat() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreBasicRelation, hasFormat));
 }
 
 std::string ebucoreBasicRelationBase::gethasFormat() const
@@ -121,9 +181,19 @@ std::string ebucoreBasicRelationBase::gethasFormat() const
     return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, hasFormat));
 }
 
+bool ebucoreBasicRelationBase::haveisEpisodeOf() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreBasicRelation, isEpisodeOf));
+}
+
 std::string ebucoreBasicRelationBase::getisEpisodeOf() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreBasicRelation, isEpisodeOf));
+}
+
+bool ebucoreBasicRelationBase::haveisMemberOf() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreBasicRelation, isMemberOf));
 }
 
 std::string ebucoreBasicRelationBase::getisMemberOf() const

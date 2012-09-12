@@ -101,6 +101,11 @@ std::string ebucoreLocationBase::getlocationNote() const
     return getStringItem(&MXF_ITEM_K(ebucoreLocation, locationNote));
 }
 
+bool ebucoreLocationBase::havelocationTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreLocation, locationTypeGroup));
+}
+
 ebucoreTypeGroup* ebucoreLocationBase::getlocationTypeGroup() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreLocation, locationTypeGroup)));
