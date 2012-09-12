@@ -980,8 +980,8 @@ void mapAncillaryData(ebucoreAncillaryData* source, ancillaryDataFormat& dest) {
 
 	ancillaryDataFormat::lineNumber_sequence destLines;
 	if (source->havelineNumber()) {
-		std::vector<uint32_t>& lines = source->getlineNumber();
-		for (std::vector<uint32_t>::iterator it = lines.begin(); it != lines.end(); it++) {
+		const std::vector<uint32_t>& lines = source->getlineNumber();
+		for (std::vector<uint32_t>::const_iterator it = lines.begin(); it != lines.end(); it++) {
 			destLines.push_back(*it);
 		}
 		dest.lineNumber(destLines);
