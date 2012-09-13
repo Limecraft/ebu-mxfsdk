@@ -590,7 +590,7 @@ void mapMetadataCoverage(coverageType& source, ebucoreCoverage *dest, ObjectModi
 	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, spatial, ebucoreSpatial, mapSpatial, dest, setspatial)
 }
 
-void mapRights(rightsType& source, ebucoreRights *dest, std::map<::xml_schema::id, ebucoreFormat*>& formatMap, ObjectModifier* mod = NULL) {
+void mapRights(rightsType& source, ebucoreRights *dest, std::map<xml_schema::id, ebucoreFormat*>& formatMap, ObjectModifier* mod = NULL) {
 	SIMPLE_MAP_OPTIONAL(source, rightsID, dest, setrightsId)
 	NEW_VECTOR_AND_ASSIGN(source, rightsAttributedId, ebucoreIdentifier, rightsType::rightsAttributedId_iterator, mapIdentifier, dest, setrightsAttributeID)
 	NEW_VECTOR_AND_ASSIGN(source, rights, ebucoreTextualAnnotation, rightsType::rights_iterator, mapTextualAnnotation, dest, setrightsValue)
@@ -624,7 +624,7 @@ void mapRights(rightsType& source, ebucoreRights *dest, std::map<::xml_schema::i
 
 }
 
-void mapPublicationHistoryEvent(publicationEvent& source, ebucorePublicationHistoryEvent* dest, std::map<::xml_schema::id, ebucoreFormat*>& formatMap, ObjectModifier* mod = NULL) {
+void mapPublicationHistoryEvent(publicationEvent& source, ebucorePublicationHistoryEvent* dest, std::map<xml_schema::id, ebucoreFormat*>& formatMap, ObjectModifier* mod = NULL) {
 
 	SIMPLE_MAP_OPTIONAL(source, firstShowing, dest, setfirstPublicationFlag)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, publicationDate, dest, setpublicationDate, convert_timestamp)
@@ -645,7 +645,7 @@ void mapPublicationHistoryEvent(publicationEvent& source, ebucorePublicationHist
 	}
 }
 
-void mapPublicationHistory(publicationHistoryType& source, std::vector<ebucorePublicationHistoryEvent*>& dest, mxfpp::HeaderMetadata *header_metadata, std::map<::xml_schema::id, ebucoreFormat*>& formatMap, ObjectModifier* mod = NULL) {
+void mapPublicationHistory(publicationHistoryType& source, std::vector<ebucorePublicationHistoryEvent*>& dest, mxfpp::HeaderMetadata *header_metadata, std::map<xml_schema::id, ebucoreFormat*>& formatMap, ObjectModifier* mod = NULL) {
 
 	std::vector<ebucorePublicationHistoryEvent*> vec_dest_hist;
 	for (publicationHistoryType::publicationEvent_iterator it = source.publicationEvent().begin(); it != source.publicationEvent().end(); it++) {
@@ -1071,7 +1071,7 @@ void mapDataFormat(dataFormatType& source, ebucoreDataFormat *dest, ObjectModifi
 		dataFormatType::technicalAttributeBoolean_iterator, mapTechnicalAttributeBoolean, dest, setdataTechnicalAttributeBoolean)
 }
 
-void mapFormat(formatType& source, ebucoreFormat *dest, std::map<::xml_schema::id, ebucoreFormat*>& formatMap, ObjectModifier* mod = NULL) {
+void mapFormat(formatType& source, ebucoreFormat *dest, std::map<xml_schema::id, ebucoreFormat*>& formatMap, ObjectModifier* mod = NULL) {
 
 	SIMPLE_MAP_OPTIONAL(source, formatId, dest, setformatID)
 	SIMPLE_MAP_OPTIONAL(source, formatVersionId, dest, setformatVersionID)
@@ -1166,7 +1166,7 @@ void mapPart(partType& source, ebucorePartMetadata *dest, mxfRational overallFra
 
 void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, mxfRational overallFrameRate, std::vector<ebucorePartMetadata*>& timelineParts, ObjectModifier* mod) {
 
-	std::map<::xml_schema::id, ebucoreFormat*> formatMap;
+	std::map<xml_schema::id, ebucoreFormat*> formatMap;
 
 	NEW_VECTOR_AND_ASSIGN(source, title, ebucoreTitle, coreMetadataType::title_iterator, mapTitle, dest, settitle)	
 	NEW_VECTOR_AND_ASSIGN(source, alternativeTitle, ebucoreAlternativeTitle, coreMetadataType::alternativeTitle_iterator, mapAlternativeTitle, dest, setalternativeTitle)
