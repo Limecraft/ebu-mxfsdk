@@ -111,7 +111,8 @@ DMFramework* GenerateSideCarFramework(const char* metadataLocation, HeaderMetada
 	return framework;
 }
 
-DMFramework* Process(std::auto_ptr<ebuCoreMainType> metadata, const char* metadataLocation, HeaderMetadata *destination, std::vector<EventInput> &eventFrameworks, Identification* identificationToAppend) {
+DMFramework* Process(std::auto_ptr<ebuCoreMainType> metadata, const char* metadataLocation, HeaderMetadata *destination, 
+											std::vector<EventInput> &eventFrameworks, Identification* identificationToAppend) {
 
 	// Generate a new Generation UID if necessary, and provide to each mapping function
 	GenerationUIDAppender *appender = NULL;
@@ -123,7 +124,12 @@ DMFramework* Process(std::auto_ptr<ebuCoreMainType> metadata, const char* metada
 	framework->setdocumentId(metadataLocation);	// use the file location as document id
 
 	std::vector<ebucorePartMetadata*> timelineParts;
-	mxfRational r = { 25, 1 };
+	// get a basis for translating timecodes to edit units, use the editrate of the materialpackage
+	mxfRational r = FindMaterialPackageEditRate(destination);
+	// no usefull value, fill in something default
+	if (r.numerator == -1 && r.denominator == 0) {
+		r.numerator = 25; r.denominator = 1;
+	}
 
 	ebucoreCoreMetadata *core = new ebucoreCoreMetadata(destination);
 	if (appender!=NULL) appender->Modify(core);

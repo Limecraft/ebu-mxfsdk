@@ -459,6 +459,51 @@ void ShiftBytesInFile(mxfpp::File* mFile, int64_t shiftPosition, int64_t shiftOf
 	delete buffer;
 }
 
+mxfRational FindMaterialPackageEditRate(HeaderMetadata *header_metadata) {
+	Track *selectedTrack = NULL;
+	MaterialPackage *material_package = header_metadata->getPreface()->findMaterialPackage();
+	std::vector<GenericTrack*>& tracks = material_package->getTracks();
+	for (std::vector<GenericTrack*>::const_iterator it = tracks.begin(); it!=tracks.end(); it++) {
+		// use only regular timeline tracks
+		Track *tlTrk = dynamic_cast<Track*>(*it);
+		if (tlTrk!=NULL) {
+			// find the timeline component of this track
+			StructuralComponent *comp = tlTrk->getSequence();
+			if (comp->getDataDefinition() == MXF_DDEF_L(Timecode)) {
+				// this is it, fetch editrate from the track
+				selectedTrack = tlTrk;
+				break;
+			}
+		}
+	}
+	if (selectedTrack == NULL) {
+		for (std::vector<GenericTrack*>::const_iterator it = tracks.begin(); it!=tracks.end(); it++) {
+			Track *tlTrk = dynamic_cast<Track*>(*it);
+			if (tlTrk!=NULL) {
+				if (tlTrk->getSequence()->getDataDefinition() == MXF_DDEF_L(Picture)) {
+					selectedTrack = tlTrk;
+					break;
+				}
+			}
+		}
+	}
+	if (selectedTrack == NULL) {
+		for (std::vector<GenericTrack*>::const_iterator it = tracks.begin(); it!=tracks.end(); it++) {
+			Track *tlTrk = dynamic_cast<Track*>(*it);
+			if (tlTrk!=NULL) {
+				if (tlTrk->getSequence()->getDataDefinition() == MXF_DDEF_L(Sound)) {
+					selectedTrack = tlTrk;
+					break;
+				}
+			}
+		}
+	}
+
+	mxfRational rate = {-1, 0};
+	if (selectedTrack != NULL) rate = selectedTrack->getEditRate();
+	return rate;
+}
+
 void InsertFramework(HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, DMFramework *framework, ObjectModifier *mod)
 {
     BMX_ASSERT(header_metadata);

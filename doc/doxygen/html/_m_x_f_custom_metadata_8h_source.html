@@ -106,24 +106,26 @@
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ae68760612386ffdd03db488b898af59d">InsertFramework</a>(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, mxfpp::DMFramework *framework, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a> *mod = NULL);</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
-<div class="line"><a name="l00230"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_event_input.html">  230</a></span>&#160;        <span class="keyword">struct </span><a class="code" href="struct_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_event_input.html">EventInput</a> {</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;                mxfPosition start;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;                mxfLength duration;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;                mxfpp::DMFramework *framework;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        };</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ad07dd777e3400cc0c719303bbad0b97c">InsertEventFrameworks</a>(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, std::vector&lt;EventInput&gt; &amp;frameworks, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a> *mod = NULL);</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        } <span class="comment">// namespace MXFCustomMetadata</span></div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;} <span class="comment">// namespace EBUSDK</span></div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        mxfRational <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a46f886a4d53dc6f8322709071bc7364c">FindMaterialPackageEditRate</a>(mxfpp::HeaderMetadata *header_metadata);</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
+<div class="line"><a name="l00240"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_event_input.html">  240</a></span>&#160;        <span class="keyword">struct </span><a class="code" href="struct_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_event_input.html">EventInput</a> {</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;                mxfPosition start;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;                mxfLength duration;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;                mxfpp::DMFramework *framework;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        };</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ad07dd777e3400cc0c719303bbad0b97c">InsertEventFrameworks</a>(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, std::vector&lt;EventInput&gt; &amp;frameworks, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a> *mod = NULL);</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        } <span class="comment">// namespace MXFCustomMetadata</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;} <span class="comment">// namespace EBUSDK</span></div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 13 2012 02:43:22 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 13 2012 23:57:29 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

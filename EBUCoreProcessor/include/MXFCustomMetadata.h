@@ -225,6 +225,16 @@ namespace EBUSDK {
 	void InsertFramework(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, mxfpp::DMFramework *framework, ObjectModifier *mod = NULL);
 
 	/**
+	  * Looks throught the material package of the given __header_metadata__ and locates the edit rate most appropriate to the overall package. 
+		The edit rate is selected from timeline tracks in the following order: timecode tracks, video tracks or audio tracks. 
+		The edit rate of the first of these tracks found is used.
+	
+		@returns The edit rate, or a special rational {-1, 0} if no valid value was found.
+		@param header_metadata The header metadata from which to select the material package.
+	  */
+	mxfRational FindMaterialPackageEditRate(mxfpp::HeaderMetadata *header_metadata);
+
+	/**
 	  *	Structure for defining temporal location of a DM framework on an MXF timeline. Used as input to the __InsertEventFrameworks__ function.
 	  */
 	struct EventInput {

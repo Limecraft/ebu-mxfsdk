@@ -72,6 +72,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ae343e7315da96a00914e05cd0cb35bfa"><td class="memItemLeft" align="right" valign="top">mxfpp::Partition *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ae343e7315da96a00914e05cd0cb35bfa">FindPreferredMetadataPartition</a> (const std::vector&lt; mxfpp::Partition * &gt; &amp;partitions, mxfpp::Partition **headerPartition, mxfpp::Partition **footerPartition)</td></tr>
 <tr class="memitem:a01cb6284c0c0d4570d8e816831181cc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a01cb6284c0c0d4570d8e816831181cc0">AppendDMSLabel</a> (mxfpp::HeaderMetadata *header_metadata, mxfUL scheme_label)</td></tr>
 <tr class="memitem:ae68760612386ffdd03db488b898af59d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ae68760612386ffdd03db488b898af59d">InsertFramework</a> (mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, mxfpp::DMFramework *framework, <a class="el" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a> *mod=NULL)</td></tr>
+<tr class="memitem:a46f886a4d53dc6f8322709071bc7364c"><td class="memItemLeft" align="right" valign="top">mxfRational&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a46f886a4d53dc6f8322709071bc7364c">FindMaterialPackageEditRate</a> (mxfpp::HeaderMetadata *header_metadata)</td></tr>
 <tr class="memitem:ad07dd777e3400cc0c719303bbad0b97c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ad07dd777e3400cc0c719303bbad0b97c">InsertEventFrameworks</a> (mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, std::vector&lt; <a class="el" href="struct_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_event_input.html">EventInput</a> &gt; &amp;frameworks, <a class="el" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a> *mod=NULL)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
@@ -203,6 +204,30 @@ Functions</h2></td></tr>
     <tr><td class="paramname">partition</td><td>The partition in which to locate the last KLV filler element. </td></tr>
     <tr><td class="paramname">partitionSectionOffset</td><td>Pointer to the integer that receives the byte position from where the last KLV filler was searched for. Depending on the configuration of the <b>partition</b>, this can be immediatelly behind the partition pack, behind the header metadata (if present), or behind the partition's index entries (if present). This can be the same value as returned by this function, but not necessarily in case multiple filler elements are found. </td></tr>
     <tr><td class="paramname">extractedFileSize</td><td>Pointer to the integer that receives the length of the provided MXF file. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a46f886a4d53dc6f8322709071bc7364c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mxfRational EBUSDK::MXFCustomMetadata::FindMaterialPackageEditRate </td>
+          <td>(</td>
+          <td class="paramtype">mxfpp::HeaderMetadata *&#160;</td>
+          <td class="paramname"><em>header_metadata</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Looks throught the material package of the given <b>header_metadata</b> and locates the edit rate most appropriate to the overall package. The edit rate is selected from timeline tracks in the following order: timecode tracks, video tracks or audio tracks. The edit rate of the first of these tracks found is used.</p>
+<dl class="section return"><dt>Returns</dt><dd>The edit rate, or a special rational {-1, 0} if no valid value was found. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">header_metadata</td><td>The header metadata from which to select the material package. </td></tr>
   </table>
   </dd>
 </dl>
@@ -711,7 +736,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 13 2012 02:43:23 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 13 2012 23:57:31 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>
