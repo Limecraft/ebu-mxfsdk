@@ -67,6 +67,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ac3dcc9be2cb3f6dfd564e04c70012e4e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#ac3dcc9be2cb3f6dfd564e04c70012e4e">RegisterMetadataExtensionsforEBUCore</a> (mxfpp::DataModel *data_model)</td></tr>
 <tr class="memitem:a47859bf6d29ea2b7ab3e2676f1e8df55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a47859bf6d29ea2b7ab3e2676f1e8df55">RegisterFrameworkObjectFactoriesforEBUCore</a> (mxfpp::HeaderMetadata *metadata)</td></tr>
 <tr class="memitem:af15b60dc7dc2d2409bf3cca12f9240a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af15b60dc7dc2d2409bf3cca12f9240a7">InsertEBUCoreFramework</a> (mxfpp::HeaderMetadata *header_metadata, mxfpp::DMFramework *framework, mxfpp::Identification *identificationToAppend=NULL)</td></tr>
+<tr class="memitem:ab70ef1b82235fa10fe40655c4b51bb62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#ab70ef1b82235fa10fe40655c4b51bb62">InsertEBUCoreEventFrameworks</a> (mxfpp::HeaderMetadata *header_metadata, std::vector&lt; <a class="el" href="struct_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_event_input.html">EBUSDK::MXFCustomMetadata::EventInput</a> &gt; &amp;eventFrameworks, mxfpp::Identification *identificationToAppend=NULL)</td></tr>
 <tr class="memitem:a79638580d9298bbbee16e486c2c4fab1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a79638580d9298bbbee16e486c2c4fab1">EmbedEBUCoreMetadata</a> (const char *metadataLocation, const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...), <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dd">MetadataKind</a> optWaytoWrite=<a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda09c0b3d73333f14708a225f5d47626b8">KLV_ENCODED</a>, bool optNoIdentification=false, bool optForceHeader=false)</td></tr>
 <tr class="memitem:a61c5515c9f7c3395e7e2b2acb30b903b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a61c5515c9f7c3395e7e2b2acb30b903b">EmbedEBUCoreMetadata</a> (xercesc::DOMDocument &amp;metadataDocument, const char *metadataLocation, const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...), <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dd">MetadataKind</a> optWaytoWrite=<a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda09c0b3d73333f14708a225f5d47626b8">KLV_ENCODED</a>, bool optNoIdentification=false, bool optForceHeader=false)</td></tr>
 <tr class="memitem:a61cbbad8a24382405688c7f921f02916"><td class="memItemLeft" align="right" valign="top">xercesc::DOMDocument &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a61cbbad8a24382405688c7f921f02916">ExtractEBUCoreMetadata</a> (const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...))</td></tr>
@@ -382,6 +383,49 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ab70ef1b82235fa10fe40655c4b51bb62"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EBUSDK::EBUCore::InsertEBUCoreEventFrameworks </td>
+          <td>(</td>
+          <td class="paramtype">mxfpp::HeaderMetadata *&#160;</td>
+          <td class="paramname"><em>header_metadata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="struct_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_event_input.html">EBUSDK::MXFCustomMetadata::EventInput</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>eventFrameworks</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">mxfpp::Identification *&#160;</td>
+          <td class="paramname"><em>identificationToAppend</em> = <code>NULL</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Inserts a given list of descriptive metadata frameworks in the provided header metadata structure.<br/>
+ This function adds an Event DM track to the MXF timeline, from which the provided <b>eventFrameworks</b> are weakly referenced.<br/>
+ Currently, the DM track added is assigned a Track ID <em>10002</em> and is given a Track Name <em>EBU_Core_Parts</em>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">header_metadata</td><td>The HeaderMetadata structure to which the framework and timeline elements are added. </td></tr>
+    <tr><td class="paramname">eventFrameworks</td><td>The DM frameworks input set to be added to the MXF timeline. The EventInput structure's Start and Duration fields are used to properly place the DM Segment on the timeline. </td></tr>
+    <tr><td class="paramname">identificationToAppend</td><td>Optional Identification metadata set that will be referenced from each metadata set created by this function. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="af15b60dc7dc2d2409bf3cca12f9240a7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -518,7 +562,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 11 2012 03:10:20 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 13 2012 02:43:23 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>
