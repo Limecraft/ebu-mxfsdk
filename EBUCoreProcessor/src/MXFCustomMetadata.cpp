@@ -462,7 +462,7 @@ void ShiftBytesInFile(mxfpp::File* mFile, int64_t shiftPosition, int64_t shiftOf
 mxfRational FindMaterialPackageEditRate(HeaderMetadata *header_metadata) {
 	Track *selectedTrack = NULL;
 	MaterialPackage *material_package = header_metadata->getPreface()->findMaterialPackage();
-	std::vector<GenericTrack*>& tracks = material_package->getTracks();
+	const std::vector<GenericTrack*>& tracks = material_package->getTracks();
 	for (std::vector<GenericTrack*>::const_iterator it = tracks.begin(); it!=tracks.end(); it++) {
 		// use only regular timeline tracks
 		Track *tlTrk = dynamic_cast<Track*>(*it);
