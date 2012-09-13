@@ -61,40 +61,40 @@ ebucoreCoordinatesBase::~ebucoreCoordinatesBase()
 {}
 
 
-std::string ebucoreCoordinatesBase::getposX() const
+float ebucoreCoordinatesBase::getposX() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreCoordinates, posX));
+    return getFloatItem(&MXF_ITEM_K(ebucoreCoordinates, posX));
 }
 
-std::string ebucoreCoordinatesBase::getposY() const
+float ebucoreCoordinatesBase::getposY() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreCoordinates, posY));
+    return getFloatItem(&MXF_ITEM_K(ebucoreCoordinates, posY));
 }
 
-bool ebucoreCoordinatesBase::havecoordinatesTypeGroup() const
+bool ebucoreCoordinatesBase::havecoordinatesFormatGroup() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreCoordinates, coordinatesTypeGroup));
+    return haveItem(&MXF_ITEM_K(ebucoreCoordinates, coordinatesFormatGroup));
 }
 
-ebucoreTypeGroup* ebucoreCoordinatesBase::getcoordinatesTypeGroup() const
+ebucoreFormatGroup* ebucoreCoordinatesBase::getcoordinatesFormatGroup() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreCoordinates, coordinatesTypeGroup)));
-    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreCoordinates, coordinatesFormatGroup)));
+    MXFPP_CHECK(dynamic_cast<ebucoreFormatGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreFormatGroup*>(obj.release());
 }
 
-void ebucoreCoordinatesBase::setposX(std::string value)
+void ebucoreCoordinatesBase::setposX(float value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreCoordinates, posX), value);
+    setFloatItem(&MXF_ITEM_K(ebucoreCoordinates, posX), value);
 }
 
-void ebucoreCoordinatesBase::setposY(std::string value)
+void ebucoreCoordinatesBase::setposY(float value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreCoordinates, posY), value);
+    setFloatItem(&MXF_ITEM_K(ebucoreCoordinates, posY), value);
 }
 
-void ebucoreCoordinatesBase::setcoordinatesTypeGroup(ebucoreTypeGroup* value)
+void ebucoreCoordinatesBase::setcoordinatesFormatGroup(ebucoreFormatGroup* value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucoreCoordinates, coordinatesTypeGroup), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreCoordinates, coordinatesFormatGroup), value);
 }
 

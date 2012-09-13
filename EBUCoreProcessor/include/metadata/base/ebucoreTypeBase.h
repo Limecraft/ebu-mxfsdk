@@ -59,8 +59,11 @@ public:
    std::string gettypeNote() const;
    bool havetypeValue() const;
    std::vector<ebucoreTextualAnnotation*> gettypeValue() const;
+   bool haveobjectType() const;
    std::vector<ebucoreObjectType*> getobjectType() const;
+   bool havegenre() const;
    std::vector<ebucoreGenre*> getgenre() const;
+   bool havetargetAudience() const;
    std::vector<ebucoreTargetAudience*> gettargetAudience() const;
 
 

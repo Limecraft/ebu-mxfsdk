@@ -91,6 +91,11 @@ std::string ebucoreContactBase::getfamilyName() const
     return getStringItem(&MXF_ITEM_K(ebucoreContact, familyName));
 }
 
+bool ebucoreContactBase::havegivenName() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContact, givenName));
+}
+
 std::string ebucoreContactBase::getgivenName() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreContact, givenName));
@@ -113,14 +118,14 @@ std::vector<ebucoreTextualAnnotation*> ebucoreContactBase::getotherGivenName() c
     return result;
 }
 
-bool ebucoreContactBase::havesaluation() const
+bool ebucoreContactBase::havesalutation() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreContact, saluation));
+    return haveItem(&MXF_ITEM_K(ebucoreContact, salutation));
 }
 
-std::string ebucoreContactBase::getsaluation() const
+std::string ebucoreContactBase::getsalutation() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreContact, saluation));
+    return getStringItem(&MXF_ITEM_K(ebucoreContact, salutation));
 }
 
 bool ebucoreContactBase::havesuffix() const
@@ -160,11 +165,21 @@ std::vector<ebucoreTextualAnnotation*> ebucoreContactBase::getusername() const
     return result;
 }
 
+bool ebucoreContactBase::havecontactType() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContact, contactType));
+}
+
 ebucoreTypeGroup* ebucoreContactBase::getcontactType() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreContact, contactType)));
     MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+}
+
+bool ebucoreContactBase::havecontactDetails() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContact, contactDetails));
 }
 
 std::vector<ebucoreContactDetails*> ebucoreContactBase::getcontactDetails() const
@@ -177,6 +192,11 @@ std::vector<ebucoreContactDetails*> ebucoreContactBase::getcontactDetails() cons
         result.push_back(dynamic_cast<ebucoreContactDetails*>(iter->get()));
     }
     return result;
+}
+
+bool ebucoreContactBase::havecontactRelatedContacts() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreContact, contactRelatedContacts));
 }
 
 std::vector<ebucoreEntity*> ebucoreContactBase::getcontactRelatedContacts() const
@@ -239,9 +259,9 @@ void ebucoreContactBase::appendotherGivenName(ebucoreTextualAnnotation* value)
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreContact, otherGivenName), value);
 }
 
-void ebucoreContactBase::setsaluation(std::string value)
+void ebucoreContactBase::setsalutation(std::string value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreContact, saluation), value);
+    setStringItem(&MXF_ITEM_K(ebucoreContact, salutation), value);
 }
 
 void ebucoreContactBase::setsuffix(std::string value)

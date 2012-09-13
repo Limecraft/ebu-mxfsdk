@@ -88,6 +88,11 @@ std::vector<ebucoreTextualAnnotation*> ebucoreTypeBase::gettypeValue() const
     return result;
 }
 
+bool ebucoreTypeBase::haveobjectType() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreType, objectType));
+}
+
 std::vector<ebucoreObjectType*> ebucoreTypeBase::getobjectType() const
 {
     vector<ebucoreObjectType*> result;
@@ -100,6 +105,11 @@ std::vector<ebucoreObjectType*> ebucoreTypeBase::getobjectType() const
     return result;
 }
 
+bool ebucoreTypeBase::havegenre() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreType, genre));
+}
+
 std::vector<ebucoreGenre*> ebucoreTypeBase::getgenre() const
 {
     vector<ebucoreGenre*> result;
@@ -110,6 +120,11 @@ std::vector<ebucoreGenre*> ebucoreTypeBase::getgenre() const
         result.push_back(dynamic_cast<ebucoreGenre*>(iter->get()));
     }
     return result;
+}
+
+bool ebucoreTypeBase::havetargetAudience() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreType, targetAudience));
 }
 
 std::vector<ebucoreTargetAudience*> ebucoreTypeBase::gettargetAudience() const

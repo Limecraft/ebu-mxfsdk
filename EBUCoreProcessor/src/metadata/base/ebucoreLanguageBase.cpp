@@ -61,14 +61,29 @@ ebucoreLanguageBase::~ebucoreLanguageBase()
 {}
 
 
+bool ebucoreLanguageBase::havelanguageCode() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreLanguage, languageCode));
+}
+
 std::string ebucoreLanguageBase::getlanguageCode() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreLanguage, languageCode));
 }
 
+bool ebucoreLanguageBase::havelanguageLanguage() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreLanguage, languageLanguage));
+}
+
 std::string ebucoreLanguageBase::getlanguageLanguage() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreLanguage, languageLanguage));
+}
+
+bool ebucoreLanguageBase::havelanguageNote() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreLanguage, languageNote));
 }
 
 std::string ebucoreLanguageBase::getlanguageNote() const

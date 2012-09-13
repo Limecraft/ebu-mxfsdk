@@ -58,12 +58,12 @@ public:
    std::string getratingValue() const;
    std::string getratingScaleMinValue() const;
    std::string getratingScaleMaxValue() const;
+   bool haveratingLanguage() const;
    std::string getratingLanguage() const;
    bool haveratingTypeGroup() const;
    ebucoreTypeGroup* getratingTypeGroup() const;
    bool haveratingFormatGroup() const;
    ebucoreFormatGroup* getratingFormatGroup() const;
-   bool haveratingProviderEntity() const;
    ebucoreEntity* getratingProviderEntity() const;
 
 

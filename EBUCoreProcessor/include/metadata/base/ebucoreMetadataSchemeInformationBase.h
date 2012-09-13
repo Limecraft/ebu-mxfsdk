@@ -55,11 +55,13 @@ public:
 
    // getters
 
+   bool haveebucoreMetadataScheme() const;
    std::string getebucoreMetadataScheme() const;
+   bool haveebucoreMetadataSchemeVersion() const;
    std::string getebucoreMetadataSchemeVersion() const;
+   bool haveebucoreFrameworktextLanguage() const;
    std::string getebucoreFrameworktextLanguage() const;
-   bool haveebucoreMetadataServerLocator() const;
-   std::string getebucoreMetadataServerLocator() const;
+   bool haveebucoreMetadataProvider() const;
    ebucoreEntity* getebucoreMetadataProvider() const;
 
 
@@ -68,7 +70,6 @@ public:
    void setebucoreMetadataScheme(std::string value);
    void setebucoreMetadataSchemeVersion(std::string value);
    void setebucoreFrameworktextLanguage(std::string value);
-   void setebucoreMetadataServerLocator(std::string value);
    void setebucoreMetadataProvider(ebucoreEntity* value);
 
 

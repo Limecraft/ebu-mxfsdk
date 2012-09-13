@@ -1,5 +1,6 @@
 
 #include <libMXF++/MXF.h>
+#include <MXFCustomMetadata.h>
 
 #include <xercesc/dom/DOMDocument.hpp>
 
@@ -76,6 +77,18 @@ namespace EBUSDK {
 		@param identificationToAppend Optional Identification metadata set that will be referenced from each metadata set created by this function.
 	*/
 	void InsertEBUCoreFramework(mxfpp::HeaderMetadata *header_metadata, mxfpp::DMFramework *framework, mxfpp::Identification *identificationToAppend = NULL);
+
+	/**
+	*	Inserts a given list of descriptive metadata frameworks in the provided header metadata structure.\n
+		This function adds an Event DM track to the MXF timeline, from which the provided __eventFrameworks__ are weakly referenced.\n
+		Currently, the DM track added is assigned a Track ID _10002_ and is given a Track Name _EBU_Core_Parts_.
+
+		@param header_metadata The HeaderMetadata structure to which the framework and timeline elements are added.
+		@param eventFrameworks The DM frameworks input set to be added to the MXF timeline. The EventInput structure's Start and 
+		Duration fields are used to properly place the DM Segment on the timeline.
+		@param identificationToAppend Optional Identification metadata set that will be referenced from each metadata set created by this function.
+	*/
+	void InsertEBUCoreEventFrameworks(mxfpp::HeaderMetadata *header_metadata, std::vector<EBUSDK::MXFCustomMetadata::EventInput>& eventFrameworks, mxfpp::Identification *identificationToAppend = NULL);
 
 	enum ProgressCallbackLevel {
 		FATAL,

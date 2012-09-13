@@ -56,6 +56,7 @@ public:
    // getters
 
    std::string getidentifierValue() const;
+   bool haveidentifierNote() const;
    std::string getidentifierNote() const;
    bool haveidentifierTypeGroup() const;
    ebucoreTypeGroup* getidentifierTypeGroup() const;

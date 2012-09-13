@@ -61,9 +61,19 @@ ebucoreMetadataSchemeInformationBase::~ebucoreMetadataSchemeInformationBase()
 {}
 
 
+bool ebucoreMetadataSchemeInformationBase::haveebucoreMetadataScheme() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreMetadataScheme));
+}
+
 std::string ebucoreMetadataSchemeInformationBase::getebucoreMetadataScheme() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreMetadataScheme));
+}
+
+bool ebucoreMetadataSchemeInformationBase::haveebucoreMetadataSchemeVersion() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreMetadataSchemeVersion));
 }
 
 std::string ebucoreMetadataSchemeInformationBase::getebucoreMetadataSchemeVersion() const
@@ -71,19 +81,19 @@ std::string ebucoreMetadataSchemeInformationBase::getebucoreMetadataSchemeVersio
     return getStringItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreMetadataSchemeVersion));
 }
 
+bool ebucoreMetadataSchemeInformationBase::haveebucoreFrameworktextLanguage() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreFrameworktextLanguage));
+}
+
 std::string ebucoreMetadataSchemeInformationBase::getebucoreFrameworktextLanguage() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreFrameworktextLanguage));
 }
 
-bool ebucoreMetadataSchemeInformationBase::haveebucoreMetadataServerLocator() const
+bool ebucoreMetadataSchemeInformationBase::haveebucoreMetadataProvider() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreMetadataServerLocator));
-}
-
-std::string ebucoreMetadataSchemeInformationBase::getebucoreMetadataServerLocator() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreMetadataServerLocator));
+    return haveItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreMetadataProvider));
 }
 
 ebucoreEntity* ebucoreMetadataSchemeInformationBase::getebucoreMetadataProvider() const
@@ -106,11 +116,6 @@ void ebucoreMetadataSchemeInformationBase::setebucoreMetadataSchemeVersion(std::
 void ebucoreMetadataSchemeInformationBase::setebucoreFrameworktextLanguage(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreFrameworktextLanguage), value);
-}
-
-void ebucoreMetadataSchemeInformationBase::setebucoreMetadataServerLocator(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreMetadataServerLocator), value);
 }
 
 void ebucoreMetadataSchemeInformationBase::setebucoreMetadataProvider(ebucoreEntity* value)

@@ -96,16 +96,6 @@ std::string ebucorePublicationHistoryEventBase::getpublicationService() const
     return getStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationService));
 }
 
-bool ebucorePublicationHistoryEventBase::havepublicationMedium() const
-{
-    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationMedium));
-}
-
-std::string ebucorePublicationHistoryEventBase::getpublicationMedium() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationMedium));
-}
-
 bool ebucorePublicationHistoryEventBase::havepublicationChannel() const
 {
     return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationChannel));
@@ -114,6 +104,18 @@ bool ebucorePublicationHistoryEventBase::havepublicationChannel() const
 std::string ebucorePublicationHistoryEventBase::getpublicationChannel() const
 {
     return getStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationChannel));
+}
+
+bool ebucorePublicationHistoryEventBase::havepublicationMedium() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationMedium));
+}
+
+ebucoreTypeGroup* ebucorePublicationHistoryEventBase::getpublicationMedium() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationMedium)));
+    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
 bool ebucorePublicationHistoryEventBase::havepublicationFormatReference() const
@@ -148,14 +150,14 @@ void ebucorePublicationHistoryEventBase::setpublicationService(std::string value
     setStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationService), value);
 }
 
-void ebucorePublicationHistoryEventBase::setpublicationMedium(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationMedium), value);
-}
-
 void ebucorePublicationHistoryEventBase::setpublicationChannel(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationChannel), value);
+}
+
+void ebucorePublicationHistoryEventBase::setpublicationMedium(ebucoreTypeGroup* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationMedium), value);
 }
 
 void ebucorePublicationHistoryEventBase::setpublicationFormatReference(ebucoreFormat* value)

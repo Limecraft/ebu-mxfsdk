@@ -55,17 +55,17 @@ public:
 
    // getters
 
-   std::string getposX() const;
-   std::string getposY() const;
-   bool havecoordinatesTypeGroup() const;
-   ebucoreTypeGroup* getcoordinatesTypeGroup() const;
+   float getposX() const;
+   float getposY() const;
+   bool havecoordinatesFormatGroup() const;
+   ebucoreFormatGroup* getcoordinatesFormatGroup() const;
 
 
    // setters
 
-   void setposX(std::string value);
-   void setposY(std::string value);
-   void setcoordinatesTypeGroup(ebucoreTypeGroup* value);
+   void setposX(float value);
+   void setposY(float value);
+   void setcoordinatesFormatGroup(ebucoreFormatGroup* value);
 
 
 protected:

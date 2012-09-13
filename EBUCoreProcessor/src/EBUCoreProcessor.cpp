@@ -111,7 +111,7 @@ DMFramework* GenerateSideCarFramework(const char* metadataLocation, HeaderMetada
 	return framework;
 }
 
-DMFramework* Process(std::auto_ptr<ebuCoreMainType> metadata, const char* metadataLocation, HeaderMetadata *destination, Identification* identificationToAppend) {
+DMFramework* Process(std::auto_ptr<ebuCoreMainType> metadata, const char* metadataLocation, HeaderMetadata *destination, std::vector<EventInput> &eventFrameworks, Identification* identificationToAppend) {
 
 	// Generate a new Generation UID if necessary, and provide to each mapping function
 	GenerationUIDAppender *appender = NULL;
@@ -119,21 +119,32 @@ DMFramework* Process(std::auto_ptr<ebuCoreMainType> metadata, const char* metada
 		appender = new GenerationUIDAppender(identificationToAppend->getThisGenerationUID());
 	}
 	ebucoreMainFramework *framework = new ebucoreMainFramework(destination);
-	appender->Modify(framework);
+	if (appender!=NULL) appender->Modify(framework);
 	framework->setdocumentId(metadataLocation);	// use the file location as document id
 
 	std::vector<ebucorePartMetadata*> timelineParts;
 	mxfRational r = { 25, 1 };
 
 	ebucoreCoreMetadata *core = new ebucoreCoreMetadata(destination);
-	appender->Modify(core);
+	if (appender!=NULL) appender->Modify(core);
 	if (appender != NULL)
 		mapCoreMetadata(metadata->coreMetadata(), core, r, timelineParts, appender);
 	else
 		mapCoreMetadata(metadata->coreMetadata(), core, r, timelineParts);
 
+	for (std::vector<ebucorePartMetadata*>::iterator it = timelineParts.begin(); it!=timelineParts.end(); it++) {
+		EventInput in;
+		ebucorePartFramework* fw = new ebucorePartFramework(destination);
+		fw->setpartMetadata(*it);
+		if (appender!=NULL) appender->Modify(fw);
+		in.framework = fw;
+		in.start = (*it)->getpartStartEditUnitNumber();
+		in.duration = (*it)->getpartDurationEditUnitNumber();
+		eventFrameworks.push_back( in );
+	}
+
 	ebucoreMetadataSchemeInformation *info = new ebucoreMetadataSchemeInformation(destination);
-	appender->Modify(info);
+	if (appender!=NULL) appender->Modify(info);
 	if (appender != NULL)
 		mapMetadataSchemeInformation(*metadata, info, appender);
 	else
@@ -142,8 +153,6 @@ DMFramework* Process(std::auto_ptr<ebuCoreMainType> metadata, const char* metada
 	framework->setcoreMetadata(core);
 	framework->setmetadataSchemeInformation(info);
 
-	//std::cout << framework->getdocumentId();
-
 	if (appender!=NULL)
 		delete appender;
 
@@ -151,9 +160,10 @@ DMFramework* Process(std::auto_ptr<ebuCoreMainType> metadata, const char* metada
 }
 
 DMFramework* Process(const char* location, HeaderMetadata *destination, Identification* identificationToAppend) {
+	std::vector<EventInput> eventFrameworks;
 	std::ifstream input(location);
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
-	return Process(ebuCoreMainElementPtr, location, destination, identificationToAppend);
+	return Process(ebuCoreMainElementPtr, location, destination, eventFrameworks, identificationToAppend);
 }
 
 void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model)
@@ -224,10 +234,18 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 
 		Identification* id = optNoIdentification ? NULL : EBUCore::GenerateEBUCoreIdentificationSet(&*mHeaderMetadata);
 		// choose between sidecar serialization or fully fledged KLV-encoded metadata
+
+		// process the EBUCore metadata
+		std::vector<EventInput> eventFrameworks;
 		DMFramework *framework = optEmbedAsSidecar ?
 			EBUCore::GenerateSideCarFramework(metadataLocation, &*mHeaderMetadata, id) :
-			EBUCore::Process(metadata, metadataLocation, &*mHeaderMetadata, id);
+			EBUCore::Process(metadata, metadataLocation, &*mHeaderMetadata, eventFrameworks, id);
+		// insert the static track DM framework
 		EBUCore::InsertEBUCoreFramework(&*mHeaderMetadata, framework, id);
+		// insert the event track DM frameworks on the timeline, if any
+		if (eventFrameworks.size() > 0) {
+			EBUCore::InsertEBUCoreEventFrameworks(&*mHeaderMetadata, eventFrameworks, id);
+		}
 
 		// ///////////////////////////////////////
 		// / 2. In order to avoid rewriting large portions of the file, we append our metadata
@@ -610,6 +628,24 @@ void InsertEBUCoreFramework(HeaderMetadata *header_metadata, DMFramework *framew
 		delete appender;
 }
 
+void InsertEBUCoreEventFrameworks(HeaderMetadata *header_metadata, std::vector<EventInput>& eventFrameworks, Identification *identificationToAppend) {
+
+	BMX_ASSERT(header_metadata != NULL);
+
+	// Don't append the EBU Core DMS label to the Preface, as we assume the main framework has already been planted
+	// AppendDMSLabel(header_metadata, MXF_DM_L(EBUCoreDescriptiveScheme));
+
+	GenerationUIDAppender *appender = NULL;
+	if (identificationToAppend != NULL) {
+		appender = new GenerationUIDAppender(identificationToAppend->getThisGenerationUID());
+	}
+
+	InsertEventFrameworks(header_metadata, 10002, "EBU_Core_Parts", eventFrameworks, appender);
+
+	if (appender!=NULL)
+		delete appender;
+}
+
 static std::vector<DMFramework*> ebu_get_static_frameworks(MaterialPackage *mp)
 {
     std::vector<DMFramework*> frameworks;
@@ -663,10 +699,12 @@ std::auto_ptr<ebuCoreMainType> ParseEBUCoreMetadata(ebucoreMainFramework *fw) {
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElement( new ebuCoreMainType(main) );
 
 	if (fw->havemetadataSchemeInformation()) {
-		std::auto_ptr<entityType> p( new entityType() );
 		ebucoreMetadataSchemeInformation *info = fw->getmetadataSchemeInformation();
-		mapEntity(info->getebucoreMetadataProvider(), *(p.get()));
-		ebuCoreMainElement->metadataProvider(p);
+		if (info->haveebucoreMetadataProvider()) {
+			std::auto_ptr<entityType> p( new entityType() );
+			mapEntity(info->getebucoreMetadataProvider(), *(p.get()));
+			ebuCoreMainElement->metadataProvider(p);
+		}
 	}
 	
 	return ebuCoreMainElement;
@@ -715,7 +753,7 @@ void FindAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilenam
 		std::auto_ptr<ebuCoreMainType> ebuCoreMainElement( FindAndSerializeEBUCore(metadata) );
 	
 		xml_schema::namespace_infomap map;
-		map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";
+		map[""].name = "urn:ebu:metadata-schema:ebuCore_2012";
 		map["dc"].name = "http://purl.org/dc/elements/1.1/";
 
 		// open a file output stream
@@ -839,7 +877,7 @@ void ExtractEBUCoreMetadata(
 			progress_callback(0.7f, INFO, "ExtractEBUCoreMetadata", "A coreMetadata set was attached to the ebucoreMainFramework, and was processed successfully");
 
 			xml_schema::namespace_infomap map;
-			map[""].name = "urn:ebu:metadata-schema:ebuCore_2011";
+			map[""].name = "urn:ebu:metadata-schema:ebuCore_2012";
 			map["dc"].name = "http://purl.org/dc/elements/1.1/";
 
 			if (outputFashion == SERIALIZE_TO_FILE) {

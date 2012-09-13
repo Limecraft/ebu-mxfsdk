@@ -81,6 +81,11 @@ std::string ebucoreTitleBase::gettitleNote() const
     return getStringItem(&MXF_ITEM_K(ebucoreTitle, titleNote));
 }
 
+bool ebucoreTitleBase::havetitleValue() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTitle, titleValue));
+}
+
 std::vector<ebucoreTextualAnnotation*> ebucoreTitleBase::gettitleValue() const
 {
     vector<ebucoreTextualAnnotation*> result;

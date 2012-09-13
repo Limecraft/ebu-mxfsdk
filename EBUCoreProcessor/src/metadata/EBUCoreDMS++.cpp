@@ -74,6 +74,7 @@ void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata)
 	header_metadata->registerObjectFactory(&ebucoreMimeType::setKey, new MetadataSetFactory<ebucoreMimeType>());
 	header_metadata->registerObjectFactory(&ebucoreLocator::setKey, new MetadataSetFactory<ebucoreLocator>());
 	header_metadata->registerObjectFactory(&ebucorePackageInfo::setKey, new MetadataSetFactory<ebucorePackageInfo>());
+	header_metadata->registerObjectFactory(&ebucorePartMetadata::setKey, new MetadataSetFactory<ebucorePartMetadata>());
 	header_metadata->registerObjectFactory(&ebucorePartFramework::setKey, new MetadataSetFactory<ebucorePartFramework>());
 	header_metadata->registerObjectFactory(&ebucoreRational::setKey, new MetadataSetFactory<ebucoreRational>());
 	header_metadata->registerObjectFactory(&ebucoreSigningFormat::setKey, new MetadataSetFactory<ebucoreSigningFormat>());
@@ -81,6 +82,20 @@ void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata)
 	header_metadata->registerObjectFactory(&ebucoreVideoFormat::setKey, new MetadataSetFactory<ebucoreVideoFormat>());
 	header_metadata->registerObjectFactory(&ebucoreCustomRelation::setKey, new MetadataSetFactory<ebucoreCustomRelation>());
 	header_metadata->registerObjectFactory(&ebucoreMetadataSchemeInformation::setKey, new MetadataSetFactory<ebucoreMetadataSchemeInformation>());
+	
+	header_metadata->registerObjectFactory(&ebucoreTechnicalAttributeAnyURI::setKey, new MetadataSetFactory<ebucoreTechnicalAttributeAnyURI>());
+	header_metadata->registerObjectFactory(&ebucoreTechnicalAttributeString::setKey, new MetadataSetFactory<ebucoreTechnicalAttributeString>());
+	header_metadata->registerObjectFactory(&ebucoreTechnicalAttributeBoolean::setKey, new MetadataSetFactory<ebucoreTechnicalAttributeBoolean>());
+	header_metadata->registerObjectFactory(&ebucoreTechnicalAttributeFloat::setKey, new MetadataSetFactory<ebucoreTechnicalAttributeFloat>());
+	header_metadata->registerObjectFactory(&ebucoreTechnicalAttributeRational::setKey, new MetadataSetFactory<ebucoreTechnicalAttributeRational>());
+	header_metadata->registerObjectFactory(&ebucoreTechnicalAttributeInt8::setKey, new MetadataSetFactory<ebucoreTechnicalAttributeInt8>());
+	header_metadata->registerObjectFactory(&ebucoreTechnicalAttributeInt16::setKey, new MetadataSetFactory<ebucoreTechnicalAttributeInt16>());
+	header_metadata->registerObjectFactory(&ebucoreTechnicalAttributeInt32::setKey, new MetadataSetFactory<ebucoreTechnicalAttributeInt32>());
+	header_metadata->registerObjectFactory(&ebucoreTechnicalAttributeInt64::setKey, new MetadataSetFactory<ebucoreTechnicalAttributeInt64>());
+	header_metadata->registerObjectFactory(&ebucoreTechnicalAttributeUInt8::setKey, new MetadataSetFactory<ebucoreTechnicalAttributeUInt8>());
+	header_metadata->registerObjectFactory(&ebucoreTechnicalAttributeUInt16::setKey, new MetadataSetFactory<ebucoreTechnicalAttributeUInt16>());
+	header_metadata->registerObjectFactory(&ebucoreTechnicalAttributeUInt32::setKey, new MetadataSetFactory<ebucoreTechnicalAttributeUInt32>());
+	header_metadata->registerObjectFactory(&ebucoreTechnicalAttributeUInt64::setKey, new MetadataSetFactory<ebucoreTechnicalAttributeUInt64>());
 }
 
 } // namespace EBUCore

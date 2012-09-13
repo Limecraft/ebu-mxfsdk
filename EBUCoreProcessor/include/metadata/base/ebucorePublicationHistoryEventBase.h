@@ -62,10 +62,10 @@ public:
    mxfTimestamp getpublicationTime() const;
    bool havepublicationService() const;
    std::string getpublicationService() const;
-   bool havepublicationMedium() const;
-   std::string getpublicationMedium() const;
    bool havepublicationChannel() const;
    std::string getpublicationChannel() const;
+   bool havepublicationMedium() const;
+   ebucoreTypeGroup* getpublicationMedium() const;
    bool havepublicationFormatReference() const;
    ebucoreFormat* getpublicationFormatReference() const;
 
@@ -76,8 +76,8 @@ public:
    void setpublicationDate(mxfTimestamp value);
    void setpublicationTime(mxfTimestamp value);
    void setpublicationService(std::string value);
-   void setpublicationMedium(std::string value);
    void setpublicationChannel(std::string value);
+   void setpublicationMedium(ebucoreTypeGroup* value);
    void setpublicationFormatReference(ebucoreFormat* value);
 
 

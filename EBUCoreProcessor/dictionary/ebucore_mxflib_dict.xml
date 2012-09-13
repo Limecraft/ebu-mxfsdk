@@ -18,11 +18,10 @@
 	</ebucorePartFramework>
 
   <ebucoreMetadataSchemeInformation base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 03 00 00 00">
-    <ebucoreMetadataScheme          type="UTF16String"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 03 01 00 00"/>
-    <ebucoreMetadataSchemeVersion   type="UTF16String"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 03 02 00 00"/>
-    <ebucoreFrameworktextLanguage   type="ISO7String"           use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 03 03 00 00"/>
-    <ebucoreMetadataServerLocator   type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 03 04 00 00"/>
-    <ebucoreMetadataProvider        type="StrongRef"            use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 03 A0 01 00" target="ebucoreEntity"/>
+    <ebucoreMetadataScheme          type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 03 01 00 00"/>
+    <ebucoreMetadataSchemeVersion   type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 03 02 00 00"/>
+    <ebucoreFrameworktextLanguage   type="ISO7String"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 03 03 00 00"/>
+    <ebucoreMetadataProvider        type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 03 A0 01 00" target="ebucoreEntity"/>
   </ebucoreMetadataSchemeInformation>
 
   <ebucoreEntity base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 20 00 00 00">
@@ -36,15 +35,15 @@
     <contactId                      type="ISO7String"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 01 00 00"/>
     <contactName                    type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 02 00 00"/>
     <familyName                     type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 03 00 00"/>
-    <givenName                      type="UTF16String"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 04 00 00"/>
+    <givenName                      type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 04 00 00"/>
     <otherGivenName                 type="StrongRefBatch"       use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 05 00 00" target="ebucoreTextualAnnotation"/>
-    <saluation                      type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 06 00 00"/>
+    <salutation                     type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 06 00 00"/>
     <suffix                         type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 07 00 00"/>
     <occupation                     type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 08 00 00"/>
     <username                       type="StrongRefBatch"       use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 A0 01 00" target="ebucoreTextualAnnotation"/>
-    <contactType                    type="StrongRef"            use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 A0 02 00" target="ebucoreTypeGroup"/>
-    <contactDetails                 type="StrongRefBatch"       use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 A0 03 00" target="ebucoreContactDetails"/>
-    <contactRelatedContacts         type="StrongRefBatch"       use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 A0 04 00" target="ebucoreEntity"/>
+    <contactType                    type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 A0 02 00" target="ebucoreTypeGroup"/>
+    <contactDetails                 type="StrongRefBatch"       use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 A0 03 00" target="ebucoreContactDetails"/>
+    <contactRelatedContacts         type="StrongRefBatch"       use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 A0 04 00" target="ebucoreEntity"/>
     <stageName                      type="StrongRefBatch"       use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 21 A0 05 00" target="ebucoreTextualAnnotation"/>
   </ebucoreContact>
 
@@ -120,7 +119,7 @@
 
   <ebucoreIdentifier base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 04 00 00 00">
     <identifierValue                type="UTF16String"        use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 04 01 00 00"/>
-    <identifierNote                 type="UTF16String"        use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 04 02 00 00"/>
+    <identifierNote                 type="UTF16String"        use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 04 02 00 00"/>
     <identifierTypeGroup            type="StrongRef"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 04 A0 01 00" target="ebucoreTypeGroup"/>
     <identifierFormatGroup          type="StrongRef"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 04 A0 02 00" target="ebucoreFormatGroup"/>
     <identifierAttributorEntity     type="StrongRef"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 04 A0 03 00" target="ebucoreEntity"/>
@@ -129,7 +128,7 @@
   <ebucoreTitle base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 05 01 00 00">
     <titleAttributionDate           type="Timestamp"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 05 01 01 00"/>
     <titleNote           			type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 05 01 02 00"/>
-    <titleValue                     type="StrongRefBatch"       use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 05 01 A0 01" target="ebucoreTextualAnnotation"/>
+    <titleValue                     type="StrongRefBatch"       use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 05 01 A0 01" target="ebucoreTextualAnnotation"/>
   </ebucoreTitle>
 
   <!-- Tentatively changed ULs to avoid collision iwth ebucoreTitle -->
@@ -197,9 +196,9 @@
   <ebucoreType base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 0C 01 00 00">
     <typeNote                         type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0C 01 01 00"/>
     <typeValue                        type="StrongRefBatch"       use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0C 01 A0 01" target="ebucoreTextualAnnotation"/>
-    <objectType                       type="StrongRefBatch"       use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0C 01 A0 02" target="ebucoreObjectType"/>
-    <genre                            type="StrongRefBatch"       use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0C 01 A0 03" target="ebucoreGenre"/>
-    <targetAudience                   type="StrongRefBatch"       use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0C 01 A0 04" target="ebucoreTargetAudience"/>
+    <objectType                       type="StrongRefBatch"       use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0C 01 A0 02" target="ebucoreObjectType"/>
+    <genre                            type="StrongRefBatch"       use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0C 01 A0 03" target="ebucoreGenre"/>
+    <targetAudience                   type="StrongRefBatch"       use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0C 01 A0 04" target="ebucoreTargetAudience"/>
   </ebucoreType>
 
   <ebucoreObjectType base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 0C 02 00 00">
@@ -215,9 +214,9 @@
   </ebucoreTargetAudience>
 
   <ebucoreLanguage base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 0D 00 00 00">
-    <languageCode                     type="ISO7String"           use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0D 01 00 00"/>
-    <languageLanguage                 type="UTF16String"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0D 02 00 00"/>
-    <languageNote                     type="UTF16String"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0D 03 00 00"/>
+    <languageCode                     type="ISO7String"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0D 01 00 00"/>
+    <languageLanguage                 type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0D 02 00 00"/>
+    <languageNote                     type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0D 03 00 00"/>
     <languagePurposeSet               type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0D A0 01 00" target="ebucoreTypeGroup"/>
   </ebucoreLanguage>
 
@@ -239,13 +238,13 @@
     <locationCode                     type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0E 01 01 03"/>
     <locationNote                     type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0E 01 01 04"/>
     <locationTypeGroup                type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0E 01 01 A0" target="ebucoreTypeGroup"/>
-    <coordinateReference              type="WeakRef"              use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0E 01 01 B0" target="ebucoreCoordinates"/> <!-- ISO7String??? -->
+    <coordinateReference              type="WeakRef"              use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0E 01 01 B0" target="ebucoreCoordinates"/>
   </ebucoreLocation>
 
   <ebucoreCoordinates base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 0E 01 02 00">
-    <posX                             type="UTF16String"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0E 01 02 01"/>
-    <posY                             type="UTF16String"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0E 01 02 02"/>
-    <coordinatesTypeGroup             type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0E 01 02 A0" target="ebucoreTypeGroup"/>
+    <posX                             type="Float32"                use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0E 01 02 01"/>
+    <posY                             type="Float32"                use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0E 01 02 02"/>
+    <coordinatesFormatGroup           type="StrongRef"              use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 0E 01 02 A0" target="ebucoreFormatGroup"/>
   </ebucoreCoordinates>
 
   <ebucoreTemporal base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 0E 02 00 00">
@@ -267,8 +266,8 @@
   </ebucorePeriodOfTime>
 
   <ebucoreRights base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 10 00 00 00">
-    <rightsId                         type="ISO7String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 10 01 00 00"/>
-    <rightsLink                       type="UTF16String"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 10 02 00 00"/>
+    <rightsId                         type="ISO7String"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 10 01 00 00"/>
+    <rightsLink                       type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 10 02 00 00"/>
     <rightsClearanceFlag              type="Boolean"              use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 10 03 00 00"/>
     <rightsValue                      type="StrongRefBatch"       use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 10 A0 01 00" target="ebucoreTextualAnnotation"/>
     <exploitationIssues               type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 10 A0 02 00" target="ebucoreTextualAnnotation"/>
@@ -289,10 +288,10 @@
     <ratingValue                      type="UTF16String"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 12 01 00 00"/>
     <ratingScaleMinValue              type="UTF16String"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 12 02 00 00"/>
     <ratingScaleMaxValue              type="UTF16String"          use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 12 03 00 00"/>
-    <ratingLanguage                   type="ISO7String"           use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 12 04 00 00"/>
+    <ratingLanguage                   type="ISO7String"           use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 12 04 00 00"/>
     <ratingTypeGroup                  type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 12 A0 01 00" target="ebucoreTypeGroup"/>
     <ratingFormatGroup                type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 12 A0 02 00" target="ebucoreFormatGroup"/>
-    <ratingProviderEntity             type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 12 A0 03 00" target="ebucoreEntity"/>
+    <ratingProviderEntity             type="StrongRef"            use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 12 A0 03 00" target="ebucoreEntity"/>
   </ebucoreRating>
 
   <ebucorePublicationHistoryEvent base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 13 00 00 00">
@@ -300,19 +299,19 @@
     <publicationDate                  type="Timestamp"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 13 02 00 00"/>
     <publicationTime                  type="Timestamp"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 13 03 00 00"/>
     <publicationService               type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 13 04 00 00"/>
-    <publicationMedium                type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 13 05 00 00"/>
-    <publicationChannel               type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 13 06 00 00"/>
-    <publicationFormatReference       type="WeakRef"              use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 13 06 A0 01" target="ebucoreFormat"/>
+    <publicationChannel               type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 13 05 00 00"/>
+    <publicationMedium                type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 13 A0 01 00" target="ebucoreTypeGroup"/>    
+    <publicationFormatReference       type="WeakRef"              use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 13 B0 01 00" target="ebucoreFormat"/>
   </ebucorePublicationHistoryEvent>
 
   <ebucoreCustomRelation base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 40 01 00 00">
     <relationByName                   type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 40 01 01 00"/>
-    <relationIdentifier               type="UMID"                 use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 40 01 02 00"/>
-    <relationLink                     type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 40 01 03 00"/>
-    <runningOrderNumber               type="UInt32"               use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 40 01 04 00"/>
-    <totalNumberOfGroupMembers        type="UInt32"               use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 40 01 05 00"/>
-    <orderedGroupFlag                 type="Boolean"              use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 40 01 06 00"/>
+    <relationLink                     type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 40 01 02 00"/>
+    <runningOrderNumber               type="UInt32"               use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 40 01 03 00"/>
+    <totalNumberOfGroupMembers        type="UInt32"               use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 40 01 04 00"/>
+    <orderedGroupFlag                 type="Boolean"              use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 40 01 05 00"/>
     <customRelationTypeGroup          type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 40 01 A0 01" target="ebucoreTypeGroup"/>
+    <relationIdentifier               type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 40 01 A0 02" target="ebucoreIdentifier"/>
   </ebucoreCustomRelation>
 
   <ebucoreBasicRelation base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 40 02 00 00">

@@ -76,6 +76,11 @@ std::string ebucoreRatingBase::getratingScaleMaxValue() const
     return getStringItem(&MXF_ITEM_K(ebucoreRating, ratingScaleMaxValue));
 }
 
+bool ebucoreRatingBase::haveratingLanguage() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingLanguage));
+}
+
 std::string ebucoreRatingBase::getratingLanguage() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreRating, ratingLanguage));
@@ -103,11 +108,6 @@ ebucoreFormatGroup* ebucoreRatingBase::getratingFormatGroup() const
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRating, ratingFormatGroup)));
     MXFPP_CHECK(dynamic_cast<ebucoreFormatGroup*>(obj.get()) != 0);
     return dynamic_cast<ebucoreFormatGroup*>(obj.release());
-}
-
-bool ebucoreRatingBase::haveratingProviderEntity() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingProviderEntity));
 }
 
 ebucoreEntity* ebucoreRatingBase::getratingProviderEntity() const

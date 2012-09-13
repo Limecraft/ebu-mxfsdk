@@ -71,16 +71,6 @@ std::string ebucoreCustomRelationBase::getrelationByName() const
     return getStringItem(&MXF_ITEM_K(ebucoreCustomRelation, relationByName));
 }
 
-bool ebucoreCustomRelationBase::haverelationIdentifier() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreCustomRelation, relationIdentifier));
-}
-
-mxfUMID ebucoreCustomRelationBase::getrelationIdentifier() const
-{
-    return getUMIDItem(&MXF_ITEM_K(ebucoreCustomRelation, relationIdentifier));
-}
-
 bool ebucoreCustomRelationBase::haverelationLink() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreCustomRelation, relationLink));
@@ -133,14 +123,21 @@ ebucoreTypeGroup* ebucoreCustomRelationBase::getcustomRelationTypeGroup() const
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
+bool ebucoreCustomRelationBase::haverelationIdentifier() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreCustomRelation, relationIdentifier));
+}
+
+ebucoreIdentifier* ebucoreCustomRelationBase::getrelationIdentifier() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreCustomRelation, relationIdentifier)));
+    MXFPP_CHECK(dynamic_cast<ebucoreIdentifier*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreIdentifier*>(obj.release());
+}
+
 void ebucoreCustomRelationBase::setrelationByName(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreCustomRelation, relationByName), value);
-}
-
-void ebucoreCustomRelationBase::setrelationIdentifier(mxfUMID value)
-{
-    setUMIDItem(&MXF_ITEM_K(ebucoreCustomRelation, relationIdentifier), value);
 }
 
 void ebucoreCustomRelationBase::setrelationLink(std::string value)
@@ -166,5 +163,10 @@ void ebucoreCustomRelationBase::setorderedGroupFlag(bool value)
 void ebucoreCustomRelationBase::setcustomRelationTypeGroup(ebucoreTypeGroup* value)
 {
     setStrongRefItem(&MXF_ITEM_K(ebucoreCustomRelation, customRelationTypeGroup), value);
+}
+
+void ebucoreCustomRelationBase::setrelationIdentifier(ebucoreIdentifier* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreCustomRelation, relationIdentifier), value);
 }
 

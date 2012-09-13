@@ -57,8 +57,6 @@ public:
 
    bool haverelationByName() const;
    std::string getrelationByName() const;
-   bool haverelationIdentifier() const;
-   mxfUMID getrelationIdentifier() const;
    bool haverelationLink() const;
    std::string getrelationLink() const;
    bool haverunningOrderNumber() const;
@@ -69,17 +67,19 @@ public:
    bool getorderedGroupFlag() const;
    bool havecustomRelationTypeGroup() const;
    ebucoreTypeGroup* getcustomRelationTypeGroup() const;
+   bool haverelationIdentifier() const;
+   ebucoreIdentifier* getrelationIdentifier() const;
 
 
    // setters
 
    void setrelationByName(std::string value);
-   void setrelationIdentifier(mxfUMID value);
    void setrelationLink(std::string value);
    void setrunningOrderNumber(uint32_t value);
    void settotalNumberOfGroupMembers(uint32_t value);
    void setorderedGroupFlag(bool value);
    void setcustomRelationTypeGroup(ebucoreTypeGroup* value);
+   void setrelationIdentifier(ebucoreIdentifier* value);
 
 
 protected:

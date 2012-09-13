@@ -59,6 +59,7 @@ public:
    mxfTimestamp gettitleAttributionDate() const;
    bool havetitleNote() const;
    std::string gettitleNote() const;
+   bool havetitleValue() const;
    std::vector<ebucoreTextualAnnotation*> gettitleValue() const;
 
 

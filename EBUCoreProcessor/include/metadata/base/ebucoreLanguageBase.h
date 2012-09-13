@@ -55,8 +55,11 @@ public:
 
    // getters
 
+   bool havelanguageCode() const;
    std::string getlanguageCode() const;
+   bool havelanguageLanguage() const;
    std::string getlanguageLanguage() const;
+   bool havelanguageNote() const;
    std::string getlanguageNote() const;
    bool havelanguagePurposeSet() const;
    ebucoreTypeGroup* getlanguagePurposeSet() const;
