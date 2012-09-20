@@ -61,6 +61,11 @@ ebucorePublicationHistoryEventBase::~ebucorePublicationHistoryEventBase()
 {}
 
 
+bool ebucorePublicationHistoryEventBase::havefirstPublicationFlag() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, firstPublicationFlag));
+}
+
 bool ebucorePublicationHistoryEventBase::getfirstPublicationFlag() const
 {
     return getBooleanItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, firstPublicationFlag));

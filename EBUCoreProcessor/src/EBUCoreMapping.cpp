@@ -460,7 +460,8 @@ void mapLanguage(languageType& source, ebucoreLanguage *dest, ObjectModifier* mo
 	// TODO: KLV Language has an indirection for languagepurpose via a languagepurposeset which contains
 	// only a reference to the typegroup, required?
 	SIMPLE_MAP_OPTIONAL(source, language, dest, setlanguageLanguage)
-	dest->setlanguageCode(source.language().get().lang());
+	if (source.language().present())
+		dest->setlanguageCode(source.language().get().lang());
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setlanguagePurposeSet)
 	SIMPLE_MAP_OPTIONAL(source, note, dest, setlanguageNote)
 }
@@ -1148,7 +1149,7 @@ void mapFormat(formatType& source, ebucoreFormat *dest, std::map<xml_schema::id,
 
 	// add this format element to the list
 	if (source.formatId().present()) {
-		formatMap[source.format().get()] = dest;
+		formatMap[source.formatId().get()] = dest;
 	}
 }
 

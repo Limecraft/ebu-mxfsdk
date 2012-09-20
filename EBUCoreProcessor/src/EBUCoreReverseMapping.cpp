@@ -629,7 +629,7 @@ void mapRights(ebucoreRights *source, rightsType& dest) {
 
 void mapPublicationHistoryEvent(ebucorePublicationHistoryEvent* source, publicationEvent& dest) {
 
-	SIMPLE_RMAP(source, getfirstPublicationFlag, dest, firstShowing)
+	SIMPLE_RMAP_OPTIONAL(source, havefirstPublicationFlag, getfirstPublicationFlag, dest, firstShowing)
 
 	if (source->havepublicationDate()) {
 		dest.publicationDate( std::auto_ptr<publicationEvent::publicationDate_type>( convert_timestamp_date(source->getpublicationDate())) );

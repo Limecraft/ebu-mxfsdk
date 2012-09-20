@@ -55,6 +55,7 @@ public:
 
    // getters
 
+   bool havefirstPublicationFlag() const;
    bool getfirstPublicationFlag() const;
    bool havepublicationDate() const;
    mxfTimestamp getpublicationDate() const;
