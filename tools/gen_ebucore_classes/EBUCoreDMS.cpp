@@ -36,7 +36,7 @@
 #include <mxf/mxf.h>
 #include <mxf/mxf_macros.h>
 
-#include "EBUCoreDMS.h"
+#include <metadata/EBUCoreDMS.h>
 
 using namespace EBUSDK::EBUCore;
 
@@ -54,7 +54,7 @@ int EBUCoreDMS::RegisterCExtensions(MXFDataModel *data_model)
     CHK_OFAIL(mxf_register_item_def(data_model, #name, &MXF_SET_K(setName), &MXF_ITEM_K(setName, name), tag, \
                                     typeId, isRequired));
 
-#include "ebucore_extensions_data_model.h"
+#include <metadata/ebucore_extensions_data_model.h>
 
     return mxf_finalise_data_model(data_model);
 

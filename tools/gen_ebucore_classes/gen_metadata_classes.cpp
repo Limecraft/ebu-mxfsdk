@@ -52,7 +52,7 @@
 #include <mxf/mxf.h>
 #include <mxf/mxf_macros.h>
 
-#include "EBUCoreDMS.h"
+#include <metadata/EBUCoreDMS.h>
 
 #define CHECK(cmd) \
     if (!(cmd)) \
