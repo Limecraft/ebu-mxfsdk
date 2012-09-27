@@ -40,6 +40,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mxf2ebu", "apps\mxf2ebu\mxf
 		{E0F3C797-3186-4BB7-B3B7-EB92A378CDC7} = {E0F3C797-3186-4BB7-B3B7-EB92A378CDC7}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gen_ebucore_classes", "tools\gen_ebucore_classes\gen_ebucore_classes.vcxproj", "{CB1589DD-1F5E-4869-B1F2-635A2F5DFB38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -94,6 +96,10 @@ Global
 		{B6D2A2D1-08B6-4E5B-A9AE-9339705230F3}.Debug|Win32.Build.0 = Debug|Win32
 		{B6D2A2D1-08B6-4E5B-A9AE-9339705230F3}.Release|Win32.ActiveCfg = Release|Win32
 		{B6D2A2D1-08B6-4E5B-A9AE-9339705230F3}.Release|Win32.Build.0 = Release|Win32
+		{CB1589DD-1F5E-4869-B1F2-635A2F5DFB38}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CB1589DD-1F5E-4869-B1F2-635A2F5DFB38}.Debug|Win32.Build.0 = Debug|Win32
+		{CB1589DD-1F5E-4869-B1F2-635A2F5DFB38}.Release|Win32.ActiveCfg = Release|Win32
+		{CB1589DD-1F5E-4869-B1F2-635A2F5DFB38}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
