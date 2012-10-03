@@ -1,6 +1,6 @@
 noinst_PROGRAMS = gen_ebucore_classes
 
-gen_ebucore_classes_SOURCES = gen_ebucore_classes.cpp
+gen_ebucore_classes_SOURCES = gen_metadata_classes.cpp
 gen_ebucore_classes_CXXFLAGS = $(LIBMXFPP_CFLAGS)
 gen_ebucore_classes_LDADD = $(LIBMXF_LIBS)
 
