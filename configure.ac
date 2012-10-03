@@ -256,6 +256,7 @@ AC_CONFIG_FILES([
 	apps/ebu2mxf/Makefile
 	apps/mxf2ebu/Makefile
 	tools/Makefile
+	tools/gen_ebucore_classes/Makefile
 	msvc_build/Makefile
 	msvc_build/vs8/Makefile
     bmx.pc])
