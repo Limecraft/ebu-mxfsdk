@@ -1,3 +1,5 @@
+SUBDIRS = gen_ebucore_classes
+
 bin_PROGRAMS = movdump h264dump
 
 movdump_SOURCES = movdump.cpp
