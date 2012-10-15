@@ -1,15 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bmx", "bmx\bmx.vcxproj", "{D6AD7523-372A-4CC3-8AEA-0EC52D955359}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libMXF", "..\..\..\ebu-libmxf\msvc_build\vs10\mxf\libMXF.vcxproj", "{580F8E65-F910-46A6-8A9C-6A8E58D95E53}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libMXF++", "..\..\..\ebu-libMXFpp\msvc_build\vs10\libMXF++\libMXF++.vcxproj", "{33E3C49F-5483-4081-9446-9238A59B761A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uriparser", "..\..\..\..\uriparser\win32\Visual_Studio_2005\uriparser.vcxproj", "{8E2F76A2-59B5-4DF7-8062-EBD6FCF0C8B3}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bmxtranswrap", "apps\bmxtranswrap\bmxtranswrap.vcxproj", "{66CB2EA7-A853-45D1-80BC-254E451DE950}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "raw2bmx", "apps\raw2bmx\raw2bmx.vcxproj", "{BF415E6B-C90A-449D-A697-06B6CD724614}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -44,16 +40,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gen_ebucore_classes", "tool
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CustomMetatadataSupport", "..\..\..\CustomMetadataSupport\msvc_build\vs10\CustomMetatadataSupport.vcxproj", "{BEBABF29-67BF-4AB5-A5FE-435B58ED9A33}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bmx", "..\..\..\ebu-bmx\msvc_build\vs10\bmx\bmx.vcxproj", "{D6AD7523-372A-4CC3-8AEA-0EC52D955359}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D6AD7523-372A-4CC3-8AEA-0EC52D955359}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D6AD7523-372A-4CC3-8AEA-0EC52D955359}.Debug|Win32.Build.0 = Debug|Win32
-		{D6AD7523-372A-4CC3-8AEA-0EC52D955359}.Release|Win32.ActiveCfg = Release|Win32
-		{D6AD7523-372A-4CC3-8AEA-0EC52D955359}.Release|Win32.Build.0 = Release|Win32
 		{580F8E65-F910-46A6-8A9C-6A8E58D95E53}.Debug|Win32.ActiveCfg = Debug|Win32
 		{580F8E65-F910-46A6-8A9C-6A8E58D95E53}.Debug|Win32.Build.0 = Debug|Win32
 		{580F8E65-F910-46A6-8A9C-6A8E58D95E53}.Release|Win32.ActiveCfg = Release|Win32
@@ -66,10 +60,6 @@ Global
 		{8E2F76A2-59B5-4DF7-8062-EBD6FCF0C8B3}.Debug|Win32.Build.0 = Debug|Win32
 		{8E2F76A2-59B5-4DF7-8062-EBD6FCF0C8B3}.Release|Win32.ActiveCfg = Release|Win32
 		{8E2F76A2-59B5-4DF7-8062-EBD6FCF0C8B3}.Release|Win32.Build.0 = Release|Win32
-		{66CB2EA7-A853-45D1-80BC-254E451DE950}.Debug|Win32.ActiveCfg = Debug|Win32
-		{66CB2EA7-A853-45D1-80BC-254E451DE950}.Debug|Win32.Build.0 = Debug|Win32
-		{66CB2EA7-A853-45D1-80BC-254E451DE950}.Release|Win32.ActiveCfg = Release|Win32
-		{66CB2EA7-A853-45D1-80BC-254E451DE950}.Release|Win32.Build.0 = Release|Win32
 		{BF415E6B-C90A-449D-A697-06B6CD724614}.Debug|Win32.ActiveCfg = Debug|Win32
 		{BF415E6B-C90A-449D-A697-06B6CD724614}.Debug|Win32.Build.0 = Debug|Win32
 		{BF415E6B-C90A-449D-A697-06B6CD724614}.Release|Win32.ActiveCfg = Release|Win32
@@ -106,6 +96,10 @@ Global
 		{BEBABF29-67BF-4AB5-A5FE-435B58ED9A33}.Debug|Win32.Build.0 = Debug|Win32
 		{BEBABF29-67BF-4AB5-A5FE-435B58ED9A33}.Release|Win32.ActiveCfg = Release|Win32
 		{BEBABF29-67BF-4AB5-A5FE-435B58ED9A33}.Release|Win32.Build.0 = Release|Win32
+		{D6AD7523-372A-4CC3-8AEA-0EC52D955359}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D6AD7523-372A-4CC3-8AEA-0EC52D955359}.Debug|Win32.Build.0 = Debug|Win32
+		{D6AD7523-372A-4CC3-8AEA-0EC52D955359}.Release|Win32.ActiveCfg = Release|Win32
+		{D6AD7523-372A-4CC3-8AEA-0EC52D955359}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
