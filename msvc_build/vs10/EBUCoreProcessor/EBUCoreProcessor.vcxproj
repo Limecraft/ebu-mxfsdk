@@ -45,7 +45,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\EBUCoreProcessor\include;..\..\..\EBUCoreProcessor\include\xsd;..\..\..\..\ebu-libmxf;..\..\..\..\ebu-libMXFpp;..\..\..\include;..\..\..\..\ebu-libMXFpp\msvc_build\vs10;..\..\..\..\uriparser\include;C:\code\EBU-SDK\xsd-3.3.0-i686-windows\libxsd;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\EBUCoreProcessor\include;..\..\..\EBUCoreProcessor\include\xsd;..\..\..\ebu-libmxf;..\..\..\ebu-libMXFpp;..\..\..\ebu-bmx\include;..\..\..\include;..\..\..\ebu-libMXFpp\msvc_build\vs10;..\..\..\CustomMetadataSupport\include;..\..\..\..\uriparser\include;C:\code\EBU-SDK\xsd-3.3.0-i686-windows\libxsd;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
@@ -222,8 +222,6 @@
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreTypeGroup.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreVersion.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\metadata\ebucoreVideoFormat.cpp" />
-    <ClCompile Include="..\..\..\EBUCoreProcessor\src\MXFCustomMetadata.cpp" />
-    <ClCompile Include="..\..\..\EBUCoreProcessor\src\XercesUtils.cpp" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\xsd\EBU_CORE_20110915.cxx" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\xsd\EBU_CORE_20120817.cxx" />
     <ClCompile Include="..\..\..\EBUCoreProcessor\src\xsd\simpledc20021212.cxx" />
@@ -253,7 +251,6 @@
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreRole.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucoreTypeGroup.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\metadata\ebucore_extensions_data_model.h" />
-    <ClInclude Include="..\..\..\EBUCoreProcessor\include\MXFCustomMetadata.h" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\xsd\EBU_CORE_20110915.hxx" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\xsd\EBU_CORE_20120817.hxx" />
     <ClInclude Include="..\..\..\EBUCoreProcessor\include\xsd\simpledc20021212.hxx" />

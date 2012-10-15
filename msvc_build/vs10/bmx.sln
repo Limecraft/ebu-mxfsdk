@@ -42,6 +42,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mxf2ebu", "apps\mxf2ebu\mxf
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gen_ebucore_classes", "tools\gen_ebucore_classes\gen_ebucore_classes.vcxproj", "{CB1589DD-1F5E-4869-B1F2-635A2F5DFB38}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CustomMetatadataSupport", "..\..\CustomMetadataSupport\msvc_build\vs10\CustomMetatadataSupport.vcxproj", "{BEBABF29-67BF-4AB5-A5FE-435B58ED9A33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -100,6 +102,10 @@ Global
 		{CB1589DD-1F5E-4869-B1F2-635A2F5DFB38}.Debug|Win32.Build.0 = Debug|Win32
 		{CB1589DD-1F5E-4869-B1F2-635A2F5DFB38}.Release|Win32.ActiveCfg = Release|Win32
 		{CB1589DD-1F5E-4869-B1F2-635A2F5DFB38}.Release|Win32.Build.0 = Release|Win32
+		{BEBABF29-67BF-4AB5-A5FE-435B58ED9A33}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BEBABF29-67BF-4AB5-A5FE-435B58ED9A33}.Debug|Win32.Build.0 = Debug|Win32
+		{BEBABF29-67BF-4AB5-A5FE-435B58ED9A33}.Release|Win32.ActiveCfg = Release|Win32
+		{BEBABF29-67BF-4AB5-A5FE-435B58ED9A33}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
