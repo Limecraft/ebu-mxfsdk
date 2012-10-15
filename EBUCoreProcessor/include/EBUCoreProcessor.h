@@ -90,6 +90,8 @@ namespace EBUSDK {
 	*/
 	void InsertEBUCoreEventFrameworks(mxfpp::HeaderMetadata *header_metadata, std::vector<EBUSDK::MXFCustomMetadata::EventInput>& eventFrameworks, mxfpp::Identification *identificationToAppend = NULL);
 
+	void RemoveEBUCoreFrameworks(mxfpp::HeaderMetadata *header_metadata);
+
 	enum ProgressCallbackLevel {
 		FATAL,
 		ERROR,

@@ -246,6 +246,10 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 		DMFramework *framework = optEmbedAsSidecar ?
 			EBUCore::GenerateSideCarFramework(metadataLocation, &*mHeaderMetadata, id) :
 			EBUCore::Process(metadata, metadataLocation, &*mHeaderMetadata, eventFrameworks, id);
+
+		// remove any previously present EBUCore metadata
+		//RemoveEBUCoreFrameworks(&*mHeaderMetadata);
+
 		// insert the static track DM framework
 		EBUCore::InsertEBUCoreFramework(&*mHeaderMetadata, framework, id);
 		// insert the event track DM frameworks on the timeline, if any
@@ -650,6 +654,28 @@ void InsertEBUCoreEventFrameworks(HeaderMetadata *header_metadata, std::vector<E
 
 	if (appender!=NULL)
 		delete appender;
+}
+
+void RemoveEBUCoreFrameworks(mxfpp::HeaderMetadata *header_metadata) {
+	BMX_ASSERT(header_metadata);
+
+    MaterialPackage *material_package = header_metadata->getPreface()->findMaterialPackage();
+    BMX_ASSERT(material_package);
+
+	std::vector<GenericTrack*> trks = material_package->getTracks();
+	std::vector<GenericTrack*>::iterator it = trks.begin();
+	while(it != trks.end()) {
+		if (dynamic_cast<StaticTrack*>(*it) != NULL || dynamic_cast<EventTrack*>(*it) != NULL) {
+			if ((*it)->getTrackName().compare("EBU_Core") == 0 || (*it)->getTrackName().compare("EBU_Core_Parts") == 0) {
+				// this is an EBU track, remove it, first from the low-level metadata, then from the material package object
+			    mxf_remove_set(header_metadata->getCHeaderMetadata(), (*it)->getCMetadataSet());
+				it = trks.erase(it);
+			} else it++;
+		} else it++;
+	}
+
+	// reassign the new tracks list to the package
+	material_package->setTracks(trks);
 }
 
 static std::vector<DMFramework*> ebu_get_static_frameworks(MaterialPackage *mp)
