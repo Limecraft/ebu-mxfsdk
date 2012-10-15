@@ -1,0 +1,9 @@
+[submodule "ebu-libmxf"]
+	path = ebu-libmxf
+	url = git@github.com:Limecraft/ebu-libmxf.git
+[submodule "ebu-libmxfpp"]
+	path = ebu-libmxfpp
+	url = git@github.com:Limecraft/ebu-libmxfpp.git
+[submodule "ebu-bmx"]
+	path = ebu-bmx
+	url = git@github.com:Limecraft/ebu-bmx.git
