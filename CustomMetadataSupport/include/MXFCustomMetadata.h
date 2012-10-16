@@ -166,6 +166,12 @@ namespace EBUSDK {
 	uint64_t WriteDarkMetadataToFile(mxfpp::File* mFile, MXFFileDarkSerializer& metadata, const mxfKey *darkMetadataSetKey, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, mxfpp::Partition* metadataDestinationPartition, mxfpp::Partition* metadataSourcePartition);
 
 	/**
+	*	Removes a 'tree' of metadata sets from the given header metadata.\n
+		The tree removed from the header metadata comprises all metadata sets reachable recursively from the initial set through strong references. Weak references are not followed as they do not imply ownership.
+	*/
+	void RemoveMetadataSetTree(mxfpp::HeaderMetadata *header_metadata, mxfpp::MetadataSet *startSet);
+
+	/**
 	*	Finds the last KLV filler element in the given __partition__.
 
 		@returns Returns the byte position of the last KLV filler element in the given partition.

@@ -216,11 +216,18 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 		count += mxfKey_extlen + llen;
 		count += mFile->read(KLVBuffer, len);
 
-		// is a set with this key in the final header metadata? no, then append it
+		// is this a set we know about in our data model? no, then append it
+		// all others that we know a definition of, we leave out of this as they should have been added
+		// to the header metadata in the proper way (and may actually have been deleted)
 		MXFList *setList = NULL;
-		if (mxf_find_set_by_key(mHeaderMetadata->getCHeaderMetadata(), &key, &setList)) {
-			if (mxf_get_list_length(setList) == 0 && 
-				!mxf_is_primer_pack(&key) && /* don't include any primer pack or fillers */
+		MXFSetDef *setDef = NULL;
+		
+		//mHeaderMetadata->
+		
+		if (!mxf_find_set_def(mHeaderMetadata->getCHeaderMetadata()->dataModel, &key, &setDef)) {
+		//if (mxf_find_set_by_key(mHeaderMetadata->getCHeaderMetadata(), &key, &setList)) {
+		//	if (mxf_get_list_length(setList) == 0 && 
+			if (!mxf_is_primer_pack(&key) && /* don't include any primer pack or fillers */
 				!mxf_is_filler(&key)) {
 				mxf_print_key(&key);
 				// no errors and the list is empty, append the KLV to the memory file
@@ -228,7 +235,7 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 				mxf_file_write(mxfMemFile, KLVBuffer, len);
 				i++;
 			} //else printf("\n");
-			mxf_free_list(&setList);
+		//	mxf_free_list(&setList);
 		}
 	}
 	//std::cout << "Rogue KLVS: " << i << std::endl;
@@ -457,6 +464,62 @@ void ShiftBytesInFile(mxfpp::File* mFile, int64_t shiftPosition, int64_t shiftOf
 	}
 
 	delete buffer;
+}
+
+void RemoveMetadataSetTree(MXFHeaderMetadata *header_metadata, MXFMetadataSet *set) {
+	
+	MXFSetDef *setDef;
+	mxf_find_set_def(header_metadata->dataModel, &set->key, &setDef);
+
+	//char key[48];
+	//mxf_sprint_key(key, &set->key);
+	//printf("Deleting item \"%s\" [%s]\n", setDef->name, key);
+
+	// loop through the set and locate strongly referenced children
+	MXFListIterator itemIter;
+	mxf_initialise_list_iter(&itemIter, &set->items);
+    while (mxf_next_list_iter_element(&itemIter))
+    {
+		MXFItemDef *itemDef;
+		MXFMetadataItem *item = (MXFMetadataItem*)mxf_get_iter_element(&itemIter);
+
+		// what is the definition of this item
+		if (mxf_find_item_def_in_set_def(&item->key, setDef, &itemDef)) {
+			// only if we know the definition
+			MXFMetadataSet *referencedSet;
+			if (itemDef->typeId == MXF_STRONGREF_TYPE) {
+				// item is a single strong reference, follow it
+				mxf_get_strongref_item(set, &item->key, &referencedSet);
+				
+				RemoveMetadataSetTree(header_metadata, referencedSet);
+
+			} else if (itemDef->typeId == MXF_STRONGREFARRAY_TYPE || itemDef->typeId == MXF_STRONGREFBATCH_TYPE) {
+				// loop through the array or batch of elements and follow each
+				MXFArrayItemIterator arrayIter; uint8_t* _value; uint32_t _length;
+		        mxf_initialise_array_item_iterator(set, &item->key, &arrayIter);
+				while (mxf_next_array_item_element(&arrayIter, &_value, &_length) != 0)
+				{
+					MXFListIterator setsIter;
+					mxf_initialise_sets_iter(header_metadata, &setsIter);
+
+					if (mxf_get_strongref_s(header_metadata, &setsIter, _value, &referencedSet)) {
+
+						RemoveMetadataSetTree(header_metadata, referencedSet);
+
+					}
+				}
+			}
+		}
+ 	}
+
+	// done with references, delete ourselves
+	mxf_remove_set(header_metadata, set);
+}
+
+void RemoveMetadataSetTree(HeaderMetadata *header_metadata, MetadataSet *startSet) {
+	MXFHeaderMetadata *c_metadata = header_metadata->getCHeaderMetadata();
+	MXFMetadataSet *c_set = startSet->getCMetadataSet();
+	RemoveMetadataSetTree(c_metadata, c_set);
 }
 
 mxfRational FindMaterialPackageEditRate(HeaderMetadata *header_metadata) {

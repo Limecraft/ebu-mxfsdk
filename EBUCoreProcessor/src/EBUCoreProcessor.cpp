@@ -248,7 +248,7 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 			EBUCore::Process(metadata, metadataLocation, &*mHeaderMetadata, eventFrameworks, id);
 
 		// remove any previously present EBUCore metadata
-		//RemoveEBUCoreFrameworks(&*mHeaderMetadata);
+		RemoveEBUCoreFrameworks(&*mHeaderMetadata);
 
 		// insert the static track DM framework
 		EBUCore::InsertEBUCoreFramework(&*mHeaderMetadata, framework, id);
@@ -667,8 +667,8 @@ void RemoveEBUCoreFrameworks(mxfpp::HeaderMetadata *header_metadata) {
 	while(it != trks.end()) {
 		if (dynamic_cast<StaticTrack*>(*it) != NULL || dynamic_cast<EventTrack*>(*it) != NULL) {
 			if ((*it)->getTrackName().compare("EBU_Core") == 0 || (*it)->getTrackName().compare("EBU_Core_Parts") == 0) {
-				// this is an EBU track, remove it, first from the low-level metadata, then from the material package object
-			    mxf_remove_set(header_metadata->getCHeaderMetadata(), (*it)->getCMetadataSet());
+				// this is an EBU track, remove it, first from the low-level metadata, then from the material package object by updating the reference vector
+				RemoveMetadataSetTree(header_metadata, *it);
 				it = trks.erase(it);
 			} else it++;
 		} else it++;
