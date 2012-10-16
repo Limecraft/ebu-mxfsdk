@@ -73,7 +73,7 @@ namespace EBUSDK {
 		@param metadataDestinationPartition The partition in the __mFile__ to which the metadata is being written.
 		@param metadataSourcePartition The partition in the __mFile__ from which the updated metadata was obtained.
 	*/
-	uint64_t WriteMetadataToMemoryFile(mxfpp::File* mFile, MXFMemoryFile **destMemFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, mxfpp::Partition* metadataDestinationPartition, mxfpp::Partition* metadataSourcePartition);
+	uint64_t WriteMetadataToMemoryFile(mxfpp::File* mFile, MXFMemoryFile **destMemFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, mxfpp::Partition* metadataDestinationPartition, mxfpp::Partition* metadataSourcePartition, std::vector<const mxfKey*>& darkElementKeysToIgnore);
 
 	/**
 	*	Writes KLV-encoded header metadata to an MXF file.
@@ -92,7 +92,7 @@ namespace EBUSDK {
 		@param metadataDestinationPartition The partition in the __mFile__ to which the metadata is being written.
 		@param metadataSourcePartition The partition in the __mFile__ from which the updated metadata was obtained.
 	*/
-	uint64_t WriteMetadataToFile(mxfpp::File* mFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, mxfpp::Partition* metadataDestinationPartition, mxfpp::Partition* metadataSourcePartition);
+	uint64_t WriteMetadataToFile(mxfpp::File* mFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, mxfpp::Partition* metadataDestinationPartition, mxfpp::Partition* metadataSourcePartition, std::vector<const mxfKey*>& darkElementKeysToIgnore);
 
 	/**
 	*	Abstract utility class which defines an interface for writing dark metadata (i.e., blobs of bytes) to an MXF file.

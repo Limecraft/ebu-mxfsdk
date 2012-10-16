@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <memory>
+#include <algorithm>
 
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>
@@ -176,7 +177,16 @@ uint64_t BufferIndex(File* mFile, Partition* partition, bmx::ByteArray& index_by
 	return pos_write_start_metadata;
 }
 
-uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, Partition* metadataDestinationPartition, Partition* metadataSourcePartition) {
+class FixedKeyComparer {
+	const mxfKey *k;
+public:
+	FixedKeyComparer(const mxfKey *key) : k(key) { };
+	bool operator()(const mxfKey *key) {
+		return mxf_equals_key(k, key);
+	}
+};
+
+uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, Partition* metadataDestinationPartition, Partition* metadataSourcePartition, std::vector<const mxfKey*>& darkElementKeysToIgnore) {
 	mxfKey key;
 	uint8_t llen;
 	uint64_t len;
@@ -222,18 +232,19 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 		MXFList *setList = NULL;
 		MXFSetDef *setDef = NULL;
 		
-		//mHeaderMetadata->
-		
 		if (!mxf_find_set_def(mHeaderMetadata->getCHeaderMetadata()->dataModel, &key, &setDef)) {
 		//if (mxf_find_set_by_key(mHeaderMetadata->getCHeaderMetadata(), &key, &setList)) {
 		//	if (mxf_get_list_length(setList) == 0 && 
 			if (!mxf_is_primer_pack(&key) && /* don't include any primer pack or fillers */
 				!mxf_is_filler(&key)) {
-				mxf_print_key(&key);
-				// no errors and the list is empty, append the KLV to the memory file
-				mxf_write_kl(mxfMemFile, &key, len);
-				mxf_file_write(mxfMemFile, KLVBuffer, len);
-				i++;
+				FixedKeyComparer f(&key);
+				if (std::find_if(darkElementKeysToIgnore.begin(), darkElementKeysToIgnore.end(), f) == darkElementKeysToIgnore.end()) {
+					mxf_print_key(&key);
+					// no errors and the list is empty, append the KLV to the memory file
+					mxf_write_kl(mxfMemFile, &key, len);
+					mxf_file_write(mxfMemFile, KLVBuffer, len);
+					i++;
+				}
 			} //else printf("\n");
 		//	mxf_free_list(&setList);
 		}
@@ -353,14 +364,14 @@ uint64_t WriteDarkMetadataToFile(File* mFile, MXFFileDarkSerializer& metadata, c
 	return memFileSize;
 }
 
-uint64_t WriteMetadataToFile(File* mFile, HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, Partition* metadataDestinationPartition, Partition* metadataSourcePartition) {
+uint64_t WriteMetadataToFile(File* mFile, HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, Partition* metadataDestinationPartition, Partition* metadataSourcePartition, std::vector<const mxfKey*>& darkElementKeysToIgnore) {
 	MXFMemoryFile *cMemFile;
 
 	// record the original metadata size
 	uint64_t oriMetadataSize = metadataSourcePartition->getHeaderByteCount();
 
 	// how many bytes have we written to the memoryfile?
-	uint64_t memFileSize = WriteMetadataToMemoryFile(mFile, &cMemFile, mHeaderMetadata, metadata_read_position, metadata_write_position, metadataDestinationPartition, metadataSourcePartition);
+	uint64_t memFileSize = WriteMetadataToMemoryFile(mFile, &cMemFile, mHeaderMetadata, metadata_read_position, metadata_write_position, metadataDestinationPartition, metadataSourcePartition, darkElementKeysToIgnore);
 
 	// shift if required
 	if (shiftFileBytesIfNeeded && memFileSize > oriMetadataSize) {

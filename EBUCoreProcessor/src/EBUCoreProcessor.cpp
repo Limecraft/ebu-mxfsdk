@@ -257,6 +257,11 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 			EBUCore::InsertEBUCoreEventFrameworks(&*mHeaderMetadata, eventFrameworks, id);
 		}
 
+		// prepare a vector of dark metadata keys that is to be ignored (i.e., discarded) 
+		// when metadata is (re)written to the file
+		std::vector<const mxfKey*> ignoredDarkKeys;
+		ignoredDarkKeys.push_back(&keyEBUCoreDarkMetadata);
+
 		// ///////////////////////////////////////
 		// / 2. In order to avoid rewriting large portions of the file, we append our metadata
 		// / to that of the footer partition (if already present, and new otherwise)
@@ -270,7 +275,7 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 			bmx::ByteArray index_bytes(index_length);
 			uint64_t pos_write_start_metadata = BufferIndex(&*mFile, footerPartition, index_bytes, &index_length);
 
-			uint64_t headerMetadataSize = WriteMetadataToFile(&*mFile, &*mHeaderMetadata, pos_start_metadata, pos_write_start_metadata, false, footerPartition, metadata_partition);
+			uint64_t headerMetadataSize = WriteMetadataToFile(&*mFile, &*mHeaderMetadata, pos_start_metadata, pos_write_start_metadata, false, footerPartition, metadata_partition, ignoredDarkKeys);
 
 			if (index_length > 0) {
 				progress_callback(0.75, DEBUG, "EmbedEBUCoreMetadata", "Rewritng footer partition index entries");
@@ -328,7 +333,7 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 			uint64_t oriMetadataSize = headerPartition->getHeaderByteCount();
 
 			// Write metadata to the header partition, forcing a file bytes shift if required (likely)
-			uint64_t headerMetadataSize = WriteMetadataToFile(&*mFile, &*mHeaderMetadata, pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition);
+			uint64_t headerMetadataSize = WriteMetadataToFile(&*mFile, &*mHeaderMetadata, pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition, ignoredDarkKeys);
 
 			uint64_t fileOffset = headerMetadataSize - oriMetadataSize;
 
