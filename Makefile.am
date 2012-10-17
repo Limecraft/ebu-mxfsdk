@@ -1,12 +1,12 @@
-SUBDIRS = include src EBUCoreProcessor apps tools test msvc_build
+SUBDIRS = CustomMetadataSupport EBUCoreProcessor
 
 
-pkgconfig_DATA = bmx-$(BMX_MAJORMINOR).pc
+pkgconfig_DATA = ebu-mxfsdk-$(EBUSDK_MAJORMINOR).pc
 
-bmx-$(BMX_MAJORMINOR).pc: bmx.pc
-	cp bmx.pc bmx-$(BMX_MAJORMINOR).pc
+ebu-mxfsdk-$(EBUSDK_MAJORMINOR).pc: ebu-mxfsdk.pc
+	cp ebu-mxfsdk.pc ebu-mxfsdk-$(EBUSDK_MAJORMINOR).pc
 
-CLEANFILES = bmx-$(BMX_MAJORMINOR).pc
+CLEANFILES = ebu-mxfsdk-$(EBUSDK_MAJORMINOR).pc
 
 
 ACLOCAL_AMFLAGS = -I m4

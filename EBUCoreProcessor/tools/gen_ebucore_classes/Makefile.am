@@ -1,8 +1,8 @@
 noinst_PROGRAMS = gen_ebucore_classes
 
 gen_ebucore_classes_SOURCES = EBUCoreDMS.cpp gen_metadata_classes.cpp
-gen_ebucore_classes_CXXFLAGS = $(BMX_CFLAGS)
-gen_ebucore_classes_LDADD = $(BMX_LDADDLIBS)
+gen_ebucore_classes_CXXFLAGS = $(EBUSDK_CFLAGS)
+gen_ebucore_classes_LDADD = $(EBUSDK_LDADDLIBS)
 
 
 .PHONY: generate

@@ -1,4 +1,4 @@
-noinst_LTLIBRARIES = libebucore.la
+lib_LTLIBRARIES = libebucore.la
 
 libebucore_la_SOURCES = \
 	metadata/base/ebucoreTextualAnnotationBase.cpp \
@@ -36,7 +36,6 @@ libebucore_la_SOURCES = \
 	metadata/base/ebucoreSubjectBase.cpp \
 	metadata/base/ebucoreTargetAudienceBase.cpp \
 	metadata/base/ebucoreTemporalBase.cpp \
-	metadata/base/ebucoreTextualAnnotationBase.cpp \
 	metadata/base/ebucoreTitleBase.cpp \
 	metadata/base/ebucoreTypeBase.cpp \
 	metadata/base/ebucoreTypeGroupBase.cpp \
@@ -141,7 +140,6 @@ libebucore_la_SOURCES = \
 	metadata/ebucoreSubject.cpp \
 	metadata/ebucoreTargetAudience.cpp \
 	metadata/ebucoreTemporal.cpp \
-	metadata/ebucoreTextualAnnotation.cpp \
 	metadata/ebucoreTitle.cpp \
 	metadata/ebucoreType.cpp \
 	metadata/ebucoreTypeGroup.cpp \
@@ -149,12 +147,10 @@ libebucore_la_SOURCES = \
 	xsd/EBU_CORE_20120817.cxx \
 	xsd/simpledc20021212.cxx \
 	xsd/xml.cxx \
-    XercesUtils.cpp \
-    MXFCustomMetadata.cpp \
 	EBUCoreMapping.cpp \
 	EBUCoreReverseMapping.cpp \
 	EBUCoreProcessor.cpp \
 	AppUtils.cpp
 
-libebucore_la_CXXFLAGS = $(BMX_CFLAGS)
+libebucore_la_CXXFLAGS = $(EBUSDK_CFLAGS)
 

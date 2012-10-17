@@ -9,7 +9,7 @@ mxf2raw_SOURCES = \
 	AvidInfoOutput.h \
 	mxf2raw.cpp
 
-mxf2raw_CXXFLAGS = $(BMX_CFLAGS)
-mxf2raw_LDADD = $(BMX_LDADDLIBS)
+mxf2raw_CXXFLAGS = $(EBUSDK_CFLAGS)
+mxf2raw_LDADD = $(EBUSDK_LDADDLIBS)
 
 

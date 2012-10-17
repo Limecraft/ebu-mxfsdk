@@ -21,7 +21,7 @@ dnl -- Init
 dnl-----------------------------------------------------------------------------
 
 AC_INIT(m4_defn([m4_EBUSDK_LIBRARY_NAME]), m4_defn([m4_EBUSDK_VERSION]))
-AC_CONFIG_SRCDIR([src/common/BMXException.cpp])
+dnl AC_CONFIG_SRCDIR([src/common/BMXException.cpp])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -123,8 +123,10 @@ dnl-----------------------------------------------------------------------------
 
 LIBMXF_MAJORMINOR=1.0
 LIBMXFPP_MAJORMINOR=${LIBMXF_MAJORMINOR}
+BMX_MAJORMINOR=0.1
 AC_SUBST(LIBMXF_MAJORMINOR)
 AC_SUBST(LIBMXFPP_MAJORMINOR)
+AC_SUBST(LIBBMX_MAJORMINOR)
 
 PKG_CHECK_MODULES(LIBMXF, libMXF-${LIBMXF_MAJORMINOR} >= 1.0.3)
 AC_SUBST(LIBMXF_CFLAGS)
@@ -133,6 +135,10 @@ AC_SUBST(LIBMXF_LIBS)
 PKG_CHECK_MODULES(LIBMXFPP, libMXF++-${LIBMXFPP_MAJORMINOR} >= 1.0.3)
 AC_SUBST(LIBMXFPP_CFLAGS)
 AC_SUBST(LIBMXFPP_LIBS)
+
+PKG_CHECK_MODULES(BMX, bmx-${BMX_MAJORMINOR} >= 0.0.0)
+AC_SUBST(BMX_CFLAGS)
+AC_SUBST(BMX_LIBS)
 
 
 dnl-----------------------------------------------------------------------------
@@ -186,16 +192,16 @@ if test x"$GCC" = xyes; then
 fi
 AC_SUBST(WARN_CFLAGS)
 
-BMX_CFLAGS="${WARN_CFLAGS} ${LIBMXF_CFLAGS} ${LIBMXFPP_CFLAGS} \
-	${LIBURIPARSER_CFLAGS} -I\$(top_srcdir)/include -I\$(top_srcdir)/EBUCoreProcessor/include -I\$(top_srcdir)/EBUCoreProcessor/include/xsd"
-AC_SUBST(BMX_CFLAGS)
+EBUSDK_CFLAGS="${WARN_CFLAGS} ${LIBMXF_CFLAGS} ${LIBMXFPP_CFLAGS} ${BMX_CFLAGS} \
+	${LIBURIPARSER_CFLAGS} -I\$(top_srcdir)/CustomMetadataSupport/include -I\$(top_srcdir)/EBUCoreProcessor/include -I\$(top_srcdir)/EBUCoreProcessor/include/xsd"
+AC_SUBST(EBUSDK_CFLAGS)
 
-BMX_LIBADDLIBS="${UUIDLIB} ${LIBURIPARSER_LIBS} ${LIBMXF_LIBS} ${LIBMXFPP_LIBS}"
-AC_SUBST(BMX_LIBADDLIBS)
+EBUSDK_LIBADDLIBS="${UUIDLIB} ${LIBURIPARSER_LIBS} ${LIBMXF_LIBS} ${LIBMXFPP_LIBS} ${BMX_LIBS}"
+AC_SUBST(EBUSDK_LIBADDLIBS)
 
-BMX_LDADDLIBS="${BMX_LIBADDLIBS} \
-	\$(top_builddir)/src/libbmx-${BMX_MAJORMINOR}.la \$(top_builddir)/EBUCoreProcessor/src/libebucore.la -lxerces-c"
-AC_SUBST(BMX_LDADDLIBS)
+EBUSDK_LDADDLIBS="${EBUSDK_LIBADDLIBS} \
+	\$(top_builddir)/CustomMetadataSupport/src/libebucustommetadatasupport.la \$(top_builddir)/EBUCoreProcessor/src/libebucore.la -lxerces-c"
+AC_SUBST(EBUSDK_LDADDLIBS)
 
 
 dnl-----------------------------------------------------------------------------
@@ -223,43 +229,20 @@ dnl-----------------------------------------------------------------------------
 
 AC_CONFIG_FILES([
 	Makefile
-	include/Makefile
-	src/Makefile
-	src/common/Makefile
-	src/frame/Makefile
-	src/essence_parser/Makefile
-	src/writer_helper/Makefile
-	src/mxf_helper/Makefile
-	src/mxf_reader/Makefile
-	src/as02/Makefile
-	src/mxf_op1a/Makefile
-	src/avid_mxf/Makefile
-	src/d10_mxf/Makefile
-	src/as11/Makefile
-	src/wave/Makefile
-	src/clip_writer/Makefile
+	CustomMetadataSupport/Makefile
+	CustomMetadataSupport/src/Makefile
 	EBUCoreProcessor/Makefile
 	EBUCoreProcessor/src/Makefile
-	test/Makefile
-	test/as02/Makefile
-	test/as11/Makefile
-	test/mxf_op1a/Makefile
-	test/avid_mxf/Makefile
-	test/mxf_reader/Makefile
-	test/d10_mxf/Makefile
-	test/wave/Makefile
-	test/essence_parser/Makefile
-	apps/Makefile
-	apps/mxf2raw/Makefile
-	apps/raw2bmx/Makefile
-	apps/bmxtranswrap/Makefile
-	apps/ebu2mxf/Makefile
-	apps/mxf2ebu/Makefile
-	tools/Makefile
-	tools/gen_ebucore_classes/Makefile
-	msvc_build/Makefile
-	msvc_build/vs8/Makefile
-    bmx.pc])
+	EBUCoreProcessor/apps/Makefile
+	EBUCoreProcessor/apps/mxf2raw/Makefile
+	EBUCoreProcessor/apps/raw2bmx/Makefile
+	EBUCoreProcessor/apps/ebu2mxf/Makefile
+	EBUCoreProcessor/apps/mxf2ebu/Makefile
+	EBUCoreProcessor/tools/Makefile
+	EBUCoreProcessor/tools/gen_ebucore_classes/Makefile
+	EBUCoreProcessor/msvc_build/Makefile
+	EBUCoreProcessor/msvc_build/vs8/Makefile
+    ebu-mxfsdk.pc])
 
 AC_OUTPUT
 

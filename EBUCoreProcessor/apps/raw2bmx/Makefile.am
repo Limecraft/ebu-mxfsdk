@@ -1,7 +1,7 @@
 bin_PROGRAMS = raw2bmx
 
 raw2bmx_SOURCES = raw2bmx.cpp
-raw2bmx_CXXFLAGS = $(BMX_CFLAGS)
-raw2bmx_LDADD = ../libapp.la $(BMX_LDADDLIBS)
+raw2bmx_CXXFLAGS = $(EBUSDK_CFLAGS)
+raw2bmx_LDADD = ../libapp.la $(EBUSDK_LDADDLIBS)
 
 

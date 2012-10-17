@@ -1,4 +1,4 @@
-SUBDIRS = . mxf2raw raw2bmx bmxtranswrap ebu2mxf mxf2ebu
+SUBDIRS = . mxf2raw raw2bmx ebu2mxf mxf2ebu
 
 
 noinst_LTLIBRARIES = libapp.la
@@ -9,5 +9,5 @@ libapp_la_SOURCES = \
 	AS11Helper.cpp \
 	AS11Helper.h
 
-libapp_la_CXXFLAGS = $(BMX_CFLAGS)
+libapp_la_CXXFLAGS = $(EBUSDK_CFLAGS)
 
