@@ -4,23 +4,23 @@ dnl-----------------------------------------------------------------------------
 
 dnl extract package name and version from Version.h
 
-m4_define([m4_BMX_LIBRARY_NAME],
-	m4_esyscmd([(sed -n 's/^.*BMX_LIBRARY_NAME[^\"]*\"\([^\"]*\)\"/\1/p' include/bmx/Version.h | tr -d '\n')]))
-m4_define([m4_BMX_VERSION_MAJOR],
-	m4_esyscmd([(sed -n 's/^.*BMX_VERSION_MAJOR\ *\([0-9][0-9]*\)/\1/p' include/bmx/Version.h | tr -d '\n')]))
-m4_define([m4_BMX_VERSION_MINOR],
-	m4_esyscmd([(sed -n 's/^.*BMX_VERSION_MINOR\ *\([0-9][0-9]*\)/\1/p' include/bmx/Version.h | tr -d '\n')]))
-m4_define([m4_BMX_VERSION_MICRO],
-	m4_esyscmd([(sed -n 's/^.*BMX_VERSION_MICRO\ *\([0-9][0-9]*\)/\1/p' include/bmx/Version.h | tr -d '\n')]))
-m4_define([m4_BMX_VERSION],
-	m4_defn([m4_BMX_VERSION_MAJOR]).m4_defn([m4_BMX_VERSION_MINOR]).m4_defn([m4_BMX_VERSION_MICRO]))
+m4_define([m4_EBUSDK_LIBRARY_NAME],
+	m4_esyscmd([(sed -n 's/^.*EBUSDK_LIBRARY_NAME[^\"]*\"\([^\"]*\)\"/\1/p' Version.h | tr -d '\n')]))
+m4_define([m4_EBUSDK_VERSION_MAJOR],
+	m4_esyscmd([(sed -n 's/^.*EBUSDK_VERSION_MAJOR\ *\([0-9][0-9]*\)/\1/p' Version.h | tr -d '\n')]))
+m4_define([m4_EBUSDK_VERSION_MINOR],
+	m4_esyscmd([(sed -n 's/^.*EBUSDK_VERSION_MINOR\ *\([0-9][0-9]*\)/\1/p' Version.h | tr -d '\n')]))
+m4_define([m4_EBUSDK_VERSION_MICRO],
+	m4_esyscmd([(sed -n 's/^.*EBUSDK_VERSION_MICRO\ *\([0-9][0-9]*\)/\1/p' Version.h | tr -d '\n')]))
+m4_define([m4_EBUSDK_VERSION],
+	m4_defn([m4_EBUSDK_VERSION_MAJOR]).m4_defn([m4_EBUSDK_VERSION_MINOR]).m4_defn([m4_EBUSDK_VERSION_MICRO]))
 
 
 dnl-----------------------------------------------------------------------------
 dnl -- Init
 dnl-----------------------------------------------------------------------------
 
-AC_INIT(m4_defn([m4_BMX_LIBRARY_NAME]), m4_defn([m4_BMX_VERSION]))
+AC_INIT(m4_defn([m4_EBUSDK_LIBRARY_NAME]), m4_defn([m4_EBUSDK_VERSION]))
 AC_CONFIG_SRCDIR([src/common/BMXException.cpp])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -38,12 +38,12 @@ dnl - library source changed -> increment REVISION
 dnl - interfaces added/removed/changed -> increment CURRENT, REVISION = 0
 dnl - interfaces added -> increment AGE
 dnl - interfaces removed -> AGE = 0
-BMX_LIBVERSION="3:0:0"
-AC_SUBST(BMX_LIBVERSION)
+EBUSDK_LIBVERSION="3:0:0"
+AC_SUBST(EBUSDK_LIBVERSION)
 
 
-BMX_MAJORMINOR=m4_defn([m4_BMX_VERSION_MAJOR]).m4_defn([m4_BMX_VERSION_MINOR])
-AC_SUBST(BMX_MAJORMINOR)
+EBUSDK_MAJORMINOR=m4_defn([m4_EBUSDK_VERSION_MAJOR]).m4_defn([m4_EBUSDK_VERSION_MINOR])
+AC_SUBST(EBUSDK_MAJORMINOR)
 
 
 dnl-----------------------------------------------------------------------------
