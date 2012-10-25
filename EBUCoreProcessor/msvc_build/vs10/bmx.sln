@@ -42,6 +42,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CustomMetatadataSupport", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bmx", "..\..\..\ebu-bmx\msvc_build\vs10\bmx\bmx.vcxproj", "{D6AD7523-372A-4CC3-8AEA-0EC52D955359}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mxfanalyzer", "..\..\..\Analyzer\msvc_build\vs10\apps\mxfanalyzer\mxfanalyzer.vcxproj", "{3B1344EB-D93E-4A63-A199-5DFBEE8A4EED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -100,6 +102,10 @@ Global
 		{D6AD7523-372A-4CC3-8AEA-0EC52D955359}.Debug|Win32.Build.0 = Debug|Win32
 		{D6AD7523-372A-4CC3-8AEA-0EC52D955359}.Release|Win32.ActiveCfg = Release|Win32
 		{D6AD7523-372A-4CC3-8AEA-0EC52D955359}.Release|Win32.Build.0 = Release|Win32
+		{3B1344EB-D93E-4A63-A199-5DFBEE8A4EED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3B1344EB-D93E-4A63-A199-5DFBEE8A4EED}.Debug|Win32.Build.0 = Debug|Win32
+		{3B1344EB-D93E-4A63-A199-5DFBEE8A4EED}.Release|Win32.ActiveCfg = Release|Win32
+		{3B1344EB-D93E-4A63-A199-5DFBEE8A4EED}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
