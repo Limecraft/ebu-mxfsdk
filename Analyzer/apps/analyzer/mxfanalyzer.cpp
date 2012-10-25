@@ -47,6 +47,7 @@ struct KLVPacketRef {
 	mxfKey key;
 	int64_t len;
 	int64_t offset;
+	uint8_t llen;
 };
 
 class Filter {
@@ -69,6 +70,7 @@ public:
 		}
 		currentSet.key = *key;
 		currentSet.len = len;
+		currentSet.llen = llen;
 		currentSet.offset = mxf_file_tell(file);
 		setSet = true;
 		itemSet = false;
@@ -178,6 +180,19 @@ const XMLCh* serialize_ul(mxfUL* ul) {
 	return out;
 }
 
+const XMLCh* serialize_key(mxfKey* key) {
+	std::wstringstream s;
+	s << L"urn:oid:1.3.52.2";
+	int b = 4;
+	for (int b=4; b < 16 && ((uint8_t*)key)[b] != 0; b++) {
+		s << L"." << ((uint8_t*)key)[b];
+	}
+
+	XMLCh* out = new XMLCh[s.str().length() + 1];
+	wcscpy(out, s.str().c_str());
+	return out;
+}
+
 const XMLCh* serialize_umid(mxfUMID *umid) {
 	std::wstringstream s;
 	s << L"0x" << std::hex << std::uppercase;
@@ -198,7 +213,7 @@ const XMLCh* serialize_dark_value(MXFFile *file, int64_t offset, int64_t length)
 	mxf_file_read(file, buf, length);
 	for (int64_t i=0;i<length;i++) {
 		wchar_t t[3]; t[2] = 0;
-		_snwprintf(t, 2, L"%02x", buf[i]);
+		_snwprintf(t, 2, L"%02X", buf[i]);
 		s << t;
 	}
 
@@ -219,7 +234,7 @@ DOMElement *PrepareElement(DOMDocument *doc, DOMElement *parent, XMLCh* namespac
 }
 
 void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* root, MXFHeaderMetadata *header_metadata, MXFFile *mxfFile,
-	std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems, std::map<mxfKey, st434info*>& st434dict) {
+	std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems, std::map<mxfKey, st434info*>& st434dict) {
 	
 	std::map<mxfKey, st434info*>::const_iterator objIter;
 	objIter = st434dict.find(set->key);
@@ -294,7 +309,7 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 						// item is a single strong reference, follow it
 						mxf_get_strongref_item(set, &item->key, &referencedSet);
 				
-						AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkSets, darkItems, st434dict);
+						AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkItems, st434dict);
 
 					} else if (itemDef->typeId == MXF_STRONGREFARRAY_TYPE || itemDef->typeId == MXF_STRONGREFBATCH_TYPE) {
 						// loop through the array or batch of elements and follow each
@@ -306,7 +321,7 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 							mxf_initialise_sets_iter(header_metadata, &setsIter);
 
 							if (mxf_get_strongref_s(header_metadata, &setsIter, _value, &referencedSet)) {
-								AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkSets, darkItems, st434dict);
+								AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkItems, st434dict);
 							}
 						}
 					} else if (itemDef->typeId == MXF_UTF16STRING_TYPE) {
@@ -408,6 +423,19 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 	}
 }
 
+void AnalyzeDarkSets(DOMElement* parent, DOMDocument* root, MXFHeaderMetadata *header_metadata, MXFFile *mxfFile, std::vector<KLVPacketRef>& darkSets) {
+	if (darkSets.size() > 0) {
+		DOMElement* floatingGroups = PrepareElement(root, parent, L"http://www.smpte-ra.org/schemas/434/2006/multiplex/S377M/2004", L"FloatingMetadataGroups");
+		for (std::vector<KLVPacketRef>::iterator it = darkSets.begin(); it != darkSets.end(); it++) {
+			DOMElement* darkElem = PrepareElement(root, floatingGroups, s377mGroupsNS, L"UnparsedDarkGroup");
+			darkElem->setAttributeNS(s377mGroupsNS, L"Key", serialize_key(&(*it).key));
+			darkElem->setAttributeNS(s377mGroupsNS, L"BEROctetCount", serialize_simple<uint8_t>((*it).llen));
+			darkElem->setTextContent(serialize_dark_value(mxfFile, (*it).offset, (*it).len));
+		}
+	}
+}
+
+
 int main(int argc, char* argv[])
 {
 	XMLPlatformUtils::Initialize();
@@ -476,8 +504,8 @@ int main(int argc, char* argv[])
 	}
 
 	DOMImplementation *pImpl = DOMImplementation::getImplementation();
-	DOMDocument *doc = pImpl->createDocument(L"http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004", L"metadata", NULL);
-	
+	DOMDocument *doc = pImpl->createDocument(s377mGroupsNS, L"MetadataSets", NULL);
+
 	// add global namespace/prefix declarations
 	doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
 		L"xmlns:s335mElements", s335mElementsNS);
@@ -491,7 +519,9 @@ int main(int argc, char* argv[])
 #include "analyzer/group_declarations.inc"
 
 	AnalyzeMetadataSet(doc->getDocumentElement(), mHeaderMetadata->getPreface()->getCMetadataSet(), doc, mHeaderMetadata->getCHeaderMetadata(), mFile->getCFile(),
-		filter.darkSets, filter.allDarkItems, st434dict);
+		filter.allDarkItems, st434dict);
+
+	AnalyzeDarkSets(doc->getDocumentElement(), doc,mHeaderMetadata->getCHeaderMetadata(),  mFile->getCFile(), filter.darkSets);
 
 	LocalFileFormatTarget f("out.xml");
 	SerializeXercesDocument(*doc, f);
