@@ -4,6 +4,7 @@
 #include <sstream>
 
 #include <mxf/mxf.h>
+#include <mxf/mxf_macros.h>
 #include <libMXF++/MXF.h>
 #include <bmx/mxf_reader/MXFFileReader.h>
 #include <bmx/BMXException.h>
@@ -225,7 +226,6 @@ const XMLCh* serialize_dark_value(MXFFile *file, int64_t offset, int64_t length)
 	wcscpy(out, s.str().c_str());
 	return out;
 }
-
 
 DOMElement *PrepareElement(DOMDocument *doc, DOMElement *parent, XMLCh* namespaceURI, XMLCh* elementName) {
 	DOMElement *itemElem = doc->createElementNS(namespaceURI, elementName);
@@ -483,6 +483,83 @@ void AnalyzeDarkSets(DOMElement* parent, DOMDocument* root, MXFHeaderMetadata *h
 	}
 }
 
+void AnalyzeIndexTable(DOMElement* parent, DOMDocument* root, MXFFile *mxfFile, uint64_t indexTableLength) {
+	MXFIndexTableSegment* idx;
+	mxf_read_index_table_segment(mxfFile, indexTableLength, &idx);
+	DOMElement *idxElem = PrepareElement(root, parent, s377mGroupsNS, L"IndexTableSegment");
+		DOMElement *rateElem = PrepareElement(root, idxElem, s335mElementsNS, L"IndexEditRate");
+			PrepareElementWithContent(root, rateElem, s377mTypesNS, L"Numerator", serialize_simple<int32_t>(idx->indexEditRate.numerator));
+			PrepareElementWithContent(root, rateElem, s377mTypesNS, L"Denominator", serialize_simple<int32_t>(idx->indexEditRate.denominator));
+		PrepareElementWithContent(root, idxElem, s335mElementsNS, L"IndexStartPosition", serialize_simple<mxfPosition>(idx->indexStartPosition));
+		PrepareElementWithContent(root, idxElem, s335mElementsNS, L"IndexDuration", serialize_simple<mxfLength>(idx->indexDuration));
+		PrepareElementWithContent(root, idxElem, s335mElementsNS, L"EditUnitByteCount", serialize_simple<uint32_t>(idx->editUnitByteCount));
+		PrepareElementWithContent(root, idxElem, s335mElementsNS, L"IndexStreamID", serialize_simple<uint32_t>(idx->indexSID));
+		PrepareElementWithContent(root, idxElem, s335mElementsNS, L"EssenceStreamID", serialize_simple<uint32_t>(idx->bodySID));
+		PrepareElementWithContent(root, idxElem, s335mElementsNS, L"SliceCount", serialize_simple<uint8_t>(idx->sliceCount));
+		PrepareElementWithContent(root, idxElem, s335mElementsNS, L"PositionTableCount", serialize_simple<uint8_t>(idx->posTableCount));
+
+		DOMElement *deltaArrayElem = PrepareElement(root, idxElem, s335mElementsNS, L"DeltaEntryArray");
+		// loop through the linked list of delta entries
+		MXFDeltaEntry *d_entry = idx->deltaEntryArray;
+		while (d_entry != NULL) {
+			DOMElement *deltaElem = PrepareElement(root, deltaArrayElem, s335mElementsNS, L"Element");
+				PrepareElementWithContent(root, deltaElem, s335mElementsNS, L"PositionTableIndex", serialize_simple<int8_t>(d_entry->posTableIndex));
+				PrepareElementWithContent(root, deltaElem, s335mElementsNS, L"Slice", serialize_simple<uint8_t>(d_entry->slice));
+				PrepareElementWithContent(root, deltaElem, s335mElementsNS, L"ElementDelta", serialize_simple<uint32_t>(d_entry->elementData));
+			d_entry = d_entry->next;
+		}
+
+		DOMElement *indexArrayElem = PrepareElement(root, idxElem, s335mElementsNS, L"IndexEntryArray");
+		// loop through the linked list of index entries
+		MXFIndexEntry *i_entry = idx->indexEntryArray;
+		while (i_entry != NULL) {
+			DOMElement *idxEntElem = PrepareElement(root, indexArrayElem, s335mElementsNS, L"Element");
+				PrepareElementWithContent(root, idxEntElem, s335mElementsNS, L"TemporalOffset", serialize_simple<int8_t>(i_entry->temporalOffset));
+				PrepareElementWithContent(root, idxEntElem, s335mElementsNS, L"KeyFrameOffset", serialize_simple<int8_t>(i_entry->keyFrameOffset));
+				PrepareElementWithContent(root, idxEntElem, s335mElementsNS, L"Flags", serialize_simple<uint8_t>(i_entry->flags));
+				PrepareElementWithContent(root, idxEntElem, s335mElementsNS, L"StreamOffset", serialize_simple<uint64_t>(i_entry->streamOffset));
+
+				// loop through the array of slice offsets
+				DOMElement *sliceElem = PrepareElement(root, idxEntElem, s335mElementsNS, L"SliceOffset");
+					for (uint8_t i=0; i<idx->sliceCount; i++) {
+						PrepareElementWithContent(root, sliceElem, s335mElementsNS, L"Element", serialize_simple<uint32_t>(i_entry->sliceOffset[i]));
+					}
+				// loop through the array of positions
+				DOMElement *posElem = PrepareElement(root, idxEntElem, s335mElementsNS, L"PositionTable");
+					for (uint8_t i=0; i<idx->posTableCount; i++) {
+						DOMElement *ptElem = PrepareElement(root, posElem, s335mElementsNS, L"Element");
+						PrepareElementWithContent(root, ptElem, s377mTypesNS, L"Numerator", serialize_simple<int32_t>(i_entry->posTable[i].numerator));
+						PrepareElementWithContent(root, ptElem, s377mTypesNS, L"Denominator", serialize_simple<int32_t>(i_entry->posTable[i].denominator));
+					}
+
+			i_entry = i_entry->next;
+		}
+
+	mxf_free_index_table_segment(&idx);
+}
+
+bool FindIndexTable(MXFFile *mxfFile, int64_t offset, int64_t *tableOffset, int64_t *length) {
+	mxfKey key;
+    uint8_t llen;
+    uint64_t len;
+
+	mxf_file_seek(mxfFile, offset, SEEK_SET);
+	while (1)
+    {
+        CHK_ORET(mxf_read_next_nonfiller_kl(mxfFile, &key, &llen, &len));
+        if (mxf_is_index_table_segment(&key))
+        {
+			*length = len;
+			*tableOffset = mxf_file_tell(mxfFile);
+            return true;
+        }
+        else
+        {
+            CHK_ORET(mxf_skip(mxfFile, len));
+        }
+    }
+	return false;
+}
 
 int main(int argc, char* argv[])
 {
@@ -565,6 +642,12 @@ int main(int argc, char* argv[])
 	std::map<mxfKey, st434info*> st434dict;
 
 #include "analyzer/group_declarations.inc"
+
+	int64_t indexTableOffset=0, indexTableLength=0;
+	while (FindIndexTable(mFile->getCFile(), indexTableOffset, &indexTableOffset, &indexTableLength)) {
+		indexTableOffset += indexTableLength;
+		AnalyzeIndexTable(doc->getDocumentElement(), doc, mFile->getCFile(), indexTableLength);
+	}
 
 	AnalyzePrimerPack(doc->getDocumentElement(), doc, mHeaderMetadata->getCHeaderMetadata()->primerPack);
 	AnalyzePartitionPack(doc->getDocumentElement(), doc, metadata_partition->getCPartition());
