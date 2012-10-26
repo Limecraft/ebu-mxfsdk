@@ -138,8 +138,11 @@ int filter_after_item_read(void *privateData, MXFHeaderMetadata *headerMetadata,
 	return ((Filter*)privateData)->after_item_read(headerMetadata, item);
 }
 
-template<class t> const XMLCh* serialize_simple(t value) {
+template<class t> const XMLCh* serialize_simple(t value, bool hex = false) {
 	std::wstringstream s;
+	if (hex) {
+		s << L"0x" << std::hex << std::uppercase;
+	}
 	s << value;
 
 	XMLCh* out = new XMLCh[s.str().length() + 1];
@@ -454,6 +457,20 @@ void AnalyzePartitionPack(DOMElement* parent, DOMDocument* root, MXFPartition *p
 	AnalyzeList(ppEssenceContaines, &partition->essenceContainers, MXF_UL_TYPE, root);
 }
 
+void AnalyzePrimerPack(DOMElement* parent, DOMDocument* root, MXFPrimerPack *primer) {
+	DOMElement *ppElem = PrepareElement(root, parent, s377mGroupsNS, L"PrimerPack");
+	DOMElement *ppBatch = PrepareElement(root, ppElem, s377mGroupsNS, L"LocalTagEntryBatch");
+
+	MXFListIterator it;
+	mxf_initialise_list_iter(&it, &primer->entries);
+	while (mxf_next_list_iter_element(&it)) {
+		MXFPrimerPackEntry* v = (MXFPrimerPackEntry*)mxf_get_iter_element(&it);
+		DOMElement *ppEntry = PrepareElement(root, ppBatch, s377mGroupsNS, L"LocalTagEntry");
+		PrepareElementWithContent(root, ppEntry, s335mElementsNS, L"LocalTag", serialize_simple<uint16_t>(v->localTag, true));
+		PrepareElementWithContent(root, ppEntry, s335mElementsNS, L"LocalTagUniqueID", serialize_ul(&v->uid));
+	}
+}
+
 void AnalyzeDarkSets(DOMElement* parent, DOMDocument* root, MXFHeaderMetadata *header_metadata, MXFFile *mxfFile, std::vector<KLVPacketRef>& darkSets) {
 	if (darkSets.size() > 0) {
 		DOMElement* floatingGroups = PrepareElement(root, parent, L"http://www.smpte-ra.org/schemas/434/2006/multiplex/S377M/2004", L"FloatingMetadataGroups");
@@ -549,6 +566,7 @@ int main(int argc, char* argv[])
 
 #include "analyzer/group_declarations.inc"
 
+	AnalyzePrimerPack(doc->getDocumentElement(), doc, mHeaderMetadata->getCHeaderMetadata()->primerPack);
 	AnalyzePartitionPack(doc->getDocumentElement(), doc, metadata_partition->getCPartition());
 
 	AnalyzeMetadataSet(doc->getDocumentElement(), mHeaderMetadata->getPreface()->getCMetadataSet(), doc, mHeaderMetadata->getCHeaderMetadata(), mFile->getCFile(),
