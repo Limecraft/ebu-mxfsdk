@@ -35,6 +35,7 @@ using namespace EBUSDK::Utils;
 static XMLCh* s377mTypesNS = L"http://www.smpte-ra.org/schemas/434/2006/types/S377M/2004";
 static XMLCh* s335mElementsNS = L"http://www.smpte-ra.org/schemas/434/2006/properties/S335M";
 static XMLCh* s377mGroupsNS = L"http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004";
+static XMLCh* s377mMuxNS = L"http://www.smpte-ra.org/schemas/434/2006/multiplex/S377M/2004";
 
 struct st434info {
 	XMLCh* namespaceURI;
@@ -233,6 +234,82 @@ DOMElement *PrepareElement(DOMDocument *doc, DOMElement *parent, XMLCh* namespac
 	return itemElem;
 }
 
+DOMElement *PrepareElementWithContent(DOMDocument *doc, DOMElement *parent, XMLCh* namespaceURI, XMLCh* elementName, const XMLCh* textContent) {
+	DOMElement *itemElem = PrepareElement(doc, parent, namespaceURI, elementName);
+	itemElem->setTextContent(textContent);
+	return itemElem;
+}
+
+#define GET_AND_SERIALIZE(type, source, getfunction, serializefunction, dest)	\
+					type v; \
+					getfunction(source, &v); \
+					dest->setTextContent(serializefunction(v));
+#define GET_AND_SERIALIZE_BY_REF(type, source, getfunction, serializefunction, dest)	\
+					type v; \
+					getfunction(source, &v); \
+					dest->setTextContent(serializefunction(&v));
+
+void serializeMXFValue(unsigned int type, uint8_t *value, DOMElement* elem, DOMDocument *root) {
+	if (type == MXF_INT8_TYPE) {
+		GET_AND_SERIALIZE(int8_t, value, mxf_get_int8, serialize_simple<int8_t>, elem);
+	} else if (type == MXF_UINT8_TYPE) {
+		GET_AND_SERIALIZE(uint8_t, value, mxf_get_uint8, serialize_simple<uint8_t>, elem);
+	} else if (type == MXF_INT16_TYPE) {
+		GET_AND_SERIALIZE(int16_t, value, mxf_get_int16, serialize_simple<int16_t>, elem);
+	} else if (type == MXF_UINT16_TYPE) {
+		GET_AND_SERIALIZE(uint16_t, value, mxf_get_uint16, serialize_simple<uint16_t>, elem);
+	} else if (type == MXF_INT32_TYPE) {
+		GET_AND_SERIALIZE(int32_t, value, mxf_get_int32, serialize_simple<int32_t>, elem);
+	} else if (type == MXF_UINT32_TYPE) {
+		GET_AND_SERIALIZE(uint32_t, value, mxf_get_uint32, serialize_simple<uint32_t>, elem);
+	} else if (type == MXF_INT64_TYPE) {
+		GET_AND_SERIALIZE(int64_t, value, mxf_get_int64, serialize_simple<int64_t>, elem);
+	} else if (type == MXF_UINT64_TYPE) {
+		GET_AND_SERIALIZE(uint64_t, value, mxf_get_uint64, serialize_simple<uint64_t>, elem);
+	} else if (type == MXF_POSITION_TYPE || type == MXF_LENGTH_TYPE) {
+		GET_AND_SERIALIZE(int64_t, value, mxf_get_int64, serialize_simple<int64_t>, elem);
+	} else if (type == MXF_BOOLEAN_TYPE) {
+		GET_AND_SERIALIZE(mxfBoolean, value, mxf_get_boolean, serialize_boolean, elem);
+	} else if (type == MXF_RATIONAL_TYPE) {
+		const XMLCh* prefix = elem->lookupPrefix(s377mTypesNS);
+
+		mxfRational v;
+		mxf_get_rational(value, &v); 
+
+		DOMElement *elemNum = PrepareElement(root, elem, s377mTypesNS, L"Numerator");
+		elemNum->setTextContent(serialize_simple<int32_t>(v.numerator));
+		DOMElement *elemDenom = PrepareElement(root, elem, s377mTypesNS, L"Denominator");
+		elemDenom->setTextContent(serialize_simple<int32_t>(v.denominator));
+
+	} else if (type == MXF_UL_TYPE) {
+		GET_AND_SERIALIZE_BY_REF(mxfUL, value, mxf_get_ul, serialize_ul, elem);
+	} else if (type == MXF_UMID_TYPE || type == MXF_PACKAGEID_TYPE) {
+		GET_AND_SERIALIZE_BY_REF(mxfUMID, value, mxf_get_umid, serialize_umid, elem);
+	} else if (type == MXF_UUID_TYPE) {
+		GET_AND_SERIALIZE_BY_REF(mxfUUID, value, mxf_get_uuid, serialize_uuid, elem);
+	} else if (type == MXF_TIMESTAMP_TYPE) {
+		mxfTimestamp v;
+		mxf_get_timestamp(value, &v);
+
+		const XMLCh* prefix = elem->lookupPrefix(s377mTypesNS);
+
+		DOMElement *year = PrepareElement(root, elem, s377mTypesNS, L"Year");
+		year->setTextContent(serialize_simple<uint16_t>(v.year));
+		DOMElement *month = PrepareElement(root, elem, s377mTypesNS, L"Month");
+		month->setTextContent(serialize_simple<uint8_t>(v.month));
+		DOMElement *day = PrepareElement(root, elem, s377mTypesNS, L"Day");
+		day->setTextContent(serialize_simple<uint8_t>(v.day));
+		DOMElement *hours = PrepareElement(root, elem, s377mTypesNS, L"Hour");
+		hours->setTextContent(serialize_simple<uint8_t>(v.hour));
+		DOMElement *minutes = PrepareElement(root, elem, s377mTypesNS, L"Minute");
+		minutes->setTextContent(serialize_simple<uint8_t>(v.min));
+		DOMElement *seconds = PrepareElement(root, elem, s377mTypesNS, L"Second");
+		seconds->setTextContent(serialize_simple<uint8_t>(v.sec));
+		DOMElement *qmsec = PrepareElement(root, elem, s377mTypesNS, L"mSec4");
+		qmsec->setTextContent(serialize_simple<uint8_t>(v.qmsec));
+	}
+}
+
 void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* root, MXFHeaderMetadata *header_metadata, MXFFile *mxfFile,
 	std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems, std::map<mxfKey, st434info*>& st434dict) {
 	
@@ -289,15 +366,6 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 				objIter = st434dict.find(itemDef->key);
 				if (objIter != st434dict.end())
 				{
-#define GET_AND_SERIALIZE(type, source, getfunction, serializefunction, dest)	\
-					type v; \
-					getfunction(source, &v); \
-					dest->setTextContent(serializefunction(v));
-#define GET_AND_SERIALIZE_BY_REF(type, source, getfunction, serializefunction, dest)	\
-					type v; \
-					getfunction(source, &v); \
-					dest->setTextContent(serializefunction(&v));
-
 					st434info* itemInfo = (*objIter).second;
 					// create an element for this set
 					DOMElement *itemElem = PrepareElement(root, elem, itemInfo->namespaceURI, itemInfo->elementName);
@@ -339,79 +407,15 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 						mxf_initialise_array_item_iterator(set, &item->key, &arrIter);
 						while (mxf_next_array_item_element(&arrIter, &arrElm, &arrElmLength))
 						{
-							if (itemType->typeId != MXF_UTF16STRING_TYPE && itemType->typeId != MXF_UTF16STRING_TYPE) {
-								DOMElement *arrDomElem = PrepareElement(root, itemElem, L"http://www.smpte-ra.org/schemas/434/2006/properties/S335M", L"Element");
-								//MXFPP_CHECK(elementLength == mxfUL_extlen);
-								//mxf_get_ul(element, &value);
-
-								if (itemType->info.array.elementTypeId == MXF_UL_TYPE) {
-									GET_AND_SERIALIZE_BY_REF(mxfUL, arrElm, mxf_get_ul, serialize_ul, arrDomElem);
-								} else if (itemType->info.array.elementTypeId == MXF_INT32_TYPE) {
-									GET_AND_SERIALIZE(int32_t, arrElm, mxf_get_int32, serialize_simple<int32_t>, arrDomElem);
-								}
+							if (itemType->typeId != MXF_UTF16STRING_TYPE && itemType->typeId != MXF_ISO7STRING_TYPE) {
+								/* There can be no strings in arrays! */
+								DOMElement *arrDomElem = PrepareElement(root, itemElem, s335mElementsNS, L"Element");
+								serializeMXFValue(itemType->info.array.elementTypeId, arrElm, arrDomElem, root);
 							}
 						}
 
 					} else {
-						if (itemDef->typeId == MXF_INT8_TYPE) {
-							GET_AND_SERIALIZE(int8_t, item->value, mxf_get_int8, serialize_simple<int8_t>, itemElem);
-						} else if (itemDef->typeId == MXF_UINT8_TYPE) {
-							GET_AND_SERIALIZE(uint8_t, item->value, mxf_get_uint8, serialize_simple<uint8_t>, itemElem);
-						} else if (itemDef->typeId == MXF_INT16_TYPE) {
-							GET_AND_SERIALIZE(int16_t, item->value, mxf_get_int16, serialize_simple<int16_t>, itemElem);
-						} else if (itemDef->typeId == MXF_UINT16_TYPE) {
-							GET_AND_SERIALIZE(uint16_t, item->value, mxf_get_uint16, serialize_simple<uint16_t>, itemElem);
-						} else if (itemDef->typeId == MXF_INT32_TYPE) {
-							GET_AND_SERIALIZE(int32_t, item->value, mxf_get_int32, serialize_simple<int32_t>, itemElem);
-						} else if (itemDef->typeId == MXF_UINT32_TYPE) {
-							GET_AND_SERIALIZE(uint32_t, item->value, mxf_get_uint32, serialize_simple<uint32_t>, itemElem);
-						} else if (itemDef->typeId == MXF_INT64_TYPE) {
-							GET_AND_SERIALIZE(int64_t, item->value, mxf_get_int64, serialize_simple<int64_t>, itemElem);
-						} else if (itemDef->typeId == MXF_UINT64_TYPE) {
-							GET_AND_SERIALIZE(uint64_t, item->value, mxf_get_uint64, serialize_simple<uint64_t>, itemElem);
-						} else if (itemDef->typeId == MXF_POSITION_TYPE || itemDef->typeId == MXF_LENGTH_TYPE) {
-							GET_AND_SERIALIZE(int64_t, item->value, mxf_get_int64, serialize_simple<int64_t>, itemElem);
-						} else if (itemDef->typeId == MXF_BOOLEAN_TYPE) {
-							GET_AND_SERIALIZE(mxfBoolean, item->value, mxf_get_boolean, serialize_boolean, itemElem);
-						} else if (itemDef->typeId == MXF_RATIONAL_TYPE) {
-							const XMLCh* prefix = itemElem->lookupPrefix(s377mTypesNS);
-
-							mxfRational v;
-							mxf_get_rational(item->value, &v); 
-
-							DOMElement *elemNum = PrepareElement(root, itemElem, s377mTypesNS, L"Numerator");
-							elemNum->setTextContent(serialize_simple<int32_t>(v.numerator));
-							DOMElement *elemDenom = PrepareElement(root, itemElem, s377mTypesNS, L"Denominator");
-							elemDenom->setTextContent(serialize_simple<int32_t>(v.denominator));
-
-						} else if (itemDef->typeId == MXF_UL_TYPE) {
-							GET_AND_SERIALIZE_BY_REF(mxfUL, item->value, mxf_get_ul, serialize_ul, itemElem);
-						} else if (itemDef->typeId == MXF_UMID_TYPE || itemDef->typeId == MXF_PACKAGEID_TYPE) {
-							GET_AND_SERIALIZE_BY_REF(mxfUMID, item->value, mxf_get_umid, serialize_umid, itemElem);
-						} else if (itemDef->typeId == MXF_UUID_TYPE) {
-							GET_AND_SERIALIZE_BY_REF(mxfUUID, item->value, mxf_get_uuid, serialize_uuid, itemElem);
-						} else if (itemDef->typeId == MXF_TIMESTAMP_TYPE) {
-							mxfTimestamp v;
-							mxf_get_timestamp(item->value, &v);
-
-							const XMLCh* prefix = itemElem->lookupPrefix(s377mTypesNS);
-
-							DOMElement *year = PrepareElement(root, itemElem, s377mTypesNS, L"Year");
-							year->setTextContent(serialize_simple<uint16_t>(v.year));
-							DOMElement *month = PrepareElement(root, itemElem, s377mTypesNS, L"Month");
-							month->setTextContent(serialize_simple<uint8_t>(v.month));
-							DOMElement *day = PrepareElement(root, itemElem, s377mTypesNS, L"Day");
-							day->setTextContent(serialize_simple<uint8_t>(v.day));
-							DOMElement *hours = PrepareElement(root, itemElem, s377mTypesNS, L"Hour");
-							hours->setTextContent(serialize_simple<uint8_t>(v.hour));
-							DOMElement *minutes = PrepareElement(root, itemElem, s377mTypesNS, L"Minute");
-							minutes->setTextContent(serialize_simple<uint8_t>(v.min));
-							DOMElement *seconds = PrepareElement(root, itemElem, s377mTypesNS, L"Second");
-							seconds->setTextContent(serialize_simple<uint8_t>(v.sec));
-							DOMElement *qmsec = PrepareElement(root, itemElem, s377mTypesNS, L"mSec4");
-							qmsec->setTextContent(serialize_simple<uint8_t>(v.qmsec));
-						}
-
+						serializeMXFValue(itemDef->typeId, item->value, itemElem, root);
 					}
 				}
 			}
@@ -421,6 +425,33 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 	else {
 		// don't know this!!!
 	}
+}
+
+void AnalyzeList(DOMElement* parent, MXFList *list, int elementType, DOMDocument* root) {
+	MXFListIterator it;
+	mxf_initialise_list_iter(&it, list);
+	while (mxf_next_list_iter_element(&it)) {
+		uint8_t* v = (uint8_t*)mxf_get_iter_element(&it);
+		serializeMXFValue(elementType, v, PrepareElement(root, parent, s335mElementsNS, L"Element"), root);
+	}
+}
+
+void AnalyzePartitionPack(DOMElement* parent, DOMDocument* root, MXFPartition *partition) {
+	DOMElement *ppElem = PrepareElement(root, parent, s377mGroupsNS, L"PartitionPack");
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, L"MajorVersion", serialize_simple<uint16_t>(partition->majorVersion));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, L"MinorVersion", serialize_simple<uint16_t>(partition->minorVersion));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, L"KAGSize", serialize_simple<uint32_t>(partition->kagSize));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, L"ThisPartition", serialize_simple<uint64_t>(partition->thisPartition));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, L"PreviousPartition", serialize_simple<uint64_t>(partition->previousPartition));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, L"FooterPartition", serialize_simple<uint64_t>(partition->footerPartition));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, L"HeaderByteCount", serialize_simple<uint64_t>(partition->headerByteCount));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, L"IndexByteCount", serialize_simple<uint64_t>(partition->indexByteCount));	
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, L"IndexStreamID", serialize_simple<uint32_t>(partition->indexSID));	
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, L"BodyOffset", serialize_simple<uint64_t>(partition->bodyOffset));	
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, L"EssenceStreamID", serialize_simple<uint32_t>(partition->bodySID));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, L"OperationalPattern", serialize_ul(&partition->operationalPattern));
+	DOMElement *ppEssenceContaines = PrepareElement(root, ppElem, s335mElementsNS, L"EssenceContainers");
+	AnalyzeList(ppEssenceContaines, &partition->essenceContainers, MXF_UL_TYPE, root);
 }
 
 void AnalyzeDarkSets(DOMElement* parent, DOMDocument* root, MXFHeaderMetadata *header_metadata, MXFFile *mxfFile, std::vector<KLVPacketRef>& darkSets) {
@@ -517,6 +548,8 @@ int main(int argc, char* argv[])
 	std::map<mxfKey, st434info*> st434dict;
 
 #include "analyzer/group_declarations.inc"
+
+	AnalyzePartitionPack(doc->getDocumentElement(), doc, metadata_partition->getCPartition());
 
 	AnalyzeMetadataSet(doc->getDocumentElement(), mHeaderMetadata->getPreface()->getCMetadataSet(), doc, mHeaderMetadata->getCHeaderMetadata(), mFile->getCFile(),
 		filter.allDarkItems, st434dict);
