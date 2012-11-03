@@ -38,6 +38,19 @@ static XMLCh* s335mElementsNS = L"http://www.smpte-ra.org/schemas/434/2006/prope
 static XMLCh* s377mGroupsNS = L"http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004";
 static XMLCh* s377mMuxNS = L"http://www.smpte-ra.org/schemas/434/2006/multiplex/S377M/2004";
 
+struct AnalyzerConfig {
+	enum {
+		METADATA,
+		MXF_MUX
+	} AnalysisType;
+	enum { 		
+		LOGICAL,
+		PHYSICAL
+	} MetadataAnalysisType;
+
+};
+
+
 struct st434info {
 	XMLCh* namespaceURI;
 	XMLCh* elementName;
@@ -57,18 +70,18 @@ class Filter {
 	KLVPacketRef currentSet, currentItem;
 	mxfUUID currentSetUID;
 	bool setSet, itemSet;
-public:
-	std::vector<KLVPacketRef> darkSets;
 	std::vector<KLVPacketRef> darkItems;
-	std::map<mxfUUID, std::vector<KLVPacketRef>> allDarkItems;
-
-	Filter(MXFFile *f) : setSet(false), itemSet(false), file(f) {}
+	std::vector<KLVPacketRef>& _darkSets;
+	std::map<mxfUUID, std::vector<KLVPacketRef>>& _allDarkItems;
+public:
+	Filter(MXFFile *f, std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems) : 
+		setSet(false), itemSet(false), file(f), _darkSets(darkSets), _allDarkItems(darkItems) {}
     int before_set_read(MXFHeaderMetadata *headerMetadata, const mxfKey *key, uint8_t llen, uint64_t len, int *skip) {
 		// clear cache of dark items when beginning this set
 		darkItems.clear();
 		if (setSet) {
 			// currentKey key was begun, but never finished!
-			darkSets.push_back(currentSet);
+			_darkSets.push_back(currentSet);
 		}
 		currentSet.key = *key;
 		currentSet.len = len;
@@ -85,7 +98,7 @@ public:
 		if (darkItems.size() > 0) {
 			currentSetUID = set->instanceUID;
 			// and add the current list of cached dark items to this set's entry
-			allDarkItems[currentSetUID] = darkItems;
+			_allDarkItems[currentSetUID] = darkItems;
 		}
 
 		if (setSet && mxf_equals_key(&currentSet.key, &set->key))
@@ -114,7 +127,7 @@ public:
 	void done() {
 		if (setSet)
 			// currentKey key was begun, but never finished!
-			darkSets.push_back(currentSet);
+			_darkSets.push_back(currentSet);
 	}
 	void itemDone() {
 		if (itemSet)
@@ -538,6 +551,54 @@ void AnalyzeIndexTable(DOMElement* parent, DOMDocument* root, MXFFile *mxfFile, 
 	mxf_free_index_table_segment(&idx);
 }
 
+std::auto_ptr<HeaderMetadata> ReadHeaderMetadata(File* mxfFile, Partition* partition, DataModel* metadataModel, std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems) {
+
+	mxfKey key;
+	uint8_t llen;
+	uint64_t len;
+
+	std::auto_ptr<HeaderMetadata> mHeaderMetadata ( new HeaderMetadata(metadataModel) );
+
+	mxfFile->seek(partition->getThisPartition(), SEEK_SET);
+	mxfFile->readKL(&key, &llen, &len);
+	mxfFile->skip(len);
+	mxfFile->readNextNonFillerKL(&key, &llen, &len);
+
+	uint64_t pos_start_metadata = mxfFile->tell() - mxfKey_extlen - llen;
+
+	Filter filter(mxfFile->getCFile(), darkSets, darkItems);
+	MXFReadFilter cfilter;
+	cfilter.before_set_read = filter_before_set_read;
+	cfilter.after_set_read = filter_after_set_read;
+	cfilter.before_item_read = filter_before_item_read;
+	cfilter.after_item_read = filter_after_item_read;
+	cfilter.privateData = &filter;
+
+	mHeaderMetadata->readFiltered(&*mxfFile, partition, &cfilter, &key, llen, len);
+	filter.done();
+
+	return mHeaderMetadata;
+}
+
+void AnalyzeHeaderMetadata(	DOMElement *parent, DOMDocument* root, MXFHeaderMetadata* metadata, MXFMetadataSet *metadataSet, MXFFile *file,
+							std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems, std::map<mxfKey, st434info*>& st434dictionary) {
+
+	// analyze the metadata set
+	AnalyzeMetadataSet(parent, metadataSet, root, metadata, file, darkItems, st434dictionary);
+	// the dump dark sets
+	AnalyzeDarkSets(parent, root, metadata, file, darkSets);
+}
+
+void AddST434PrefixDeclarations(DOMDocument *doc) {
+	// add global namespace/prefix declarations
+	doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
+		L"xmlns:s335mElements", s335mElementsNS);
+	doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
+		L"xmlns:s377mTypes", s377mTypesNS);
+	doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
+		L"xmlns:s377mGroups", s377mGroupsNS);
+}
+
 bool FindIndexTable(MXFFile *mxfFile, int64_t offset, int64_t *tableOffset, int64_t *length) {
 	mxfKey key;
     uint8_t llen;
@@ -561,11 +622,17 @@ bool FindIndexTable(MXFFile *mxfFile, int64_t offset, int64_t *tableOffset, int6
 	return false;
 }
 
-int main(int argc, char* argv[])
-{
-	XMLPlatformUtils::Initialize();
+std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfig configuration) {
 
-	std::auto_ptr<File> mFile( File::openRead(argv[1]) );	// throws MXFException if open failed!
+	XMLPlatformUtils::Initialize();
+	
+	DOMImplementation *pImpl = DOMImplementation::getImplementation();
+
+	std::map<mxfKey, st434info*> st434dict;
+
+#include "analyzer/group_declarations.inc"
+
+	std::auto_ptr<File> mFile( File::openRead(mxfLocation) );	// throws MXFException if open failed!
 
 	std::auto_ptr<DataModel> mDataModel ( new DataModel() );
 
@@ -587,34 +654,63 @@ int main(int argc, char* argv[])
 	Partition *metadata_partition = NULL, *headerPartition = NULL, *footerPartition = NULL;
 
 	metadata_partition = FindPreferredMetadataPartition(partitions, &headerPartition, &footerPartition);
-	if (!metadata_partition)
-		throw BMXException("No MXF suitable MXF metadata found");
 
-	mxfKey key;
-	uint8_t llen;
-	uint64_t len;
+	if (configuration.AnalysisType == AnalyzerConfig::METADATA) {
 
-	std::auto_ptr<HeaderMetadata> mHeaderMetadata ( new HeaderMetadata(&*mDataModel) );
+		// only analyze the primary header metadata into a MetadataSets element
 
-	mFile->seek(metadata_partition->getThisPartition(), SEEK_SET);
-	mFile->readKL(&key, &llen, &len);
-	mFile->skip(len);
-	mFile->readNextNonFillerKL(&key, &llen, &len);
+		DOMDocument *doc = pImpl->createDocument(s377mGroupsNS, L"MetadataSets", NULL);
+		AddST434PrefixDeclarations(doc);
 
-	uint64_t pos_start_metadata =  mFile->tell() - mxfKey_extlen - llen;
+		if (!metadata_partition)
+			throw BMXException("No MXF suitable MXF metadata found");
 
-	Filter filter(mFile->getCFile());
-	MXFReadFilter cfilter;
-	cfilter.before_set_read = filter_before_set_read;
-	cfilter.after_set_read = filter_after_set_read;
-	cfilter.before_item_read = filter_before_item_read;
-	cfilter.after_item_read = filter_after_item_read;
-	cfilter.privateData = &filter;
+		std::vector<KLVPacketRef> darkSets;
+		std::map<mxfUUID, std::vector<KLVPacketRef>> darkItems;
 
-	mHeaderMetadata->readFiltered(&*mFile, metadata_partition, &cfilter, &key, llen, len);
-	filter.done();
+		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(&*mFile, metadata_partition, &*mDataModel, darkSets, darkItems);
 
-	for (std::map<mxfUUID, std::vector<KLVPacketRef>>::iterator it=filter.allDarkItems.begin(); it!=filter.allDarkItems.end();it++) {
+		AnalyzeHeaderMetadata(doc->getDocumentElement(), doc, headerMetadata->getCHeaderMetadata(), headerMetadata->getPreface()->getCMetadataSet(), 
+			mFile->getCFile(), darkSets, darkItems, st434dict);
+
+		return std::auto_ptr<DOMDocument>(doc);
+
+	} else {
+
+		// only analyze the entire MXF file into an MXFFile element
+		DOMDocument *doc = pImpl->createDocument(s377mMuxNS, L"MXFFile", NULL);
+		AddST434PrefixDeclarations(doc);
+
+		std::vector<KLVPacketRef> darkSets;
+		std::map<mxfUUID, std::vector<KLVPacketRef>> darkItems;
+
+		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(&*mFile, metadata_partition, &*mDataModel, darkSets, darkItems);
+
+		int64_t indexTableOffset=0, indexTableLength=0;
+		while (FindIndexTable(mFile->getCFile(), indexTableOffset, &indexTableOffset, &indexTableLength)) {
+			indexTableOffset += indexTableLength;
+			AnalyzeIndexTable(doc->getDocumentElement(), doc, mFile->getCFile(), indexTableLength);
+		}
+
+		AnalyzePrimerPack(doc->getDocumentElement(), doc, headerMetadata->getCHeaderMetadata()->primerPack);
+		AnalyzePartitionPack(doc->getDocumentElement(), doc, metadata_partition->getCPartition());
+
+		AnalyzeHeaderMetadata(doc->getDocumentElement(), doc, headerMetadata->getCHeaderMetadata(), headerMetadata->getPreface()->getCMetadataSet(), 
+			mFile->getCFile(), darkSets, darkItems, st434dict);
+
+		return std::auto_ptr<DOMDocument>(doc);
+	}
+}
+
+int main(int argc, char* argv[])
+{
+	AnalyzerConfig cfg;
+	cfg.AnalysisType = AnalyzerConfig::MXF_MUX;
+	cfg.MetadataAnalysisType = AnalyzerConfig::LOGICAL;
+
+	std::auto_ptr<DOMDocument> doc = AnalyzeMXFFile(argv[1], cfg);
+
+	/*for (std::map<mxfUUID, std::vector<KLVPacketRef>>::iterator it=darkItems.begin(); it!=darkItems.end();it++) {
 		std::pair<const mxfUUID, std::vector<KLVPacketRef>>& p = *it;
 		char uuid[KEY_STR_SIZE];
 		char setkey[KEY_STR_SIZE];
@@ -626,36 +722,7 @@ int main(int argc, char* argv[])
 			mxf_sprint_key(key, &(*it2).key);
 			printf("\t%s\n", key);
 		}
-	}
-
-	DOMImplementation *pImpl = DOMImplementation::getImplementation();
-	DOMDocument *doc = pImpl->createDocument(s377mGroupsNS, L"MetadataSets", NULL);
-
-	// add global namespace/prefix declarations
-	doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
-		L"xmlns:s335mElements", s335mElementsNS);
-	doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
-		L"xmlns:s377mTypes", s377mTypesNS);
-	doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
-		L"xmlns:s377mGroups", s377mGroupsNS);
-
-	std::map<mxfKey, st434info*> st434dict;
-
-#include "analyzer/group_declarations.inc"
-
-	int64_t indexTableOffset=0, indexTableLength=0;
-	while (FindIndexTable(mFile->getCFile(), indexTableOffset, &indexTableOffset, &indexTableLength)) {
-		indexTableOffset += indexTableLength;
-		AnalyzeIndexTable(doc->getDocumentElement(), doc, mFile->getCFile(), indexTableLength);
-	}
-
-	AnalyzePrimerPack(doc->getDocumentElement(), doc, mHeaderMetadata->getCHeaderMetadata()->primerPack);
-	AnalyzePartitionPack(doc->getDocumentElement(), doc, metadata_partition->getCPartition());
-
-	AnalyzeMetadataSet(doc->getDocumentElement(), mHeaderMetadata->getPreface()->getCMetadataSet(), doc, mHeaderMetadata->getCHeaderMetadata(), mFile->getCFile(),
-		filter.allDarkItems, st434dict);
-
-	AnalyzeDarkSets(doc->getDocumentElement(), doc,mHeaderMetadata->getCHeaderMetadata(),  mFile->getCFile(), filter.darkSets);
+	}*/
 
 	LocalFileFormatTarget f("out.xml");
 	SerializeXercesDocument(*doc, f);
