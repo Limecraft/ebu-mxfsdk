@@ -685,6 +685,43 @@ bool FindIndexTable(MXFFile *mxfFile, int64_t offset, int64_t *tableOffset, int6
 	return false;
 }
 
+void AnalyzePartition(DOMElement *parent, DOMDocument *root, Partition *partition, File *mxfFile, DataModel *dataModel, AnalyzerConfig configuration, std::map<mxfKey, st434info*>& st434dict) {
+	std::vector<KLVPacketRef> darkSets;
+	std::map<mxfUUID, std::vector<KLVPacketRef>> darkItems;
+
+	// what type of partition is this?
+	DOMElement *partElem = 
+		mxf_is_header_partition_pack(partition->getKey()) ? 
+			PrepareElement(root, parent, s377mMuxNS, L"HeaderPartition") : 
+			(mxf_is_footer_partition_pack(partition->getKey()) ? 
+				PrepareElement(root, parent, s377mMuxNS, L"FooterPartition") :
+				PrepareElement(root, parent, s377mMuxNS, L"BodyPartition"));
+
+	AnalyzePartitionPack(partElem, root, partition->getCPartition());
+
+	if (partition->getHeaderByteCount() > 0) {
+		DOMElement *metadataElem = PrepareElement(root, partElem, s377mMuxNS, L"HeaderMetadata");
+
+		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(mxfFile, partition, dataModel, darkSets, darkItems);
+
+		AnalyzePrimerPack(metadataElem, root, headerMetadata->getCHeaderMetadata()->primerPack);
+
+		DOMElement *setsElem = PrepareElement(root, metadataElem, s377mMuxNS, L"MetadataSets");
+
+		AnalyzeHeaderMetadata(setsElem, root, &*headerMetadata,
+			mxfFile->getCFile(), darkSets, darkItems, configuration, st434dict);
+	}
+
+	if (partition->getIndexByteCount() > 0) {
+		int64_t indexTableOffset=0, indexTableLength=0;
+		while (FindIndexTable(mxfFile->getCFile(), indexTableOffset, &indexTableOffset, &indexTableLength)) {
+			indexTableOffset += indexTableLength;
+			AnalyzeIndexTable(partElem, root, mxfFile->getCFile(), indexTableLength);
+		}
+	}
+
+}
+
 std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfig configuration) {
 
 	XMLPlatformUtils::Initialize();
@@ -722,7 +759,7 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 
 		// only analyze the primary header metadata into a MetadataSets element
 
-		DOMDocument *doc = pImpl->createDocument(s377mGroupsNS, L"MetadataSets", NULL);
+		DOMDocument *doc = pImpl->createDocument(s377mMuxNS, L"MetadataSets", NULL);
 		AddST434PrefixDeclarations(doc);
 
 		if (!metadata_partition)
@@ -740,11 +777,14 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 
 	} else {
 
-		// only analyze the entire MXF file into an MXFFile element
+		// analyze the entire MXF file into an MXFFile element
 		DOMDocument *doc = pImpl->createDocument(s377mMuxNS, L"MXFFile", NULL);
 		AddST434PrefixDeclarations(doc);
 
-		std::vector<KLVPacketRef> darkSets;
+		// dump each of the partitions
+		AnalyzePartition(doc->getDocumentElement(), doc, headerPartition, &*mFile, &*mDataModel, configuration, st434dict);
+
+		/*std::vector<KLVPacketRef> darkSets;
 		std::map<mxfUUID, std::vector<KLVPacketRef>> darkItems;
 
 		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(&*mFile, metadata_partition, &*mDataModel, darkSets, darkItems);
@@ -759,7 +799,7 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 		AnalyzePartitionPack(doc->getDocumentElement(), doc, metadata_partition->getCPartition());
 
 		AnalyzeHeaderMetadata(doc->getDocumentElement(), doc, &*headerMetadata,
-			mFile->getCFile(), darkSets, darkItems, configuration, st434dict);
+			mFile->getCFile(), darkSets, darkItems, configuration, st434dict);*/
 
 		return std::auto_ptr<DOMDocument>(doc);
 	}
@@ -768,8 +808,8 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 int main(int argc, char* argv[])
 {
 	AnalyzerConfig cfg;
-	cfg.AnalysisType = AnalyzerConfig::METADATA;
-	cfg.MetadataAnalysisType = AnalyzerConfig::PHYSICAL;
+	cfg.AnalysisType = AnalyzerConfig::MXF_MUX;
+	cfg.MetadataAnalysisType = AnalyzerConfig::LOGICAL;
 
 	std::auto_ptr<DOMDocument> doc = AnalyzeMXFFile(argv[1], cfg);
 
