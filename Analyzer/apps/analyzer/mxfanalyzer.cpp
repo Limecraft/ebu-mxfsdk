@@ -19,6 +19,7 @@ int main(int argc, char* argv[])
 	AnalyzerConfig cfg;
 	cfg.AnalysisType = AnalyzerConfig::MXF_MUX;
 	cfg.MetadataAnalysisType = AnalyzerConfig::LOGICAL;
+	cfg.DeepIndexTableAnalysis = false;
 
 	std::auto_ptr<DOMDocument> doc = AnalyzeMXFFile(argv[1], cfg);
 

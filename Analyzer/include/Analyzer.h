@@ -20,6 +20,7 @@ namespace EBUSDK {
 				LOGICAL,
 				PHYSICAL
 			} MetadataAnalysisType;
+			bool DeepIndexTableAnalysis;
 		};
 
 		std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfig configuration);
