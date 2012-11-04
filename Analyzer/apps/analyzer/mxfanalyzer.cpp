@@ -441,10 +441,15 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 							MXFListIterator setsIter;
 							mxf_initialise_sets_iter(header_metadata, &setsIter);
 
-
-
 							if (mxf_get_strongref_s(header_metadata, &setsIter, _value, &referencedSet)) {
-								AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkItems, recurseIntoReferences, st434dict);
+
+								// do we follow strong references extensively?
+								if (recurseIntoReferences) {
+									AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkItems, recurseIntoReferences, st434dict);
+								}
+								else {
+									AnalyzeShallowStrongReference(itemElem, referencedSet, root, header_metadata, st434dict);
+								}
 							}
 						}
 					} else {
@@ -622,13 +627,29 @@ std::auto_ptr<HeaderMetadata> ReadHeaderMetadata(File* mxfFile, Partition* parti
 	return mHeaderMetadata;
 }
 
-void AnalyzeHeaderMetadata(	DOMElement *parent, DOMDocument* root, MXFHeaderMetadata* metadata, MXFMetadataSet *metadataSet, MXFFile *file,
-							std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems, bool recurseIntoReferences, std::map<mxfKey, st434info*>& st434dictionary) {
+void AnalyzeHeaderMetadata(	DOMElement *parent, DOMDocument* root, HeaderMetadata* headerMetadata, MXFFile *file,
+	std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems, AnalyzerConfig configuration, std::map<mxfKey, st434info*>& st434dictionary) {
 
-	// analyze the metadata set
-	AnalyzeMetadataSet(parent, metadataSet, root, metadata, file, darkItems, recurseIntoReferences, st434dictionary);
-	// the dump dark sets
-	AnalyzeDarkSets(parent, root, metadata, file, darkSets);
+	if (configuration.MetadataAnalysisType == AnalyzerConfig::LOGICAL) {
+		// analyze the metadata set
+		AnalyzeMetadataSet(parent, headerMetadata->getPreface()->getCMetadataSet(), root, headerMetadata->getCHeaderMetadata(), file, darkItems, true, st434dictionary);
+		// the dump dark sets
+		AnalyzeDarkSets(parent, root, headerMetadata->getCHeaderMetadata(), file, darkSets);
+	} else {
+		// do a 'physical' dump of the metadata, iterate over each of the sets
+		MXFListIterator setIter;		
+		mxf_initialise_list_iter(&setIter, &headerMetadata->getCHeaderMetadata()->sets);
+		while (mxf_next_list_iter_element(&setIter))
+		{
+			MXFMetadataSet *set = (MXFMetadataSet*)mxf_get_iter_element(&setIter);
+
+			// analyze the metadata set
+			AnalyzeMetadataSet(parent, set, root, headerMetadata->getCHeaderMetadata(), file, darkItems, false, st434dictionary);
+		}
+		// the dump dark sets
+		AnalyzeDarkSets(parent, root, headerMetadata->getCHeaderMetadata(), file, darkSets);
+
+	}
 }
 
 void AddST434PrefixDeclarations(DOMDocument *doc) {
@@ -712,8 +733,8 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 
 		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(&*mFile, metadata_partition, &*mDataModel, darkSets, darkItems);
 
-		AnalyzeHeaderMetadata(doc->getDocumentElement(), doc, headerMetadata->getCHeaderMetadata(), headerMetadata->getPreface()->getCMetadataSet(), 
-			mFile->getCFile(), darkSets, darkItems, configuration.MetadataAnalysisType == AnalyzerConfig::LOGICAL, st434dict);
+		AnalyzeHeaderMetadata(doc->getDocumentElement(), doc, &*headerMetadata, 
+			mFile->getCFile(), darkSets, darkItems, configuration, st434dict);
 
 		return std::auto_ptr<DOMDocument>(doc);
 
@@ -737,8 +758,8 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 		AnalyzePrimerPack(doc->getDocumentElement(), doc, headerMetadata->getCHeaderMetadata()->primerPack);
 		AnalyzePartitionPack(doc->getDocumentElement(), doc, metadata_partition->getCPartition());
 
-		AnalyzeHeaderMetadata(doc->getDocumentElement(), doc, headerMetadata->getCHeaderMetadata(), headerMetadata->getPreface()->getCMetadataSet(), 
-			mFile->getCFile(), darkSets, darkItems, configuration.MetadataAnalysisType == AnalyzerConfig::LOGICAL, st434dict);
+		AnalyzeHeaderMetadata(doc->getDocumentElement(), doc, &*headerMetadata,
+			mFile->getCFile(), darkSets, darkItems, configuration, st434dict);
 
 		return std::auto_ptr<DOMDocument>(doc);
 	}
