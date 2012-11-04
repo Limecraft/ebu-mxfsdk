@@ -713,10 +713,13 @@ void AnalyzePartition(DOMElement *parent, DOMDocument *root, Partition *partitio
 	}
 
 	if (partition->getIndexByteCount() > 0) {
+
+		DOMElement *indexElem = PrepareElement(root, partElem, s377mGroupsNS, L"IndexTable");
+
 		int64_t indexTableOffset=0, indexTableLength=0;
 		while (FindIndexTable(mxfFile->getCFile(), indexTableOffset, &indexTableOffset, &indexTableLength)) {
 			indexTableOffset += indexTableLength;
-			AnalyzeIndexTable(partElem, root, mxfFile->getCFile(), indexTableLength);
+			AnalyzeIndexTable(indexElem, root, mxfFile->getCFile(), indexTableLength);
 		}
 	}
 
@@ -781,25 +784,19 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 		DOMDocument *doc = pImpl->createDocument(s377mMuxNS, L"MXFFile", NULL);
 		AddST434PrefixDeclarations(doc);
 
-		// dump each of the partitions
+		// dump each of the partitions, header partition first
 		AnalyzePartition(doc->getDocumentElement(), doc, headerPartition, &*mFile, &*mDataModel, configuration, st434dict);
 
-		/*std::vector<KLVPacketRef> darkSets;
-		std::map<mxfUUID, std::vector<KLVPacketRef>> darkItems;
-
-		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(&*mFile, metadata_partition, &*mDataModel, darkSets, darkItems);
-
-		int64_t indexTableOffset=0, indexTableLength=0;
-		while (FindIndexTable(mFile->getCFile(), indexTableOffset, &indexTableOffset, &indexTableLength)) {
-			indexTableOffset += indexTableLength;
-			AnalyzeIndexTable(doc->getDocumentElement(), doc, mFile->getCFile(), indexTableLength);
+		// ... then body partitions
+		for (std::vector<Partition*>::const_iterator it = partitions.begin(); it != partitions.end(); it++) {
+			if (mxf_is_body_partition_pack((*it)->getKey())) {
+				AnalyzePartition(doc->getDocumentElement(), doc, *it, &*mFile, &*mDataModel, configuration, st434dict);
+			}
 		}
 
-		AnalyzePrimerPack(doc->getDocumentElement(), doc, headerMetadata->getCHeaderMetadata()->primerPack);
-		AnalyzePartitionPack(doc->getDocumentElement(), doc, metadata_partition->getCPartition());
-
-		AnalyzeHeaderMetadata(doc->getDocumentElement(), doc, &*headerMetadata,
-			mFile->getCFile(), darkSets, darkItems, configuration, st434dict);*/
+		// ... finally dump footer partition
+		if (footerPartition != NULL)
+			AnalyzePartition(doc->getDocumentElement(), doc, footerPartition, &*mFile, &*mDataModel, configuration, st434dict);
 
 		return std::auto_ptr<DOMDocument>(doc);
 	}
