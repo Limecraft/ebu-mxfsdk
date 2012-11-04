@@ -240,7 +240,7 @@ const XMLCh* serialize_dark_value(MXFFile *file, int64_t offset, int64_t length)
 	return out;
 }
 
-DOMElement *PrepareElement(DOMDocument *doc, DOMElement *parent, XMLCh* namespaceURI, XMLCh* elementName) {
+DOMElement *PrepareElement(DOMDocument *doc, DOMElement *parent, const XMLCh* namespaceURI, const XMLCh* elementName) {
 	DOMElement *itemElem = doc->createElementNS(namespaceURI, elementName);
 	parent->appendChild(itemElem);
 	const XMLCh* prefix = itemElem->lookupPrefix(namespaceURI);
@@ -254,6 +254,17 @@ DOMElement *PrepareElementWithContent(DOMDocument *doc, DOMElement *parent, XMLC
 	DOMElement *itemElem = PrepareElement(doc, parent, namespaceURI, elementName);
 	itemElem->setTextContent(textContent);
 	return itemElem;
+}
+
+DOMAttr *PrepareAttributeWithContent(DOMDocument *doc, DOMElement *parent, XMLCh* namespaceURI, XMLCh* attrName, const XMLCh* textContent) {
+	DOMAttr *attr = doc->createAttributeNS(namespaceURI, attrName);
+	parent->setAttributeNode(attr);
+	const XMLCh* prefix = attr->lookupPrefix(namespaceURI);
+	if (prefix != NULL) {
+		attr->setPrefix(prefix);
+	}
+	attr->setTextContent(textContent);
+	return attr;
 }
 
 #define GET_AND_SERIALIZE(type, source, getfunction, serializefunction, dest)	\
@@ -326,8 +337,26 @@ void serializeMXFValue(unsigned int type, uint8_t *value, DOMElement* elem, DOMD
 	}
 }
 
+void AnalyzeShallowStrongReference(DOMElement* parent, MXFMetadataSet *set, DOMDocument* root, MXFHeaderMetadata *header_metadata, std::map<mxfKey, st434info*>& st434dict) {
+	// Use the set key to determine the item information that we need to print
+	std::map<mxfKey, st434info*>::const_iterator objIter;
+	objIter = st434dict.find(set->key);
+	// only if we know the definition
+	if (objIter != st434dict.end()) {
+		st434info* info = (*objIter).second;
+
+		// write out a _REF reference element
+		std::wstring ref_elem(info->elementName);
+		ref_elem.append(L"_REF");
+		DOMElement *refElem = PrepareElement(root, parent, info->namespaceURI, ref_elem.c_str());
+
+		// set the instanceUID attribute
+		PrepareAttributeWithContent(root, refElem, s377mTypesNS, L"TargetInstance", serialize_uuid(&set->instanceUID));
+	}
+}
+
 void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* root, MXFHeaderMetadata *header_metadata, MXFFile *mxfFile,
-	std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems, std::map<mxfKey, st434info*>& st434dict) {
+	std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems, bool recurseIntoReferences, std::map<mxfKey, st434info*>& st434dict) {
 	
 	std::map<mxfKey, st434info*>::const_iterator objIter;
 	objIter = st434dict.find(set->key);
@@ -346,7 +375,7 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 		parent->appendChild(elem);
 
 		// set the instanceUID attribute
-		elem->setAttributeNS(s335mElementsNS, L"s335mElements:InstanceID", serialize_uuid(&set->instanceUID));
+		PrepareAttributeWithContent(root, elem, s335mElementsNS, L"InstanceID", serialize_uuid(&set->instanceUID));
 
 		// are there dark properties to add??? (must be done first, as per ST-434)
 		std::map<mxfUUID, std::vector<KLVPacketRef>>::iterator darkIt = darkItems.find(set->instanceUID);
@@ -358,11 +387,9 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 				for(std::vector<KLVPacketRef>::iterator it = localDarkItems.begin(); it != localDarkItems.end(); it++) {
 					KLVPacketRef& ref = *it;
 					DOMElement* prop = PrepareElement(root, props, s377mGroupsNS, L"DarkProperty");
-					prop->setAttributeNS(s377mGroupsNS, L"UniversalLabel", serialize_ul(&ref.key));
+					PrepareAttributeWithContent(root, prop, s377mGroupsNS, L"UniversalLabel", serialize_ul(&ref.key));
 					prop->setTextContent(serialize_dark_value(mxfFile, ref.offset, ref.len));
 				}
-
-				//printf("Hello!");
 			}
 		}
 
@@ -380,22 +407,32 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 
 				std::map<mxfKey, st434info*>::const_iterator objIter;
 				objIter = st434dict.find(itemDef->key);
+				// only if we know the definition
 				if (objIter != st434dict.end())
 				{
 					st434info* itemInfo = (*objIter).second;
-					// create an element for this set
-					DOMElement *itemElem = PrepareElement(root, elem, itemInfo->namespaceURI, itemInfo->elementName);
 
-					// only if we know the definition
+					// create an element for this item
+					DOMElement *itemElem = PrepareElement(root, elem, itemInfo->namespaceURI, itemInfo->elementName);
+					
+					// .. and a pointer to a possible strongly referenced set
 					MXFMetadataSet *referencedSet;
 
 					if (itemDef->typeId == MXF_STRONGREF_TYPE) {
+
 						// item is a single strong reference, follow it
 						mxf_get_strongref_item(set, &item->key, &referencedSet);
-				
-						AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkItems, st434dict);
+
+						// do we follow strong references extensively?
+						if (recurseIntoReferences) {
+							AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkItems, recurseIntoReferences, st434dict);
+						}
+						else {
+							AnalyzeShallowStrongReference(itemElem, referencedSet, root, header_metadata, st434dict);
+						}
 
 					} else if (itemDef->typeId == MXF_STRONGREFARRAY_TYPE || itemDef->typeId == MXF_STRONGREFBATCH_TYPE) {
+
 						// loop through the array or batch of elements and follow each
 						MXFArrayItemIterator arrayIter; uint8_t* _value; uint32_t _length;
 						mxf_initialise_array_item_iterator(set, &item->key, &arrayIter);
@@ -404,34 +441,39 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 							MXFListIterator setsIter;
 							mxf_initialise_sets_iter(header_metadata, &setsIter);
 
+
+
 							if (mxf_get_strongref_s(header_metadata, &setsIter, _value, &referencedSet)) {
-								AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkItems, st434dict);
+								AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkItems, recurseIntoReferences, st434dict);
 							}
 						}
-					} else if (itemDef->typeId == MXF_UTF16STRING_TYPE) {
+					} else {
+
+						if (itemDef->typeId == MXF_UTF16STRING_TYPE) {
 							uint16_t utf16Size;
 							mxf_get_utf16string_item_size(set, &item->key, &utf16Size);
 							mxfUTF16Char *utf16Result = new mxfUTF16Char[utf16Size];
 							mxf_get_utf16string(item->value, item->length, utf16Result);
 							itemElem->setTextContent(utf16Result);
-					} else if (itemType->category == MXF_ARRAY_TYPE_CAT) {
-						// this is any array type, loop through the entries
-						MXFArrayItemIterator arrIter;
-						uint8_t *arrElm;
-						uint32_t arrElmLength;
+						} else if (itemType->category == MXF_ARRAY_TYPE_CAT) {
+							// this is any array type, loop through the entries
+							MXFArrayItemIterator arrIter;
+							uint8_t *arrElm;
+							uint32_t arrElmLength;
 
-						mxf_initialise_array_item_iterator(set, &item->key, &arrIter);
-						while (mxf_next_array_item_element(&arrIter, &arrElm, &arrElmLength))
-						{
-							if (itemType->typeId != MXF_UTF16STRING_TYPE && itemType->typeId != MXF_ISO7STRING_TYPE) {
-								/* There can be no strings in arrays! */
-								DOMElement *arrDomElem = PrepareElement(root, itemElem, s335mElementsNS, L"Element");
-								serializeMXFValue(itemType->info.array.elementTypeId, arrElm, arrDomElem, root);
+							mxf_initialise_array_item_iterator(set, &item->key, &arrIter);
+							while (mxf_next_array_item_element(&arrIter, &arrElm, &arrElmLength))
+							{
+								if (itemType->typeId != MXF_UTF16STRING_TYPE && itemType->typeId != MXF_ISO7STRING_TYPE) {
+									/* There can be no strings in arrays! */
+									DOMElement *arrDomElem = PrepareElement(root, itemElem, s335mElementsNS, L"Element");
+									serializeMXFValue(itemType->info.array.elementTypeId, arrElm, arrDomElem, root);
+								}
 							}
-						}
 
-					} else {
-						serializeMXFValue(itemDef->typeId, item->value, itemElem, root);
+						} else {
+							serializeMXFValue(itemDef->typeId, item->value, itemElem, root);
+						}
 					}
 				}
 			}
@@ -489,8 +531,8 @@ void AnalyzeDarkSets(DOMElement* parent, DOMDocument* root, MXFHeaderMetadata *h
 		DOMElement* floatingGroups = PrepareElement(root, parent, L"http://www.smpte-ra.org/schemas/434/2006/multiplex/S377M/2004", L"FloatingMetadataGroups");
 		for (std::vector<KLVPacketRef>::iterator it = darkSets.begin(); it != darkSets.end(); it++) {
 			DOMElement* darkElem = PrepareElement(root, floatingGroups, s377mGroupsNS, L"UnparsedDarkGroup");
-			darkElem->setAttributeNS(s377mGroupsNS, L"Key", serialize_key(&(*it).key));
-			darkElem->setAttributeNS(s377mGroupsNS, L"BEROctetCount", serialize_simple<uint8_t>((*it).llen));
+			PrepareAttributeWithContent(root, darkElem, s377mGroupsNS, L"Key", serialize_key(&(*it).key));
+			PrepareAttributeWithContent(root, darkElem, s377mGroupsNS, L"BEROctetCount", serialize_simple<uint8_t>((*it).llen));
 			darkElem->setTextContent(serialize_dark_value(mxfFile, (*it).offset, (*it).len));
 		}
 	}
@@ -581,10 +623,10 @@ std::auto_ptr<HeaderMetadata> ReadHeaderMetadata(File* mxfFile, Partition* parti
 }
 
 void AnalyzeHeaderMetadata(	DOMElement *parent, DOMDocument* root, MXFHeaderMetadata* metadata, MXFMetadataSet *metadataSet, MXFFile *file,
-							std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems, std::map<mxfKey, st434info*>& st434dictionary) {
+							std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems, bool recurseIntoReferences, std::map<mxfKey, st434info*>& st434dictionary) {
 
 	// analyze the metadata set
-	AnalyzeMetadataSet(parent, metadataSet, root, metadata, file, darkItems, st434dictionary);
+	AnalyzeMetadataSet(parent, metadataSet, root, metadata, file, darkItems, recurseIntoReferences, st434dictionary);
 	// the dump dark sets
 	AnalyzeDarkSets(parent, root, metadata, file, darkSets);
 }
@@ -671,7 +713,7 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(&*mFile, metadata_partition, &*mDataModel, darkSets, darkItems);
 
 		AnalyzeHeaderMetadata(doc->getDocumentElement(), doc, headerMetadata->getCHeaderMetadata(), headerMetadata->getPreface()->getCMetadataSet(), 
-			mFile->getCFile(), darkSets, darkItems, st434dict);
+			mFile->getCFile(), darkSets, darkItems, configuration.MetadataAnalysisType == AnalyzerConfig::LOGICAL, st434dict);
 
 		return std::auto_ptr<DOMDocument>(doc);
 
@@ -696,7 +738,7 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 		AnalyzePartitionPack(doc->getDocumentElement(), doc, metadata_partition->getCPartition());
 
 		AnalyzeHeaderMetadata(doc->getDocumentElement(), doc, headerMetadata->getCHeaderMetadata(), headerMetadata->getPreface()->getCMetadataSet(), 
-			mFile->getCFile(), darkSets, darkItems, st434dict);
+			mFile->getCFile(), darkSets, darkItems, configuration.MetadataAnalysisType == AnalyzerConfig::LOGICAL, st434dict);
 
 		return std::auto_ptr<DOMDocument>(doc);
 	}
@@ -705,8 +747,8 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 int main(int argc, char* argv[])
 {
 	AnalyzerConfig cfg;
-	cfg.AnalysisType = AnalyzerConfig::MXF_MUX;
-	cfg.MetadataAnalysisType = AnalyzerConfig::LOGICAL;
+	cfg.AnalysisType = AnalyzerConfig::METADATA;
+	cfg.MetadataAnalysisType = AnalyzerConfig::PHYSICAL;
 
 	std::auto_ptr<DOMDocument> doc = AnalyzeMXFFile(argv[1], cfg);
 
