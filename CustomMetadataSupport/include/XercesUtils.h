@@ -63,37 +63,8 @@ DOMLSParser* ObtainParser(DOMErrorHandler& errHandler);
 DOMDocument* ParseXercesDocument(const XMLCh* location);
 DOMDocument* ParseXercesDocument(InputSource& input);
 
+void SerializeXercesDocument(xercesc::DOMDocument& document, xercesc::XMLFormatTarget& target);
 
-void SerializeXercesDocument(xercesc::DOMDocument& document, xercesc::XMLFormatTarget& target) {
-
-	// call into xerces for serialization
-	// cf. http://xerces.apache.org/xerces-c/program-dom-3.html#DOMLSSerializer
-
-	static const XMLCh gLS[] = { chLatin_L, chLatin_S, chNull };
-	DOMImplementation *impl = DOMImplementationRegistry::getDOMImplementation(gLS);
-
-	// construct the DOMWriter
-	DOMLSSerializer *writer = ((DOMImplementationLS*)impl)->createLSSerializer();
-
-    // optionally you can set some features on this serializer
-    if (writer->getDomConfig()->canSetParameter(XMLUni::fgDOMWRTDiscardDefaultContent, true))
-        writer->getDomConfig()->setParameter(XMLUni::fgDOMWRTDiscardDefaultContent, true);
-
-    if (writer->getDomConfig()->canSetParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true))
-            writer->getDomConfig()->setParameter(XMLUni::fgDOMWRTFormatPrettyPrint, true);
-
-	// prepare output
-	DOMLSOutput *outp = ((DOMImplementationLS*)impl)->createLSOutput();
-	outp->setByteStream(&target);
-
-	// serialize the DOMNode to a UTF-16 string
-	writer->write(&document, outp);
-
-	// release the memory
-	outp->release();
-	writer->release();
-
-}
 
 class DarkDOMDocumentSerializer : public EBUSDK::MXFCustomMetadata::MXFFileDarkSerializer, public xercesc::XMLFormatTarget {
 	xercesc::DOMDocument& doc;
