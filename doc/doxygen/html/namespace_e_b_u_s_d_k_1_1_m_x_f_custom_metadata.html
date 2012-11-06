@@ -63,10 +63,11 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:afb4a23bb781bba2e2a7b78492f6e3e27"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#afb4a23bb781bba2e2a7b78492f6e3e27">BufferIndex</a> (mxfpp::File *mFile, mxfpp::Partition *partition, bmx::ByteArray &amp;index_bytes, uint32_t *index_length)</td></tr>
-<tr class="memitem:aa24c7333b4446243c80c5e3b3c8fb50d"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#aa24c7333b4446243c80c5e3b3c8fb50d">WriteMetadataToMemoryFile</a> (mxfpp::File *mFile, MXFMemoryFile **destMemFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, mxfpp::Partition *metadataDestinationPartition, mxfpp::Partition *metadataSourcePartition)</td></tr>
-<tr class="memitem:a0cd84c28e88803e85b6360ead0e1827f"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a0cd84c28e88803e85b6360ead0e1827f">WriteMetadataToFile</a> (mxfpp::File *mFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, mxfpp::Partition *metadataDestinationPartition, mxfpp::Partition *metadataSourcePartition)</td></tr>
+<tr class="memitem:a80ed4df73609691c24249ddf53ea8a10"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a80ed4df73609691c24249ddf53ea8a10">WriteMetadataToMemoryFile</a> (mxfpp::File *mFile, MXFMemoryFile **destMemFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, mxfpp::Partition *metadataDestinationPartition, mxfpp::Partition *metadataSourcePartition, std::vector&lt; const mxfKey * &gt; &amp;darkElementKeysToIgnore)</td></tr>
+<tr class="memitem:affd9c817d1f4355a0cbc8c72cef5f92d"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#affd9c817d1f4355a0cbc8c72cef5f92d">WriteMetadataToFile</a> (mxfpp::File *mFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, mxfpp::Partition *metadataDestinationPartition, mxfpp::Partition *metadataSourcePartition, std::vector&lt; const mxfKey * &gt; &amp;darkElementKeysToIgnore)</td></tr>
 <tr class="memitem:a72fb6c3ec3b347cb799d772ae539be7a"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a72fb6c3ec3b347cb799d772ae539be7a">WriteDarkMetadataToMemoryFile</a> (mxfpp::File *mFile, MXFMemoryFile **destMemFile, <a class="el" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html">MXFFileDarkSerializer</a> &amp;metadata, const mxfKey *darkMetadataSetKey, uint64_t metadata_read_position, uint64_t metadata_write_position, mxfpp::Partition *metadataDestinationPartition, mxfpp::Partition *metadataSourcePartition)</td></tr>
 <tr class="memitem:a3f1449ea2e7ad5d49395972384d2a308"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a3f1449ea2e7ad5d49395972384d2a308">WriteDarkMetadataToFile</a> (mxfpp::File *mFile, <a class="el" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html">MXFFileDarkSerializer</a> &amp;metadata, const mxfKey *darkMetadataSetKey, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, mxfpp::Partition *metadataDestinationPartition, mxfpp::Partition *metadataSourcePartition)</td></tr>
+<tr class="memitem:a0ffc2a04126404c5733cd57f8a1aded4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a0ffc2a04126404c5733cd57f8a1aded4">RemoveMetadataSetTree</a> (mxfpp::HeaderMetadata *header_metadata, mxfpp::MetadataSet *startSet)</td></tr>
 <tr class="memitem:a8b42118c3a2523aafbc81d23e7555208"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a8b42118c3a2523aafbc81d23e7555208">FindLastPartitionFill</a> (mxfpp::File *mFile, mxfpp::Partition *partition, int64_t *partitionSectionOffset, int64_t *extractedFileSize=NULL)</td></tr>
 <tr class="memitem:ae473eadee856c02447c962257113aac8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ae473eadee856c02447c962257113aac8">ShiftBytesInFile</a> (mxfpp::File *mFile, int64_t shiftPosition, int64_t shiftOffset)</td></tr>
 <tr class="memitem:ae343e7315da96a00914e05cd0cb35bfa"><td class="memItemLeft" align="right" valign="top">mxfpp::Partition *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ae343e7315da96a00914e05cd0cb35bfa">FindPreferredMetadataPartition</a> (const std::vector&lt; mxfpp::Partition * &gt; &amp;partitions, mxfpp::Partition **headerPartition, mxfpp::Partition **footerPartition)</td></tr>
@@ -395,6 +396,34 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a0ffc2a04126404c5733cd57f8a1aded4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EBUSDK::MXFCustomMetadata::RemoveMetadataSetTree </td>
+          <td>(</td>
+          <td class="paramtype">mxfpp::HeaderMetadata *&#160;</td>
+          <td class="paramname"><em>header_metadata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">mxfpp::MetadataSet *&#160;</td>
+          <td class="paramname"><em>startSet</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Removes a 'tree' of metadata sets from the given header metadata.<br/>
+ The tree removed from the header metadata comprises all metadata sets reachable recursively from the initial set through strong references. Weak references are not followed as they do not imply ownership. </p>
+
+</div>
+</div>
 <a class="anchor" id="ae473eadee856c02447c962257113aac8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -591,7 +620,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0cd84c28e88803e85b6360ead0e1827f"></a>
+<a class="anchor" id="affd9c817d1f4355a0cbc8c72cef5f92d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -635,7 +664,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">mxfpp::Partition *&#160;</td>
-          <td class="paramname"><em>metadataSourcePartition</em>&#160;</td>
+          <td class="paramname"><em>metadataSourcePartition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; const mxfKey * &gt; &amp;&#160;</td>
+          <td class="paramname"><em>darkElementKeysToIgnore</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -662,7 +697,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa24c7333b4446243c80c5e3b3c8fb50d"></a>
+<a class="anchor" id="a80ed4df73609691c24249ddf53ea8a10"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -706,7 +741,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">mxfpp::Partition *&#160;</td>
-          <td class="paramname"><em>metadataSourcePartition</em>&#160;</td>
+          <td class="paramname"><em>metadataSourcePartition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; const mxfKey * &gt; &amp;&#160;</td>
+          <td class="paramname"><em>darkElementKeysToIgnore</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -736,7 +777,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 13 2012 23:57:31 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Nov 6 2012 11:43:54 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

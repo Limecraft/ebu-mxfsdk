@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>EBU MXF SDK: C:/code/BMX/ebu-bmx/EBUCoreProcessor/include/EBUCoreProcessor.h Source File</title>
+<title>EBU MXF SDK: C:/code/BMX/ebu-mxfsdk/EBUCoreProcessor/include/EBUCoreProcessor.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -34,7 +34,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_9be8e76387cd7388e8f013cb2cc8a5c6.html">EBUCoreProcessor</a></li><li class="navelem"><a class="el" href="dir_1faa9c3a11968bc3db3bb549e5bcfda3.html">include</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d1324ab2d370781e535d63201b05d671.html">EBUCoreProcessor</a></li><li class="navelem"><a class="el" href="dir_ad571ffb366777fc30ccb3a2cbb4aeb0.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -50,66 +50,68 @@
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>EBUSDK {</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">namespace </span>EBUCore {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">namespace </span>EBUCore {</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        mxfpp::Identification* <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#acd8fa3e0a155ebbda02f53af148d8b3c">GenerateEBUCoreIdentificationSet</a>(mxfpp::HeaderMetadata *destination);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    mxfpp::Identification* <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#acd8fa3e0a155ebbda02f53af148d8b3c">GenerateEBUCoreIdentificationSet</a>(mxfpp::HeaderMetadata *destination);</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        mxfpp::DMFramework* <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a9637fb0e0421d07a3ec52d687b3409ad">Process</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* location, mxfpp::HeaderMetadata *destination, mxfpp::Identification *identificationToAppend = NULL);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    mxfpp::DMFramework* <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a9637fb0e0421d07a3ec52d687b3409ad">Process</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* location, mxfpp::HeaderMetadata *destination, mxfpp::Identification *identificationToAppend = NULL);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a8be4e2bfbe0833f2f3d46a48ba20fcc4">FindAndSerializeEBUCore</a>(mxfpp::HeaderMetadata *metadata, <span class="keyword">const</span> <span class="keywordtype">char</span>* outputfilename);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a8be4e2bfbe0833f2f3d46a48ba20fcc4">FindAndSerializeEBUCore</a>(mxfpp::HeaderMetadata *metadata, <span class="keyword">const</span> <span class="keywordtype">char</span>* outputfilename);</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#ac3dcc9be2cb3f6dfd564e04c70012e4e">RegisterMetadataExtensionsforEBUCore</a>(mxfpp::DataModel *data_model);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#ac3dcc9be2cb3f6dfd564e04c70012e4e">RegisterMetadataExtensionsforEBUCore</a>(mxfpp::DataModel *data_model);</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a47859bf6d29ea2b7ab3e2676f1e8df55">RegisterFrameworkObjectFactoriesforEBUCore</a>(mxfpp::HeaderMetadata *metadata);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a47859bf6d29ea2b7ab3e2676f1e8df55">RegisterFrameworkObjectFactoriesforEBUCore</a>(mxfpp::HeaderMetadata *metadata);</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af15b60dc7dc2d2409bf3cca12f9240a7">InsertEBUCoreFramework</a>(mxfpp::HeaderMetadata *header_metadata, mxfpp::DMFramework *framework, mxfpp::Identification *identificationToAppend = NULL);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af15b60dc7dc2d2409bf3cca12f9240a7">InsertEBUCoreFramework</a>(mxfpp::HeaderMetadata *header_metadata, mxfpp::DMFramework *framework, mxfpp::Identification *identificationToAppend = NULL);</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#ab70ef1b82235fa10fe40655c4b51bb62">InsertEBUCoreEventFrameworks</a>(mxfpp::HeaderMetadata *header_metadata, std::vector&lt;EBUSDK::MXFCustomMetadata::EventInput&gt;&amp; eventFrameworks, mxfpp::Identification *identificationToAppend = NULL);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#ab70ef1b82235fa10fe40655c4b51bb62">InsertEBUCoreEventFrameworks</a>(mxfpp::HeaderMetadata *header_metadata, std::vector&lt;EBUSDK::MXFCustomMetadata::EventInput&gt;&amp; eventFrameworks, mxfpp::Identification *identificationToAppend = NULL);</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keyword">enum</span> ProgressCallbackLevel {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                FATAL,</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                ERROR,</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                WARN,</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                INFO,</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                DEBUG,</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                TRACE</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        };</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dd">  105</a></span>&#160;        <span class="keyword">enum</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dd">MetadataKind</a> {</div>
-<div class="line"><a name="l00107"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda09c0b3d73333f14708a225f5d47626b8">  107</a></span>&#160;                <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda09c0b3d73333f14708a225f5d47626b8">KLV_ENCODED</a>,</div>
-<div class="line"><a name="l00109"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8ddaf85f408a05989d786087adcfe0f8c18e">  109</a></span>&#160;                <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8ddaf85f408a05989d786087adcfe0f8c18e">DARK</a>,</div>
-<div class="line"><a name="l00111"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda88d2d8710479d536bf973a3c0e040dd0">  111</a></span>&#160;                <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda88d2d8710479d536bf973a3c0e040dd0">SIDECAR</a></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        };</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a79638580d9298bbbee16e486c2c4fab1">EmbedEBUCoreMetadata</a>(      <span class="keyword">const</span> <span class="keywordtype">char</span>* metadataLocation, </div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation, </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;                                                        <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, ProgressCallbackLevel level, <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">function</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg_format, ...),</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;                                                        <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dd">MetadataKind</a> optWaytoWrite = <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda09c0b3d73333f14708a225f5d47626b8">KLV_ENCODED</a>,</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;                                                        <span class="keywordtype">bool</span> optNoIdentification = <span class="keyword">false</span>, <span class="keywordtype">bool</span> optForceHeader = <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a79638580d9298bbbee16e486c2c4fab1">EmbedEBUCoreMetadata</a>(      xercesc::DOMDocument&amp; metadataDocument, </div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* metadataLocation,</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation, </div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                                                        <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, ProgressCallbackLevel level, <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">function</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg_format, ...),</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                                                        <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dd">MetadataKind</a> optWaytoWrite = <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda09c0b3d73333f14708a225f5d47626b8">KLV_ENCODED</a>,</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                                                        <span class="keywordtype">bool</span> optNoIdentification = <span class="keyword">false</span>, <span class="keywordtype">bool</span> optForceHeader = <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        xercesc::DOMDocument&amp; <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a61cbbad8a24382405688c7f921f02916">ExtractEBUCoreMetadata</a>(</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation,</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;                                                        <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, ProgressCallbackLevel level, <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">function</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg_format, ...));</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        </div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a61cbbad8a24382405688c7f921f02916">ExtractEBUCoreMetadata</a>(</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation,</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;                                                        <span class="keyword">const</span> <span class="keywordtype">char</span>* metadataLocation,</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;                                                        <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, ProgressCallbackLevel level, <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">function</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg_format, ...));</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        } <span class="comment">// namespace EBUCore</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordtype">void</span> RemoveEBUCoreFrameworks(mxfpp::HeaderMetadata *header_metadata);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keyword">enum</span> ProgressCallbackLevel {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        FATAL,</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        ERROR,</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        WARN,</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        INFO,</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        DEBUG,</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        TRACE</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    };</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dd">  107</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dd">MetadataKind</a> {</div>
+<div class="line"><a name="l00109"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda09c0b3d73333f14708a225f5d47626b8">  109</a></span>&#160;        <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda09c0b3d73333f14708a225f5d47626b8">KLV_ENCODED</a>,</div>
+<div class="line"><a name="l00111"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8ddaf85f408a05989d786087adcfe0f8c18e">  111</a></span>&#160;        <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8ddaf85f408a05989d786087adcfe0f8c18e">DARK</a>,</div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda88d2d8710479d536bf973a3c0e040dd0">  113</a></span>&#160;        <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda88d2d8710479d536bf973a3c0e040dd0">SIDECAR</a></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    };</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a79638580d9298bbbee16e486c2c4fab1">EmbedEBUCoreMetadata</a>(  <span class="keyword">const</span> <span class="keywordtype">char</span>* metadataLocation, </div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation, </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;                            <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, ProgressCallbackLevel level, <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">function</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg_format, ...),</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;                            <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dd">MetadataKind</a> optWaytoWrite = <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda09c0b3d73333f14708a225f5d47626b8">KLV_ENCODED</a>,</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;                            <span class="keywordtype">bool</span> optNoIdentification = <span class="keyword">false</span>, <span class="keywordtype">bool</span> optForceHeader = <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a79638580d9298bbbee16e486c2c4fab1">EmbedEBUCoreMetadata</a>(  xercesc::DOMDocument&amp; metadataDocument, </div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">char</span>* metadataLocation,</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation, </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                            <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, ProgressCallbackLevel level, <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">function</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg_format, ...),</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;                            <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dd">MetadataKind</a> optWaytoWrite = <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda09c0b3d73333f14708a225f5d47626b8">KLV_ENCODED</a>,</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;                            <span class="keywordtype">bool</span> optNoIdentification = <span class="keyword">false</span>, <span class="keywordtype">bool</span> optForceHeader = <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    xercesc::DOMDocument&amp; <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a61cbbad8a24382405688c7f921f02916">ExtractEBUCoreMetadata</a>(</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation,</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;                            <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, ProgressCallbackLevel level, <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">function</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg_format, ...));</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    </div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a61cbbad8a24382405688c7f921f02916">ExtractEBUCoreMetadata</a>(</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation,</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;                            <span class="keyword">const</span> <span class="keywordtype">char</span>* metadataLocation,</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;                            <span class="keywordtype">void</span> (*progress_callback)(<span class="keywordtype">float</span> progress, ProgressCallbackLevel level, <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">function</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg_format, ...));</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;} <span class="comment">// namespace EBUSDK</span></div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    } <span class="comment">// namespace EBUCore</span></div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;} <span class="comment">// namespace EBUSDK</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 13 2012 02:43:21 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Nov 6 2012 11:43:52 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>
