@@ -491,6 +491,23 @@ void AnalyzeList(DOMElement* parent, MXFList *list, int elementType, DOMDocument
 	}
 }
 
+void AnalyzeRIP(DOMElement* parent, DOMDocument* root, MXFRIP *rip, uint32_t rip_size) {
+	DOMElement *ripElem = PrepareElement(root, parent, s377mGroupsNS, L"RandomIndexPack");
+	DOMElement *ripEntriesElem = PrepareElement(root, ripElem, s377mGroupsNS, L"PartitionOffsetPairArray");
+		
+		MXFListIterator it;
+		mxf_initialise_list_iter(&it, &rip->entries);
+		while (mxf_next_list_iter_element(&it)) {
+			MXFRIPEntry* v = (MXFRIPEntry*)mxf_get_iter_element(&it);
+			DOMElement *ripEntry = PrepareElement(root, ripEntriesElem, s377mGroupsNS, L"PartitionOffsetPair");
+			PrepareElementWithContent(root, ripEntry, s335mElementsNS, L"EssenceStreamID", serialize_simple<uint32_t>(v->bodySID));
+			PrepareElementWithContent(root, ripEntry, s335mElementsNS, L"ByteOffset", serialize_simple<uint64_t>(v->thisPartition));
+		}
+
+	PrepareElementWithContent(root, ripElem, s335mElementsNS, L"PackLength", serialize_simple<uint32_t>(rip_size));
+
+}
+
 void AnalyzePartitionPack(DOMElement* parent, DOMDocument* root, MXFPartition *partition) {
 	DOMElement *ppElem = PrepareElement(root, parent, s377mGroupsNS, L"PartitionPack");
 	PrepareElementWithContent(root, ppElem, s335mElementsNS, L"MajorVersion", serialize_simple<uint16_t>(partition->majorVersion));
@@ -738,8 +755,12 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 	// ///////////
 
 	// read the RIP
+	bool validRIP = false;
 	MXFRIP rip;
-	mxf_read_rip(mFile->getCFile(), &rip);
+	uint32_t rip_size;
+	if (mxf_read_rip_and_size(mFile->getCFile(), &rip, &rip_size)) {
+		validRIP = true;
+	}
 
 	if (!mFile->readPartitions())
 		throw BMXException("Failed to read all partitions. File may be incomplete or invalid");
@@ -755,6 +776,8 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 	Partition *metadata_partition = NULL, *headerPartition = NULL, *footerPartition = NULL;
 
 	metadata_partition = FindPreferredMetadataPartition(partitions, &headerPartition, &footerPartition);
+
+	std::auto_ptr<DOMDocument> out;
 
 	if (configuration.AnalysisType == AnalyzerConfig::METADATA) {
 
@@ -774,7 +797,7 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 		AnalyzeHeaderMetadata(doc->getDocumentElement(), doc, &*headerMetadata, 
 			mFile->getCFile(), darkSets, darkItems, configuration, st434dict);
 
-		return std::auto_ptr<DOMDocument>(doc);
+		out = std::auto_ptr<DOMDocument>(doc);
 
 	} else {
 
@@ -796,8 +819,17 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 		if (footerPartition != NULL)
 			AnalyzePartition(doc->getDocumentElement(), doc, footerPartition, &*mFile, &*mDataModel, configuration, st434dict);
 
-		return std::auto_ptr<DOMDocument>(doc);
+		if (validRIP) {
+			AnalyzeRIP(doc->getDocumentElement(), doc, &rip, rip_size);
+		}
+
+		out = std::auto_ptr<DOMDocument>(doc);
 	}
+
+	// cleanup
+	mxf_clear_rip(&rip);
+
+	return out;
 }
 
 void AnalyzeMXFFile(const char* mxfLocation, const char* reportLocation, AnalyzerConfig configuration) {
