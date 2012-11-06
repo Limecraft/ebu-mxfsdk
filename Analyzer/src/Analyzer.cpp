@@ -727,7 +727,7 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 
 	std::map<mxfKey, st434info*> st434dict;
 
-#include "group_declarations.inc"
+//#include "group_declarations.inc"
 
 	std::auto_ptr<File> mFile( File::openRead(mxfLocation) );	// throws MXFException if open failed!
 
@@ -736,6 +736,10 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 	// ///////////////////////////////////////
 	// / 1. Open MXF File and locate all partitions, using the RIP
 	// ///////////
+
+	// read the RIP
+	MXFRIP rip;
+	mxf_read_rip(mFile->getCFile(), &rip);
 
 	if (!mFile->readPartitions())
 		throw BMXException("Failed to read all partitions. File may be incomplete or invalid");
@@ -796,13 +800,19 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 	}
 }
 
+void AnalyzeMXFFile(const char* mxfLocation, const char* reportLocation, AnalyzerConfig configuration) {
+	std::auto_ptr<DOMDocument> doc = AnalyzeMXFFile(reportLocation, configuration);
+	LocalFileFormatTarget f(reportLocation);
+	SerializeXercesDocument(*doc, f);
+}
+
 int main(int argc, char* argv[])
 {
 	AnalyzerConfig cfg;
 	cfg.AnalysisType = AnalyzerConfig::MXF_MUX;
 	cfg.MetadataAnalysisType = AnalyzerConfig::LOGICAL;
 
-	std::auto_ptr<DOMDocument> doc = AnalyzeMXFFile(argv[1], cfg);
+	AnalyzeMXFFile(argv[1], "out.xml", cfg);
 
 	/*for (std::map<mxfUUID, std::vector<KLVPacketRef>>::iterator it=darkItems.begin(); it!=darkItems.end();it++) {
 		std::pair<const mxfUUID, std::vector<KLVPacketRef>>& p = *it;
@@ -817,9 +827,6 @@ int main(int argc, char* argv[])
 			printf("\t%s\n", key);
 		}
 	}*/
-
-	LocalFileFormatTarget f("out.xml");
-	SerializeXercesDocument(*doc, f);
 
 	return 0;
 }
