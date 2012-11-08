@@ -134,7 +134,7 @@
   <!-- Tentatively changed ULs to avoid collision iwth ebucoreTitle -->
   <ebucoreAlternativeTitle base="InterchangeObject" type="localSet" key="06 0E 2B 34 01 01 01 05 0D 02 01 01 05 02 00 00">
     <alternativeTitleAttributionDate           type="Timestamp"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 05 02 01 00"/>
-    <alternativeTitleNote           		   type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 05 01 02 00"/>
+    <alternativeTitleNote           		   type="UTF16String"          use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 05 02 02 00"/>
     <alternativeTitleValue                     type="StrongRefBatch"       use="required"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 05 02 A0 01" target="ebucoreTextualAnnotation"/>
     <alternativeTitleTypeGroup                 type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 05 02 A0 02" target="ebucoreTypeGroup"/>
     <alternativeTitleStatusGroup               type="StrongRef"            use="optional"  globalKey="06 0E 2B 34 01 01 01 05 0D 02 01 01 05 02 A1 03" target="ebucoreStatusGroup"/>
