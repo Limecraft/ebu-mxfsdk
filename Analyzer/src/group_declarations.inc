@@ -3298,3 +3298,2423 @@ st434dict.insert(std::pair<mxfKey, st434info*>(
 	key_060E2B3401010110040106040A000000,
 	new st434info(L"VC1Level", L"http://www.smpte-ra.org/schemas/434/2006/properties/S335M")
 ));
+mxfKey key_060E2B34010101050D02010101010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x01,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010101010000,
+	new st434info(L"ebucoreMainFramework", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010101010100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x01,0x01,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010101010100,
+	new st434info(L"documentLocator", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010101020200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x01,0x02,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010101020200,
+	new st434info(L"documentId", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010101A0A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x01,0xA0,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010101A0A001,
+	new st434info(L"coreMetadata", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010101A0A002 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x01,0xA0,0xA0,0x02};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010101A0A002,
+	new st434info(L"metadataSchemeInformation", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010101020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x01,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010101020000,
+	new st434info(L"ebucorePartFramework", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010102A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x01,0x02,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010102A001,
+	new st434info(L"partMetadata", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010103000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x03,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010103000000,
+	new st434info(L"ebucoreMetadataSchemeInformation", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010103010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x03,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010103010000,
+	new st434info(L"ebucoreMetadataScheme", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010103020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x03,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010103020000,
+	new st434info(L"ebucoreMetadataSchemeVersion", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010103030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x03,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010103030000,
+	new st434info(L"ebucoreFrameworktextLanguage", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010103A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x03,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010103A00100,
+	new st434info(L"ebucoreMetadataProvider", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010120000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x20,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010120000000,
+	new st434info(L"ebucoreEntity", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010120010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x20,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010120010000,
+	new st434info(L"entityId", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010120A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x20,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010120A00100,
+	new st434info(L"entityContact", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010120A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x20,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010120A00200,
+	new st434info(L"entityOrganisation", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010120A00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x20,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010120A00300,
+	new st434info(L"entityRole", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010121000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x21,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010121000000,
+	new st434info(L"ebucoreContact", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010121010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x21,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010121010000,
+	new st434info(L"contactId", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010121020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x21,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010121020000,
+	new st434info(L"contactName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010121030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x21,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010121030000,
+	new st434info(L"familyName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010121040000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x21,0x04,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010121040000,
+	new st434info(L"givenName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010121050000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x21,0x05,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010121050000,
+	new st434info(L"otherGivenName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010121060000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x21,0x06,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010121060000,
+	new st434info(L"salutation", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010121070000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x21,0x07,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010121070000,
+	new st434info(L"suffix", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010121080000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x21,0x08,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010121080000,
+	new st434info(L"occupation", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010121A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x21,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010121A00100,
+	new st434info(L"username", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010121A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x21,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010121A00200,
+	new st434info(L"contactType", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010121A00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x21,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010121A00300,
+	new st434info(L"contactDetails", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010121A00400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x21,0xA0,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010121A00400,
+	new st434info(L"contactRelatedContacts", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010121A00500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x21,0xA0,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010121A00500,
+	new st434info(L"stageName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010130000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x30,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010130000000,
+	new st434info(L"ebucoreContactDetails", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010130010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x30,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010130010000,
+	new st434info(L"webAddress", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010130020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x30,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010130020000,
+	new st434info(L"telephoneNumber", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010130030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x30,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010130030000,
+	new st434info(L"mobileTelephoneNumber", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010130A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x30,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010130A00100,
+	new st434info(L"detailsType", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010130A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x30,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010130A00200,
+	new st434info(L"address", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010130A00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x30,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010130A00300,
+	new st434info(L"emailAddress", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010131000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x31,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010131000000,
+	new st434info(L"ebucoreAddress", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010131010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x31,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010131010000,
+	new st434info(L"townCity", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010131020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x31,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010131020000,
+	new st434info(L"countyState", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010131030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x31,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010131030000,
+	new st434info(L"deliveryCode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010131040000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x31,0x04,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010131040000,
+	new st434info(L"countryName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010131050000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x31,0x05,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010131050000,
+	new st434info(L"countryCode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010131A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x31,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010131A00100,
+	new st434info(L"addressLines", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145040000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x04,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145040000,
+	new st434info(L"ebucoreTextualAnnotation", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145040100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x04,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145040100,
+	new st434info(L"text", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145040200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x04,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145040200,
+	new st434info(L"textLanguage", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145010000,
+	new st434info(L"ebucoreTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145010100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x01,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145010100,
+	new st434info(L"typeGroupThesaurus", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145010200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x01,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145010200,
+	new st434info(L"typeGroupLabel", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145010300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x01,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145010300,
+	new st434info(L"typeGroupLink", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145010301 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x01,0x03,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145010301,
+	new st434info(L"typeGroupUL", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145010400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x01,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145010400,
+	new st434info(L"typeGroupDefinition", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145010500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x01,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145010500,
+	new st434info(L"typeGroupLanguage", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010122000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x22,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010122000000,
+	new st434info(L"ebucoreOrganisation", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010122010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x22,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010122010000,
+	new st434info(L"organisationId", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010122020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x22,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010122020000,
+	new st434info(L"organisationName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010122030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x22,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010122030000,
+	new st434info(L"organisationCode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010122A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x22,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010122A00100,
+	new st434info(L"organisationDepartment", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010122A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x22,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010122A00200,
+	new st434info(L"organisationType", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010122A00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x22,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010122A00300,
+	new st434info(L"organisationDetails", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010122A00400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x22,0xA0,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010122A00400,
+	new st434info(L"organisationRelatedContacts", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010125000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x25,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010125000000,
+	new st434info(L"ebucoreOrganisationDepartment", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010125010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x25,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010125010000,
+	new st434info(L"departmentId", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010125020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x25,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010125020000,
+	new st434info(L"departmentName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102000000,
+	new st434info(L"ebucoreCoreMetadata", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00100,
+	new st434info(L"identifier", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00200,
+	new st434info(L"title", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00300,
+	new st434info(L"alternativeTitle", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00400,
+	new st434info(L"creator", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00500,
+	new st434info(L"subject", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00600 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x06,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00600,
+	new st434info(L"description", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00700 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x07,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00700,
+	new st434info(L"publisher", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00800 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x08,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00800,
+	new st434info(L"contributor", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00900 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x09,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00900,
+	new st434info(L"date", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00A00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x0A,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00A00,
+	new st434info(L"type", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00B00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x0B,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00B00,
+	new st434info(L"language", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00C00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x0C,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00C00,
+	new st434info(L"coverage", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00D00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x0D,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00D00,
+	new st434info(L"rights", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00E00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x0E,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00E00,
+	new st434info(L"rating", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A00F00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x0F,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A00F00,
+	new st434info(L"version", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A01000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x10,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A01000,
+	new st434info(L"publicationHistoryEvent", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A01100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x11,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A01100,
+	new st434info(L"customRelation", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A01200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x12,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A01200,
+	new st434info(L"basicRelation", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A01300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x13,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A01300,
+	new st434info(L"format", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010102A01400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x02,0xA0,0x14,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010102A01400,
+	new st434info(L"part", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010104000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x04,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010104000000,
+	new st434info(L"ebucoreIdentifier", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010104010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x04,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010104010000,
+	new st434info(L"identifierValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010104020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x04,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010104020000,
+	new st434info(L"identifierNote", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010104A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x04,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010104A00100,
+	new st434info(L"identifierTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010104A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x04,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010104A00200,
+	new st434info(L"identifierFormatGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010104A00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x04,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010104A00300,
+	new st434info(L"identifierAttributorEntity", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010105010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x05,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010105010000,
+	new st434info(L"ebucoreTitle", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010105010100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x05,0x01,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010105010100,
+	new st434info(L"titleAttributionDate", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010105010200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x05,0x01,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010105010200,
+	new st434info(L"titleNote", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010501A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x05,0x01,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010501A001,
+	new st434info(L"titleValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010105020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x05,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010105020000,
+	new st434info(L"ebucoreAlternativeTitle", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010105020100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x05,0x02,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010105020100,
+	new st434info(L"alternativeTitleAttributionDate", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010105020200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x05,0x02,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010105020200,
+	new st434info(L"alternativeTitleNote", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010502A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x05,0x02,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010502A001,
+	new st434info(L"alternativeTitleValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010502A002 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x05,0x02,0xA0,0x02};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010502A002,
+	new st434info(L"alternativeTitleTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010502A103 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x05,0x02,0xA1,0x03};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010502A103,
+	new st434info(L"alternativeTitleStatusGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145020000,
+	new st434info(L"ebucoreFormatGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145020100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x02,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145020100,
+	new st434info(L"formatGroupThesaurus", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145020200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x02,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145020200,
+	new st434info(L"formatGroupLabel", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145020300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x02,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145020300,
+	new st434info(L"formatGroupLink", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145020301 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x02,0x03,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145020301,
+	new st434info(L"formatGroupUL", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145020400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x02,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145020400,
+	new st434info(L"formatGroupDefinition", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145020500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x02,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145020500,
+	new st434info(L"formatGroupLanguage", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145030000,
+	new st434info(L"ebucoreStatusGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145030100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x03,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145030100,
+	new st434info(L"statusGroupThesaurus", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145030200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x03,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145030200,
+	new st434info(L"statusGroupLabel", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145030300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x03,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145030300,
+	new st434info(L"statusGroupLink", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145030301 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x03,0x03,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145030301,
+	new st434info(L"statusGroupUL", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145030400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x03,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145030400,
+	new st434info(L"statusGroupDefinition", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010145030500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x45,0x03,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010145030500,
+	new st434info(L"statusGroupLanguage", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010107000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x07,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010107000000,
+	new st434info(L"ebucoreSubject", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010107010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x07,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010107010000,
+	new st434info(L"subjectCode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010107020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x07,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010107020000,
+	new st434info(L"subjectDefinition", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010107030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x07,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010107030000,
+	new st434info(L"subjectNote", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010107A00101 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x07,0xA0,0x01,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010107A00101,
+	new st434info(L"subjectValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010107A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x07,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010107A00200,
+	new st434info(L"subjectTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010107A00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x07,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010107A00300,
+	new st434info(L"subjectAttributorEntity", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010108000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x08,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010108000000,
+	new st434info(L"ebucoreDescription", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010108010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x08,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010108010000,
+	new st434info(L"descriptionNote", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010108A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x08,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010108A00100,
+	new st434info(L"descriptionValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010108A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x08,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010108A00200,
+	new st434info(L"descriptionTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B010000,
+	new st434info(L"ebucoreDate", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B010100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x01,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B010100,
+	new st434info(L"dateCreated", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B010200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x01,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B010200,
+	new st434info(L"yearCreated", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B010300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x01,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B010300,
+	new st434info(L"dateIssued", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B010400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x01,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B010400,
+	new st434info(L"yearIssued", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B010500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x01,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B010500,
+	new st434info(L"dateModified", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B010600 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x01,0x06,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B010600,
+	new st434info(L"yearModified", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B010700 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x01,0x07,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B010700,
+	new st434info(L"dateDigitized", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B010800 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x01,0x08,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B010800,
+	new st434info(L"yearDigitized", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B010900 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x01,0x09,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B010900,
+	new st434info(L"dateNote", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B01A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x01,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B01A001,
+	new st434info(L"alternativeDate", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B020000,
+	new st434info(L"ebucoreDateType", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B020100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x02,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B020100,
+	new st434info(L"dateValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B02A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x02,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B02A001,
+	new st434info(L"textualDate", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010B02A002 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0B,0x02,0xA0,0x02};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010B02A002,
+	new st434info(L"dateTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010C010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0C,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010C010000,
+	new st434info(L"ebucoreType", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010C010100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0C,0x01,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010C010100,
+	new st434info(L"typeNote", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010C01A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0C,0x01,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010C01A001,
+	new st434info(L"typeValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010C01A002 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0C,0x01,0xA0,0x02};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010C01A002,
+	new st434info(L"objectType", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010C01A003 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0C,0x01,0xA0,0x03};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010C01A003,
+	new st434info(L"genre", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010C01A004 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0C,0x01,0xA0,0x04};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010C01A004,
+	new st434info(L"targetAudience", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010C020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0C,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010C020000,
+	new st434info(L"ebucoreObjectType", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010C02A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0C,0x02,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010C02A001,
+	new st434info(L"objectTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010C030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0C,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010C030000,
+	new st434info(L"ebucoreGenre", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010C03A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0C,0x03,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010C03A001,
+	new st434info(L"genreKindGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010C040000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0C,0x04,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010C040000,
+	new st434info(L"ebucoreTargetAudience", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010C04A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0C,0x04,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010C04A001,
+	new st434info(L"targetAudienceKindGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010D000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0D,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010D000000,
+	new st434info(L"ebucoreLanguage", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010D010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0D,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010D010000,
+	new st434info(L"languageCode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010D020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0D,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010D020000,
+	new st434info(L"languageLanguage", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010D030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0D,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010D030000,
+	new st434info(L"languageNote", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010DA00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0D,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010DA00100,
+	new st434info(L"languagePurposeSet", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E000000,
+	new st434info(L"ebucoreCoverage", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010EA00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010EA00100,
+	new st434info(L"coverageValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010EA00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010EA00200,
+	new st434info(L"spatial", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010EA00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010EA00300,
+	new st434info(L"temporal", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E010000,
+	new st434info(L"ebucoreSpatial", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E01A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x01,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E01A001,
+	new st434info(L"location", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E01A002 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x01,0xA0,0x02};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E01A002,
+	new st434info(L"coordinates", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E010100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x01,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E010100,
+	new st434info(L"ebucoreLocation", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E010101 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x01,0x01,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E010101,
+	new st434info(L"locationId", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E010102 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x01,0x01,0x02};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E010102,
+	new st434info(L"locationName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E010103 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x01,0x01,0x03};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E010103,
+	new st434info(L"locationCode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E010104 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x01,0x01,0x04};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E010104,
+	new st434info(L"locationNote", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E0101A0 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x01,0x01,0xA0};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E0101A0,
+	new st434info(L"locationTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E0101B0 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x01,0x01,0xB0};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E0101B0,
+	new st434info(L"coordinateReference", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E010200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x01,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E010200,
+	new st434info(L"ebucoreCoordinates", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E010201 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x01,0x02,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E010201,
+	new st434info(L"posX", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E010202 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x01,0x02,0x02};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E010202,
+	new st434info(L"posY", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E0102A0 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x01,0x02,0xA0};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E0102A0,
+	new st434info(L"coordinatesFormatGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E020000,
+	new st434info(L"ebucoreTemporal", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E020100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x02,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E020100,
+	new st434info(L"temporalDefinitionNote", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E02A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x02,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E02A001,
+	new st434info(L"periodOfTime", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E02A002 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x02,0xA0,0x02};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E02A002,
+	new st434info(L"temporalTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E030100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x03,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E030100,
+	new st434info(L"ebucorePeriodOfTime", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E030101 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x03,0x01,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E030101,
+	new st434info(L"periodId", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E030102 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x03,0x01,0x02};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E030102,
+	new st434info(L"periodName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E030103 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x03,0x01,0x03};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E030103,
+	new st434info(L"periodStartYear", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E030104 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x03,0x01,0x04};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E030104,
+	new st434info(L"periodStartDate", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E030105 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x03,0x01,0x05};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E030105,
+	new st434info(L"periodStartTime", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E030106 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x03,0x01,0x06};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E030106,
+	new st434info(L"periodEndYear", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E030107 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x03,0x01,0x07};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E030107,
+	new st434info(L"periodEndDate", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201010E030108 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x0E,0x03,0x01,0x08};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201010E030108,
+	new st434info(L"periodEndTime", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010110000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x10,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010110000000,
+	new st434info(L"ebucoreRights", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010110010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x10,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010110010000,
+	new st434info(L"rightsId", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010110020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x10,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010110020000,
+	new st434info(L"rightsLink", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010110030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x10,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010110030000,
+	new st434info(L"rightsClearanceFlag", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010110A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x10,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010110A00100,
+	new st434info(L"rightsValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010110A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x10,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010110A00200,
+	new st434info(L"exploitationIssues", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010110A00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x10,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010110A00300,
+	new st434info(L"rightsCoverage", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010110A00400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x10,0xA0,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010110A00400,
+	new st434info(L"rightsHolderEntity", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010110A00500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x10,0xA0,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010110A00500,
+	new st434info(L"rightsContacts", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010110A00600 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x10,0xA0,0x06,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010110A00600,
+	new st434info(L"rightsTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010110A00700 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x10,0xA0,0x07,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010110A00700,
+	new st434info(L"rightsAttributeID", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010110A00800 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x10,0xA0,0x08,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010110A00800,
+	new st434info(L"rightsFormatReferences", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010111000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x11,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010111000000,
+	new st434info(L"ebucoreVersion", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010111010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x11,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010111010000,
+	new st434info(L"versionValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010111020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x11,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010111020000,
+	new st434info(L"versionLanguage", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010112000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x12,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010112000000,
+	new st434info(L"ebucoreRating", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010112010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x12,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010112010000,
+	new st434info(L"ratingValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010112020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x12,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010112020000,
+	new st434info(L"ratingScaleMinValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010112030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x12,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010112030000,
+	new st434info(L"ratingScaleMaxValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010112040000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x12,0x04,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010112040000,
+	new st434info(L"ratingLanguage", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010112A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x12,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010112A00100,
+	new st434info(L"ratingTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010112A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x12,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010112A00200,
+	new st434info(L"ratingFormatGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010112A00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x12,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010112A00300,
+	new st434info(L"ratingProviderEntity", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010113000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x13,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010113000000,
+	new st434info(L"ebucorePublicationHistoryEvent", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010113010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x13,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010113010000,
+	new st434info(L"firstPublicationFlag", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010113020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x13,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010113020000,
+	new st434info(L"publicationDate", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010113030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x13,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010113030000,
+	new st434info(L"publicationTime", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010113040000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x13,0x04,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010113040000,
+	new st434info(L"publicationService", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010113050000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x13,0x05,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010113050000,
+	new st434info(L"publicationChannel", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010113A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x13,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010113A00100,
+	new st434info(L"publicationMedium", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010113B00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x13,0xB0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010113B00100,
+	new st434info(L"publicationFormatReference", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140010000,
+	new st434info(L"ebucoreCustomRelation", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140010100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x01,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140010100,
+	new st434info(L"relationByName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140010200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x01,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140010200,
+	new st434info(L"relationLink", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140010300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x01,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140010300,
+	new st434info(L"runningOrderNumber", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140010400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x01,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140010400,
+	new st434info(L"totalNumberOfGroupMembers", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140010500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x01,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140010500,
+	new st434info(L"orderedGroupFlag", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201014001A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x01,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201014001A001,
+	new st434info(L"customRelationTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201014001A002 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x01,0xA0,0x02};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201014001A002,
+	new st434info(L"relationIdentifier", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020000,
+	new st434info(L"ebucoreBasicRelation", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020100,
+	new st434info(L"isVersionOf", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020200,
+	new st434info(L"hasVersion", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020300,
+	new st434info(L"isReplacedBy", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020400,
+	new st434info(L"replaces", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020500,
+	new st434info(L"isRequiredBy", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020600 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x06,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020600,
+	new st434info(L"requires", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020700 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x07,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020700,
+	new st434info(L"isPartOf", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020800 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x08,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020800,
+	new st434info(L"hasPart", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020900 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x09,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020900,
+	new st434info(L"isReferencedBy", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020A00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x0A,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020A00,
+	new st434info(L"references", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020B00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x0B,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020B00,
+	new st434info(L"isFormatOf", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020C00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x0C,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020C00,
+	new st434info(L"hasFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020D00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x0D,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020D00,
+	new st434info(L"isEpisodeOf", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010140020E00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x40,0x02,0x0E,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010140020E00,
+	new st434info(L"isMemberOf", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E0000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E0000000,
+	new st434info(L"ebucorePartMetadata", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E0010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E0010000,
+	new st434info(L"partId", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E0020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E0020000,
+	new st434info(L"partName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E0030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E0030000,
+	new st434info(L"partDefinition", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E0040000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0x04,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E0040000,
+	new st434info(L"partStartTimecode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E0050000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0x05,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E0050000,
+	new st434info(L"partStartTime", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E0060000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0x06,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E0060000,
+	new st434info(L"partStartEditUnitNumber", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E0070000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0x07,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E0070000,
+	new st434info(L"partEndTimecode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E0090000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0x09,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E0090000,
+	new st434info(L"partEndTime", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E00A0000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0x0A,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E00A0000,
+	new st434info(L"partEndEditUnitNumber", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E00B0000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0x0B,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E00B0000,
+	new st434info(L"partDurationTimecode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E00C0000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0x0C,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E00C0000,
+	new st434info(L"partDurationTime", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E00D0000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0x0D,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E00D0000,
+	new st434info(L"partDurationEditUnitNumber", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E0A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E0A00100,
+	new st434info(L"partTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101E0A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xE0,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101E0A00200,
+	new st434info(L"partMeta", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150000000,
+	new st434info(L"ebucoreFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150010000,
+	new st434info(L"formatID", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150020000,
+	new st434info(L"formatVersionID", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150030000,
+	new st434info(L"formatName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150040000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x04,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150040000,
+	new st434info(L"formatDefinition", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150050000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x05,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150050000,
+	new st434info(L"formatYearCreated", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150060000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x06,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150060000,
+	new st434info(L"formatDateCreated", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150070000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x07,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150070000,
+	new st434info(L"overallDurationTimecode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150080000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x08,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150080000,
+	new st434info(L"overallDurationTime", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150090000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x09,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150090000,
+	new st434info(L"overallDurationEditUnit", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101500A0000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x0A,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101500A0000,
+	new st434info(L"overallEditRate", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101500B0000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x0B,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101500B0000,
+	new st434info(L"overallStartTimecode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101500C0000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x0C,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101500C0000,
+	new st434info(L"overallStartTime", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101500D0000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x0D,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101500D0000,
+	new st434info(L"overallStartEditUnit", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101500E0000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x0E,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101500E0000,
+	new st434info(L"overallEndTimecode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101500F0000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x0F,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101500F0000,
+	new st434info(L"overallEndTime", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150100000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0x10,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150100000,
+	new st434info(L"overallEndEditUnit", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00100,
+	new st434info(L"containerFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00200,
+	new st434info(L"medium", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00300,
+	new st434info(L"packageInfo", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00400,
+	new st434info(L"mimeType", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00500,
+	new st434info(L"materialAudioFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00600 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x06,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00600,
+	new st434info(L"materialVideoFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00700 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x07,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00700,
+	new st434info(L"materialImageFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00800 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x08,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00800,
+	new st434info(L"materialDataFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00900 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x09,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00900,
+	new st434info(L"materialSigningFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00A00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x0A,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00A00,
+	new st434info(L"materialTechnicalAttributeString", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00B00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x0B,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00B00,
+	new st434info(L"materialTechnicalAttributeInt8", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00C00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x0C,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00C00,
+	new st434info(L"materialTechnicalAttributeInt16", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00D00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x0D,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00D00,
+	new st434info(L"materialTechnicalAttributeInt32", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00E00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x0E,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00E00,
+	new st434info(L"materialTechnicalAttributeInt64", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A00F00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x0F,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A00F00,
+	new st434info(L"materialTechnicalAttributeUInt8", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A01000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x10,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A01000,
+	new st434info(L"materialTechnicalAttributeUInt16", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A01100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x11,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A01100,
+	new st434info(L"materialTechnicalAttributeUInt32", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A01200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x12,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A01200,
+	new st434info(L"materialTechnicalAttributeUInt64", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A01300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x13,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A01300,
+	new st434info(L"materialTechnicalAttributeFloat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A01400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x14,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A01400,
+	new st434info(L"materialTechnicalAttributeRational", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A01500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x15,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A01500,
+	new st434info(L"materialTechnicalAttributeAnyURI", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010150A01600 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x50,0xA0,0x16,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010150A01600,
+	new st434info(L"materialTechnicalAttributeBoolean", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160000000,
+	new st434info(L"ebucoreVideoFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160010000,
+	new st434info(L"videoFormatID", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160020000,
+	new st434info(L"videoFormatName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160030000,
+	new st434info(L"videoFormatDefinition", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160040000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0x04,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160040000,
+	new st434info(L"videoBitRate", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160050000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0x05,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160050000,
+	new st434info(L"videoBitRateMode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160060000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0x06,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160060000,
+	new st434info(L"videoSamplingFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160070000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0x07,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160070000,
+	new st434info(L"videoScanningOrder", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160080000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0x08,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160080000,
+	new st434info(L"videoActiveLines", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160090000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0x09,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160090000,
+	new st434info(L"videoNoiseFilterFlag", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00100,
+	new st434info(L"videoAspectRatio", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00200,
+	new st434info(L"videoFrameRate", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00300,
+	new st434info(L"videoHeight", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00400,
+	new st434info(L"videoWidth", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00500,
+	new st434info(L"videoEncoding", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00600 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x06,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00600,
+	new st434info(L"videoCodectype", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00700 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x07,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00700,
+	new st434info(L"videoTrack", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00800 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x08,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00800,
+	new st434info(L"videoTechnicalAttributeString", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00900 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x09,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00900,
+	new st434info(L"videoTechnicalAttributeInt8", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00A00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x0A,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00A00,
+	new st434info(L"videoTechnicalAttributeInt16", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00B00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x0B,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00B00,
+	new st434info(L"videoTechnicalAttributeInt32", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00C00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x0C,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00C00,
+	new st434info(L"videoTechnicalAttributeInt64", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00D00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x0D,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00D00,
+	new st434info(L"videoTechnicalAttributeUInt8", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00E00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x0E,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00E00,
+	new st434info(L"videoTechnicalAttributeUInt16", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A00F00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x0F,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A00F00,
+	new st434info(L"videoTechnicalAttributeUInt32", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A01000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x10,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A01000,
+	new st434info(L"videoTechnicalAttributeUInt64", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A01100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x11,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A01100,
+	new st434info(L"videoTechnicalAttributeFloat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A01200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x12,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A01200,
+	new st434info(L"videoTechnicalAttributeRational", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A01300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x13,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A01300,
+	new st434info(L"videoTechnicalAttributeAnyURI", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010160A01400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x60,0xA0,0x14,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010160A01400,
+	new st434info(L"videoTechnicalAttributeBoolean", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165000000,
+	new st434info(L"ebucoreImageFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165010000,
+	new st434info(L"imageFormatID", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165020000,
+	new st434info(L"imageFormatName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165030000,
+	new st434info(L"imageFormatDefinition", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165040000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0x04,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165040000,
+	new st434info(L"imageOrientation", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00100,
+	new st434info(L"imageAspectRatio", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00200,
+	new st434info(L"imageEncoding", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00300,
+	new st434info(L"imageCodec", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00400,
+	new st434info(L"imageHeight", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00500,
+	new st434info(L"imageWidth", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00600 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x06,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00600,
+	new st434info(L"imageTechnicalAttributeString", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00700 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x07,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00700,
+	new st434info(L"imageTechnicalAttributeInt8", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00800 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x08,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00800,
+	new st434info(L"imageTechnicalAttributeInt16", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00900 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x09,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00900,
+	new st434info(L"imageTechnicalAttributeInt32", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00A00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x0A,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00A00,
+	new st434info(L"imageTechnicalAttributeInt64", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00B00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x0B,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00B00,
+	new st434info(L"imageTechnicalAttributeUInt8", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00C00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x0C,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00C00,
+	new st434info(L"imageTechnicalAttributeUInt16", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00D00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x0D,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00D00,
+	new st434info(L"imageTechnicalAttributeUInt32", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00E00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x0E,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00E00,
+	new st434info(L"imageTechnicalAttributeUInt64", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A00F00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x0F,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A00F00,
+	new st434info(L"imageTechnicalAttributeFloat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A01000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x10,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A01000,
+	new st434info(L"imageTechnicalAttributeRational", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A01100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x11,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A01100,
+	new st434info(L"imageTechnicalAttributeAnyURI", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010165A01200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x65,0xA0,0x12,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010165A01200,
+	new st434info(L"imageTechnicalAttributeBoolean", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170000000,
+	new st434info(L"ebucoreAudioFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170010000,
+	new st434info(L"audioFormatID", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170020000,
+	new st434info(L"audioFormatName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170030000,
+	new st434info(L"audioFormatDefinition", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170040000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0x04,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170040000,
+	new st434info(L"audioTrackConfiguration", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170060000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0x06,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170060000,
+	new st434info(L"audioSamplingSize", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170070000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0x07,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170070000,
+	new st434info(L"audioSamplingType", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170080000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0x08,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170080000,
+	new st434info(L"audioTotalNumberOfChannels", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170090000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0x09,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170090000,
+	new st434info(L"audioBitRate", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101700A0000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0x0A,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101700A0000,
+	new st434info(L"audioBitRateMode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00100,
+	new st434info(L"audioSamplingRate", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00200,
+	new st434info(L"audioEncoding", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00300,
+	new st434info(L"audioCodec", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00400,
+	new st434info(L"audioTrack", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00500,
+	new st434info(L"audioTechnicalAttributeString", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00600 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x06,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00600,
+	new st434info(L"audioTechnicalAttributeInt8", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00700 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x07,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00700,
+	new st434info(L"audioTechnicalAttributeInt16", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00800 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x08,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00800,
+	new st434info(L"audioTechnicalAttributeInt32", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00900 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x09,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00900,
+	new st434info(L"audioTechnicalAttributeInt64", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00A00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x0A,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00A00,
+	new st434info(L"audioTechnicalAttributeUInt8", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00B00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x0B,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00B00,
+	new st434info(L"audioTechnicalAttributeUInt16", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00C00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x0C,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00C00,
+	new st434info(L"audioTechnicalAttributeUInt32", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00D00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x0D,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00D00,
+	new st434info(L"audioTechnicalAttributeUInt64", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00E00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x0E,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00E00,
+	new st434info(L"audioTechnicalAttributeFloat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A00F00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x0F,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A00F00,
+	new st434info(L"audioTechnicalAttributeRational", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A01000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x10,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A01000,
+	new st434info(L"audioTechnicalAttributeAnyURI", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010170A01100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x70,0xA0,0x11,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010170A01100,
+	new st434info(L"audioTechnicalAttributeBoolean", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010180000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x80,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010180000000,
+	new st434info(L"ebucoreTrack", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010180010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x80,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010180010000,
+	new st434info(L"trackID", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010180020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x80,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010180020000,
+	new st434info(L"trackName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010180030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x80,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010180030000,
+	new st434info(L"trackLanguageName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010180040000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x80,0x04,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010180040000,
+	new st434info(L"trackLanguageCode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010180A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x80,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010180A00100,
+	new st434info(L"trackTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190000000,
+	new st434info(L"ebucoreDataFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190010000,
+	new st434info(L"dataFormatID", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190020000,
+	new st434info(L"dataFormatName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190030000,
+	new st434info(L"dataFormatDefinition", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00100,
+	new st434info(L"captioning", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00200,
+	new st434info(L"ancillaryData", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00300,
+	new st434info(L"dataTechnicalAttributeString", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00400,
+	new st434info(L"dataTechnicalAttributeInt8", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00500,
+	new st434info(L"dataTechnicalAttributeInt16", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00600 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x06,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00600,
+	new st434info(L"dataTechnicalAttributeInt32", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00700 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x07,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00700,
+	new st434info(L"dataTechnicalAttributeInt64", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00800 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x08,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00800,
+	new st434info(L"dataTechnicalAttributeUInt8", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00900 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x09,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00900,
+	new st434info(L"dataTechnicalAttributeUInt16", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00A00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x0A,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00A00,
+	new st434info(L"dataTechnicalAttributeUInt32", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00B00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x0B,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00B00,
+	new st434info(L"dataTechnicalAttributeUInt64", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00C00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x0C,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00C00,
+	new st434info(L"dataTechnicalAttributeFloat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00D00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x0D,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00D00,
+	new st434info(L"dataTechnicalAttributeRational", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00E00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x0E,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00E00,
+	new st434info(L"dataTechnicalAttributeAnyURI", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010190A00F00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x90,0xA0,0x0F,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010190A00F00,
+	new st434info(L"dataTechnicalAttributeBoolean", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010151010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x51,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010151010000,
+	new st434info(L"ebucoreMimeType", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010151A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x51,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010151A00100,
+	new st434info(L"mimeTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010191010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x91,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010191010000,
+	new st434info(L"ebucoreCaptioning", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010191010100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x91,0x01,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010191010100,
+	new st434info(L"captioningFormatID", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010191010200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x91,0x01,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010191010200,
+	new st434info(L"captioningFormatName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010191010300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x91,0x01,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010191010300,
+	new st434info(L"captioningFormatDefinition", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010191010400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x91,0x01,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010191010400,
+	new st434info(L"captioningSourceUri", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010191010500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x91,0x01,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010191010500,
+	new st434info(L"captioningLanguageName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010191010600 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x91,0x01,0x06,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010191010600,
+	new st434info(L"captioningLanguageCode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D0201019101A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x91,0x01,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D0201019101A001,
+	new st434info(L"captioningTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010191020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x91,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010191020000,
+	new st434info(L"ebucoreAncillaryData", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010191020100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x91,0x02,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010191020100,
+	new st434info(L"DID", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010191020200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x91,0x02,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010191020200,
+	new st434info(L"SDID", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010191020300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x91,0x02,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010191020300,
+	new st434info(L"lineNumber", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D02010191020400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x91,0x02,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D02010191020400,
+	new st434info(L"ANCWrappingType", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101A0000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xA0,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101A0000000,
+	new st434info(L"ebucoreSigningFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101A0010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xA0,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101A0010000,
+	new st434info(L"signingTrackID", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101A0020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xA0,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101A0020000,
+	new st434info(L"signingTrackName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101A0030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xA0,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101A0030000,
+	new st434info(L"signingTrackLanguageName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101A0040000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xA0,0x04,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101A0040000,
+	new st434info(L"signingTrackLanguageCode", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101A0050000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xA0,0x05,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101A0050000,
+	new st434info(L"signingSourceUri", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101A0A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xA0,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101A0A00100,
+	new st434info(L"signingTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101A0A00200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xA0,0xA0,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101A0A00200,
+	new st434info(L"signingFormatGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010100,
+	new st434info(L"ebucoreTechnicalAttributeString", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010101 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x01,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010101,
+	new st434info(L"technicalAttributeStringValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010200,
+	new st434info(L"ebucoreTechnicalAttributeInt8", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010201 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x02,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010201,
+	new st434info(L"technicalAttributeInt8Value", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010300,
+	new st434info(L"ebucoreTechnicalAttributeInt16", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010301 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x03,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010301,
+	new st434info(L"technicalAttributeInt16Value", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010400,
+	new st434info(L"ebucoreTechnicalAttributeInt32", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010401 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x04,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010401,
+	new st434info(L"technicalAttributeInt32Value", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010500,
+	new st434info(L"ebucoreTechnicalAttributeInt64", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010501 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x05,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010501,
+	new st434info(L"technicalAttributeInt64Value", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010600 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x06,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010600,
+	new st434info(L"ebucoreTechnicalAttributeUInt8", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010601 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x06,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010601,
+	new st434info(L"technicalAttributeUInt8Value", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010700 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x07,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010700,
+	new st434info(L"ebucoreTechnicalAttributeUInt16", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010701 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x07,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010701,
+	new st434info(L"technicalAttributeUInt16Value", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010800 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x08,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010800,
+	new st434info(L"ebucoreTechnicalAttributeUInt32", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010801 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x08,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010801,
+	new st434info(L"technicalAttributeUInt32Value", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010900 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x09,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010900,
+	new st434info(L"ebucoreTechnicalAttributeUInt64", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010901 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x09,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010901,
+	new st434info(L"technicalAttributeUInt64Value", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010A00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x0A,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010A00,
+	new st434info(L"ebucoreTechnicalAttributeFloat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010A01 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x0A,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010A01,
+	new st434info(L"technicalAttributeFloatValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010B00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x0B,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010B00,
+	new st434info(L"ebucoreTechnicalAttributeRational", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010B01 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x0B,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010B01,
+	new st434info(L"technicalAttributeRationalValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010C00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x0C,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010C00,
+	new st434info(L"ebucoreTechnicalAttributeAnyURI", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010C01 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x0C,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010C01,
+	new st434info(L"technicalAttributeAnyURIValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010D00 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x0D,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010D00,
+	new st434info(L"ebucoreTechnicalAttributeBoolean", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0010D01 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x01,0x0D,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0010D01,
+	new st434info(L"technicalAttributeBooleanValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0030000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x03,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0030000,
+	new st434info(L"ebucoreDimension", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0030100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x03,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0030100,
+	new st434info(L"dimensionValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0030200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x03,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0030200,
+	new st434info(L"dimensionUnit", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B0050000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x05,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B0050000,
+	new st434info(L"ebucoreEncoding", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101B005A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xB0,0x05,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101B005A001,
+	new st434info(L"encodingTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x00,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0000000,
+	new st434info(L"ebucorePackageInfo", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C00A0000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x0A,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C00A0000,
+	new st434info(L"packageSize", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0020000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x02,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0020000,
+	new st434info(L"packageName", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0A00100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0xA0,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0A00100,
+	new st434info(L"packageLocator", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0010000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x01,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0010000,
+	new st434info(L"ebucoreLocator", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0010100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x01,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0010100,
+	new st434info(L"locatorLocation", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C001A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x01,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C001A001,
+	new st434info(L"locatorTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0040000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x04,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0040000,
+	new st434info(L"ebucoreContainerFormat", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C004A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x04,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C004A001,
+	new st434info(L"containerFormatGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0050000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x05,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0050000,
+	new st434info(L"ebucoreMedium", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0050100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x05,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0050100,
+	new st434info(L"mediumID", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C005A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x05,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C005A001,
+	new st434info(L"mediumTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0060000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x06,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0060000,
+	new st434info(L"ebucoreCodec", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0060100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x06,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0060100,
+	new st434info(L"name", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0060200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x06,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0060200,
+	new st434info(L"vendor", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0060300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x06,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0060300,
+	new st434info(L"version", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0060400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x06,0x04,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0060400,
+	new st434info(L"family", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0060500 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x06,0x05,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0060500,
+	new st434info(L"codecIdentifier", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0070000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x07,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0070000,
+	new st434info(L"ebucoreRational", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0070100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x07,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0070100,
+	new st434info(L"nominalValue", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0070200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x07,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0070200,
+	new st434info(L"factorNumerator", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0070300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x07,0x03,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0070300,
+	new st434info(L"factorDenominator", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0080000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x08,0x00,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0080000,
+	new st434info(L"ebucoreAspectRatio", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0080100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x08,0x01,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0080100,
+	new st434info(L"aspectRatioFactorNumerator", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C0080200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x08,0x02,0x00};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C0080200,
+	new st434info(L"aspectRatioFactorDenominator", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
+mxfKey key_060E2B34010101050D020101C008A001 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0xC0,0x08,0xA0,0x01};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060E2B34010101050D020101C008A001,
+	new st434info(L"aspectRatioTypeGroup", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")
+));
