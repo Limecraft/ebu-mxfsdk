@@ -57,7 +57,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.;..\..\include;..\..\..\..\apps;..\..\..\ebu-libMXF;..\..\..\ebu-libMXFpp;..\..\..\ebu-bmx\include;..\..\..\CustomMetadataSupport\include;..\..\..\..\uriparser\include;..\..\..\include;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\..\include;..\..\..\..\apps;..\..\..\ebu-libMXF;..\..\..\ebu-libMXFpp;..\..\..\ebu-bmx\include;..\..\..\CustomMetadataSupport\include;..\..\..\EBUCoreProcessor\include;..\..\..\..\uriparser\include;..\..\..\include;C:\code\EBU-SDK\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>

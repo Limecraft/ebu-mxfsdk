@@ -10,6 +10,7 @@
 #include <bmx/BMXException.h>
 
 #include <MXFCustomMetadata.h>
+#include <metadata/EBUCoreDMS++.h>
 #include <XercesUtils.h>
 
 #if defined(_WIN32)
@@ -740,15 +741,20 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 
 	XMLPlatformUtils::Initialize();
 	
+	//XMLCh str[] = { 'A', 'B', 'C' };
+
+	//TranscodeFromStr str((const XMLByte*)"Package", 8, "UTF-8");
+
 	DOMImplementation *pImpl = DOMImplementation::getImplementation();
 
 	std::map<mxfKey, st434info*> st434dict;
 
-//#include "group_declarations.inc"
+#include "group_declarations.inc"
 
 	std::auto_ptr<File> mFile( File::openRead(mxfLocation) );	// throws MXFException if open failed!
 
 	std::auto_ptr<DataModel> mDataModel ( new DataModel() );
+	EBUSDK::EBUCore::RegisterExtensions(&*mDataModel);
 
 	// ///////////////////////////////////////
 	// / 1. Open MXF File and locate all partitions, using the RIP
@@ -836,31 +842,6 @@ void AnalyzeMXFFile(const char* mxfLocation, const char* reportLocation, Analyze
 	std::auto_ptr<DOMDocument> doc = AnalyzeMXFFile(reportLocation, configuration);
 	LocalFileFormatTarget f(reportLocation);
 	SerializeXercesDocument(*doc, f);
-}
-
-int main(int argc, char* argv[])
-{
-	AnalyzerConfig cfg;
-	cfg.AnalysisType = AnalyzerConfig::MXF_MUX;
-	cfg.MetadataAnalysisType = AnalyzerConfig::LOGICAL;
-
-	AnalyzeMXFFile(argv[1], "out.xml", cfg);
-
-	/*for (std::map<mxfUUID, std::vector<KLVPacketRef>>::iterator it=darkItems.begin(); it!=darkItems.end();it++) {
-		std::pair<const mxfUUID, std::vector<KLVPacketRef>>& p = *it;
-		char uuid[KEY_STR_SIZE];
-		char setkey[KEY_STR_SIZE];
-		mxf_sprint_key(uuid, (mxfKey*)&p.first);
-		printf("%s:\n", uuid);
-
-		for (std::vector<KLVPacketRef>::iterator it2=p.second.begin();it2!=p.second.end();it2++) {
-			char key[KEY_STR_SIZE];
-			mxf_sprint_key(key, &(*it2).key);
-			printf("\t%s\n", key);
-		}
-	}*/
-
-	return 0;
 }
 
 } // namespace Analyzer
