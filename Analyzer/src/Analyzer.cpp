@@ -447,7 +447,7 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 						}
 					} else {
 
-						if (itemDef->typeId == MXF_UTF16STRING_TYPE) {
+						if (itemDef->typeId == MXF_UTF16STRING_TYPE || itemDef->typeId == MXF_ISO7STRING_TYPE) {
 							uint16_t utf16Size;
 							mxf_get_utf16string_item_size(set, &item->key, &utf16Size);
 							mxfUTF16Char *utf16Result = new mxfUTF16Char[utf16Size];
