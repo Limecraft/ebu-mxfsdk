@@ -674,13 +674,14 @@ void AddST434PrefixDeclarations(DOMDocument *doc) {
 		L"xmlns:s377mGroups", s377mGroupsNS);
 }
 
-bool FindIndexTable(MXFFile *mxfFile, int64_t offset, int64_t *tableOffset, int64_t *length) {
+bool FindIndexTable(MXFFile *mxfFile, int64_t offset, int64_t *tableOffset, int64_t maxTableLength, int64_t *length) {
 	mxfKey key;
     uint8_t llen;
     uint64_t len;
+	int64_t skippedBytes = 0;
 
 	mxf_file_seek(mxfFile, offset, SEEK_SET);
-	while (1)
+	while (skippedBytes <= maxTableLength)
     {
         CHK_ORET(mxf_read_next_nonfiller_kl(mxfFile, &key, &llen, &len));
         if (mxf_is_index_table_segment(&key))
@@ -692,6 +693,8 @@ bool FindIndexTable(MXFFile *mxfFile, int64_t offset, int64_t *tableOffset, int6
         else
         {
             CHK_ORET(mxf_skip(mxfFile, len));
+			// count what we have skipped (Key length, length length and value length)
+			skippedBytes += mxfKey_extlen + llen + len;
         }
     }
 	return false;
@@ -729,7 +732,7 @@ void AnalyzePartition(DOMElement *parent, DOMDocument *root, Partition *partitio
 		DOMElement *indexElem = PrepareElement(root, partElem, s377mGroupsNS, L"IndexTable");
 
 		int64_t indexTableOffset=0, indexTableLength=0;
-		while (FindIndexTable(mxfFile->getCFile(), indexTableOffset, &indexTableOffset, &indexTableLength)) {
+		while (FindIndexTable(mxfFile->getCFile(), indexTableOffset + partition->getThisPartition() + partition->getHeaderByteCount(), &indexTableOffset, partition->getIndexByteCount() - indexTableOffset, &indexTableLength)) {
 			indexTableOffset += indexTableLength;
 			AnalyzeIndexTable(indexElem, root, mxfFile->getCFile(), indexTableLength, configuration.DeepIndexTableAnalysis);
 		}
