@@ -146,75 +146,73 @@ int filter_after_item_read(void *privateData, MXFHeaderMetadata *headerMetadata,
 	return ((Filter*)privateData)->after_item_read(headerMetadata, item);
 }
 
-template<class t> const XMLCh* serialize_simple(t value, bool hex = false) {
-	std::wstringstream s;
+template<class t> const std::string serialize_simple_int8(t value, bool hex = false) {
+	std::stringstream s;
 	if (hex) {
-		s << L"0x" << std::hex << std::uppercase;
+		s << "0x" << std::hex << std::uppercase;
+	}
+	// override to int to make sure it is dealt with as a proper int, not a character
+	s << (int)value;
+
+	return s.str();
+}
+
+template<class t> const std::string serialize_simple(t value, bool hex = false) {
+	std::stringstream s;
+	if (hex) {
+		s << "0x" << std::hex << std::uppercase;
 	}
 	s << value;
 
-	XMLCh* out = new XMLCh[s.str().length() + 1];
-	wcscpy(out, s.str().c_str());
-	return out;
+	return s.str();
 }
 
-const XMLCh* serialize_boolean(mxfBoolean value) {
-	std::wstringstream s;
-	s << (value) ? 1 : 0;
-
-	XMLCh* out = new XMLCh[s.str().length() + 1];
-	wcscpy(out, s.str().c_str());
-	return out;
+const std::string serialize_boolean(mxfBoolean value) {
+	return std::string((value) ? "1" : "0");
 }
 
-const XMLCh* serialize_uuid(mxfUUID* uuid) {
+const std::string serialize_uuid(mxfUUID* uuid) {
 #define UUID_STRING_LEN	46
-	XMLCh* out = new XMLCh[UUID_STRING_LEN];
-	_snwprintf(out, UUID_STRING_LEN,
-                 L"urn:uuid:%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
+	char out[UUID_STRING_LEN];
+	_snprintf(out, UUID_STRING_LEN,
+                 "urn:uuid:%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
                  uuid->octet0, uuid->octet1, uuid->octet2, uuid->octet3,
                  uuid->octet4, uuid->octet5, uuid->octet6, uuid->octet7,
                  uuid->octet8, uuid->octet9, uuid->octet10, uuid->octet11,
                  uuid->octet12, uuid->octet13, uuid->octet14, uuid->octet15);
-	return out;
+	return std::string(out);
 }
 
-const XMLCh* serialize_ul(mxfUL* ul) {
-	std::wstringstream s;
-	s << L"urn:oid:1.3.52";
+const std::string serialize_ul(mxfUL* ul) {
+	std::stringstream s;
+	s << "urn:oid:1.3.52";
 	int b = 4;
 	for (int b=4; b < 16 && ((uint8_t*)ul)[b] != 0; b++) {
-		s << L"." << ((uint8_t*)ul)[b];
+		s << "." << (int)((uint8_t*)ul)[b];
 	}
 
-	XMLCh* out = new XMLCh[s.str().length() + 1];
-	wcscpy(out, s.str().c_str());
-	return out;
+	return s.str();
 }
 
-const XMLCh* serialize_key(mxfKey* key) {
-	std::wstringstream s;
-	s << L"urn:oid:1.3.52.2";
+const std::string serialize_key(mxfKey* key) {
+	std::stringstream s;
+	s << "urn:oid:1.3.52.2";
 	int b = 4;
 	for (int b=4; b < 16 && ((uint8_t*)key)[b] != 0; b++) {
-		s << L"." << ((uint8_t*)key)[b];
+		s << "." << (int)((uint8_t*)key)[b];
 	}
 
-	XMLCh* out = new XMLCh[s.str().length() + 1];
-	wcscpy(out, s.str().c_str());
-	return out;
+	return s.str();
 }
 
-const XMLCh* serialize_umid(mxfUMID *umid) {
-	std::wstringstream s;
-	s << L"0x" << std::hex << std::uppercase;
+const std::string serialize_umid(mxfUMID *umid) {
+	std::stringstream s;
+	s << "0x" << std::hex << std::uppercase;
 	for (int b=0; b < 32; b++) {
-		s << ((uint8_t*)umid)[b];
+		s << (int)((uint8_t*)umid)[b];
 	}
 
-	XMLCh* out = new XMLCh[s.str().length() + 1];
-	wcscpy(out, s.str().c_str());
-	return out;
+	return s.str();
 }
 
 const XMLCh* serialize_dark_value(MXFFile *file, int64_t offset, int64_t length) {
@@ -238,6 +236,7 @@ class XMLStr {
 	TranscodeFromStr _s;
 public:
 	XMLStr(const char* source, XMLTranscoder *tc) : _s((const XMLByte*)source, strlen(source), tc) {}
+	XMLStr(const std::string& source, XMLTranscoder *tc) : _s((const XMLByte*)(source.c_str()), source.length(), tc) {}
 	~XMLStr() {}
 	const XMLCh* str() {
 		return _s.str();
@@ -269,6 +268,10 @@ DOMElement *PrepareElementWithContent(DOMDocument *doc, DOMElement *parent, XMLC
 	return PrepareElementWithContent(doc, parent, namespaceURI, elementName.str(), textContent);
 }
 
+DOMElement *PrepareElementWithContent(DOMDocument *doc, DOMElement *parent, XMLCh* namespaceURI, XMLStr& elementName, XMLStr& textContent) {
+	return PrepareElementWithContent(doc, parent, namespaceURI, elementName.str(), textContent.str());
+}
+
 DOMAttr *PrepareAttributeWithContent(DOMDocument *doc, DOMElement *parent, XMLCh* namespaceURI, const XMLCh* attrName, const XMLCh* textContent) {
 	DOMAttr *attr = doc->createAttributeNS(namespaceURI, attrName);
 	parent->setAttributeNode(attr);
@@ -280,73 +283,67 @@ DOMAttr *PrepareAttributeWithContent(DOMDocument *doc, DOMElement *parent, XMLCh
 	return attr;
 }
 
-#define GET_AND_SERIALIZE(type, source, getfunction, serializefunction, dest)	\
+#define GET_AND_SERIALIZE(type, source, getfunction, serializefunction, dest, tc)	\
 					type v; \
 					getfunction(source, &v); \
-					dest->setTextContent(serializefunction(v));
-#define GET_AND_SERIALIZE_BY_REF(type, source, getfunction, serializefunction, dest)	\
+					dest->setTextContent(_X(serializefunction(v), tc).str());
+#define GET_AND_SERIALIZE_BY_REF(type, source, getfunction, serializefunction, dest, tc)	\
 					type v; \
 					getfunction(source, &v); \
-					dest->setTextContent(serializefunction(&v));
+					dest->setTextContent(_X(serializefunction(&v), tc).str());
 
 void serializeMXFValue(unsigned int type, uint8_t *value, DOMElement* elem, DOMDocument *root, XMLTranscoder* tc) {
 	if (type == MXF_INT8_TYPE) {
-		GET_AND_SERIALIZE(int8_t, value, mxf_get_int8, serialize_simple<int8_t>, elem);
+		GET_AND_SERIALIZE(int8_t, value, mxf_get_int8, serialize_simple_int8<int8_t>, elem, tc);
 	} else if (type == MXF_UINT8_TYPE) {
-		GET_AND_SERIALIZE(uint8_t, value, mxf_get_uint8, serialize_simple<uint8_t>, elem);
+		GET_AND_SERIALIZE(uint8_t, value, mxf_get_uint8, serialize_simple_int8<uint8_t>, elem, tc);
 	} else if (type == MXF_INT16_TYPE) {
-		GET_AND_SERIALIZE(int16_t, value, mxf_get_int16, serialize_simple<int16_t>, elem);
+		GET_AND_SERIALIZE(int16_t, value, mxf_get_int16, serialize_simple<int16_t>, elem, tc);
 	} else if (type == MXF_UINT16_TYPE) {
-		GET_AND_SERIALIZE(uint16_t, value, mxf_get_uint16, serialize_simple<uint16_t>, elem);
+		GET_AND_SERIALIZE(uint16_t, value, mxf_get_uint16, serialize_simple<uint16_t>, elem, tc);
 	} else if (type == MXF_INT32_TYPE) {
-		GET_AND_SERIALIZE(int32_t, value, mxf_get_int32, serialize_simple<int32_t>, elem);
+		GET_AND_SERIALIZE(int32_t, value, mxf_get_int32, serialize_simple<int32_t>, elem, tc);
 	} else if (type == MXF_UINT32_TYPE) {
-		GET_AND_SERIALIZE(uint32_t, value, mxf_get_uint32, serialize_simple<uint32_t>, elem);
+		GET_AND_SERIALIZE(uint32_t, value, mxf_get_uint32, serialize_simple<uint32_t>, elem, tc);
 	} else if (type == MXF_INT64_TYPE) {
-		GET_AND_SERIALIZE(int64_t, value, mxf_get_int64, serialize_simple<int64_t>, elem);
+		GET_AND_SERIALIZE(int64_t, value, mxf_get_int64, serialize_simple<int64_t>, elem, tc);
 	} else if (type == MXF_UINT64_TYPE) {
-		GET_AND_SERIALIZE(uint64_t, value, mxf_get_uint64, serialize_simple<uint64_t>, elem);
+		GET_AND_SERIALIZE(uint64_t, value, mxf_get_uint64, serialize_simple<uint64_t>, elem, tc);
 	} else if (type == MXF_POSITION_TYPE || type == MXF_LENGTH_TYPE) {
-		GET_AND_SERIALIZE(int64_t, value, mxf_get_int64, serialize_simple<int64_t>, elem);
+		GET_AND_SERIALIZE(int64_t, value, mxf_get_int64, serialize_simple<int64_t>, elem, tc);
 	} else if (type == MXF_BOOLEAN_TYPE) {
-		GET_AND_SERIALIZE(mxfBoolean, value, mxf_get_boolean, serialize_boolean, elem);
+		GET_AND_SERIALIZE(mxfBoolean, value, mxf_get_boolean, serialize_boolean, elem, tc);
 	} else if (type == MXF_RATIONAL_TYPE) {
 		const XMLCh* prefix = elem->lookupPrefix(s377mTypesNS);
 
 		mxfRational v;
 		mxf_get_rational(value, &v); 
 
-		DOMElement *elemNum = PrepareElement(root, elem, s377mTypesNS, _X("Numerator", tc));
-		elemNum->setTextContent(serialize_simple<int32_t>(v.numerator));
-		DOMElement *elemDenom = PrepareElement(root, elem, s377mTypesNS, _X("Denominator", tc));
-		elemDenom->setTextContent(serialize_simple<int32_t>(v.denominator));
+		DOMElement *elemNum = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Numerator", tc), _X(serialize_simple<int32_t>(v.numerator), tc));
+		DOMElement *elemDenom = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Denominator", tc), _X(serialize_simple<int32_t>(v.denominator), tc));
 
 	} else if (type == MXF_UL_TYPE) {
-		GET_AND_SERIALIZE_BY_REF(mxfUL, value, mxf_get_ul, serialize_ul, elem);
+		mxfUL v;
+		mxf_get_ul(value, &v);
+		elem->setTextContent(_X(serialize_ul(&v), tc).str());
+		//GET_AND_SERIALIZE_BY_REF(mxfUL, value, mxf_get_ul, serialize_ul, elem, tc);
 	} else if (type == MXF_UMID_TYPE || type == MXF_PACKAGEID_TYPE) {
-		GET_AND_SERIALIZE_BY_REF(mxfUMID, value, mxf_get_umid, serialize_umid, elem);
+		GET_AND_SERIALIZE_BY_REF(mxfUMID, value, mxf_get_umid, serialize_umid, elem, tc);
 	} else if (type == MXF_UUID_TYPE) {
-		GET_AND_SERIALIZE_BY_REF(mxfUUID, value, mxf_get_uuid, serialize_uuid, elem);
+		GET_AND_SERIALIZE_BY_REF(mxfUUID, value, mxf_get_uuid, serialize_uuid, elem, tc);
 	} else if (type == MXF_TIMESTAMP_TYPE) {
 		mxfTimestamp v;
 		mxf_get_timestamp(value, &v);
 
 		const XMLCh* prefix = elem->lookupPrefix(s377mTypesNS);
 
-		DOMElement *year = PrepareElement(root, elem, s377mTypesNS, _X("Year", tc));
-		year->setTextContent(serialize_simple<uint16_t>(v.year));
-		DOMElement *month = PrepareElement(root, elem, s377mTypesNS, _X("Month", tc));
-		month->setTextContent(serialize_simple<uint8_t>(v.month));
-		DOMElement *day = PrepareElement(root, elem, s377mTypesNS, _X("Day", tc));
-		day->setTextContent(serialize_simple<uint8_t>(v.day));
-		DOMElement *hours = PrepareElement(root, elem, s377mTypesNS, _X("Hour", tc));
-		hours->setTextContent(serialize_simple<uint8_t>(v.hour));
-		DOMElement *minutes = PrepareElement(root, elem, s377mTypesNS, _X("Minute", tc));
-		minutes->setTextContent(serialize_simple<uint8_t>(v.min));
-		DOMElement *seconds = PrepareElement(root, elem, s377mTypesNS, _X("Second", tc));
-		seconds->setTextContent(serialize_simple<uint8_t>(v.sec));
-		DOMElement *qmsec = PrepareElement(root, elem, s377mTypesNS, _X("mSec4", tc));
-		qmsec->setTextContent(serialize_simple<uint8_t>(v.qmsec));
+		DOMElement *year = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Year", tc), _X(serialize_simple<uint16_t>(v.year), tc));
+		DOMElement *month = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Month", tc), _X(serialize_simple_int8<uint8_t>(v.month), tc));
+		DOMElement *day = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Day", tc) , _X(serialize_simple_int8<uint8_t>(v.day), tc));
+		DOMElement *hours = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Hour", tc), _X(serialize_simple_int8<uint8_t>(v.hour), tc));
+		DOMElement *minutes = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Minute", tc), _X(serialize_simple_int8<uint8_t>(v.min), tc));
+		DOMElement *seconds = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Second", tc), _X(serialize_simple_int8<uint8_t>(v.sec), tc));
+		DOMElement *qmsec = PrepareElementWithContent(root, elem, s377mTypesNS, _X("mSec4", tc), _X(serialize_simple_int8<uint8_t>(v.qmsec), tc));
 	}
 }
 
@@ -364,7 +361,7 @@ void AnalyzeShallowStrongReference(DOMElement* parent, MXFMetadataSet *set, DOMD
 		DOMElement *refElem = PrepareElement(root, parent, info->namespaceURI, ref_elem.c_str());
 
 		// set the instanceUID attribute
-		PrepareAttributeWithContent(root, refElem, s377mTypesNS, _X("TargetInstance", tc).str(), serialize_uuid(&set->instanceUID));
+		PrepareAttributeWithContent(root, refElem, s377mTypesNS, _X("TargetInstance", tc).str(), _X(serialize_uuid(&set->instanceUID), tc).str());
 	}
 }
 
@@ -388,7 +385,7 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 		parent->appendChild(elem);
 
 		// set the instanceUID attribute
-		PrepareAttributeWithContent(root, elem, s335mElementsNS, _X("InstanceID", tc).str(), serialize_uuid(&set->instanceUID));
+		PrepareAttributeWithContent(root, elem, s335mElementsNS, _X("InstanceID", tc).str(), _X(serialize_uuid(&set->instanceUID), tc).str());
 
 		// are there dark properties to add??? (must be done first, as per ST-434)
 		std::map<mxfUUID, std::vector<KLVPacketRef>>::iterator darkIt = darkItems.find(set->instanceUID);
@@ -400,7 +397,7 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 				for(std::vector<KLVPacketRef>::iterator it = localDarkItems.begin(); it != localDarkItems.end(); it++) {
 					KLVPacketRef& ref = *it;
 					DOMElement* prop = PrepareElement(root, props, s377mGroupsNS, _X("DarkProperty", tc));
-					PrepareAttributeWithContent(root, prop, s377mGroupsNS, _X("UniversalLabel", tc).str(), serialize_ul(&ref.key));
+					PrepareAttributeWithContent(root, prop, s377mGroupsNS, _X("UniversalLabel", tc).str(), _X(serialize_ul(&ref.key), tc).str());
 					prop->setTextContent(serialize_dark_value(mxfFile, ref.offset, ref.len));
 				}
 			}
@@ -521,28 +518,28 @@ void AnalyzeRIP(DOMElement* parent, DOMDocument* root, MXFRIP *rip, uint32_t rip
 		while (mxf_next_list_iter_element(&it)) {
 			MXFRIPEntry* v = (MXFRIPEntry*)mxf_get_iter_element(&it);
 			DOMElement *ripEntry = PrepareElement(root, ripEntriesElem, s377mGroupsNS, _X("PartitionOffsetPair", tc));
-			PrepareElementWithContent(root, ripEntry, s335mElementsNS, _X("EssenceStreamID", tc), serialize_simple<uint32_t>(v->bodySID));
-			PrepareElementWithContent(root, ripEntry, s335mElementsNS, _X("ByteOffset", tc), serialize_simple<uint64_t>(v->thisPartition));
+			PrepareElementWithContent(root, ripEntry, s335mElementsNS, _X("EssenceStreamID", tc), _X(serialize_simple<uint32_t>(v->bodySID), tc));
+			PrepareElementWithContent(root, ripEntry, s335mElementsNS, _X("ByteOffset", tc), _X(serialize_simple<uint64_t>(v->thisPartition), tc));
 		}
 
-	PrepareElementWithContent(root, ripElem, s335mElementsNS, _X("PackLength", tc), serialize_simple<uint32_t>(rip_size));
+	PrepareElementWithContent(root, ripElem, s335mElementsNS, _X("PackLength", tc), _X(serialize_simple<uint32_t>(rip_size), tc));
 
 }
 
 void AnalyzePartitionPack(DOMElement* parent, DOMDocument* root, MXFPartition *partition, XMLTranscoder *tc) {
 	DOMElement *ppElem = PrepareElement(root, parent, s377mGroupsNS, _X("PartitionPack", tc));
-	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("MajorVersion", tc), serialize_simple<uint16_t>(partition->majorVersion));
-	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("MinorVersion", tc), serialize_simple<uint16_t>(partition->minorVersion));
-	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("KAGSize", tc), serialize_simple<uint32_t>(partition->kagSize));
-	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("ThisPartition", tc), serialize_simple<uint64_t>(partition->thisPartition));
-	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("PreviousPartition", tc), serialize_simple<uint64_t>(partition->previousPartition));
-	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("FooterPartition", tc), serialize_simple<uint64_t>(partition->footerPartition));
-	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("HeaderByteCount", tc), serialize_simple<uint64_t>(partition->headerByteCount));
-	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("IndexByteCount", tc), serialize_simple<uint64_t>(partition->indexByteCount));	
-	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("IndexStreamID", tc), serialize_simple<uint32_t>(partition->indexSID));	
-	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("BodyOffset", tc), serialize_simple<uint64_t>(partition->bodyOffset));	
-	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("EssenceStreamID", tc), serialize_simple<uint32_t>(partition->bodySID));
-	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("OperationalPattern", tc), serialize_ul(&partition->operationalPattern));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("MajorVersion", tc), _X(serialize_simple<uint16_t>(partition->majorVersion), tc));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("MinorVersion", tc), _X(serialize_simple<uint16_t>(partition->minorVersion), tc));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("KAGSize", tc), _X(serialize_simple<uint32_t>(partition->kagSize), tc));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("ThisPartition", tc), _X(serialize_simple<uint64_t>(partition->thisPartition), tc));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("PreviousPartition", tc), _X(serialize_simple<uint64_t>(partition->previousPartition), tc));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("FooterPartition", tc), _X(serialize_simple<uint64_t>(partition->footerPartition), tc));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("HeaderByteCount", tc), _X(serialize_simple<uint64_t>(partition->headerByteCount), tc));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("IndexByteCount", tc), _X(serialize_simple<uint64_t>(partition->indexByteCount), tc));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("IndexStreamID", tc), _X(serialize_simple<uint32_t>(partition->indexSID), tc));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("BodyOffset", tc), _X(serialize_simple<uint64_t>(partition->bodyOffset), tc));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("EssenceStreamID", tc), _X(serialize_simple<uint32_t>(partition->bodySID), tc));
+	PrepareElementWithContent(root, ppElem, s335mElementsNS, _X("OperationalPattern", tc), _X(serialize_ul(&partition->operationalPattern), tc));
 	DOMElement *ppEssenceContaines = PrepareElement(root, ppElem, s335mElementsNS, _X("EssenceContainers", tc));
 	AnalyzeList(ppEssenceContaines, &partition->essenceContainers, MXF_UL_TYPE, root, tc);
 }
@@ -556,8 +553,8 @@ void AnalyzePrimerPack(DOMElement* parent, DOMDocument* root, MXFPrimerPack *pri
 	while (mxf_next_list_iter_element(&it)) {
 		MXFPrimerPackEntry* v = (MXFPrimerPackEntry*)mxf_get_iter_element(&it);
 		DOMElement *ppEntry = PrepareElement(root, ppBatch, s377mGroupsNS, _X("LocalTagEntry", tc));
-		PrepareElementWithContent(root, ppEntry, s335mElementsNS, _X("LocalTag", tc), serialize_simple<uint16_t>(v->localTag, true));
-		PrepareElementWithContent(root, ppEntry, s335mElementsNS, _X("LocalTagUniqueID", tc), serialize_ul(&v->uid));
+		PrepareElementWithContent(root, ppEntry, s335mElementsNS, _X("LocalTag", tc), _X(serialize_simple<uint16_t>(v->localTag, true), tc));
+		PrepareElementWithContent(root, ppEntry, s335mElementsNS, _X("LocalTagUniqueID", tc), _X(serialize_ul(&v->uid), tc));
 	}
 }
 
@@ -566,8 +563,8 @@ void AnalyzeDarkSets(DOMElement* parent, DOMDocument* root, MXFHeaderMetadata *h
 		DOMElement* floatingGroups = PrepareElement(root, parent, s377mMuxNS, _X("FloatingMetadataGroups", tc));
 		for (std::vector<KLVPacketRef>::iterator it = darkSets.begin(); it != darkSets.end(); it++) {
 			DOMElement* darkElem = PrepareElement(root, floatingGroups, s377mGroupsNS, _X("UnparsedDarkGroup", tc));
-			PrepareAttributeWithContent(root, darkElem, s377mGroupsNS, _X("Key", tc).str(), serialize_key(&(*it).key));
-			PrepareAttributeWithContent(root, darkElem, s377mGroupsNS, _X("BEROctetCount", tc).str(), serialize_simple<uint8_t>((*it).llen));
+			PrepareAttributeWithContent(root, darkElem, s377mGroupsNS, _X("Key", tc).str(), _X(serialize_key(&(*it).key), tc).str());
+			PrepareAttributeWithContent(root, darkElem, s377mGroupsNS, _X("BEROctetCount", tc).str(), _X(serialize_simple_int8<uint8_t>((*it).llen), tc).str());
 			darkElem->setTextContent(serialize_dark_value(mxfFile, (*it).offset, (*it).len));
 		}
 	}
@@ -578,15 +575,15 @@ void AnalyzeIndexTable(DOMElement* parent, DOMDocument* root, MXFFile *mxfFile, 
 	mxf_read_index_table_segment(mxfFile, indexTableLength, &idx);
 	DOMElement *idxElem = PrepareElement(root, parent, s377mGroupsNS, _X("IndexTableSegment", tc));
 		DOMElement *rateElem = PrepareElement(root, idxElem, s335mElementsNS, _X("IndexEditRate", tc));
-			PrepareElementWithContent(root, rateElem, s377mTypesNS, _X("Numerator", tc), serialize_simple<int32_t>(idx->indexEditRate.numerator));
-			PrepareElementWithContent(root, rateElem, s377mTypesNS, _X("Denominator", tc), serialize_simple<int32_t>(idx->indexEditRate.denominator));
-		PrepareElementWithContent(root, idxElem, s335mElementsNS, _X("IndexStartPosition", tc), serialize_simple<mxfPosition>(idx->indexStartPosition));
-		PrepareElementWithContent(root, idxElem, s335mElementsNS, _X("IndexDuration", tc), serialize_simple<mxfLength>(idx->indexDuration));
-		PrepareElementWithContent(root, idxElem, s335mElementsNS, _X("EditUnitByteCount", tc), serialize_simple<uint32_t>(idx->editUnitByteCount));
-		PrepareElementWithContent(root, idxElem, s335mElementsNS, _X("IndexStreamID", tc), serialize_simple<uint32_t>(idx->indexSID));
-		PrepareElementWithContent(root, idxElem, s335mElementsNS, _X("EssenceStreamID", tc), serialize_simple<uint32_t>(idx->bodySID));
-		PrepareElementWithContent(root, idxElem, s335mElementsNS, _X("SliceCount", tc), serialize_simple<uint8_t>(idx->sliceCount));
-		PrepareElementWithContent(root, idxElem, s335mElementsNS, _X("PositionTableCount", tc), serialize_simple<uint8_t>(idx->posTableCount));
+			PrepareElementWithContent(root, rateElem, s377mTypesNS, _X("Numerator", tc), _X(serialize_simple<int32_t>(idx->indexEditRate.numerator), tc));
+			PrepareElementWithContent(root, rateElem, s377mTypesNS, _X("Denominator", tc), _X(serialize_simple<int32_t>(idx->indexEditRate.denominator), tc));
+			PrepareElementWithContent(root, idxElem, s335mElementsNS, _X("IndexStartPosition", tc), _X(serialize_simple<mxfPosition>(idx->indexStartPosition), tc));
+			PrepareElementWithContent(root, idxElem, s335mElementsNS, _X("IndexDuration", tc), _X(serialize_simple<mxfLength>(idx->indexDuration), tc));
+			PrepareElementWithContent(root, idxElem, s335mElementsNS, _X("EditUnitByteCount", tc), _X(serialize_simple<uint32_t>(idx->editUnitByteCount), tc));
+			PrepareElementWithContent(root, idxElem, s335mElementsNS, _X("IndexStreamID", tc), _X(serialize_simple<uint32_t>(idx->indexSID), tc));
+			PrepareElementWithContent(root, idxElem, s335mElementsNS, _X("EssenceStreamID", tc), _X(serialize_simple<uint32_t>(idx->bodySID), tc));
+			PrepareElementWithContent(root, idxElem, s335mElementsNS, _X("SliceCount", tc), _X(serialize_simple_int8<uint8_t>(idx->sliceCount), tc));
+			PrepareElementWithContent(root, idxElem, s335mElementsNS, _X("PositionTableCount", tc), _X(serialize_simple_int8<uint8_t>(idx->posTableCount), tc));
 
 		if (deepIndexTableAnalysis) {
 			DOMElement *deltaArrayElem = PrepareElement(root, idxElem, s335mElementsNS, _X("DeltaEntryArray", tc));
@@ -594,9 +591,9 @@ void AnalyzeIndexTable(DOMElement* parent, DOMDocument* root, MXFFile *mxfFile, 
 			MXFDeltaEntry *d_entry = idx->deltaEntryArray;
 			while (d_entry != NULL) {
 				DOMElement *deltaElem = PrepareElement(root, deltaArrayElem, s335mElementsNS, _X("Element", tc));
-					PrepareElementWithContent(root, deltaElem, s335mElementsNS, _X("PositionTableIndex", tc), serialize_simple<int8_t>(d_entry->posTableIndex));
-					PrepareElementWithContent(root, deltaElem, s335mElementsNS, _X("Slice", tc), serialize_simple<uint8_t>(d_entry->slice));
-					PrepareElementWithContent(root, deltaElem, s335mElementsNS, _X("ElementDelta", tc), serialize_simple<uint32_t>(d_entry->elementData));
+					PrepareElementWithContent(root, deltaElem, s335mElementsNS, _X("PositionTableIndex", tc), _X(serialize_simple_int8<int8_t>(d_entry->posTableIndex), tc));
+					PrepareElementWithContent(root, deltaElem, s335mElementsNS, _X("Slice", tc), _X(serialize_simple_int8<uint8_t>(d_entry->slice), tc));
+					PrepareElementWithContent(root, deltaElem, s335mElementsNS, _X("ElementDelta", tc), _X(serialize_simple<uint32_t>(d_entry->elementData), tc));
 				d_entry = d_entry->next;
 			}
 
@@ -605,22 +602,22 @@ void AnalyzeIndexTable(DOMElement* parent, DOMDocument* root, MXFFile *mxfFile, 
 			MXFIndexEntry *i_entry = idx->indexEntryArray;
 			while (i_entry != NULL) {
 				DOMElement *idxEntElem = PrepareElement(root, indexArrayElem, s335mElementsNS, _X("Element", tc));
-					PrepareElementWithContent(root, idxEntElem, s335mElementsNS, _X("TemporalOffset", tc), serialize_simple<int8_t>(i_entry->temporalOffset));
-					PrepareElementWithContent(root, idxEntElem, s335mElementsNS, _X("KeyFrameOffset", tc), serialize_simple<int8_t>(i_entry->keyFrameOffset));
-					PrepareElementWithContent(root, idxEntElem, s335mElementsNS, _X("Flags", tc), serialize_simple<uint8_t>(i_entry->flags));
-					PrepareElementWithContent(root, idxEntElem, s335mElementsNS, _X("StreamOffset", tc), serialize_simple<uint64_t>(i_entry->streamOffset));
+					PrepareElementWithContent(root, idxEntElem, s335mElementsNS, _X("TemporalOffset", tc), _X(serialize_simple_int8<int8_t>(i_entry->temporalOffset), tc));
+					PrepareElementWithContent(root, idxEntElem, s335mElementsNS, _X("KeyFrameOffset", tc), _X(serialize_simple_int8<int8_t>(i_entry->keyFrameOffset), tc));
+					PrepareElementWithContent(root, idxEntElem, s335mElementsNS, _X("Flags", tc), _X(serialize_simple_int8<uint8_t>(i_entry->flags), tc));
+					PrepareElementWithContent(root, idxEntElem, s335mElementsNS, _X("StreamOffset", tc), _X(serialize_simple<uint64_t>(i_entry->streamOffset), tc));
 
 					// loop through the array of slice offsets
 					DOMElement *sliceElem = PrepareElement(root, idxEntElem, s335mElementsNS, _X("SliceOffset", tc));
 						for (uint8_t i=0; i<idx->sliceCount; i++) {
-							PrepareElementWithContent(root, sliceElem, s335mElementsNS, _X("Element", tc), serialize_simple<uint32_t>(i_entry->sliceOffset[i]));
+							PrepareElementWithContent(root, sliceElem, s335mElementsNS, _X("Element", tc), _X(serialize_simple<uint32_t>(i_entry->sliceOffset[i]), tc));
 						}
 					// loop through the array of positions
 					DOMElement *posElem = PrepareElement(root, idxEntElem, s335mElementsNS, _X("PositionTable", tc));
 						for (uint8_t i=0; i<idx->posTableCount; i++) {
 							DOMElement *ptElem = PrepareElement(root, posElem, s335mElementsNS, _X("Element", tc));
-							PrepareElementWithContent(root, ptElem, s377mTypesNS, _X("Numerator", tc), serialize_simple<int32_t>(i_entry->posTable[i].numerator));
-							PrepareElementWithContent(root, ptElem, s377mTypesNS, _X("Denominator", tc), serialize_simple<int32_t>(i_entry->posTable[i].denominator));
+							PrepareElementWithContent(root, ptElem, s377mTypesNS, _X("Numerator", tc), _X(serialize_simple<int32_t>(i_entry->posTable[i].numerator), tc));
+							PrepareElementWithContent(root, ptElem, s377mTypesNS, _X("Denominator", tc), _X(serialize_simple<int32_t>(i_entry->posTable[i].denominator), tc));
 						}
 
 				i_entry = i_entry->next;
