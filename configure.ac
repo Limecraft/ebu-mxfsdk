@@ -245,7 +245,7 @@ AC_CONFIG_FILES([
 	Analyzer/Makefile
 	Analyzer/src/Makefile
 	Analyzer/apps/Makefile
-	Analyzer/apps/mxfanalyzer/Makefile
+	Analyzer/apps/analyzer/Makefile
     ebu-mxfsdk.pc])
 
 AC_OUTPUT
