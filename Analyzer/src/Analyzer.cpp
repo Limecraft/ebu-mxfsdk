@@ -394,9 +394,8 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 				
 				for(std::vector<KLVPacketRef>::iterator it = localDarkItems.begin(); it != localDarkItems.end(); it++) {
 					KLVPacketRef& ref = *it;
-					DOMElement* prop = PrepareElement(root, props, s377mGroupsNS, _X("DarkProperty", tc));
+					DOMElement* prop = PrepareElementWithContent(root, props, s377mGroupsNS, _X("DarkProperty", tc), _X(serialize_dark_value(mxfFile, ref.offset, ref.len), tc));
 					PrepareAttributeWithContent(root, prop, s377mGroupsNS, _X("UniversalLabel", tc).str(), _X(serialize_ul(&ref.key), tc).str());
-					prop->setTextContent(serialize_dark_value(mxfFile, ref.offset, ref.len));
 				}
 			}
 		}
@@ -560,10 +559,9 @@ void AnalyzeDarkSets(DOMElement* parent, DOMDocument* root, MXFHeaderMetadata *h
 	if (darkSets.size() > 0) {
 		DOMElement* floatingGroups = PrepareElement(root, parent, s377mMuxNS, _X("FloatingMetadataGroups", tc));
 		for (std::vector<KLVPacketRef>::iterator it = darkSets.begin(); it != darkSets.end(); it++) {
-			DOMElement* darkElem = PrepareElement(root, floatingGroups, s377mGroupsNS, _X("UnparsedDarkGroup", tc));
+			DOMElement* darkElem = PrepareElementWithContent(root, floatingGroups, s377mGroupsNS, _X("UnparsedDarkGroup", tc), _X(serialize_dark_value(mxfFile, (*it).offset, (*it).len), tc));
 			PrepareAttributeWithContent(root, darkElem, s377mGroupsNS, _X("Key", tc).str(), _X(serialize_key(&(*it).key), tc).str());
 			PrepareAttributeWithContent(root, darkElem, s377mGroupsNS, _X("BEROctetCount", tc).str(), _X(serialize_simple_int8<uint8_t>((*it).llen), tc).str());
-			darkElem->setTextContent(serialize_dark_value(mxfFile, (*it).offset, (*it).len));
 		}
 	}
 }
