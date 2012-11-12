@@ -467,9 +467,10 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 						if (itemDef->typeId == MXF_UTF16STRING_TYPE || itemDef->typeId == MXF_ISO7STRING_TYPE) {
 							uint16_t utf16Size;
 							mxf_get_utf16string_item_size(set, &item->key, &utf16Size);
-							mxfUTF16Char *utf16Result = new mxfUTF16Char[utf16Size];
-							mxf_get_utf16string(item->value, item->length, utf16Result);
+							XMLCh *utf16Result = new XMLCh[utf16Size];
+							mxf_get_fixed_item_length_utf16string(item->value, item->length, (uint16_t*)utf16Result);
 							itemElem->setTextContent(utf16Result);
+							delete utf16Result; // release, no longer needed
 						} else if (itemType->category == MXF_ARRAY_TYPE_CAT) {
 							// this is any array type, loop through the entries
 							MXFArrayItemIterator arrIter;
