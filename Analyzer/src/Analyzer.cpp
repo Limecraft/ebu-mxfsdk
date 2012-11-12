@@ -40,10 +40,10 @@ using namespace EBUSDK::Utils;
 namespace EBUSDK {
 namespace Analyzer {
 
-static XMLCh* s377mTypesNS = L"http://www.smpte-ra.org/schemas/434/2006/types/S377M/2004";
-static XMLCh* s335mElementsNS = L"http://www.smpte-ra.org/schemas/434/2006/properties/S335M";
-static XMLCh* s377mGroupsNS = L"http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004";
-static XMLCh* s377mMuxNS = L"http://www.smpte-ra.org/schemas/434/2006/multiplex/S377M/2004";
+static const XMLCh s335mElementsNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','p','r','o','p','e','r','t','i','e','s','/','S','3','3','5','M','\0'};
+static const XMLCh s377mGroupsNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','3','7','7','M','/','2','0','0','4','\0'};
+static const XMLCh s377mTypesNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','t','y','p','e','s','/','S','3','7','7','M','/','2','0','0','4','\0'};
+static const XMLCh s377mMuxNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','m','u','l','t','i','p','l','e','x','/','S','3','7','7','M','/','2','0','0','4','\0'};
 
 struct st434info {
 	XMLCh* namespaceURI;
@@ -66,9 +66,9 @@ class Filter {
 	bool setSet, itemSet;
 	std::vector<KLVPacketRef> darkItems;
 	std::vector<KLVPacketRef>& _darkSets;
-	std::map<mxfUUID, std::vector<KLVPacketRef>>& _allDarkItems;
+	std::map< mxfUUID, std::vector<KLVPacketRef> >& _allDarkItems;
 public:
-	Filter(MXFFile *f, std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems) : 
+	Filter(MXFFile *f, std::vector<KLVPacketRef>& darkSets, std::map< mxfUUID, std::vector<KLVPacketRef> >& darkItems) : 
 		setSet(false), itemSet(false), file(f), _darkSets(darkSets), _allDarkItems(darkItems) {}
     int before_set_read(MXFHeaderMetadata *headerMetadata, const mxfKey *key, uint8_t llen, uint64_t len, int *skip) {
 		// clear cache of dark items when beginning this set
@@ -174,7 +174,7 @@ const std::string serialize_boolean(mxfBoolean value) {
 const std::string serialize_uuid(mxfUUID* uuid) {
 #define UUID_STRING_LEN	46
 	char out[UUID_STRING_LEN];
-	_snprintf(out, UUID_STRING_LEN,
+	snprintf(out, UUID_STRING_LEN,
                  "urn:uuid:%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
                  uuid->octet0, uuid->octet1, uuid->octet2, uuid->octet3,
                  uuid->octet4, uuid->octet5, uuid->octet6, uuid->octet7,
@@ -186,7 +186,6 @@ const std::string serialize_uuid(mxfUUID* uuid) {
 const std::string serialize_ul(mxfUL* ul) {
 	std::stringstream s;
 	s << "urn:oid:1.3.52";
-	int b = 4;
 	for (int b=4; b < 16 && ((uint8_t*)ul)[b] != 0; b++) {
 		s << "." << (int)((uint8_t*)ul)[b];
 	}
@@ -197,7 +196,6 @@ const std::string serialize_ul(mxfUL* ul) {
 const std::string serialize_key(mxfKey* key) {
 	std::stringstream s;
 	s << "urn:oid:1.3.52.2";
-	int b = 4;
 	for (int b=4; b < 16 && ((uint8_t*)key)[b] != 0; b++) {
 		s << "." << (int)((uint8_t*)key)[b];
 	}
@@ -223,7 +221,7 @@ const std::string serialize_dark_value(MXFFile *file, int64_t offset, int64_t le
 	mxf_file_read(file, buf, length);
 	for (int64_t i=0;i<length;i++) {
 		char t[3]; t[2] = '\0';
-		_snprintf(t, 2, "%02X", buf[i]);
+		snprintf(t, 2, "%02X", buf[i]);
 		s << t;
 	}
 
@@ -236,7 +234,7 @@ public:
 	XMLStr(const char* source, XMLTranscoder *tc) : _s((const XMLByte*)source, strlen(source), tc) {}
 	XMLStr(const std::string& source, XMLTranscoder *tc) : _s((const XMLByte*)(source.c_str()), source.length(), tc) {}
 	~XMLStr() {}
-	const XMLCh* str() {
+	const XMLCh* str() const {
 		return _s.str();
 	}
 };
@@ -252,25 +250,25 @@ DOMElement *PrepareElement(DOMDocument *doc, DOMElement *parent, const XMLCh* na
 	return itemElem;
 }
 
-DOMElement *PrepareElement(DOMDocument *doc, DOMElement *parent, const XMLCh* namespaceURI, XMLStr& elementName) {
+DOMElement *PrepareElement(DOMDocument *doc, DOMElement *parent, const XMLCh* namespaceURI, const XMLStr& elementName) {
 	return PrepareElement(doc, parent, namespaceURI, elementName.str());
 }
 
-DOMElement *PrepareElementWithContent(DOMDocument *doc, DOMElement *parent, XMLCh* namespaceURI, const XMLCh* elementName, const XMLCh* textContent) {
+DOMElement *PrepareElementWithContent(DOMDocument *doc, DOMElement *parent, const XMLCh* namespaceURI, const XMLCh* elementName, const XMLCh* textContent) {
 	DOMElement *itemElem = PrepareElement(doc, parent, namespaceURI, elementName);
 	itemElem->setTextContent(textContent);
 	return itemElem;
 }
 
-DOMElement *PrepareElementWithContent(DOMDocument *doc, DOMElement *parent, XMLCh* namespaceURI, XMLStr& elementName, const XMLCh* textContent) {
+DOMElement *PrepareElementWithContent(DOMDocument *doc, DOMElement *parent, const XMLCh* namespaceURI, const XMLStr& elementName, const XMLCh* textContent) {
 	return PrepareElementWithContent(doc, parent, namespaceURI, elementName.str(), textContent);
 }
 
-DOMElement *PrepareElementWithContent(DOMDocument *doc, DOMElement *parent, XMLCh* namespaceURI, XMLStr& elementName, XMLStr& textContent) {
+DOMElement *PrepareElementWithContent(DOMDocument *doc, DOMElement *parent, const XMLCh* namespaceURI, const XMLStr& elementName, const XMLStr& textContent) {
 	return PrepareElementWithContent(doc, parent, namespaceURI, elementName.str(), textContent.str());
 }
 
-DOMAttr *PrepareAttributeWithContent(DOMDocument *doc, DOMElement *parent, XMLCh* namespaceURI, const XMLCh* attrName, const XMLCh* textContent) {
+DOMAttr *PrepareAttributeWithContent(DOMDocument *doc, DOMElement *parent, const XMLCh* namespaceURI, const XMLCh* attrName, const XMLCh* textContent) {
 	DOMAttr *attr = doc->createAttributeNS(namespaceURI, attrName);
 	parent->setAttributeNode(attr);
 	const XMLCh* prefix = attr->lookupPrefix(namespaceURI);
@@ -312,13 +310,15 @@ void serializeMXFValue(unsigned int type, uint8_t *value, DOMElement* elem, DOMD
 	} else if (type == MXF_BOOLEAN_TYPE) {
 		GET_AND_SERIALIZE(mxfBoolean, value, mxf_get_boolean, serialize_boolean, elem, tc);
 	} else if (type == MXF_RATIONAL_TYPE) {
-		const XMLCh* prefix = elem->lookupPrefix(s377mTypesNS);
-
 		mxfRational v;
 		mxf_get_rational(value, &v); 
 
-		DOMElement *elemNum = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Numerator", tc), _X(serialize_simple<int32_t>(v.numerator), tc));
-		DOMElement *elemDenom = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Denominator", tc), _X(serialize_simple<int32_t>(v.denominator), tc));
+		/*_X t(serialize_simple<int32_t>(v.numerator), tc);
+		_X tt("Numerator", tc);
+		DOMElement *elemNum = PrepareElementWithContent(root, elem, s377mTypesNS, tt, t);*/
+
+		PrepareElementWithContent(root, elem, s377mTypesNS, _X("Numerator", tc), _X(serialize_simple<int32_t>(v.numerator), tc));
+		PrepareElementWithContent(root, elem, s377mTypesNS, _X("Denominator", tc), _X(serialize_simple<int32_t>(v.denominator), tc));
 
 	} else if (type == MXF_UL_TYPE) {
 		mxfUL v;
@@ -333,15 +333,13 @@ void serializeMXFValue(unsigned int type, uint8_t *value, DOMElement* elem, DOMD
 		mxfTimestamp v;
 		mxf_get_timestamp(value, &v);
 
-		const XMLCh* prefix = elem->lookupPrefix(s377mTypesNS);
-
-		DOMElement *year = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Year", tc), _X(serialize_simple<uint16_t>(v.year), tc));
-		DOMElement *month = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Month", tc), _X(serialize_simple_int8<uint8_t>(v.month), tc));
-		DOMElement *day = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Day", tc) , _X(serialize_simple_int8<uint8_t>(v.day), tc));
-		DOMElement *hours = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Hour", tc), _X(serialize_simple_int8<uint8_t>(v.hour), tc));
-		DOMElement *minutes = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Minute", tc), _X(serialize_simple_int8<uint8_t>(v.min), tc));
-		DOMElement *seconds = PrepareElementWithContent(root, elem, s377mTypesNS, _X("Second", tc), _X(serialize_simple_int8<uint8_t>(v.sec), tc));
-		DOMElement *qmsec = PrepareElementWithContent(root, elem, s377mTypesNS, _X("mSec4", tc), _X(serialize_simple_int8<uint8_t>(v.qmsec), tc));
+		PrepareElementWithContent(root, elem, s377mTypesNS, _X("Year", tc), _X(serialize_simple<uint16_t>(v.year), tc));
+		PrepareElementWithContent(root, elem, s377mTypesNS, _X("Month", tc), _X(serialize_simple_int8<uint8_t>(v.month), tc));
+		PrepareElementWithContent(root, elem, s377mTypesNS, _X("Day", tc) , _X(serialize_simple_int8<uint8_t>(v.day), tc));
+		PrepareElementWithContent(root, elem, s377mTypesNS, _X("Hour", tc), _X(serialize_simple_int8<uint8_t>(v.hour), tc));
+		PrepareElementWithContent(root, elem, s377mTypesNS, _X("Minute", tc), _X(serialize_simple_int8<uint8_t>(v.min), tc));
+		PrepareElementWithContent(root, elem, s377mTypesNS, _X("Second", tc), _X(serialize_simple_int8<uint8_t>(v.sec), tc));
+		PrepareElementWithContent(root, elem, s377mTypesNS, _X("mSec4", tc), _X(serialize_simple_int8<uint8_t>(v.qmsec), tc));
 	}
 }
 
@@ -354,9 +352,9 @@ void AnalyzeShallowStrongReference(DOMElement* parent, MXFMetadataSet *set, DOMD
 		st434info* info = (*objIter).second;
 
 		// write out a _REF reference element
-		std::wstring ref_elem(info->elementName);
-		ref_elem.append(L"_REF");
-		DOMElement *refElem = PrepareElement(root, parent, info->namespaceURI, ref_elem.c_str());
+		std::string ref_elem(info->elementName);
+		ref_elem.append("_REF");
+		DOMElement *refElem = PrepareElement(root, parent, info->namespaceURI, _X(ref_elem, tc));
 
 		// set the instanceUID attribute
 		PrepareAttributeWithContent(root, refElem, s377mTypesNS, _X("TargetInstance", tc).str(), _X(serialize_uuid(&set->instanceUID), tc).str());
@@ -364,7 +362,7 @@ void AnalyzeShallowStrongReference(DOMElement* parent, MXFMetadataSet *set, DOMD
 }
 
 void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* root, MXFHeaderMetadata *header_metadata, MXFFile *mxfFile,
-	std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems, bool recurseIntoReferences, std::map<mxfKey, st434info*>& st434dict, XMLTranscoder *tc) {
+	std::map< mxfUUID, std::vector<KLVPacketRef> >& darkItems, bool recurseIntoReferences, std::map<mxfKey, st434info*>& st434dict, XMLTranscoder *tc) {
 	
 	std::map<mxfKey, st434info*>::const_iterator objIter;
 	objIter = st434dict.find(set->key);
@@ -386,7 +384,7 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 		PrepareAttributeWithContent(root, elem, s335mElementsNS, _X("InstanceID", tc).str(), _X(serialize_uuid(&set->instanceUID), tc).str());
 
 		// are there dark properties to add??? (must be done first, as per ST-434)
-		std::map<mxfUUID, std::vector<KLVPacketRef>>::iterator darkIt = darkItems.find(set->instanceUID);
+		std::map< mxfUUID, std::vector<KLVPacketRef> >::iterator darkIt = darkItems.find(set->instanceUID);
 		if (darkIt != darkItems.end()) {
 			std::vector<KLVPacketRef>& localDarkItems = (*darkIt).second;
 			if (localDarkItems.size() > 0) {
@@ -623,7 +621,7 @@ void AnalyzeIndexTable(DOMElement* parent, DOMDocument* root, MXFFile *mxfFile, 
 	mxf_free_index_table_segment(&idx);
 }
 
-std::auto_ptr<HeaderMetadata> ReadHeaderMetadata(File* mxfFile, Partition* partition, DataModel* metadataModel, std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems) {
+std::auto_ptr<HeaderMetadata> ReadHeaderMetadata(File* mxfFile, Partition* partition, DataModel* metadataModel, std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef> >& darkItems) {
 
 	mxfKey key;
 	uint8_t llen;
@@ -653,7 +651,7 @@ std::auto_ptr<HeaderMetadata> ReadHeaderMetadata(File* mxfFile, Partition* parti
 }
 
 void AnalyzeHeaderMetadata(	DOMElement *parent, DOMDocument* root, HeaderMetadata* headerMetadata, MXFFile *file,
-	std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef>>& darkItems, AnalyzerConfig configuration, std::map<mxfKey, st434info*>& st434dictionary, XMLTranscoder *tc) {
+	std::vector<KLVPacketRef>& darkSets, std::map< mxfUUID, std::vector<KLVPacketRef> >& darkItems, AnalyzerConfig configuration, std::map<mxfKey, st434info*>& st434dictionary, XMLTranscoder *tc) {
 
 	if (configuration.MetadataAnalysisType == AnalyzerConfig::LOGICAL) {
 		// analyze the metadata set
@@ -715,12 +713,12 @@ bool FindIndexTable(MXFFile *mxfFile, int64_t offset, int64_t *tableOffset, int6
 
 void AnalyzePartition(DOMElement *parent, DOMDocument *root, Partition *partition, File *mxfFile, DataModel *dataModel, AnalyzerConfig configuration, std::map<mxfKey, st434info*>& st434dict, XMLTranscoder *tc) {
 	std::vector<KLVPacketRef> darkSets;
-	std::map<mxfUUID, std::vector<KLVPacketRef>> darkItems;
+	std::map< mxfUUID, std::vector<KLVPacketRef> > darkItems;
 
 	// what type of partition is this?
 	DOMElement *partElem = 
 		mxf_is_header_partition_pack(partition->getKey()) ? 
-			PrepareElement(root, parent, s377mMuxNS, _X("HeaderPartition", tc)) : 
+			PrepareElement(/*root*/ (DOMDocument*)NULL , /*parent*/ (DOMElement*)NULL, &s377mMuxNS[0], _X("HeaderPartition", tc)) : 
 			(mxf_is_footer_partition_pack(partition->getKey()) ? 
 				PrepareElement(root, parent, s377mMuxNS, _X("FooterPartition", tc)) :
 				PrepareElement(root, parent, s377mMuxNS, _X("BodyPartition", tc)));
@@ -814,7 +812,7 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 			throw BMXException("No MXF suitable MXF metadata found");
 
 		std::vector<KLVPacketRef> darkSets;
-		std::map<mxfUUID, std::vector<KLVPacketRef>> darkItems;
+		std::map< mxfUUID, std::vector<KLVPacketRef> > darkItems;
 
 		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(&*mFile, metadata_partition, &*mDataModel, darkSets, darkItems);
 

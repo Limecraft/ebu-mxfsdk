@@ -193,7 +193,7 @@ fi
 AC_SUBST(WARN_CFLAGS)
 
 EBUSDK_CFLAGS="${WARN_CFLAGS} ${LIBMXF_CFLAGS} ${LIBMXFPP_CFLAGS} ${BMX_CFLAGS} \
-	${LIBURIPARSER_CFLAGS} -I\$(top_srcdir)/CustomMetadataSupport/include -I\$(top_srcdir)/EBUCoreProcessor/include -I\$(top_srcdir)/EBUCoreProcessor/include/xsd"
+	${LIBURIPARSER_CFLAGS} -I\$(top_srcdir)/CustomMetadataSupport/include -I\$(top_srcdir)/EBUCoreProcessor/include -I\$(top_srcdir)/EBUCoreProcessor/include/xsd -I\$(top_srcdir)/Analyzer/include"
 AC_SUBST(EBUSDK_CFLAGS)
 
 EBUSDK_LIBADDLIBS="${UUIDLIB} ${LIBURIPARSER_LIBS} ${LIBMXF_LIBS} ${LIBMXFPP_LIBS} ${BMX_LIBS}"
