@@ -1,4 +1,4 @@
-SUBDIRS = CustomMetadataSupport EBUCoreProcessor
+SUBDIRS = CustomMetadataSupport EBUCoreProcessor Analyzer
 
 
 pkgconfig_DATA = ebu-mxfsdk-$(EBUSDK_MAJORMINOR).pc
