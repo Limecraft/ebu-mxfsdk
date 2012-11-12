@@ -321,18 +321,11 @@ void serializeMXFValue(unsigned int type, uint8_t *value, DOMElement* elem, DOMD
 		mxfRational v;
 		mxf_get_rational(value, &v); 
 
-		/*_X t(serialize_simple<int32_t>(v.numerator), tc);
-		_X tt("Numerator", tc);
-		DOMElement *elemNum = PrepareElementWithContent(root, elem, s377mTypesNS, tt, t);*/
-
 		PrepareElementWithContent(root, elem, s377mTypesNS, _X("Numerator", tc), _X(serialize_simple<int32_t>(v.numerator), tc));
 		PrepareElementWithContent(root, elem, s377mTypesNS, _X("Denominator", tc), _X(serialize_simple<int32_t>(v.denominator), tc));
 
 	} else if (type == MXF_UL_TYPE) {
-		mxfUL v;
-		mxf_get_ul(value, &v);
-		elem->setTextContent(_X(serialize_ul(&v), tc).str());
-		//GET_AND_SERIALIZE_BY_REF(mxfUL, value, mxf_get_ul, serialize_ul, elem, tc);
+		GET_AND_SERIALIZE_BY_REF(mxfUL, value, mxf_get_ul, serialize_ul, elem, tc);
 	} else if (type == MXF_UMID_TYPE || type == MXF_PACKAGEID_TYPE) {
 		GET_AND_SERIALIZE_BY_REF(mxfUMID, value, mxf_get_umid, serialize_umid, elem, tc);
 	} else if (type == MXF_UUID_TYPE) {
@@ -359,10 +352,14 @@ void AnalyzeShallowStrongReference(DOMElement* parent, MXFMetadataSet *set, DOMD
 	if (objIter != st434dict.end()) {
 		st434info* info = (*objIter).second;
 
+		XMLCh *t = new XMLCh[XMLString::stringLen(info->elementName) + 4 /* length of _REF */ + 1 /* \0 char */];
 		// write out a _REF reference element
-		std::string ref_elem(info->elementName);
-		ref_elem.append("_REF");
-		DOMElement *refElem = PrepareElement(root, parent, info->namespaceURI, _X(ref_elem, tc));
+		XMLString::copyString(t, info->elementName);
+		_X ref("_REF", tc);
+		XMLString::catString(t, ref.str());
+		
+		DOMElement *refElem = PrepareElement(root, parent, info->namespaceURI, t);
+		delete t;	// release t which we don't need anymore
 
 		// set the instanceUID attribute
 		PrepareAttributeWithContent(root, refElem, s377mTypesNS, _X("TargetInstance", tc).str(), _X(serialize_uuid(&set->instanceUID), tc).str());
@@ -726,7 +723,7 @@ void AnalyzePartition(DOMElement *parent, DOMDocument *root, Partition *partitio
 	// what type of partition is this?
 	DOMElement *partElem = 
 		mxf_is_header_partition_pack(partition->getKey()) ? 
-			PrepareElement(/*root*/ (DOMDocument*)NULL , /*parent*/ (DOMElement*)NULL, &s377mMuxNS[0], _X("HeaderPartition", tc)) : 
+			PrepareElement(root, parent, s377mMuxNS, _X("HeaderPartition", tc)) : 
 			(mxf_is_footer_partition_pack(partition->getKey()) ? 
 				PrepareElement(root, parent, s377mMuxNS, _X("FooterPartition", tc)) :
 				PrepareElement(root, parent, s377mMuxNS, _X("BodyPartition", tc)));
