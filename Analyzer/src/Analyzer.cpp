@@ -215,21 +215,19 @@ const std::string serialize_umid(mxfUMID *umid) {
 	return s.str();
 }
 
-const XMLCh* serialize_dark_value(MXFFile *file, int64_t offset, int64_t length) {
+const std::string serialize_dark_value(MXFFile *file, int64_t offset, int64_t length) {
 	uint8_t *buf = new uint8_t[length];
-	std::wstringstream s;
+	std::stringstream s;
 
 	mxf_file_seek(file, offset, SEEK_SET);
 	mxf_file_read(file, buf, length);
 	for (int64_t i=0;i<length;i++) {
-		wchar_t t[3]; t[2] = 0;
-		_snwprintf(t, 2, L"%02X", buf[i]);
+		char t[3]; t[2] = '\0';
+		_snprintf(t, 2, "%02X", buf[i]);
 		s << t;
 	}
 
-	XMLCh* out = new XMLCh[s.str().length() + 1];
-	wcscpy(out, s.str().c_str());
-	return out;
+	return s.str();
 }
 
 class XMLStr {
