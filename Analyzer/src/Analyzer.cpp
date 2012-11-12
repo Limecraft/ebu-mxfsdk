@@ -174,7 +174,11 @@ const std::string serialize_boolean(mxfBoolean value) {
 const std::string serialize_uuid(mxfUUID* uuid) {
 #define UUID_STRING_LEN	46
 	char out[UUID_STRING_LEN];
+#if defined(_WIN32)
+	_snprintf(out, UUID_STRING_LEN,
+#else
 	snprintf(out, UUID_STRING_LEN,
+#endif
                  "urn:uuid:%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
                  uuid->octet0, uuid->octet1, uuid->octet2, uuid->octet3,
                  uuid->octet4, uuid->octet5, uuid->octet6, uuid->octet7,
@@ -221,7 +225,11 @@ const std::string serialize_dark_value(MXFFile *file, int64_t offset, int64_t le
 	mxf_file_read(file, buf, length);
 	for (int64_t i=0;i<length;i++) {
 		char t[3]; t[2] = '\0';
+#if defined(_WIN32)
+		_snprintf(t, 2, "%02X", buf[i]);
+#else
 		snprintf(t, 2, "%02X", buf[i]);
+#endif
 		s << t;
 	}
 
