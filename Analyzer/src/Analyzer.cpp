@@ -765,7 +765,7 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 	// to UTF-16 coded-strings to pass to the Xerces document
 	XMLTransService::Codes res;
 	XMLTranscoder *tc = XMLPlatformUtils::fgTransService->makeNewTranscoderFor(
-		XMLRecognizer::Encodings::UTF_8, res, 2048   /* as used by TranscodeFromStr class */);
+		XMLRecognizer::UTF_8, res, 2048   /* as used by TranscodeFromStr class */);
 
 	DOMImplementation *pImpl = DOMImplementation::getImplementation();
 
