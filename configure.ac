@@ -244,8 +244,8 @@ AC_CONFIG_FILES([
 	EBUCoreProcessor/msvc_build/vs8/Makefile
 	Analyzer/Makefile
 	Analyzer/src/Makefile
-	Analyzer/src/apps/Makefile
-	Analyzer/src/apps/mxfanalyzer/Makefile
+	Analyzer/apps/Makefile
+	Analyzer/apps/mxfanalyzer/Makefile
     ebu-mxfsdk.pc])
 
 AC_OUTPUT
