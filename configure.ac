@@ -200,7 +200,7 @@ EBUSDK_LIBADDLIBS="${UUIDLIB} ${LIBURIPARSER_LIBS} ${LIBMXF_LIBS} ${LIBMXFPP_LIB
 AC_SUBST(EBUSDK_LIBADDLIBS)
 
 EBUSDK_LDADDLIBS="${EBUSDK_LIBADDLIBS} \
-	\$(top_builddir)/CustomMetadataSupport/src/libebucustommetadatasupport.la \$(top_builddir)/EBUCoreProcessor/src/libebucore.la -lxerces-c"
+	\$(top_builddir)/CustomMetadataSupport/src/libebucustommetadatasupport.la \$(top_builddir)/EBUCoreProcessor/src/libebucore.la \$(top_builddir)/Analyzer/src/libebumxfanalyzer.la -lxerces-c"
 AC_SUBST(EBUSDK_LDADDLIBS)
 
 
