@@ -7,3 +7,7 @@
 [submodule "ebu-bmx"]
 	path = ebu-bmx
 	url = git@github.com:Limecraft/ebu-bmx.git
+
+[submodule "uriparser"]
+	path = uriparser
+	url = git@github.com:Limecraft/ebu-uriparser.git
