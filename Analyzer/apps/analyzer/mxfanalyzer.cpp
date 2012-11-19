@@ -146,11 +146,8 @@ int main(int argc, char* argv[])
         filenames.push_back(argv[cmdln_index]);
     }
 
-	std::auto_ptr<DOMDocument> doc = AnalyzeMXFFile(filenames[0], cfg);
-
-	LocalFileFormatTarget f(report_filename);
-	SerializeXercesDocument(*doc, f);
-
+	AnalyzeMXFFile(filenames[0], report_filename, cfg);
+	
 	return 0;
 }
 

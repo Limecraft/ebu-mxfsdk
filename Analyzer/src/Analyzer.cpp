@@ -233,6 +233,7 @@ const std::string serialize_dark_value(MXFFile *file, int64_t offset, int64_t le
 		s << t;
 	}
 
+	delete buf;
 	return s.str();
 }
 
@@ -857,11 +858,23 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 	// cleanup
 	mxf_clear_rip(&rip);
 
+	// delete our transcoder (via delete operator from base XMemmory class)
+	delete tc;
+
+	// release the ST434 dictionary
+	while(st434dict.size() > 0) {
+		std::map<mxfKey, st434info*>::iterator it = st434dict.begin();
+		st434info* e = (*it).second;
+		mxfKey k = (*it).first;
+		st434dict.erase(k);
+		delete e;
+	}
+
 	return out;
 }
 
 void AnalyzeMXFFile(const char* mxfLocation, const char* reportLocation, AnalyzerConfig configuration) {
-	std::auto_ptr<DOMDocument> doc = AnalyzeMXFFile(reportLocation, configuration);
+	std::auto_ptr<DOMDocument> doc = AnalyzeMXFFile(mxfLocation, configuration);
 	LocalFileFormatTarget f(reportLocation);
 	SerializeXercesDocument(*doc, f);
 }
