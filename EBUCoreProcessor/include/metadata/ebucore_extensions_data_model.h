@@ -1,4 +1,3 @@
-
 #if !defined (MXF_BASIC_TYPE_DEF)
 #define MXF_BASIC_TYPE_DEF(typeId, name, size)
 #endif
@@ -14,7 +13,6 @@
 #if !defined (MXF_INTERPRETED_TYPE_DEF)
 #define MXF_INTERPRETED_TYPE_DEF(typeId, name, interpretedTypeId, fixedSize)
 #endif
-
 #if !defined (MXF_LABEL)
 #define MXF_LABEL(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15)
 #endif
@@ -24,7 +22,6 @@
 #if !defined (MXF_ITEM_DEFINITION)
 #define MXF_ITEM_DEFINITION(setName, name, label, localTag, typeId, isRequired)
 #endif
-
 MXF_SET_DEFINITION(DMFramework, ebucoreMainFramework, 
 	MXF_LABEL(0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x01,0x01,0x00,0x00)
 );
@@ -575,7 +572,7 @@ MXF_SET_DEFINITION(InterchangeObject, ebucoreAlternativeTitle,
 		0
 	);
 	MXF_ITEM_DEFINITION(ebucoreAlternativeTitle, alternativeTitleNote,
-		MXF_LABEL(0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x05,0x01,0x02,0x00),
+		MXF_LABEL(0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01,0x05,0x02,0x02,0x00),
 		0x0000,
 		MXF_UTF16STRING_TYPE,
 		0
@@ -2716,7 +2713,6 @@ MXF_SET_DEFINITION(InterchangeObject, ebucoreAspectRatio,
 		MXF_STRONGREF_TYPE,
 		0
 	);
-
 #undef MXF_BASIC_TYPE_DEF
 #undef MXF_ARRAY_TYPE_DEF
 #undef MXF_COMPOUND_TYPE_DEF
@@ -2725,4 +2721,3 @@ MXF_SET_DEFINITION(InterchangeObject, ebucoreAspectRatio,
 #undef MXF_LABEL
 #undef MXF_SET_DEFINITION
 #undef MXF_ITEM_DEFINITION
-
