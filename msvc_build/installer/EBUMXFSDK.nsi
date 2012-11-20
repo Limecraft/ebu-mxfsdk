@@ -115,7 +115,7 @@ Section "MXFSDK" SecMXFSDK
   ;File /r /x .git /x Debug /x Release /x ipch /x *.suo /x *.sdf /x *.opensdf ..\..\EBUCoreProcessor
   ;File /r /x .git /x Debug /x Release /x ipch /x *.suo /x *.sdf /x *.opensdf /x ebu-mxfsdk*.exe /x xerces-c-3.1.1-x86-windows-vc-10.0 /x xsd-3.3.0-i686-windows ..\..\msvc_build
   ;File /r ..\..\bin
-  ;!include "files_installer.inc"
+  !include "files_installer.inc"
   
   
   ;Store installation folder
