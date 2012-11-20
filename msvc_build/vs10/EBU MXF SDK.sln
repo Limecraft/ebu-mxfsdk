@@ -5,7 +5,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libMXF", "..\..\ebu-libmxf\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libMXF++", "..\..\ebu-libMXFpp\msvc_build\vs10\libMXF++\libMXF++.vcxproj", "{33E3C49F-5483-4081-9446-9238A59B761A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uriparser", "..\..\uriparser\win32\Visual_Studio_2005\uriparser.vcxproj", "{8E2F76A2-59B5-4DF7-8062-EBD6FCF0C8B3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uriparser", "..\..\uriparser\win32\Visual_Studio_2010\uriparser.vcxproj", "{8E2F76A2-59B5-4DF7-8062-EBD6FCF0C8B3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "raw2bmx", "..\..\EBUCoreProcessor\msvc_build\vs10\apps\raw2bmx\raw2bmx.vcxproj", "{BF415E6B-C90A-449D-A697-06B6CD724614}"
 	ProjectSection(ProjectDependencies) = postProject
