@@ -117,10 +117,16 @@ Section "MXFSDK" SecMXFSDK
   ;File /r /x .git /x Debug /x Release /x ipch /x *.suo /x *.sdf /x *.opensdf /x ebu-mxfsdk*.exe /x xerces-c-3.1.1-x86-windows-vc-10.0 /x xsd-3.3.0-i686-windows ..\..\msvc_build
   ;File /r ..\..\bin
   !include "files_installer.inc"
+  File "/oname=vcredist_x86.exe" "..\..\msvc_build\installer\resources\vcredist_x86.exe"
   
   ; Extract dependency zip files
   nsisunz::UnzipToLog /text "Extracting: %f [%p]..." "$INSTDIR\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0.zip" "$INSTDIR\msvc_build\dependencies"
   nsisunz::UnzipToLog /text "Extracting: %f [%p]..." "$INSTDIR\msvc_build\dependencies\xsd-3.3.0-i686-windows.zip" "$INSTDIR\msvc_build\dependencies"
+  
+  ; Install Visual C++ redist
+  DetailPrint "Installing Microsoft Visual C++ Runtime dependencies..."
+  ExecWait '"$INSTDIR\vcredist_x86.exe" /q'
+  Delete "$INSTDIR\vcredist_x86.exe"
   
   ;Store installation folder
   WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" $INSTDIR

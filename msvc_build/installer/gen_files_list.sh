@@ -4,8 +4,8 @@ find ../../ebu-libmxf ../../ebu-libmxfpp ../../ebu-bmx ../../Analyzer ../../Cust
 	-not -iname '*suo*' -not -iname '*sdf*' -not -iname '*opensdf' -not -iname '*.user' \
 	-printf '%y|"%h/%f"\n' > files.txt
 find ../../msvc_build \
-	-iname '.git' -prune -o -iname Debug -prune -o -iname Release -prune -o -iname ipch -prune -o -iname xerces-c-3.1.1-x86-windows-vc-10.0 -prune -o -iname xsd-3.3.0-i686-windows -prune -o \
-	-not -path '.git' -not -path '*Debug' -not -path '*Release' -not -path '*ipch' \
+	-iname '.git' -prune -o -iname installer -prune -o -iname Debug -prune -o -iname Release -prune -o -iname ipch -prune -o -iname xerces-c-3.1.1-x86-windows-vc-10.0 -prune -o -iname xsd-3.3.0-i686-windows -prune -o \
+	-not -path '.git' -not -path '*Debug' -not -path '*Release' -not -path '*ipch' -not -path '*installer' \
 	-not -iname '*suo*' -not -iname '*sdf*' -not -iname '*opensdf' -not -iname 'ebu-mxfsdk*.exe' \
 	-printf '%y|"%h/%f"\n' >> files.txt
 find ../../bin \
