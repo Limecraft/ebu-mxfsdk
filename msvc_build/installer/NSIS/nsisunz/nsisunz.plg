@@ -1,0 +1,57 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: nsisunz - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\TEMP\RSP11E.tmp" with contents
+[
+/nologo /MT /W3 /O1 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "UNZIP_EXPORTS" /Fp"Release/nsisunz.pch" /YX /Fo"Release/" /Fd"Release/" /Gs32000 /FD /c 
+"C:\tmp\NSIS2\Contrib\nsisunz\zlib\ADLER32.C"
+"C:\tmp\NSIS2\Contrib\nsisunz\zlib\CRC32.C"
+"C:\tmp\NSIS2\Contrib\nsisunz\zlib\INFFAST.C"
+"C:\tmp\NSIS2\Contrib\nsisunz\zlib\INFLATE.C"
+"C:\tmp\NSIS2\Contrib\nsisunz\zlib\INFTREES.C"
+"C:\tmp\NSIS2\Contrib\nsisunz\nsisunz.cpp"
+"C:\tmp\NSIS2\Contrib\nsisunz\zlib\Unzip.c"
+"C:\tmp\NSIS2\Contrib\nsisunz\zlib\Zutil.c"
+"C:\tmp\NSIS2\Contrib\nsisunz\miniclib.c"
+]
+Creating command line "cl.exe @C:\TEMP\RSP11E.tmp" 
+Creating temporary file "C:\TEMP\RSP11F.tmp" with contents
+[
+kernel32.lib user32.lib /nologo /dll /incremental:no /pdb:"Release/nsisunz.pdb" /machine:I386 /nodefaultlib /out:"..\..\plugins\nsisunz.dll" /implib:"Release/nsisunz.lib" 
+.\Release\ADLER32.OBJ
+.\Release\CRC32.OBJ
+.\Release\INFFAST.OBJ
+.\Release\INFLATE.OBJ
+.\Release\INFTREES.OBJ
+.\Release\nsisunz.obj
+.\Release\Unzip.obj
+.\Release\Zutil.obj
+.\Release\miniclib.obj
+]
+Creating command line "link.exe @C:\TEMP\RSP11F.tmp"
+<h3>Output Window</h3>
+Compiling...
+ADLER32.C
+CRC32.C
+INFFAST.C
+INFLATE.C
+INFTREES.C
+nsisunz.cpp
+Unzip.c
+Zutil.c
+miniclib.c
+Linking...
+   Creating library Release/nsisunz.lib and object Release/nsisunz.exp
+
+
+
+<h3>Results</h3>
+nsisunz.dll - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

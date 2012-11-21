@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>nsisunz</title>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+<style type="text/css">
+/*<![CDATA[*/
+
+body
+        {
+        padding: 10px;
+        background-color: #F0F0F0;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 13px;
+        font-weight: normal;
+        }
+
+p
+        {
+        font-size: 100%;
+        margin: 20px;
+        }
+
+.center
+        {
+        text-align: center;
+        }
+
+table
+        {
+        margin: auto;
+        text-align: left;
+        background-color: #FFFFFF;
+        }
+
+.maintable
+        {
+        border: 2px solid #376EAB;
+        }
+
+.parameter
+        {
+        font-weight: bold;
+        color: #6586AC;
+        }
+
+
+h1
+        {
+        font-size: 220%;
+        color: #333333;
+        font-weight: normal;
+        text-align: center;
+        margin: 20px;
+	filter: glow(color="silver", strength="6");
+	height: 12px;
+        }
+
+h2
+        {
+        font-size: 165%;
+        color: #7A7272;
+        font-weight: normal;
+        }
+
+h3
+        {
+        font-size: 140%;
+        font-weight: bold;
+        color: #303030;
+        margin: 20px;
+        }
+
+pre     {
+        font-size: 100%;
+        margin: 20px;
+        }
+
+div
+        {
+        margin: 20px;
+        }
+
+a:link, a:visited, a:active
+        {
+        color: #294F75;
+        text-decoration: none;
+        }
+
+a:hover
+        {
+        color: #182634;
+        text-decoration: underline;
+        }
+
+.subtable
+        {
+        border: 0px;
+        margin-left: 20px;
+        margin-right: 20px;
+        }
+
+.lefttable
+        {
+        background-color: #CCCCCC;
+        vertical-align: top;
+        }
+
+.righttable
+        {
+        background-color: #EEEEEE;
+        vertical-align: top;
+        }
+
+.preproc {color: green;}
+.comment {color: gray;}
+.keyword {color: blue;}
+.string {color: teal;}
+.param {color: orange;}
+
+/*]]>*/
+</style>
+</head>
+<body>
+<div class="center">
+<table width="750" class="maintable" cellspacing="0" cellpadding="0">
+<tr>
+<td>
+<h1>nsisunz</h1>
+<div>
+<h2>Introduction</h2>
+<p><b>nsisunz</b> is a NSIS plugin which allows you to extract files from ZIP
+archives.</p>
+<p><b>nsisunz</b> is great when you use another NSIS plug-in named
+<em>NSISdl</em> to download a ZIP file from the internet.
+Download a small installer which lets the user choose the components he/she
+want to install and the installer downloads it (<em>QuickTime Setup</em> does
+this).</p>
+<p>Note:
+<em>nsisunz</em> does not support password protected ZIP archives
+(encrypted).<br/>
+To extract only a specific file from the archive use the
+<a href="#fileopt">"/file"</a> option.
+</p>
+<h2>How to use</h2>
+<h3>Setting it up</h3>
+<p>To see a great example of how to use the plug-in,
+check out the included <a href="example.nsi">example script</a>.</p>
+<p>You use the <em>Unzip</em>, <em>UnzipToLog</em> or the
+<em><a href="#UnzipToStack">UnzipToStack</a></em> function to extract files
+from a ZIP archive.</p>
+<p>In my opinion the best way to describe things is by showing an example,
+so here is one:</p>
+<pre>
+<font class="keyword">InitPluginsDir</font>
+<font class="comment">; Call plug-in. Push filename to ZIP first, and the dest. folder last.</font>
+nsisunz::UnzipToLog <font class="string">"$PLUGINSDIR\myzipfile.zip" "$INSTDIR"</font>
+
+<font class="comment">; Always check result on stack</font>
+<font class="keyword">Pop</font> $0
+<font class="keyword">StrCmp</font> $0 <font class="string">"success"</font> ok
+  <font class="keyword">DetailPrint</font> <font class="string">"$0"</font> <font class="comment">;print error message to log</font>
+ok:
+
+<font class="comment">; You can also use the "Unzip" function if you don't want to use the log.
+; It is a lot quicker, and is preferred for large ZIP archives.</font>
+nsisunz::Unzip <font class="string">"$PLUGINSDIR\myzipfile.zip" "$INSTDIR"</font>
+</pre>
+<a name="UnzipToStack"><h3>The UnzipToStack function</h3></a>
+<p>The <em>UnzipToStack</em> function can be used instead of the <em>UnzipToLog</em> function
+if you want the extraction to be a lot faster when extracting from very large ZIP archives and still
+want to see the files extracted. This is how you use it:
+</p>
+<pre>
+nsisunz::UnzipToStack <font class="string">"$PLUGINSDIR\myzipfile.zip" "$INSTDIR"</font>
+<font class="keyword">Pop</font> $0
+<font class="keyword">StrCmp</font> $0 <font class="string">"success"</font> ok
+  <font class="keyword">DetailPrint</font> <font class="keyword">"$0"</font> <font class="comment">;print error message to log</font>
+  <font class="keyword">Goto</font> skiplist
+ok:
+
+<font class="comment">; Print out list of files extracted to log</font>
+next:
+  <font class="keyword">Pop</font> $0
+  <font class="keyword">DetailPrint</font> $0
+<font class="keyword">StrCmp</font> $0 "" 0 next <font class="comment">; pop strings until a blank one arrives</font>
+
+skiplist:
+</pre>
+<a name="fileopt"><h3>Extracting specific files</h3></a>
+<p>
+To extract only a specific file use the "/file" option like this:
+</p>
+<pre>
+nsisunz::UnzipToLog /file <font class="string">"AnyPathInsideZIP/AFile.txt" "myzip.zip" "c:\myfiles"</font>
+</pre>
+<p>
+The path is relative to the root of the ZIP archive so you don't have to
+prepend a slash ("/"). Furthermore the foldernames are extracted with the file so
+the example above creates a file named "c:\myfiles\AnyPathInsideZIP\AFile.txt".
+To avoid this use "/noextractpath" like this:
+</p>
+<pre>
+nsisunz::UnzipToLog /noextractpath /file \
+  <font class="string">"AnyPathInsideZIP/AFile.txt" "myzip.zip" "c:\myfiles"</font>
+</pre>
+<h3>Using nsisunz with NSISdl</h3>
+<p>To use <em>NSISdl</em> with <em>nsisunz</em> to download and extract a ZIP archive,
+do something like this:</p>
+<pre>
+<font class="keyword">InitPluginsDir</font>
+NSISdl::download <font class="string">http://www.domain.com/file "$PLUGINSDIR\localfile.zip"</font>
+<font class="keyword">Pop</font> $R0 ;Get the return value
+<font class="keyword">StrCmp</font> $R0 <font class="string">"success"</font> +3
+  <font class="keyword">MessageBox</font> <font class="param">MB_OK</font> <font class="string">"Download failed: $R0"</font>
+  <font class="keyword">Quit</font>
+
+nsisunz::UnzipToLog <font class="string">"$PLUGINSDIR\localfile.zip" "$INSTDIR"</font>
+<font class="keyword">Pop</font> $R0
+<font class="keyword">StrCmp</font> $R0 <font class="string">"success"</font> +2
+  <font class="keyword">DetailPrint</font> <font class="string">"$R0"</font> <font class="comment">;print error message to log</font>
+
+</pre>
+<h3>Options</h3>
+<p>These are the optional parameters you can specify when calling <em>nsisunz</em>.</p>
+<table class="subtable">
+  <tr>
+    <td class="lefttable">/noextractpath</td>
+    <td class="righttable">This option makes the plug-in extract all files to
+    the destination directory without regard to paths stored in ZIP file.
+    Is often used in conjunction with "/file" to extract a single file
+    from anywhere in an archive to a destination directory.</td>
+  </tr>
+  <tr>
+    <td class="lefttable">/file</td>
+    <td class="righttable">Extract a specific file. Filename must be specified
+    as next parameter and must match a file in the ZIP including any
+    subdirectories. If the file couldn't be found in the ZIP file,
+    <em>nsisunz</em> pushes the string "File not found in ZIP file" on the
+    stack.</td>
+  </tr>
+  <tr>
+    <td class="lefttable">/text</td>
+    <td class="righttable">Sets the format of the text used in the log to the
+    next param. <em>"%f"</em> is replaced with the filename, <em>"%c"</em> is
+    replaced with the compressed size and <em>"%u"</em> is replaced with the
+    uncompressed size.
+    </td>
+  </tr>
+</table>
+<h3>Return value</h3>
+<p>After you have called the DLL, <b>nsisunz</b> adds either "success" or a specific error message
+on the stack. This is the possible error messages:</p>
+<ul>
+<li>Error opening ZIP file</li>
+<li>Error opening output file(s)</li>
+<li>Error writing output file(s)</li>
+<li>Error extracting from ZIP file</li>
+<li>File not found in ZIP file</li>
+</ul>
+<p>Usually, you don't need to check this value, but you still have to remove it from the stack
+(have a look at the example above).</p>
+<h2>Reserve files</h2>
+<p>If you are using BZIP2 (solid) compression, it's important that files which are being extracted
+in init- or page functions function are located before other files in the data block, because this
+will make your installer faster.</p>
+<p>If there are File commands in your sections or functions above the init- or page functions, add
+ReserveFile commands above your sections and functions:</p>
+<pre>
+<font class="keyword">ReserveFile</font> <font class="string">"myzipfile.zip"</font>
+<font class="keyword">ReserveFile</font> <font class="string">"${NSISDIR}\Plugins\nsisunz.dll"</font>
+</pre>
+<h2>Localization</h2>
+<p>Use the <em>"/text"</em> parameter to localize the text used by nsisunz
+for the log output.
+</p>
+<pre>
+<font class="comment">; Localized strings for use with nsisunz</font>
+<font class="comment">; The "%f" in the string is replaced with the filename on run-time.</font>
+<font class="comment">; "%c" and "%u" is replaced with compressed size and</font>
+<font class="comment">; uncompressed size respectively. See example script.</font>
+
+<font class="keyword">LoadLanguageFile</font> <font class="string">"${NSISDIR}\Contrib\Language files\english.nlf"</font>
+<font class="keyword">LoadLanguageFile</font> <font class="string">"${NSISDIR}\Contrib\Language files\norwegian.nlf"</font>
+
+<font class="keyword">LangString</font> nsisunz_text ${LANG_ENGLISH} <font class="string">"Extract: %f"</font>
+<font class="keyword">LangString</font> nsisunz_text ${LANG_NORWEGIAN} <font class="string">"Pakk ut: %f"</font>
+
+<font class="keyword">Function</font> .onInit
+  nsisunz:: /text <font class="string">"" "$(nsisunz_text)"</font>
+<font class="keyword">FunctionEnd</font>
+</pre>
+<h2>Notes</h2>
+<p>
+The plug-in is compressed with UPX to make it smaller.<br />
+If you make changes to the source, re-compile and use UPX you may get this
+message:<br />
+<code>upx: nsisunz.dll: CantPackException: file is possibly packed/protected
+(try --force)</code><br />
+I used the "<code>--force</code>" parameter as proposed,
+and without problems UPX reduced the size of <em>nsisunz.dll</em> from ~71 kb
+to 31,5 kb<br/>
+The reason for why you get this message is that the source #include's
+"AggressiveOptimize.h" which makes the linker merge the code sections of the
+final executable. This makes UPX think it's already packed (which it kinda is).
+But by using the "<code>--force</code>" parameter, UPX may shrink it a lot
+more.<br/>
+I hope people appreciate my struggles to keep the size of the plug-in small.
+If someone have any suggestions for making it even smaller I would like if
+someone sendt me an e-mail.
+</p>
+<h2>Contact</h2>
+<p><em>nsisunz</em> is written by Saivert.<br />
+Homepage: <a href="http://saivert.inthegray.com/">
+http://saivert.inthegray.com/</a><br />
+E-mail: <a href="mailto:saivert@gmail.com?subject=nsisunz&
+body=Regarding%20nsisunz:%0D%0A%0D%0A">saivert@gmail.com</a>
+
+</p>
+<h2>Version history</h2>
+<ul>
+<li>DLL version 1.0 (12/4/2004)
+<ul>
+<li>First public release!</li>
+</ul>
+</li>
+</ul>
+<h2>Credits</h2>
+<p>
+Based on code in NSIS Zip2Exe<br/>
+portions Copyright &copy; 1999-2001 Miguel Garrido (mgarrido01@hotmail.com)<br/>
+Uses ZLIB - Copyright &copy; Mark Adler<br/>
+ZIP format routines - Copyright &copy; 1998 Gilles Vollant<br/>
+Thanks to Tim Kosse for the LogMessage function, even though I
+could figure this out myself.<br/>
+And thanks to Joost Verburg for the readme HTML page design.</p>
+<h2>License</h2>
+<pre>
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute
+it freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented;
+   you must not claim that you wrote the original software.
+   If you use this software in a product, an acknowledgment in the
+   product documentation would be appreciated but is not required.
+2. Altered versions must be plainly marked as such,
+   and must not be misrepresented as being the original software.
+3. This notice may not be removed or altered from any distribution.
+</pre></div>
+</td>
+</tr>
+</table>
+</div>
+</body>
+</html>

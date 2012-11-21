@@ -24,6 +24,7 @@ SetCompressor /SOLID lzma
 !addincludedir NSIS\helpers
 !addincludedir NSIS\UAC
 !addplugindir NSIS\UAC\Ansi
+!addplugindir NSIS\nsisunz\Release
 !include UAC.nsh
 
 !macro UACInit thing
@@ -60,9 +61,9 @@ SetShellVarContext all
 	OutFile ebu-mxfsdk-${VERSION}.exe
 
   ;Default installation folder
-	InstallDir "$PROGRAMFILES\EBU\MXFSDK"
-
-
+  ;InstallDir "$PROGRAMFILES\EBU\MXFSDK"
+  InstallDir "$DOCUMENTS\EBU-MXFSDK"
+ 
   ;Get installation folder from registry if available
   InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 
@@ -117,6 +118,9 @@ Section "MXFSDK" SecMXFSDK
   ;File /r ..\..\bin
   !include "files_installer.inc"
   
+  ; Extract dependency zip files
+  nsisunz::UnzipToLog /text "Extracting: %f [%p]..." "$INSTDIR\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0.zip" "$INSTDIR\msvc_build\dependencies"
+  nsisunz::UnzipToLog /text "Extracting: %f [%p]..." "$INSTDIR\msvc_build\dependencies\xsd-3.3.0-i686-windows.zip" "$INSTDIR\msvc_build\dependencies"
   
   ;Store installation folder
   WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" $INSTDIR
@@ -177,6 +181,10 @@ Section "Uninstall"
 
   Delete "$INSTDIR\Uninstall.exe"
 
+  ; Removed extracted dependencies, don't really care if anything goes lost, not supposed to modify these dirs...
+  RMDir /r "$INSTDIR\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0"
+  RMDir /r "$INSTDIR\msvc_build\dependencies\xsd-3.3.0-i686-windows"
+  
   !include "files_uninstaller.inc"
   RMDir "$INSTDIR"
 
