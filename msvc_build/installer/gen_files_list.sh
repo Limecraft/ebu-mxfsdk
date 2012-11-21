@@ -9,6 +9,12 @@ find ../../msvc_build \
 	-not -iname '*suo*' -not -iname '*sdf*' -not -iname '*opensdf' -not -iname 'ebu-mxfsdk*.exe' \
 	-printf '%y|"%h/%f"\n' >> files.txt
 find ../../bin \
+	-not -iname '*.pdb' \
+	-printf '%y|"%h/%f"\n' >> files.txt
+find ../../doc/ \
+	-iname '*.pdf' \
+	-printf '%y|"%h/%f"\n' >> files.txt
+find ../../doc/doxygen \
 	-printf '%y|"%h/%f"\n' >> files.txt
 
 sed -e 's/^f|\(.*\)/f|\1|\1/' -e 's/^f|/File\|/' -e s/^d\ .*// -e 's/\//\\/g' files.txt | \
