@@ -5,7 +5,7 @@
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>*/
 
-#include "EBUCoreMapping.h"
+#include "EBUCore_1_5/EBUCoreMapping.h"
 #include "AppUtils.h"
 
 #include <xercesc/util/TransService.hpp>

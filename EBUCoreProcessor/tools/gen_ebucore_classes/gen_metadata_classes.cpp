@@ -52,7 +52,8 @@
 #include <mxf/mxf.h>
 #include <mxf/mxf_macros.h>
 
-#include <metadata/EBUCoreDMS.h>
+#define EBUCORE_VERSION_NAMESPACE "EBUCore_1_5"
+#include <EBUCore_1_5/metadata/EBUCoreDMS.h>
 
 #define CHECK(cmd) \
     if (!(cmd)) \
@@ -288,7 +289,7 @@ static void gen_class(const char *directory, MXFDataModel *dataModel, MXFSetDef 
     /* open header and source files */
 
     strcpy(filename, directory);
-    strcat(filename, "/include/metadata/base/");
+    strcat(filename, "/include/" EBUCORE_VERSION_NAMESPACE "/metadata/base/");
     strcat(filename, setDef->name);
     strcat(filename, "Base.h");
     if ((baseHeaderFile = fopen(filename, "wb")) == NULL)
@@ -298,7 +299,7 @@ static void gen_class(const char *directory, MXFDataModel *dataModel, MXFSetDef 
     }
 
     strcpy(filename, directory);
-    strcat(filename, "/src/metadata/base/");
+    strcat(filename, "/src/" EBUCORE_VERSION_NAMESPACE "/metadata/base/");
     strcat(filename, setDef->name);
     strcat(filename, "Base.cpp");
     if ((baseSourceFile = fopen(filename, "wb")) == NULL)
@@ -308,7 +309,7 @@ static void gen_class(const char *directory, MXFDataModel *dataModel, MXFSetDef 
     }
 
     strcpy(filename, directory);
-    strcat(filename, "/include/metadata/");
+    strcat(filename, "/include/" EBUCORE_VERSION_NAMESPACE "/metadata/");
     strcat(filename, setDef->name);
     strcat(filename, ".h");
     if ((headerFile = fopen(filename, "wb")) == NULL)
@@ -318,7 +319,7 @@ static void gen_class(const char *directory, MXFDataModel *dataModel, MXFSetDef 
     }
 
     strcpy(filename, directory);
-    strcat(filename, "/src/metadata/");
+    strcat(filename, "/src/" EBUCORE_VERSION_NAMESPACE "/metadata/");
     strcat(filename, setDef->name);
     strcat(filename, ".cpp");
     if ((sourceFile = fopen(filename, "wb")) == NULL)
@@ -403,7 +404,7 @@ static void gen_class(const char *directory, MXFDataModel *dataModel, MXFSetDef 
         "\n"
 		"using namespace mxfpp;\n"
         "\n"
-		"namespace EBUSDK { namespace EBUCore { namespace KLV\n"
+		"namespace EBUSDK { namespace EBUCore { namespace " EBUCORE_VERSION_NAMESPACE " { namespace KLV\n"
         "{\n"
         "\n"
         "\n"
@@ -420,7 +421,7 @@ static void gen_class(const char *directory, MXFDataModel *dataModel, MXFSetDef 
         "\n",
         baseClassNameU,
         baseClassNameU,
-        strstr(parentClassName, "ebucore") ? "metadata" : (setDef->parentSetDef != NULL) ? "libMXF++/metadata" : "libMXF++",
+		strstr(parentClassName, "ebucore") ? EBUCORE_VERSION_NAMESPACE "/metadata" : (setDef->parentSetDef != NULL) ? "libMXF++/metadata" : "libMXF++",
         (setDef->parentSetDef != NULL) ? parentClassName : "MetadataSet",
         baseClassName, parentClassName,
         baseClassName,
@@ -465,11 +466,11 @@ static void gen_class(const char *directory, MXFDataModel *dataModel, MXFSetDef 
         "\n"
         "\n"
         "\n"
-        "#include <metadata/base/%s.h>\n"
+        "#include <EBUCore_1_5/metadata/base/%s.h>\n"
         "\n"
 		"using namespace mxfpp;\n"
         "\n"
-		"namespace EBUSDK { namespace EBUCore { namespace KLV\n"
+		"namespace EBUSDK { namespace EBUCore { namespace " EBUCORE_VERSION_NAMESPACE " { namespace KLV\n"
         "{\n"
         "\n"
         "\n"
@@ -533,12 +534,12 @@ static void gen_class(const char *directory, MXFDataModel *dataModel, MXFSetDef 
         "#include <memory>\n"
         "\n"
         "#include <libMXF++/MXF.h>\n"
-		"#include <metadata/EBUCoreDMS++.h>\n"
+		"#include <EBUCore_1_5/metadata/EBUCoreDMS++.h>\n"
         "\n"
         "\n"
         "using namespace std;\n"
         "using namespace mxfpp;\n"
-		"using namespace EBUSDK::EBUCore::KLV;\n"
+		"using namespace EBUSDK::EBUCore::" EBUCORE_VERSION_NAMESPACE "::KLV;\n"
         "\n"
         "\n"
         "const mxfKey %s::setKey = MXF_SET_K(%s);\n"
@@ -604,12 +605,12 @@ static void gen_class(const char *directory, MXFDataModel *dataModel, MXFSetDef 
         "#endif\n"
         "\n"
         "#include <libMXF++/MXF.h>\n"
-		"#include <metadata/EBUCoreDMS++.h>\n"
+		"#include <" EBUCORE_VERSION_NAMESPACE "/metadata/EBUCoreDMS++.h>\n"
         "\n"
         "\n"
         "using namespace std;\n"
         "using namespace mxfpp;\n"
-		"using namespace EBUSDK::EBUCore::KLV;\n"
+		"using namespace EBUSDK::EBUCore::" EBUCORE_VERSION_NAMESPACE "::KLV;\n"
         "\n"
         "\n"
         "\n"
@@ -1981,7 +1982,7 @@ static void gen_class(const char *directory, MXFDataModel *dataModel, MXFSetDef 
         "};\n"
         "\n"
         "\n"
-		"}}};\n"
+		"}}}};\n"
         "\n"
         "\n"
         "#endif\n",
@@ -1995,7 +1996,7 @@ static void gen_class(const char *directory, MXFDataModel *dataModel, MXFSetDef 
         "};\n"
         "\n"
         "\n"
-		"}}};\n"
+		"}}}};\n"
         "\n"
         "\n"
         "#endif\n",

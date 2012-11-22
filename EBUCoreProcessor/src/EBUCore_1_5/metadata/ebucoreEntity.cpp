@@ -34,12 +34,12 @@
 #endif
 
 #include <libMXF++/MXF.h>
-#include <metadata/EBUCoreDMS++.h>
+#include <EBUCore_1_5/metadata/EBUCoreDMS++.h>
 
 
 using namespace std;
 using namespace mxfpp;
-using namespace EBUSDK::EBUCore::KLV;
+using namespace EBUSDK::EBUCore::EBUCore_1_5::KLV;
 
 
 

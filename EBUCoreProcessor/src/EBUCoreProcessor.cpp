@@ -36,7 +36,7 @@
 #define MXF_OPEN_MODIFY(fn, pf)   mxf_disk_file_open_modify(fn, pf)
 #endif
 
-#include <EBUCoreMapping.h>
+#include <EBUCore_1_5/EBUCoreMapping.h>
 #include <MXFCustomMetadata.h>
 #include <EBUCoreProcessor.h>
 #include <XercesUtils.h>
@@ -174,7 +174,7 @@ DMFramework* Process(const char* location, HeaderMetadata *destination, Identifi
 
 void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model)
 {
-	EBUSDK::EBUCore::RegisterExtensions(data_model);	
+	EBUSDK::EBUCore::EBUCore_1_5::RegisterExtensions(data_model);	
 }
 
 
@@ -622,7 +622,7 @@ void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument,
 }
 
 void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata) {
-	EBUCore::RegisterFrameworkObjectFactory(metadata);
+	EBUCore::EBUCore_1_5::RegisterFrameworkObjectFactory(metadata);
 }
 
 void InsertEBUCoreFramework(HeaderMetadata *header_metadata, DMFramework *framework, Identification *identificationToAppend) {

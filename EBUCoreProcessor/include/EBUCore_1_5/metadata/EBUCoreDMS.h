@@ -41,7 +41,7 @@
 #define MXF_ITEM_DEFINITION(setName, name, label, localTag, typeId, isRequired) \
     static const mxfUL MXF_ITEM_K(setName, name) = label;
 
-#include <metadata/ebucore_extensions_data_model.h>
+#include <EBUCore_1_5/metadata/ebucore_extensions_data_model.h>
 
 static const mxfUL MXF_DM_L(EBUCoreDescriptiveScheme) =
 	{ 0x06, 0x0E, 0x2B, 0x34, 0x01, 0x01, 0x01, 0x05, 0x0D, 0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00 };

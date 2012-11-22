@@ -38,7 +38,7 @@
 
 using namespace mxfpp;
 
-namespace EBUSDK { namespace EBUCore { namespace KLV
+namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_5 { namespace KLV
 {
 
 
@@ -87,7 +87,7 @@ protected:
 };
 
 
-}}};
+}}}};
 
 
 #endif

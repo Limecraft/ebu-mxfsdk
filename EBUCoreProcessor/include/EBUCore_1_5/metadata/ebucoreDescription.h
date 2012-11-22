@@ -34,11 +34,11 @@
 
 
 
-#include <metadata/base/ebucoreDescriptionBase.h>
+#include <EBUCore_1_5/metadata/base/ebucoreDescriptionBase.h>
 
 using namespace mxfpp;
 
-namespace EBUSDK { namespace EBUCore { namespace KLV
+namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_5 { namespace KLV
 {
 
 
@@ -59,7 +59,7 @@ protected:
 };
 
 
-}}};
+}}}};
 
 
 #endif

@@ -3,13 +3,13 @@
 
 //#include "EBU_CORE_20110915.hxx"
 //#include "EBU_CORE_20120403.hxx"
-#include "EBU_CORE_20120817.hxx"
+#include <EBUCore_1_5/xsd/EBU_CORE_20120817.hxx>
 
 #include <MXFCustomMetadata.h>
-#include <metadata/EBUCoreDMS++.h>
+#include <EBUCore_1_5/metadata/EBUCoreDMS++.h>
 
 using namespace EBUSDK::MXFCustomMetadata;
-using namespace EBUSDK::EBUCore::KLV;
+using namespace EBUSDK::EBUCore::EBUCore_1_5::KLV;
 
 namespace EBUSDK {
 namespace EBUCore {
