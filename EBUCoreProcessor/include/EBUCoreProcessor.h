@@ -1,4 +1,7 @@
 
+#ifndef __EBUSDK_EBUCOREPROCESSOR_H__
+#define __EBUSDK_EBUCOREPROCESSOR_H__
+
 #include <libMXF++/MXF.h>
 #include <MXFCustomMetadata.h>
 
@@ -88,7 +91,7 @@ namespace EBUSDK {
 		Duration fields are used to properly place the DM Segment on the timeline.
 		@param identificationToAppend Optional Identification metadata set that will be referenced from each metadata set created by this function.
 	*/
-	void InsertEBUCoreEventFrameworks(mxfpp::HeaderMetadata *header_metadata, std::vector<EBUSDK::MXFCustomMetadata::EventInput>& eventFrameworks, mxfpp::Identification *identificationToAppend = NULL);
+	void InsertEBUCoreEventFrameworks(mxfpp::HeaderMetadata *header_metadata, std::vector<MXFCustomMetadata::EventInput>& eventFrameworks, mxfpp::Identification *identificationToAppend = NULL);
 
 	void RemoveEBUCoreFrameworks(mxfpp::HeaderMetadata *header_metadata);
 
@@ -194,6 +197,16 @@ namespace EBUSDK {
 							const char* metadataLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...));
 
+	std::vector<mxfpp::DMFramework*> ebu_get_static_frameworks(mxfpp::MaterialPackage *mp);
+
+	enum MetadataOutput {
+		SERIALIZE_TO_FILE,
+		OUTPUT_AS_DOM_DOCUMENT
+	};
+
+
 	} // namespace EBUCore
 
 } // namespace EBUSDK
+
+#endif

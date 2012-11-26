@@ -16,6 +16,7 @@ using namespace mxfpp;
 
 namespace EBUSDK {
 namespace EBUCore {
+namespace EBUCore_1_5 {
 
 #define	SIMPLE_MAP(source, sourceProperty, dest, destProperty)	\
 	dest->destProperty(source.sourceProperty().get());
@@ -1293,5 +1294,6 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, mxfRat
 	dest->setpart(vec_parts); 
 }
 
+} // namespace EBUCore_1_5
 } // namespace EBUCore
 } // namespace EBUSDK

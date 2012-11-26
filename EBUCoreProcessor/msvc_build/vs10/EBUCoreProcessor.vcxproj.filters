@@ -9,16 +9,10 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Header Files\metadata">
-      <UniqueIdentifier>{f1071521-5a41-4171-8551-5bb66628dda9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\metadata\base">
-      <UniqueIdentifier>{63285a39-a76a-4039-b02d-138389b14166}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\metadata">
+    <Filter Include="Source Files\EBUCore_1_5\metadata">
       <UniqueIdentifier>{680e9b4d-dcbd-46fd-9c81-10313274f27a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\metadata\base">
+    <Filter Include="Source Files\EBUCore_1_5\metadata\base">
       <UniqueIdentifier>{03817576-60cc-45e2-a7b1-5ac682fc38ca}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\xsd">
@@ -26,6 +20,27 @@
     </Filter>
     <Filter Include="Header Files\xsd">
       <UniqueIdentifier>{c3cf842b-73f4-4423-8e90-f7e517599d14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EBUCore_1_5">
+      <UniqueIdentifier>{7c43bf1a-d5b9-4aba-9e4d-660ff68307f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EBUCore_1_5\metadata">
+      <UniqueIdentifier>{2a251912-df98-4e25-b445-5bee0cb8a18c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EBUCore_1_5\xsd">
+      <UniqueIdentifier>{c700fce0-0131-4f7d-a5a1-35702c6480bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\EBUCore_1_5">
+      <UniqueIdentifier>{7bbb2238-5676-47d0-958f-b85251da2da0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\EBUCore_1_5\metadata">
+      <UniqueIdentifier>{f1071521-5a41-4171-8551-5bb66628dda9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\EBUCore_1_5\metadata\base">
+      <UniqueIdentifier>{63285a39-a76a-4039-b02d-138389b14166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\EBUCore_1_5\xsd">
+      <UniqueIdentifier>{96118a6e-2b8a-4b82-af5a-e2e3dad21ad6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -35,449 +50,452 @@
     <ClCompile Include="..\..\src\EBUCoreProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\EBUCore_1_5\metadata\EBUCoreDMS++.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreAlternativeTitleBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreAddressBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreAncillaryDataBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreAspectRatioBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreAudioFormatBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreBasicRelationBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreCaptioningBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreCodecBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreContactBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreContactDetailsBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreContainerFormatBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreCoordinatesBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreCoreMetadataBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreCoverageBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreAddress.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreAlternativeTitle.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreAncillaryData.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreAspectRatio.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreAudioFormat.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreBasicRelation.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreCaptioning.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreCodec.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreContact.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreContactDetails.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreContainerFormat.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreCoordinates.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreCoreMetadata.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreCoverage.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreCustomRelation.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreDataFormat.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreDate.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreDateType.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreDescription.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreDimension.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreEncoding.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreEntity.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreFormat.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreFormatGroup.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreGenre.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreIdentifier.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreImageFormat.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreLanguage.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreLocation.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreLocator.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreMainFramework.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreMedium.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreMetadataSchemeInformation.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreMimeType.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreObjectType.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreOrganisation.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucorePackageInfo.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucorePartFramework.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucorePartMetadata.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucorePeriodOfTime.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucorePublicationHistoryEvent.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreRating.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreRational.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreRights.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreSigningFormat.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreSpatial.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreStatusGroup.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreSubject.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTargetAudience.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreDataFormatBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreDateBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreCustomRelationBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreDateTypeBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreDescriptionBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreDimensionBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreEncodingBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreEntityBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreFormatBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreFormatGroupBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreGenreBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreIdentifierBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreImageFormatBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreLanguageBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreLocationBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreLocatorBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucorePartFrameworkBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucorePackageInfoBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreOrganisationDepartmentBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreOrganisationBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreObjectTypeBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreMimeTypeBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreMediumBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucorePartMetadataBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucorePeriodOfTimeBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucorePublicationHistoryEventBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreRatingBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreRationalBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreRightsBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreSigningFormatBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreSpatialBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreStatusGroupBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreSubjectBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTargetAudienceBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTechnicalAttributeAnyURIBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTechnicalAttributeBooleanBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTechnicalAttributeFloatBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTechnicalAttributeInt16Base.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTechnicalAttributeInt32Base.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTechnicalAttributeInt64Base.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTechnicalAttributeInt8Base.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTechnicalAttributeRationalBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTechnicalAttributeStringBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTechnicalAttributeUInt16Base.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTechnicalAttributeUInt32Base.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTechnicalAttributeUInt64Base.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTechnicalAttributeUInt8Base.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTemporalBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTextualAnnotationBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTitleBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTrackBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTypeBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreTypeGroupBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreVersionBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreVideoFormatBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreMainFrameworkBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreMetadataSchemeInformationBase.cpp">
-      <Filter>Source Files\metadata\base</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTechnicalAttributeAnyURI.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTechnicalAttributeBoolean.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTechnicalAttributeFloat.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTechnicalAttributeInt16.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTechnicalAttributeInt32.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTechnicalAttributeInt64.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTechnicalAttributeInt8.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTechnicalAttributeRational.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTechnicalAttributeString.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTechnicalAttributeUInt16.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTechnicalAttributeUInt32.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTechnicalAttributeUInt64.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTechnicalAttributeUInt8.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTemporal.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTextualAnnotation.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTitle.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTrack.cpp">
-      <Filter>Source Files\metadata</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreType.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreTypeGroup.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreVersion.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreVideoFormat.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreOrganisationDepartment.cpp">
-      <Filter>Source Files\metadata</Filter>
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\xsd\xml.cxx">
       <Filter>Source Files\xsd</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\EBUCore_1_5\EBUCoreMapping.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\EBUCore_1_5\EBUCoreReverseMapping.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\EBUCore_1_5\xsd\EBU_CORE_20120817.cxx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_5\xsd\simpledc20021212.cxx">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_5\metadata\ebucoreType.cpp">
+      <Filter>Source Files\EBUCore_1_5\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_5\xsd\EBU_CORE_20120817.cxx">
+      <Filter>Source Files\EBUCore_1_5\xsd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_5\EBUCoreMapping.cpp">
+      <Filter>Source Files\EBUCore_1_5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_5\EBUCoreReverseMapping.cpp">
+      <Filter>Source Files\EBUCore_1_5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_5\metadata\EBUCoreDMS++.cpp">
+      <Filter>Source Files\EBUCore_1_5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_5\EBUCoreProcessor_1_5.cpp">
+      <Filter>Source Files\EBUCore_1_5</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -494,58 +512,58 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\ebucoreAddress.h">
-      <Filter>Header Files\metadata</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\ebucoreContact.h">
-      <Filter>Header Files\metadata</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\base\ebucoreAddressBase.h">
-      <Filter>Header Files\metadata\base</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\base\ebucoreContactBase.h">
-      <Filter>Header Files\metadata\base</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\ebucoreContactDetails.h">
-      <Filter>Header Files\metadata</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\ebucoreEntity.h">
-      <Filter>Header Files\metadata</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\base\ebucoreEntityBase.h">
-      <Filter>Header Files\metadata\base</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\ebucoreMainFramework.h">
-      <Filter>Header Files\metadata</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\base\ebucoreMainFrameworkBase.h">
-      <Filter>Header Files\metadata\base</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\ebucoreMetadataSchemeInformation.h">
-      <Filter>Header Files\metadata</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\base\ebucoreMetadataSchemeInformationBase.h">
-      <Filter>Header Files\metadata\base</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\ebucoreOrganisation.h">
-      <Filter>Header Files\metadata</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\base\ebucoreContactDetailsBase.h">
-      <Filter>Header Files\metadata\base</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\base\ebucoreOrganisationBase.h">
-      <Filter>Header Files\metadata\base</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\base\ebucoreTypeGroupBase.h">
-      <Filter>Header Files\metadata\base</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\base\ebucoreRoleBase.h">
-      <Filter>Header Files\metadata\base</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\ebucoreTypeGroup.h">
-      <Filter>Header Files\metadata</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\metadata\ebucoreRole.h">
-      <Filter>Header Files\metadata</Filter>
+      <Filter>Header Files\EBUCore_1_5\metadata</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\xsd\xml.hxx">
       <Filter>Header Files\xsd</Filter>
@@ -553,11 +571,11 @@
     <ClInclude Include="..\..\include\EBUCore_1_5\EBUCoreMapping.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\EBUCore_1_5\xsd\EBU_CORE_20120817.hxx">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\EBUCore_1_5\xsd\simpledc20021212.hxx">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\EBUCore_1_5\xsd\EBU_CORE_20120817.hxx">
+      <Filter>Header Files\EBUCore_1_5\xsd</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

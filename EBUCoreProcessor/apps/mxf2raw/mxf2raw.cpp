@@ -875,9 +875,9 @@ int main(int argc, const char** argv)
         }
 
 		if (ebucore_filename) {
-			EBUCore::RegisterFrameworkObjectFactoriesforEBUCore(file_reader->GetHeaderMetadata());
+			//EBUCore::RegisterFrameworkObjectFactoriesforEBUCore(file_reader->GetHeaderMetadata());
 			// write EBU Core metadata to ebucore_filename
-			EBUCore::FindAndSerializeEBUCore(file_reader->GetHeaderMetadata(), ebucore_filename);
+			//EBUCore::FindAndSerializeEBUCore(file_reader->GetHeaderMetadata(), ebucore_filename);
 		}
 
         // read data

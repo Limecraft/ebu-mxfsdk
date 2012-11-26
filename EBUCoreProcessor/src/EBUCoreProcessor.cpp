@@ -36,14 +36,14 @@
 #define MXF_OPEN_MODIFY(fn, pf)   mxf_disk_file_open_modify(fn, pf)
 #endif
 
-#include <EBUCore_1_5/EBUCoreMapping.h>
+#include <EBUCore_1_5/EBUCoreProcessor_1_5.h>
+#include <EBUCore_1_5/metadata/EBUCoreDMS++.h>
 #include <MXFCustomMetadata.h>
 #include <EBUCoreProcessor.h>
 #include <XercesUtils.h>
 
 #include <xercesc/util/TransService.hpp>
 
-using namespace ebuCore_2012;
 using namespace mxfpp;
 using namespace bmx;
 
@@ -94,89 +94,11 @@ Identification* GenerateEBUCoreIdentificationSet(mxfpp::HeaderMetadata *destinat
 	return newId;
 }
 
-DMFramework* GenerateSideCarFramework(const char* metadataLocation, HeaderMetadata *destination, Identification* identificationToAppend) {
-
-	GenerationUIDAppender *appender = NULL;
-	if (identificationToAppend != NULL) {
-		appender = new GenerationUIDAppender(identificationToAppend->getThisGenerationUID());
-	}
-	ebucoreMainFramework *framework = new ebucoreMainFramework(destination);
-	appender->Modify(framework);
-	framework->setdocumentId(metadataLocation);	// use the file location as document id
-	framework->setdocumentLocator(metadataLocation);
-
-	if (appender!=NULL)
-		delete appender;
-
-	return framework;
-}
-
-DMFramework* Process(std::auto_ptr<ebuCoreMainType> metadata, const char* metadataLocation, HeaderMetadata *destination, 
-											std::vector<EventInput> &eventFrameworks, Identification* identificationToAppend) {
-
-	// Generate a new Generation UID if necessary, and provide to each mapping function
-	GenerationUIDAppender *appender = NULL;
-	if (identificationToAppend != NULL) {
-		appender = new GenerationUIDAppender(identificationToAppend->getThisGenerationUID());
-	}
-	ebucoreMainFramework *framework = new ebucoreMainFramework(destination);
-	if (appender!=NULL) appender->Modify(framework);
-	framework->setdocumentId(metadataLocation);	// use the file location as document id
-
-	std::vector<ebucorePartMetadata*> timelineParts;
-	// get a basis for translating timecodes to edit units, use the editrate of the materialpackage
-	mxfRational r = FindMaterialPackageEditRate(destination);
-	// no usefull value, fill in something default
-	if (r.numerator == -1 && r.denominator == 0) {
-		r.numerator = 25; r.denominator = 1;
-	}
-
-	ebucoreCoreMetadata *core = new ebucoreCoreMetadata(destination);
-	if (appender!=NULL) appender->Modify(core);
-	if (appender != NULL)
-		mapCoreMetadata(metadata->coreMetadata(), core, r, timelineParts, appender);
-	else
-		mapCoreMetadata(metadata->coreMetadata(), core, r, timelineParts);
-
-	for (std::vector<ebucorePartMetadata*>::iterator it = timelineParts.begin(); it!=timelineParts.end(); it++) {
-		EventInput in;
-		ebucorePartFramework* fw = new ebucorePartFramework(destination);
-		fw->setpartMetadata(*it);
-		if (appender!=NULL) appender->Modify(fw);
-		in.framework = fw;
-		in.start = (*it)->getpartStartEditUnitNumber();
-		in.duration = (*it)->getpartDurationEditUnitNumber();
-		eventFrameworks.push_back( in );
-	}
-
-	ebucoreMetadataSchemeInformation *info = new ebucoreMetadataSchemeInformation(destination);
-	if (appender!=NULL) appender->Modify(info);
-	if (appender != NULL)
-		mapMetadataSchemeInformation(*metadata, info, appender);
-	else
-		mapMetadataSchemeInformation(*metadata, info);
-
-	framework->setcoreMetadata(core);
-	framework->setmetadataSchemeInformation(info);
-
-	if (appender!=NULL)
-		delete appender;
-
-	return framework;
-}
-
-DMFramework* Process(const char* location, HeaderMetadata *destination, Identification* identificationToAppend) {
-	std::vector<EventInput> eventFrameworks;
-	std::ifstream input(location);
-	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
-	return Process(ebuCoreMainElementPtr, location, destination, eventFrameworks, identificationToAppend);
-}
-
 void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model)
 {
-	EBUSDK::EBUCore::EBUCore_1_5::RegisterExtensions(data_model);	
+	// register the extensions for EBUCore version 1.5
+	EBUSDK::EBUCore::EBUCore_1_5::RegisterMetadataExtensionsforEBUCore(data_model);	
 }
-
 
 void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata, 
 							const char* metadataLocation,
@@ -244,8 +166,8 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 		// process the EBUCore metadata
 		std::vector<EventInput> eventFrameworks;
 		DMFramework *framework = optEmbedAsSidecar ?
-			EBUCore::GenerateSideCarFramework(metadataLocation, &*mHeaderMetadata, id) :
-			EBUCore::Process(metadata, metadataLocation, &*mHeaderMetadata, eventFrameworks, id);
+			EBUCore::EBUCore_1_5::GenerateSideCarFramework(metadataLocation, &*mHeaderMetadata, id) :
+			EBUCore::EBUCore_1_5::Process(metadata, metadataLocation, &*mHeaderMetadata, eventFrameworks, id);
 
 		// remove any previously present EBUCore metadata
 		RemoveEBUCoreFrameworks(&*mHeaderMetadata);
@@ -726,84 +648,6 @@ static std::vector<DMFramework*> ebu_get_static_frameworks(MaterialPackage *mp)
     return frameworks;
 }
 
-std::auto_ptr<ebuCoreMainType> ParseEBUCoreMetadata(ebucoreMainFramework *fw) {
-	// assert that a coremetadata element is present!
-
-	std::auto_ptr<ebuCoreMainType::coreMetadata_type> main( new ebuCoreMainType::coreMetadata_type() );
-	mapCoreMetadata(fw->getcoreMetadata(), *main);
-
-	// map the EBU Core KLV framework to the XSD-derived counterpart
-	std::auto_ptr<ebuCoreMainType> ebuCoreMainElement( new ebuCoreMainType(main) );
-
-	if (fw->havemetadataSchemeInformation()) {
-		ebucoreMetadataSchemeInformation *info = fw->getmetadataSchemeInformation();
-		if (info->haveebucoreMetadataProvider()) {
-			std::auto_ptr<entityType> p( new entityType() );
-			mapEntity(info->getebucoreMetadataProvider(), *(p.get()));
-			ebuCoreMainElement->metadataProvider(p);
-		}
-	}
-	
-	return ebuCoreMainElement;
-}
-
-ebucoreMainFramework* FindEBUCoreMetadataFramework(HeaderMetadata *metadata) {
-
-	MaterialPackage *mp = metadata->getPreface()->findMaterialPackage();
-	if (!mp) {
-		// throw an exception!
-		return NULL;
-    }
-
-	ebucoreMainFramework *ebucore = NULL;
-	std::vector<DMFramework*> static_frameworks = ebu_get_static_frameworks(mp);
-	size_t i;
-    for (i = 0; i < static_frameworks.size(); i++) {
-		ebucoreMainFramework *p = dynamic_cast<ebucoreMainFramework*>(static_frameworks[i]);
-        if (p) {
-			ebucore = p;
-			break;
-		}
-    }
-
-	return ebucore;
-}
-
-std::auto_ptr<ebuCoreMainType> FindAndSerializeEBUCore(HeaderMetadata *metadata) {
-	
-	ebucoreMainFramework *fw = FindEBUCoreMetadataFramework(metadata);
-
-	if (fw==NULL) {
-		// throw an exception!
-		return std::auto_ptr<ebuCoreMainType>(NULL);
-	}
-	
-	return fw->havecoreMetadata() ? 
-		ParseEBUCoreMetadata(fw) : 
-		std::auto_ptr<ebuCoreMainType>(NULL);
-}
-
-
-
-void FindAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilename) {
-	
-		std::auto_ptr<ebuCoreMainType> ebuCoreMainElement( FindAndSerializeEBUCore(metadata) );
-	
-		xml_schema::namespace_infomap map;
-		map[""].name = "urn:ebu:metadata-schema:ebuCore_2012";
-		map["dc"].name = "http://purl.org/dc/elements/1.1/";
-
-		// open a file output stream
-		std::ofstream out(outputfilename);
-		ebuCoreMain (out, *ebuCoreMainElement, map);
-		out.close();
-}
-
-enum MetadataOutput {
-	SERIALIZE_TO_FILE,
-	OUTPUT_AS_DOM_DOCUMENT
-};
-
 void ExtractEBUCoreMetadata(
 							const char* mxfLocation,
 							const char* metadataLocation,
@@ -862,23 +706,25 @@ void ExtractEBUCoreMetadata(
 
 	EBUCore::RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
 
-	std::auto_ptr<ebuCoreMainType> p;
-	ebucoreMainFramework *fw = FindEBUCoreMetadataFramework(&*mHeaderMetadata);
+	//std::auto_ptr<ebuCoreMainType> p;
+	DMFramework *fw = EBUCore_1_5::FindEBUCoreMetadataFramework(&*mHeaderMetadata);
 
 	if (fw != NULL) {
 		progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "Found an ebucoreMainFramework on the MXF timeline");
 
-		if (fw->havecoreMetadata()) {
+		if (EBUCore_1_5::EBUCoreFrameworkHasActualMetadata(fw)) {
+
 			// there is a CoreMetadata object, enough to parse the KLV-encoded metadata
-			p = ParseEBUCoreMetadata(fw);
+			EBUCore_1_5::ParseAndSerializeEBUCoreMetadata(fw, outputFashion, metadataLocation, outputDocument, progress_callback);
+
 		} else {
 			progress_callback(0.62f, INFO, "ExtractEBUCoreMetadata", "No coreMetadata set is attached to the ebucoreMainFramework, attempting to locate a side-car metadata reference...");
 		
 			// ///////////////////////////////////////
 			// / 2b. If there is no KLV-codec metadata beyond the framework, there could be a reference to a sidecar XML file
 			// ///////////
-			if (fw->havedocumentLocator()) {
-				const std::string& loc = fw->getdocumentLocator();
+			if (EBUCore_1_5::EBUCoreFrameworkRefersToExternalMetadata(fw)) {
+				const std::string& loc = EBUCore_1_5::GetEBUCoreFrameworkExternalMetadataLocation(fw);
 
 				progress_callback(0.65f, INFO, "ExtractEBUCoreMetadata", "A side-car metadata reference (documentLocator) was found: %s", loc.c_str());
 
@@ -909,32 +755,6 @@ void ExtractEBUCoreMetadata(
 			}
 		}
 
-		if (p.get() != NULL) {
-
-			progress_callback(0.7f, INFO, "ExtractEBUCoreMetadata", "A coreMetadata set was attached to the ebucoreMainFramework, and was processed successfully");
-
-			xml_schema::namespace_infomap map;
-			map[""].name = "urn:ebu:metadata-schema:ebuCore_2012";
-			map["dc"].name = "http://purl.org/dc/elements/1.1/";
-
-			if (outputFashion == SERIALIZE_TO_FILE) {
-				progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to XML file at %s\n", metadataLocation);
-
-				// open a file output stream
-				std::ofstream out(metadataLocation);
-				ebuCoreMain (out, *p, map);
-				out.close();
-			} 
-			else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
-				progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to output Xerces-C DOM Document");
-		
-				::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > xml = ebuCoreMain(*p, map);
-				// pass the DOM document to output
-				*outputDocument = xml.get();
-				xml.release();
-			}
-
-		} 
 	}
 	else {
 		// ///////////////////////////////////////

@@ -80,6 +80,7 @@
     <ClCompile Include="..\..\src\AppUtils.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_5\EBUCoreMapping.cpp" />
     <ClCompile Include="..\..\src\EBUCoreProcessor.cpp" />
+    <ClCompile Include="..\..\src\EBUCore_1_5\EBUCoreProcessor_1_5.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_5\EBUCoreReverseMapping.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreAddressBase.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_5\metadata\base\ebucoreAlternativeTitleBase.cpp" />
