@@ -110,7 +110,9 @@ namespace EBUSDK {
 		/** Metadata is encoded using a single KLV element in which the metadata is written as is. */
 		DARK,
 		/** A KLV-encoded metadata set is added to the the header metadata with a reference to an external file that contains the actual metadata. */
-		SIDECAR
+		SIDECAR,
+
+		NONE
 	};
 
 	/**
