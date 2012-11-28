@@ -266,6 +266,23 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 	return memFileSize;
 }
 
+uint64_t CopyValueBetweenFiles(File& destFile, File& sourceFile, uint64_t size, uint8_t *buffer, int bufSize) {
+	uint64_t totalRead=0, read=0, written=0;
+	while (totalRead < size) {
+		read = sourceFile.read(buffer, MIN(size-totalRead, bufSize) );
+		if (read != MIN(size-totalRead, bufSize)) {
+			// if these don't match, something went wrong, except!
+			throw bmx::BMXException("Error reading %" PRId64 " bytes from MXF file", MIN(size-totalRead, bufSize));
+		}
+		written = destFile.write(buffer, read);
+		if (written != read)
+			// if these don't match, something went wrong, except!
+			throw bmx::BMXException("Error writing %" PRId64 " bytes to MXF file", read);
+		totalRead += read;
+	}
+	return size;
+}
+
 uint64_t WriteDarkMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, MXFFileDarkSerializer& metadata, const mxfKey *darkMetadataSetKey, uint64_t metadata_read_position, uint64_t metadata_write_position, Partition* metadataDestinationPartition, Partition* metadataSourcePartition) {
 	mxfKey key;
 	uint8_t llen;
@@ -288,28 +305,42 @@ uint64_t WriteDarkMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile,
 														// (need to put this back at the end anyway)
 	KAGFillerWriter reserve_filler_writer(metadataDestinationPartition);
 	mFile->seek(metadata_read_position, SEEK_SET);
-	uint8_t *KLVBuffer = new uint8_t[64*1024];
-	uint64_t count = 0, read = 0;
-	int i = 0;
-	while (count < oriSourceHeaderByteCount) {
-		read = mFile->read(KLVBuffer, MIN(oriSourceHeaderByteCount-count, 64*1024) );
-		memFile.write(KLVBuffer, read);
-		count += read;
-	}
 
-	// find the last non-filler KLV in the metadata
-	memFile.seek(metadata_write_position, SEEK_SET);
-	count = metadata_write_position;
-	uint64_t behindLastNonFillerKLV = 0;
-	while (count < (oriSourceHeaderByteCount + metadata_write_position)) {
-		memFile.readKL(&key, &llen, &len);
+	// write each of the KLV packets in the original metadata, 
+	// except for ones that match our dark metadata key, which we skip in order to replace old with new
+	uint64_t behindLastNonFillerKLV = metadata_write_position;
+
+#define COPY_BUFFER_SIZE 64*1024
+	std::vector<uint8_t> KLVBuffer(COPY_BUFFER_SIZE);	// will auto-delete when going out of scope (even when exceptions are thrown)
+
+	uint64_t count = 0, skipped = 0;
+	while (count < oriSourceHeaderByteCount) {
+		mFile->readKL(&key, &llen, &len);
+		count += mxfKey_extlen + llen;
+
+		printf("Found key: ");
+		mxf_print_key(&key);
+		printf("\n");
+
+		if (mxf_equals_key(&key, darkMetadataSetKey)) {
+			// skip this set from the copy operation, 
+			// which effectively acts as a remove op.
+			count += len;
+
+			mFile->skip(len);
+			skipped += mxfKey_extlen + llen + len;
+		} else {
+			// copy the KLV packet
+			memFile.writeFixedKL(&key, llen, len);
+			count += CopyValueBetweenFiles(memFile, *mFile, len, &KLVBuffer[0] /* provide address of first element */, COPY_BUFFER_SIZE);
+		}
 		if (!mxf_is_filler(&key)) {
 			// record position of this non-filler KLV
-			behindLastNonFillerKLV = memFile.tell() + len;
+			behindLastNonFillerKLV = metadata_write_position + count - skipped; // subtract all we have skipped in the destination memfile
 		}
-		memFile.skip(len);
-		count = memFile.tell();
+
 	}
+
 	// we can now maneuver behind the last nonfiller element
 	memFile.seek(behindLastNonFillerKLV, SEEK_SET);
 
