@@ -248,6 +248,8 @@ void EmbedEBUCoreMetadata(
 
 		uint64_t metadata_original_len_with_fill = metadata_partition->getHeaderByteCount();
 
+		EBUCore::RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
+
 		// ///////////////////////////////////////
 	    // / 1b. Locate any existing EBUCore metadata in the header metadata partition.
 		/*		 If existing metadata is found, the new metadata is serialized 
@@ -256,6 +258,11 @@ void EmbedEBUCoreMetadata(
 		MetadataKind existingKind = ExtractEBUCoreMetadata(&*mHeaderMetadata, metadata_partition, &*mFile, NULL, NULL, DONT_SERIALIZE, progress_callback);
 		if (existingKind != NONE) {
 			// there is metadata, override the way in which we are writing metadata!
+			if (optWaytoWrite != existingKind) {
+				progress_callback(0.0f, INFO, "EmbedEBUCoreMetadata", "Due to existing metadata, overriding metadata serializetion mode to %s", 
+					existingKind == KLV_ENCODED ? "KLV-encoded" : (existingKind == SIDECAR ? "side-car" : "dark metadata" ) );
+			}
+
 			optWaytoWrite = existingKind;
 		}
 
@@ -682,7 +689,7 @@ MetadataKind ExtractEBUCoreMetadata(
 	// ///////////////////////////////////////
 	// / 2a. Locate the KLV-coded EBUCore metadata in the MXF header metadata and serialize it to 
 	// ///////////
-	progress_callback(0.6f, INFO, "ExtractEBUCoreMetadata", "Locating and extracting EBUCore KLV metadata");
+	progress_callback(0.6f, INFO, "ExtractEBUCoreMetadata", "Locating existing EBUCore KLV metadata");
 
 	std::auto_ptr<ebuCoreMainType> p;
 	ebucoreMainFramework *fw = FindEBUCoreMetadataFramework(headerMetadata);
