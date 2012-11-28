@@ -318,10 +318,6 @@ uint64_t WriteDarkMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile,
 		mFile->readKL(&key, &llen, &len);
 		count += mxfKey_extlen + llen;
 
-		printf("Found key: ");
-		mxf_print_key(&key);
-		printf("\n");
-
 		if (mxf_equals_key(&key, darkMetadataSetKey)) {
 			// skip this set from the copy operation, 
 			// which effectively acts as a remove op.
