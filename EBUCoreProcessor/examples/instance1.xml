@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ebucore:ebuCoreMain xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:ebucore="urn:ebu:metadata-schema:ebuCore_2012"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:ebu:metadata-schema:ebuCore_2012 file://C:/code/EBU-SDK/Documentation/EBU-Core/XSD1.4-20120817/EBU_CORE_20120817.xsd"
+    schema="schema0" version="1.4" dateLastModified="2006-05-04" documentId="documentId0"
+    documentLocation="http://www.oxygenxml.com/" xml:lang="en-US">
+    <ebucore:coreMetadata>
+        <ebucore:title attributiondate="2006-05-04" note="note0">
+            <dc:title xml:lang="en">title0</dc:title>
+        </ebucore:title>
+        <ebucore:description typeLabel="typeLabel12" typeDefinition="typeDefinition12"
+            typeLink="http://www.oxygenxml.com/" typeLanguage="en-US" note="note3">
+            <dc:description xml:lang="en">description0</dc:description>
+        </ebucore:description>
+        <ebucore:contributor entityId="http://www.oxygenxml.com/">
+            <ebucore:contactDetails contactId="http://www.oxygenxml.com/" typeLabel="typeLabel18"
+                typeDefinition="typeDefinition18" typeLink="http://www.oxygenxml.com/"
+                typeLanguage="en-US">
+                <ebucore:name>name3</ebucore:name>
+                <ebucore:username xml:lang="en">username3</ebucore:username>
+                <ebucore:occupation xml:lang="en">occupation3</ebucore:occupation>
+            </ebucore:contactDetails>
+            <ebucore:organisationDetails organisationId="http://www.oxygenxml.com/"
+                typeLabel="typeLabel20" typeDefinition="typeDefinition20"
+                typeLink="http://www.oxygenxml.com/" typeLanguage="en-US">
+                <ebucore:organisationName xml:lang="en">organisationName3</ebucore:organisationName>
+                <ebucore:organisationCode>http://www.oxygenxml.com/</ebucore:organisationCode>
+                <ebucore:organisationDepartment departmentId="http://www.oxygenxml.com/"
+                    xml:lang="en">organisationDepartment3</ebucore:organisationDepartment>
+            </ebucore:organisationDetails>
+            <ebucore:role typeLabel="typeLabel22" typeDefinition="typeDefinition22"
+                typeLink="http://www.oxygenxml.com/" typeLanguage="en-US"/>
+        </ebucore:contributor>
+        <ebucore:type note="note4">
+            <dc:type xml:lang="en">type0</dc:type>
+            <ebucore:genre typeLabel="typeLabel24" typeDefinition="typeDefinition24"
+                typeLink="http://www.oxygenxml.com/" typeLanguage="en-US"/>
+            <ebucore:objectType typeLabel="typeLabel25" typeDefinition="typeDefinition25"
+                typeLink="http://www.oxygenxml.com/" typeLanguage="en-US"/>
+            <ebucore:targetAudience typeLabel="typeLabel26" typeDefinition="typeDefinition26"
+                typeLink="http://www.oxygenxml.com/" typeLanguage="en-US"/>
+        </ebucore:type>
+        <ebucore:language typeLabel="typeLabel135" typeDefinition="typeDefinition135"
+            typeLink="http://www.oxygenxml.com/" typeLanguage="en-US" note="note8">
+            <dc:language xml:lang="en">language0</dc:language>
+        </ebucore:language>
+      <ebucore:part typeLabel="dynamic technical parameter" partName="Zoom">
+        <ebucore:part>
+          <ebucore:format>
+            <ebucore:start typeLabel="typeLabel95" typeDefinition="typeDefinition95"
+                typeLink="http://www.oxygenxml.com/" typeLanguage="en-US">
+              <ebucore:timecode>00:00:23:11</ebucore:timecode>
+            </ebucore:start>
+            <ebucore:duration typeLabel="typeLabel97" typeDefinition="typeDefinition97"
+                typeLink="http://www.oxygenxml.com/" typeLanguage="en-US">
+              <ebucore:timecode>00:00:00:01</ebucore:timecode>
+            </ebucore:duration>
+            <ebucore:technicalAttributeFloat typeLabel="LensZoom">33.1</ebucore:technicalAttributeFloat>
+          </ebucore:format>
+        </ebucore:part>
+        <ebucore:part>
+          <ebucore:format>
+            <ebucore:start typeLabel="typeLabel95" typeDefinition="typeDefinition95"
+                typeLink="http://www.oxygenxml.com/" typeLanguage="en-US">
+              <ebucore:timecode>00:00:23:12</ebucore:timecode>
+            </ebucore:start>
+            <ebucore:duration typeLabel="typeLabel97" typeDefinition="typeDefinition97"
+                typeLink="http://www.oxygenxml.com/" typeLanguage="en-US">
+              <ebucore:timecode>00:00:00:01</ebucore:timecode>
+            </ebucore:duration>
+            <ebucore:technicalAttributeFloat typeLabel="LensZoom">33.2</ebucore:technicalAttributeFloat>
+          </ebucore:format>
+        </ebucore:part>
+        <ebucore:part>
+          <ebucore:format>
+            <ebucore:start typeLabel="typeLabel95" typeDefinition="typeDefinition95"
+                typeLink="http://www.oxygenxml.com/" typeLanguage="en-US">
+              <ebucore:timecode>00:00:23:13</ebucore:timecode>
+            </ebucore:start>
+            <ebucore:duration typeLabel="typeLabel97" typeDefinition="typeDefinition97"
+                typeLink="http://www.oxygenxml.com/" typeLanguage="en-US">
+              <ebucore:timecode>00:00:00:01</ebucore:timecode>
+            </ebucore:duration>
+            <ebucore:technicalAttributeFloat typeLabel="LensZoom">33.3</ebucore:technicalAttributeFloat>
+          </ebucore:format>
+        </ebucore:part>
+      </ebucore:part>
+    </ebucore:coreMetadata>
+</ebucore:ebuCoreMain>
