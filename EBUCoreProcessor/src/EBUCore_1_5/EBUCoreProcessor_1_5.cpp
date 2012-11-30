@@ -114,6 +114,21 @@ DMFramework* Process(std::auto_ptr<ebuCoreMainType> metadata, const char* metada
 	return framework;
 }
 
+DMFramework* Process(xercesc::DOMDocument* metadataDocument, const char* metadataLocation, HeaderMetadata *destination, 
+											std::vector<EventInput> &eventFrameworks, Identification* identificationToAppend) {
+	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr(NULL);
+	// actually parse the EBUCore metadata
+	if (metadataDocument != NULL) {
+		ebuCoreMainElementPtr = ebuCoreMain (*metadataDocument, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom);
+	} else {
+		// use the file location to parse the metadata
+		std::ifstream input(metadataLocation);
+		ebuCoreMainElementPtr = ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom);
+		input.close();
+	}
+	return Process(ebuCoreMainElementPtr, metadataLocation, destination, eventFrameworks, identificationToAppend); 
+}
+
 DMFramework* Process(const char* location, HeaderMetadata *destination, Identification* identificationToAppend) {
 	std::vector<EventInput> eventFrameworks;
 	std::ifstream input(location);

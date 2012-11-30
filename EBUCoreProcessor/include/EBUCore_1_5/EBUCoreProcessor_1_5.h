@@ -18,19 +18,6 @@ namespace EBUSDK {
 		namespace EBUCore_1_5 {
 
 	/**
-	*	Parses EBUCore metadata in a file at __location__ and returns the resulting EBUCore MXF descriptive metadata framework of the type EBUCoreMainFramework.\n
-		In case the optional Identification set is provided in the __identificationToAppend__ argument, 
-		this Identification is referenced from all metadata sets generated during the parsing operation. 
-		This allows external applications to track all metadata related to this particular parsing (and possibly subsequent MXF update) operation.
-
-		@return Returns the parsed EBUCoreMainFramework set.
-		@param location Location of the metadata file.
-		@param destination The HeaderMetadata structure to which the EBUCoreMainFramework and its descending metadata sets will be added.
-		@param identificationToAppend Optional Identification metadata set that will be referenced from each parsed metadata set.
-	*/
-	mxfpp::DMFramework* Process(const char* location, mxfpp::HeaderMetadata *destination, mxfpp::Identification *identificationToAppend = NULL);
-
-	/**
 	*	Convenience function for locating KLV-encoded EBUCore metadata in the provided header metadata and serializing this metadata to file.
 
 		@param metadata Parsed header metadata structure of the MXF file.
@@ -64,6 +51,10 @@ namespace EBUSDK {
 	bool EBUCoreFrameworkHasActualMetadata(mxfpp::DMFramework *fw);
 	bool EBUCoreFrameworkRefersToExternalMetadata(mxfpp::DMFramework *fw);
 	std::string GetEBUCoreFrameworkExternalMetadataLocation(mxfpp::DMFramework *fw);
+
+	mxfpp::DMFramework* Process(xercesc::DOMDocument* metadataDocument, const char* metadataLocation, mxfpp::HeaderMetadata *destination, 
+		std::vector<EBUSDK::MXFCustomMetadata::EventInput> &eventFrameworks, mxfpp::Identification* identificationToAppend);
+
 
 	void ParseAndSerializeEBUCoreMetadata(	mxfpp::DMFramework *framework, 
 										EBUSDK::EBUCore::MetadataOutput outputFashion, 

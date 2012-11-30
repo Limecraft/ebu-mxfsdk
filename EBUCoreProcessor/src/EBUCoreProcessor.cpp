@@ -4,6 +4,7 @@
 #include "config.h"
 #endif
 
+#include <iterator>
 #include <iostream>
 #include <fstream>
 #include <memory>
@@ -99,12 +100,6 @@ void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model)
 	// register the extensions for EBUCore version 1.5
 	EBUSDK::EBUCore::EBUCore_1_5::RegisterMetadataExtensionsforEBUCore(data_model);	
 }
-
-enum MetadataOutput {
-	SERIALIZE_TO_FILE,
-	OUTPUT_AS_DOM_DOCUMENT,
-	DONT_SERIALIZE
-};
 
 MetadataKind ExtractEBUCoreMetadata(
 							HeaderMetadata *headerMetadata,
@@ -216,18 +211,7 @@ void EmbedEBUCoreMetadata(
 			if (optWaytoWrite == SIDECAR) {
 				framework = EBUCore::EBUCore_1_5::GenerateSideCarFramework(metadataLocation, &*mHeaderMetadata, id);
 			} else {
-				std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr(NULL);
-				// actually parse the EBUCore metadata
-				if (metadataDocument != NULL) {
-					ebuCoreMainElementPtr = ebuCoreMain (*metadataDocument, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom);
-				} else {
-					// use the file location to parse the metadata
-					std::ifstream input(metadataLocation);
-					ebuCoreMainElementPtr = ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom);
-					input.close();
-				}
-				framework = EBUCore::EBUCore_1_5::Process(metadata, metadataLocation, &*mHeaderMetadata, eventFrameworks, id); 
-				//EBUCore::Process(ebuCoreMainElementPtr, metadataLocation, &*mHeaderMetadata, eventFrameworks, id);
+				framework = EBUCore::EBUCore_1_5::Process(metadataDocument, metadataLocation, &*mHeaderMetadata, eventFrameworks, id); 
 			}
 
 			// remove any previously present EBUCore metadata

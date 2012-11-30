@@ -203,7 +203,8 @@ namespace EBUSDK {
 
 	enum MetadataOutput {
 		SERIALIZE_TO_FILE,
-		OUTPUT_AS_DOM_DOCUMENT
+		OUTPUT_AS_DOM_DOCUMENT,
+		DONT_SERIALIZE
 	};
 
 
