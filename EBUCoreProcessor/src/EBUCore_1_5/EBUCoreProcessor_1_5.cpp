@@ -209,7 +209,7 @@ DMFramework* FindEBUCoreMetadataFramework(HeaderMetadata *metadata) {
     }
 
 	ebucoreMainFramework *ebucore = NULL;
-	std::vector<DMFramework*> static_frameworks = EBUSDK::EBUCore::ebu_get_static_frameworks(mp);
+	std::vector<DMFramework*> static_frameworks = GetStaticFrameworks(mp);
 	size_t i;
     for (i = 0; i < static_frameworks.size(); i++) {
 		ebucoreMainFramework *p = dynamic_cast<ebucoreMainFramework*>(static_frameworks[i]);

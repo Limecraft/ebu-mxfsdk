@@ -605,6 +605,49 @@ mxfRational FindMaterialPackageEditRate(HeaderMetadata *header_metadata) {
 	return rate;
 }
 
+std::vector<DMFramework*> GetStaticFrameworks(MaterialPackage *mp)
+{
+    std::vector<DMFramework*> frameworks;
+
+    // expect to find Static DM Track -> Sequence -> DM Segment -> DM Framework
+
+    std::vector<GenericTrack*> tracks = mp->getTracks();
+    size_t i;
+    for (i = 0; i < tracks.size(); i++) {
+        StaticTrack *st = dynamic_cast<StaticTrack*>(tracks[i]);
+        if (!st)
+            continue;
+
+        StructuralComponent *sc = st->getSequence();
+        if (!sc || sc->getDataDefinition() != MXF_DDEF_L(DescriptiveMetadata))
+            continue;
+
+        Sequence *seq = dynamic_cast<Sequence*>(sc);
+        DMSegment *seg = dynamic_cast<DMSegment*>(sc);
+        if (!seq && !seg)
+            continue;
+
+        if (seq) {
+            std::vector<StructuralComponent*> scs = seq->getStructuralComponents();
+            if (scs.size() != 1)
+                continue;
+
+            seg = dynamic_cast<DMSegment*>(scs[0]);
+            if (!seg)
+                continue;
+        }
+
+        if (!seg->haveDMFramework())
+            continue;
+
+        DMFramework *framework = seg->getDMFrameworkLight();
+        if (framework)
+            frameworks.push_back(framework);
+    }
+
+    return frameworks;
+}
+
 void InsertFramework(HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, DMFramework *framework, ObjectModifier *mod)
 {
     BMX_ASSERT(header_metadata);

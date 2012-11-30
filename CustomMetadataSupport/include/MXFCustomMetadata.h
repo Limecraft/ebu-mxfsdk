@@ -209,6 +209,8 @@ namespace EBUSDK {
 	*/
 	mxfpp::Partition* FindPreferredMetadataPartition(const std::vector<mxfpp::Partition*>& partitions, mxfpp::Partition** headerPartition, mxfpp::Partition** footerPartition);
 
+	std::vector<mxfpp::DMFramework*> GetStaticFrameworks(mxfpp::MaterialPackage *mp);
+
 	/**
 	*	Appends a descriptive metadata scheme Universal Label to the given header metadata object, where it is written into the Preface metadata set.
 		

@@ -199,8 +199,6 @@ namespace EBUSDK {
 							const char* metadataLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...));
 
-	std::vector<mxfpp::DMFramework*> ebu_get_static_frameworks(mxfpp::MaterialPackage *mp);
-
 	enum MetadataOutput {
 		SERIALIZE_TO_FILE,
 		OUTPUT_AS_DOM_DOCUMENT,
