@@ -110,7 +110,7 @@ MetadataKind ExtractEBUCoreMetadata(
 							MetadataOutput outputFashion,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...));
 
-void EmbedEBUCoreMetadata(	
+void InnerEmbedEBUCoreMetadata(	
 							xercesc::DOMDocument* metadataDocument, 
 							const char* metadataLocation,
 							const char* mxfLocation,
@@ -387,7 +387,7 @@ void EmbedEBUCoreMetadata(	const char* metadataLocation,
 		optWaytoWrite == KLV_ENCODED ? "KLV-encoded" : (optWaytoWrite == SIDECAR ? "side-car" : "dark metadata" ) );
 	progress_callback(0.1f, INFO, "EmbedEBUCoreMetadata", "Reading EBUCore XML document from file %s", metadataLocation);
 
-	EmbedEBUCoreMetadata(NULL, metadataLocation, mxfLocation, progress_callback, optWaytoWrite, optNoIdentification, optForceHeader);	
+	InnerEmbedEBUCoreMetadata(NULL, metadataLocation, mxfLocation, progress_callback, optWaytoWrite, optNoIdentification, optForceHeader);	
 
 }
 
@@ -402,7 +402,12 @@ void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument,
 		optWaytoWrite == KLV_ENCODED ? "KLV-encoded" : (optWaytoWrite == SIDECAR ? "side-car" : "dark metadata" ) );
 	progress_callback(0.1f, INFO, "EmbedEBUCoreMetadata", "Reading EBUCore XML document from DOMDocument input");
 
+<<<<<<< HEAD
 	EmbedEBUCoreMetadata(metadataDocument, metadataLocation, mxfLocation, progress_callback, optWaytoWrite, optNoIdentification, optForceHeader);
+=======
+	InnerEmbedEBUCoreMetadata(&metadataDocument, metadataLocation, mxfLocation, progress_callback, optWaytoWrite, optNoIdentification, optForceHeader);
+
+>>>>>>> master
 }
 
 void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata) {
