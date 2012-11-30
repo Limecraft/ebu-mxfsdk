@@ -403,7 +403,6 @@ void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument,
 	progress_callback(0.1f, INFO, "EmbedEBUCoreMetadata", "Reading EBUCore XML document from DOMDocument input");
 
 	EmbedEBUCoreMetadata(metadataDocument, metadataLocation, mxfLocation, progress_callback, optWaytoWrite, optNoIdentification, optForceHeader);
-
 }
 
 void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata) {
@@ -536,6 +535,8 @@ MetadataKind ExtractEBUCoreMetadata(
 			// there is a CoreMetadata object, enough to parse the KLV-encoded metadata
 			EBUCore_1_5::ParseAndSerializeEBUCoreMetadata(fw, outputFashion, metadataLocation, outputDocument, progress_callback);
 			// return the proper value: is it KLV_ENCODED or NONE????
+			return KLV_ENCODED;
+
 		} else {
 			progress_callback(0.62f, INFO, "ExtractEBUCoreMetadata", "No coreMetadata set is attached to the ebucoreMainFramework, attempting to locate a side-car metadata reference...");
 		
