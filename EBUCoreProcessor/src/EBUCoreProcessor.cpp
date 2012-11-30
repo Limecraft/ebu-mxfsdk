@@ -402,12 +402,8 @@ void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument,
 		optWaytoWrite == KLV_ENCODED ? "KLV-encoded" : (optWaytoWrite == SIDECAR ? "side-car" : "dark metadata" ) );
 	progress_callback(0.1f, INFO, "EmbedEBUCoreMetadata", "Reading EBUCore XML document from DOMDocument input");
 
-<<<<<<< HEAD
-	EmbedEBUCoreMetadata(metadataDocument, metadataLocation, mxfLocation, progress_callback, optWaytoWrite, optNoIdentification, optForceHeader);
-=======
 	InnerEmbedEBUCoreMetadata(&metadataDocument, metadataLocation, mxfLocation, progress_callback, optWaytoWrite, optNoIdentification, optForceHeader);
 
->>>>>>> master
 }
 
 void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata) {
