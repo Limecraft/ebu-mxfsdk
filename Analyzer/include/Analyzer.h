@@ -2,6 +2,14 @@
 #ifndef __EBUSDK_ANALYZER_H__
 #define __EBUSDK_ANALYZER_H__
 
+#ifdef EXPORTING
+#define DLLEXPORT __declspec(dllexport)
+#elif IMPORTING
+#define DLLEXPORT __declspec(dllimport)
+#else
+#define DLLEXPORT
+#endif
+
 #include <memory>
 
 #include <xercesc/dom/DOMDocument.hpp>
@@ -41,12 +49,12 @@ namespace EBUSDK {
 			*/
 			enum MetadataAnalysisType { 		
 				/**
-				*	Perform a logical layout of the header metadata in which the XML report reflects a tree structure similar 
+				*	Output a logical layout of the header metadata in which the XML report reflects a tree structure similar 
 					to the one represented by the header metadata with all strong references resolved and used as parent for child metadata sets.
 				*/
 				LOGICAL,
 				/**
-				*	Perform a physical layout of the header metadata in which all metadata sets are listed one after the other in a flat list. 
+				*	Output a physical layout of the header metadata in which all metadata sets are listed one after the other in a flat list. 
 					Strong references are not resolved, the reference is indicated by means the TargetInstance attribute with the target InstanceUID UUID as value.
 				*/
 				PHYSICAL
@@ -65,7 +73,7 @@ namespace EBUSDK {
 			@param mxfLocation Location of the MXF file.
 			@param configuration The configuration structure of the analyzer.
 		*/
-		std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfig configuration);
+		DLLEXPORT std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfig configuration);
 
 		/**
 		*	Analyzes the MXF file at __mxfLocation__ and writes the resulting analysis report in a SMPTE ST-434-compliant XML document at __reportLocation__.
@@ -74,7 +82,7 @@ namespace EBUSDK {
 			@param reportLocation Location of the report XML document.
 			@param configuration The configuration structure of the analyzer.
 		*/
-		void AnalyzeMXFFile(const char* mxfLocation, const char* reportLocation, AnalyzerConfig configuration);
+		DLLEXPORT void AnalyzeMXFFile(const char* mxfLocation, const char* reportLocation, AnalyzerConfig configuration);
 	}
 }
 

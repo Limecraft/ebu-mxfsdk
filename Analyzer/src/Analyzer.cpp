@@ -28,6 +28,7 @@
 #include <xercesc/util/PlatformUtils.hpp>
 
 #include "Analyzer.h"
+#include "AnalyzerExtensions.h"
 
 using namespace xercesc;
 
@@ -758,6 +759,22 @@ void AnalyzePartition(DOMElement *parent, DOMDocument *root, Partition *partitio
 
 }
 
+void RegisterAnalyzerExtensions(DataModel *data_model) {
+
+#define MXF_LABEL(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15) \
+    {d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15}
+
+#define MXF_SET_DEFINITION(parent_name, name, label) \
+    data_model->registerSetDef(#name, &MXF_SET_K(parent_name), &MXF_SET_K(name));
+
+#define MXF_ITEM_DEFINITION(set_name, name, label, tag, type_id, is_required) \
+    data_model->registerItemDef(#name, &MXF_SET_K(set_name), &MXF_ITEM_K(set_name, name), tag, type_id, is_required);
+
+#include <aes3_descriptor_data_model.h>
+
+}
+
+
 std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfig configuration) {
 
 	XMLPlatformUtils::Initialize();
@@ -777,6 +794,7 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 	std::auto_ptr<File> mFile( File::openRead(mxfLocation) );	// throws MXFException if open failed!
 
 	std::auto_ptr<DataModel> mDataModel ( new DataModel() );
+	RegisterAnalyzerExtensions(&*mDataModel);
 	EBUSDK::EBUCore::RegisterExtensions(&*mDataModel);
 
 	// ///////////////////////////////////////

@@ -1,6 +1,6 @@
 
 !define PRODUCT_NAME "EBU MXF SDK"
-!define VERSION "1.0" ;@VERSION@
+!define VERSION "0.9.2" ;@VERSION@
 !define PRODUCT_VERSION "1.0" ;@VERSION@
 !define PRODUCT_GROUP "EBU"
 !define PRODUCT_PUBLISHER "EBU Technical"
@@ -119,6 +119,12 @@ Section "MXFSDK" SecMXFSDK
   
   CreateDirectory "$INSTDIR\doc"
   !include "files_installer.inc"
+  File "/oname=Analyzer\msvc_build\vs10\apps\mxfanalyzer\xerces-c_3_1D.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1D.dll"
+  File "/oname=EBUCoreProcessor\msvc_build\vs10\apps\ebu2mxf\xerces-c_3_1D.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1D.dll"
+  File "/oname=EBUCoreProcessor\msvc_build\vs10\apps\mxf2ebu\xerces-c_3_1D.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1D.dll"
+  File "/oname=EBUCoreProcessor\msvc_build\vs10\apps\mxf2raw\xerces-c_3_1D.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1D.dll"
+  File "/oname=EBUCoreProcessor\msvc_build\vs10\apps\raw2bmx\xerces-c_3_1D.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1D.dll"
+
   File "/oname=vcredist_x86.exe" "..\..\msvc_build\installer\resources\vcredist_x86.exe"
   
   ; Extract dependency zip files

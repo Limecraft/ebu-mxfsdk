@@ -100,11 +100,27 @@ void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model)
 	EBUSDK::EBUCore::EBUCore_1_5::RegisterMetadataExtensionsforEBUCore(data_model);	
 }
 
-void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata, 
+enum MetadataOutput {
+	SERIALIZE_TO_FILE,
+	OUTPUT_AS_DOM_DOCUMENT,
+	DONT_SERIALIZE
+};
+
+MetadataKind ExtractEBUCoreMetadata(
+							HeaderMetadata *headerMetadata,
+							Partition *partition,
+							File *mxfFile,
+							const char* metadataLocation,
+							xercesc::DOMDocument** outputDocument,
+							MetadataOutput outputFashion,
+							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...));
+
+void EmbedEBUCoreMetadata(	
+							xercesc::DOMDocument* metadataDocument, 
 							const char* metadataLocation,
 							const char* mxfLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-							bool optEmbedAsSidecar,
+							MetadataKind optWaytoWrite,
 							bool optNoIdentification, bool optForceHeader) {
 
 		progress_callback(0.2f, INFO, "EmbedEBUCoreMetadata", "Opening MXF file %s", mxfLocation);
@@ -155,34 +171,86 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 
 		uint64_t metadata_original_len_with_fill = metadata_partition->getHeaderByteCount();
 
+		EBUCore::RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
+
 		// ///////////////////////////////////////
-		// / 2. Insert the EBU Core object tree into the header metadata
+	    // / 1b. Locate any existing EBUCore metadata in the header metadata partition.
+		/*		 If existing metadata is found, the new metadata is serialized 
+				in the same fashion, overwriting what was present before */
+		// ///////////
+		MetadataKind existingKind = ExtractEBUCoreMetadata(&*mHeaderMetadata, metadata_partition, &*mFile, NULL, NULL, DONT_SERIALIZE, progress_callback);
+		if (existingKind != NONE) {
+			// there is metadata, override the way in which we are writing metadata!
+			if (optWaytoWrite != existingKind) {
+				progress_callback(0.0f, INFO, "EmbedEBUCoreMetadata", "Due to existing metadata, overriding metadata serializetion mode to %s", 
+					existingKind == KLV_ENCODED ? "KLV-encoded" : (existingKind == SIDECAR ? "side-car" : "dark metadata" ) );
+			}
+
+			optWaytoWrite = existingKind;
+		}
+
+		// ///////////////////////////////////////
+		// / 2. Insert the EBU Core metadata into the header metadata
 		// ///////////
 		progress_callback(0.4f, INFO, "EmbedEBUCoreMetadata", "Embedding EBUCore metadata in MXF metadata");
-
-		Identification* id = optNoIdentification ? NULL : EBUCore::GenerateEBUCoreIdentificationSet(&*mHeaderMetadata);
-		// choose between sidecar serialization or fully fledged KLV-encoded metadata
-
-		// process the EBUCore metadata
-		std::vector<EventInput> eventFrameworks;
-		DMFramework *framework = optEmbedAsSidecar ?
-			EBUCore::EBUCore_1_5::GenerateSideCarFramework(metadataLocation, &*mHeaderMetadata, id) :
-			EBUCore::EBUCore_1_5::Process(metadata, metadataLocation, &*mHeaderMetadata, eventFrameworks, id);
-
-		// remove any previously present EBUCore metadata
-		RemoveEBUCoreFrameworks(&*mHeaderMetadata);
-
-		// insert the static track DM framework
-		EBUCore::InsertEBUCoreFramework(&*mHeaderMetadata, framework, id);
-		// insert the event track DM frameworks on the timeline, if any
-		if (eventFrameworks.size() > 0) {
-			EBUCore::InsertEBUCoreEventFrameworks(&*mHeaderMetadata, eventFrameworks, id);
-		}
 
 		// prepare a vector of dark metadata keys that is to be ignored (i.e., discarded) 
 		// when metadata is (re)written to the file
 		std::vector<const mxfKey*> ignoredDarkKeys;
-		ignoredDarkKeys.push_back(&keyEBUCoreDarkMetadata);
+
+		// prepare a pointer to the serializer of dark metadata
+		std::auto_ptr<MXFFileDarkSerializer> ser(NULL);
+
+
+		if (optWaytoWrite != DARK && optWaytoWrite != NONE) {
+			// ///////////////////////////////////////
+			// / 3. Do a KLV-encoded serialization of (part of) the metadata.
+			// ///////////
+
+			Identification* id = optNoIdentification ? NULL : EBUCore::GenerateEBUCoreIdentificationSet(&*mHeaderMetadata);
+			// choose between sidecar serialization or fully fledged KLV-encoded metadata
+
+			// process the EBUCore metadata
+			std::vector<EventInput> eventFrameworks;
+			DMFramework *framework = NULL;
+			if (optWaytoWrite == SIDECAR) {
+				framework = EBUCore::EBUCore_1_5::GenerateSideCarFramework(metadataLocation, &*mHeaderMetadata, id);
+			} else {
+				std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr(NULL);
+				// actually parse the EBUCore metadata
+				if (metadataDocument != NULL) {
+					ebuCoreMainElementPtr = ebuCoreMain (*metadataDocument, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom);
+				} else {
+					// use the file location to parse the metadata
+					std::ifstream input(metadataLocation);
+					ebuCoreMainElementPtr = ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom);
+					input.close();
+				}
+				framework = EBUCore::EBUCore_1_5::Process(metadata, metadataLocation, &*mHeaderMetadata, eventFrameworks, id); 
+				//EBUCore::Process(ebuCoreMainElementPtr, metadataLocation, &*mHeaderMetadata, eventFrameworks, id);
+			}
+
+			// remove any previously present EBUCore metadata
+			RemoveEBUCoreFrameworks(&*mHeaderMetadata);
+
+			// insert the static track DM framework
+			EBUCore::InsertEBUCoreFramework(&*mHeaderMetadata, framework, id);
+			// insert the event track DM frameworks on the timeline, if any
+			if (eventFrameworks.size() > 0) {
+				EBUCore::InsertEBUCoreEventFrameworks(&*mHeaderMetadata, eventFrameworks, id);
+			}
+
+			ignoredDarkKeys.push_back(&keyEBUCoreDarkMetadata);
+
+		} else {
+			// ///////////////////////////////////////
+			// / 3. Create a Serializer for our dark metadata
+			// ///////////
+			ser.reset( (metadataDocument != NULL) ? 
+				static_cast<MXFFileDarkSerializer*>(new DarkDOMDocumentSerializer(*metadataDocument)) : 
+				static_cast<MXFFileDarkSerializer*>(new DarkFileSerializer(metadataLocation)) 
+			);
+		}
 
 		// ///////////////////////////////////////
 		// / 2. In order to avoid rewriting large portions of the file, we append our metadata
@@ -197,7 +265,15 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 			bmx::ByteArray index_bytes(index_length);
 			uint64_t pos_write_start_metadata = BufferIndex(&*mFile, footerPartition, index_bytes, &index_length);
 
-			uint64_t headerMetadataSize = WriteMetadataToFile(&*mFile, &*mHeaderMetadata, pos_start_metadata, pos_write_start_metadata, false, footerPartition, metadata_partition, ignoredDarkKeys);
+			uint64_t headerMetadataSize = (optWaytoWrite == DARK) ?
+				WriteDarkMetadataToFile(	&*mFile, 
+											*ser, 
+											&keyEBUCoreDarkMetadata, 
+											pos_start_metadata, pos_write_start_metadata, false, footerPartition, metadata_partition) :
+				WriteMetadataToFile(		&*mFile, 
+											&*mHeaderMetadata, 
+											pos_start_metadata, pos_write_start_metadata, false, footerPartition, metadata_partition, 
+											ignoredDarkKeys);
 
 			if (index_length > 0) {
 				progress_callback(0.75, DEBUG, "EmbedEBUCoreMetadata", "Rewritng footer partition index entries");
@@ -255,7 +331,15 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 			uint64_t oriMetadataSize = headerPartition->getHeaderByteCount();
 
 			// Write metadata to the header partition, forcing a file bytes shift if required (likely)
-			uint64_t headerMetadataSize = WriteMetadataToFile(&*mFile, &*mHeaderMetadata, pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition, ignoredDarkKeys);
+			uint64_t headerMetadataSize = (optWaytoWrite == DARK) ?
+				WriteDarkMetadataToFile(	&*mFile, 
+											*ser, 
+											&keyEBUCoreDarkMetadata, 
+											pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition) :
+				WriteMetadataToFile(		&*mFile, 
+											&*mHeaderMetadata, 
+											pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition, 
+											ignoredDarkKeys);
 
 			uint64_t fileOffset = headerMetadataSize - oriMetadataSize;
 
@@ -308,188 +392,6 @@ void EmbedEBUCoreMetadata(	std::auto_ptr<ebuCoreMainType> metadata,
 
         // clean-up through auto_ptr destruction
 }
-
-void EmbedDarkEBUCoreMetadata(	xercesc::DOMDocument *metadataDocument, 
-							const char* metadataLocation,
-							const char* mxfLocation, 
-							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-							bool optNoIdentification, bool optForceHeader) {
-
-		progress_callback(0.2f, INFO, "EmbedEBUCoreMetadata", "Opening MXF file %s", mxfLocation);
-
-		std::auto_ptr<File> mFile( File::openModify(mxfLocation) );	// throws MXFException if open failed!
-
-		// ///////////////////////////////////////
-		// / 1. Open MXF File and locate all partitions, using the RIP
-		// ///////////
-
-		if (!mFile->readPartitions())
-			throw BMXException("Failed to read all partitions. File may be incomplete or invalid");
-
-	    const std::vector<Partition*> &partitions = mFile->getPartitions();
-
-		// ///////////////////////////////////////
-	    // / 1a. Locate the Metadata to use for extension
-		/*		We prefer closed footer metadata when available (if the metadata 
-				is repeated in the footer, it is likely to be more up-to-date than
-				that in the header.																*/
-		// ///////////
-		progress_callback(0.25, INFO, "EmbedEBUCoreMetadata", "Locating preferred MXF metadata");
-
-	    Partition *metadata_partition = NULL, *headerPartition = NULL, *footerPartition = NULL;
-
-		metadata_partition = FindPreferredMetadataPartition(partitions, &headerPartition, &footerPartition);
-		if (!metadata_partition)
-			throw BMXException("No MXF suitable MXF metadata found");
-
-		progress_callback(0.3f, INFO, "EmbedEBUCoreMetadata", "Reading and parsing MXF metadata");
-
-		mxfKey key;
-		uint8_t llen;
-		uint64_t len;
-
-		mFile->seek(metadata_partition->getThisPartition(), SEEK_SET);
-		mFile->readKL(&key, &llen, &len);
-		mFile->skip(len);
-		mFile->readNextNonFillerKL(&key, &llen, &len);
-		BMX_CHECK(mxf_is_header_metadata(&key));
-		uint64_t pos_start_metadata =  mFile->tell() - mxfKey_extlen - llen;
-
-		uint64_t metadata_original_len_with_fill = metadata_partition->getHeaderByteCount();
-
-		// ///////////////////////////////////////
-		// / 3. Create a Serializer for our dark metadata
-		// ///////////
-
-		std::auto_ptr<MXFFileDarkSerializer> ser( (metadataDocument != NULL) ? 
-			static_cast<MXFFileDarkSerializer*>(new DarkDOMDocumentSerializer(*metadataDocument)) : 
-			static_cast<MXFFileDarkSerializer*>(new DarkFileSerializer(metadataLocation)) );
-
-		// ///////////////////////////////////////
-		// / 2. In order to avoid rewriting large portions of the file, we append our metadata
-		// / to that of the footer partition (if already present, and new otherwise)
-		// ///////////
-		if (!optForceHeader) {
-
-			progress_callback(0.5, INFO, "EmbedEBUCoreMetadata", "Writing new metadata into footer partition");
-
-			// What does the footer partition look like? Are there index entries to move around?
-			uint32_t index_length = 0;
-			bmx::ByteArray index_bytes(index_length);
-			uint64_t pos_write_start_metadata = BufferIndex(&*mFile, footerPartition, index_bytes, &index_length);
-
-			uint64_t headerMetadataSize = WriteDarkMetadataToFile(&*mFile, *ser, &keyEBUCoreDarkMetadata, pos_start_metadata, pos_write_start_metadata, false, footerPartition, metadata_partition);
-
-			if (index_length > 0) {
-				progress_callback(0.75f, DEBUG, "EmbedEBUCoreMetadata", "Rewritng footer partition index entries");
-
-				// write the index tables back to the footer partition
-				mFile->write(index_bytes.GetBytes(), index_bytes.GetSize());
-			}
-
-			progress_callback(0.8f, INFO, "EmbedEBUCoreMetadata", "Rewriting file Random Index Pack");
-
-			mFile->writeRIP();
-
-			progress_callback(0.9f, INFO, "EmbedEBUCoreMetadata", "Updating partition packs");
-
-			// seek backwards and update footer partition pack
-			footerPartition->setHeaderByteCount(/*footerPartition->getHeaderByteCount() + */ headerMetadataSize); // Add dark metadata elements to file
-			mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
-			footerPartition->write(&*mFile);
-
-			// ///////////////////////////////////////
-			// / 3. In case of in-place updates: properly update partition packs...
-			/*		Header partition:
-						Open -> Open (If the metadata in the header was open, leave open, there's more to come in the footer)
-						Closed -> Open (Open closed metadata, the header metadata may no longer be used)
-					Body partition:
-						No metadata: Leave as is, there's no metadata to be found anyway
-						Open -> Open (Leave as is, more to come later)
-						Closed -> Open (Indicate that this is no longer a verbatim repitition of the header metadata)
-					Footer partition:
-						-> Open (if all other partitions were open, we append our EBU Core metadata and leave the partition/file open)
-						-> Closed (in other cases, this will contain the finalized (with EBU Core) metadata)
-						No metadata: Use metadata from the header partition as final and insert in this partition
-			*/
-			// ///////////
-			for (size_t i = 0 ; i < partitions.size()-1; i++) {	// rewrite for all but the footer partition
-				Partition *p = partitions[i];
-				if (mxf_is_header_partition_pack(p->getKey())) {
-					p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Header) : &MXF_PP_K(OpenIncomplete, Header) );
-				}
-				else if (mxf_is_body_partition_pack(p->getKey())) {
-					p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Body) : &MXF_PP_K(OpenIncomplete, Body) );
-				} 
-				mFile->seek(p->getThisPartition(), SEEK_SET);
-				p->write(&*mFile);
-			}
-
-		} else {
-			// ///////////////////////////////////////
-			// / 2a. Provide an override where the file is rewritten to accomodate updated metadata in the header partition?
-			// / (This could become necessary when generated MXF files need 
-			// / to be natively supported by playout/hardware-constrained machines)
-			// ///////////
-			progress_callback(0.5, INFO, "EmbedEBUCoreMetadata", "Forcing new metadata into header partition, shifting bytes where necessary");
-
-			uint64_t oriMetadataSize = headerPartition->getHeaderByteCount();
-
-			// Write metadata to the header partition, forcing a file bytes shift if required (likely)
-			uint64_t headerMetadataSize = WriteDarkMetadataToFile(&*mFile, *ser, &keyEBUCoreDarkMetadata, pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition);
-
-			uint64_t fileOffset = headerMetadataSize - oriMetadataSize;
-
-			progress_callback(0.8f, INFO, "EmbedEBUCoreMetadata", "Shifted file bytes after header partition by %" PRId64 " bytes", fileOffset);
-
-			progress_callback(0.81f, INFO, "EmbedEBUCoreMetadata", "Updating partition pack offsets");
-			
-			// In this case, there's no further need for shifting the index bytes (been done already)
-			// What we do have to do is update each of the partition packs with an updated offset
-			uint64_t prevPartition = 0;
-			for (size_t i = 0 ; i < partitions.size(); i++) {
-				Partition *p = partitions[i];
-				if (!mxf_is_header_partition_pack(p->getKey())) {
-					p->setThisPartition(p->getThisPartition() + fileOffset);
-					p->setPreviousPartition(prevPartition);
-				} else if (mxf_is_header_partition_pack(p->getKey())) {
-					// make sure this is updated also
-					p->setHeaderByteCount(headerMetadataSize);
-				}
-				p->setFooterPartition(p->getFooterPartition() + fileOffset);
-				mFile->seek(p->getThisPartition(), SEEK_SET);
-				p->write(&*mFile);
-				prevPartition = p->getThisPartition();
-			}
-
-			// Finish by re-writing the rip.
-			// To be safe, we will overwrite the entire RIP of the previous file, 
-			// by extending the filler if present, or by adding a new filler up until the next KAG.
-
-			progress_callback(0.9f, INFO, "EmbedEBUCoreMetadata", "Rewriting file Random Index Pack");
-
-			// find the offset in the footer partition from which the header and index starts
-			int64_t eof, partitionSectionOffset;
-			int64_t fillerWritePosition = FindLastPartitionFill(&*mFile, footerPartition, &partitionSectionOffset, &eof);
-
-			// write the filler to the next KAG after the end of the file
-			mFile->seek(fillerWritePosition, SEEK_SET);
-			footerPartition->allocateSpaceToKag(&*mFile, eof - fillerWritePosition);
-
-			if (footerPartition->getIndexByteCount() > 0)
-				footerPartition->setIndexByteCount(mFile->tell() - partitionSectionOffset);
-			else if (footerPartition->getHeaderByteCount() > 0)
-				footerPartition->setHeaderByteCount(mFile->tell() - partitionSectionOffset);
-
-			mFile->writeRIP();
-
-			mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
-			footerPartition->write(&*mFile);
-		}
-
-        // clean-up through auto_ptr destruction
-}
-
 
 void EmbedEBUCoreMetadata(	const char* metadataLocation, 
 							const char* mxfLocation, 
@@ -501,21 +403,8 @@ void EmbedEBUCoreMetadata(	const char* metadataLocation,
 		optWaytoWrite == KLV_ENCODED ? "KLV-encoded" : (optWaytoWrite == SIDECAR ? "side-car" : "dark metadata" ) );
 	progress_callback(0.1f, INFO, "EmbedEBUCoreMetadata", "Reading EBUCore XML document from file %s", metadataLocation);
 
-	std::ifstream input(metadataLocation);
-	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
-	input.close();
+	EmbedEBUCoreMetadata(NULL, metadataLocation, mxfLocation, progress_callback, optWaytoWrite, optNoIdentification, optForceHeader);	
 
-	switch (optWaytoWrite) {
-	case KLV_ENCODED:
-		EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, false, optNoIdentification, optForceHeader);	
-		break;
-	case DARK:
-		EmbedDarkEBUCoreMetadata(NULL, metadataLocation, mxfLocation, progress_callback, optNoIdentification, optForceHeader);
-		break;
-	case SIDECAR:
-		EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, true, optNoIdentification, optForceHeader);
-		break;
-	}
 }
 
 void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument, 
@@ -529,18 +418,8 @@ void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument,
 		optWaytoWrite == KLV_ENCODED ? "KLV-encoded" : (optWaytoWrite == SIDECAR ? "side-car" : "dark metadata" ) );
 	progress_callback(0.1f, INFO, "EmbedEBUCoreMetadata", "Reading EBUCore XML document from DOMDocument input");
 
-	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (metadataDocument, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
-	switch (optWaytoWrite) {
-	case KLV_ENCODED:
-		EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, false, optNoIdentification, optForceHeader);
-		break;
-	case DARK:
-		EmbedDarkEBUCoreMetadata(&metadataDocument, metadataLocation, mxfLocation, progress_callback, optNoIdentification, optForceHeader);
-		break;
-	case SIDECAR:
-		EmbedEBUCoreMetadata(ebuCoreMainElementPtr, metadataLocation, mxfLocation, progress_callback, true, optNoIdentification, optForceHeader);
-		break;
-	}
+	EmbedEBUCoreMetadata(metadataDocument, metadataLocation, mxfLocation, progress_callback, optWaytoWrite, optNoIdentification, optForceHeader);
+
 }
 
 void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata) {
@@ -648,6 +527,121 @@ static std::vector<DMFramework*> ebu_get_static_frameworks(MaterialPackage *mp)
     return frameworks;
 }
 
+MetadataKind ExtractEBUCoreMetadata(
+							HeaderMetadata *headerMetadata,
+							Partition *partition,
+							File *mxfFile,
+							const char* metadataLocation,
+							xercesc::DOMDocument** outputDocument,
+							MetadataOutput outputFashion,
+							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...)) {
+
+
+	// ///////////////////////////////////////
+	// / 2a. Locate the KLV-coded EBUCore metadata in the MXF header metadata and serialize it to 
+	// ///////////
+	progress_callback(0.6f, INFO, "ExtractEBUCoreMetadata", "Locating existing EBUCore KLV metadata");
+
+	//std::auto_ptr<ebuCoreMainType> p;
+	DMFramework *fw = EBUCore_1_5::FindEBUCoreMetadataFramework(&*headerMetadata);
+
+	if (fw != NULL) {
+		progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "Found an ebucoreMainFramework on the MXF timeline");
+
+		if (EBUCore_1_5::EBUCoreFrameworkHasActualMetadata(fw)) {
+			// there is a CoreMetadata object, enough to parse the KLV-encoded metadata
+			EBUCore_1_5::ParseAndSerializeEBUCoreMetadata(fw, outputFashion, metadataLocation, outputDocument, progress_callback);
+			// return the proper value: is it KLV_ENCODED or NONE????
+		} else {
+			progress_callback(0.62f, INFO, "ExtractEBUCoreMetadata", "No coreMetadata set is attached to the ebucoreMainFramework, attempting to locate a side-car metadata reference...");
+		
+			// ///////////////////////////////////////
+			// / 2b. If there is no KLV-codec metadata beyond the framework, there could be a reference to a sidecar XML file
+			// ///////////
+			if (EBUCore_1_5::EBUCoreFrameworkRefersToExternalMetadata(fw)) {
+				const std::string& loc = EBUCore_1_5::GetEBUCoreFrameworkExternalMetadataLocation(fw);
+
+				progress_callback(0.65f, INFO, "ExtractEBUCoreMetadata", "A side-car metadata reference (documentLocator) was found: %s", loc.c_str());
+
+				//if (loc.size() > 0) {
+					if (outputFashion == SERIALIZE_TO_FILE) {
+						progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing side-car EBUCore metadata to XML file at %s\n", metadataLocation);
+
+						std::ofstream out(metadataLocation, std::ofstream::out | std::ofstream::binary);
+						std::ifstream in(loc.c_str(), std::ifstream::in | std::ifstream::binary);
+						in >> std::noskipws;
+						std::copy(std::istream_iterator<unsigned char>(in), std::istream_iterator<unsigned char>(), std::ostream_iterator<unsigned char>(out));
+
+						in.close();
+						out.close();
+					} 
+					else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
+						progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing side-car EBUCore metadata to output Xerces-C DOM Document");
+					
+						xercesc::TranscodeFromStr location((const unsigned char*)loc.c_str(), loc.size(), "UTF-8");
+						*outputDocument = ParseXercesDocument(location.str());
+					}
+
+					return SIDECAR;
+				//}
+				//else {
+				//	// location too short!
+				//}
+			} else {
+				// this is wrong, as there is no coremetadata, and no reference to a sidecar file!
+				return NONE;
+			}
+		}
+
+		
+	}
+	else {
+		// ///////////////////////////////////////
+		// / 2c. If there is no KLV-codec metadata, there could be embedded dark metadata,
+		// /     find its key in the metadata
+		// ///////////
+		mxfKey key; uint8_t llen; uint64_t len;
+
+		bool darkFound = false;
+		progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "No ebucoreMainFramework found on the MXF timeline, looking for dark metadata...");
+
+		mxfFile->seek(partition->getThisPartition(), SEEK_SET);
+		uint64_t count = 0, sourceHeaderByteCount = partition->getHeaderByteCount();
+		while (count < sourceHeaderByteCount)
+		{
+			mxfFile->readKL(&key, &llen, &len);
+			if (mxf_equals_key(&key, &keyEBUCoreDarkMetadata)) {
+				darkFound = true;
+				progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "Located EBUCore dark metadata set at offset %" PRId64 "...", partition->getThisPartition() + count);
+
+				// there is dark metadata, get it out
+				if (outputFashion == SERIALIZE_TO_FILE) {
+					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to XML file at %s", metadataLocation);
+
+					WriteKLVContentsToFile(metadataLocation, mxfFile, len);
+				} 
+				else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
+					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to output Xerces-C DOM Document");
+					
+					KLVInputSource inp(mxfFile, len);
+					*outputDocument = ParseXercesDocument(inp);
+				}
+				// only do this once!
+				return DARK;
+			} else {
+				mxfFile->skip(len);
+			}
+			count += mxfKey_extlen + llen + len;
+		}
+
+		if (!darkFound)
+			progress_callback(0.99f, INFO, "ExtractEBUCoreMetadata", "No dark metadata set found");
+
+		return NONE;
+	}
+
+}
+
 void ExtractEBUCoreMetadata(
 							const char* mxfLocation,
 							const char* metadataLocation,
@@ -699,103 +693,10 @@ void ExtractEBUCoreMetadata(
 	BMX_CHECK(mxf_is_header_metadata(&key));
 	mHeaderMetadata->read(&*mFile, metadata_partition, &key, llen, len);
 
-	// ///////////////////////////////////////
-	// / 2a. Locate the KLV-coded EBUCore metadata in the MXF header metadata and serialize it to 
-	// ///////////
-	progress_callback(0.6f, INFO, "ExtractEBUCoreMetadata", "Locating and extracting EBUCore KLV metadata");
-
+	
 	EBUCore::RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
 
-	//std::auto_ptr<ebuCoreMainType> p;
-	DMFramework *fw = EBUCore_1_5::FindEBUCoreMetadataFramework(&*mHeaderMetadata);
-
-	if (fw != NULL) {
-		progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "Found an ebucoreMainFramework on the MXF timeline");
-
-		if (EBUCore_1_5::EBUCoreFrameworkHasActualMetadata(fw)) {
-
-			// there is a CoreMetadata object, enough to parse the KLV-encoded metadata
-			EBUCore_1_5::ParseAndSerializeEBUCoreMetadata(fw, outputFashion, metadataLocation, outputDocument, progress_callback);
-
-		} else {
-			progress_callback(0.62f, INFO, "ExtractEBUCoreMetadata", "No coreMetadata set is attached to the ebucoreMainFramework, attempting to locate a side-car metadata reference...");
-		
-			// ///////////////////////////////////////
-			// / 2b. If there is no KLV-codec metadata beyond the framework, there could be a reference to a sidecar XML file
-			// ///////////
-			if (EBUCore_1_5::EBUCoreFrameworkRefersToExternalMetadata(fw)) {
-				const std::string& loc = EBUCore_1_5::GetEBUCoreFrameworkExternalMetadataLocation(fw);
-
-				progress_callback(0.65f, INFO, "ExtractEBUCoreMetadata", "A side-car metadata reference (documentLocator) was found: %s", loc.c_str());
-
-				//if (loc.size() > 0) {
-					if (outputFashion == SERIALIZE_TO_FILE) {
-						progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing side-car EBUCore metadata to XML file at %s\n", metadataLocation);
-
-						std::ofstream out(metadataLocation, std::ofstream::out | std::ofstream::binary);
-						std::ifstream in(loc.c_str(), std::ifstream::in | std::ifstream::binary);
-						in >> std::noskipws;
-						std::copy(std::istream_iterator<unsigned char>(in), std::istream_iterator<unsigned char>(), std::ostream_iterator<unsigned char>(out));
-
-						in.close();
-						out.close();
-					} 
-					else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
-						progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing side-car EBUCore metadata to output Xerces-C DOM Document");
-					
-						xercesc::TranscodeFromStr location((const unsigned char*)loc.c_str(), loc.size(), "UTF-8");
-						*outputDocument = ParseXercesDocument(location.str());
-					}
-				//}
-				//else {
-				//	// location too short!
-				//}
-			} else {
-				// this is wrong, as there is no coremetadata, and no reference to a sidecar file!
-			}
-		}
-
-	}
-	else {
-		// ///////////////////////////////////////
-		// / 2c. If there is no KLV-codec metadata, there could be embedded dark metadata,
-		// /     find its key in the metadata
-		// ///////////
-		bool darkFound = false;
-		progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "No ebucoreMainFramework found on the MXF timeline, looking for dark metadata...");
-
-		mFile->seek(metadata_partition->getThisPartition(), SEEK_SET);
-		uint64_t count = 0, sourceHeaderByteCount = metadata_partition->getHeaderByteCount();
-		while (count < sourceHeaderByteCount)
-		{
-			mFile->readKL(&key, &llen, &len);
-			if (mxf_equals_key(&key, &keyEBUCoreDarkMetadata)) {
-				darkFound = true;
-				progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "Located EBUCore dark metadata set at offset %" PRId64 "...", metadata_partition->getThisPartition() + count);
-
-				// there is dark metadata, get it out
-				if (outputFashion == SERIALIZE_TO_FILE) {
-					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to XML file at %s", metadataLocation);
-
-					WriteKLVContentsToFile(metadataLocation, &*mFile, len);
-				} 
-				else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
-					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to output Xerces-C DOM Document");
-					
-					KLVInputSource inp(&*mFile, len);
-					*outputDocument = ParseXercesDocument(inp);
-				}
-				// only do this once!
-				break;
-			} else {
-				mFile->skip(len);
-			}
-			count += mxfKey_extlen + llen + len;
-		}
-
-		if (!darkFound)
-			progress_callback(0.99f, INFO, "ExtractEBUCoreMetadata", "No dark metadata set found");
-	}
+	ExtractEBUCoreMetadata(&*mHeaderMetadata, metadata_partition, &*mFile, metadataLocation, outputDocument, outputFashion, progress_callback);
 
 	// ///////////////////////////////////////
 	// / 3. We're done, close the MXF file.

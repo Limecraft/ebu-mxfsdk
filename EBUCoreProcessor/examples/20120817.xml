@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ebuCoreMain xmlns:dc="http://purl.org/dc/elements/1.1/"
+             xmlns:default="http://iptc.org/std/nar/2006-10-01/"
+             xmlns:ebu="http://ebu.org/nar-extensions/"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="urn:ebu:metadata-schema:ebuCore_2012"
+             schema="EBU_CORE_20120817.xsd"
+             version="1.3"
+             dateLastModified="2011-01-31">
+   <coreMetadata>
+      <title>
+         <dc:title>VE Chavez decree #3</dc:title>
+      </title>
+      <alternativeTitle typeLabel="headline">
+         <dc:title>VE Chavez decree</dc:title>
+      </alternativeTitle>
+      <creator entityId="EBUNMSSRVCodeSource:GBRTV">
+         <organisationDetails organisationId="EBUNMSSRVCodeSource:GBRTV">
+            <organisationName>Reuters Television Ltd</organisationName>
+            <details typeLink="addressType:office">
+               <emailAddress/>
+               <webAddress/>
+               <address>
+                  <addressLine>WSHT</addressLine>
+                  <addressTownCity/><country typeLink="" typeLabel=""/></address>
+               <telephoneNumber/>
+            </details>
+         </organisationDetails>
+      </creator>
+      <creator entityId="EBUNMSSRVCodeSource2:GBAPTN"/>
+      <subject>
+         <dc:subject/>
+         <subjectCode>EBUNMSCategoryCode:EXCH</subjectCode>
+      </subject>
+      <subject>
+         <dc:subject>Americas</dc:subject>
+         <subjectCode>EBUNMSWebcatCode:AMERICAS</subjectCode>
+      </subject>
+      <description typeLabel="pubStatus">
+         <dc:description>NMSStatusCode:TRS</dc:description>
+      </description>
+      <description typeLink="EBUNMSDescription:dopesheet">
+         <dc:description> Denying he was a dictator, President Hugo
+            Chavez offered on Saturday (January 15) to give up much-criticized decree powers in May,
+            a year ahead of schedule, if post-flood emergency measures were implemented
+            quickly.Addressing the South American nation's parliament, Chavez said he was
+            being unfairly "demonized" around the world and was prepared to give up sooner than
+            expected the fast-track powers given for 18 months under an Enabling Law passed in
+            December."I am capable of asking this National Assembly to overturn the Enabling
+            Law...So if anyone feels restricted (by the decreepowers), then I'll send it back,
+            I have no problem," he said.Chavez pledged to work "harder" and "faster" to push
+            through decrees by May he says are needed for reconstructionand relief after floods
+            that left more than 130,000 homeless.The socialist Chavez, who has led Venezuela on
+            an increasingly radical path since 1999, requested decree powersfrom the outgoing
+            parliament at the end of last year. The decree authority was to have lasted to mid-2012,
+            a few monthsbefore a presidential vote where he plans to run again.Critics
+            said the real intention was to undercut the incoming National Assembly, which has a
+            greater presence ofopposition lawmakers who were relishing the chance to try to
+            block Chavez's agenda.Also at the start of a speech the famously garrulous
+            president said would last five to six hours, Chavez addressed the latest diplomatic row
+            with the US. "We regret the absence of some ambassadors, among them, the US
+            ambassador. We wish we had a US ambassador here with us, from all of the countries in
+            the world. I ran into and spoke with the US Secretary of State (referring to Hillary
+            Clinton), on January 01 in Brasilia," Chavez said. "I told her to tell (US President
+            Barak) Obama to offer him the very hand I was offering her and to tell him that what we
+            had discussed in Trinidad and Tobago was en route." In a wide-ranging speech to
+            parliament, Chavez also pledged a Power shortages were a factor hindering
+            Venezuela's economy in 2010. It shrank an estimated 1.9 percent, the only major economy
+            in Latin America still in recession.
+        </dc:description>
+      </description>
+      <description typeLink="EBUNMSDescription:shotlist">
+         <dc:description> CARACAS, VENEZUELA (JANUARY 15, 2011)
+            (REUTERS - ACCESS ALL)1. GENERAL VIEW OF PRESIDENT HUGO CHAVEZ ARRIVING TO NATIONAL
+            ASSEMBLY2. VARIOUS OF CHAVEZ WALKING INCARACAS, VENEZUELA (JANUARY 15, 2011)
+            (ORIGINALLY 4:3) (GOVERNMENT TV - ACCESS ALL)3. VARIOUS OF AUDIENCE CLAPPING4.
+            VARIOUS OF CHAVEZ WALKING IN, GREETING VARIOUS LAWMAKERS5. (SOUNDBITE) (Spanish)
+            CHAVEZ SAYING:"We regret the absence of some ambassadors, among them, the US
+            ambassador. We wish we had a US ambassador here with us, from all of the countries in
+            the world. I ran into and spoke with the US Secretary of State (referring to Hillary
+            Clinton), on January 01 in Brasilia. She approached me, I didn't touch on any subject, I
+            didn't have any intentions to do so, just the greeting between leaders. She said to me
+            'would you allow me to directly manage with you the topic of our ambassador?' and I said
+            'yes, I want.' I told her to tell (US President Barak) Obama to offer him the very hand
+            I was offering her and to tell him that what we had discussed in Trinidad and Tobago was
+            en route. We want good relations with the entire world so for that reason, from here I
+            send a warm greeting to all of the countries of the world, to all of the governments on
+            the planet, to the UN and OAS."6. AUDIENCE7. (SOUNDBITE) (Spanish) CHAVEZ
+            SAYING:"Mr. Vice President, the government submits to the National Assembly for its
+            consideration on May 01. If we could have rushed the laws that we were working on and so
+            that no one feels restricted, if anyone feels restricted (by the decreepowers),
+            then I'll send it back, I have no problem. I am going to work harder and faster. Now,
+            some will say that Chavez retreated. Anyone who wants to think that can go ahead and
+            think that. What Chavez wants is to move forward." 8. AUDIENCECARACAS,
+            VENEZUELA (JANUARY 15, 2011) (REUTERS - ACCESS ALL)9. VARIOUS OF PEOPLE GATHERED
+            OUTSIDE WATCHING SPEECH ON SCREENS
+        </dc:description>
+      </description>
+      <publisher entityId="EBUProviderCode:EBU">
+         <organisationDetails organisationId="EBUProviderCode:EBU">
+            <organisationName>European Broadcasting Union - EVN</organisationName>
+            <organisationDepartment departmentId="EBUServicerCode:EUROVISION">Eurovision services</organisationDepartment>
+            <details typeLink="addressType:office">
+               <emailAddress>evn@eurovision.net</emailAddress>
+               <webAddress>http://www.eurovision.net</webAddress>
+               <address>
+                  <addressLine/>
+                  <addressLine>Eurovision News Exchanges</addressLine>
+                  <addressLine>L Ancienne Route 17 A</addressLine>
+                  <addressLine>CH-1218</addressLine>
+                  <addressTownCity>Grand-Saconnex</addressTownCity><country typeLink="ISOCountryCode:ch" typeLabel="Switzerland"/></address>
+               <telephoneNumber>+41 22 717 2850</telephoneNumber>
+            </details>
+         </organisationDetails><role typeLabel="provider"/></publisher>
+      <date><created startDate="2011-01-15" startTime="00:00:00Z"/><issued startDate="2011-01-16" startTime="03:47:06Z"/><modified startDate="2011-01-16" startTime="04:38:20Z"/></date>
+      <type>
+         <objectType typeLabel="news item"/>
+      </type>
+      <format formatId="EVN_20110116-PNN-0428-528229" formatName="dopesheet">
+            <locator typeLabel="dopesheet">/News/16Jan2011/Items/20110116-PNN-0428-528229/index.html</locator>
+      </format>
+      <format formatId="EVN_528229_116A0428" formatName="manifestation">
+         <videoFormat>
+            <technicalAttributeRational factorNumerator="16" factorDenominator="9" typeLabel="AspectRatio">1 </technicalAttributeRational>
+         </videoFormat>
+            <duration>
+               <editUnitNumber editRate="25" factorDenominator="1" factorNumerator="1">2280</editUnitNumber>
+            </duration>
+            <locator typeLabel="manifestation">destination/path/filename(528229)</locator>
+      </format>
+      <identifier typeLabel="itemId">
+         <dc:identifier>tag:ebu.ch,2011:528229</dc:identifier>
+      </identifier>
+      <identifier typeLink="idType:dummy">
+         <dc:identifier>
+            asd-001
+        </dc:identifier>
+      </identifier>
+      <language typeLabel="Natural"/>
+      <language typeLink="EBULanguageUsageCode:PartNarrated">
+         <dc:language>Spanish</dc:language>
+      </language>
+      <coverage>
+         <spatial>
+            <location typeLink="cptype:city">
+               <name>CARACAS</name>
+            </location>
+            <location typeLink="cptype:country">
+               <name>VENEZUELA</name>
+               <code>country:VE</code>
+            </location>
+         </spatial>
+      </coverage>
+      <rights typeLabel="metadataUsageRights">
+         <dc:rights>The metadata contained in this file is provided for test purpose
+							only</dc:rights>
+         <rightsHolder>
+            <organisationDetails>
+               <organisationName>EBU</organisationName>
+            </organisationDetails>
+         </rightsHolder>
+      </rights>
+      <rights typeLabel="UsageTerms">
+         <dc:rights> Agency common from GBAPTN and⁄or GBRTV and⁄or
+            USCBSN.Access only for Eurovision Members and Sub-licensees with relevant agency
+            contracts. </dc:rights>
+         <rightsHolder/>
+      </rights>
+      <publicationHistory>
+         <publicationEvent>
+            <publicationDate>2011-01-16</publicationDate>
+            <publicationTime>04:34:07Z</publicationTime>
+            <publicationChannel>/News/16Jan2011/Items/20110116-PNN-0428-528229/index.html</publicationChannel>
+         </publicationEvent>
+      </publicationHistory>
+      <part partId="EVN_528229_116A0428_Part1_ID">
+         <description typeLabel="sequenceNumber">
+            <dc:description>1</dc:description>
+         </description>
+         <description>
+            <dc:description/>
+         </description>
+         <format formatId="EVN_20110116-PNN-0428-528229-04340701" formatName="thumbnail">
+               <locator typeLabel="thumbnail">/News/16Jan2011/Keyframes/20110116-PNN-0428-528229//20110116-PNN-0428-528229-04340701.jpeg</locator>
+         </format>
+         <format formatId="EVN_528229_116A0428_Part1_ID" formatName="partId">
+            <start>
+               <editUnitNumber editRate="25" factorDenominator="1" factorNumerator="1">411176</editUnitNumber>
+            </start>
+         </format>
+         <language typeLabel="EBULanguageUsageCode:VoiceOver">
+            <dc:language/>
+         </language>
+      </part>
+      <part partId="EVN_528229_116A0428_Part2_ID">
+         <description typeLabel="sequenceNumber">
+            <dc:description>2</dc:description>
+         </description>
+         <description>
+            <dc:description/>
+         </description>
+         <format formatId="EVN_20110116-PNN-0428-528229-04342718" formatName="thumbnail">
+               <locator typeLabel="thumbnail">/News/16Jan2011/Keyframes/20110116-PNN-0428-528229//20110116-PNN-0428-528229-04342718.jpeg</locator>
+         </format>
+         <format formatId="EVN_528229_116A0428_Part2_ID" formatName="partId">
+            <start>
+               <editUnitNumber editRate="25" factorDenominator="1" factorNumerator="1">411693</editUnitNumber>
+            </start>
+         </format>
+         <language typeLabel="EBULanguageUsageCode:VoiceOver">
+            <dc:language/>
+         </language>
+      </part>
+      <part partId="EVN_528229_116A0428_Part3_ID">
+         <description typeLabel="sequenceNumber">
+            <dc:description>3</dc:description>
+         </description>
+         <description>
+            <dc:description/>
+         </description>
+         <format formatId="EVN_20110116-PNN-0428-528229-04344218" formatName="thumbnail">
+               <locator typeLabel="thumbnail">/News/16Jan2011/Keyframes/20110116-PNN-0428-528229//20110116-PNN-0428-528229-04344218.jpeg</locator>
+         </format>
+         <format formatId="EVN_528229_116A0428_Part3_ID" formatName="partId">
+            <start>
+               <editUnitNumber editRate="25" factorDenominator="1" factorNumerator="1">412068</editUnitNumber>
+            </start>
+         </format>
+         <language typeLabel="EBULanguageUsageCode:VoiceOver">
+            <dc:language/>
+         </language>
+      </part>
+      <part partId="EVN_528229_116A0428_Part4_ID">
+         <description typeLabel="sequenceNumber">
+            <dc:description>4</dc:description>
+         </description>
+         <description>
+            <dc:description/>
+         </description>
+         <format formatId="EVN_20110116-PNN-0428-528229-04345801" formatName="thumbnail">
+               <locator typeLabel="thumbnail">/News/16Jan2011/Keyframes/20110116-PNN-0428-528229//20110116-PNN-0428-528229-04345801.jpeg</locator>
+         </format>
+         <format formatId="EVN_528229_116A0428_Part4_ID" formatName="partId">
+            <start>
+               <editUnitNumber editRate="25" factorDenominator="1" factorNumerator="1">412451</editUnitNumber>
+            </start>
+         </format>
+         <language typeLabel="EBULanguageUsageCode:VoiceOver">
+            <dc:language/>
+         </language>
+      </part>
+      <part partId="EVN_528229_116A0428_Part5_ID">
+         <description typeLabel="sequenceNumber">
+            <dc:description>5</dc:description>
+         </description>
+         <description>
+            <dc:description/>
+         </description>
+         <format formatId="EVN_20110116-PNN-0428-528229-04362107" formatName="thumbnail">
+               <locator typeLabel="thumbnail">/News/16Jan2011/Keyframes/20110116-PNN-0428-528229//20110116-PNN-0428-528229-04362107.jpeg</locator>
+         </format>
+         <format formatId="EVN_528229_116A0428_Part5_ID" formatName="partId">
+            <start>
+               <editUnitNumber editRate="25" factorDenominator="1" factorNumerator="1">414532</editUnitNumber>
+            </start>
+         </format>
+         <language typeLabel="EBULanguageUsageCode:VoiceOver">
+            <dc:language/>
+         </language>
+      </part>
+      <part partId="EVN_528229_116A0428_Part6_ID">
+         <description typeLabel="sequenceNumber">
+            <dc:description>6</dc:description>
+         </description>
+         <description>
+            <dc:description/>
+         </description>
+         <format formatId="EVN_20110116-PNN-0428-528229-04370611" formatName="thumbnail">
+               <locator typeLabel="thumbnail">/News/16Jan2011/Keyframes/20110116-PNN-0428-528229//20110116-PNN-0428-528229-04370611.jpeg</locator>
+         </format>
+         <format formatId="EVN_528229_116A0428_Part6_ID" formatName="partId">
+            <start>
+               <editUnitNumber editRate="25" factorDenominator="1" factorNumerator="1">415661</editUnitNumber>
+            </start>
+         </format>
+         <language typeLabel="EBULanguageUsageCode:VoiceOver">
+            <dc:language/>
+         </language>
+      </part>
+      <part partId="EVN_528229_116A0428_Part7_ID">
+         <description typeLabel="sequenceNumber">
+            <dc:description>7</dc:description>
+         </description>
+         <description>
+            <dc:description/>
+         </description>
+         <format formatId="EVN_20110116-PNN-0428-528229-04372601" formatName="thumbnail">
+               <locator typeLabel="thumbnail">/News/16Jan2011/Keyframes/20110116-PNN-0428-528229//20110116-PNN-0428-528229-04372601.jpeg</locator>
+         </format>
+         <format formatId="EVN_528229_116A0428_Part7_ID" formatName="partId">
+            <start>
+               <editUnitNumber editRate="25" factorDenominator="1" factorNumerator="1">416151</editUnitNumber>
+            </start>
+         </format>
+         <language typeLabel="EBULanguageUsageCode:VoiceOver">
+            <dc:language/>
+         </language>
+      </part>
+      <part partId="EVN_528229_116A0428_Part8_ID">
+         <description typeLabel="sequenceNumber">
+            <dc:description>8</dc:description>
+         </description>
+         <description>
+            <dc:description/>
+         </description>
+         <format formatId="EVN_20110116-PNN-0428-528229-04373809" formatName="thumbnail">
+               <locator typeLabel="thumbnail">/News/16Jan2011/Keyframes/20110116-PNN-0428-528229//20110116-PNN-0428-528229-04373809.jpeg</locator>
+         </format>
+         <format formatId="EVN_528229_116A0428_Part8_ID" formatName="partId">
+            <start>
+               <editUnitNumber editRate="25" factorDenominator="1" factorNumerator="1">416459</editUnitNumber>
+            </start>
+         </format>
+         <language typeLabel="EBULanguageUsageCode:VoiceOver">
+            <dc:language/>
+         </language>
+      </part>
+   </coreMetadata>
+   <metadataProvider>
+      <organisationDetails organisationId="http://www.ebu.ch">
+         <organisationName xml:lang="en">European Broadcasting
+							Union</organisationName>
+         <organisationDepartment xml:lang="en">Eurovision associated to EBU Technical
+							and Development</organisationDepartment>
+         <details typeLabel="office">
+            <emailAddress>metadata@ebu.ch</emailAddress>
+            <webAddress>http://tech.ebu.ch</webAddress>
+            <address>
+               <addressLine>L'ancienne route 17A</addressLine>
+               <addressTownCity>Grand-Saconnex</addressTownCity>
+               <addressCountyState>Geneva</addressCountyState>
+               <addressDeliveryCode>CH1218</addressDeliveryCode>
+               <country typeLink="ISOCountryCode:ch" typeLabel="Switzerland"/>
+            </address>
+         </details>
+         <contacts entityId="http://www.ebu.ch/evain">
+            <contactDetails contactId="http://www.ebu.ch/evain">
+               <name> Jean-Pierre Evain </name>
+               <username>JPE</username>
+               <occupation>Senior Engineer</occupation>
+               <details typeLabel="office">
+                  <emailAddress>evain@ebu.ch</emailAddress>
+                  <webAddress>http://tech.ebu.ch/metadata</webAddress>
+                  <telephoneNumber>+41 22 717 27 34</telephoneNumber>
+               </details>
+            </contactDetails>
+            <role typeLabel="ECM coordinator"/>
+         </contacts>
+      </organisationDetails>
+   </metadataProvider>
+</ebuCoreMain>

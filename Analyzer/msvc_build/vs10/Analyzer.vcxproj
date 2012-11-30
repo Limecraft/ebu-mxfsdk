@@ -14,7 +14,9 @@
     <ClCompile Include="..\..\src\Analyzer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\aes3_descriptor_data_model.h" />
     <ClInclude Include="..\..\include\Analyzer.h" />
+    <ClInclude Include="..\..\include\AnalyzerExtensions.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{942979EC-F345-42F3-89C3-A3D096421DF3}</ProjectGuid>
