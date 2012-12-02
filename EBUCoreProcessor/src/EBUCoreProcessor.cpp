@@ -97,9 +97,11 @@ Identification* GenerateEBUCoreIdentificationSet(mxfpp::HeaderMetadata *destinat
 
 EBUCoreProcessor* GetEBUCoreProcessor(std::vector<mxfUL>& descriptiveMetadataSchemes) {
 	EBUCoreProcessor *processor = NULL;
-	// loop throught the vector and find the first matching scheme
+	// loop through the vector and find the first matching scheme
 	for (std::vector<mxfUL>::iterator it=descriptiveMetadataSchemes.begin(); it!=descriptiveMetadataSchemes.end();it++) {
-		//processor = GetEBUCoreProcessor(&*it);
+		if (mxf_equals_ul(&*it, &EBUCore_1_5::EBUCoreProcessor::DMScheme)) {
+			processor = new EBUCore_1_5::EBUCoreProcessor();
+		}
 		if (processor != NULL) break;
 	}
 	return processor;

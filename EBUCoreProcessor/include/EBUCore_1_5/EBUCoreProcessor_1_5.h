@@ -26,6 +26,9 @@ namespace EBUSDK {
 			void FindAndSerializeEBUCore(mxfpp::HeaderMetadata *metadata, const char* outputfilename);
 
 			class EBUCoreProcessor : public EBUSDK::EBUCore::EBUCoreProcessor {
+			public:
+
+				static const mxfUL DMScheme;// = { 0x06, 0x0E, 0x2B, 0x34, 0x01, 0x01, 0x01, 0x05, 0x0D, 0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00 };
 
 				/**
 				*	Registers the KLV EBUCore metadata extensions with a given MXF metadata data model. These extensions comprise the class structure and ULs associated with metadata sets.

@@ -41,6 +41,7 @@ namespace EBUSDK {
 namespace EBUCore {
 namespace EBUCore_1_5 {
 
+const mxfUL EBUCoreProcessor::DMScheme = { 0x06, 0x0E, 0x2B, 0x34, 0x01, 0x01, 0x01, 0x05, 0x0D, 0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00 };
 
 DMFramework* GenerateSideCarFramework(const char* metadataLocation, HeaderMetadata *destination, Identification* identificationToAppend) {
 
