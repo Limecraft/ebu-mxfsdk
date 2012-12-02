@@ -107,6 +107,9 @@ EBUCoreProcessor* GetEBUCoreProcessor(std::vector<mxfUL>& descriptiveMetadataSch
 	return processor;
 }
 
+EBUCoreProcessor* GetDefaultEBUCoreProcessor() {
+	return new EBUCore_1_5::EBUCoreProcessor();
+}
 
 /*void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model)
 {
@@ -213,6 +216,12 @@ void InnerEmbedEBUCoreMetadata(
 			}
 
 			optWaytoWrite = existingKind;
+		} else {
+			// there is no current metadata, allocate a default processor for it
+			processor = GetDefaultEBUCoreProcessor();
+
+			processor->RegisterMetadataExtensionsforEBUCore(&*mDataModel);
+			//processor->RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
 		}
 
 		// ///////////////////////////////////////
