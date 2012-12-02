@@ -48,11 +48,11 @@ const mxfUL* EBUCoreProcessor::GetDescriptiveMetadataScheme() {
 }
 
 void EBUCoreProcessor::RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model) {
-	RegisterMetadataExtensionsforEBUCore(data_model);
+	RegisterExtensions(data_model);
 }
 
 void EBUCoreProcessor::RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata) {
-	RegisterFrameworkObjectFactoriesforEBUCore(metadata);
+	RegisterFrameworkObjectFactory(metadata);
 }
 
 DMFramework* EBUCoreProcessor::GenerateSideCarFramework(const char* metadataLocation, HeaderMetadata *destination, Identification* identificationToAppend) {
