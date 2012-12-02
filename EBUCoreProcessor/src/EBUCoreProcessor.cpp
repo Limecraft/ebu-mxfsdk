@@ -95,13 +95,25 @@ Identification* GenerateEBUCoreIdentificationSet(mxfpp::HeaderMetadata *destinat
 	return newId;
 }
 
-void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model)
+EBUCoreProcessor* GetEBUCoreProcessor(std::vector<mxfUL>& descriptiveMetadataSchemes) {
+	EBUCoreProcessor *processor = NULL;
+	// loop throught the vector and find the first matching scheme
+	for (std::vector<mxfUL>::iterator it=descriptiveMetadataSchemes.begin(); it!=descriptiveMetadataSchemes.end();it++) {
+		//processor = GetEBUCoreProcessor(&*it);
+		if (processor != NULL) break;
+	}
+	return processor;
+}
+
+
+/*void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model)
 {
 	// register the extensions for EBUCore version 1.5
 	EBUSDK::EBUCore::EBUCore_1_5::RegisterMetadataExtensionsforEBUCore(data_model);	
-}
+}*/
 
 MetadataKind ExtractEBUCoreMetadata(
+							EBUCoreProcessor *processor,
 							HeaderMetadata *headerMetadata,
 							Partition *partition,
 							File *mxfFile,
@@ -166,14 +178,21 @@ void InnerEmbedEBUCoreMetadata(
 
 		uint64_t metadata_original_len_with_fill = metadata_partition->getHeaderByteCount();
 
-		EBUCore::RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
+		// ///////////////////////////////////////
+	    // / 1b. Locate any existing EBUCore DMScheme declarations, 
+		/*		 this determine the version of EBUCoreProcessor to use	 */
+		// ///////////
+		EBUCoreProcessor* processor = GetEBUCoreProcessor(mHeaderMetadata->getPreface()->getDMSchemes());
+		if (processor != NULL) {
+			processor->RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
+		}
 
 		// ///////////////////////////////////////
-	    // / 1b. Locate any existing EBUCore metadata in the header metadata partition.
+	    // / 1c. Locate any existing EBUCore metadata in the header metadata partition.
 		/*		 If existing metadata is found, the new metadata is serialized 
 				in the same fashion, overwriting what was present before */
 		// ///////////
-		MetadataKind existingKind = ExtractEBUCoreMetadata(&*mHeaderMetadata, metadata_partition, &*mFile, NULL, NULL, DONT_SERIALIZE, progress_callback);
+		MetadataKind existingKind = ExtractEBUCoreMetadata(processor, &*mHeaderMetadata, metadata_partition, &*mFile, NULL, NULL, DONT_SERIALIZE, progress_callback);
 		if (existingKind != NONE) {
 			// there is metadata, override the way in which we are writing metadata!
 			if (optWaytoWrite != existingKind) {
@@ -209,9 +228,9 @@ void InnerEmbedEBUCoreMetadata(
 			std::vector<EventInput> eventFrameworks;
 			DMFramework *framework = NULL;
 			if (optWaytoWrite == SIDECAR) {
-				framework = EBUCore::EBUCore_1_5::GenerateSideCarFramework(metadataLocation, &*mHeaderMetadata, id);
+				framework = processor->GenerateSideCarFramework(metadataLocation, &*mHeaderMetadata, id);
 			} else {
-				framework = EBUCore::EBUCore_1_5::Process(metadataDocument, metadataLocation, &*mHeaderMetadata, eventFrameworks, id); 
+				framework = processor->Process(metadataDocument, metadataLocation, &*mHeaderMetadata, eventFrameworks, id); 
 			}
 
 			// remove any previously present EBUCore metadata
@@ -469,6 +488,7 @@ void RemoveEBUCoreFrameworks(mxfpp::HeaderMetadata *header_metadata) {
 }
 
 MetadataKind ExtractEBUCoreMetadata(
+							EBUCoreProcessor *processor,
 							HeaderMetadata *headerMetadata,
 							Partition *partition,
 							File *mxfFile,
@@ -484,14 +504,14 @@ MetadataKind ExtractEBUCoreMetadata(
 	progress_callback(0.6f, INFO, "ExtractEBUCoreMetadata", "Locating existing EBUCore KLV metadata");
 
 	//std::auto_ptr<ebuCoreMainType> p;
-	DMFramework *fw = EBUCore_1_5::FindEBUCoreMetadataFramework(&*headerMetadata);
+	DMFramework *fw = (processor == NULL) ? NULL : processor->FindEBUCoreMetadataFramework(&*headerMetadata);
 
 	if (fw != NULL) {
 		progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "Found an ebucoreMainFramework on the MXF timeline");
 
-		if (EBUCore_1_5::EBUCoreFrameworkHasActualMetadata(fw)) {
+		if (processor->EBUCoreFrameworkHasActualMetadata(fw)) {
 			// there is a CoreMetadata object, enough to parse the KLV-encoded metadata
-			EBUCore_1_5::ParseAndSerializeEBUCoreMetadata(fw, outputFashion, metadataLocation, outputDocument, progress_callback);
+			processor->ParseAndSerializeEBUCoreMetadata(fw, outputFashion, metadataLocation, outputDocument, progress_callback);
 			// return the proper value: is it KLV_ENCODED or NONE????
 			return KLV_ENCODED;
 
@@ -501,8 +521,8 @@ MetadataKind ExtractEBUCoreMetadata(
 			// ///////////////////////////////////////
 			// / 2b. If there is no KLV-codec metadata beyond the framework, there could be a reference to a sidecar XML file
 			// ///////////
-			if (EBUCore_1_5::EBUCoreFrameworkRefersToExternalMetadata(fw)) {
-				const std::string& loc = EBUCore_1_5::GetEBUCoreFrameworkExternalMetadataLocation(fw);
+			if (processor->EBUCoreFrameworkRefersToExternalMetadata(fw)) {
+				const std::string& loc = processor->GetEBUCoreFrameworkExternalMetadataLocation(fw);
 
 				progress_callback(0.65f, INFO, "ExtractEBUCoreMetadata", "A side-car metadata reference (documentLocator) was found: %s", loc.c_str());
 
@@ -636,10 +656,12 @@ void ExtractEBUCoreMetadata(
 	BMX_CHECK(mxf_is_header_metadata(&key));
 	mHeaderMetadata->read(&*mFile, metadata_partition, &key, llen, len);
 
-	
-	EBUCore::RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
+	EBUCoreProcessor* processor = GetEBUCoreProcessor(mHeaderMetadata->getPreface()->getDMSchemes());
+	if (processor != NULL) {
+		processor->RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
+	}
 
-	ExtractEBUCoreMetadata(&*mHeaderMetadata, metadata_partition, &*mFile, metadataLocation, outputDocument, outputFashion, progress_callback);
+	ExtractEBUCoreMetadata(processor, &*mHeaderMetadata, metadata_partition, &*mFile, metadataLocation, outputDocument, outputFashion, progress_callback);
 
 	// ///////////////////////////////////////
 	// / 3. We're done, close the MXF file.

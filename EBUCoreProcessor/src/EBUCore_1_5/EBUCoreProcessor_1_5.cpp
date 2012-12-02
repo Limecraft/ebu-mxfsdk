@@ -26,7 +26,6 @@
 #include <EBUCore_1_5/EBUCoreMapping.h>
 #include <EBUCore_1_5/EBUCoreProcessor_1_5.h>
 #include <MXFCustomMetadata.h>
-#include <EBUCoreProcessor.h>
 #include <XercesUtils.h>
 
 #include <xercesc/util/TransService.hpp>

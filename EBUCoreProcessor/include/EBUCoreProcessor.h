@@ -205,6 +205,26 @@ namespace EBUSDK {
 		DONT_SERIALIZE
 	};
 
+	class EBUCoreProcessor {
+	public:
+		virtual void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model) = 0;
+		virtual void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata) = 0;
+		virtual mxfpp::DMFramework* GenerateSideCarFramework(const char* metadataLocation, mxfpp::HeaderMetadata *destination, mxfpp::Identification* identificationToAppend) = 0;
+		virtual mxfpp::DMFramework* FindEBUCoreMetadataFramework(mxfpp::HeaderMetadata *metadata) = 0;
+		virtual bool EBUCoreFrameworkHasActualMetadata(mxfpp::DMFramework *fw) = 0;
+		virtual bool EBUCoreFrameworkRefersToExternalMetadata(mxfpp::DMFramework *fw) = 0;
+		virtual std::string GetEBUCoreFrameworkExternalMetadataLocation(mxfpp::DMFramework *fw) = 0;
+		virtual mxfpp::DMFramework* Process(xercesc::DOMDocument* metadataDocument, const char* metadataLocation, mxfpp::HeaderMetadata *destination, 
+			std::vector<EBUSDK::MXFCustomMetadata::EventInput> &eventFrameworks, mxfpp::Identification* identificationToAppend) = 0;
+		virtual void ParseAndSerializeEBUCoreMetadata(	mxfpp::DMFramework *framework, 
+											EBUSDK::EBUCore::MetadataOutput outputFashion, 
+											const char* metadataLocation, 
+											xercesc::DOMDocument** outputDocument, 
+											void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...)) = 0;
+	};
+
+	EBUCoreProcessor* GetDefaultEBUCoreProcessor();
+	EBUCoreProcessor* GetEBUCoreProcessor(std::vector<mxfUL>& descriptiveMetadataSchemes);
 
 	} // namespace EBUCore
 
