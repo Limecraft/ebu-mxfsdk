@@ -30,6 +30,8 @@ namespace EBUSDK {
 
 				static const mxfUL DMScheme;// = { 0x06, 0x0E, 0x2B, 0x34, 0x01, 0x01, 0x01, 0x05, 0x0D, 0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00 };
 
+				const mxfUL* GetDescriptiveMetadataScheme();
+
 				/**
 				*	Registers the KLV EBUCore metadata extensions with a given MXF metadata data model. These extensions comprise the class structure and ULs associated with metadata sets.
 
@@ -60,6 +62,7 @@ namespace EBUSDK {
 				mxfpp::DMFramework* Process(xercesc::DOMDocument* metadataDocument, const char* metadataLocation, mxfpp::HeaderMetadata *destination, 
 					std::vector<EBUSDK::MXFCustomMetadata::EventInput> &eventFrameworks, mxfpp::Identification* identificationToAppend);
 
+				mxfpp::DMFramework* Process(const char* location, mxfpp::HeaderMetadata *destination, mxfpp::Identification* identificationToAppend);
 
 				void ParseAndSerializeEBUCoreMetadata(	mxfpp::DMFramework *framework, 
 													EBUSDK::EBUCore::MetadataOutput outputFashion, 

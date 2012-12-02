@@ -136,9 +136,6 @@ void InnerEmbedEBUCoreMetadata(
 
 		std::auto_ptr<File> mFile( File::openModify(mxfLocation) );	// throws MXFException if open failed!
 
-		std::auto_ptr<DataModel> mDataModel ( new DataModel() );
-		EBUCore::RegisterMetadataExtensionsforEBUCore(&*mDataModel);
-
 		// ///////////////////////////////////////
 		// / 1. Open MXF File and locate all partitions, using the RIP
 		// ///////////
@@ -168,6 +165,7 @@ void InnerEmbedEBUCoreMetadata(
 		uint8_t llen;
 		uint64_t len;
 
+		std::auto_ptr<DataModel> mDataModel ( new DataModel() );
 		std::auto_ptr<HeaderMetadata> mHeaderMetadata ( new HeaderMetadata(&*mDataModel) );
 
 		mFile->seek(metadata_partition->getThisPartition(), SEEK_SET);
@@ -186,7 +184,19 @@ void InnerEmbedEBUCoreMetadata(
 		// ///////////
 		EBUCoreProcessor* processor = GetEBUCoreProcessor(mHeaderMetadata->getPreface()->getDMSchemes());
 		if (processor != NULL) {
+			// we have a processor, which means that a DM Scheme for EBUCore was present,
+			// we should now reload the header metadata with this in mind!
+			processor->RegisterMetadataExtensionsforEBUCore(&*mDataModel);
+			
+			// reset
+			mHeaderMetadata = std::auto_ptr<HeaderMetadata>(new HeaderMetadata(&*mDataModel));
 			processor->RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
+
+			mFile->seek(metadata_partition->getThisPartition(), SEEK_SET);
+			mFile->readKL(&key, &llen, &len);
+			mFile->skip(len);
+			mFile->readNextNonFillerKL(&key, &llen, &len);
+			mHeaderMetadata->read(&*mFile, metadata_partition, &key, llen, len);
 		}
 
 		// ///////////////////////////////////////
@@ -239,7 +249,7 @@ void InnerEmbedEBUCoreMetadata(
 			RemoveEBUCoreFrameworks(&*mHeaderMetadata);
 
 			// insert the static track DM framework
-			EBUCore::InsertEBUCoreFramework(&*mHeaderMetadata, framework, id);
+			EBUCore::InsertEBUCoreFramework(&*mHeaderMetadata, processor->GetDescriptiveMetadataScheme(), framework, id);
 			// insert the event track DM frameworks on the timeline, if any
 			if (eventFrameworks.size() > 0) {
 				EBUCore::InsertEBUCoreEventFrameworks(&*mHeaderMetadata, eventFrameworks, id);
@@ -431,12 +441,12 @@ void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata)
 	EBUCore::EBUCore_1_5::RegisterFrameworkObjectFactory(metadata);
 }
 
-void InsertEBUCoreFramework(HeaderMetadata *header_metadata, DMFramework *framework, Identification *identificationToAppend) {
+void InsertEBUCoreFramework(HeaderMetadata *header_metadata, const mxfUL *dmSchemeLabel, DMFramework *framework, Identification *identificationToAppend) {
 
 	BMX_ASSERT(header_metadata != NULL);
 
 	// Append the EBU Core DMS label to the Preface
-	AppendDMSLabel(header_metadata, MXF_DM_L(EBUCoreDescriptiveScheme));
+	AppendDMSLabel(header_metadata, *dmSchemeLabel);
 
 	GenerationUIDAppender *appender = NULL;
 	if (identificationToAppend != NULL) {
@@ -621,7 +631,6 @@ void ExtractEBUCoreMetadata(
 	std::auto_ptr<File> mFile( File::openRead(mxfLocation) );	// throws MXFException if open failed!
 
 	std::auto_ptr<DataModel> mDataModel ( new DataModel() );
-	EBUCore::RegisterMetadataExtensionsforEBUCore(&*mDataModel);
 
 	// ///////////////////////////////////////
 	// / 1. Open MXF File and locate all partitions, using the RIP
@@ -658,9 +667,25 @@ void ExtractEBUCoreMetadata(
 	BMX_CHECK(mxf_is_header_metadata(&key));
 	mHeaderMetadata->read(&*mFile, metadata_partition, &key, llen, len);
 
+	// ///////////////////////////////////////
+	// / 1b. Locate any existing EBUCore DMScheme declarations, 
+	/*		 this determine the version of EBUCoreProcessor to use	 */
+	// ///////////
 	EBUCoreProcessor* processor = GetEBUCoreProcessor(mHeaderMetadata->getPreface()->getDMSchemes());
 	if (processor != NULL) {
+		// we have a processor, which means that a DM Scheme for EBUCore was present,
+		// we should now reload the header metadata with this in mind!
+		processor->RegisterMetadataExtensionsforEBUCore(&*mDataModel);
+			
+		// reset
+		mHeaderMetadata = std::auto_ptr<HeaderMetadata>(new HeaderMetadata(&*mDataModel));
 		processor->RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
+
+		mFile->seek(metadata_partition->getThisPartition(), SEEK_SET);
+		mFile->readKL(&key, &llen, &len);
+		mFile->skip(len);
+		mFile->readNextNonFillerKL(&key, &llen, &len);
+		mHeaderMetadata->read(&*mFile, metadata_partition, &key, llen, len);
 	}
 
 	ExtractEBUCoreMetadata(processor, &*mHeaderMetadata, metadata_partition, &*mFile, metadataLocation, outputDocument, outputFashion, progress_callback);

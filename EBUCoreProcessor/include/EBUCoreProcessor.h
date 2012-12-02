@@ -55,7 +55,7 @@ namespace EBUSDK {
 
 		@param data_model The MXF metadata data model to which the extensions are to be appended.
 	*/
-	void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model);
+	//void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model);
 
 	/**
 	*	Registers the KLV EBUCore metadata object factories with a given MXF header metadata structure.
@@ -67,7 +67,7 @@ namespace EBUSDK {
 
 		@param metadata The HeaderMetadata structure with which the factory functions must be registered.
 	*/
-	void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata);
+	//void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata);
 
 	/**
 	*	Inserts a given descriptive metadata framework set in the provided header metadata structure.\n
@@ -79,7 +79,8 @@ namespace EBUSDK {
 		@param framework The DM framework set to be added to the MXF timeline.
 		@param identificationToAppend Optional Identification metadata set that will be referenced from each metadata set created by this function.
 	*/
-	void InsertEBUCoreFramework(mxfpp::HeaderMetadata *header_metadata, mxfpp::DMFramework *framework, mxfpp::Identification *identificationToAppend = NULL);
+	void InsertEBUCoreFramework(mxfpp::HeaderMetadata *header_metadata, const mxfUL *dmSchemeLabel, 
+								mxfpp::DMFramework *framework, mxfpp::Identification *identificationToAppend = NULL);
 
 	/**
 	*	Inserts a given list of descriptive metadata frameworks in the provided header metadata structure.\n
@@ -207,6 +208,7 @@ namespace EBUSDK {
 
 	class EBUCoreProcessor {
 	public:
+		virtual const mxfUL* GetDescriptiveMetadataScheme() = 0;
 		virtual void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model) = 0;
 		virtual void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata) = 0;
 		virtual mxfpp::DMFramework* GenerateSideCarFramework(const char* metadataLocation, mxfpp::HeaderMetadata *destination, mxfpp::Identification* identificationToAppend) = 0;

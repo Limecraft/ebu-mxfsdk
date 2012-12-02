@@ -43,7 +43,19 @@ namespace EBUCore_1_5 {
 
 const mxfUL EBUCoreProcessor::DMScheme = { 0x06, 0x0E, 0x2B, 0x34, 0x01, 0x01, 0x01, 0x05, 0x0D, 0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00 };
 
-DMFramework* GenerateSideCarFramework(const char* metadataLocation, HeaderMetadata *destination, Identification* identificationToAppend) {
+const mxfUL* EBUCoreProcessor::GetDescriptiveMetadataScheme() {
+	return &DMScheme;
+}
+
+void EBUCoreProcessor::RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model) {
+	RegisterMetadataExtensionsforEBUCore(data_model);
+}
+
+void EBUCoreProcessor::RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata) {
+	RegisterFrameworkObjectFactoriesforEBUCore(metadata);
+}
+
+DMFramework* EBUCoreProcessor::GenerateSideCarFramework(const char* metadataLocation, HeaderMetadata *destination, Identification* identificationToAppend) {
 
 	GenerationUIDAppender *appender = NULL;
 	if (identificationToAppend != NULL) {
@@ -114,7 +126,7 @@ DMFramework* Process(std::auto_ptr<ebuCoreMainType> metadata, const char* metada
 	return framework;
 }
 
-DMFramework* Process(xercesc::DOMDocument* metadataDocument, const char* metadataLocation, HeaderMetadata *destination, 
+DMFramework* EBUCoreProcessor::Process(xercesc::DOMDocument* metadataDocument, const char* metadataLocation, HeaderMetadata *destination, 
 											std::vector<EventInput> &eventFrameworks, Identification* identificationToAppend) {
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr(NULL);
 	// actually parse the EBUCore metadata
@@ -126,17 +138,17 @@ DMFramework* Process(xercesc::DOMDocument* metadataDocument, const char* metadat
 		ebuCoreMainElementPtr = ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom);
 		input.close();
 	}
-	return Process(ebuCoreMainElementPtr, metadataLocation, destination, eventFrameworks, identificationToAppend); 
+	return EBUCore::EBUCore_1_5::Process(ebuCoreMainElementPtr, metadataLocation, destination, eventFrameworks, identificationToAppend); 
 }
 
-DMFramework* Process(const char* location, HeaderMetadata *destination, Identification* identificationToAppend) {
+DMFramework* EBUCoreProcessor::Process(const char* location, HeaderMetadata *destination, Identification* identificationToAppend) {
 	std::vector<EventInput> eventFrameworks;
 	std::ifstream input(location);
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
-	return Process(ebuCoreMainElementPtr, location, destination, eventFrameworks, identificationToAppend);
+	return EBUCore::EBUCore_1_5::Process(ebuCoreMainElementPtr, location, destination, eventFrameworks, identificationToAppend);
 }
 
-void ParseAndSerializeEBUCoreMetadata(	DMFramework *framework, 
+void EBUCoreProcessor::ParseAndSerializeEBUCoreMetadata(	DMFramework *framework, 
 										MetadataOutput outputFashion, 
 										const char* metadataLocation, 
 										xercesc::DOMDocument** outputDocument, 
@@ -185,22 +197,22 @@ void ParseAndSerializeEBUCoreMetadata(	DMFramework *framework,
 	
 }
 
-bool EBUCoreFrameworkHasActualMetadata(DMFramework *fw) {
+bool EBUCoreProcessor::EBUCoreFrameworkHasActualMetadata(DMFramework *fw) {
 	ebucoreMainFramework *p = dynamic_cast<ebucoreMainFramework*>(fw);
 	return (p) ? p->havecoreMetadata() : false;
 }
 
-bool EBUCoreFrameworkRefersToExternalMetadata(DMFramework *fw) {
+bool EBUCoreProcessor::EBUCoreFrameworkRefersToExternalMetadata(DMFramework *fw) {
 	ebucoreMainFramework *p = dynamic_cast<ebucoreMainFramework*>(fw);
 	return (p) ? p->havedocumentLocator() : false;
 }
 
-std::string GetEBUCoreFrameworkExternalMetadataLocation(DMFramework *fw) {
+std::string EBUCoreProcessor::GetEBUCoreFrameworkExternalMetadataLocation(DMFramework *fw) {
 	ebucoreMainFramework *p = dynamic_cast<ebucoreMainFramework*>(fw);
 	return p->getdocumentLocator();
 }
 
-DMFramework* FindEBUCoreMetadataFramework(HeaderMetadata *metadata) {
+DMFramework* EBUCoreProcessor::FindEBUCoreMetadataFramework(HeaderMetadata *metadata) {
 
 	MaterialPackage *mp = metadata->getPreface()->findMaterialPackage();
 	if (!mp) {
@@ -222,14 +234,14 @@ DMFramework* FindEBUCoreMetadataFramework(HeaderMetadata *metadata) {
 	return ebucore;
 }
 
-void FindAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilename) {
+/*void FindAndSerializeEBUCore(HeaderMetadata *metadata, const char* outputfilename) {
 	
 	DMFramework *fw = FindEBUCoreMetadataFramework(metadata);
 
 	if (fw != NULL && EBUCoreFrameworkHasActualMetadata(fw)) {
-		ParseAndSerializeEBUCoreMetadata(fw, SERIALIZE_TO_FILE, outputfilename, NULL, NULL /* dangerous! */);
+		ParseAndSerializeEBUCoreMetadata(fw, SERIALIZE_TO_FILE, outputfilename, NULL, NULL /* dangerous! *);
 	}
-}
+}*/
 
 } // namespace EBUCore_1_5
 } // namespace EBUCore
