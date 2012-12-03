@@ -67,6 +67,7 @@ Inheritance diagram for EBUSDK::EBUCore::EBUCore_1_5::EBUCoreProcessor:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a2380ed03be0dd5e83d449f175a577600"><td class="memItemLeft" align="right" valign="top">const mxfUL *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__5_1_1_e_b_u_core_processor.html#a2380ed03be0dd5e83d449f175a577600">GetDescriptiveMetadataScheme</a> ()</td></tr>
 <tr class="memitem:a4896db9120ac9c29eaebdbb0625600a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__5_1_1_e_b_u_core_processor.html#a4896db9120ac9c29eaebdbb0625600a6">RegisterMetadataExtensions</a> (mxfpp::DataModel *data_model)</td></tr>
 <tr class="memitem:ae484c31223cc917cbea04dd65e00e8e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__5_1_1_e_b_u_core_processor.html#ae484c31223cc917cbea04dd65e00e8e3">RegisterFrameworkObjectFactories</a> (mxfpp::HeaderMetadata *metadata)</td></tr>
 <tr class="memitem:a27ba5d5da8f41a84c8b6d98b92d19192"><td class="memItemLeft" align="right" valign="top">mxfpp::DMFramework *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__5_1_1_e_b_u_core_processor.html#a27ba5d5da8f41a84c8b6d98b92d19192">GenerateSideCarFramework</a> (const char *metadataLocation, mxfpp::HeaderMetadata *destination, mxfpp::Identification *identificationToAppend)</td></tr>
@@ -78,14 +79,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6ee2cc01fd3c31ca2f820aedbbed5586"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__5_1_1_e_b_u_core_processor.html#a6ee2cc01fd3c31ca2f820aedbbed5586">ParseAndSerializeMetadata</a> (mxfpp::DMFramework *framework, <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#ae1f2adaa3b0c2230605e627d1cdacda9">EBUSDK::EBUCore::MetadataOutput</a> outputFashion, const char *metadataLocation, xercesc::DOMDocument **outputDocument, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...))</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>Convenience function for locating KLV-encoded <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> metadata in the provided header metadata and serializing this metadata to file.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">metadata</td><td>Parsed header metadata structure of the MXF file. </td></tr>
-    <tr><td class="paramname">outputfilename</td><td>Location of the file to write the serialized metadata to. </td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__5_1_1_e_b_u_core_processor.html">EBUCoreProcessor</a> implementation for <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> version 1.5. </p>
 </div><h2>Member Function Documentation</h2>
 <a class="anchor" id="adcb0705cb9474b77e4c8d156f6439a6d"></a>
 <div class="memitem">
@@ -238,6 +232,33 @@ Public Member Functions</h2></td></tr>
 </dl>
 
 <p>Implements <a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core_processor.html#a6813ce73d97d6bdad4be9723e7934b35">EBUSDK::EBUCore::EBUCoreProcessor</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2380ed03be0dd5e83d449f175a577600"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const mxfUL * EBUSDK::EBUCore::EBUCore_1_5::EBUCoreProcessor::GetDescriptiveMetadataScheme </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the DM Scheme Universal Label associated with the version of <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> supported by this <a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__5_1_1_e_b_u_core_processor.html">EBUCoreProcessor</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the DM Scheme Universal Label. </dd></dl>
+
+<p>Implements <a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core_processor.html#a2e0076d06e578fd79854b63c760ad670">EBUSDK::EBUCore::EBUCoreProcessor</a>.</p>
 
 </div>
 </div>
@@ -427,8 +448,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Registers the KLV <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> metadata object factories with a given MXF header metadata structure. These object factories allow the MXF metadata processing code to locate appropriate custom metadata set instantiation functions (factories) to call when encountering custom ULs in the metadata. Essentially, when a metadata set with a registered UL is encountered in the MXF metadata, the appropriate factory function will be called to create a metadata set of the correct type.<br/>
- <em><b>Note!</em></b> The factory functions must be registered with the empty metadata before actually parsing the MXF file header metadata.</p>
+<p>Registers the version-specific KLV <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> metadata object factories with a given MXF header metadata structure. These object factories allow the MXF metadata processing code to locate appropriate custom metadata set instantiation functions (factories) to call when encountering custom ULs in the metadata. Essentially, when a metadata set with a registered UL is encountered in the MXF metadata, the appropriate factory function will be called to create a metadata set of the correct type.<br/>
+ <em><b>Note!</em></b> The factory functions must be registered with the empty metadata before actually parsing the MXF file header metadata.<br/>
+ <em><b>Note!</em></b> Only a single <a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__5_1_1_e_b_u_core_processor.html">EBUCoreProcessor</a> may register its extensions, unless no overlap in terms of ULs between versions exists.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">metadata</td><td>The HeaderMetadata structure with which the factory functions must be registered. </td></tr>
@@ -461,7 +483,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Registers the KLV <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> metadata extensions with a given MXF metadata data model. These extensions comprise the class structure and ULs associated with metadata sets.</p>
+<p>Registers the version-specific KLV <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> metadata extensions with a given MXF metadata data model. These extensions comprise the class structure and ULs associated with metadata sets.<br/>
+ <em><b>Note!</em></b> Only a single <a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__5_1_1_e_b_u_core_processor.html">EBUCoreProcessor</a> may register its extensions, unless no overlap in terms of ULs between versions exists.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data_model</td><td>The MXF metadata data model to which the extensions are to be appended. </td></tr>
@@ -480,7 +503,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 3 2012 14:30:56 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 3 2012 14:43:25 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

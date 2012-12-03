@@ -198,6 +198,11 @@ namespace EBUSDK {
 	*/
 	class EBUCoreProcessor {
 	public:
+		/**
+		*	Returns the DM Scheme Universal Label associated with the version of EBUCore supported by this EBUCoreProcessor.
+
+			@returns A pointer to the DM Scheme Universal Label.
+		*/
 		virtual const mxfUL* GetDescriptiveMetadataScheme() = 0;
 
 		/**
