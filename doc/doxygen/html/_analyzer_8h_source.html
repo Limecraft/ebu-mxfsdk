@@ -46,39 +46,47 @@
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifndef __EBUSDK_ANALYZER_H__</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __EBUSDK_ANALYZER_H__</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;xercesc/dom/DOMDocument.hpp&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">using namespace </span>xercesc;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k.html">   14</a></span>&#160;<span class="keyword">namespace </span>EBUSDK {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_analyzer.html">   19</a></span>&#160;    <span class="keyword">namespace </span>Analyzer {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html">   24</a></span>&#160;        <span class="keyword">struct </span><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html">AnalyzerConfig</a> {</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a77786710451dba6c807589dd372a290e">   28</a></span>&#160;            <span class="keyword">enum</span> <a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a77786710451dba6c807589dd372a290e">AnalysisType</a> {</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a77786710451dba6c807589dd372a290ea33abf4dcf555ca7d0e9d822fe239fc9f">   32</a></span>&#160;                <a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a77786710451dba6c807589dd372a290ea33abf4dcf555ca7d0e9d822fe239fc9f">METADATA</a>,</div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a77786710451dba6c807589dd372a290eadb37c84d30b431cad8cff43b4422a21c">   37</a></span>&#160;                MXF_MUX</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            } AnalysisType;</div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a713136b3c0c5bffdef733bab15adce2a">   42</a></span>&#160;            <span class="keyword">enum</span> <a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a713136b3c0c5bffdef733bab15adce2a">MetadataAnalysisType</a> {         </div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a713136b3c0c5bffdef733bab15adce2aa4ba36e0bafe4126cc93246e6f4bfe465">   47</a></span>&#160;                <a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a713136b3c0c5bffdef733bab15adce2aa4ba36e0bafe4126cc93246e6f4bfe465">LOGICAL</a>,</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a713136b3c0c5bffdef733bab15adce2aa79420cf2619d09d8d77a2b051b572b7a">   52</a></span>&#160;                PHYSICAL</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            } MetadataAnalysisType;</div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#ad5be0c4af7240e142cee619ee3fc437f">   58</a></span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#ad5be0c4af7240e142cee619ee3fc437f">DeepIndexTableAnalysis</a>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        };</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        std::auto_ptr&lt;DOMDocument&gt; <a class="code" href="namespace_e_b_u_s_d_k_1_1_analyzer.html#a20cdc0171b0805b30593467c4a5e4a79">AnalyzeMXFFile</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation, <a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html">AnalyzerConfig</a> configuration);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_analyzer.html#a20cdc0171b0805b30593467c4a5e4a79">AnalyzeMXFFile</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation, <span class="keyword">const</span> <span class="keywordtype">char</span>* reportLocation, <a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html">AnalyzerConfig</a> configuration);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifdef EXPORTING</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define DLLEXPORT __declspec(dllexport)</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#elif IMPORTING</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define DLLEXPORT __declspec(dllimport)</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define DLLEXPORT</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;xercesc/dom/DOMDocument.hpp&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">using namespace </span>xercesc;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k.html">   22</a></span>&#160;<span class="keyword">namespace </span>EBUSDK {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_analyzer.html">   27</a></span>&#160;    <span class="keyword">namespace </span>Analyzer {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html">   32</a></span>&#160;        <span class="keyword">struct </span><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html">AnalyzerConfig</a> {</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a77786710451dba6c807589dd372a290e">   36</a></span>&#160;            <span class="keyword">enum</span> <a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a77786710451dba6c807589dd372a290e">AnalysisType</a> {</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a77786710451dba6c807589dd372a290ea33abf4dcf555ca7d0e9d822fe239fc9f">   40</a></span>&#160;                <a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a77786710451dba6c807589dd372a290ea33abf4dcf555ca7d0e9d822fe239fc9f">METADATA</a>,</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a77786710451dba6c807589dd372a290eadb37c84d30b431cad8cff43b4422a21c">   45</a></span>&#160;                MXF_MUX</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            } AnalysisType;</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a713136b3c0c5bffdef733bab15adce2a">   50</a></span>&#160;            <span class="keyword">enum</span> <a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a713136b3c0c5bffdef733bab15adce2a">MetadataAnalysisType</a> {         </div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a713136b3c0c5bffdef733bab15adce2aa4ba36e0bafe4126cc93246e6f4bfe465">   55</a></span>&#160;                <a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a713136b3c0c5bffdef733bab15adce2aa4ba36e0bafe4126cc93246e6f4bfe465">LOGICAL</a>,</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#a713136b3c0c5bffdef733bab15adce2aa79420cf2619d09d8d77a2b051b572b7a">   60</a></span>&#160;                PHYSICAL</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            } MetadataAnalysisType;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#ad5be0c4af7240e142cee619ee3fc437f">   66</a></span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html#ad5be0c4af7240e142cee619ee3fc437f">DeepIndexTableAnalysis</a>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        };</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        DLLEXPORT std::auto_ptr&lt;DOMDocument&gt; <a class="code" href="namespace_e_b_u_s_d_k_1_1_analyzer.html#a20cdc0171b0805b30593467c4a5e4a79">AnalyzeMXFFile</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation, <a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html">AnalyzerConfig</a> configuration);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        DLLEXPORT <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_analyzer.html#a20cdc0171b0805b30593467c4a5e4a79">AnalyzeMXFFile</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* mxfLocation, <span class="keyword">const</span> <span class="keywordtype">char</span>* reportLocation, <a class="code" href="struct_e_b_u_s_d_k_1_1_analyzer_1_1_analyzer_config.html">AnalyzerConfig</a> configuration);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    }</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 6 2012 11:43:52 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 3 2012 14:30:54 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

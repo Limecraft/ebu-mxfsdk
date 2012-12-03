@@ -51,25 +51,6 @@ namespace EBUSDK {
 	void FindAndSerializeEBUCore(mxfpp::HeaderMetadata *metadata, const char* outputfilename);
 
 	/**
-	*	Registers the KLV EBUCore metadata extensions with a given MXF metadata data model. These extensions comprise the class structure and ULs associated with metadata sets.
-
-		@param data_model The MXF metadata data model to which the extensions are to be appended.
-	*/
-	//void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model);
-
-	/**
-	*	Registers the KLV EBUCore metadata object factories with a given MXF header metadata structure.
-		These object factories allow the MXF metadata processing code to locate appropriate custom metadata set 
-		instantiation functions (factories) to call when encountering custom ULs in the metadata. 
-		Essentially, when a metadata set with a registered UL is encountered in the MXF metadata, 
-		the appropriate factory function will be called to create a metadata set of the correct type.\n
-		<em>@b Note!</em> The factory functions must be registered with the empty metadata before actually parsing the MXF file header metadata.
-
-		@param metadata The HeaderMetadata structure with which the factory functions must be registered.
-	*/
-	//void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata);
-
-	/**
 	*	Inserts a given descriptive metadata framework set in the provided header metadata structure.\n
 		This function first appends the EBUCore DMS scheme label to the metadata Preface set and then 
 		adds a static DM track to the MXF timeline, from which the provided __framework__ is referenced.\n
@@ -200,32 +181,137 @@ namespace EBUSDK {
 							const char* metadataLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...));
 
+	/**
+	*	The way in which metadata should be serialized.
+	*/
 	enum MetadataOutput {
+		/** Serialize to a file. */
 		SERIALIZE_TO_FILE,
+		/** Serialize to a new Xerces-C++ XML DOM document object. */
 		OUTPUT_AS_DOM_DOCUMENT,
+		/** Don't serialize. */
 		DONT_SERIALIZE
 	};
 
+	/**
+	*	Abstract class which represents a version of EBUCore processing capabilities. This class will be subclassed for each version of EBUCore.
+	*/
 	class EBUCoreProcessor {
 	public:
 		virtual const mxfUL* GetDescriptiveMetadataScheme() = 0;
-		virtual void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model) = 0;
-		virtual void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata) = 0;
+
+		/**
+		*	Registers the version-specific KLV EBUCore metadata extensions with a given MXF metadata data model. 
+			These extensions comprise the class structure and ULs associated with metadata sets.\n
+			<em>@b Note!</em> Only a single EBUCoreProcessor may register its extensions, unless no overlap in terms of ULs between versions exists.
+
+			@param data_model The MXF metadata data model to which the extensions are to be appended.
+
+		*/
+		virtual void RegisterMetadataExtensions(mxfpp::DataModel *data_model) = 0;
+
+		/**
+		*	Registers the version-specific KLV EBUCore metadata object factories with a given MXF header metadata structure.
+			These object factories allow the MXF metadata processing code to locate appropriate custom metadata set 
+			instantiation functions (factories) to call when encountering custom ULs in the metadata. 
+			Essentially, when a metadata set with a registered UL is encountered in the MXF metadata, 
+			the appropriate factory function will be called to create a metadata set of the correct type.\n
+			<em>@b Note!</em> The factory functions must be registered with the empty metadata before actually parsing the MXF file header metadata.\n
+			<em>@b Note!</em> Only a single EBUCoreProcessor may register its extensions, unless no overlap in terms of ULs between versions exists.
+
+			@param metadata The HeaderMetadata structure with which the factory functions must be registered.
+		*/
+		virtual void RegisterFrameworkObjectFactories(mxfpp::HeaderMetadata *metadata) = 0;
+
+		/**
+		*	Generates and returns an EBUCore DM Framework object and metadata object structure which refers to an external metadata location.
+			
+			@returns A pointer to the generated side-car metadata object.
+			@param metadataLocation Location of the external metadata document that the generated side-car framework will refer to.
+			@param destination The HeaderMetadata structure to which the framework and its connected object should be added.
+			@param identificationToAppend The additional MXF metadata Identification set to identify the SDK as source of the EBUCore metadata serialization. Can be NULL if no identification metadata should be appended.
+		*/
 		virtual mxfpp::DMFramework* GenerateSideCarFramework(const char* metadataLocation, mxfpp::HeaderMetadata *destination, mxfpp::Identification* identificationToAppend) = 0;
-		virtual mxfpp::DMFramework* FindEBUCoreMetadataFramework(mxfpp::HeaderMetadata *metadata) = 0;
-		virtual bool EBUCoreFrameworkHasActualMetadata(mxfpp::DMFramework *fw) = 0;
-		virtual bool EBUCoreFrameworkRefersToExternalMetadata(mxfpp::DMFramework *fw) = 0;
-		virtual std::string GetEBUCoreFrameworkExternalMetadataLocation(mxfpp::DMFramework *fw) = 0;
+
+		/**
+		*	Locates and returns an existing EBUCore DM Framework on the timeline of the provided header metadata, if any.
+			
+			@returns A pointer to the DM Framework metadata object. Returns NULL if no framework was found.
+			@param metadata The header metadata in which to locate the DM Framework.
+		*/
+		virtual mxfpp::DMFramework* FindMetadataFramework(mxfpp::HeaderMetadata *metadata) = 0;
+
+		/**
+		*	Determines whether the provided DM Framework refers to actual EBUCore metadata.
+			
+			@returns True if the DM Framework object refers to actual metadata. Returns false otherwise, e.g., if the framework refers to an external side-car metadata location.
+			@param fw A pointer to the DM Framework.
+		*/
+		virtual bool FrameworkHasActualMetadata(mxfpp::DMFramework *fw) = 0;
+
+		/**
+		*	Determines whether the provided DM Framework refers to an external side-car metadata location.
+			
+			@returns True if the DM Framework object refers to an external side-car metadata location. Returns false otherwise.
+			@param fw A pointer to the DM Framework.
+		*/
+		virtual bool FrameworkRefersToExternalMetadata(mxfpp::DMFramework *fw) = 0;
+
+		/**
+		*	Returns the location of the external side-car metadata that the provided DM Framework referes to. Throws an exception if no such reference exists, which can be verified in advance using the _FrameworkRefersToExternalMetadata_ function.
+			
+			@returns The location of the external side-car metadata.
+			@param fw A pointer to the DM Framework.
+		*/
+		virtual std::string GetFrameworkExternalMetadataLocation(mxfpp::DMFramework *fw) = 0;
+		
+		/**
+		*	Processes and converts a Xerces-C++ XML DOM representation into a KLV-encode representation which is returned in the form of a DM Framework object.
+			
+			@returns A pointer to the generated metadata object which refers to the processed and converted EBUCore metadata.
+			@param metadataDocument The DOM Document that serves as metadata input for the conversion process.
+			@param metadataLocation The external location of the DOM Document.
+			@param destination The HeaderMetadata structure to which the DM Framework and its descending metadata sets will be added.
+			@param eventFrameworks A vector to which MXF Event Frameworks generated by the converion process are added. These frameworks can be appended to Event Tracks on the MXF timeline.
+			@param identificationToAppend The additional MXF metadata Identification set to identify the SDK as source of the EBUCore metadata serialization. Can be NULL if no identification metadata should be appended.
+		*/
 		virtual mxfpp::DMFramework* Process(xercesc::DOMDocument* metadataDocument, const char* metadataLocation, mxfpp::HeaderMetadata *destination, 
 			std::vector<EBUSDK::MXFCustomMetadata::EventInput> &eventFrameworks, mxfpp::Identification* identificationToAppend) = 0;
-		virtual void ParseAndSerializeEBUCoreMetadata(	mxfpp::DMFramework *framework, 
+
+		/**
+		*	Parses and serializes an EBUCore metadata object structure referred to by a given DM Framework 
+			and serializes this metadata according to the specified output fashion.
+			
+			@param fw A pointer to the DM Framework.
+			@param outputFashion. The way to serialize the metadata.
+			@param metadataLocation The file location to which to write the metadata. 
+			Must be provided if _outputFashion_ is SERIALIZE_TO_FILE, and can be NULL otherwise
+			@param outputDocument A pointer to a Xerces-C++ XML DOM document object pointer. 
+			The pointer will be set to a newly generated DOM document if _outputFashion_ is OUTPUT_AS_DOM_DOCUMENT and can be NULL otherwise.
+			@param progress_callback A function that is called with updated progress concerning the serialization process. 
+			The function is called with the overall progress of the operation in __progress__,  a __message__ that describes the updated status, 
+			and the name of the internal __function__ to which the progress update relates (which can be used for debugging purposes).
+		*/
+		virtual void ParseAndSerializeMetadata(	mxfpp::DMFramework *fw, 
 											EBUSDK::EBUCore::MetadataOutput outputFashion, 
 											const char* metadataLocation, 
 											xercesc::DOMDocument** outputDocument, 
 											void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...)) = 0;
 	};
 
+	/**
+	*	Returns a newly created instance of the default EBUCoreProcessor object. This object represents processing capabilities for the preferred EBUCore version supported by the SDK.
+			
+		@returns An instance of the default EBUCoreProcessor.
+	*/	
 	EBUCoreProcessor* GetDefaultEBUCoreProcessor();
+
+	/**
+	*	Returns a newly created instance of the EBUCoreProcessor object for processing capabilities for EBUCore metadata declared in the given vector of DM Schemes.
+			
+		@returns The EBUCoreProcessor that matches the declared DM Schemes, if any. The first matching EBUCoreProcessor is returned, or NULL if no supported EBUCore DM Scheme is found in the _descriptiveMetadataSchemes_ vector.
+		@param descriptiveMetadataSchemes A vector with DM Scheme Universal Labals as declared in the header metadata of the MXF file.
+	*/
 	EBUCoreProcessor* GetEBUCoreProcessor(std::vector<mxfUL>& descriptiveMetadataSchemes);
 
 	} // namespace EBUCore

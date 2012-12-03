@@ -47,11 +47,11 @@ const mxfUL* EBUCoreProcessor::GetDescriptiveMetadataScheme() {
 	return &DMScheme;
 }
 
-void EBUCoreProcessor::RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model) {
+void EBUCoreProcessor::RegisterMetadataExtensions(mxfpp::DataModel *data_model) {
 	RegisterExtensions(data_model);
 }
 
-void EBUCoreProcessor::RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata) {
+void EBUCoreProcessor::RegisterFrameworkObjectFactories(mxfpp::HeaderMetadata *metadata) {
 	RegisterFrameworkObjectFactory(metadata);
 }
 
@@ -148,7 +148,7 @@ DMFramework* EBUCoreProcessor::Process(const char* location, HeaderMetadata *des
 	return EBUCore::EBUCore_1_5::Process(ebuCoreMainElementPtr, location, destination, eventFrameworks, identificationToAppend);
 }
 
-void EBUCoreProcessor::ParseAndSerializeEBUCoreMetadata(	DMFramework *framework, 
+void EBUCoreProcessor::ParseAndSerializeMetadata(	DMFramework *framework, 
 										MetadataOutput outputFashion, 
 										const char* metadataLocation, 
 										xercesc::DOMDocument** outputDocument, 
@@ -197,22 +197,22 @@ void EBUCoreProcessor::ParseAndSerializeEBUCoreMetadata(	DMFramework *framework,
 	
 }
 
-bool EBUCoreProcessor::EBUCoreFrameworkHasActualMetadata(DMFramework *fw) {
+bool EBUCoreProcessor::FrameworkHasActualMetadata(DMFramework *fw) {
 	ebucoreMainFramework *p = dynamic_cast<ebucoreMainFramework*>(fw);
 	return (p) ? p->havecoreMetadata() : false;
 }
 
-bool EBUCoreProcessor::EBUCoreFrameworkRefersToExternalMetadata(DMFramework *fw) {
+bool EBUCoreProcessor::FrameworkRefersToExternalMetadata(DMFramework *fw) {
 	ebucoreMainFramework *p = dynamic_cast<ebucoreMainFramework*>(fw);
 	return (p) ? p->havedocumentLocator() : false;
 }
 
-std::string EBUCoreProcessor::GetEBUCoreFrameworkExternalMetadataLocation(DMFramework *fw) {
+std::string EBUCoreProcessor::GetFrameworkExternalMetadataLocation(DMFramework *fw) {
 	ebucoreMainFramework *p = dynamic_cast<ebucoreMainFramework*>(fw);
 	return p->getdocumentLocator();
 }
 
-DMFramework* EBUCoreProcessor::FindEBUCoreMetadataFramework(HeaderMetadata *metadata) {
+DMFramework* EBUCoreProcessor::FindMetadataFramework(HeaderMetadata *metadata) {
 
 	MaterialPackage *mp = metadata->getPreface()->findMaterialPackage();
 	if (!mp) {

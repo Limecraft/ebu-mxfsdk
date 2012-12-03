@@ -189,11 +189,11 @@ void InnerEmbedEBUCoreMetadata(
 		if (processor != NULL) {
 			// we have a processor, which means that a DM Scheme for EBUCore was present,
 			// we should now reload the header metadata with this in mind!
-			processor->RegisterMetadataExtensionsforEBUCore(&*mDataModel);
+			processor->RegisterMetadataExtensions(&*mDataModel);
 			
 			// reset
 			mHeaderMetadata = std::auto_ptr<HeaderMetadata>(new HeaderMetadata(&*mDataModel));
-			processor->RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
+			processor->RegisterFrameworkObjectFactories(&*mHeaderMetadata);
 
 			mFile->seek(metadata_partition->getThisPartition(), SEEK_SET);
 			mFile->readKL(&key, &llen, &len);
@@ -220,7 +220,7 @@ void InnerEmbedEBUCoreMetadata(
 			// there is no current metadata, allocate a default processor for it
 			processor = GetDefaultEBUCoreProcessor();
 
-			processor->RegisterMetadataExtensionsforEBUCore(&*mDataModel);
+			processor->RegisterMetadataExtensions(&*mDataModel);
 			//processor->RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
 		}
 
@@ -525,25 +525,23 @@ MetadataKind ExtractEBUCoreMetadata(
 	progress_callback(0.6f, INFO, "ExtractEBUCoreMetadata", "Locating existing EBUCore KLV metadata");
 
 	//std::auto_ptr<ebuCoreMainType> p;
-	DMFramework *fw = (processor == NULL) ? NULL : processor->FindEBUCoreMetadataFramework(&*headerMetadata);
+	DMFramework *fw = (processor == NULL) ? NULL : processor->FindMetadataFramework(&*headerMetadata);
 
 	if (fw != NULL) {
 		progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "Found an ebucoreMainFramework on the MXF timeline");
 
-		if (processor->EBUCoreFrameworkHasActualMetadata(fw)) {
+		if (processor->FrameworkHasActualMetadata(fw)) {
 			// there is a CoreMetadata object, enough to parse the KLV-encoded metadata
-			processor->ParseAndSerializeEBUCoreMetadata(fw, outputFashion, metadataLocation, outputDocument, progress_callback);
-			// return the proper value: is it KLV_ENCODED or NONE????
+			processor->ParseAndSerializeMetadata(fw, outputFashion, metadataLocation, outputDocument, progress_callback);
 			return KLV_ENCODED;
-
 		} else {
 			progress_callback(0.62f, INFO, "ExtractEBUCoreMetadata", "No coreMetadata set is attached to the ebucoreMainFramework, attempting to locate a side-car metadata reference...");
 		
 			// ///////////////////////////////////////
 			// / 2b. If there is no KLV-codec metadata beyond the framework, there could be a reference to a sidecar XML file
 			// ///////////
-			if (processor->EBUCoreFrameworkRefersToExternalMetadata(fw)) {
-				const std::string& loc = processor->GetEBUCoreFrameworkExternalMetadataLocation(fw);
+			if (processor->FrameworkRefersToExternalMetadata(fw)) {
+				const std::string& loc = processor->GetFrameworkExternalMetadataLocation(fw);
 
 				progress_callback(0.65f, INFO, "ExtractEBUCoreMetadata", "A side-car metadata reference (documentLocator) was found: %s", loc.c_str());
 
@@ -684,11 +682,11 @@ void ExtractEBUCoreMetadata(
 	if (processor != NULL) {
 		// we have a processor, which means that a DM Scheme for EBUCore was present,
 		// we should now reload the header metadata with this in mind!
-		processor->RegisterMetadataExtensionsforEBUCore(&*mDataModel);
+		processor->RegisterMetadataExtensions(&*mDataModel);
 			
 		// reset
 		mHeaderMetadata = std::auto_ptr<HeaderMetadata>(new HeaderMetadata(&*mDataModel));
-		processor->RegisterFrameworkObjectFactoriesforEBUCore(&*mHeaderMetadata);
+		processor->RegisterFrameworkObjectFactories(&*mHeaderMetadata);
 
 		mFile->seek(metadata_partition->getThisPartition(), SEEK_SET);
 		mFile->readKL(&key, &llen, &len);

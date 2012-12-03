@@ -14,7 +14,10 @@ namespace EBUSDK {
 	 *	EBU MXF SDK namespace for EBUCore-specific functionality.
 	 */
 	namespace EBUCore {
-		
+
+		/**
+		 *	EBU MXF SDK namespace for EBUCore 1.5-specific functionality.
+		 */
 		namespace EBUCore_1_5 {
 
 			/**
@@ -23,7 +26,7 @@ namespace EBUSDK {
 				@param metadata Parsed header metadata structure of the MXF file.
 				@param outputfilename Location of the file to write the serialized metadata to.
 			*/
-			void FindAndSerializeEBUCore(mxfpp::HeaderMetadata *metadata, const char* outputfilename);
+			//void FindAndSerializeEBUCore(mxfpp::HeaderMetadata *metadata, const char* outputfilename);
 
 			class EBUCoreProcessor : public EBUSDK::EBUCore::EBUCoreProcessor {
 			public:
@@ -37,7 +40,7 @@ namespace EBUSDK {
 
 					@param data_model The MXF metadata data model to which the extensions are to be appended.
 				*/
-				void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model);
+				void RegisterMetadataExtensions(mxfpp::DataModel *data_model);
 
 				/**
 				*	Registers the KLV EBUCore metadata object factories with a given MXF header metadata structure.
@@ -49,22 +52,22 @@ namespace EBUSDK {
 
 					@param metadata The HeaderMetadata structure with which the factory functions must be registered.
 				*/
-				void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata);
+				void RegisterFrameworkObjectFactories(mxfpp::HeaderMetadata *metadata);
 
 
 				mxfpp::DMFramework* GenerateSideCarFramework(const char* metadataLocation, mxfpp::HeaderMetadata *destination, mxfpp::Identification* identificationToAppend);
 
-				mxfpp::DMFramework* FindEBUCoreMetadataFramework(mxfpp::HeaderMetadata *metadata);
-				bool EBUCoreFrameworkHasActualMetadata(mxfpp::DMFramework *fw);
-				bool EBUCoreFrameworkRefersToExternalMetadata(mxfpp::DMFramework *fw);
-				std::string GetEBUCoreFrameworkExternalMetadataLocation(mxfpp::DMFramework *fw);
+				mxfpp::DMFramework* FindMetadataFramework(mxfpp::HeaderMetadata *metadata);
+				bool FrameworkHasActualMetadata(mxfpp::DMFramework *fw);
+				bool FrameworkRefersToExternalMetadata(mxfpp::DMFramework *fw);
+				std::string GetFrameworkExternalMetadataLocation(mxfpp::DMFramework *fw);
 
 				mxfpp::DMFramework* Process(xercesc::DOMDocument* metadataDocument, const char* metadataLocation, mxfpp::HeaderMetadata *destination, 
 					std::vector<EBUSDK::MXFCustomMetadata::EventInput> &eventFrameworks, mxfpp::Identification* identificationToAppend);
 
 				mxfpp::DMFramework* Process(const char* location, mxfpp::HeaderMetadata *destination, mxfpp::Identification* identificationToAppend);
 
-				void ParseAndSerializeEBUCoreMetadata(	mxfpp::DMFramework *framework, 
+				void ParseAndSerializeMetadata(	mxfpp::DMFramework *framework, 
 													EBUSDK::EBUCore::MetadataOutput outputFashion, 
 													const char* metadataLocation, 
 													xercesc::DOMDocument** outputDocument, 
