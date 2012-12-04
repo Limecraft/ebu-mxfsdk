@@ -731,6 +731,12 @@ void AnalyzePartition(DOMElement *parent, DOMDocument *root, Partition *partitio
 				PrepareElement(root, parent, s377mMuxNS, _X("FooterPartition", tc)) :
 				PrepareElement(root, parent, s377mMuxNS, _X("BodyPartition", tc)));
 
+	// Open/Closed/Complete/Incomplete?
+	PrepareAttributeWithContent(root, partElem, s377mMuxNS, _X("Closed", tc).str(), 
+		(mxf_partition_is_closed(partition->getKey()) ? _X("1", tc).str() : _X("0", tc).str()) );
+	PrepareAttributeWithContent(root, partElem, s377mMuxNS, _X("Complete", tc).str(), 
+		(mxf_partition_is_complete(partition->getKey()) ? _X("1", tc).str() : _X("0", tc).str()) );
+
 	AnalyzePartitionPack(partElem, root, partition->getCPartition(), tc);
 
 	if (partition->getHeaderByteCount() > 0) {
