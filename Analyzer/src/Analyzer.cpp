@@ -10,7 +10,7 @@
 #include <bmx/BMXException.h>
 
 #include <MXFCustomMetadata.h>
-#include <metadata/EBUCoreDMS++.h>
+#include <EBUCoreProcessor.h>
 #include <XercesUtils.h>
 
 #if defined(_WIN32)
@@ -801,7 +801,9 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 
 	std::auto_ptr<DataModel> mDataModel ( new DataModel() );
 	RegisterAnalyzerExtensions(&*mDataModel);
-	EBUSDK::EBUCore::RegisterExtensions(&*mDataModel);
+
+	EBUSDK::EBUCore::EBUCoreProcessor *ebucoreProc = EBUSDK::EBUCore::GetDefaultEBUCoreProcessor();
+	ebucoreProc->RegisterMetadataExtensions(&*mDataModel);
 
 	// ///////////////////////////////////////
 	// / 1. Open MXF File and locate all partitions, using the RIP
