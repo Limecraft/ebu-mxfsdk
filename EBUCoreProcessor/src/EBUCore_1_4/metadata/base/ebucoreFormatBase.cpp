@@ -41,7 +41,7 @@
 
 using namespace std;
 using namespace mxfpp;
-using namespace EBUSDK::EBUCore::EBUCore_1_5::KLV;
+using namespace EBUSDK::EBUCore::EBUCore_1_4::KLV;
 
 
 const mxfKey ebucoreFormatBase::setKey = MXF_SET_K(ebucoreFormat);

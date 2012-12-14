@@ -52,8 +52,8 @@
 #include <mxf/mxf.h>
 #include <mxf/mxf_macros.h>
 
-#define EBUCORE_VERSION_NAMESPACE "EBUCore_1_5"
-#include <EBUCore_1_5/metadata/EBUCoreDMS.h>
+#define EBUCORE_VERSION_NAMESPACE "EBUCore_1_4"
+#include <EBUCore_1_4/metadata/EBUCoreDMS.h>
 
 #define CHECK(cmd) \
     if (!(cmd)) \

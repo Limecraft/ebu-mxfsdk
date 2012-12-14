@@ -34,11 +34,11 @@
 
 
 
-#include <EBUCore_1_5/metadata/ebucoreTypeGroup.h>
+#include <EBUCore_1_4/metadata/ebucoreTypeGroup.h>
 
 using namespace mxfpp;
 
-namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_5 { namespace KLV
+namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_4 { namespace KLV
 {
 
 
