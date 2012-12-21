@@ -34,7 +34,7 @@
 
 #include <libMXF++/MXF.h>
 
-#include <EBUCore_1_5/metadata/EBUCoreDMS.h>
+#include <EBUCore_1_4/metadata/EBUCoreDMS.h>
 
 using namespace mxfpp;
 
@@ -43,7 +43,7 @@ using namespace mxfpp;
 namespace EBUSDK {
 namespace EBUCore
 {
-	namespace EBUCore_1_5 {
+	namespace EBUCore_1_4 {
 		void RegisterExtensions(DataModel *dataModel);
 		void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata);
 
@@ -60,81 +60,81 @@ namespace EBUCore
 }
 }
 
-#include <EBUCore_1_5/metadata/ebucoreTextualAnnotation.h>
-#include <EBUCore_1_5/metadata/ebucoreTypeGroup.h>
-#include <EBUCore_1_5/metadata/ebucoreFormatGroup.h>
-#include <EBUCore_1_5/metadata/ebucoreStatusGroup.h>
+#include <EBUCore_1_4/metadata/ebucoreTextualAnnotation.h>
+#include <EBUCore_1_4/metadata/ebucoreTypeGroup.h>
+#include <EBUCore_1_4/metadata/ebucoreFormatGroup.h>
+#include <EBUCore_1_4/metadata/ebucoreStatusGroup.h>
 
-#include <EBUCore_1_5/metadata/ebucoreAddress.h>
-#include <EBUCore_1_5/metadata/ebucoreContactDetails.h>
-#include <EBUCore_1_5/metadata/ebucoreContact.h>
-#include <EBUCore_1_5/metadata/ebucoreEntity.h>
-#include <EBUCore_1_5/metadata/ebucoreOrganisationDepartment.h>
-#include <EBUCore_1_5/metadata/ebucoreOrganisation.h>
-#include <EBUCore_1_5/metadata/ebucoreIdentifier.h>
-#include <EBUCore_1_5/metadata/ebucoreAlternativeTitle.h>
-#include <EBUCore_1_5/metadata/ebucoreBasicRelation.h>
-#include <EBUCore_1_5/metadata/ebucoreCoordinates.h>
-#include <EBUCore_1_5/metadata/ebucoreCustomRelation.h>
-#include <EBUCore_1_5/metadata/ebucoreDateType.h>
-#include <EBUCore_1_5/metadata/ebucoreDate.h>
-#include <EBUCore_1_5/metadata/ebucoreDescription.h>
-#include <EBUCore_1_5/metadata/ebucoreGenre.h>
-#include <EBUCore_1_5/metadata/ebucoreLanguage.h>
-#include <EBUCore_1_5/metadata/ebucoreLocation.h>
-#include <EBUCore_1_5/metadata/ebucoreObjectType.h>
-#include <EBUCore_1_5/metadata/ebucorePeriodOfTime.h>
-#include <EBUCore_1_5/metadata/ebucoreRating.h>
-#include <EBUCore_1_5/metadata/ebucoreSpatial.h>
-#include <EBUCore_1_5/metadata/ebucoreSubject.h>
-#include <EBUCore_1_5/metadata/ebucoreTargetAudience.h>
-#include <EBUCore_1_5/metadata/ebucoreTemporal.h>
-#include <EBUCore_1_5/metadata/ebucoreTitle.h>
-#include <EBUCore_1_5/metadata/ebucoreType.h>
-#include <EBUCore_1_5/metadata/ebucoreVersion.h>
-#include <EBUCore_1_5/metadata/ebucoreCoverage.h>
+#include <EBUCore_1_4/metadata/ebucoreAddress.h>
+#include <EBUCore_1_4/metadata/ebucoreContactDetails.h>
+#include <EBUCore_1_4/metadata/ebucoreContact.h>
+#include <EBUCore_1_4/metadata/ebucoreEntity.h>
+#include <EBUCore_1_4/metadata/ebucoreOrganisationDepartment.h>
+#include <EBUCore_1_4/metadata/ebucoreOrganisation.h>
+#include <EBUCore_1_4/metadata/ebucoreIdentifier.h>
+#include <EBUCore_1_4/metadata/ebucoreAlternativeTitle.h>
+#include <EBUCore_1_4/metadata/ebucoreBasicRelation.h>
+#include <EBUCore_1_4/metadata/ebucoreCoordinates.h>
+#include <EBUCore_1_4/metadata/ebucoreCustomRelation.h>
+#include <EBUCore_1_4/metadata/ebucoreDateType.h>
+#include <EBUCore_1_4/metadata/ebucoreDate.h>
+#include <EBUCore_1_4/metadata/ebucoreDescription.h>
+#include <EBUCore_1_4/metadata/ebucoreGenre.h>
+#include <EBUCore_1_4/metadata/ebucoreLanguage.h>
+#include <EBUCore_1_4/metadata/ebucoreLocation.h>
+#include <EBUCore_1_4/metadata/ebucoreObjectType.h>
+#include <EBUCore_1_4/metadata/ebucorePeriodOfTime.h>
+#include <EBUCore_1_4/metadata/ebucoreRating.h>
+#include <EBUCore_1_4/metadata/ebucoreSpatial.h>
+#include <EBUCore_1_4/metadata/ebucoreSubject.h>
+#include <EBUCore_1_4/metadata/ebucoreTargetAudience.h>
+#include <EBUCore_1_4/metadata/ebucoreTemporal.h>
+#include <EBUCore_1_4/metadata/ebucoreTitle.h>
+#include <EBUCore_1_4/metadata/ebucoreType.h>
+#include <EBUCore_1_4/metadata/ebucoreVersion.h>
+#include <EBUCore_1_4/metadata/ebucoreCoverage.h>
 
-#include <EBUCore_1_5/metadata/ebucoreTechnicalAttributeAnyURI.h>
-#include <EBUCore_1_5/metadata/ebucoreTechnicalAttributeBoolean.h>
-#include <EBUCore_1_5/metadata/ebucoreTechnicalAttributeFloat.h>
-#include <EBUCore_1_5/metadata/ebucoreTechnicalAttributeInt16.h>
-#include <EBUCore_1_5/metadata/ebucoreTechnicalAttributeInt32.h>
-#include <EBUCore_1_5/metadata/ebucoreTechnicalAttributeInt64.h>
-#include <EBUCore_1_5/metadata/ebucoreTechnicalAttributeInt8.h>
-#include <EBUCore_1_5/metadata/ebucoreTechnicalAttributeRational.h>
-#include <EBUCore_1_5/metadata/ebucoreTechnicalAttributeString.h>
-#include <EBUCore_1_5/metadata/ebucoreTechnicalAttributeUInt16.h>
-#include <EBUCore_1_5/metadata/ebucoreTechnicalAttributeUInt32.h>
-#include <EBUCore_1_5/metadata/ebucoreTechnicalAttributeUInt64.h>
-#include <EBUCore_1_5/metadata/ebucoreTechnicalAttributeUInt8.h>
-#include <EBUCore_1_5/metadata/ebucoreAncillaryData.h>
-#include <EBUCore_1_5/metadata/ebucoreAspectRatio.h>
-#include <EBUCore_1_5/metadata/ebucoreCaptioning.h>
-#include <EBUCore_1_5/metadata/ebucoreCodec.h>
-#include <EBUCore_1_5/metadata/ebucoreContainerFormat.h>
-#include <EBUCore_1_5/metadata/ebucoreDimension.h>
-#include <EBUCore_1_5/metadata/ebucoreEncoding.h>
-#include <EBUCore_1_5/metadata/ebucoreMedium.h>
-#include <EBUCore_1_5/metadata/ebucoreMimeType.h>
-#include <EBUCore_1_5/metadata/ebucoreLocator.h>
-#include <EBUCore_1_5/metadata/ebucorePackageInfo.h>
-#include <EBUCore_1_5/metadata/ebucoreRational.h>
-#include <EBUCore_1_5/metadata/ebucoreSigningFormat.h>
-#include <EBUCore_1_5/metadata/ebucoreTrack.h>
-#include <EBUCore_1_5/metadata/ebucoreVideoFormat.h>
-#include <EBUCore_1_5/metadata/ebucoreImageFormat.h>
-#include <EBUCore_1_5/metadata/ebucoreAudioFormat.h>
-#include <EBUCore_1_5/metadata/ebucoreDataFormat.h>
-#include <EBUCore_1_5/metadata/ebucoreFormat.h>
+#include <EBUCore_1_4/metadata/ebucoreTechnicalAttributeAnyURI.h>
+#include <EBUCore_1_4/metadata/ebucoreTechnicalAttributeBoolean.h>
+#include <EBUCore_1_4/metadata/ebucoreTechnicalAttributeFloat.h>
+#include <EBUCore_1_4/metadata/ebucoreTechnicalAttributeInt16.h>
+#include <EBUCore_1_4/metadata/ebucoreTechnicalAttributeInt32.h>
+#include <EBUCore_1_4/metadata/ebucoreTechnicalAttributeInt64.h>
+#include <EBUCore_1_4/metadata/ebucoreTechnicalAttributeInt8.h>
+#include <EBUCore_1_4/metadata/ebucoreTechnicalAttributeRational.h>
+#include <EBUCore_1_4/metadata/ebucoreTechnicalAttributeString.h>
+#include <EBUCore_1_4/metadata/ebucoreTechnicalAttributeUInt16.h>
+#include <EBUCore_1_4/metadata/ebucoreTechnicalAttributeUInt32.h>
+#include <EBUCore_1_4/metadata/ebucoreTechnicalAttributeUInt64.h>
+#include <EBUCore_1_4/metadata/ebucoreTechnicalAttributeUInt8.h>
+#include <EBUCore_1_4/metadata/ebucoreAncillaryData.h>
+#include <EBUCore_1_4/metadata/ebucoreAspectRatio.h>
+#include <EBUCore_1_4/metadata/ebucoreCaptioning.h>
+#include <EBUCore_1_4/metadata/ebucoreCodec.h>
+#include <EBUCore_1_4/metadata/ebucoreContainerFormat.h>
+#include <EBUCore_1_4/metadata/ebucoreDimension.h>
+#include <EBUCore_1_4/metadata/ebucoreEncoding.h>
+#include <EBUCore_1_4/metadata/ebucoreMedium.h>
+#include <EBUCore_1_4/metadata/ebucoreMimeType.h>
+#include <EBUCore_1_4/metadata/ebucoreLocator.h>
+#include <EBUCore_1_4/metadata/ebucorePackageInfo.h>
+#include <EBUCore_1_4/metadata/ebucoreRational.h>
+#include <EBUCore_1_4/metadata/ebucoreSigningFormat.h>
+#include <EBUCore_1_4/metadata/ebucoreTrack.h>
+#include <EBUCore_1_4/metadata/ebucoreVideoFormat.h>
+#include <EBUCore_1_4/metadata/ebucoreImageFormat.h>
+#include <EBUCore_1_4/metadata/ebucoreAudioFormat.h>
+#include <EBUCore_1_4/metadata/ebucoreDataFormat.h>
+#include <EBUCore_1_4/metadata/ebucoreFormat.h>
 
-#include <EBUCore_1_5/metadata/ebucoreRights.h>
-#include <EBUCore_1_5/metadata/ebucorePublicationHistoryEvent.h>
+#include <EBUCore_1_4/metadata/ebucoreRights.h>
+#include <EBUCore_1_4/metadata/ebucorePublicationHistoryEvent.h>
 
-#include <EBUCore_1_5/metadata/ebucoreMetadataSchemeInformation.h>
-#include <EBUCore_1_5/metadata/ebucorePartMetadata.h>
-#include <EBUCore_1_5/metadata/ebucoreCoreMetadata.h>
-#include <EBUCore_1_5/metadata/ebucoreMainFramework.h>
-#include <EBUCore_1_5/metadata/ebucorePartFramework.h>
+#include <EBUCore_1_4/metadata/ebucoreMetadataSchemeInformation.h>
+#include <EBUCore_1_4/metadata/ebucorePartMetadata.h>
+#include <EBUCore_1_4/metadata/ebucoreCoreMetadata.h>
+#include <EBUCore_1_4/metadata/ebucoreMainFramework.h>
+#include <EBUCore_1_4/metadata/ebucorePartFramework.h>
 
 #endif
 

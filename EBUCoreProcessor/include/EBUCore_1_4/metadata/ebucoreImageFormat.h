@@ -34,7 +34,7 @@
 
 
 
-#include <EBUCore_1_5/metadata/base/ebucoreImageFormatBase.h>
+#include <EBUCore_1_4/metadata/base/ebucoreImageFormatBase.h>
 
 using namespace mxfpp;
 

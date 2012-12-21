@@ -34,7 +34,7 @@
 
 
 
-#include <EBUCore_1_5/metadata/base/ebucoreLanguageBase.h>
+#include <EBUCore_1_4/metadata/base/ebucoreLanguageBase.h>
 
 using namespace mxfpp;
 

@@ -37,8 +37,8 @@
 #define MXF_OPEN_MODIFY(fn, pf)   mxf_disk_file_open_modify(fn, pf)
 #endif
 
-#include <EBUCore_1_5/EBUCoreProcessor_1_5.h>
-#include <EBUCore_1_5/metadata/EBUCoreDMS++.h>
+#include <EBUCore_1_4/EBUCoreProcessor_1_4.h>
+#include <EBUCore_1_4/metadata/EBUCoreDMS++.h>
 #include <MXFCustomMetadata.h>
 #include <EBUCoreProcessor.h>
 #include <XercesUtils.h>
@@ -99,8 +99,8 @@ EBUCoreProcessor* GetEBUCoreProcessor(std::vector<mxfUL>& descriptiveMetadataSch
 	EBUCoreProcessor *processor = NULL;
 	// loop through the vector and find the first matching scheme
 	for (std::vector<mxfUL>::iterator it=descriptiveMetadataSchemes.begin(); it!=descriptiveMetadataSchemes.end();it++) {
-		if (mxf_equals_ul(&*it, &EBUCore_1_5::EBUCoreProcessor::DMScheme)) {
-			processor = new EBUCore_1_5::EBUCoreProcessor();
+		if (mxf_equals_ul(&*it, &EBUCore_1_4::EBUCoreProcessor::DMScheme)) {
+			processor = new EBUCore_1_4::EBUCoreProcessor();
 		}
 		if (processor != NULL) break;
 	}
@@ -108,13 +108,13 @@ EBUCoreProcessor* GetEBUCoreProcessor(std::vector<mxfUL>& descriptiveMetadataSch
 }
 
 EBUCoreProcessor* GetDefaultEBUCoreProcessor() {
-	return new EBUCore_1_5::EBUCoreProcessor();
+	return new EBUCore_1_4::EBUCoreProcessor();
 }
 
 /*void RegisterMetadataExtensionsforEBUCore(mxfpp::DataModel *data_model)
 {
 	// register the extensions for EBUCore version 1.5
-	EBUSDK::EBUCore::EBUCore_1_5::RegisterMetadataExtensionsforEBUCore(data_model);	
+	EBUSDK::EBUCore::EBUCore_1_4::RegisterMetadataExtensionsforEBUCore(data_model);	
 }*/
 
 MetadataKind ExtractEBUCoreMetadata(
@@ -447,7 +447,7 @@ void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument,
 }
 
 void RegisterFrameworkObjectFactoriesforEBUCore(mxfpp::HeaderMetadata *metadata) {
-	EBUCore::EBUCore_1_5::RegisterFrameworkObjectFactory(metadata);
+	EBUCore::EBUCore_1_4::RegisterFrameworkObjectFactory(metadata);
 }
 
 void InsertEBUCoreFramework(HeaderMetadata *header_metadata, const mxfUL *dmSchemeLabel, DMFramework *framework, Identification *identificationToAppend) {

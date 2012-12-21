@@ -3,17 +3,17 @@
 
 //#include "EBU_CORE_20110915.hxx"
 //#include "EBU_CORE_20120403.hxx"
-#include <EBUCore_1_5/xsd/EBU_CORE_20120817.hxx>
+#include <EBUCore_1_4/xsd/EBU_CORE_20120817.hxx>
 
 #include <MXFCustomMetadata.h>
-#include <EBUCore_1_5/metadata/EBUCoreDMS++.h>
+#include <EBUCore_1_4/metadata/EBUCoreDMS++.h>
 
 using namespace EBUSDK::MXFCustomMetadata;
-using namespace EBUSDK::EBUCore::EBUCore_1_5::KLV;
+using namespace EBUSDK::EBUCore::EBUCore_1_4::KLV;
 
 namespace EBUSDK {
 namespace EBUCore {
-namespace EBUCore_1_5 {
+namespace EBUCore_1_4 {
 
 void mapCoreMetadata(ebuCore_2012::coreMetadataType& source, ebucoreCoreMetadata *dest, mxfRational overallFrameRate, std::vector<ebucorePartMetadata*>& timelineParts, ObjectModifier* mod = NULL);
 void mapCoreMetadata(ebucoreCoreMetadata *source, ebuCore_2012::coreMetadataType& dest);

@@ -5,7 +5,7 @@
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>*/
 
-#include "EBUCore_1_5/EBUCoreMapping.h"
+#include "EBUCore_1_4/EBUCoreMapping.h"
 #include "AppUtils.h"
 
 #include <xercesc/util/TransService.hpp>
@@ -16,7 +16,7 @@ using namespace mxfpp;
 
 namespace EBUSDK {
 namespace EBUCore {
-namespace EBUCore_1_5 {
+namespace EBUCore_1_4 {
 
 #define	SIMPLE_MAP(source, sourceProperty, dest, destProperty)	\
 	dest->destProperty(source.sourceProperty().get());
@@ -1294,6 +1294,6 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, mxfRat
 	dest->setpart(vec_parts); 
 }
 
-} // namespace EBUCore_1_5
+} // namespace EBUCore_1_4
 } // namespace EBUCore
 } // namespace EBUSDK

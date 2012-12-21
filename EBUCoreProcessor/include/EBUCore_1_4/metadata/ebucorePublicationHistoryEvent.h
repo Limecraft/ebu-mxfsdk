@@ -34,7 +34,7 @@
 
 
 
-#include <EBUCore_1_5/metadata/base/ebucorePublicationHistoryEventBase.h>
+#include <EBUCore_1_4/metadata/base/ebucorePublicationHistoryEventBase.h>
 
 using namespace mxfpp;
 

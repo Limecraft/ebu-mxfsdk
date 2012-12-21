@@ -34,7 +34,7 @@
 
 
 
-#include <EBUCore_1_5/metadata/base/ebucoreMediumBase.h>
+#include <EBUCore_1_4/metadata/base/ebucoreMediumBase.h>
 
 using namespace mxfpp;
 

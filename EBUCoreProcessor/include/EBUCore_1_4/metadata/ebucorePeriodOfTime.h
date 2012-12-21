@@ -34,7 +34,7 @@
 
 
 
-#include <EBUCore_1_5/metadata/base/ebucorePeriodOfTimeBase.h>
+#include <EBUCore_1_4/metadata/base/ebucorePeriodOfTimeBase.h>
 
 using namespace mxfpp;
 

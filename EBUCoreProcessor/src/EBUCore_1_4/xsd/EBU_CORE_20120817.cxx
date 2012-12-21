@@ -38,7 +38,7 @@
 
 #include <xsd/cxx/pre.hxx>
 
-#include "EBUCore_1_5/xsd/EBU_CORE_20120817.hxx"
+#include "EBUCore_1_4/xsd/EBU_CORE_20120817.hxx"
 
 namespace ebuCore_2012
 {

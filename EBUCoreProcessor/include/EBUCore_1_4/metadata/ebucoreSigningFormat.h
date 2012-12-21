@@ -34,7 +34,7 @@
 
 
 
-#include <EBUCore_1_5/metadata/base/ebucoreSigningFormatBase.h>
+#include <EBUCore_1_4/metadata/base/ebucoreSigningFormatBase.h>
 
 using namespace mxfpp;
 

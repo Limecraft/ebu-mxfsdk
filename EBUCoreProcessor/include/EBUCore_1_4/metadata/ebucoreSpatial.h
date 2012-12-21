@@ -34,7 +34,7 @@
 
 
 
-#include <EBUCore_1_5/metadata/base/ebucoreSpatialBase.h>
+#include <EBUCore_1_4/metadata/base/ebucoreSpatialBase.h>
 
 using namespace mxfpp;
 

@@ -34,7 +34,7 @@
 
 
 
-#include <EBUCore_1_5/metadata/base/ebucoreDateBase.h>
+#include <EBUCore_1_4/metadata/base/ebucoreDateBase.h>
 
 using namespace mxfpp;
 

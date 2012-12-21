@@ -23,8 +23,8 @@
     throw result; \
 }
 
-#include <EBUCore_1_5/EBUCoreMapping.h>
-#include <EBUCore_1_5/EBUCoreProcessor_1_5.h>
+#include <EBUCore_1_4/EBUCoreMapping.h>
+#include <EBUCore_1_4/EBUCoreProcessor_1_4.h>
 #include <MXFCustomMetadata.h>
 #include <XercesUtils.h>
 
@@ -39,7 +39,7 @@ using namespace EBUSDK::Utils;
 
 namespace EBUSDK {
 namespace EBUCore {
-namespace EBUCore_1_5 {
+namespace EBUCore_1_4 {
 
 const mxfUL EBUCoreProcessor::DMScheme = { 0x06, 0x0E, 0x2B, 0x34, 0x01, 0x01, 0x01, 0x05, 0x0D, 0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00 };
 
@@ -138,14 +138,14 @@ DMFramework* EBUCoreProcessor::Process(xercesc::DOMDocument* metadataDocument, c
 		ebuCoreMainElementPtr = ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom);
 		input.close();
 	}
-	return EBUCore::EBUCore_1_5::Process(ebuCoreMainElementPtr, metadataLocation, destination, eventFrameworks, identificationToAppend); 
+	return EBUCore::EBUCore_1_4::Process(ebuCoreMainElementPtr, metadataLocation, destination, eventFrameworks, identificationToAppend); 
 }
 
 DMFramework* EBUCoreProcessor::Process(const char* location, HeaderMetadata *destination, Identification* identificationToAppend) {
 	std::vector<EventInput> eventFrameworks;
 	std::ifstream input(location);
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElementPtr (ebuCoreMain (input, xml_schema::flags::dont_validate | xml_schema::flags::keep_dom));
-	return EBUCore::EBUCore_1_5::Process(ebuCoreMainElementPtr, location, destination, eventFrameworks, identificationToAppend);
+	return EBUCore::EBUCore_1_4::Process(ebuCoreMainElementPtr, location, destination, eventFrameworks, identificationToAppend);
 }
 
 void EBUCoreProcessor::ParseAndSerializeMetadata(	DMFramework *framework, 
@@ -243,6 +243,6 @@ DMFramework* EBUCoreProcessor::FindMetadataFramework(HeaderMetadata *metadata) {
 	}
 }*/
 
-} // namespace EBUCore_1_5
+} // namespace EBUCore_1_4
 } // namespace EBUCore
 } //namespace EBUSDK

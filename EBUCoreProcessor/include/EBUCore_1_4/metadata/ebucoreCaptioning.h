@@ -34,7 +34,7 @@
 
 
 
-#include <EBUCore_1_5/metadata/base/ebucoreCaptioningBase.h>
+#include <EBUCore_1_4/metadata/base/ebucoreCaptioningBase.h>
 
 using namespace mxfpp;
 

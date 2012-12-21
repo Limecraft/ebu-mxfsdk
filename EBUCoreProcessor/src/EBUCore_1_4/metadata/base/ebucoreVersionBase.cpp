@@ -36,7 +36,7 @@
 #include <memory>
 
 #include <libMXF++/MXF.h>
-#include <EBUCore_1_5/metadata/EBUCoreDMS++.h>
+#include <EBUCore_1_4/metadata/EBUCoreDMS++.h>
 
 
 using namespace std;

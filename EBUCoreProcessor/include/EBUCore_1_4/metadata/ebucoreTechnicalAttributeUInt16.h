@@ -34,7 +34,7 @@
 
 
 
-#include <EBUCore_1_5/metadata/base/ebucoreTechnicalAttributeUInt16Base.h>
+#include <EBUCore_1_4/metadata/base/ebucoreTechnicalAttributeUInt16Base.h>
 
 using namespace mxfpp;
 

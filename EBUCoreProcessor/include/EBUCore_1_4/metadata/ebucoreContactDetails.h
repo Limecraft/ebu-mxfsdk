@@ -34,7 +34,7 @@
 
 
 
-#include <EBUCore_1_5/metadata/base/ebucoreContactDetailsBase.h>
+#include <EBUCore_1_4/metadata/base/ebucoreContactDetailsBase.h>
 
 using namespace mxfpp;
 

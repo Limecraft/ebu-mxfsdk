@@ -1,11 +1,11 @@
 
-#include <EBUCore_1_5/metadata/EBUCoreDMS++.h>
+#include <EBUCore_1_4/metadata/EBUCoreDMS++.h>
 
-using namespace EBUSDK::EBUCore::EBUCore_1_5::KLV;
+using namespace EBUSDK::EBUCore::EBUCore_1_4::KLV;
 
 namespace EBUSDK {
 namespace EBUCore {
-namespace EBUCore_1_5 {
+namespace EBUCore_1_4 {
 
 void RegisterExtensions(DataModel *data_model)
 {
@@ -20,7 +20,7 @@ void RegisterExtensions(DataModel *data_model)
 #define MXF_ITEM_DEFINITION(set_name, name, label, tag, type_id, is_required) \
     data_model->registerItemDef(#name, &MXF_SET_K(set_name), &MXF_ITEM_K(set_name, name), tag, type_id, is_required);
 
-#include <EBUCore_1_5/metadata/ebucore_extensions_data_model.h>
+#include <EBUCore_1_4/metadata/ebucore_extensions_data_model.h>
 
     data_model->finalise();
 }
@@ -99,6 +99,6 @@ void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata)
 	header_metadata->registerObjectFactory(&ebucoreTechnicalAttributeUInt64::setKey, new MetadataSetFactory<ebucoreTechnicalAttributeUInt64>());
 }
 
-} // namespace EBUCore_1_5
+} // namespace EBUCore_1_4
 } // namespace EBUCore
 } // namespace EBUSDK

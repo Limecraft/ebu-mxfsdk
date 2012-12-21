@@ -16,9 +16,9 @@ namespace EBUSDK {
 	namespace EBUCore {
 
 		/**
-		 *	EBU MXF SDK namespace for EBUCore 1.5-specific functionality.
+		 *	EBU MXF SDK namespace for EBUCore 1.4-specific functionality.
 		 */
-		namespace EBUCore_1_5 {
+		namespace EBUCore_1_4 {
 
 			/**
 			*	EBUCoreProcessor implementation for EBUCore version 1.5.
@@ -45,7 +45,7 @@ namespace EBUSDK {
 													void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...));
 			};
 
-		} // namespace EBUCore_1_5
+		} // namespace EBUCore_1_4
 
 	} // namespace EBUCore
 
