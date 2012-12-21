@@ -225,8 +225,8 @@
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreTypeGroup.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreVersion.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreVideoFormat.cpp" />
-    <ClCompile Include="..\..\src\EBUCore_1_4\xsd\EBU_CORE_20120817.cxx" />
-    <ClCompile Include="..\..\src\EBUCore_1_4\xsd\simpledc20021212.cxx" />
+    <ClCompile Include="..\..\src\EBUCore_1_4\xsd\EBU_CORE_20121219.cxx" />
+    <ClCompile Include="..\..\src\xsd\simpledc20021212.cxx" />
     <ClCompile Include="..\..\src\xsd\xml.cxx" />
   </ItemGroup>
   <ItemGroup>

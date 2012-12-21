@@ -38,7 +38,7 @@
 
 #include <xsd/cxx/pre.hxx>
 
-#include "EBUCore_1_5/xsd/simpledc20021212.hxx"
+#include "xsd/simpledc20021212.hxx"
 
 namespace dc
 {
