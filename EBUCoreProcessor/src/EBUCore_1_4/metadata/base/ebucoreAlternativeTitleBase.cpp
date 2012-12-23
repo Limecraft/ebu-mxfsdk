@@ -81,6 +81,11 @@ std::string ebucoreAlternativeTitleBase::getalternativeTitleNote() const
     return getStringItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleNote));
 }
 
+bool ebucoreAlternativeTitleBase::havealternativeTitleValue() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreAlternativeTitle, alternativeTitleValue));
+}
+
 std::vector<ebucoreTextualAnnotation*> ebucoreAlternativeTitleBase::getalternativeTitleValue() const
 {
     vector<ebucoreTextualAnnotation*> result;

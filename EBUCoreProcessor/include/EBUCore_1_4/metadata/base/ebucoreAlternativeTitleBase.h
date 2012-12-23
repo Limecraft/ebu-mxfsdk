@@ -59,6 +59,7 @@ public:
    mxfTimestamp getalternativeTitleAttributionDate() const;
    bool havealternativeTitleNote() const;
    std::string getalternativeTitleNote() const;
+   bool havealternativeTitleValue() const;
    std::vector<ebucoreTextualAnnotation*> getalternativeTitleValue() const;
    bool havealternativeTitleTypeGroup() const;
    ebucoreTypeGroup* getalternativeTitleTypeGroup() const;

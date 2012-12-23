@@ -61,6 +61,11 @@ ebucoreIdentifierBase::~ebucoreIdentifierBase()
 {}
 
 
+bool ebucoreIdentifierBase::haveidentifierValue() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreIdentifier, identifierValue));
+}
+
 std::string ebucoreIdentifierBase::getidentifierValue() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreIdentifier, identifierValue));

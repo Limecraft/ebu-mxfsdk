@@ -71,6 +71,14 @@ public:
    mxfTimestamp getdateDigitized() const;
    bool haveyearDigitized() const;
    mxfTimestamp getyearDigitized() const;
+   bool havedateReleased() const;
+   mxfTimestamp getdateReleased() const;
+   bool haveyearReleased() const;
+   mxfTimestamp getyearReleased() const;
+   bool havedateCopyrighted() const;
+   mxfTimestamp getdateCopyrighted() const;
+   bool haveyearCopytighted() const;
+   mxfTimestamp getyearCopytighted() const;
    bool havedateNote() const;
    std::string getdateNote() const;
    bool havealternativeDate() const;
@@ -87,6 +95,10 @@ public:
    void setyearModified(mxfTimestamp value);
    void setdateDigitized(mxfTimestamp value);
    void setyearDigitized(mxfTimestamp value);
+   void setdateReleased(mxfTimestamp value);
+   void setyearReleased(mxfTimestamp value);
+   void setdateCopyrighted(mxfTimestamp value);
+   void setyearCopytighted(mxfTimestamp value);
    void setdateNote(std::string value);
    void setalternativeDate(const std::vector<ebucoreDateType*>& value);
    void appendalternativeDate(ebucoreDateType* value);

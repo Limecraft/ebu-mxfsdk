@@ -311,21 +311,16 @@ ebucoreVersion* ebucoreCoreMetadataBase::getversion() const
     return dynamic_cast<ebucoreVersion*>(obj.release());
 }
 
-bool ebucoreCoreMetadataBase::havepublicationHistoryEvent() const
+bool ebucoreCoreMetadataBase::havepublicationHistory() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreCoreMetadata, publicationHistoryEvent));
+    return haveItem(&MXF_ITEM_K(ebucoreCoreMetadata, publicationHistory));
 }
 
-std::vector<ebucorePublicationHistoryEvent*> ebucoreCoreMetadataBase::getpublicationHistoryEvent() const
+ebucorePublicationHistoryEvent* ebucoreCoreMetadataBase::getpublicationHistory() const
 {
-    vector<ebucorePublicationHistoryEvent*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoreMetadata, publicationHistoryEvent)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucorePublicationHistoryEvent*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucorePublicationHistoryEvent*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreCoreMetadata, publicationHistory)));
+    MXFPP_CHECK(dynamic_cast<ebucorePublicationHistoryEvent*>(obj.get()) != 0);
+    return dynamic_cast<ebucorePublicationHistoryEvent*>(obj.release());
 }
 
 bool ebucoreCoreMetadataBase::havecustomRelation() const
@@ -555,15 +550,9 @@ void ebucoreCoreMetadataBase::setversion(ebucoreVersion* value)
     setStrongRefItem(&MXF_ITEM_K(ebucoreCoreMetadata, version), value);
 }
 
-void ebucoreCoreMetadataBase::setpublicationHistoryEvent(const std::vector<ebucorePublicationHistoryEvent*>& value)
+void ebucoreCoreMetadataBase::setpublicationHistory(ebucorePublicationHistoryEvent* value)
 {
-    WrapObjectVectorIterator<ebucorePublicationHistoryEvent> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoreMetadata, publicationHistoryEvent), &iter);
-}
-
-void ebucoreCoreMetadataBase::appendpublicationHistoryEvent(ebucorePublicationHistoryEvent* value)
-{
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreCoreMetadata, publicationHistoryEvent), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreCoreMetadata, publicationHistory), value);
 }
 
 void ebucoreCoreMetadataBase::setcustomRelation(const std::vector<ebucoreCustomRelation*>& value)

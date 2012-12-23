@@ -55,15 +55,17 @@ public:
 
    // getters
 
-   std::string getversionValue() const;
-   bool haveversionLanguage() const;
-   std::string getversionLanguage() const;
+   bool haveversionValue() const;
+   std::vector<ebucoreTextualAnnotation*> getversionValue() const;
+   bool haveversionTypeGroup() const;
+   ebucoreTypeGroup* getversionTypeGroup() const;
 
 
    // setters
 
-   void setversionValue(std::string value);
-   void setversionLanguage(std::string value);
+   void setversionValue(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendversionValue(ebucoreTextualAnnotation* value);
+   void setversionTypeGroup(ebucoreTypeGroup* value);
 
 
 protected:

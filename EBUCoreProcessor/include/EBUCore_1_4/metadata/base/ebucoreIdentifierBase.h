@@ -55,6 +55,7 @@ public:
 
    // getters
 
+   bool haveidentifierValue() const;
    std::string getidentifierValue() const;
    bool haveidentifierNote() const;
    std::string getidentifierNote() const;

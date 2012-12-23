@@ -71,14 +71,14 @@ std::string ebucoreLanguageBase::getlanguageCode() const
     return getStringItem(&MXF_ITEM_K(ebucoreLanguage, languageCode));
 }
 
-bool ebucoreLanguageBase::havelanguageLanguage() const
+bool ebucoreLanguageBase::havelanguageLanguageCode() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreLanguage, languageLanguage));
+    return haveItem(&MXF_ITEM_K(ebucoreLanguage, languageLanguageCode));
 }
 
-std::string ebucoreLanguageBase::getlanguageLanguage() const
+std::string ebucoreLanguageBase::getlanguageLanguageCode() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreLanguage, languageLanguage));
+    return getStringItem(&MXF_ITEM_K(ebucoreLanguage, languageLanguageCode));
 }
 
 bool ebucoreLanguageBase::havelanguageNote() const
@@ -108,9 +108,9 @@ void ebucoreLanguageBase::setlanguageCode(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreLanguage, languageCode), value);
 }
 
-void ebucoreLanguageBase::setlanguageLanguage(std::string value)
+void ebucoreLanguageBase::setlanguageLanguageCode(std::string value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreLanguage, languageLanguage), value);
+    setStringItem(&MXF_ITEM_K(ebucoreLanguage, languageLanguageCode), value);
 }
 
 void ebucoreLanguageBase::setlanguageNote(std::string value)

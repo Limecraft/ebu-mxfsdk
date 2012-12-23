@@ -57,16 +57,12 @@ public:
 
    bool havelocation() const;
    std::vector<ebucoreLocation*> getlocation() const;
-   bool havecoordinates() const;
-   std::vector<ebucoreCoordinates*> getcoordinates() const;
 
 
    // setters
 
    void setlocation(const std::vector<ebucoreLocation*>& value);
    void appendlocation(ebucoreLocation* value);
-   void setcoordinates(const std::vector<ebucoreCoordinates*>& value);
-   void appendcoordinates(ebucoreCoordinates* value);
 
 
 protected:

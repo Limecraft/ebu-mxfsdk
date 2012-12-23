@@ -57,8 +57,8 @@ public:
 
    bool havelanguageCode() const;
    std::string getlanguageCode() const;
-   bool havelanguageLanguage() const;
-   std::string getlanguageLanguage() const;
+   bool havelanguageLanguageCode() const;
+   std::string getlanguageLanguageCode() const;
    bool havelanguageNote() const;
    std::string getlanguageNote() const;
    bool havelanguagePurposeSet() const;
@@ -68,7 +68,7 @@ public:
    // setters
 
    void setlanguageCode(std::string value);
-   void setlanguageLanguage(std::string value);
+   void setlanguageLanguageCode(std::string value);
    void setlanguageNote(std::string value);
    void setlanguagePurposeSet(ebucoreTypeGroup* value);
 

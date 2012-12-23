@@ -55,27 +55,46 @@ public:
 
    // getters
 
-   std::string getratingValue() const;
-   std::string getratingScaleMinValue() const;
-   std::string getratingScaleMaxValue() const;
-   bool haveratingLanguage() const;
-   std::string getratingLanguage() const;
+   bool haveratingReason() const;
+   std::string getratingReason() const;
+   bool haveratingLinkToLogo() const;
+   std::string getratingLinkToLogo() const;
+   bool haveratingNotRatedFlag() const;
+   bool getratingNotRatedFlag() const;
+   bool haveratingAdultContentFlag() const;
+   bool getratingAdultContentFlag() const;
+   bool haveratingValue() const;
+   std::vector<ebucoreTextualAnnotation*> getratingValue() const;
+   bool haveratingScaleMinValue() const;
+   std::vector<ebucoreTextualAnnotation*> getratingScaleMinValue() const;
+   bool haveratingScaleMaxValue() const;
+   std::vector<ebucoreTextualAnnotation*> getratingScaleMaxValue() const;
    bool haveratingTypeGroup() const;
    ebucoreTypeGroup* getratingTypeGroup() const;
    bool haveratingFormatGroup() const;
    ebucoreFormatGroup* getratingFormatGroup() const;
+   bool haveratingProviderEntity() const;
    ebucoreEntity* getratingProviderEntity() const;
+   bool haveratingRegion() const;
+   ebucoreRegion* getratingRegion() const;
 
 
    // setters
 
-   void setratingValue(std::string value);
-   void setratingScaleMinValue(std::string value);
-   void setratingScaleMaxValue(std::string value);
-   void setratingLanguage(std::string value);
+   void setratingReason(std::string value);
+   void setratingLinkToLogo(std::string value);
+   void setratingNotRatedFlag(bool value);
+   void setratingAdultContentFlag(bool value);
+   void setratingValue(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendratingValue(ebucoreTextualAnnotation* value);
+   void setratingScaleMinValue(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendratingScaleMinValue(ebucoreTextualAnnotation* value);
+   void setratingScaleMaxValue(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendratingScaleMaxValue(ebucoreTextualAnnotation* value);
    void setratingTypeGroup(ebucoreTypeGroup* value);
    void setratingFormatGroup(ebucoreFormatGroup* value);
    void setratingProviderEntity(ebucoreEntity* value);
+   void setratingRegion(ebucoreRegion* value);
 
 
 protected:

@@ -55,13 +55,28 @@ public:
 
    // getters
 
-   bool havetargetAudienceKindGroup() const;
-   ebucoreTypeGroup* gettargetAudienceKindGroup() const;
+   bool havetargetAudienceReason() const;
+   std::string gettargetAudienceReason() const;
+   bool havetargetAudienceLinkToLogo() const;
+   std::string gettargetAudienceLinkToLogo() const;
+   bool havetargetAudienceNotRatedFlag() const;
+   bool gettargetAudienceNotRatedFlag() const;
+   bool havetargetAudienceAdultContentFlag() const;
+   bool gettargetAudienceAdultContentFlag() const;
+   bool havetargetAudienceTypeGroup() const;
+   ebucoreTypeGroup* gettargetAudienceTypeGroup() const;
+   bool havetargetAudienceRegion() const;
+   ebucoreRegion* gettargetAudienceRegion() const;
 
 
    // setters
 
-   void settargetAudienceKindGroup(ebucoreTypeGroup* value);
+   void settargetAudienceReason(std::string value);
+   void settargetAudienceLinkToLogo(std::string value);
+   void settargetAudienceNotRatedFlag(bool value);
+   void settargetAudienceAdultContentFlag(bool value);
+   void settargetAudienceTypeGroup(ebucoreTypeGroup* value);
+   void settargetAudienceRegion(ebucoreRegion* value);
 
 
 protected:

@@ -61,20 +61,97 @@ ebucoreTargetAudienceBase::~ebucoreTargetAudienceBase()
 {}
 
 
-bool ebucoreTargetAudienceBase::havetargetAudienceKindGroup() const
+bool ebucoreTargetAudienceBase::havetargetAudienceReason() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceKindGroup));
+    return haveItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceReason));
 }
 
-ebucoreTypeGroup* ebucoreTargetAudienceBase::gettargetAudienceKindGroup() const
+std::string ebucoreTargetAudienceBase::gettargetAudienceReason() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceKindGroup)));
+    return getStringItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceReason));
+}
+
+bool ebucoreTargetAudienceBase::havetargetAudienceLinkToLogo() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceLinkToLogo));
+}
+
+std::string ebucoreTargetAudienceBase::gettargetAudienceLinkToLogo() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceLinkToLogo));
+}
+
+bool ebucoreTargetAudienceBase::havetargetAudienceNotRatedFlag() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceNotRatedFlag));
+}
+
+bool ebucoreTargetAudienceBase::gettargetAudienceNotRatedFlag() const
+{
+    return getBooleanItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceNotRatedFlag));
+}
+
+bool ebucoreTargetAudienceBase::havetargetAudienceAdultContentFlag() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceAdultContentFlag));
+}
+
+bool ebucoreTargetAudienceBase::gettargetAudienceAdultContentFlag() const
+{
+    return getBooleanItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceAdultContentFlag));
+}
+
+bool ebucoreTargetAudienceBase::havetargetAudienceTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceTypeGroup));
+}
+
+ebucoreTypeGroup* ebucoreTargetAudienceBase::gettargetAudienceTypeGroup() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceTypeGroup)));
     MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
-void ebucoreTargetAudienceBase::settargetAudienceKindGroup(ebucoreTypeGroup* value)
+bool ebucoreTargetAudienceBase::havetargetAudienceRegion() const
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceKindGroup), value);
+    return haveItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceRegion));
+}
+
+ebucoreRegion* ebucoreTargetAudienceBase::gettargetAudienceRegion() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceRegion)));
+    MXFPP_CHECK(dynamic_cast<ebucoreRegion*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreRegion*>(obj.release());
+}
+
+void ebucoreTargetAudienceBase::settargetAudienceReason(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceReason), value);
+}
+
+void ebucoreTargetAudienceBase::settargetAudienceLinkToLogo(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceLinkToLogo), value);
+}
+
+void ebucoreTargetAudienceBase::settargetAudienceNotRatedFlag(bool value)
+{
+    setBooleanItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceNotRatedFlag), value);
+}
+
+void ebucoreTargetAudienceBase::settargetAudienceAdultContentFlag(bool value)
+{
+    setBooleanItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceAdultContentFlag), value);
+}
+
+void ebucoreTargetAudienceBase::settargetAudienceTypeGroup(ebucoreTypeGroup* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceTypeGroup), value);
+}
+
+void ebucoreTargetAudienceBase::settargetAudienceRegion(ebucoreRegion* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceRegion), value);
 }
 

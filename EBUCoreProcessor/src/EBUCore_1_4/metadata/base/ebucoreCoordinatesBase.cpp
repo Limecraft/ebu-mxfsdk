@@ -61,9 +61,19 @@ ebucoreCoordinatesBase::~ebucoreCoordinatesBase()
 {}
 
 
+bool ebucoreCoordinatesBase::haveposX() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreCoordinates, posX));
+}
+
 float ebucoreCoordinatesBase::getposX() const
 {
     return getFloatItem(&MXF_ITEM_K(ebucoreCoordinates, posX));
+}
+
+bool ebucoreCoordinatesBase::haveposY() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreCoordinates, posY));
 }
 
 float ebucoreCoordinatesBase::getposY() const

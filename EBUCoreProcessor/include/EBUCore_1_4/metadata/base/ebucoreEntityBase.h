@@ -62,7 +62,7 @@ public:
    bool haveentityOrganisation() const;
    std::vector<ebucoreOrganisation*> getentityOrganisation() const;
    bool haveentityRole() const;
-   std::vector<ebucoreTypeGroup*> getentityRole() const;
+   std::vector<ebucoreRole*> getentityRole() const;
 
 
    // setters
@@ -72,8 +72,8 @@ public:
    void appendentityContact(ebucoreContact* value);
    void setentityOrganisation(const std::vector<ebucoreOrganisation*>& value);
    void appendentityOrganisation(ebucoreOrganisation* value);
-   void setentityRole(const std::vector<ebucoreTypeGroup*>& value);
-   void appendentityRole(ebucoreTypeGroup* value);
+   void setentityRole(const std::vector<ebucoreRole*>& value);
+   void appendentityRole(ebucoreRole* value);
 
 
 protected:

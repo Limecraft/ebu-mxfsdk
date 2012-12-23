@@ -57,26 +57,30 @@ public:
 
    bool havelocationId() const;
    std::string getlocationId() const;
-   bool havelocationName() const;
-   std::string getlocationName() const;
    bool havelocationCode() const;
    std::string getlocationCode() const;
-   bool havelocationNote() const;
-   std::string getlocationNote() const;
+   bool havelocationDefinitionNote() const;
+   std::string getlocationDefinitionNote() const;
+   bool havelocationName() const;
+   std::vector<ebucoreTextualAnnotation*> getlocationName() const;
+   bool havelocationRegion() const;
+   ebucoreRegion* getlocationRegion() const;
    bool havelocationTypeGroup() const;
    ebucoreTypeGroup* getlocationTypeGroup() const;
-   bool havecoordinateReference() const;
-   ebucoreCoordinates* getcoordinateReference() const;
+   bool havelocationCoordinates() const;
+   ebucoreCoordinates* getlocationCoordinates() const;
 
 
    // setters
 
    void setlocationId(std::string value);
-   void setlocationName(std::string value);
    void setlocationCode(std::string value);
-   void setlocationNote(std::string value);
+   void setlocationDefinitionNote(std::string value);
+   void setlocationName(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendlocationName(ebucoreTextualAnnotation* value);
+   void setlocationRegion(ebucoreRegion* value);
    void setlocationTypeGroup(ebucoreTypeGroup* value);
-   void setcoordinateReference(ebucoreCoordinates* value);
+   void setlocationCoordinates(ebucoreCoordinates* value);
 
 
 protected:

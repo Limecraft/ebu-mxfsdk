@@ -57,14 +57,10 @@ public:
 
    bool havecontactId() const;
    std::string getcontactId() const;
-   bool havecontactName() const;
-   std::string getcontactName() const;
    bool havefamilyName() const;
    std::string getfamilyName() const;
    bool havegivenName() const;
    std::string getgivenName() const;
-   bool haveotherGivenName() const;
-   std::vector<ebucoreTextualAnnotation*> getotherGivenName() const;
    bool havesalutation() const;
    std::string getsalutation() const;
    bool havesuffix() const;
@@ -72,7 +68,11 @@ public:
    bool haveoccupation() const;
    std::string getoccupation() const;
    bool haveusername() const;
-   std::vector<ebucoreTextualAnnotation*> getusername() const;
+   std::string getusername() const;
+   bool haveguestFlag() const;
+   bool getguestFlag() const;
+   bool havecontactName() const;
+   std::vector<ebucoreCompoundName*> getcontactName() const;
    bool havecontactType() const;
    ebucoreTypeGroup* getcontactType() const;
    bool havecontactDetails() const;
@@ -81,21 +81,26 @@ public:
    std::vector<ebucoreEntity*> getcontactRelatedContacts() const;
    bool havestageName() const;
    std::vector<ebucoreTextualAnnotation*> getstageName() const;
+   bool havegender() const;
+   ebucoreTextualAnnotation* getgender() const;
+   bool havecontactRelatedInformationLink() const;
+   std::vector<ebucoreBasicLink*> getcontactRelatedInformationLink() const;
+   bool haveotherGivenName() const;
+   std::vector<ebucoreTextualAnnotation*> getotherGivenName() const;
 
 
    // setters
 
    void setcontactId(std::string value);
-   void setcontactName(std::string value);
    void setfamilyName(std::string value);
    void setgivenName(std::string value);
-   void setotherGivenName(const std::vector<ebucoreTextualAnnotation*>& value);
-   void appendotherGivenName(ebucoreTextualAnnotation* value);
    void setsalutation(std::string value);
    void setsuffix(std::string value);
    void setoccupation(std::string value);
-   void setusername(const std::vector<ebucoreTextualAnnotation*>& value);
-   void appendusername(ebucoreTextualAnnotation* value);
+   void setusername(std::string value);
+   void setguestFlag(bool value);
+   void setcontactName(const std::vector<ebucoreCompoundName*>& value);
+   void appendcontactName(ebucoreCompoundName* value);
    void setcontactType(ebucoreTypeGroup* value);
    void setcontactDetails(const std::vector<ebucoreContactDetails*>& value);
    void appendcontactDetails(ebucoreContactDetails* value);
@@ -103,6 +108,11 @@ public:
    void appendcontactRelatedContacts(ebucoreEntity* value);
    void setstageName(const std::vector<ebucoreTextualAnnotation*>& value);
    void appendstageName(ebucoreTextualAnnotation* value);
+   void setgender(ebucoreTextualAnnotation* value);
+   void setcontactRelatedInformationLink(const std::vector<ebucoreBasicLink*>& value);
+   void appendcontactRelatedInformationLink(ebucoreBasicLink* value);
+   void setotherGivenName(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendotherGivenName(ebucoreTextualAnnotation* value);
 
 
 protected:

@@ -101,26 +101,34 @@ std::string ebucorePublicationHistoryEventBase::getpublicationService() const
     return getStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationService));
 }
 
-bool ebucorePublicationHistoryEventBase::havepublicationChannel() const
+bool ebucorePublicationHistoryEventBase::havefreePublicationFlag() const
 {
-    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationChannel));
+    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, freePublicationFlag));
 }
 
-std::string ebucorePublicationHistoryEventBase::getpublicationChannel() const
+bool ebucorePublicationHistoryEventBase::getfreePublicationFlag() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationChannel));
+    return getBooleanItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, freePublicationFlag));
 }
 
-bool ebucorePublicationHistoryEventBase::havepublicationMedium() const
+bool ebucorePublicationHistoryEventBase::havelivePublicationFlag() const
 {
-    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationMedium));
+    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, livePublicationFlag));
 }
 
-ebucoreTypeGroup* ebucorePublicationHistoryEventBase::getpublicationMedium() const
+bool ebucorePublicationHistoryEventBase::getlivePublicationFlag() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationMedium)));
-    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+    return getBooleanItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, livePublicationFlag));
+}
+
+bool ebucorePublicationHistoryEventBase::havepublicationNote() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationNote));
+}
+
+std::string ebucorePublicationHistoryEventBase::getpublicationNote() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationNote));
 }
 
 bool ebucorePublicationHistoryEventBase::havepublicationFormatReference() const
@@ -133,6 +141,59 @@ ebucoreFormat* ebucorePublicationHistoryEventBase::getpublicationFormatReference
     auto_ptr<MetadataSet> obj(getWeakRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationFormatReference)));
     MXFPP_CHECK(dynamic_cast<ebucoreFormat*>(obj.get()) != 0);
     return dynamic_cast<ebucoreFormat*>(obj.release());
+}
+
+bool ebucorePublicationHistoryEventBase::havepublicationRightsReference() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationRightsReference));
+}
+
+ebucoreRights* ebucorePublicationHistoryEventBase::getpublicationRightsReference() const
+{
+    auto_ptr<MetadataSet> obj(getWeakRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationRightsReference)));
+    MXFPP_CHECK(dynamic_cast<ebucoreRights*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreRights*>(obj.release());
+}
+
+bool ebucorePublicationHistoryEventBase::havepublicationRegion() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationRegion));
+}
+
+std::vector<ebucoreRegion*> ebucorePublicationHistoryEventBase::getpublicationRegion() const
+{
+    vector<ebucoreRegion*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationRegion)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreRegion*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreRegion*>(iter->get()));
+    }
+    return result;
+}
+
+bool ebucorePublicationHistoryEventBase::havepublicationMedium() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationMedium));
+}
+
+ebucorePublicationMedium* ebucorePublicationHistoryEventBase::getpublicationMedium() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationMedium)));
+    MXFPP_CHECK(dynamic_cast<ebucorePublicationMedium*>(obj.get()) != 0);
+    return dynamic_cast<ebucorePublicationMedium*>(obj.release());
+}
+
+bool ebucorePublicationHistoryEventBase::havepublicationChannel() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationChannel));
+}
+
+ebucorePublicationChannel* ebucorePublicationHistoryEventBase::getpublicationChannel() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationChannel)));
+    MXFPP_CHECK(dynamic_cast<ebucorePublicationChannel*>(obj.get()) != 0);
+    return dynamic_cast<ebucorePublicationChannel*>(obj.release());
 }
 
 void ebucorePublicationHistoryEventBase::setfirstPublicationFlag(bool value)
@@ -155,18 +216,49 @@ void ebucorePublicationHistoryEventBase::setpublicationService(std::string value
     setStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationService), value);
 }
 
-void ebucorePublicationHistoryEventBase::setpublicationChannel(std::string value)
+void ebucorePublicationHistoryEventBase::setfreePublicationFlag(bool value)
 {
-    setStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationChannel), value);
+    setBooleanItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, freePublicationFlag), value);
 }
 
-void ebucorePublicationHistoryEventBase::setpublicationMedium(ebucoreTypeGroup* value)
+void ebucorePublicationHistoryEventBase::setlivePublicationFlag(bool value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationMedium), value);
+    setBooleanItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, livePublicationFlag), value);
+}
+
+void ebucorePublicationHistoryEventBase::setpublicationNote(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationNote), value);
 }
 
 void ebucorePublicationHistoryEventBase::setpublicationFormatReference(ebucoreFormat* value)
 {
     setWeakRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationFormatReference), value);
+}
+
+void ebucorePublicationHistoryEventBase::setpublicationRightsReference(ebucoreRights* value)
+{
+    setWeakRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationRightsReference), value);
+}
+
+void ebucorePublicationHistoryEventBase::setpublicationRegion(const std::vector<ebucoreRegion*>& value)
+{
+    WrapObjectVectorIterator<ebucoreRegion> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationRegion), &iter);
+}
+
+void ebucorePublicationHistoryEventBase::appendpublicationRegion(ebucoreRegion* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationRegion), value);
+}
+
+void ebucorePublicationHistoryEventBase::setpublicationMedium(ebucorePublicationMedium* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationMedium), value);
+}
+
+void ebucorePublicationHistoryEventBase::setpublicationChannel(ebucorePublicationChannel* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationChannel), value);
 }
 

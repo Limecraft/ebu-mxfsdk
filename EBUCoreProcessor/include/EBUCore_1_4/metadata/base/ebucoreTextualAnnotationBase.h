@@ -55,6 +55,7 @@ public:
 
    // getters
 
+   bool havetext() const;
    std::string gettext() const;
    bool havetextLanguage() const;
    std::string gettextLanguage() const;

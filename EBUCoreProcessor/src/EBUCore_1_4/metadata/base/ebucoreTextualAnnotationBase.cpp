@@ -61,6 +61,11 @@ ebucoreTextualAnnotationBase::~ebucoreTextualAnnotationBase()
 {}
 
 
+bool ebucoreTextualAnnotationBase::havetext() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTextualAnnotation, text));
+}
+
 std::string ebucoreTextualAnnotationBase::gettext() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreTextualAnnotation, text));

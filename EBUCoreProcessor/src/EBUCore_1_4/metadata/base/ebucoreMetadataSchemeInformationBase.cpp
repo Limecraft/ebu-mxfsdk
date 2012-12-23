@@ -91,6 +91,16 @@ std::string ebucoreMetadataSchemeInformationBase::getebucoreFrameworktextLanguag
     return getStringItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreFrameworktextLanguage));
 }
 
+bool ebucoreMetadataSchemeInformationBase::haveebucoreMetadataNamespacePrefix() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreMetadataNamespacePrefix));
+}
+
+std::string ebucoreMetadataSchemeInformationBase::getebucoreMetadataNamespacePrefix() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreMetadataNamespacePrefix));
+}
+
 bool ebucoreMetadataSchemeInformationBase::haveebucoreMetadataProvider() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreMetadataProvider));
@@ -116,6 +126,11 @@ void ebucoreMetadataSchemeInformationBase::setebucoreMetadataSchemeVersion(std::
 void ebucoreMetadataSchemeInformationBase::setebucoreFrameworktextLanguage(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreFrameworktextLanguage), value);
+}
+
+void ebucoreMetadataSchemeInformationBase::setebucoreMetadataNamespacePrefix(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreMetadataSchemeInformation, ebucoreMetadataNamespacePrefix), value);
 }
 
 void ebucoreMetadataSchemeInformationBase::setebucoreMetadataProvider(ebucoreEntity* value)

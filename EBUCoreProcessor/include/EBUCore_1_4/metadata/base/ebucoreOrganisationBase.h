@@ -57,10 +57,12 @@ public:
 
    bool haveorganisationId() const;
    std::string getorganisationId() const;
-   bool haveorganisationName() const;
-   std::vector<ebucoreTextualAnnotation*> getorganisationName() const;
    bool haveorganisationCode() const;
-   std::vector<ebucoreTextualAnnotation*> getorganisationCode() const;
+   std::vector<ebucoreIdentifier*> getorganisationCode() const;
+   bool haveorganisationRelatedInformationLink() const;
+   std::vector<ebucoreBasicLink*> getorganisationRelatedInformationLink() const;
+   bool haveorganisationName() const;
+   std::vector<ebucoreCompoundName*> getorganisationName() const;
    bool haveorganisationDepartment() const;
    ebucoreOrganisationDepartment* getorganisationDepartment() const;
    bool haveorganisationType() const;
@@ -74,10 +76,12 @@ public:
    // setters
 
    void setorganisationId(std::string value);
-   void setorganisationName(const std::vector<ebucoreTextualAnnotation*>& value);
-   void appendorganisationName(ebucoreTextualAnnotation* value);
-   void setorganisationCode(const std::vector<ebucoreTextualAnnotation*>& value);
-   void appendorganisationCode(ebucoreTextualAnnotation* value);
+   void setorganisationCode(const std::vector<ebucoreIdentifier*>& value);
+   void appendorganisationCode(ebucoreIdentifier* value);
+   void setorganisationRelatedInformationLink(const std::vector<ebucoreBasicLink*>& value);
+   void appendorganisationRelatedInformationLink(ebucoreBasicLink* value);
+   void setorganisationName(const std::vector<ebucoreCompoundName*>& value);
+   void appendorganisationName(ebucoreCompoundName* value);
    void setorganisationDepartment(ebucoreOrganisationDepartment* value);
    void setorganisationType(ebucoreTypeGroup* value);
    void setorganisationDetails(const std::vector<ebucoreContactDetails*>& value);

@@ -111,6 +111,16 @@ bool ebucoreCustomRelationBase::getorderedGroupFlag() const
     return getBooleanItem(&MXF_ITEM_K(ebucoreCustomRelation, orderedGroupFlag));
 }
 
+bool ebucoreCustomRelationBase::haverelationNote() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreCustomRelation, relationNote));
+}
+
+std::string ebucoreCustomRelationBase::getrelationNote() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreCustomRelation, relationNote));
+}
+
 bool ebucoreCustomRelationBase::havecustomRelationTypeGroup() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreCustomRelation, customRelationTypeGroup));
@@ -158,6 +168,11 @@ void ebucoreCustomRelationBase::settotalNumberOfGroupMembers(uint32_t value)
 void ebucoreCustomRelationBase::setorderedGroupFlag(bool value)
 {
     setBooleanItem(&MXF_ITEM_K(ebucoreCustomRelation, orderedGroupFlag), value);
+}
+
+void ebucoreCustomRelationBase::setrelationNote(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreCustomRelation, relationNote), value);
 }
 
 void ebucoreCustomRelationBase::setcustomRelationTypeGroup(ebucoreTypeGroup* value)

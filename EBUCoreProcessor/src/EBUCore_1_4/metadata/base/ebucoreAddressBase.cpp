@@ -61,26 +61,6 @@ ebucoreAddressBase::~ebucoreAddressBase()
 {}
 
 
-bool ebucoreAddressBase::havetownCity() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreAddress, townCity));
-}
-
-std::string ebucoreAddressBase::gettownCity() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreAddress, townCity));
-}
-
-bool ebucoreAddressBase::havecountyState() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreAddress, countyState));
-}
-
-std::string ebucoreAddressBase::getcountyState() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreAddress, countyState));
-}
-
 bool ebucoreAddressBase::havedeliveryCode() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreAddress, deliveryCode));
@@ -91,24 +71,55 @@ std::string ebucoreAddressBase::getdeliveryCode() const
     return getStringItem(&MXF_ITEM_K(ebucoreAddress, deliveryCode));
 }
 
-bool ebucoreAddressBase::havecountryName() const
+bool ebucoreAddressBase::havetownCity() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreAddress, countryName));
+    return haveItem(&MXF_ITEM_K(ebucoreAddress, townCity));
 }
 
-std::string ebucoreAddressBase::getcountryName() const
+std::vector<ebucoreTextualAnnotation*> ebucoreAddressBase::gettownCity() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreAddress, countryName));
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreAddress, townCity)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
 }
 
-bool ebucoreAddressBase::havecountryCode() const
+bool ebucoreAddressBase::havecountyState() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreAddress, countryCode));
+    return haveItem(&MXF_ITEM_K(ebucoreAddress, countyState));
 }
 
-std::string ebucoreAddressBase::getcountryCode() const
+std::vector<ebucoreTextualAnnotation*> ebucoreAddressBase::getcountyState() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreAddress, countryCode));
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreAddress, countyState)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
+}
+
+bool ebucoreAddressBase::havecountry() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreAddress, country));
+}
+
+std::vector<ebucoreCountry*> ebucoreAddressBase::getcountry() const
+{
+    vector<ebucoreCountry*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreAddress, country)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreCountry*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreCountry*>(iter->get()));
+    }
+    return result;
 }
 
 bool ebucoreAddressBase::haveaddressLines() const
@@ -128,29 +139,42 @@ std::vector<ebucoreTextualAnnotation*> ebucoreAddressBase::getaddressLines() con
     return result;
 }
 
-void ebucoreAddressBase::settownCity(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreAddress, townCity), value);
-}
-
-void ebucoreAddressBase::setcountyState(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreAddress, countyState), value);
-}
-
 void ebucoreAddressBase::setdeliveryCode(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreAddress, deliveryCode), value);
 }
 
-void ebucoreAddressBase::setcountryName(std::string value)
+void ebucoreAddressBase::settownCity(const std::vector<ebucoreTextualAnnotation*>& value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreAddress, countryName), value);
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreAddress, townCity), &iter);
 }
 
-void ebucoreAddressBase::setcountryCode(std::string value)
+void ebucoreAddressBase::appendtownCity(ebucoreTextualAnnotation* value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreAddress, countryCode), value);
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreAddress, townCity), value);
+}
+
+void ebucoreAddressBase::setcountyState(const std::vector<ebucoreTextualAnnotation*>& value)
+{
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreAddress, countyState), &iter);
+}
+
+void ebucoreAddressBase::appendcountyState(ebucoreTextualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreAddress, countyState), value);
+}
+
+void ebucoreAddressBase::setcountry(const std::vector<ebucoreCountry*>& value)
+{
+    WrapObjectVectorIterator<ebucoreCountry> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreAddress, country), &iter);
+}
+
+void ebucoreAddressBase::appendcountry(ebucoreCountry* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreAddress, country), value);
 }
 
 void ebucoreAddressBase::setaddressLines(const std::vector<ebucoreTextualAnnotation*>& value)

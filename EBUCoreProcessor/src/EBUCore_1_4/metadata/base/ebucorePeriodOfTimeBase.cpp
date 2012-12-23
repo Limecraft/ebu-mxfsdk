@@ -71,16 +71,6 @@ std::string ebucorePeriodOfTimeBase::getperiodId() const
     return getStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodId));
 }
 
-bool ebucorePeriodOfTimeBase::haveperiodName() const
-{
-    return haveItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodName));
-}
-
-std::string ebucorePeriodOfTimeBase::getperiodName() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodName));
-}
-
 bool ebucorePeriodOfTimeBase::haveperiodStartYear() const
 {
     return haveItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodStartYear));
@@ -141,14 +131,26 @@ mxfTimestamp ebucorePeriodOfTimeBase::getperiodEndTime() const
     return getTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndTime));
 }
 
+bool ebucorePeriodOfTimeBase::haveperiodName() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodName));
+}
+
+std::vector<ebucoreTextualAnnotation*> ebucorePeriodOfTimeBase::getperiodName() const
+{
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodName)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
+}
+
 void ebucorePeriodOfTimeBase::setperiodId(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodId), value);
-}
-
-void ebucorePeriodOfTimeBase::setperiodName(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodName), value);
 }
 
 void ebucorePeriodOfTimeBase::setperiodStartYear(mxfTimestamp value)
@@ -179,5 +181,16 @@ void ebucorePeriodOfTimeBase::setperiodEndDate(mxfTimestamp value)
 void ebucorePeriodOfTimeBase::setperiodEndTime(mxfTimestamp value)
 {
     setTimestampItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodEndTime), value);
+}
+
+void ebucorePeriodOfTimeBase::setperiodName(const std::vector<ebucoreTextualAnnotation*>& value)
+{
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodName), &iter);
+}
+
+void ebucorePeriodOfTimeBase::appendperiodName(ebucoreTextualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucorePeriodOfTime, periodName), value);
 }
 

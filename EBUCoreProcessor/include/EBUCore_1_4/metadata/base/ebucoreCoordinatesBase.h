@@ -55,7 +55,9 @@ public:
 
    // getters
 
+   bool haveposX() const;
    float getposX() const;
+   bool haveposY() const;
    float getposY() const;
    bool havecoordinatesFormatGroup() const;
    ebucoreFormatGroup* getcoordinatesFormatGroup() const;

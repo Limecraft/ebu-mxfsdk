@@ -71,16 +71,6 @@ std::string ebucoreLocationBase::getlocationId() const
     return getStringItem(&MXF_ITEM_K(ebucoreLocation, locationId));
 }
 
-bool ebucoreLocationBase::havelocationName() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreLocation, locationName));
-}
-
-std::string ebucoreLocationBase::getlocationName() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreLocation, locationName));
-}
-
 bool ebucoreLocationBase::havelocationCode() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreLocation, locationCode));
@@ -91,14 +81,43 @@ std::string ebucoreLocationBase::getlocationCode() const
     return getStringItem(&MXF_ITEM_K(ebucoreLocation, locationCode));
 }
 
-bool ebucoreLocationBase::havelocationNote() const
+bool ebucoreLocationBase::havelocationDefinitionNote() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreLocation, locationNote));
+    return haveItem(&MXF_ITEM_K(ebucoreLocation, locationDefinitionNote));
 }
 
-std::string ebucoreLocationBase::getlocationNote() const
+std::string ebucoreLocationBase::getlocationDefinitionNote() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreLocation, locationNote));
+    return getStringItem(&MXF_ITEM_K(ebucoreLocation, locationDefinitionNote));
+}
+
+bool ebucoreLocationBase::havelocationName() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreLocation, locationName));
+}
+
+std::vector<ebucoreTextualAnnotation*> ebucoreLocationBase::getlocationName() const
+{
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreLocation, locationName)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
+}
+
+bool ebucoreLocationBase::havelocationRegion() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreLocation, locationRegion));
+}
+
+ebucoreRegion* ebucoreLocationBase::getlocationRegion() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreLocation, locationRegion)));
+    MXFPP_CHECK(dynamic_cast<ebucoreRegion*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreRegion*>(obj.release());
 }
 
 bool ebucoreLocationBase::havelocationTypeGroup() const
@@ -113,14 +132,14 @@ ebucoreTypeGroup* ebucoreLocationBase::getlocationTypeGroup() const
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
-bool ebucoreLocationBase::havecoordinateReference() const
+bool ebucoreLocationBase::havelocationCoordinates() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreLocation, coordinateReference));
+    return haveItem(&MXF_ITEM_K(ebucoreLocation, locationCoordinates));
 }
 
-ebucoreCoordinates* ebucoreLocationBase::getcoordinateReference() const
+ebucoreCoordinates* ebucoreLocationBase::getlocationCoordinates() const
 {
-    auto_ptr<MetadataSet> obj(getWeakRefItem(&MXF_ITEM_K(ebucoreLocation, coordinateReference)));
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreLocation, locationCoordinates)));
     MXFPP_CHECK(dynamic_cast<ebucoreCoordinates*>(obj.get()) != 0);
     return dynamic_cast<ebucoreCoordinates*>(obj.release());
 }
@@ -130,19 +149,30 @@ void ebucoreLocationBase::setlocationId(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreLocation, locationId), value);
 }
 
-void ebucoreLocationBase::setlocationName(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreLocation, locationName), value);
-}
-
 void ebucoreLocationBase::setlocationCode(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreLocation, locationCode), value);
 }
 
-void ebucoreLocationBase::setlocationNote(std::string value)
+void ebucoreLocationBase::setlocationDefinitionNote(std::string value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreLocation, locationNote), value);
+    setStringItem(&MXF_ITEM_K(ebucoreLocation, locationDefinitionNote), value);
+}
+
+void ebucoreLocationBase::setlocationName(const std::vector<ebucoreTextualAnnotation*>& value)
+{
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreLocation, locationName), &iter);
+}
+
+void ebucoreLocationBase::appendlocationName(ebucoreTextualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreLocation, locationName), value);
+}
+
+void ebucoreLocationBase::setlocationRegion(ebucoreRegion* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreLocation, locationRegion), value);
 }
 
 void ebucoreLocationBase::setlocationTypeGroup(ebucoreTypeGroup* value)
@@ -150,8 +180,8 @@ void ebucoreLocationBase::setlocationTypeGroup(ebucoreTypeGroup* value)
     setStrongRefItem(&MXF_ITEM_K(ebucoreLocation, locationTypeGroup), value);
 }
 
-void ebucoreLocationBase::setcoordinateReference(ebucoreCoordinates* value)
+void ebucoreLocationBase::setlocationCoordinates(ebucoreCoordinates* value)
 {
-    setWeakRefItem(&MXF_ITEM_K(ebucoreLocation, coordinateReference), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreLocation, locationCoordinates), value);
 }
 

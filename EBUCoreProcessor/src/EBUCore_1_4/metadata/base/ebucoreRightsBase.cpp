@@ -91,6 +91,16 @@ bool ebucoreRightsBase::getrightsClearanceFlag() const
     return getBooleanItem(&MXF_ITEM_K(ebucoreRights, rightsClearanceFlag));
 }
 
+bool ebucoreRightsBase::haverightsNote() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, rightsNote));
+}
+
+std::string ebucoreRightsBase::getrightsNote() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreRights, rightsNote));
+}
+
 bool ebucoreRightsBase::haverightsValue() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreRights, rightsValue));
@@ -113,11 +123,33 @@ bool ebucoreRightsBase::haveexploitationIssues() const
     return haveItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues));
 }
 
-ebucoreTextualAnnotation* ebucoreRightsBase::getexploitationIssues() const
+std::vector<ebucoreTextualAnnotation*> ebucoreRightsBase::getexploitationIssues() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues)));
-    MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreTextualAnnotation*>(obj.release());
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
+}
+
+bool ebucoreRightsBase::havecopyrightStatement() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRights, copyrightStatement));
+}
+
+std::vector<ebucoreTextualAnnotation*> ebucoreRightsBase::getcopyrightStatement() const
+{
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, copyrightStatement)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
 }
 
 bool ebucoreRightsBase::haverightsCoverage() const
@@ -227,6 +259,11 @@ void ebucoreRightsBase::setrightsClearanceFlag(bool value)
     setBooleanItem(&MXF_ITEM_K(ebucoreRights, rightsClearanceFlag), value);
 }
 
+void ebucoreRightsBase::setrightsNote(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreRights, rightsNote), value);
+}
+
 void ebucoreRightsBase::setrightsValue(const std::vector<ebucoreTextualAnnotation*>& value)
 {
     WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
@@ -238,9 +275,26 @@ void ebucoreRightsBase::appendrightsValue(ebucoreTextualAnnotation* value)
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, rightsValue), value);
 }
 
-void ebucoreRightsBase::setexploitationIssues(ebucoreTextualAnnotation* value)
+void ebucoreRightsBase::setexploitationIssues(const std::vector<ebucoreTextualAnnotation*>& value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues), value);
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues), &iter);
+}
+
+void ebucoreRightsBase::appendexploitationIssues(ebucoreTextualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, exploitationIssues), value);
+}
+
+void ebucoreRightsBase::setcopyrightStatement(const std::vector<ebucoreTextualAnnotation*>& value)
+{
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, copyrightStatement), &iter);
+}
+
+void ebucoreRightsBase::appendcopyrightStatement(ebucoreTextualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreRights, copyrightStatement), value);
 }
 
 void ebucoreRightsBase::setrightsCoverage(ebucoreCoverage* value)

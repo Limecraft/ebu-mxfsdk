@@ -61,29 +61,95 @@ ebucoreRatingBase::~ebucoreRatingBase()
 {}
 
 
-std::string ebucoreRatingBase::getratingValue() const
+bool ebucoreRatingBase::haveratingReason() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreRating, ratingValue));
+    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingReason));
 }
 
-std::string ebucoreRatingBase::getratingScaleMinValue() const
+std::string ebucoreRatingBase::getratingReason() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreRating, ratingScaleMinValue));
+    return getStringItem(&MXF_ITEM_K(ebucoreRating, ratingReason));
 }
 
-std::string ebucoreRatingBase::getratingScaleMaxValue() const
+bool ebucoreRatingBase::haveratingLinkToLogo() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreRating, ratingScaleMaxValue));
+    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingLinkToLogo));
 }
 
-bool ebucoreRatingBase::haveratingLanguage() const
+std::string ebucoreRatingBase::getratingLinkToLogo() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingLanguage));
+    return getStringItem(&MXF_ITEM_K(ebucoreRating, ratingLinkToLogo));
 }
 
-std::string ebucoreRatingBase::getratingLanguage() const
+bool ebucoreRatingBase::haveratingNotRatedFlag() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreRating, ratingLanguage));
+    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingNotRatedFlag));
+}
+
+bool ebucoreRatingBase::getratingNotRatedFlag() const
+{
+    return getBooleanItem(&MXF_ITEM_K(ebucoreRating, ratingNotRatedFlag));
+}
+
+bool ebucoreRatingBase::haveratingAdultContentFlag() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingAdultContentFlag));
+}
+
+bool ebucoreRatingBase::getratingAdultContentFlag() const
+{
+    return getBooleanItem(&MXF_ITEM_K(ebucoreRating, ratingAdultContentFlag));
+}
+
+bool ebucoreRatingBase::haveratingValue() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingValue));
+}
+
+std::vector<ebucoreTextualAnnotation*> ebucoreRatingBase::getratingValue() const
+{
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreRating, ratingValue)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
+}
+
+bool ebucoreRatingBase::haveratingScaleMinValue() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingScaleMinValue));
+}
+
+std::vector<ebucoreTextualAnnotation*> ebucoreRatingBase::getratingScaleMinValue() const
+{
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreRating, ratingScaleMinValue)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
+}
+
+bool ebucoreRatingBase::haveratingScaleMaxValue() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingScaleMaxValue));
+}
+
+std::vector<ebucoreTextualAnnotation*> ebucoreRatingBase::getratingScaleMaxValue() const
+{
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreRating, ratingScaleMaxValue)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
 }
 
 bool ebucoreRatingBase::haveratingTypeGroup() const
@@ -110,6 +176,11 @@ ebucoreFormatGroup* ebucoreRatingBase::getratingFormatGroup() const
     return dynamic_cast<ebucoreFormatGroup*>(obj.release());
 }
 
+bool ebucoreRatingBase::haveratingProviderEntity() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingProviderEntity));
+}
+
 ebucoreEntity* ebucoreRatingBase::getratingProviderEntity() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRating, ratingProviderEntity)));
@@ -117,24 +188,69 @@ ebucoreEntity* ebucoreRatingBase::getratingProviderEntity() const
     return dynamic_cast<ebucoreEntity*>(obj.release());
 }
 
-void ebucoreRatingBase::setratingValue(std::string value)
+bool ebucoreRatingBase::haveratingRegion() const
 {
-    setStringItem(&MXF_ITEM_K(ebucoreRating, ratingValue), value);
+    return haveItem(&MXF_ITEM_K(ebucoreRating, ratingRegion));
 }
 
-void ebucoreRatingBase::setratingScaleMinValue(std::string value)
+ebucoreRegion* ebucoreRatingBase::getratingRegion() const
 {
-    setStringItem(&MXF_ITEM_K(ebucoreRating, ratingScaleMinValue), value);
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreRating, ratingRegion)));
+    MXFPP_CHECK(dynamic_cast<ebucoreRegion*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreRegion*>(obj.release());
 }
 
-void ebucoreRatingBase::setratingScaleMaxValue(std::string value)
+void ebucoreRatingBase::setratingReason(std::string value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreRating, ratingScaleMaxValue), value);
+    setStringItem(&MXF_ITEM_K(ebucoreRating, ratingReason), value);
 }
 
-void ebucoreRatingBase::setratingLanguage(std::string value)
+void ebucoreRatingBase::setratingLinkToLogo(std::string value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreRating, ratingLanguage), value);
+    setStringItem(&MXF_ITEM_K(ebucoreRating, ratingLinkToLogo), value);
+}
+
+void ebucoreRatingBase::setratingNotRatedFlag(bool value)
+{
+    setBooleanItem(&MXF_ITEM_K(ebucoreRating, ratingNotRatedFlag), value);
+}
+
+void ebucoreRatingBase::setratingAdultContentFlag(bool value)
+{
+    setBooleanItem(&MXF_ITEM_K(ebucoreRating, ratingAdultContentFlag), value);
+}
+
+void ebucoreRatingBase::setratingValue(const std::vector<ebucoreTextualAnnotation*>& value)
+{
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreRating, ratingValue), &iter);
+}
+
+void ebucoreRatingBase::appendratingValue(ebucoreTextualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreRating, ratingValue), value);
+}
+
+void ebucoreRatingBase::setratingScaleMinValue(const std::vector<ebucoreTextualAnnotation*>& value)
+{
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreRating, ratingScaleMinValue), &iter);
+}
+
+void ebucoreRatingBase::appendratingScaleMinValue(ebucoreTextualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreRating, ratingScaleMinValue), value);
+}
+
+void ebucoreRatingBase::setratingScaleMaxValue(const std::vector<ebucoreTextualAnnotation*>& value)
+{
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreRating, ratingScaleMaxValue), &iter);
+}
+
+void ebucoreRatingBase::appendratingScaleMaxValue(ebucoreTextualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreRating, ratingScaleMaxValue), value);
 }
 
 void ebucoreRatingBase::setratingTypeGroup(ebucoreTypeGroup* value)
@@ -150,5 +266,10 @@ void ebucoreRatingBase::setratingFormatGroup(ebucoreFormatGroup* value)
 void ebucoreRatingBase::setratingProviderEntity(ebucoreEntity* value)
 {
     setStrongRefItem(&MXF_ITEM_K(ebucoreRating, ratingProviderEntity), value);
+}
+
+void ebucoreRatingBase::setratingRegion(ebucoreRegion* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreRating, ratingRegion), value);
 }
 

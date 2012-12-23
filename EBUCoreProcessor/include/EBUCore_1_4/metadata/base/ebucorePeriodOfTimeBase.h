@@ -57,8 +57,6 @@ public:
 
    bool haveperiodId() const;
    std::string getperiodId() const;
-   bool haveperiodName() const;
-   std::string getperiodName() const;
    bool haveperiodStartYear() const;
    mxfTimestamp getperiodStartYear() const;
    bool haveperiodStartDate() const;
@@ -71,18 +69,21 @@ public:
    mxfTimestamp getperiodEndDate() const;
    bool haveperiodEndTime() const;
    mxfTimestamp getperiodEndTime() const;
+   bool haveperiodName() const;
+   std::vector<ebucoreTextualAnnotation*> getperiodName() const;
 
 
    // setters
 
    void setperiodId(std::string value);
-   void setperiodName(std::string value);
    void setperiodStartYear(mxfTimestamp value);
    void setperiodStartDate(mxfTimestamp value);
    void setperiodStartTime(mxfTimestamp value);
    void setperiodEndYear(mxfTimestamp value);
    void setperiodEndDate(mxfTimestamp value);
    void setperiodEndTime(mxfTimestamp value);
+   void setperiodName(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendperiodName(ebucoreTextualAnnotation* value);
 
 
 protected:

@@ -61,28 +61,48 @@ ebucoreVersionBase::~ebucoreVersionBase()
 {}
 
 
-std::string ebucoreVersionBase::getversionValue() const
+bool ebucoreVersionBase::haveversionValue() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreVersion, versionValue));
+    return haveItem(&MXF_ITEM_K(ebucoreVersion, versionValue));
 }
 
-bool ebucoreVersionBase::haveversionLanguage() const
+std::vector<ebucoreTextualAnnotation*> ebucoreVersionBase::getversionValue() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreVersion, versionLanguage));
+    vector<ebucoreTextualAnnotation*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreVersion, versionValue)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreTextualAnnotation*>(iter->get()));
+    }
+    return result;
 }
 
-std::string ebucoreVersionBase::getversionLanguage() const
+bool ebucoreVersionBase::haveversionTypeGroup() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreVersion, versionLanguage));
+    return haveItem(&MXF_ITEM_K(ebucoreVersion, versionTypeGroup));
 }
 
-void ebucoreVersionBase::setversionValue(std::string value)
+ebucoreTypeGroup* ebucoreVersionBase::getversionTypeGroup() const
 {
-    setStringItem(&MXF_ITEM_K(ebucoreVersion, versionValue), value);
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreVersion, versionTypeGroup)));
+    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
-void ebucoreVersionBase::setversionLanguage(std::string value)
+void ebucoreVersionBase::setversionValue(const std::vector<ebucoreTextualAnnotation*>& value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreVersion, versionLanguage), value);
+    WrapObjectVectorIterator<ebucoreTextualAnnotation> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreVersion, versionValue), &iter);
+}
+
+void ebucoreVersionBase::appendversionValue(ebucoreTextualAnnotation* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreVersion, versionValue), value);
+}
+
+void ebucoreVersionBase::setversionTypeGroup(ebucoreTypeGroup* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreVersion, versionTypeGroup), value);
 }
 

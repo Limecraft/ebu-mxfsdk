@@ -55,27 +55,27 @@ public:
 
    // getters
 
-   bool havetownCity() const;
-   std::string gettownCity() const;
-   bool havecountyState() const;
-   std::string getcountyState() const;
    bool havedeliveryCode() const;
    std::string getdeliveryCode() const;
-   bool havecountryName() const;
-   std::string getcountryName() const;
-   bool havecountryCode() const;
-   std::string getcountryCode() const;
+   bool havetownCity() const;
+   std::vector<ebucoreTextualAnnotation*> gettownCity() const;
+   bool havecountyState() const;
+   std::vector<ebucoreTextualAnnotation*> getcountyState() const;
+   bool havecountry() const;
+   std::vector<ebucoreCountry*> getcountry() const;
    bool haveaddressLines() const;
    std::vector<ebucoreTextualAnnotation*> getaddressLines() const;
 
 
    // setters
 
-   void settownCity(std::string value);
-   void setcountyState(std::string value);
    void setdeliveryCode(std::string value);
-   void setcountryName(std::string value);
-   void setcountryCode(std::string value);
+   void settownCity(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendtownCity(ebucoreTextualAnnotation* value);
+   void setcountyState(const std::vector<ebucoreTextualAnnotation*>& value);
+   void appendcountyState(ebucoreTextualAnnotation* value);
+   void setcountry(const std::vector<ebucoreCountry*>& value);
+   void appendcountry(ebucoreCountry* value);
    void setaddressLines(const std::vector<ebucoreTextualAnnotation*>& value);
    void appendaddressLines(ebucoreTextualAnnotation* value);
 

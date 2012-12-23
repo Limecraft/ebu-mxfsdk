@@ -497,6 +497,54 @@
     <ClCompile Include="..\..\src\xsd\simpledc20021212.cxx">
       <Filter>Source Files\xsd</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreBasicLink.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreCompoundName.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreCountry.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucorePublicationChannel.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucorePublicationHistory.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucorePublicationMedium.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreRegion.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreRole.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreRegionBase.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreRoleBase.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreBasicLinkBase.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreCompoundNameBase.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreCountryBase.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucorePublicationChannelBase.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucorePublicationHistoryBase.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucorePublicationMediumBase.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\EBUCoreProcessor.h">

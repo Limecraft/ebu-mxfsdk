@@ -63,12 +63,22 @@ public:
    mxfTimestamp getpublicationTime() const;
    bool havepublicationService() const;
    std::string getpublicationService() const;
-   bool havepublicationChannel() const;
-   std::string getpublicationChannel() const;
-   bool havepublicationMedium() const;
-   ebucoreTypeGroup* getpublicationMedium() const;
+   bool havefreePublicationFlag() const;
+   bool getfreePublicationFlag() const;
+   bool havelivePublicationFlag() const;
+   bool getlivePublicationFlag() const;
+   bool havepublicationNote() const;
+   std::string getpublicationNote() const;
    bool havepublicationFormatReference() const;
    ebucoreFormat* getpublicationFormatReference() const;
+   bool havepublicationRightsReference() const;
+   ebucoreRights* getpublicationRightsReference() const;
+   bool havepublicationRegion() const;
+   std::vector<ebucoreRegion*> getpublicationRegion() const;
+   bool havepublicationMedium() const;
+   ebucorePublicationMedium* getpublicationMedium() const;
+   bool havepublicationChannel() const;
+   ebucorePublicationChannel* getpublicationChannel() const;
 
 
    // setters
@@ -77,9 +87,15 @@ public:
    void setpublicationDate(mxfTimestamp value);
    void setpublicationTime(mxfTimestamp value);
    void setpublicationService(std::string value);
-   void setpublicationChannel(std::string value);
-   void setpublicationMedium(ebucoreTypeGroup* value);
+   void setfreePublicationFlag(bool value);
+   void setlivePublicationFlag(bool value);
+   void setpublicationNote(std::string value);
    void setpublicationFormatReference(ebucoreFormat* value);
+   void setpublicationRightsReference(ebucoreRights* value);
+   void setpublicationRegion(const std::vector<ebucoreRegion*>& value);
+   void appendpublicationRegion(ebucoreRegion* value);
+   void setpublicationMedium(ebucorePublicationMedium* value);
+   void setpublicationChannel(ebucorePublicationChannel* value);
 
 
 protected:

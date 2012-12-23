@@ -141,6 +141,46 @@ mxfTimestamp ebucoreDateBase::getyearDigitized() const
     return getTimestampItem(&MXF_ITEM_K(ebucoreDate, yearDigitized));
 }
 
+bool ebucoreDateBase::havedateReleased() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreDate, dateReleased));
+}
+
+mxfTimestamp ebucoreDateBase::getdateReleased() const
+{
+    return getTimestampItem(&MXF_ITEM_K(ebucoreDate, dateReleased));
+}
+
+bool ebucoreDateBase::haveyearReleased() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreDate, yearReleased));
+}
+
+mxfTimestamp ebucoreDateBase::getyearReleased() const
+{
+    return getTimestampItem(&MXF_ITEM_K(ebucoreDate, yearReleased));
+}
+
+bool ebucoreDateBase::havedateCopyrighted() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreDate, dateCopyrighted));
+}
+
+mxfTimestamp ebucoreDateBase::getdateCopyrighted() const
+{
+    return getTimestampItem(&MXF_ITEM_K(ebucoreDate, dateCopyrighted));
+}
+
+bool ebucoreDateBase::haveyearCopytighted() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreDate, yearCopytighted));
+}
+
+mxfTimestamp ebucoreDateBase::getyearCopytighted() const
+{
+    return getTimestampItem(&MXF_ITEM_K(ebucoreDate, yearCopytighted));
+}
+
 bool ebucoreDateBase::havedateNote() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreDate, dateNote));
@@ -206,6 +246,26 @@ void ebucoreDateBase::setdateDigitized(mxfTimestamp value)
 void ebucoreDateBase::setyearDigitized(mxfTimestamp value)
 {
     setTimestampItem(&MXF_ITEM_K(ebucoreDate, yearDigitized), value);
+}
+
+void ebucoreDateBase::setdateReleased(mxfTimestamp value)
+{
+    setTimestampItem(&MXF_ITEM_K(ebucoreDate, dateReleased), value);
+}
+
+void ebucoreDateBase::setyearReleased(mxfTimestamp value)
+{
+    setTimestampItem(&MXF_ITEM_K(ebucoreDate, yearReleased), value);
+}
+
+void ebucoreDateBase::setdateCopyrighted(mxfTimestamp value)
+{
+    setTimestampItem(&MXF_ITEM_K(ebucoreDate, dateCopyrighted), value);
+}
+
+void ebucoreDateBase::setyearCopytighted(mxfTimestamp value)
+{
+    setTimestampItem(&MXF_ITEM_K(ebucoreDate, yearCopytighted), value);
 }
 
 void ebucoreDateBase::setdateNote(std::string value)

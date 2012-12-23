@@ -61,17 +61,22 @@ namespace EBUCore
 }
 
 #include <EBUCore_1_4/metadata/ebucoreTextualAnnotation.h>
+#include <EBUCore_1_4/metadata/ebucoreBasicLink.h>
 #include <EBUCore_1_4/metadata/ebucoreTypeGroup.h>
 #include <EBUCore_1_4/metadata/ebucoreFormatGroup.h>
 #include <EBUCore_1_4/metadata/ebucoreStatusGroup.h>
 
+#include <EBUCore_1_4/metadata/ebucoreCompoundName.h>
+#include <EBUCore_1_4/metadata/ebucoreCountry.h>
+#include <EBUCore_1_4/metadata/ebucoreRegion.h>
+#include <EBUCore_1_4/metadata/ebucoreRole.h>
 #include <EBUCore_1_4/metadata/ebucoreAddress.h>
 #include <EBUCore_1_4/metadata/ebucoreContactDetails.h>
 #include <EBUCore_1_4/metadata/ebucoreContact.h>
 #include <EBUCore_1_4/metadata/ebucoreEntity.h>
+#include <EBUCore_1_4/metadata/ebucoreIdentifier.h>
 #include <EBUCore_1_4/metadata/ebucoreOrganisationDepartment.h>
 #include <EBUCore_1_4/metadata/ebucoreOrganisation.h>
-#include <EBUCore_1_4/metadata/ebucoreIdentifier.h>
 #include <EBUCore_1_4/metadata/ebucoreAlternativeTitle.h>
 #include <EBUCore_1_4/metadata/ebucoreBasicRelation.h>
 #include <EBUCore_1_4/metadata/ebucoreCoordinates.h>
@@ -128,7 +133,10 @@ namespace EBUCore
 #include <EBUCore_1_4/metadata/ebucoreFormat.h>
 
 #include <EBUCore_1_4/metadata/ebucoreRights.h>
+#include <EBUCore_1_4/metadata/ebucorePublicationChannel.h>
+#include <EBUCore_1_4/metadata/ebucorePublicationMedium.h>
 #include <EBUCore_1_4/metadata/ebucorePublicationHistoryEvent.h>
+#include <EBUCore_1_4/metadata/ebucorePublicationHistory.h>
 
 #include <EBUCore_1_4/metadata/ebucoreMetadataSchemeInformation.h>
 #include <EBUCore_1_4/metadata/ebucorePartMetadata.h>

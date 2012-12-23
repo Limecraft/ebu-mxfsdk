@@ -61,6 +61,8 @@ public:
    std::string getebucoreMetadataSchemeVersion() const;
    bool haveebucoreFrameworktextLanguage() const;
    std::string getebucoreFrameworktextLanguage() const;
+   bool haveebucoreMetadataNamespacePrefix() const;
+   std::string getebucoreMetadataNamespacePrefix() const;
    bool haveebucoreMetadataProvider() const;
    ebucoreEntity* getebucoreMetadataProvider() const;
 
@@ -70,6 +72,7 @@ public:
    void setebucoreMetadataScheme(std::string value);
    void setebucoreMetadataSchemeVersion(std::string value);
    void setebucoreFrameworktextLanguage(std::string value);
+   void setebucoreMetadataNamespacePrefix(std::string value);
    void setebucoreMetadataProvider(ebucoreEntity* value);
 
 

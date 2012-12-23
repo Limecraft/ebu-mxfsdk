@@ -65,6 +65,8 @@ public:
    uint32_t gettotalNumberOfGroupMembers() const;
    bool haveorderedGroupFlag() const;
    bool getorderedGroupFlag() const;
+   bool haverelationNote() const;
+   std::string getrelationNote() const;
    bool havecustomRelationTypeGroup() const;
    ebucoreTypeGroup* getcustomRelationTypeGroup() const;
    bool haverelationIdentifier() const;
@@ -78,6 +80,7 @@ public:
    void setrunningOrderNumber(uint32_t value);
    void settotalNumberOfGroupMembers(uint32_t value);
    void setorderedGroupFlag(bool value);
+   void setrelationNote(std::string value);
    void setcustomRelationTypeGroup(ebucoreTypeGroup* value);
    void setrelationIdentifier(ebucoreIdentifier* value);
 
