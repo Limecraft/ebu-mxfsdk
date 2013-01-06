@@ -249,12 +249,12 @@ void mapMetadataSchemeInformation(ebuCoreMainType& source, ebucoreMetadataScheme
 	// is there a version node? appearently, no easier way to check than
 	// to look through the attributes of the source node and see if there 
 	// is a matching attribute
-	xercesc_3_1::DOMNamedNodeMap* attrs = source._node()->getAttributes();
-	XMLCh* str_version = xercesc_3_1::XMLString::transcode("version");
-	const xercesc_3_1::DOMNode* version_node = attrs->getNamedItem(str_version);
-	xercesc_3_1::XMLString::release(&str_version);
+	xercesc::DOMNamedNodeMap* attrs = source._node()->getAttributes();
+	XMLCh* str_version = xercesc::XMLString::transcode("version");
+	const xercesc::DOMNode* version_node = attrs->getNamedItem(str_version);
+	xercesc::XMLString::release(&str_version);
 	if (version_node != NULL) {
-		xercesc_3_1::TranscodeToStr version(source.version()._node()->getTextContent(), "UTF-8");
+		xercesc::TranscodeToStr version(source.version()._node()->getTextContent(), "UTF-8");
 		std::string std_version((char*)version.str());
 		dest->setebucoreMetadataSchemeVersion(std_version);
 	}
