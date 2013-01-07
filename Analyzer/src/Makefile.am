@@ -4,5 +4,5 @@ libebumxfanalyzer_la_SOURCES = \
     Analyzer.cpp
 	
 libebumxfanalyzer_la_CXXFLAGS = $(EBUSDK_CFLAGS)
-libebumxfanalyzer_la_LDADD = $(EBUSDK_ANALYZER_LDADDLIBS)
+libebumxfanalyzer_la_LIBADD = $(EBUSDK_ANALYZER_LDADDLIBS)
 
