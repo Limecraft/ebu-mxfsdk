@@ -775,8 +775,9 @@ int main(int argc, const char** argv)
                 app_register_extensions(file_reader);
             // avid extensions are already registered by the MXFReader
 
-            if (ebucore_filename)
-                EBUCore::RegisterMetadataExtensionsforEBUCore(file_reader->GetDataModel());
+			// DISABLE EBUCore functionality for now
+            //if (ebucore_filename)
+            //    EBUCore::RegisterMetadataExtensionsforEBUCore(file_reader->GetDataModel());
 
             OPEN_FILE(file_reader, 0)
 
@@ -875,6 +876,7 @@ int main(int argc, const char** argv)
         }
 
 		if (ebucore_filename) {
+			// DISABLE EBUCore functionality for now
 			//EBUCore::RegisterFrameworkObjectFactoriesforEBUCore(file_reader->GetHeaderMetadata());
 			// write EBU Core metadata to ebucore_filename
 			//EBUCore::FindAndSerializeEBUCore(file_reader->GetHeaderMetadata(), ebucore_filename);
