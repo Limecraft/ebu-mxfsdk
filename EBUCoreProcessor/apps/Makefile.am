@@ -10,4 +10,5 @@ libapp_la_SOURCES = \
 	AS11Helper.h
 
 libapp_la_CXXFLAGS = $(EBUSDK_CFLAGS)
+libapp_la_LDFLAGS = $(EBUSDK_LIBADDLIBS)
 

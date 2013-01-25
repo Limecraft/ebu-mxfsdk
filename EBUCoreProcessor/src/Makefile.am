@@ -167,4 +167,5 @@ libebucore_la_SOURCES = \
 	AppUtils.cpp
 
 libebucore_la_CXXFLAGS = $(EBUSDK_CFLAGS)
+libebucore_la_LDFLAGS = $(EBUSDK_LIBADDLIBS)
 
