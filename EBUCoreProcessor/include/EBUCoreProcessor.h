@@ -317,7 +317,7 @@ namespace EBUSDK {
 		@returns The EBUCoreProcessor that matches the declared DM Schemes, if any. The first matching EBUCoreProcessor is returned, or NULL if no supported EBUCore DM Scheme is found in the _descriptiveMetadataSchemes_ vector.
 		@param descriptiveMetadataSchemes A vector with DM Scheme Universal Labals as declared in the header metadata of the MXF file.
 	*/
-	EBUCoreProcessor* GetEBUCoreProcessor(std::vector<mxfUL>& descriptiveMetadataSchemes);
+	EBUCoreProcessor* GetEBUCoreProcessor(const std::vector<mxfUL>& descriptiveMetadataSchemes);
 
 	} // namespace EBUCore
 
