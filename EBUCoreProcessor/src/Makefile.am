@@ -53,13 +53,11 @@ libebucore_la_SOURCES = \
     EBUCore_1_4/metadata/base/ebucoreAudioFormatBase.cpp \
     EBUCore_1_4/metadata/base/ebucoreCaptioningBase.cpp \
     EBUCore_1_4/metadata/base/ebucoreCodecBase.cpp \
-    EBUCore_1_4/metadata/base/ebucoreContainerFormatBase.cpp \
     EBUCore_1_4/metadata/base/ebucoreDimensionBase.cpp \
-    EBUCore_1_4/metadata/base/ebucoreDimensionWidth.cpp \
-    EBUCore_1_4/metadata/base/ebucoreDimensionHeight.cpp \
+    EBUCore_1_4/metadata/base/ebucoreWidthBase.cpp \
+    EBUCore_1_4/metadata/base/ebucoreHeightBase.cpp \
     EBUCore_1_4/metadata/base/ebucoreImageFormatBase.cpp \
     EBUCore_1_4/metadata/base/ebucoreMediumBase.cpp \
-    EBUCore_1_4/metadata/base/ebucoreLocatorBase.cpp \
     EBUCore_1_4/metadata/base/ebucorePackageInfoBase.cpp \
     EBUCore_1_4/metadata/base/ebucorePartFrameworkBase.cpp \
     EBUCore_1_4/metadata/base/ebucoreRationalBase.cpp \
@@ -91,7 +89,6 @@ libebucore_la_SOURCES = \
     EBUCore_1_4/metadata/ebucoreHeight.cpp \
     EBUCore_1_4/metadata/ebucoreImageFormat.cpp \
     EBUCore_1_4/metadata/ebucoreMedium.cpp \
-    EBUCore_1_4/metadata/ebucoreLocator.cpp \
     EBUCore_1_4/metadata/ebucorePackageInfo.cpp \
     EBUCore_1_4/metadata/ebucorePartFramework.cpp \
     EBUCore_1_4/metadata/ebucoreRational.cpp \
