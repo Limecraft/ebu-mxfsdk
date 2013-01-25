@@ -199,9 +199,21 @@ AC_SUBST(EBUSDK_CFLAGS)
 EBUSDK_LIBADDLIBS="${UUIDLIB} ${LIBURIPARSER_LIBS} ${LIBMXF_LIBS} ${LIBMXFPP_LIBS} ${BMX_LIBS}"
 AC_SUBST(EBUSDK_LIBADDLIBS)
 
-EBUSDK_LDADDLIBS="${EBUSDK_LIBADDLIBS} \
-	\$(top_builddir)/CustomMetadataSupport/src/libebucustommetadatasupport.la \$(top_builddir)/EBUCoreProcessor/src/libebucore.la \$(top_builddir)/Analyzer/src/libebumxfanalyzer.la -lxerces-c"
+EBUSDK_METADATA_LIBADDLIBS="\$(top_builddir)/CustomMetadataSupport/src/libebucustommetadatasupport.la -lxerces-c"
+AC_SUBST(EBUSDK_METADATA_LIBADDLIBS)
+
+EBUSDK_EBUCORE_LIBADDLIBS="\$(top_builddir)/EBUCoreProcessor/src/libebucore.la -lxerces-c"
+AC_SUBST(EBUSDK_EBUCORE_LIBADDLIBS)
+
+EBUSDK_ANALYZER_LIBADDLIBS="\$(top_builddir)/Analyzer/src/libebumxfanalyzer.la -lxerces-c"
+AC_SUBST(EBUSDK_ANALYZER_LIBADDLIBS)
+
+dnl EBUSDK_LDADDLIBS="${EBUSDK_LIBADDLIBS} ${EBUSDK_METADATA_LIBADDLIBS} ${EBUSDK_EBUCORE_LIBADDLIBS} ${EBUSDK_ANALYZER_LIBADDLIBS}"
+EBUSDK_LDADDLIBS="${EBUSDK_LIBADDLIBS} ${EBUSDK_METADATA_LIBADDLIBS} ${EBUSDK_EBUCORE_LIBADDLIBS}"
 AC_SUBST(EBUSDK_LDADDLIBS)
+
+EBUSDK_ANALYZER_LDADDLIBS="${EBUSDK_LIBADDLIBS} ${EBUSDK_METADATA_LIBADDLIBS} ${EBUSDK_EBUCORE_LIBADDLIBS} ${EBUSDK_ANALYZER_LIBADDLIBS}"
+AC_SUBST(EBUSDK_ANALYZER_LDADDLIBS)
 
 
 dnl-----------------------------------------------------------------------------
