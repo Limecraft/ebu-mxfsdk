@@ -80,9 +80,6 @@
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreContactDetailsBase.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreContainerFormatBase.cpp">
-      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreCoordinatesBase.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
     </ClCompile>
@@ -122,9 +119,6 @@
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreContactDetails.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreContainerFormat.cpp">
-      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreCoordinates.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata</Filter>
     </ClCompile>
@@ -152,9 +146,6 @@
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreDimension.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreEncoding.cpp">
-      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreEntity.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata</Filter>
     </ClCompile>
@@ -179,9 +170,6 @@
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreLocation.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreLocator.cpp">
-      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreMainFramework.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata</Filter>
     </ClCompile>
@@ -189,9 +177,6 @@
       <Filter>Source Files\EBUCore_1_4\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreMetadataSchemeInformation.cpp">
-      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreMimeType.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreObjectType.cpp">
@@ -257,9 +242,6 @@
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreDimensionBase.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreEncodingBase.cpp">
-      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreEntityBase.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
     </ClCompile>
@@ -284,9 +266,6 @@
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreLocationBase.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreLocatorBase.cpp">
-      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucorePartFrameworkBase.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
     </ClCompile>
@@ -300,9 +279,6 @@
       <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreObjectTypeBase.cpp">
-      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreMimeTypeBase.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreMediumBase.cpp">
@@ -543,6 +519,24 @@
       <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucorePublicationMediumBase.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreHeight.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreSubtitling.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreWidth.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreHeightBase.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreSubtitlingBase.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreWidthBase.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
     </ClCompile>
   </ItemGroup>

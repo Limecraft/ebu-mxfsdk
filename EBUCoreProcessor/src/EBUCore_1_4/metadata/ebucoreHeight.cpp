@@ -29,47 +29,29 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCOREMIMETYPE_BASE_H__
-#define __MXFPP_EBUCOREMIMETYPE_BASE_H__
-
-
-
-#include <libMXF++/metadata/InterchangeObject.h>
-
-using namespace mxfpp;
-
-namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_4 { namespace KLV
-{
-
-
-class ebucoreMimeTypeBase : public InterchangeObject
-{
-public:
-    friend class MetadataSetFactory<ebucoreMimeTypeBase>;
-    static const mxfKey setKey;
-
-public:
-    ebucoreMimeTypeBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreMimeTypeBase();
-
-
-   // getters
-
-   bool havemimeTypeGroup() const;
-   ebucoreTypeGroup* getmimeTypeGroup() const;
-
-
-   // setters
-
-   void setmimeTypeGroup(ebucoreTypeGroup* value);
-
-
-protected:
-    ebucoreMimeTypeBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
-};
-
-
-}}}};
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
+
+#include <libMXF++/MXF.h>
+#include <EBUCore_1_4/metadata/EBUCoreDMS++.h>
+
+
+using namespace std;
+using namespace mxfpp;
+using namespace EBUSDK::EBUCore::EBUCore_1_4::KLV;
+
+
+
+ebucoreHeight::ebucoreHeight(HeaderMetadata *headerMetadata)
+: ebucoreHeightBase(headerMetadata)
+{}
+
+ebucoreHeight::ebucoreHeight(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: ebucoreHeightBase(headerMetadata, cMetadataSet)
+{}
+
+ebucoreHeight::~ebucoreHeight()
+{}
+
+

@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORELOCATOR_BASE_H__
-#define __MXFPP_EBUCORELOCATOR_BASE_H__
+#ifndef __MXFPP_EBUCORESUBTITLING_BASE_H__
+#define __MXFPP_EBUCORESUBTITLING_BASE_H__
 
 
 
@@ -42,32 +42,51 @@ namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_4 { namespace KLV
 {
 
 
-class ebucoreLocatorBase : public InterchangeObject
+class ebucoreSubtitlingBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucoreLocatorBase>;
+    friend class MetadataSetFactory<ebucoreSubtitlingBase>;
     static const mxfKey setKey;
 
 public:
-    ebucoreLocatorBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreLocatorBase();
+    ebucoreSubtitlingBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreSubtitlingBase();
 
 
    // getters
 
-   std::string getlocatorLocation() const;
-   bool havelocatorTypeGroup() const;
-   ebucoreTypeGroup* getlocatorTypeGroup() const;
+   bool havesubtitlingFormatID() const;
+   std::string getsubtitlingFormatID() const;
+   bool havesubtitlingFormatName() const;
+   std::string getsubtitlingFormatName() const;
+   bool havesubtitlingSourceUri() const;
+   std::string getsubtitlingSourceUri() const;
+   bool havesubtitlingTrackID() const;
+   std::string getsubtitlingTrackID() const;
+   bool havesubtitlingTrackName() const;
+   std::string getsubtitlingTrackName() const;
+   bool havesubtitlingLanguageCode() const;
+   std::string getsubtitlingLanguageCode() const;
+   bool havesubtitlingTypeGroup() const;
+   ebucoreTypeGroup* getsubtitlingTypeGroup() const;
+   bool havesubtitlingFormatGroup() const;
+   ebucoreFormatGroup* getsubtitlingFormatGroup() const;
 
 
    // setters
 
-   void setlocatorLocation(std::string value);
-   void setlocatorTypeGroup(ebucoreTypeGroup* value);
+   void setsubtitlingFormatID(std::string value);
+   void setsubtitlingFormatName(std::string value);
+   void setsubtitlingSourceUri(std::string value);
+   void setsubtitlingTrackID(std::string value);
+   void setsubtitlingTrackName(std::string value);
+   void setsubtitlingLanguageCode(std::string value);
+   void setsubtitlingTypeGroup(ebucoreTypeGroup* value);
+   void setsubtitlingFormatGroup(ebucoreFormatGroup* value);
 
 
 protected:
-    ebucoreLocatorBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreSubtitlingBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

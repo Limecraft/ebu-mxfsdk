@@ -57,12 +57,22 @@ public:
 
    bool havedataFormatID() const;
    std::string getdataFormatID() const;
+   bool havedataFormatVersionID() const;
+   std::string getdataFormatVersionID() const;
    bool havedataFormatName() const;
    std::string getdataFormatName() const;
    bool havedataFormatDefinition() const;
    std::string getdataFormatDefinition() const;
+   bool havedataTrackId() const;
+   std::string getdataTrackId() const;
+   bool havedataTrackName() const;
+   std::string getdataTrackName() const;
+   bool havedataTrackLanguageCode() const;
+   std::string getdataTrackLanguageCode() const;
    bool havecaptioning() const;
    std::vector<ebucoreCaptioning*> getcaptioning() const;
+   bool havesubtitling() const;
+   std::vector<ebucoreSubtitling*> getsubtitling() const;
    bool haveancillaryData() const;
    std::vector<ebucoreAncillaryData*> getancillaryData() const;
    bool havedataTechnicalAttributeString() const;
@@ -96,10 +106,16 @@ public:
    // setters
 
    void setdataFormatID(std::string value);
+   void setdataFormatVersionID(std::string value);
    void setdataFormatName(std::string value);
    void setdataFormatDefinition(std::string value);
+   void setdataTrackId(std::string value);
+   void setdataTrackName(std::string value);
+   void setdataTrackLanguageCode(std::string value);
    void setcaptioning(const std::vector<ebucoreCaptioning*>& value);
    void appendcaptioning(ebucoreCaptioning* value);
+   void setsubtitling(const std::vector<ebucoreSubtitling*>& value);
+   void appendsubtitling(ebucoreSubtitling* value);
    void setancillaryData(const std::vector<ebucoreAncillaryData*>& value);
    void appendancillaryData(ebucoreAncillaryData* value);
    void setdataTechnicalAttributeString(const std::vector<ebucoreTechnicalAttributeString*>& value);

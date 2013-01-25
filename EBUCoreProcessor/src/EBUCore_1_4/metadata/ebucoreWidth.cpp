@@ -33,8 +33,6 @@
 #include "config.h"
 #endif
 
-#include <memory>
-
 #include <libMXF++/MXF.h>
 #include <EBUCore_1_4/metadata/EBUCoreDMS++.h>
 
@@ -44,37 +42,16 @@ using namespace mxfpp;
 using namespace EBUSDK::EBUCore::EBUCore_1_4::KLV;
 
 
-const mxfKey ebucoreEncodingBase::setKey = MXF_SET_K(ebucoreEncoding);
 
-
-ebucoreEncodingBase::ebucoreEncodingBase(HeaderMetadata *headerMetadata)
-: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
-{
-    headerMetadata->add(this);
-}
-
-ebucoreEncodingBase::ebucoreEncodingBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: InterchangeObject(headerMetadata, cMetadataSet)
+ebucoreWidth::ebucoreWidth(HeaderMetadata *headerMetadata)
+: ebucoreWidthBase(headerMetadata)
 {}
 
-ebucoreEncodingBase::~ebucoreEncodingBase()
+ebucoreWidth::ebucoreWidth(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: ebucoreWidthBase(headerMetadata, cMetadataSet)
 {}
 
+ebucoreWidth::~ebucoreWidth()
+{}
 
-bool ebucoreEncodingBase::haveencodingTypeGroup() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreEncoding, encodingTypeGroup));
-}
-
-ebucoreTypeGroup* ebucoreEncodingBase::getencodingTypeGroup() const
-{
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreEncoding, encodingTypeGroup)));
-    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
-}
-
-void ebucoreEncodingBase::setencodingTypeGroup(ebucoreTypeGroup* value)
-{
-    setStrongRefItem(&MXF_ITEM_K(ebucoreEncoding, encodingTypeGroup), value);
-}
 

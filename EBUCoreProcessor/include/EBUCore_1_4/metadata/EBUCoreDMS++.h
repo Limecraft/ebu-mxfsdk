@@ -116,14 +116,13 @@ namespace EBUCore
 #include <EBUCore_1_4/metadata/ebucoreAspectRatio.h>
 #include <EBUCore_1_4/metadata/ebucoreCaptioning.h>
 #include <EBUCore_1_4/metadata/ebucoreCodec.h>
-#include <EBUCore_1_4/metadata/ebucoreContainerFormat.h>
 #include <EBUCore_1_4/metadata/ebucoreDimension.h>
-#include <EBUCore_1_4/metadata/ebucoreEncoding.h>
+#include <EBUCore_1_4/metadata/ebucoreWidth.h>
+#include <EBUCore_1_4/metadata/ebucoreHeight.h>
 #include <EBUCore_1_4/metadata/ebucoreMedium.h>
-#include <EBUCore_1_4/metadata/ebucoreMimeType.h>
-#include <EBUCore_1_4/metadata/ebucoreLocator.h>
 #include <EBUCore_1_4/metadata/ebucorePackageInfo.h>
 #include <EBUCore_1_4/metadata/ebucoreRational.h>
+#include <EBUCore_1_4/metadata/ebucoreSubtitling.h>
 #include <EBUCore_1_4/metadata/ebucoreSigningFormat.h>
 #include <EBUCore_1_4/metadata/ebucoreTrack.h>
 #include <EBUCore_1_4/metadata/ebucoreVideoFormat.h>

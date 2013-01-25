@@ -86,16 +86,9 @@ bool ebucorePackageInfoBase::havepackageLocator() const
     return haveItem(&MXF_ITEM_K(ebucorePackageInfo, packageLocator));
 }
 
-std::vector<ebucoreLocator*> ebucorePackageInfoBase::getpackageLocator() const
+std::string ebucorePackageInfoBase::getpackageLocator() const
 {
-    vector<ebucoreLocator*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucorePackageInfo, packageLocator)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreLocator*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreLocator*>(iter->get()));
-    }
-    return result;
+    return getStringItem(&MXF_ITEM_K(ebucorePackageInfo, packageLocator));
 }
 
 void ebucorePackageInfoBase::setpackageSize(uint64_t value)
@@ -108,14 +101,8 @@ void ebucorePackageInfoBase::setpackageName(std::string value)
     setStringItem(&MXF_ITEM_K(ebucorePackageInfo, packageName), value);
 }
 
-void ebucorePackageInfoBase::setpackageLocator(const std::vector<ebucoreLocator*>& value)
+void ebucorePackageInfoBase::setpackageLocator(std::string value)
 {
-    WrapObjectVectorIterator<ebucoreLocator> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucorePackageInfo, packageLocator), &iter);
-}
-
-void ebucorePackageInfoBase::appendpackageLocator(ebucoreLocator* value)
-{
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucorePackageInfo, packageLocator), value);
+    setStringItem(&MXF_ITEM_K(ebucorePackageInfo, packageLocator), value);
 }
 

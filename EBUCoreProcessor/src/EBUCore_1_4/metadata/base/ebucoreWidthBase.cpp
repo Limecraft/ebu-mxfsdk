@@ -44,37 +44,49 @@ using namespace mxfpp;
 using namespace EBUSDK::EBUCore::EBUCore_1_4::KLV;
 
 
-const mxfKey ebucoreMimeTypeBase::setKey = MXF_SET_K(ebucoreMimeType);
+const mxfKey ebucoreWidthBase::setKey = MXF_SET_K(ebucoreWidth);
 
 
-ebucoreMimeTypeBase::ebucoreMimeTypeBase(HeaderMetadata *headerMetadata)
+ebucoreWidthBase::ebucoreWidthBase(HeaderMetadata *headerMetadata)
 : InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
 {
     headerMetadata->add(this);
 }
 
-ebucoreMimeTypeBase::ebucoreMimeTypeBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+ebucoreWidthBase::ebucoreWidthBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
 : InterchangeObject(headerMetadata, cMetadataSet)
 {}
 
-ebucoreMimeTypeBase::~ebucoreMimeTypeBase()
+ebucoreWidthBase::~ebucoreWidthBase()
 {}
 
 
-bool ebucoreMimeTypeBase::havemimeTypeGroup() const
+ebucoreDimension* ebucoreWidthBase::getwidthValue() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreMimeType, mimeTypeGroup));
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreWidth, widthValue)));
+    MXFPP_CHECK(dynamic_cast<ebucoreDimension*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreDimension*>(obj.release());
 }
 
-ebucoreTypeGroup* ebucoreMimeTypeBase::getmimeTypeGroup() const
+bool ebucoreWidthBase::havewidthTypeGroup() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreMimeType, mimeTypeGroup)));
+    return haveItem(&MXF_ITEM_K(ebucoreWidth, widthTypeGroup));
+}
+
+ebucoreTypeGroup* ebucoreWidthBase::getwidthTypeGroup() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreWidth, widthTypeGroup)));
     MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
-void ebucoreMimeTypeBase::setmimeTypeGroup(ebucoreTypeGroup* value)
+void ebucoreWidthBase::setwidthValue(ebucoreDimension* value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucoreMimeType, mimeTypeGroup), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreWidth, widthValue), value);
+}
+
+void ebucoreWidthBase::setwidthTypeGroup(ebucoreTypeGroup* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreWidth, widthTypeGroup), value);
 }
 

@@ -66,7 +66,7 @@ public:
    bool havetargetAudienceTypeGroup() const;
    ebucoreTypeGroup* gettargetAudienceTypeGroup() const;
    bool havetargetAudienceRegion() const;
-   ebucoreRegion* gettargetAudienceRegion() const;
+   std::vector<ebucoreRegion*> gettargetAudienceRegion() const;
 
 
    // setters
@@ -76,7 +76,8 @@ public:
    void settargetAudienceNotRatedFlag(bool value);
    void settargetAudienceAdultContentFlag(bool value);
    void settargetAudienceTypeGroup(ebucoreTypeGroup* value);
-   void settargetAudienceRegion(ebucoreRegion* value);
+   void settargetAudienceRegion(const std::vector<ebucoreRegion*>& value);
+   void appendtargetAudienceRegion(ebucoreRegion* value);
 
 
 protected:

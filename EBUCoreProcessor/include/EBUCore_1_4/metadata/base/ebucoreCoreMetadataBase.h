@@ -86,7 +86,7 @@ public:
    bool haveversion() const;
    ebucoreVersion* getversion() const;
    bool havepublicationHistory() const;
-   ebucorePublicationHistoryEvent* getpublicationHistory() const;
+   ebucorePublicationHistory* getpublicationHistory() const;
    bool havecustomRelation() const;
    std::vector<ebucoreCustomRelation*> getcustomRelation() const;
    bool havebasicRelation() const;
@@ -128,7 +128,7 @@ public:
    void setrating(const std::vector<ebucoreRating*>& value);
    void appendrating(ebucoreRating* value);
    void setversion(ebucoreVersion* value);
-   void setpublicationHistory(ebucorePublicationHistoryEvent* value);
+   void setpublicationHistory(ebucorePublicationHistory* value);
    void setcustomRelation(const std::vector<ebucoreCustomRelation*>& value);
    void appendcustomRelation(ebucoreCustomRelation* value);
    void setbasicRelation(const std::vector<ebucoreBasicRelation*>& value);

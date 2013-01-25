@@ -72,7 +72,7 @@ public:
    bool havepublicationFormatReference() const;
    ebucoreFormat* getpublicationFormatReference() const;
    bool havepublicationRightsReference() const;
-   ebucoreRights* getpublicationRightsReference() const;
+   std::vector<ebucoreRights*> getpublicationRightsReference() const;
    bool havepublicationRegion() const;
    std::vector<ebucoreRegion*> getpublicationRegion() const;
    bool havepublicationMedium() const;
@@ -91,7 +91,8 @@ public:
    void setlivePublicationFlag(bool value);
    void setpublicationNote(std::string value);
    void setpublicationFormatReference(ebucoreFormat* value);
-   void setpublicationRightsReference(ebucoreRights* value);
+   void setpublicationRightsReference(const std::vector<ebucoreRights*>& value);
+   void appendpublicationRightsReference(ebucoreRights* value);
    void setpublicationRegion(const std::vector<ebucoreRegion*>& value);
    void appendpublicationRegion(ebucoreRegion* value);
    void setpublicationMedium(ebucorePublicationMedium* value);

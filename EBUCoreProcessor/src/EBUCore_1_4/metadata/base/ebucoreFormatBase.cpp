@@ -131,6 +131,16 @@ std::string ebucoreFormatBase::getoverallDurationTimecode() const
     return getStringItem(&MXF_ITEM_K(ebucoreFormat, overallDurationTimecode));
 }
 
+bool ebucoreFormatBase::haveoverallDurationTimecodeDropframe() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallDurationTimecodeDropframe));
+}
+
+std::string ebucoreFormatBase::getoverallDurationTimecodeDropframe() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreFormat, overallDurationTimecodeDropframe));
+}
+
 bool ebucoreFormatBase::haveoverallDurationTime() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreFormat, overallDurationTime));
@@ -151,74 +161,16 @@ int64_t ebucoreFormatBase::getoverallDurationEditUnit() const
     return getLengthItem(&MXF_ITEM_K(ebucoreFormat, overallDurationEditUnit));
 }
 
-bool ebucoreFormatBase::haveoverallEditRate() const
+bool ebucoreFormatBase::haveeditRate() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallEditRate));
+    return haveItem(&MXF_ITEM_K(ebucoreFormat, editRate));
 }
 
-mxfRational ebucoreFormatBase::getoverallEditRate() const
+ebucoreRational* ebucoreFormatBase::geteditRate() const
 {
-    return getRationalItem(&MXF_ITEM_K(ebucoreFormat, overallEditRate));
-}
-
-bool ebucoreFormatBase::haveoverallStartTimecode() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallStartTimecode));
-}
-
-std::string ebucoreFormatBase::getoverallStartTimecode() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreFormat, overallStartTimecode));
-}
-
-bool ebucoreFormatBase::haveoverallStartTime() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallStartTime));
-}
-
-mxfRational ebucoreFormatBase::getoverallStartTime() const
-{
-    return getRationalItem(&MXF_ITEM_K(ebucoreFormat, overallStartTime));
-}
-
-bool ebucoreFormatBase::haveoverallStartEditUnit() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallStartEditUnit));
-}
-
-int64_t ebucoreFormatBase::getoverallStartEditUnit() const
-{
-    return getLengthItem(&MXF_ITEM_K(ebucoreFormat, overallStartEditUnit));
-}
-
-bool ebucoreFormatBase::haveoverallEndTimecode() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallEndTimecode));
-}
-
-std::string ebucoreFormatBase::getoverallEndTimecode() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreFormat, overallEndTimecode));
-}
-
-bool ebucoreFormatBase::haveoverallEndTime() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallEndTime));
-}
-
-mxfRational ebucoreFormatBase::getoverallEndTime() const
-{
-    return getRationalItem(&MXF_ITEM_K(ebucoreFormat, overallEndTime));
-}
-
-bool ebucoreFormatBase::haveoverallEndEditUnit() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreFormat, overallEndEditUnit));
-}
-
-int64_t ebucoreFormatBase::getoverallEndEditUnit() const
-{
-    return getLengthItem(&MXF_ITEM_K(ebucoreFormat, overallEndEditUnit));
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreFormat, editRate)));
+    MXFPP_CHECK(dynamic_cast<ebucoreRational*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreRational*>(obj.release());
 }
 
 bool ebucoreFormatBase::havecontainerFormat() const
@@ -226,16 +178,11 @@ bool ebucoreFormatBase::havecontainerFormat() const
     return haveItem(&MXF_ITEM_K(ebucoreFormat, containerFormat));
 }
 
-std::vector<ebucoreContainerFormat*> ebucoreFormatBase::getcontainerFormat() const
+ebucoreFormatGroup* ebucoreFormatBase::getcontainerFormat() const
 {
-    vector<ebucoreContainerFormat*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreFormat, containerFormat)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreContainerFormat*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreContainerFormat*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreFormat, containerFormat)));
+    MXFPP_CHECK(dynamic_cast<ebucoreFormatGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreFormatGroup*>(obj.release());
 }
 
 bool ebucoreFormatBase::havemedium() const
@@ -243,16 +190,11 @@ bool ebucoreFormatBase::havemedium() const
     return haveItem(&MXF_ITEM_K(ebucoreFormat, medium));
 }
 
-std::vector<ebucoreMedium*> ebucoreFormatBase::getmedium() const
+ebucoreMedium* ebucoreFormatBase::getmedium() const
 {
-    vector<ebucoreMedium*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreFormat, medium)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreMedium*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreMedium*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreFormat, medium)));
+    MXFPP_CHECK(dynamic_cast<ebucoreMedium*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreMedium*>(obj.release());
 }
 
 bool ebucoreFormatBase::havepackageInfo() const
@@ -272,16 +214,11 @@ bool ebucoreFormatBase::havemimeType() const
     return haveItem(&MXF_ITEM_K(ebucoreFormat, mimeType));
 }
 
-std::vector<ebucoreMimeType*> ebucoreFormatBase::getmimeType() const
+ebucoreTypeGroup* ebucoreFormatBase::getmimeType() const
 {
-    vector<ebucoreMimeType*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreFormat, mimeType)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreMimeType*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreMimeType*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreFormat, mimeType)));
+    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
 bool ebucoreFormatBase::havematerialAudioFormat() const
@@ -590,6 +527,18 @@ std::vector<ebucoreTechnicalAttributeBoolean*> ebucoreFormatBase::getmaterialTec
     return result;
 }
 
+bool ebucoreFormatBase::haveformatModifiedDate() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreFormat, formatModifiedDate));
+}
+
+ebucoreDate* ebucoreFormatBase::getformatModifiedDate() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreFormat, formatModifiedDate)));
+    MXFPP_CHECK(dynamic_cast<ebucoreDate*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreDate*>(obj.release());
+}
+
 void ebucoreFormatBase::setformatID(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreFormat, formatID), value);
@@ -625,6 +574,11 @@ void ebucoreFormatBase::setoverallDurationTimecode(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreFormat, overallDurationTimecode), value);
 }
 
+void ebucoreFormatBase::setoverallDurationTimecodeDropframe(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreFormat, overallDurationTimecodeDropframe), value);
+}
+
 void ebucoreFormatBase::setoverallDurationTime(mxfRational value)
 {
     setRationalItem(&MXF_ITEM_K(ebucoreFormat, overallDurationTime), value);
@@ -635,61 +589,19 @@ void ebucoreFormatBase::setoverallDurationEditUnit(int64_t value)
     setLengthItem(&MXF_ITEM_K(ebucoreFormat, overallDurationEditUnit), value);
 }
 
-void ebucoreFormatBase::setoverallEditRate(mxfRational value)
+void ebucoreFormatBase::seteditRate(ebucoreRational* value)
 {
-    setRationalItem(&MXF_ITEM_K(ebucoreFormat, overallEditRate), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreFormat, editRate), value);
 }
 
-void ebucoreFormatBase::setoverallStartTimecode(std::string value)
+void ebucoreFormatBase::setcontainerFormat(ebucoreFormatGroup* value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreFormat, overallStartTimecode), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreFormat, containerFormat), value);
 }
 
-void ebucoreFormatBase::setoverallStartTime(mxfRational value)
+void ebucoreFormatBase::setmedium(ebucoreMedium* value)
 {
-    setRationalItem(&MXF_ITEM_K(ebucoreFormat, overallStartTime), value);
-}
-
-void ebucoreFormatBase::setoverallStartEditUnit(int64_t value)
-{
-    setLengthItem(&MXF_ITEM_K(ebucoreFormat, overallStartEditUnit), value);
-}
-
-void ebucoreFormatBase::setoverallEndTimecode(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreFormat, overallEndTimecode), value);
-}
-
-void ebucoreFormatBase::setoverallEndTime(mxfRational value)
-{
-    setRationalItem(&MXF_ITEM_K(ebucoreFormat, overallEndTime), value);
-}
-
-void ebucoreFormatBase::setoverallEndEditUnit(int64_t value)
-{
-    setLengthItem(&MXF_ITEM_K(ebucoreFormat, overallEndEditUnit), value);
-}
-
-void ebucoreFormatBase::setcontainerFormat(const std::vector<ebucoreContainerFormat*>& value)
-{
-    WrapObjectVectorIterator<ebucoreContainerFormat> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreFormat, containerFormat), &iter);
-}
-
-void ebucoreFormatBase::appendcontainerFormat(ebucoreContainerFormat* value)
-{
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreFormat, containerFormat), value);
-}
-
-void ebucoreFormatBase::setmedium(const std::vector<ebucoreMedium*>& value)
-{
-    WrapObjectVectorIterator<ebucoreMedium> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreFormat, medium), &iter);
-}
-
-void ebucoreFormatBase::appendmedium(ebucoreMedium* value)
-{
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreFormat, medium), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreFormat, medium), value);
 }
 
 void ebucoreFormatBase::setpackageInfo(ebucorePackageInfo* value)
@@ -697,15 +609,9 @@ void ebucoreFormatBase::setpackageInfo(ebucorePackageInfo* value)
     setStrongRefItem(&MXF_ITEM_K(ebucoreFormat, packageInfo), value);
 }
 
-void ebucoreFormatBase::setmimeType(const std::vector<ebucoreMimeType*>& value)
+void ebucoreFormatBase::setmimeType(ebucoreTypeGroup* value)
 {
-    WrapObjectVectorIterator<ebucoreMimeType> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreFormat, mimeType), &iter);
-}
-
-void ebucoreFormatBase::appendmimeType(ebucoreMimeType* value)
-{
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreFormat, mimeType), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreFormat, mimeType), value);
 }
 
 void ebucoreFormatBase::setmaterialAudioFormat(const std::vector<ebucoreAudioFormat*>& value)
@@ -904,5 +810,10 @@ void ebucoreFormatBase::setmaterialTechnicalAttributeBoolean(const std::vector<e
 void ebucoreFormatBase::appendmaterialTechnicalAttributeBoolean(ebucoreTechnicalAttributeBoolean* value)
 {
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreFormat, materialTechnicalAttributeBoolean), value);
+}
+
+void ebucoreFormatBase::setformatModifiedDate(ebucoreDate* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreFormat, formatModifiedDate), value);
 }
 

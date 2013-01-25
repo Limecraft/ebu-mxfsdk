@@ -71,6 +71,11 @@ std::string ebucoreDescriptionBase::getdescriptionNote() const
     return getStringItem(&MXF_ITEM_K(ebucoreDescription, descriptionNote));
 }
 
+bool ebucoreDescriptionBase::havedescriptionValue() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreDescription, descriptionValue));
+}
+
 std::vector<ebucoreTextualAnnotation*> ebucoreDescriptionBase::getdescriptionValue() const
 {
     vector<ebucoreTextualAnnotation*> result;

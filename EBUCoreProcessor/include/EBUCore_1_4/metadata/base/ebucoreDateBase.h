@@ -77,8 +77,8 @@ public:
    mxfTimestamp getyearReleased() const;
    bool havedateCopyrighted() const;
    mxfTimestamp getdateCopyrighted() const;
-   bool haveyearCopytighted() const;
-   mxfTimestamp getyearCopytighted() const;
+   bool haveyearCopyrighted() const;
+   mxfTimestamp getyearCopyrighted() const;
    bool havedateNote() const;
    std::string getdateNote() const;
    bool havealternativeDate() const;
@@ -98,7 +98,7 @@ public:
    void setdateReleased(mxfTimestamp value);
    void setyearReleased(mxfTimestamp value);
    void setdateCopyrighted(mxfTimestamp value);
-   void setyearCopytighted(mxfTimestamp value);
+   void setyearCopyrighted(mxfTimestamp value);
    void setdateNote(std::string value);
    void setalternativeDate(const std::vector<ebucoreDateType*>& value);
    void appendalternativeDate(ebucoreDateType* value);

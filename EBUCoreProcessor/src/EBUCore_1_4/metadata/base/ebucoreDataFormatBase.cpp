@@ -71,6 +71,16 @@ std::string ebucoreDataFormatBase::getdataFormatID() const
     return getStringItem(&MXF_ITEM_K(ebucoreDataFormat, dataFormatID));
 }
 
+bool ebucoreDataFormatBase::havedataFormatVersionID() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreDataFormat, dataFormatVersionID));
+}
+
+std::string ebucoreDataFormatBase::getdataFormatVersionID() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreDataFormat, dataFormatVersionID));
+}
+
 bool ebucoreDataFormatBase::havedataFormatName() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreDataFormat, dataFormatName));
@@ -91,6 +101,36 @@ std::string ebucoreDataFormatBase::getdataFormatDefinition() const
     return getStringItem(&MXF_ITEM_K(ebucoreDataFormat, dataFormatDefinition));
 }
 
+bool ebucoreDataFormatBase::havedataTrackId() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreDataFormat, dataTrackId));
+}
+
+std::string ebucoreDataFormatBase::getdataTrackId() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreDataFormat, dataTrackId));
+}
+
+bool ebucoreDataFormatBase::havedataTrackName() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreDataFormat, dataTrackName));
+}
+
+std::string ebucoreDataFormatBase::getdataTrackName() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreDataFormat, dataTrackName));
+}
+
+bool ebucoreDataFormatBase::havedataTrackLanguageCode() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreDataFormat, dataTrackLanguageCode));
+}
+
+std::string ebucoreDataFormatBase::getdataTrackLanguageCode() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreDataFormat, dataTrackLanguageCode));
+}
+
 bool ebucoreDataFormatBase::havecaptioning() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreDataFormat, captioning));
@@ -104,6 +144,23 @@ std::vector<ebucoreCaptioning*> ebucoreDataFormatBase::getcaptioning() const
     {
         MXFPP_CHECK(dynamic_cast<ebucoreCaptioning*>(iter->get()) != 0);
         result.push_back(dynamic_cast<ebucoreCaptioning*>(iter->get()));
+    }
+    return result;
+}
+
+bool ebucoreDataFormatBase::havesubtitling() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreDataFormat, subtitling));
+}
+
+std::vector<ebucoreSubtitling*> ebucoreDataFormatBase::getsubtitling() const
+{
+    vector<ebucoreSubtitling*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreDataFormat, subtitling)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreSubtitling*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreSubtitling*>(iter->get()));
     }
     return result;
 }
@@ -351,6 +408,11 @@ void ebucoreDataFormatBase::setdataFormatID(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreDataFormat, dataFormatID), value);
 }
 
+void ebucoreDataFormatBase::setdataFormatVersionID(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreDataFormat, dataFormatVersionID), value);
+}
+
 void ebucoreDataFormatBase::setdataFormatName(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreDataFormat, dataFormatName), value);
@@ -359,6 +421,21 @@ void ebucoreDataFormatBase::setdataFormatName(std::string value)
 void ebucoreDataFormatBase::setdataFormatDefinition(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreDataFormat, dataFormatDefinition), value);
+}
+
+void ebucoreDataFormatBase::setdataTrackId(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreDataFormat, dataTrackId), value);
+}
+
+void ebucoreDataFormatBase::setdataTrackName(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreDataFormat, dataTrackName), value);
+}
+
+void ebucoreDataFormatBase::setdataTrackLanguageCode(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreDataFormat, dataTrackLanguageCode), value);
 }
 
 void ebucoreDataFormatBase::setcaptioning(const std::vector<ebucoreCaptioning*>& value)
@@ -370,6 +447,17 @@ void ebucoreDataFormatBase::setcaptioning(const std::vector<ebucoreCaptioning*>&
 void ebucoreDataFormatBase::appendcaptioning(ebucoreCaptioning* value)
 {
     appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreDataFormat, captioning), value);
+}
+
+void ebucoreDataFormatBase::setsubtitling(const std::vector<ebucoreSubtitling*>& value)
+{
+    WrapObjectVectorIterator<ebucoreSubtitling> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreDataFormat, subtitling), &iter);
+}
+
+void ebucoreDataFormatBase::appendsubtitling(ebucoreSubtitling* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreDataFormat, subtitling), value);
 }
 
 void ebucoreDataFormatBase::setancillaryData(const std::vector<ebucoreAncillaryData*>& value)

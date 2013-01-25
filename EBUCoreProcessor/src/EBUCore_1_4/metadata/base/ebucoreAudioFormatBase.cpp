@@ -143,6 +143,16 @@ uint64_t ebucoreAudioFormatBase::getaudioBitRate() const
     return getUInt64Item(&MXF_ITEM_K(ebucoreAudioFormat, audioBitRate));
 }
 
+bool ebucoreAudioFormatBase::haveaudioMaxBitRate() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreAudioFormat, audioMaxBitRate));
+}
+
+uint64_t ebucoreAudioFormatBase::getaudioMaxBitRate() const
+{
+    return getUInt64Item(&MXF_ITEM_K(ebucoreAudioFormat, audioMaxBitRate));
+}
+
 bool ebucoreAudioFormatBase::haveaudioBitRateMode() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreAudioFormat, audioBitRateMode));
@@ -168,16 +178,11 @@ bool ebucoreAudioFormatBase::haveaudioEncoding() const
     return haveItem(&MXF_ITEM_K(ebucoreAudioFormat, audioEncoding));
 }
 
-std::vector<ebucoreEncoding*> ebucoreAudioFormatBase::getaudioEncoding() const
+ebucoreTypeGroup* ebucoreAudioFormatBase::getaudioEncoding() const
 {
-    vector<ebucoreEncoding*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreAudioFormat, audioEncoding)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreEncoding*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreEncoding*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreAudioFormat, audioEncoding)));
+    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
 bool ebucoreAudioFormatBase::haveaudioCodec() const
@@ -470,6 +475,11 @@ void ebucoreAudioFormatBase::setaudioBitRate(uint64_t value)
     setUInt64Item(&MXF_ITEM_K(ebucoreAudioFormat, audioBitRate), value);
 }
 
+void ebucoreAudioFormatBase::setaudioMaxBitRate(uint64_t value)
+{
+    setUInt64Item(&MXF_ITEM_K(ebucoreAudioFormat, audioMaxBitRate), value);
+}
+
 void ebucoreAudioFormatBase::setaudioBitRateMode(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreAudioFormat, audioBitRateMode), value);
@@ -480,15 +490,9 @@ void ebucoreAudioFormatBase::setaudioSamplingRate(mxfRational value)
     setRationalItem(&MXF_ITEM_K(ebucoreAudioFormat, audioSamplingRate), value);
 }
 
-void ebucoreAudioFormatBase::setaudioEncoding(const std::vector<ebucoreEncoding*>& value)
+void ebucoreAudioFormatBase::setaudioEncoding(ebucoreTypeGroup* value)
 {
-    WrapObjectVectorIterator<ebucoreEncoding> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreAudioFormat, audioEncoding), &iter);
-}
-
-void ebucoreAudioFormatBase::appendaudioEncoding(ebucoreEncoding* value)
-{
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreAudioFormat, audioEncoding), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreAudioFormat, audioEncoding), value);
 }
 
 void ebucoreAudioFormatBase::setaudioCodec(ebucoreCodec* value)

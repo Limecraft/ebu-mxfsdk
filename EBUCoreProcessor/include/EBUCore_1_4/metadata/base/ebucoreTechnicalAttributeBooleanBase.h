@@ -34,7 +34,7 @@
 
 
 
-#include <EBUCore_1_4/metadata/ebucoreTypeGroup.h>
+#include <libMXF++/metadata/InterchangeObject.h>
 
 using namespace mxfpp;
 
@@ -42,7 +42,7 @@ namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_4 { namespace KLV
 {
 
 
-class ebucoreTechnicalAttributeBooleanBase : public ebucoreTypeGroup
+class ebucoreTechnicalAttributeBooleanBase : public InterchangeObject
 {
 public:
     friend class MetadataSetFactory<ebucoreTechnicalAttributeBooleanBase>;
@@ -56,11 +56,14 @@ public:
    // getters
 
    bool gettechnicalAttributeBooleanValue() const;
+   bool havetechnicalAttributeTypeGroup() const;
+   ebucoreTypeGroup* gettechnicalAttributeTypeGroup() const;
 
 
    // setters
 
    void settechnicalAttributeBooleanValue(bool value);
+   void settechnicalAttributeTypeGroup(ebucoreTypeGroup* value);
 
 
 protected:

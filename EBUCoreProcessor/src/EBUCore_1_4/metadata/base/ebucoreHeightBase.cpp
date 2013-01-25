@@ -29,37 +29,64 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORELOCATOR_H__
-#define __MXFPP_EBUCORELOCATOR_H__
-
-
-
-#include <EBUCore_1_4/metadata/base/ebucoreLocatorBase.h>
-
-using namespace mxfpp;
-
-namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_4 { namespace KLV
-{
-
-
-class ebucoreLocator : public ebucoreLocatorBase
-{
-public:
-    friend class MetadataSetFactory<ebucoreLocator>;
-
-public:
-    ebucoreLocator(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreLocator();
-
-
-
-
-protected:
-    ebucoreLocator(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
-};
-
-
-}}}};
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
+
+#include <memory>
+
+#include <libMXF++/MXF.h>
+#include <EBUCore_1_4/metadata/EBUCoreDMS++.h>
+
+
+using namespace std;
+using namespace mxfpp;
+using namespace EBUSDK::EBUCore::EBUCore_1_4::KLV;
+
+
+const mxfKey ebucoreHeightBase::setKey = MXF_SET_K(ebucoreHeight);
+
+
+ebucoreHeightBase::ebucoreHeightBase(HeaderMetadata *headerMetadata)
+: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
+{
+    headerMetadata->add(this);
+}
+
+ebucoreHeightBase::ebucoreHeightBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: InterchangeObject(headerMetadata, cMetadataSet)
+{}
+
+ebucoreHeightBase::~ebucoreHeightBase()
+{}
+
+
+ebucoreDimension* ebucoreHeightBase::getheightValue() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreHeight, heightValue)));
+    MXFPP_CHECK(dynamic_cast<ebucoreDimension*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreDimension*>(obj.release());
+}
+
+bool ebucoreHeightBase::haveheightTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreHeight, heightTypeGroup));
+}
+
+ebucoreTypeGroup* ebucoreHeightBase::getheightTypeGroup() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreHeight, heightTypeGroup)));
+    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+}
+
+void ebucoreHeightBase::setheightValue(ebucoreDimension* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreHeight, heightValue), value);
+}
+
+void ebucoreHeightBase::setheightTypeGroup(ebucoreTypeGroup* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreHeight, heightTypeGroup), value);
+}
+

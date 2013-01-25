@@ -43,15 +43,15 @@ using namespace EBUSDK::EBUCore::EBUCore_1_4::KLV;
 
 
 
-ebucoreEncoding::ebucoreEncoding(HeaderMetadata *headerMetadata)
-: ebucoreEncodingBase(headerMetadata)
+ebucoreSubtitling::ebucoreSubtitling(HeaderMetadata *headerMetadata)
+: ebucoreSubtitlingBase(headerMetadata)
 {}
 
-ebucoreEncoding::ebucoreEncoding(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: ebucoreEncodingBase(headerMetadata, cMetadataSet)
+ebucoreSubtitling::ebucoreSubtitling(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: ebucoreSubtitlingBase(headerMetadata, cMetadataSet)
 {}
 
-ebucoreEncoding::~ebucoreEncoding()
+ebucoreSubtitling::~ebucoreSubtitling()
 {}
 
 

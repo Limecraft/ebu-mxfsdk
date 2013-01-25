@@ -48,13 +48,13 @@ const mxfKey ebucoreTechnicalAttributeRationalBase::setKey = MXF_SET_K(ebucoreTe
 
 
 ebucoreTechnicalAttributeRationalBase::ebucoreTechnicalAttributeRationalBase(HeaderMetadata *headerMetadata)
-: ebucoreTypeGroup(headerMetadata, headerMetadata->createCSet(&setKey))
+: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
 {
     headerMetadata->add(this);
 }
 
 ebucoreTechnicalAttributeRationalBase::ebucoreTechnicalAttributeRationalBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: ebucoreTypeGroup(headerMetadata, cMetadataSet)
+: InterchangeObject(headerMetadata, cMetadataSet)
 {}
 
 ebucoreTechnicalAttributeRationalBase::~ebucoreTechnicalAttributeRationalBase()
@@ -66,8 +66,25 @@ mxfRational ebucoreTechnicalAttributeRationalBase::gettechnicalAttributeRational
     return getRationalItem(&MXF_ITEM_K(ebucoreTechnicalAttributeRational, technicalAttributeRationalValue));
 }
 
+bool ebucoreTechnicalAttributeRationalBase::havetechnicalAttributeTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTechnicalAttributeRational, technicalAttributeTypeGroup));
+}
+
+ebucoreTypeGroup* ebucoreTechnicalAttributeRationalBase::gettechnicalAttributeTypeGroup() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreTechnicalAttributeRational, technicalAttributeTypeGroup)));
+    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+}
+
 void ebucoreTechnicalAttributeRationalBase::settechnicalAttributeRationalValue(mxfRational value)
 {
     setRationalItem(&MXF_ITEM_K(ebucoreTechnicalAttributeRational, technicalAttributeRationalValue), value);
+}
+
+void ebucoreTechnicalAttributeRationalBase::settechnicalAttributeTypeGroup(ebucoreTypeGroup* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreTechnicalAttributeRational, technicalAttributeTypeGroup), value);
 }
 

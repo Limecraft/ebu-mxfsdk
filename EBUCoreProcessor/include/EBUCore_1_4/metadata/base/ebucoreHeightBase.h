@@ -29,12 +29,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCORECONTAINERFORMAT_H__
-#define __MXFPP_EBUCORECONTAINERFORMAT_H__
+#ifndef __MXFPP_EBUCOREHEIGHT_BASE_H__
+#define __MXFPP_EBUCOREHEIGHT_BASE_H__
 
 
 
-#include <EBUCore_1_4/metadata/base/ebucoreContainerFormatBase.h>
+#include <libMXF++/metadata/InterchangeObject.h>
 
 using namespace mxfpp;
 
@@ -42,20 +42,32 @@ namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_4 { namespace KLV
 {
 
 
-class ebucoreContainerFormat : public ebucoreContainerFormatBase
+class ebucoreHeightBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucoreContainerFormat>;
+    friend class MetadataSetFactory<ebucoreHeightBase>;
+    static const mxfKey setKey;
 
 public:
-    ebucoreContainerFormat(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreContainerFormat();
+    ebucoreHeightBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreHeightBase();
 
 
+   // getters
+
+   ebucoreDimension* getheightValue() const;
+   bool haveheightTypeGroup() const;
+   ebucoreTypeGroup* getheightTypeGroup() const;
+
+
+   // setters
+
+   void setheightValue(ebucoreDimension* value);
+   void setheightTypeGroup(ebucoreTypeGroup* value);
 
 
 protected:
-    ebucoreContainerFormat(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreHeightBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

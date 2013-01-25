@@ -171,14 +171,14 @@ mxfTimestamp ebucoreDateBase::getdateCopyrighted() const
     return getTimestampItem(&MXF_ITEM_K(ebucoreDate, dateCopyrighted));
 }
 
-bool ebucoreDateBase::haveyearCopytighted() const
+bool ebucoreDateBase::haveyearCopyrighted() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreDate, yearCopytighted));
+    return haveItem(&MXF_ITEM_K(ebucoreDate, yearCopyrighted));
 }
 
-mxfTimestamp ebucoreDateBase::getyearCopytighted() const
+mxfTimestamp ebucoreDateBase::getyearCopyrighted() const
 {
-    return getTimestampItem(&MXF_ITEM_K(ebucoreDate, yearCopytighted));
+    return getTimestampItem(&MXF_ITEM_K(ebucoreDate, yearCopyrighted));
 }
 
 bool ebucoreDateBase::havedateNote() const
@@ -263,9 +263,9 @@ void ebucoreDateBase::setdateCopyrighted(mxfTimestamp value)
     setTimestampItem(&MXF_ITEM_K(ebucoreDate, dateCopyrighted), value);
 }
 
-void ebucoreDateBase::setyearCopytighted(mxfTimestamp value)
+void ebucoreDateBase::setyearCopyrighted(mxfTimestamp value)
 {
-    setTimestampItem(&MXF_ITEM_K(ebucoreDate, yearCopytighted), value);
+    setTimestampItem(&MXF_ITEM_K(ebucoreDate, yearCopyrighted), value);
 }
 
 void ebucoreDateBase::setdateNote(std::string value)

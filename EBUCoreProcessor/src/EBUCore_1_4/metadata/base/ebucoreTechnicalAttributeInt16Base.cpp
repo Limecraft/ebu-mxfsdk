@@ -48,13 +48,13 @@ const mxfKey ebucoreTechnicalAttributeInt16Base::setKey = MXF_SET_K(ebucoreTechn
 
 
 ebucoreTechnicalAttributeInt16Base::ebucoreTechnicalAttributeInt16Base(HeaderMetadata *headerMetadata)
-: ebucoreTypeGroup(headerMetadata, headerMetadata->createCSet(&setKey))
+: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
 {
     headerMetadata->add(this);
 }
 
 ebucoreTechnicalAttributeInt16Base::ebucoreTechnicalAttributeInt16Base(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: ebucoreTypeGroup(headerMetadata, cMetadataSet)
+: InterchangeObject(headerMetadata, cMetadataSet)
 {}
 
 ebucoreTechnicalAttributeInt16Base::~ebucoreTechnicalAttributeInt16Base()
@@ -66,8 +66,25 @@ int16_t ebucoreTechnicalAttributeInt16Base::gettechnicalAttributeInt16Value() co
     return getInt16Item(&MXF_ITEM_K(ebucoreTechnicalAttributeInt16, technicalAttributeInt16Value));
 }
 
+bool ebucoreTechnicalAttributeInt16Base::havetechnicalAttributeTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTechnicalAttributeInt16, technicalAttributeTypeGroup));
+}
+
+ebucoreTypeGroup* ebucoreTechnicalAttributeInt16Base::gettechnicalAttributeTypeGroup() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreTechnicalAttributeInt16, technicalAttributeTypeGroup)));
+    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+}
+
 void ebucoreTechnicalAttributeInt16Base::settechnicalAttributeInt16Value(int16_t value)
 {
     setInt16Item(&MXF_ITEM_K(ebucoreTechnicalAttributeInt16, technicalAttributeInt16Value), value);
+}
+
+void ebucoreTechnicalAttributeInt16Base::settechnicalAttributeTypeGroup(ebucoreTypeGroup* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreTechnicalAttributeInt16, technicalAttributeTypeGroup), value);
 }
 

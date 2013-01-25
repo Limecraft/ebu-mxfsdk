@@ -29,12 +29,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCOREMIMETYPE_H__
-#define __MXFPP_EBUCOREMIMETYPE_H__
+#ifndef __MXFPP_EBUCOREWIDTH_H__
+#define __MXFPP_EBUCOREWIDTH_H__
 
 
 
-#include <EBUCore_1_4/metadata/base/ebucoreMimeTypeBase.h>
+#include <EBUCore_1_4/metadata/base/ebucoreWidthBase.h>
 
 using namespace mxfpp;
 
@@ -42,20 +42,20 @@ namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_4 { namespace KLV
 {
 
 
-class ebucoreMimeType : public ebucoreMimeTypeBase
+class ebucoreWidth : public ebucoreWidthBase
 {
 public:
-    friend class MetadataSetFactory<ebucoreMimeType>;
+    friend class MetadataSetFactory<ebucoreWidth>;
 
 public:
-    ebucoreMimeType(HeaderMetadata *headerMetadata);
-    virtual ~ebucoreMimeType();
+    ebucoreWidth(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreWidth();
 
 
 
 
 protected:
-    ebucoreMimeType(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucoreWidth(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

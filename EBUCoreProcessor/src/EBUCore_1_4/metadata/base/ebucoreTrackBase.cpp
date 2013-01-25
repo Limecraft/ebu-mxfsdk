@@ -81,16 +81,6 @@ std::string ebucoreTrackBase::gettrackName() const
     return getStringItem(&MXF_ITEM_K(ebucoreTrack, trackName));
 }
 
-bool ebucoreTrackBase::havetrackLanguageName() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreTrack, trackLanguageName));
-}
-
-std::string ebucoreTrackBase::gettrackLanguageName() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreTrack, trackLanguageName));
-}
-
 bool ebucoreTrackBase::havetrackLanguageCode() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreTrack, trackLanguageCode));
@@ -121,11 +111,6 @@ void ebucoreTrackBase::settrackID(std::string value)
 void ebucoreTrackBase::settrackName(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreTrack, trackName), value);
-}
-
-void ebucoreTrackBase::settrackLanguageName(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreTrack, trackLanguageName), value);
 }
 
 void ebucoreTrackBase::settrackLanguageCode(std::string value)

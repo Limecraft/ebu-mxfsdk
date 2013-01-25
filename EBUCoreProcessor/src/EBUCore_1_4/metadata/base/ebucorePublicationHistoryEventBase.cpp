@@ -148,11 +148,16 @@ bool ebucorePublicationHistoryEventBase::havepublicationRightsReference() const
     return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationRightsReference));
 }
 
-ebucoreRights* ebucorePublicationHistoryEventBase::getpublicationRightsReference() const
+std::vector<ebucoreRights*> ebucorePublicationHistoryEventBase::getpublicationRightsReference() const
 {
-    auto_ptr<MetadataSet> obj(getWeakRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationRightsReference)));
-    MXFPP_CHECK(dynamic_cast<ebucoreRights*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreRights*>(obj.release());
+    vector<ebucoreRights*> result;
+    auto_ptr<ObjectIterator> iter(getWeakRefArrayItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationRightsReference)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreRights*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreRights*>(iter->get()));
+    }
+    return result;
 }
 
 bool ebucorePublicationHistoryEventBase::havepublicationRegion() const
@@ -236,9 +241,15 @@ void ebucorePublicationHistoryEventBase::setpublicationFormatReference(ebucoreFo
     setWeakRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationFormatReference), value);
 }
 
-void ebucorePublicationHistoryEventBase::setpublicationRightsReference(ebucoreRights* value)
+void ebucorePublicationHistoryEventBase::setpublicationRightsReference(const std::vector<ebucoreRights*>& value)
 {
-    setWeakRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationRightsReference), value);
+    WrapObjectVectorIterator<ebucoreRights> iter(value);
+    setWeakRefArrayItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationRightsReference), &iter);
+}
+
+void ebucorePublicationHistoryEventBase::appendpublicationRightsReference(ebucoreRights* value)
+{
+    appendWeakRefArrayItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationRightsReference), value);
 }
 
 void ebucorePublicationHistoryEventBase::setpublicationRegion(const std::vector<ebucoreRegion*>& value)

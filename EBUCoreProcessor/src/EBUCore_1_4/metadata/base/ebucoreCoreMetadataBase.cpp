@@ -316,11 +316,11 @@ bool ebucoreCoreMetadataBase::havepublicationHistory() const
     return haveItem(&MXF_ITEM_K(ebucoreCoreMetadata, publicationHistory));
 }
 
-ebucorePublicationHistoryEvent* ebucoreCoreMetadataBase::getpublicationHistory() const
+ebucorePublicationHistory* ebucoreCoreMetadataBase::getpublicationHistory() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreCoreMetadata, publicationHistory)));
-    MXFPP_CHECK(dynamic_cast<ebucorePublicationHistoryEvent*>(obj.get()) != 0);
-    return dynamic_cast<ebucorePublicationHistoryEvent*>(obj.release());
+    MXFPP_CHECK(dynamic_cast<ebucorePublicationHistory*>(obj.get()) != 0);
+    return dynamic_cast<ebucorePublicationHistory*>(obj.release());
 }
 
 bool ebucoreCoreMetadataBase::havecustomRelation() const
@@ -550,7 +550,7 @@ void ebucoreCoreMetadataBase::setversion(ebucoreVersion* value)
     setStrongRefItem(&MXF_ITEM_K(ebucoreCoreMetadata, version), value);
 }
 
-void ebucoreCoreMetadataBase::setpublicationHistory(ebucorePublicationHistoryEvent* value)
+void ebucoreCoreMetadataBase::setpublicationHistory(ebucorePublicationHistory* value)
 {
     setStrongRefItem(&MXF_ITEM_K(ebucoreCoreMetadata, publicationHistory), value);
 }

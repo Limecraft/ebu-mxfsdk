@@ -81,16 +81,6 @@ std::string ebucoreCaptioningBase::getcaptioningFormatName() const
     return getStringItem(&MXF_ITEM_K(ebucoreCaptioning, captioningFormatName));
 }
 
-bool ebucoreCaptioningBase::havecaptioningFormatDefinition() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreCaptioning, captioningFormatDefinition));
-}
-
-std::string ebucoreCaptioningBase::getcaptioningFormatDefinition() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreCaptioning, captioningFormatDefinition));
-}
-
 bool ebucoreCaptioningBase::havecaptioningSourceUri() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreCaptioning, captioningSourceUri));
@@ -101,14 +91,24 @@ std::string ebucoreCaptioningBase::getcaptioningSourceUri() const
     return getStringItem(&MXF_ITEM_K(ebucoreCaptioning, captioningSourceUri));
 }
 
-bool ebucoreCaptioningBase::havecaptioningLanguageName() const
+bool ebucoreCaptioningBase::havecaptioningTrackID() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreCaptioning, captioningLanguageName));
+    return haveItem(&MXF_ITEM_K(ebucoreCaptioning, captioningTrackID));
 }
 
-std::string ebucoreCaptioningBase::getcaptioningLanguageName() const
+std::string ebucoreCaptioningBase::getcaptioningTrackID() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreCaptioning, captioningLanguageName));
+    return getStringItem(&MXF_ITEM_K(ebucoreCaptioning, captioningTrackID));
+}
+
+bool ebucoreCaptioningBase::havecaptioningTrackName() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreCaptioning, captioningTrackName));
+}
+
+std::string ebucoreCaptioningBase::getcaptioningTrackName() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreCaptioning, captioningTrackName));
 }
 
 bool ebucoreCaptioningBase::havecaptioningLanguageCode() const
@@ -133,6 +133,18 @@ ebucoreTypeGroup* ebucoreCaptioningBase::getcaptioningTypeGroup() const
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
+bool ebucoreCaptioningBase::havecaptioningFormatGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreCaptioning, captioningFormatGroup));
+}
+
+ebucoreFormatGroup* ebucoreCaptioningBase::getcaptioningFormatGroup() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreCaptioning, captioningFormatGroup)));
+    MXFPP_CHECK(dynamic_cast<ebucoreFormatGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreFormatGroup*>(obj.release());
+}
+
 void ebucoreCaptioningBase::setcaptioningFormatID(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreCaptioning, captioningFormatID), value);
@@ -143,19 +155,19 @@ void ebucoreCaptioningBase::setcaptioningFormatName(std::string value)
     setStringItem(&MXF_ITEM_K(ebucoreCaptioning, captioningFormatName), value);
 }
 
-void ebucoreCaptioningBase::setcaptioningFormatDefinition(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreCaptioning, captioningFormatDefinition), value);
-}
-
 void ebucoreCaptioningBase::setcaptioningSourceUri(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreCaptioning, captioningSourceUri), value);
 }
 
-void ebucoreCaptioningBase::setcaptioningLanguageName(std::string value)
+void ebucoreCaptioningBase::setcaptioningTrackID(std::string value)
 {
-    setStringItem(&MXF_ITEM_K(ebucoreCaptioning, captioningLanguageName), value);
+    setStringItem(&MXF_ITEM_K(ebucoreCaptioning, captioningTrackID), value);
+}
+
+void ebucoreCaptioningBase::setcaptioningTrackName(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreCaptioning, captioningTrackName), value);
 }
 
 void ebucoreCaptioningBase::setcaptioningLanguageCode(std::string value)
@@ -166,5 +178,10 @@ void ebucoreCaptioningBase::setcaptioningLanguageCode(std::string value)
 void ebucoreCaptioningBase::setcaptioningTypeGroup(ebucoreTypeGroup* value)
 {
     setStrongRefItem(&MXF_ITEM_K(ebucoreCaptioning, captioningTypeGroup), value);
+}
+
+void ebucoreCaptioningBase::setcaptioningFormatGroup(ebucoreFormatGroup* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreCaptioning, captioningFormatGroup), value);
 }
 

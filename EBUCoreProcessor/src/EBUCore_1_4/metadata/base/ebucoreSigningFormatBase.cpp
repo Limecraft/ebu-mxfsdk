@@ -61,6 +61,36 @@ ebucoreSigningFormatBase::~ebucoreSigningFormatBase()
 {}
 
 
+bool ebucoreSigningFormatBase::havesigningFormatID() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreSigningFormat, signingFormatID));
+}
+
+std::string ebucoreSigningFormatBase::getsigningFormatID() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreSigningFormat, signingFormatID));
+}
+
+bool ebucoreSigningFormatBase::havesigningFormatVersionID() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreSigningFormat, signingFormatVersionID));
+}
+
+std::string ebucoreSigningFormatBase::getsigningFormatVersionID() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreSigningFormat, signingFormatVersionID));
+}
+
+bool ebucoreSigningFormatBase::havesigningFormatName() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreSigningFormat, signingFormatName));
+}
+
+std::string ebucoreSigningFormatBase::getsigningFormatName() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreSigningFormat, signingFormatName));
+}
+
 bool ebucoreSigningFormatBase::havesigningTrackID() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreSigningFormat, signingTrackID));
@@ -79,16 +109,6 @@ bool ebucoreSigningFormatBase::havesigningTrackName() const
 std::string ebucoreSigningFormatBase::getsigningTrackName() const
 {
     return getStringItem(&MXF_ITEM_K(ebucoreSigningFormat, signingTrackName));
-}
-
-bool ebucoreSigningFormatBase::havesigningTrackLanguageName() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreSigningFormat, signingTrackLanguageName));
-}
-
-std::string ebucoreSigningFormatBase::getsigningTrackLanguageName() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucoreSigningFormat, signingTrackLanguageName));
 }
 
 bool ebucoreSigningFormatBase::havesigningTrackLanguageCode() const
@@ -135,6 +155,21 @@ ebucoreFormatGroup* ebucoreSigningFormatBase::getsigningFormatGroup() const
     return dynamic_cast<ebucoreFormatGroup*>(obj.release());
 }
 
+void ebucoreSigningFormatBase::setsigningFormatID(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreSigningFormat, signingFormatID), value);
+}
+
+void ebucoreSigningFormatBase::setsigningFormatVersionID(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreSigningFormat, signingFormatVersionID), value);
+}
+
+void ebucoreSigningFormatBase::setsigningFormatName(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreSigningFormat, signingFormatName), value);
+}
+
 void ebucoreSigningFormatBase::setsigningTrackID(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreSigningFormat, signingTrackID), value);
@@ -143,11 +178,6 @@ void ebucoreSigningFormatBase::setsigningTrackID(std::string value)
 void ebucoreSigningFormatBase::setsigningTrackName(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreSigningFormat, signingTrackName), value);
-}
-
-void ebucoreSigningFormatBase::setsigningTrackLanguageName(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreSigningFormat, signingTrackLanguageName), value);
 }
 
 void ebucoreSigningFormatBase::setsigningTrackLanguageCode(std::string value)

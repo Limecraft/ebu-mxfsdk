@@ -29,62 +29,37 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#include <memory>
-
-#include <libMXF++/MXF.h>
-#include <EBUCore_1_4/metadata/EBUCoreDMS++.h>
+#ifndef __MXFPP_EBUCOREHEIGHT_H__
+#define __MXFPP_EBUCOREHEIGHT_H__
 
 
-using namespace std;
+
+#include <EBUCore_1_4/metadata/base/ebucoreHeightBase.h>
+
 using namespace mxfpp;
-using namespace EBUSDK::EBUCore::EBUCore_1_4::KLV;
 
-
-const mxfKey ebucoreLocatorBase::setKey = MXF_SET_K(ebucoreLocator);
-
-
-ebucoreLocatorBase::ebucoreLocatorBase(HeaderMetadata *headerMetadata)
-: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
+namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_4 { namespace KLV
 {
-    headerMetadata->add(this);
-}
-
-ebucoreLocatorBase::ebucoreLocatorBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: InterchangeObject(headerMetadata, cMetadataSet)
-{}
-
-ebucoreLocatorBase::~ebucoreLocatorBase()
-{}
 
 
-std::string ebucoreLocatorBase::getlocatorLocation() const
+class ebucoreHeight : public ebucoreHeightBase
 {
-    return getStringItem(&MXF_ITEM_K(ebucoreLocator, locatorLocation));
-}
+public:
+    friend class MetadataSetFactory<ebucoreHeight>;
 
-bool ebucoreLocatorBase::havelocatorTypeGroup() const
-{
-    return haveItem(&MXF_ITEM_K(ebucoreLocator, locatorTypeGroup));
-}
+public:
+    ebucoreHeight(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreHeight();
 
-ebucoreTypeGroup* ebucoreLocatorBase::getlocatorTypeGroup() const
-{
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreLocator, locatorTypeGroup)));
-    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
-}
 
-void ebucoreLocatorBase::setlocatorLocation(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucoreLocator, locatorLocation), value);
-}
 
-void ebucoreLocatorBase::setlocatorTypeGroup(ebucoreTypeGroup* value)
-{
-    setStrongRefItem(&MXF_ITEM_K(ebucoreLocator, locatorTypeGroup), value);
-}
 
+protected:
+    ebucoreHeight(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+};
+
+
+}}}};
+
+
+#endif

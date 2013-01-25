@@ -48,13 +48,13 @@ const mxfKey ebucoreTechnicalAttributeUInt32Base::setKey = MXF_SET_K(ebucoreTech
 
 
 ebucoreTechnicalAttributeUInt32Base::ebucoreTechnicalAttributeUInt32Base(HeaderMetadata *headerMetadata)
-: ebucoreTypeGroup(headerMetadata, headerMetadata->createCSet(&setKey))
+: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
 {
     headerMetadata->add(this);
 }
 
 ebucoreTechnicalAttributeUInt32Base::ebucoreTechnicalAttributeUInt32Base(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: ebucoreTypeGroup(headerMetadata, cMetadataSet)
+: InterchangeObject(headerMetadata, cMetadataSet)
 {}
 
 ebucoreTechnicalAttributeUInt32Base::~ebucoreTechnicalAttributeUInt32Base()
@@ -66,8 +66,25 @@ uint32_t ebucoreTechnicalAttributeUInt32Base::gettechnicalAttributeUInt32Value()
     return getUInt32Item(&MXF_ITEM_K(ebucoreTechnicalAttributeUInt32, technicalAttributeUInt32Value));
 }
 
+bool ebucoreTechnicalAttributeUInt32Base::havetechnicalAttributeTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTechnicalAttributeUInt32, technicalAttributeTypeGroup));
+}
+
+ebucoreTypeGroup* ebucoreTechnicalAttributeUInt32Base::gettechnicalAttributeTypeGroup() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreTechnicalAttributeUInt32, technicalAttributeTypeGroup)));
+    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+}
+
 void ebucoreTechnicalAttributeUInt32Base::settechnicalAttributeUInt32Value(uint32_t value)
 {
     setUInt32Item(&MXF_ITEM_K(ebucoreTechnicalAttributeUInt32, technicalAttributeUInt32Value), value);
+}
+
+void ebucoreTechnicalAttributeUInt32Base::settechnicalAttributeTypeGroup(ebucoreTypeGroup* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreTechnicalAttributeUInt32, technicalAttributeTypeGroup), value);
 }
 

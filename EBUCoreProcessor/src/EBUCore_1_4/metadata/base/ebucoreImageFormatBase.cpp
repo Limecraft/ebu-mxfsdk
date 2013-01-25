@@ -118,16 +118,11 @@ bool ebucoreImageFormatBase::haveimageEncoding() const
     return haveItem(&MXF_ITEM_K(ebucoreImageFormat, imageEncoding));
 }
 
-std::vector<ebucoreEncoding*> ebucoreImageFormatBase::getimageEncoding() const
+ebucoreTypeGroup* ebucoreImageFormatBase::getimageEncoding() const
 {
-    vector<ebucoreEncoding*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreImageFormat, imageEncoding)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreEncoding*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreEncoding*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreImageFormat, imageEncoding)));
+    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
 bool ebucoreImageFormatBase::haveimageCodec() const
@@ -412,15 +407,9 @@ void ebucoreImageFormatBase::setimageAspectRatio(ebucoreAspectRatio* value)
     setStrongRefItem(&MXF_ITEM_K(ebucoreImageFormat, imageAspectRatio), value);
 }
 
-void ebucoreImageFormatBase::setimageEncoding(const std::vector<ebucoreEncoding*>& value)
+void ebucoreImageFormatBase::setimageEncoding(ebucoreTypeGroup* value)
 {
-    WrapObjectVectorIterator<ebucoreEncoding> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreImageFormat, imageEncoding), &iter);
-}
-
-void ebucoreImageFormatBase::appendimageEncoding(ebucoreEncoding* value)
-{
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreImageFormat, imageEncoding), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreImageFormat, imageEncoding), value);
 }
 
 void ebucoreImageFormatBase::setimageCodec(ebucoreCodec* value)

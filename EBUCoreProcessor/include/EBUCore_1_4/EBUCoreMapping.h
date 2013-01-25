@@ -3,7 +3,7 @@
 
 //#include "EBU_CORE_20110915.hxx"
 //#include "EBU_CORE_20120403.hxx"
-#include <EBUCore_1_4/xsd/EBU_CORE_20120817.hxx>
+#include <EBUCore_1_4/xsd/EBU_CORE_20121219.hxx>
 
 #include <MXFCustomMetadata.h>
 #include <EBUCore_1_4/metadata/EBUCoreDMS++.h>

@@ -29,52 +29,37 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#include <memory>
-
-#include <libMXF++/MXF.h>
-#include <EBUCore_1_4/metadata/EBUCoreDMS++.h>
+#ifndef __MXFPP_EBUCORESUBTITLING_H__
+#define __MXFPP_EBUCORESUBTITLING_H__
 
 
-using namespace std;
+
+#include <EBUCore_1_4/metadata/base/ebucoreSubtitlingBase.h>
+
 using namespace mxfpp;
-using namespace EBUSDK::EBUCore::EBUCore_1_4::KLV;
 
-
-const mxfKey ebucoreContainerFormatBase::setKey = MXF_SET_K(ebucoreContainerFormat);
-
-
-ebucoreContainerFormatBase::ebucoreContainerFormatBase(HeaderMetadata *headerMetadata)
-: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
+namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_4 { namespace KLV
 {
-    headerMetadata->add(this);
-}
-
-ebucoreContainerFormatBase::ebucoreContainerFormatBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: InterchangeObject(headerMetadata, cMetadataSet)
-{}
-
-ebucoreContainerFormatBase::~ebucoreContainerFormatBase()
-{}
 
 
-bool ebucoreContainerFormatBase::havecontainerFormatGroup() const
+class ebucoreSubtitling : public ebucoreSubtitlingBase
 {
-    return haveItem(&MXF_ITEM_K(ebucoreContainerFormat, containerFormatGroup));
-}
+public:
+    friend class MetadataSetFactory<ebucoreSubtitling>;
 
-ebucoreFormatGroup* ebucoreContainerFormatBase::getcontainerFormatGroup() const
-{
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreContainerFormat, containerFormatGroup)));
-    MXFPP_CHECK(dynamic_cast<ebucoreFormatGroup*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreFormatGroup*>(obj.release());
-}
+public:
+    ebucoreSubtitling(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreSubtitling();
 
-void ebucoreContainerFormatBase::setcontainerFormatGroup(ebucoreFormatGroup* value)
-{
-    setStrongRefItem(&MXF_ITEM_K(ebucoreContainerFormat, containerFormatGroup), value);
-}
 
+
+
+protected:
+    ebucoreSubtitling(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+};
+
+
+}}}};
+
+
+#endif

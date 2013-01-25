@@ -29,29 +29,49 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#include <libMXF++/MXF.h>
-#include <EBUCore_1_4/metadata/EBUCoreDMS++.h>
+#ifndef __MXFPP_EBUCOREWIDTH_BASE_H__
+#define __MXFPP_EBUCOREWIDTH_BASE_H__
 
 
-using namespace std;
+
+#include <libMXF++/metadata/InterchangeObject.h>
+
 using namespace mxfpp;
-using namespace EBUSDK::EBUCore::EBUCore_1_4::KLV;
+
+namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_4 { namespace KLV
+{
 
 
+class ebucoreWidthBase : public InterchangeObject
+{
+public:
+    friend class MetadataSetFactory<ebucoreWidthBase>;
+    static const mxfKey setKey;
 
-ebucoreContainerFormat::ebucoreContainerFormat(HeaderMetadata *headerMetadata)
-: ebucoreContainerFormatBase(headerMetadata)
-{}
-
-ebucoreContainerFormat::ebucoreContainerFormat(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: ebucoreContainerFormatBase(headerMetadata, cMetadataSet)
-{}
-
-ebucoreContainerFormat::~ebucoreContainerFormat()
-{}
+public:
+    ebucoreWidthBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucoreWidthBase();
 
 
+   // getters
+
+   ebucoreDimension* getwidthValue() const;
+   bool havewidthTypeGroup() const;
+   ebucoreTypeGroup* getwidthTypeGroup() const;
+
+
+   // setters
+
+   void setwidthValue(ebucoreDimension* value);
+   void setwidthTypeGroup(ebucoreTypeGroup* value);
+
+
+protected:
+    ebucoreWidthBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+};
+
+
+}}}};
+
+
+#endif

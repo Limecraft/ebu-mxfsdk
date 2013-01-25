@@ -118,11 +118,16 @@ bool ebucoreTargetAudienceBase::havetargetAudienceRegion() const
     return haveItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceRegion));
 }
 
-ebucoreRegion* ebucoreTargetAudienceBase::gettargetAudienceRegion() const
+std::vector<ebucoreRegion*> ebucoreTargetAudienceBase::gettargetAudienceRegion() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceRegion)));
-    MXFPP_CHECK(dynamic_cast<ebucoreRegion*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreRegion*>(obj.release());
+    vector<ebucoreRegion*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceRegion)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreRegion*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreRegion*>(iter->get()));
+    }
+    return result;
 }
 
 void ebucoreTargetAudienceBase::settargetAudienceReason(std::string value)
@@ -150,8 +155,14 @@ void ebucoreTargetAudienceBase::settargetAudienceTypeGroup(ebucoreTypeGroup* val
     setStrongRefItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceTypeGroup), value);
 }
 
-void ebucoreTargetAudienceBase::settargetAudienceRegion(ebucoreRegion* value)
+void ebucoreTargetAudienceBase::settargetAudienceRegion(const std::vector<ebucoreRegion*>& value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceRegion), value);
+    WrapObjectVectorIterator<ebucoreRegion> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceRegion), &iter);
+}
+
+void ebucoreTargetAudienceBase::appendtargetAudienceRegion(ebucoreRegion* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreTargetAudience, targetAudienceRegion), value);
 }
 

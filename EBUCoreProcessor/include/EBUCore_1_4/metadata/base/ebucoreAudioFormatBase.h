@@ -71,12 +71,14 @@ public:
    uint16_t getaudioTotalNumberOfChannels() const;
    bool haveaudioBitRate() const;
    uint64_t getaudioBitRate() const;
+   bool haveaudioMaxBitRate() const;
+   uint64_t getaudioMaxBitRate() const;
    bool haveaudioBitRateMode() const;
    std::string getaudioBitRateMode() const;
    bool haveaudioSamplingRate() const;
    mxfRational getaudioSamplingRate() const;
    bool haveaudioEncoding() const;
-   std::vector<ebucoreEncoding*> getaudioEncoding() const;
+   ebucoreTypeGroup* getaudioEncoding() const;
    bool haveaudioCodec() const;
    ebucoreCodec* getaudioCodec() const;
    bool haveaudioTrack() const;
@@ -119,10 +121,10 @@ public:
    void setaudioSamplingType(std::string value);
    void setaudioTotalNumberOfChannels(uint16_t value);
    void setaudioBitRate(uint64_t value);
+   void setaudioMaxBitRate(uint64_t value);
    void setaudioBitRateMode(std::string value);
    void setaudioSamplingRate(mxfRational value);
-   void setaudioEncoding(const std::vector<ebucoreEncoding*>& value);
-   void appendaudioEncoding(ebucoreEncoding* value);
+   void setaudioEncoding(ebucoreTypeGroup* value);
    void setaudioCodec(ebucoreCodec* value);
    void setaudioTrack(const std::vector<ebucoreTrack*>& value);
    void appendaudioTrack(ebucoreTrack* value);

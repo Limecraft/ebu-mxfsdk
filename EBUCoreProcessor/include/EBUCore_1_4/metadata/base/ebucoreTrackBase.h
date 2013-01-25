@@ -59,8 +59,6 @@ public:
    std::string gettrackID() const;
    bool havetrackName() const;
    std::string gettrackName() const;
-   bool havetrackLanguageName() const;
-   std::string gettrackLanguageName() const;
    bool havetrackLanguageCode() const;
    std::string gettrackLanguageCode() const;
    bool havetrackTypeGroup() const;
@@ -71,7 +69,6 @@ public:
 
    void settrackID(std::string value);
    void settrackName(std::string value);
-   void settrackLanguageName(std::string value);
    void settrackLanguageCode(std::string value);
    void settrackTypeGroup(ebucoreTypeGroup* value);
 

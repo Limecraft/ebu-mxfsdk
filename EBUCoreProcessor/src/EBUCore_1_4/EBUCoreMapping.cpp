@@ -36,6 +36,12 @@ namespace EBUCore_1_4 {
 		mapMethod(source.sourceProperty(), obj, mod);	\
 		dest->destProperty(obj);	\
 	}
+#define NEW_OBJECT_AND_ASSIGN_DIRECT(source, destType, mapMethod, dest, destProperty) \
+	{	\
+		destType *obj = newAndModifyObject<destType>(dest->getHeaderMetadata(), mod);	\
+		mapMethod(source, obj, mod);	\
+		dest->destProperty(obj);	\
+	}
 
 #define NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, sourceProperty, destType, mapMethod, dest, destProperty) \
 	if (source.sourceProperty().present()) {	\
@@ -45,13 +51,14 @@ namespace EBUCore_1_4 {
 	}
 
 #define NEW_VECTOR_AND_ASSIGN(source, sourceProperty, destType, iteratorType, mapMethod, dest, destProperty)	\
-	{ std::vector<destType*> vec_dest_destProperty;	\
-	for (iteratorType it = source.sourceProperty().begin(); it != source.sourceProperty().end(); it++) {	\
-		destType *obj = newAndModifyObject<destType>(dest->getHeaderMetadata(), mod);	\
-		mapMethod(*it, obj, mod);	\
-		vec_dest_destProperty.push_back(obj);	\
-	}	\
-	dest->destProperty(vec_dest_destProperty); }
+	if (source.sourceProperty().size() > 0)	\
+	{   std::vector<destType*> vec_dest_destProperty;	\
+		for (iteratorType it = source.sourceProperty().begin(); it != source.sourceProperty().end(); it++) {	\
+			destType *obj = newAndModifyObject<destType>(dest->getHeaderMetadata(), mod);	\
+			mapMethod(*it, obj, mod);	\
+			vec_dest_destProperty.push_back(obj);	\
+		}	\
+		dest->destProperty(vec_dest_destProperty); }
 
 #define NEW_VECTOR_AND_APPEND(source, sourceProperty, destType, iteratorType, mapMethod, dest, destVector)	\
 	{ \
@@ -118,8 +125,10 @@ template <class T> T* newAndModifyObject(HeaderMetadata *headerMetadata, ObjectM
 	return obj;
 }
 
-void mapRole(role& source, ebucoreTypeGroup *dest, ObjectModifier* mod = NULL) {
-	MAP_TYPE_GROUP(source, dest)
+void mapRole(role& source, ebucoreRole *dest, ObjectModifier* mod = NULL) {
+	// [TODO]
+	// [XSD] Fix attribute type of costcenter to string so we can map it here
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setroleTypeGroup)
 }
 
 void mapTextualAnnotation(std::string source, ebucoreTextualAnnotation *dest, ObjectModifier* mod = NULL) {
@@ -132,39 +141,32 @@ void mapTextualAnnotation(dc::elementType source, ebucoreTextualAnnotation *dest
 	dest->settextLanguage(source.lang());
 }
 
+void mapCountry(country& source, ebucoreCountry *dest, ObjectModifier* mod = NULL) {
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setcountryTypeGroup)
+}
+
+void mapCountry(regionType::country_type& source, ebucoreCountry *dest, ObjectModifier* mod = NULL) {
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setcountryTypeGroup)
+}
+
 void mapAddress(addressType& source, ebucoreAddress *dest, ObjectModifier* mod = NULL) {
 
 	if (source.addressLine().size() > 0) {
 		NEW_VECTOR_AND_ASSIGN(source, addressLine, ebucoreTextualAnnotation, addressType::addressLine_iterator, mapTextualAnnotation, dest, setaddressLines)
 	}
 	
-	SIMPLE_MAP_OPTIONAL(source, addressTownCity, dest, settownCity)
-	SIMPLE_MAP_OPTIONAL(source, addressCountyState, dest, setcountyState)
+	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, addressTownCity, ebucoreTextualAnnotation, mapTextualAnnotation, dest, settownCity)
+	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, addressCountyState, ebucoreTextualAnnotation, mapTextualAnnotation, dest, setcountyState)
 	SIMPLE_MAP_OPTIONAL(source, addressDeliveryCode, dest, setdeliveryCode)
-
-	// special treatment for country, current KLV mapping is not via a typeGroup!
-	if (source.country().present()) {
-		addressType::country_type& c = source.country().get();
-		SIMPLE_MAP_OPTIONAL(c, typeLink, dest, setcountryCode)
-		SIMPLE_MAP_OPTIONAL(c, typeLabel, dest, setcountryName)
-	}
+	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, country, ebucoreCountry, mapCountry, dest, setcountry)
 }
 
 void mapDetails(detailsType& source, ebucoreContactDetails *dest, ObjectModifier* mod = NULL) {
-	/*
-		<sequence>
-			<element name="emailAddress" type="string" minOccurs="0">
-			</element>
-			<element name="webAddress" type="string" minOccurs="0">
-			</element>
-			<element name="address" type="ebucore:addressType" minOccurs="0">
-			</element>
-			<element name="telephoneNumber" type="string" minOccurs="0"/>
-			<element name="mobileTelephoneNumber" type="string" minOccurs="0"/>
-		</sequence>
-		<attributeGroup ref="ebucore:typeGroup"/>
-	*/
-	NEW_VECTOR_AND_ASSIGN(source, emailAddress, ebucoreTextualAnnotation, detailsType::emailAddress_iterator, mapTextualAnnotation, dest, setemailAddress)
+	
+	if (source.emailAddress().size() > 0) {
+		dest->setemailAddress(source.emailAddress()[0]);
+	}
+	
 	SIMPLE_MAP_OPTIONAL(source, webAddress, dest, setwebAddress)
 
 	// map address
@@ -175,23 +177,47 @@ void mapDetails(detailsType& source, ebucoreContactDetails *dest, ObjectModifier
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setdetailsType)
 }
 
+void mapName(compoundNameType& source, ebucoreCompoundName *dest, ObjectModifier* mod = NULL) {
+	dest->setcompoundName(source);
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setcompoundNameTypeGroup)
+	MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, setcompoundNameFormatGroup)
+}
+
+void mapIdentifier(identifierType& source, ebucoreIdentifier *dest, ObjectModifier* mod = NULL);
+
+void mapBasicLink(relatedInformationLink& source, ebucoreBasicLink *dest, ObjectModifier* mod = NULL) {
+	dest->setbasicLinkURI(source);
+}
+
+void mapBasicLink(relatedInformationLink1& source, ebucoreBasicLink *dest, ObjectModifier* mod = NULL) {
+	dest->setbasicLinkURI(source);
+}
+
 void mapContact(contactDetailsType& source, ebucoreContact *dest, ObjectModifier* mod = NULL) {
 
 	SIMPLE_MAP_OPTIONAL(source, contactId, dest, setcontactId)
 
-	SIMPLE_MAP_OPTIONAL(source, name, dest, setcontactName)
+	NEW_VECTOR_AND_ASSIGN(source, name, ebucoreCompoundName, contactDetailsType::name_iterator, mapName, dest, setcontactName)
+
 	SIMPLE_MAP_OPTIONAL(source, givenName, dest, setgivenName)
 	SIMPLE_MAP_OPTIONAL(source, familyName, dest, setfamilyName)
 	SIMPLE_MAP_OPTIONAL(source, suffix, dest, setsuffix)
 	SIMPLE_MAP_OPTIONAL(source, salutation, dest, setsalutation)
+	SIMPLE_MAP_OPTIONAL(source, guest, dest, setguestFlag)
 
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, gender, ebucoreTextualAnnotation, mapTextualAnnotation, dest, setgender)
 	NEW_VECTOR_AND_ASSIGN(source, otherGivenName, ebucoreTextualAnnotation, contactDetailsType::otherGivenName_iterator, mapTextualAnnotation, dest, setotherGivenName)
-	NEW_VECTOR_AND_ASSIGN(source, username, ebucoreTextualAnnotation, contactDetailsType::username_iterator, mapTextualAnnotation, dest, setusername)
+	
+	if (source.username().size() > 0) {
+		dest->setusername(source.username()[0]);
+	}
 	SIMPLE_MAP_OPTIONAL(source, occupation, dest, setoccupation)
 	NEW_VECTOR_AND_ASSIGN(source, details, ebucoreContactDetails, contactDetailsType::details_sequence::iterator, mapDetails, dest, setcontactDetails)
 	NEW_VECTOR_AND_ASSIGN(source, stageName, ebucoreTextualAnnotation, contactDetailsType::stageName_iterator, mapTextualAnnotation, dest, setstageName)
 	NEW_VECTOR_AND_ASSIGN(source, relatedContacts, ebucoreEntity, contactDetailsType::relatedContacts_iterator, mapEntity, dest, setcontactRelatedContacts)
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setcontactType)
+
+	NEW_VECTOR_AND_ASSIGN(source, relatedInformationLink, ebucoreBasicLink, contactDetailsType::relatedInformationLink_iterator, mapBasicLink, dest, setcontactRelatedInformationLink)
 }
 
 void mapOrganisationDepartment(organisationDepartment& source, ebucoreOrganisationDepartment *dest, ObjectModifier* mod = NULL) {
@@ -202,13 +228,12 @@ void mapOrganisationDepartment(organisationDepartment& source, ebucoreOrganisati
 void mapOrganisation(organisationDetailsType& source, ebucoreOrganisation *dest, ObjectModifier* mod = NULL) {
 
 	// [TODO] The KLV mapping is somewhat inconsistent at this point with the XSD:
-	//		- XSD does not define an organisationCode
 	//		- XSD departmentId is not present in KLV
 
 	SIMPLE_MAP_OPTIONAL(source, organisationId, dest, setorganisationId)
 
-	NEW_VECTOR_AND_ASSIGN(source, organisationName, ebucoreTextualAnnotation, organisationDetailsType::organisationName_iterator, mapTextualAnnotation, dest, setorganisationName)
-	NEW_VECTOR_AND_ASSIGN(source, organisationCode, ebucoreTextualAnnotation, organisationDetailsType::organisationCode_iterator, mapTextualAnnotation, dest, setorganisationCode)
+	NEW_VECTOR_AND_ASSIGN(source, organisationName, ebucoreCompoundName, organisationDetailsType::organisationName_iterator, mapName, dest, setorganisationName)
+	NEW_VECTOR_AND_ASSIGN(source, organisationCode, ebucoreIdentifier, organisationDetailsType::organisationCode_iterator, mapIdentifier, dest, setorganisationCode)
 
 	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, organisationDepartment, ebucoreOrganisationDepartment, mapOrganisationDepartment, dest, setorganisationDepartment)
 
@@ -216,13 +241,16 @@ void mapOrganisation(organisationDetailsType& source, ebucoreOrganisation *dest,
 	NEW_VECTOR_AND_ASSIGN(source, contacts, ebucoreEntity, organisationDetailsType::contacts_iterator, mapEntity, dest, setorganisationRelatedContacts)
 
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setorganisationType)
+
+	NEW_VECTOR_AND_ASSIGN(source, relatedInformationLink, ebucoreBasicLink, organisationDetailsType::relatedInformationLink_iterator, 
+		mapBasicLink, dest, setorganisationRelatedInformationLink)
 }
 
 void mapEntity(entityType& source, ebucoreEntity *dest, ObjectModifier* mod) {
 	SIMPLE_MAP_OPTIONAL(source, entityId, dest, setentityId)
 	NEW_VECTOR_AND_ASSIGN(source, contactDetails, ebucoreContact, entityType::contactDetails_iterator, mapContact, dest, setentityContact)
 	NEW_VECTOR_AND_ASSIGN(source, organisationDetails, ebucoreOrganisation, entityType::organisationDetails_iterator, mapOrganisation, dest, setentityOrganisation)
-	NEW_VECTOR_AND_ASSIGN(source, role, ebucoreTypeGroup, entityType::role_iterator, mapRole, dest, setentityRole)
+	NEW_VECTOR_AND_ASSIGN(source, role, ebucoreRole, entityType::role_iterator, mapRole, dest, setentityRole)
 }
 
 void mapMetadataSchemeInformation(ebuCoreMainType& source, ebucoreMetadataSchemeInformation *dest, ObjectModifier* mod) {
@@ -374,18 +402,14 @@ void mapAlternativeTitle(alternativeTitleType& source, ebucoreAlternativeTitle *
 	MAP_NEW_STATUS_GROUP_AND_ASSIGN(source, dest, setalternativeTitleStatusGroup)
 }
 
-void mapIdentifier(identifierType& source, ebucoreIdentifier *dest, ObjectModifier* mod = NULL) {
+void mapIdentifier(identifierType& source, ebucoreIdentifier *dest, ObjectModifier* mod) {
 	SIMPLE_MAP_NO_GET(source, identifier, dest, setidentifierValue)
 	SIMPLE_MAP_OPTIONAL(source, note, dest, setidentifierNote)
 
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setidentifierTypeGroup)
 	MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, setidentifierFormatGroup)
 
-	if (source.attributor().present()) {
-		ebucoreEntity *obj = newAndModifyObject<ebucoreEntity>(dest->getHeaderMetadata(), mod);
-		mapEntity(source.attributor().get(), obj);
-		dest->setidentifierAttributorEntity(obj);
-	}
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, attributor, ebucoreEntity, mapEntity, dest, setidentifierAttributorEntity)
 }
 
 void mapDescription(descriptionType& source, ebucoreDescription *dest, ObjectModifier* mod = NULL) {
@@ -395,76 +419,80 @@ void mapDescription(descriptionType& source, ebucoreDescription *dest, ObjectMod
 }
 
 void mapSubject(subjectType& source, ebucoreSubject *dest, ObjectModifier* mod = NULL) {
-	NEW_OBJECT_AND_ASSIGN(source, subject, ebucoreTextualAnnotation, mapTextualAnnotation, dest, setsubjectValue)
+	NEW_VECTOR_AND_ASSIGN(source, subject, ebucoreTextualAnnotation, subjectType::subject_const_iterator, mapTextualAnnotation, dest, setsubjectValue)
 
 	SIMPLE_MAP_OPTIONAL(source, subjectCode, dest, setsubjectCode)
-	SIMPLE_MAP_OPTIONAL(source, subjectDefinition, dest, setsubjectDefinition)
+	NEW_VECTOR_AND_ASSIGN(source, subjectDefinition, ebucoreTextualAnnotation, subjectType::subjectDefinition_const_iterator, mapTextualAnnotation, dest, setsubjectDefinition)
 	SIMPLE_MAP_OPTIONAL(source, note, dest, setsubjectNote)
 
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setsubjectTypeGroup)
 
-	if (source.attributor().present()) {
-		ebucoreEntity *obj = newAndModifyObject<ebucoreEntity>(dest->getHeaderMetadata(), mod);
-		mapEntity(source.attributor().get(), obj);
-		dest->setsubjectAttributorEntity(obj);
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, attributor, ebucoreEntity, mapEntity, dest, setsubjectAttributorEntity)
+}
+
+void mapRegion(regionType& source, ebucoreRegion *dest, ObjectModifier* mod = NULL) {
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, country, ebucoreCountry, mapCountry, dest, setcountry)
+	if (source.countryRegion().size() > 0) {
+		MAP_NEW_TYPE_GROUP_AND_ASSIGN(source.countryRegion()[0], dest, setcountryRegion)
 	}
 }
 
 void mapRating(ratingType& source, ebucoreRating *dest, ObjectModifier* mod = NULL) {
-	/*
-		<sequence>
-			<element name="ratingValue" type="string"/>
-			<element name="ratingScaleMaxValue" type="string"/>
-			<element name="ratingScaleMinValue" type="string"/>
-			<element name="ratingProvider" type="ebucore:entityType"/>
-		</sequence>
-		<attributeGroup ref="ebucore:typeGroup"/>
-		<attributeGroup ref="ebucore:formatGroup"/>
-	*/
-	SIMPLE_MAP_NO_GET(source, ratingValue, dest, setratingValue)
-	SIMPLE_MAP_NO_GET(source, ratingScaleMaxValue, dest, setratingScaleMaxValue)
-	SIMPLE_MAP_NO_GET(source, ratingScaleMinValue, dest, setratingScaleMinValue)
 
-	ebucoreEntity *obj = newAndModifyObject<ebucoreEntity>(dest->getHeaderMetadata(), mod);
-	mapEntity(source.ratingProvider(), obj);
-	dest->setratingProviderEntity(obj);
+	NEW_VECTOR_AND_ASSIGN(source, ratingValue, ebucoreTextualAnnotation, ratingType::ratingValue_const_iterator, mapTextualAnnotation, dest, setratingValue)
+	NEW_VECTOR_AND_ASSIGN(source, ratingScaleMaxValue, ebucoreTextualAnnotation, ratingType::ratingScaleMaxValue_const_iterator, mapTextualAnnotation, dest, setratingScaleMaxValue)
+	NEW_VECTOR_AND_ASSIGN(source, ratingScaleMinValue, ebucoreTextualAnnotation, ratingType::ratingScaleMinValue_const_iterator, mapTextualAnnotation, dest, setratingScaleMinValue)
+
+	SIMPLE_MAP_OPTIONAL(source, reason, dest, setratingReason)
+	SIMPLE_MAP_OPTIONAL(source, linkToLogo, dest, setratingLinkToLogo)
+	SIMPLE_MAP_OPTIONAL(source, notRated, dest, setratingNotRatedFlag)
+	SIMPLE_MAP_OPTIONAL(source, adultContent, dest, setratingAdultContentFlag)
+
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, ratingProvider, ebucoreEntity, mapEntity, dest, setratingProviderEntity)
+
+	if (source.ratingRegion().size() > 0) {
+		NEW_OBJECT_AND_ASSIGN_DIRECT(source.ratingRegion()[0], ebucoreRegion, mapRegion, dest, setratingRegion)
+	}
 
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setratingTypeGroup)
 	MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, setratingFormatGroup)
 }
 
 void mapVersion(coreMetadataType::version_type& source, ebucoreVersion *dest, ObjectModifier* mod = NULL) {
-	/*
-	  <xs:simpleContent>
-		<xs:extension base="xs:string">
-			<xs:attribute ref="xml:lang" use="optional" default="en"/>
-		</xs:extension>
-	  </xs:simpleContent>
-	*/
+	ebucoreTextualAnnotation *obj = newAndModifyObject<ebucoreTextualAnnotation>(dest->getHeaderMetadata(), mod);
+	mapTextualAnnotation(source, obj, mod);
+	std::vector<ebucoreTextualAnnotation*> v_dest_destProperty;
+	v_dest_destProperty.push_back(obj);
+	dest->setversionValue(v_dest_destProperty);
 
-	dest->setversionValue(source);
-	SIMPLE_MAP_NO_GET(source, lang, dest, setversionLanguage)
+ 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setversionTypeGroup)
 }
 
 void mapLanguage(languageType& source, ebucoreLanguage *dest, ObjectModifier* mod = NULL) {
-	/*
-		<sequence>
-			<element ref="dc:language" minOccurs="0">
-			</element>
-		</sequence>
-		<attributeGroup ref="ebucore:typeGroup">
-		</attributeGroup>
-		<attribute name="note" type="string">
-		</attribute>
-	*/
 
 	// TODO: KLV Language has an indirection for languagepurpose via a languagepurposeset which contains
 	// only a reference to the typegroup, required?
-	SIMPLE_MAP_OPTIONAL(source, language, dest, setlanguageLanguage)
-	if (source.language().present())
-		dest->setlanguageCode(source.language().get().lang());
+	SIMPLE_MAP_OPTIONAL(source, language, dest, setlanguageCode)
+	if (source.language().present()) {
+		dest->setlanguageLanguageCode(source.language().get().lang());
+	}
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setlanguagePurposeSet)
 	SIMPLE_MAP_OPTIONAL(source, note, dest, setlanguageNote)
+}
+
+void mapTargetAudience(targetAudience& source, ebucoreTargetAudience *dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, reason, dest, settargetAudienceReason)
+	SIMPLE_MAP_OPTIONAL(source, linkToLogo, dest, settargetAudienceLinkToLogo)
+	SIMPLE_MAP_OPTIONAL(source, notRated, dest, settargetAudienceNotRatedFlag)
+	SIMPLE_MAP_OPTIONAL(source, adultContent, dest, settargetAudienceAdultContentFlag)
+
+	NEW_VECTOR_AND_ASSIGN(source, targetRegion, ebucoreRegion, targetAudience::targetRegion_iterator, mapRegion, dest, settargetAudienceRegion)
+
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, settargetAudienceTypeGroup)
+}
+
+void mapGenre(genre& source, ebucoreGenre *dest, ObjectModifier* mod = NULL) {
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setgenreKindGroup)
 }
 
 void mapType(typeType& source, ebucoreType *dest, ObjectModifier* mod = NULL) {
@@ -479,21 +507,8 @@ void mapType(typeType& source, ebucoreType *dest, ObjectModifier* mod = NULL) {
 	}
 	dest->setobjectType(vec_dest_objecttype);
 
-	std::vector<ebucoreTargetAudience*> v1;
-	for (typeType::targetAudience_sequence::iterator it = source.targetAudience().begin(); it != source.targetAudience().end(); it++) {
-		ebucoreTargetAudience *obj = newAndModifyObject<ebucoreTargetAudience>(dest->getHeaderMetadata(), mod);
-		MAP_NEW_TYPE_GROUP_AND_ASSIGN((*it), obj, settargetAudienceKindGroup)
-		v1.push_back(obj);
-	}
-	dest->settargetAudience(v1);
-
-	std::vector<ebucoreGenre*> v2;
-	for (typeType::genre_sequence::iterator it = source.genre().begin(); it != source.genre().end(); it++) {
-		ebucoreGenre *obj = newAndModifyObject<ebucoreGenre>(dest->getHeaderMetadata(), mod);
-		MAP_NEW_TYPE_GROUP_AND_ASSIGN((*it), obj, setgenreKindGroup)
-		v2.push_back(obj);
-	}
-	dest->setgenre(v2);
+	NEW_VECTOR_AND_ASSIGN(source, targetAudience, ebucoreTargetAudience, typeType::targetAudience_iterator, mapTargetAudience, dest, settargetAudience)
+	NEW_VECTOR_AND_ASSIGN(source, genre, ebucoreGenre, typeType::genre_iterator, mapGenre, dest, setgenre)
 
 	SIMPLE_MAP_OPTIONAL(source, note, dest, settypeNote)
 }
@@ -526,14 +541,24 @@ void mapDate(dateType& source, ebucoreDate* dest, ObjectModifier* mod = NULL) {
 		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, dest, setyearDigitized, convert_timestamp)
 		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, dest, setdateDigitized, convert_timestamp)
 	}
+	if (source.released().present()) {
+		dateType::released_type& date = source.released().get();
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, dest, setyearReleased, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, dest, setdateReleased, convert_timestamp)
+	}
+	if (source.copyrighted().present()) {
+		dateType::copyrighted_type& date = source.copyrighted().get();
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startYear, dest, setyearCopyrighted, convert_timestamp)
+		SIMPLE_MAP_OPTIONAL_CONVERT(date, startDate, dest, setdateCopyrighted, convert_timestamp)
+	}
 
 	NEW_VECTOR_AND_ASSIGN(source, alternative, ebucoreDateType, dateType::alternative_iterator, mapDateType, dest, setalternativeDate)
 }
 
-void mapPeriodOfTime(PeriodOfTime& source, ebucorePeriodOfTime* dest, ObjectModifier* mod = NULL) {
+void mapPeriodOfTime(periodOfTimeType& source, ebucorePeriodOfTime* dest, ObjectModifier* mod = NULL) {
 	// [TODO] PeriodId is at temporal level
 	//SIMPLE_MAP_OPTIONAL(source, period, dest, setperiodId)
-	SIMPLE_MAP_OPTIONAL(source, periodName, dest, setperiodName)
+	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, periodName, ebucoreTextualAnnotation, mapTextualAnnotation, dest, setperiodName)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, startYear, dest, setperiodStartYear, convert_timestamp)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, startDate, dest, setperiodStartDate, convert_timestamp)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, startTime, dest, setperiodStartTime, convert_timestamp)
@@ -549,41 +574,26 @@ void mapTemporal(temporal& source, ebucoreTemporal *dest, ObjectModifier* mod = 
 	SIMPLE_MAP_OPTIONAL(source, note, dest, settemporalDefinitionNote)
 }
 
-void mapLocation(spatial::location_type& source, ebucoreLocation *dest, ObjectModifier* mod = NULL) {
-	SIMPLE_MAP_OPTIONAL(source, locationId, dest, setlocationId)
-	SIMPLE_MAP_OPTIONAL(source, name, dest, setlocationName)
-	SIMPLE_MAP_OPTIONAL(source, code, dest, setlocationCode)
-	SIMPLE_MAP_OPTIONAL(source, note, dest, setlocationNote)
-	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setlocationTypeGroup)
-}
-
 void mapCoordinates(coordinates& source, ebucoreCoordinates *dest, ObjectModifier* mod = NULL) {
 	SIMPLE_MAP_NO_GET(source, posx, dest, setposX)
 	SIMPLE_MAP_NO_GET(source, posy, dest, setposY)
 	MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, setcoordinatesFormatGroup)
 }
 
+void mapLocation(spatial::location_type& source, ebucoreLocation *dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, locationId, dest, setlocationId)
+	SIMPLE_MAP_OPTIONAL(source, code, dest, setlocationCode)
+	SIMPLE_MAP_OPTIONAL(source, note, dest, setlocationDefinitionNote)
+
+	SIMPLE_MAP_OPTIONAL_TO_NEW_VECTOR_AND_ASSIGN(source, name, ebucoreTextualAnnotation, mapTextualAnnotation, dest, setlocationName)
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, region, ebucoreRegion, mapRegion, dest, setlocationRegion)
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, coordinates, ebucoreCoordinates, mapCoordinates, dest, setlocationCoordinates)
+
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setlocationTypeGroup)
+}
+
 void mapSpatial(spatial& source, ebucoreSpatial *dest, ObjectModifier* mod = NULL) {
-	std::vector<ebucoreLocation*> vec_dest_locs;
-	std::vector<ebucoreCoordinates*> vec_dest_coords;
-
-	for (spatial::location_iterator it = source.location().begin(); it != source.location().end(); it++) {
-		ebucoreLocation *obj = newAndModifyObject<ebucoreLocation>(dest->getHeaderMetadata(), mod);
-		mapLocation(*it, obj, mod);
-
-		if ((*it).coordinates().present()) {
-			// also map the coordinates of this location
-			ebucoreCoordinates *coords = newAndModifyObject<ebucoreCoordinates>(dest->getHeaderMetadata(), mod);
-			mapCoordinates((*it).coordinates().get(), coords);
-			vec_dest_coords.push_back(coords);
-
-			obj->setcoordinateReference(coords);
-		}
-		vec_dest_locs.push_back(obj);
-	}
-
-	dest->setlocation(vec_dest_locs);
-	dest->setcoordinates(vec_dest_coords);
+	NEW_VECTOR_AND_ASSIGN(source, location, ebucoreLocation, spatial::location_iterator, mapLocation, dest, setlocation)
 }
 
 void mapMetadataCoverage(coverageType& source, ebucoreCoverage *dest, ObjectModifier* mod = NULL) {
@@ -592,13 +602,15 @@ void mapMetadataCoverage(coverageType& source, ebucoreCoverage *dest, ObjectModi
 	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, spatial, ebucoreSpatial, mapSpatial, dest, setspatial)
 }
 
-void mapRights(rightsType& source, ebucoreRights *dest, std::map<xml_schema::id, ebucoreFormat*>& formatMap, ObjectModifier* mod = NULL) {
+void mapRights(rightsType& source, ebucoreRights *dest, std::map<xml_schema::id, ebucoreFormat*>& formatMap, std::map<xml_schema::id, ebucoreRights*>& rightsMap, ObjectModifier* mod = NULL) {
 	SIMPLE_MAP_OPTIONAL(source, rightsID, dest, setrightsId)
 	NEW_VECTOR_AND_ASSIGN(source, rightsAttributedId, ebucoreIdentifier, rightsType::rightsAttributedId_iterator, mapIdentifier, dest, setrightsAttributeID)
 	NEW_VECTOR_AND_ASSIGN(source, rights, ebucoreTextualAnnotation, rightsType::rights_iterator, mapTextualAnnotation, dest, setrightsValue)
 	SIMPLE_MAP_OPTIONAL(source, rightsClearanceFlag, dest, setrightsClearanceFlag)
-	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, exploitationIssues, ebucoreTextualAnnotation, mapTextualAnnotation, dest, setexploitationIssues)
+	NEW_VECTOR_AND_ASSIGN(source, exploitationIssues, ebucoreTextualAnnotation, rightsType::exploitationIssues_iterator, mapTextualAnnotation, dest, setexploitationIssues)
+	NEW_VECTOR_AND_ASSIGN(source, copyrightStatement, ebucoreTextualAnnotation, rightsType::copyrightStatement_iterator, mapTextualAnnotation, dest, setcopyrightStatement)
 	SIMPLE_MAP_OPTIONAL(source, rightsLink, dest, setrightsLink)
+	SIMPLE_MAP_OPTIONAL(source, note, dest, setrightsNote)
 
 	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, coverage, ebucoreCoverage, mapMetadataCoverage, dest, setrightsCoverage)
 
@@ -624,19 +636,41 @@ void mapRights(rightsType& source, ebucoreRights *dest, std::map<xml_schema::id,
 			dest->setrightsFormatReferences(destRefs);
 	}
 
+	// and put the rights object in the map for further use
+	if (source.rightsID().present()) {
+		rightsMap[source.rightsID().get()] = dest;
+	}
 }
 
-void mapPublicationHistoryEvent(publicationEvent& source, ebucorePublicationHistoryEvent* dest, std::map<xml_schema::id, ebucoreFormat*>& formatMap, ObjectModifier* mod = NULL) {
+void mapPublicationChannel(publicationChannelType& source, ebucorePublicationChannel* dest, ObjectModifier* mod = NULL) {
+	dest->setpublicationChannelName(source);
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setpublicationChannelType)
+}
+
+void mapPublicationMedium(publicationMediumType& source, ebucorePublicationMedium* dest, ObjectModifier* mod = NULL) {
+	dest->setpublicationMediumName(source);
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setpublicationMediumType)
+}
+
+void mapPublicationHistoryEvent(publicationEventType& source, ebucorePublicationHistoryEvent* dest, 
+	std::map<xml_schema::id, ebucoreFormat*>& formatMap, std::map<xml_schema::id, ebucoreRights*>& rightsMap, ObjectModifier* mod = NULL) {
 
 	SIMPLE_MAP_OPTIONAL(source, firstShowing, dest, setfirstPublicationFlag)
+	SIMPLE_MAP_OPTIONAL(source, free, dest, setfreePublicationFlag)
+	SIMPLE_MAP_OPTIONAL(source, live, dest, setlivePublicationFlag)
+	SIMPLE_MAP_OPTIONAL(source, note, dest, setpublicationNote)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, publicationDate, dest, setpublicationDate, convert_timestamp)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, publicationTime, dest, setpublicationDate, convert_timestamp)
-	SIMPLE_MAP_OPTIONAL(source, publicationChannel, dest, setpublicationChannel)
-	SIMPLE_MAP_OPTIONAL(source, publicationService, dest, setpublicationService)
 
-	if (source.publicationMedium().present()) {
-		MAP_NEW_TYPE_GROUP_AND_ASSIGN(source.publicationMedium().get(), dest, setpublicationMedium)
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, publicationChannel, ebucorePublicationChannel, mapPublicationChannel, dest, setpublicationChannel)
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, publicationMedium, ebucorePublicationMedium, mapPublicationMedium, dest, setpublicationMedium)
+
+	if (source.publicationService().present()) {
+		publicationServiceType& svc = source.publicationService().get();
+		SIMPLE_MAP_OPTIONAL(svc, publicationServiceName, dest, setpublicationService)
 	}
+
+	NEW_VECTOR_AND_ASSIGN(source, publicationRegion, ebucoreRegion, publicationEventType::publicationRegion_iterator, mapRegion, dest, setpublicationRegion)
 
 	if (source.formatIdRef().present()) {
 		// find this formatIdRef in the map of formats
@@ -645,17 +679,35 @@ void mapPublicationHistoryEvent(publicationEvent& source, ebucorePublicationHist
 			dest->setpublicationFormatReference(formatMap[source.formatIdRef().get()]);
 		}
 	}
+
+	if (source.rightsIDRefs().present()) {
+		publicationEventType::rightsIDRefs_type& rightsrefs = source.rightsIDRefs().get();
+		if (rightsrefs.size() > 0) {
+			// for each of the references to a rights object, locate it in the rights map
+			std::vector<ebucoreRights*> vec_rights;
+			for (publicationEventType::rightsIDRefs_type::const_iterator it = rightsrefs.begin(); it != rightsrefs.end(); it++) {
+				if (rightsMap.find(*it) != rightsMap.end()) {
+					// present!
+					vec_rights.push_back(rightsMap[*it]);
+				}
+			}
+			dest->setpublicationRightsReference(vec_rights);
+			// find this formatIdRef in the map of formats
+		}
+	}
 }
 
-void mapPublicationHistory(publicationHistoryType& source, std::vector<ebucorePublicationHistoryEvent*>& dest, mxfpp::HeaderMetadata *header_metadata, std::map<xml_schema::id, ebucoreFormat*>& formatMap, ObjectModifier* mod = NULL) {
-
+void mapPublicationHistory(publicationHistoryType& source, ebucorePublicationHistory *dest, mxfpp::HeaderMetadata *header_metadata, 
+	std::map<xml_schema::id, ebucoreFormat*>& formatMap, std::map<xml_schema::id, ebucoreRights*>& rightsMap, ObjectModifier* mod = NULL) {
+	
 	std::vector<ebucorePublicationHistoryEvent*> vec_dest_hist;
 	for (publicationHistoryType::publicationEvent_iterator it = source.publicationEvent().begin(); it != source.publicationEvent().end(); it++) {
 		ebucorePublicationHistoryEvent *obj = newAndModifyObject<ebucorePublicationHistoryEvent>(header_metadata, mod);
-		mapPublicationHistoryEvent(*it, obj, formatMap, mod);
+		// special case of conversion using the format map
+		mapPublicationHistoryEvent(*it, obj, formatMap, rightsMap, mod);
 		vec_dest_hist.push_back(obj);
 	}
-	dest.assign(vec_dest_hist.begin(), vec_dest_hist.end());
+	dest->setpublicationEvent(vec_dest_hist);
 }
 
 #define MAP_BASIC_RELATION_FUNCTION(destProperty) \
@@ -714,32 +766,14 @@ void mapBasicRelations(coreMetadataType& source, ebucoreCoreMetadata *dest, Obje
 }
 
 void mapCustomRelation(relationType& source, ebucoreCustomRelation *dest, ObjectModifier* mod = NULL) {
-	/*
-		<choice>
-			<element ref="dc:relation">
-			</element>
-			<element name="relationIdentifier" type="ebucore:identifierType">
-			</element>
-			<element name="relationLink" type="anyURI">
-			</element>
-		</choice>
-		<attributeGroup ref="ebucore:typeGroup">
-		</attributeGroup>
-		<attribute name="runningOrderNumber" type="integer">
-		</attribute>
-		<attribute name="note" type="string">
-		</attribute>
-	*/
-
 	// [TODO] XSD relationIdentifier is identifierType, KLV identifier is a UMID, how do we resolve?
-	// [TODO] KLV totalNumberOfGroupMembers should be resolved by other means that just the EBU-Core source XML document?
-	// [TODO] KLV orderedGroupFlag should be resolved by other means that just the EBU-Core source XML document?
 
 	SIMPLE_MAP_OPTIONAL(source, relation, dest, setrelationByName)
 	SIMPLE_MAP_OPTIONAL(source, relationLink, dest, setrelationLink)
 	SIMPLE_MAP_OPTIONAL(source, runningOrderNumber, dest, setrunningOrderNumber)
 	SIMPLE_MAP_OPTIONAL(source, totalNumberOfGroupMembers, dest, settotalNumberOfGroupMembers)
 	SIMPLE_MAP_OPTIONAL(source, orderedGroupFlag, dest, setorderedGroupFlag)
+	SIMPLE_MAP_OPTIONAL(source, note, dest, setrelationNote)
 
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setcustomRelationTypeGroup)
 
@@ -749,7 +783,7 @@ void mapCustomRelation(relationType& source, ebucoreCustomRelation *dest, Object
 #define MAP_TECHNICAL_ATTRIBUTE_FUNCTION(functionName, sourceType, destType, destProperty) \
 	void functionName(sourceType& source, destType *dest, ObjectModifier* mod) { \
 		dest->destProperty(source);	\
-		MAP_TYPE_GROUP(source, dest)	\
+		MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, settechnicalAttributeTypeGroup)	\
 	}
 
 MAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeString, String, ebucoreTechnicalAttributeString, settechnicalAttributeStringValue)
@@ -768,15 +802,7 @@ MAP_TECHNICAL_ATTRIBUTE_FUNCTION(mapTechnicalAttributeBoolean, Boolean, ebucoreT
 void mapTechnicalAttributeRational(technicalAttributeRationalType& source, ebucoreTechnicalAttributeRational *dest, ObjectModifier* mod) {
 	mxfRational r = { source.factorNumerator(), source.factorDenominator() };
 	dest->settechnicalAttributeRationalValue(r);
-	MAP_TYPE_GROUP(source, dest)
-}
-
-void mapMIMEType(mimeType& source, ebucoreMimeType *dest, ObjectModifier* mod = NULL) {
-	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setmimeTypeGroup)
-}
-
-void mapContainerFormat(formatType::containerFormat_type& source, ebucoreContainerFormat *dest, ObjectModifier* mod = NULL) {
-	MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, setcontainerFormatGroup)
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, settechnicalAttributeTypeGroup)
 }
 
 void mapMedium(medium& source, ebucoreMedium *dest, ObjectModifier* mod = NULL) {
@@ -784,26 +810,18 @@ void mapMedium(medium& source, ebucoreMedium *dest, ObjectModifier* mod = NULL) 
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setmediumTypeGroup)
 }
 
-void mapLocator(formatType::locator_type& source, ebucoreLocator *dest, ObjectModifier* mod = NULL) {
-	// [TODO] In XSD, provide a locator string that can be mapped to the KLV locatorLocation field
-	//SIMPLE_MAP(source, <<locator value>>, dest, setlocatorLocation)
-	dest->setlocatorLocation("");
-
-	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setlocatorTypeGroup)
-}
-
 void mapPackageInfo(formatType& source, ebucorePackageInfo *dest, ObjectModifier* mod = NULL) {
 	SIMPLE_MAP_OPTIONAL(source, fileName, dest, setpackageName)
 	SIMPLE_MAP_OPTIONAL(source, fileSize, dest, setpackageSize)
-
-	NEW_VECTOR_AND_ASSIGN(source, locator, ebucoreLocator, formatType::locator_iterator, mapLocator, dest, setpackageLocator)
+	if (source.locator().size() > 0) {
+		dest->setpackageLocator( source.locator()[0] );
+	}
 }
 
 void mapSigningFormat(signingFormat& source, ebucoreSigningFormat *dest, ObjectModifier* mod = NULL) {
 	SIMPLE_MAP_OPTIONAL(source, trackId, dest, setsigningTrackID)
 	SIMPLE_MAP_OPTIONAL(source, trackName, dest, setsigningTrackName)
-	SIMPLE_MAP_OPTIONAL(source, language, dest, setsigningTrackLanguageName)
-	SIMPLE_MAP_OPTIONAL(source, language, dest, setsigningTrackLanguageCode) /* find alternative? */
+	SIMPLE_MAP_OPTIONAL(source, language, dest, setsigningTrackLanguageCode)
 	SIMPLE_MAP_OPTIONAL(source, signingSourceUri, dest, setsigningSourceUri)
 
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setsigningTypeGroup)
@@ -822,6 +840,7 @@ void mapCodec(codecType& source, ebucoreCodec *dest, ObjectModifier* mod = NULL)
 void mapAudioTrack(audioTrack& source, ebucoreTrack *dest, ObjectModifier* mod = NULL) {
 	SIMPLE_MAP_OPTIONAL(source, trackId, dest, settrackID)
 	SIMPLE_MAP_OPTIONAL(source, trackName, dest, settrackName)
+	SIMPLE_MAP_OPTIONAL(source, trackLanguage, dest, settrackLanguageCode)
 
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, settrackTypeGroup)
 }
@@ -831,10 +850,6 @@ void mapVideoTrack(videoTrack& source, ebucoreTrack *dest, ObjectModifier* mod =
 	SIMPLE_MAP_OPTIONAL(source, trackName, dest, settrackName)
 
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, settrackTypeGroup)
-}
-
-void mapAudioEncoding(audioFormatType::audioEncoding_type& source, ebucoreEncoding *dest, ObjectModifier* mod = NULL) {
-	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setencodingTypeGroup)
 }
 
 void mapAudioFormat(audioFormatType& source, ebucoreAudioFormat *dest, ObjectModifier* mod = NULL) {
@@ -850,11 +865,14 @@ void mapAudioFormat(audioFormatType& source, ebucoreAudioFormat *dest, ObjectMod
 	SIMPLE_MAP_OPTIONAL(source, sampleType, dest, setaudioSamplingType)
 	SIMPLE_MAP_OPTIONAL(source, channels, dest, setaudioTotalNumberOfChannels)
 	SIMPLE_MAP_OPTIONAL(source, bitRate, dest, setaudioBitRate)
+	SIMPLE_MAP_OPTIONAL(source, bitRateMax, dest, setaudioMaxBitRate)
 	SIMPLE_MAP_OPTIONAL(source, bitRateMode, dest, setaudioBitRateMode)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, samplingRate, dest, setaudioSamplingRate, convert)
 	
+	if (source.audioEncoding().present()) {
+		MAP_NEW_TYPE_GROUP_AND_ASSIGN(source.audioEncoding().get(), dest, setaudioEncoding)
+	}
 
-	NEW_VECTOR_AND_ASSIGN(source, audioEncoding, ebucoreEncoding, audioFormatType::audioEncoding_iterator, mapAudioEncoding, dest, setaudioEncoding)
 	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, codec, ebucoreCodec, mapCodec, dest, setaudioCodec)
 	NEW_VECTOR_AND_ASSIGN(source, audioTrack, ebucoreTrack, audioFormatType::audioTrack_iterator, mapAudioTrack, dest, setaudioTrack)
 
@@ -888,10 +906,6 @@ void mapAudioFormat(audioFormatType& source, ebucoreAudioFormat *dest, ObjectMod
 		audioFormatType::technicalAttributeBoolean_iterator, mapTechnicalAttributeBoolean, dest, setaudioTechnicalAttributeBoolean)
 }
 
-void mapImageEncoding(imageFormatType::imageEncoding_type& source, ebucoreEncoding *dest, ObjectModifier* mod = NULL) {
-	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setencodingTypeGroup)
-}
-
 void mapAspectRatio(aspectRatioType& source, ebucoreAspectRatio *dest, ObjectModifier* mod = NULL) {
 	SIMPLE_MAP_NO_GET(source, factorNumerator, dest, setaspectRatioFactorNumerator)
 	SIMPLE_MAP_NO_GET(source, factorDenominator, dest, setaspectRatioFactorDenominator)
@@ -904,6 +918,23 @@ void mapDimension(lengthType& source, ebucoreDimension *dest, ObjectModifier* mo
 	SIMPLE_MAP_OPTIONAL(source, unit, dest, setdimensionUnit)
 }
 
+void mapDimension(dimensionType& source, ebucoreDimension *dest, ObjectModifier* mod = NULL) {
+	dest->setdimensionValue(source);
+	SIMPLE_MAP_OPTIONAL(source, unit, dest, setdimensionUnit)
+}
+
+void mapWidth(width& source, ebucoreWidth *dest, ObjectModifier* mod = NULL) {
+	ebucoreDimension *obj = newAndModifyObject<ebucoreDimension>(dest->getHeaderMetadata(), mod);
+	mapDimension(source, obj, mod);
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setwidthTypeGroup)
+}
+
+void mapHeight(height& source, ebucoreHeight *dest, ObjectModifier* mod = NULL) {
+	ebucoreDimension *obj = newAndModifyObject<ebucoreDimension>(dest->getHeaderMetadata(), mod);
+	mapDimension(source, obj, mod);
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setheightTypeGroup)
+}
+
 void mapImageFormat(imageFormatType& source, ebucoreImageFormat *dest, ObjectModifier* mod = NULL) {
 
 	SIMPLE_MAP_OPTIONAL(source, imageFormatId, dest, setimageFormatID)
@@ -912,9 +943,11 @@ void mapImageFormat(imageFormatType& source, ebucoreImageFormat *dest, ObjectMod
 	SIMPLE_MAP_OPTIONAL(source, orientation, dest, setimageOrientation)
 	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, aspectRatio, ebucoreAspectRatio, mapAspectRatio, dest, setimageAspectRatio)
 	
-	NEW_VECTOR_AND_ASSIGN(source, imageEncoding, ebucoreEncoding, imageFormatType::imageEncoding_iterator, mapImageEncoding, dest, setimageEncoding)
+	if (source.imageEncoding().present()) {
+		MAP_NEW_TYPE_GROUP_AND_ASSIGN(source.imageEncoding().get(), dest, setimageEncoding)
+	}
 
-	/* [TODO] XSD is missing image codec
+	/* [TODO] XSD is missing image codec!!
 	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, codec, ebucoreCodec, mapCodec, dest, setimageCodec) */
 
 	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, width, ebucoreDimension, mapDimension, dest, setimageWidth)
@@ -950,10 +983,6 @@ void mapImageFormat(imageFormatType& source, ebucoreImageFormat *dest, ObjectMod
 		imageFormatType::technicalAttributeBoolean_iterator, mapTechnicalAttributeBoolean, dest, setimageTechnicalAttributeBoolean)
 }
 
-void mapVideoEncoding(videoFormatType::videoEncoding_type& source, ebucoreEncoding *dest, ObjectModifier* mod = NULL) {
-	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setencodingTypeGroup)
-}
-
 void mapVideoFormat(videoFormatType& source, ebucoreVideoFormat *dest, ObjectModifier* mod = NULL) {
 
 	SIMPLE_MAP_OPTIONAL(source, videoFormatId, dest, setvideoFormatID)
@@ -961,18 +990,27 @@ void mapVideoFormat(videoFormatType& source, ebucoreVideoFormat *dest, ObjectMod
 	SIMPLE_MAP_OPTIONAL(source, videoFormatDefinition, dest, setvideoFormatDefinition)
 	
 	SIMPLE_MAP_OPTIONAL(source, bitRate, dest, setvideoBitRate)
+	SIMPLE_MAP_OPTIONAL(source, bitRateMax, dest, setvideoMaxBitRate)
 	SIMPLE_MAP_OPTIONAL(source, bitRateMode, dest, setvideoBitRateMode)
 	SIMPLE_MAP_OPTIONAL(source, scanningFormat, dest, setvideoSamplingFormat)
 	SIMPLE_MAP_OPTIONAL(source, scanningOrder, dest, setvideoScanningOrder)
 	SIMPLE_MAP_OPTIONAL(source, lines, dest, setvideoActiveLines)
 	SIMPLE_MAP_OPTIONAL(source, noiseFilter, dest, setvideoNoiseFilterFlag)
-	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, aspectRatio, ebucoreAspectRatio, mapAspectRatio, dest, setvideoAspectRatio)
+	SIMPLE_MAP_OPTIONAL(source, flag_3D, dest, setvideo3DFlag)
+	NEW_VECTOR_AND_ASSIGN(source, aspectRatio, ebucoreAspectRatio, videoFormatType::aspectRatio_iterator, mapAspectRatio, dest, setvideoAspectRatio)
 	SIMPLE_MAP_OPTIONAL_CONVERT(source, frameRate, dest, setvideoFrameRate, convert)
-	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, width, ebucoreDimension, mapDimension, dest, setvideoWidth)
-	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, height, ebucoreDimension, mapDimension, dest, setvideoHeight)
+	if (source.width().size() > 0) {
+		NEW_OBJECT_AND_ASSIGN_DIRECT(source.width()[0], ebucoreWidth, mapWidth, dest, setvideoWidth)
+	}
+	if (source.height().size() > 0) {
+		NEW_OBJECT_AND_ASSIGN_DIRECT(source.height()[0], ebucoreHeight, mapHeight, dest, setvideoHeight)
+	}
 
-	NEW_VECTOR_AND_ASSIGN(source, videoEncoding, ebucoreEncoding, videoFormatType::videoEncoding_iterator, mapVideoEncoding, dest, setvideoEncoding)
-	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, codec, ebucoreCodec, mapCodec, dest, setvideoCodectype)
+	if (source.videoEncoding().present()) {
+		MAP_NEW_TYPE_GROUP_AND_ASSIGN(source.videoEncoding().get(), dest, setvideoEncoding)
+	}
+
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, codec, ebucoreCodec, mapCodec, dest, setvideoCodec)
 	NEW_VECTOR_AND_ASSIGN(source, videoTrack, ebucoreTrack, videoFormatType::videoTrack_iterator, mapVideoTrack, dest, setvideoTrack)
 
 	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeString, ebucoreTechnicalAttributeString, 
@@ -1008,13 +1046,37 @@ void mapVideoFormat(videoFormatType& source, ebucoreVideoFormat *dest, ObjectMod
 void mapCaptioning(captioningFormat& source, ebucoreCaptioning* dest, ObjectModifier* mod = NULL) {
 	SIMPLE_MAP_OPTIONAL(source, captioningFormatId, dest, setcaptioningFormatID)
 	SIMPLE_MAP_OPTIONAL(source, captioningFormatName, dest, setcaptioningFormatName)
-	SIMPLE_MAP_OPTIONAL(source, formatDefinition, dest, setcaptioningFormatDefinition)
 	SIMPLE_MAP_OPTIONAL(source, captioningSourceUri, dest, setcaptioningSourceUri)
-	SIMPLE_MAP_OPTIONAL(source, formatDefinition, dest, setcaptioningFormatDefinition)
-	SIMPLE_MAP_OPTIONAL(source, language, dest, setcaptioningLanguageName)
+	SIMPLE_MAP_OPTIONAL(source, trackId, dest, setcaptioningTrackID)
+	SIMPLE_MAP_OPTIONAL(source, trackName, dest, setcaptioningTrackName)
 	SIMPLE_MAP_OPTIONAL(source, language, dest, setcaptioningLanguageCode)
 
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setcaptioningTypeGroup)
+	MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, setcaptioningFormatGroup)
+}
+
+void mapSubtitling(subtitlingFormat& source, ebucoreSubtitling* dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, subtitlingFormatId, dest, setsubtitlingFormatID)
+	SIMPLE_MAP_OPTIONAL(source, subtitlingFormatName, dest, setsubtitlingFormatName)
+	SIMPLE_MAP_OPTIONAL(source, subtitlingSourceUri, dest, setsubtitlingSourceUri)
+	SIMPLE_MAP_OPTIONAL(source, trackId, dest, setsubtitlingTrackID)
+	SIMPLE_MAP_OPTIONAL(source, trackName, dest, setsubtitlingTrackName)
+	SIMPLE_MAP_OPTIONAL(source, language, dest, setsubtitlingLanguageCode)
+
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setsubtitlingTypeGroup)
+	MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, setsubtitlingFormatGroup)
+}
+
+void mapSigning(signingFormat& source, ebucoreSigningFormat* dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, signingFormatId, dest, setsigningFormatID)
+	SIMPLE_MAP_OPTIONAL(source, signingFormatName, dest, setsigningFormatName)
+	SIMPLE_MAP_OPTIONAL(source, signingSourceUri, dest, setsigningSourceUri)
+	SIMPLE_MAP_OPTIONAL(source, trackId, dest, setsigningTrackID)
+	SIMPLE_MAP_OPTIONAL(source, trackName, dest, setsigningTrackName)
+	SIMPLE_MAP_OPTIONAL(source, language, dest, setsigningTrackLanguageCode)
+
+	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setsigningTypeGroup)
+	MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source, dest, setsigningFormatGroup)
 }
 
 void mapAncillaryData(ancillaryDataFormat& source, ebucoreAncillaryData* dest, ObjectModifier* mod = NULL) {
@@ -1037,10 +1099,16 @@ void mapAncillaryData(ancillaryDataFormat& source, ebucoreAncillaryData* dest, O
 void mapDataFormat(dataFormatType& source, ebucoreDataFormat *dest, ObjectModifier* mod = NULL) {
 
 	SIMPLE_MAP_OPTIONAL(source, dataFormatId, dest, setdataFormatID)
+	SIMPLE_MAP_OPTIONAL(source, dataFormatVersionId, dest, setdataFormatVersionID)
 	SIMPLE_MAP_OPTIONAL(source, dataFormatName, dest, setdataFormatName)
 	SIMPLE_MAP_OPTIONAL(source, dataFormatDefinition, dest, setdataFormatDefinition)
-	
+
+	SIMPLE_MAP_OPTIONAL(source, dataTrackId, dest, setdataTrackId)
+	SIMPLE_MAP_OPTIONAL(source, dataTrackName, dest, setdataTrackName)
+	SIMPLE_MAP_OPTIONAL(source, dataTrackLanguage, dest, setdataTrackLanguageCode)
+
 	NEW_VECTOR_AND_ASSIGN(source, captioningFormat, ebucoreCaptioning, dataFormatType::captioningFormat_iterator, mapCaptioning, dest, setcaptioning)
+	NEW_VECTOR_AND_ASSIGN(source, subtitlingFormat, ebucoreSubtitling, dataFormatType::subtitlingFormat_iterator, mapSubtitling, dest, setsubtitling)
 	NEW_VECTOR_AND_ASSIGN(source, ancillaryDataFormat, ebucoreAncillaryData, dataFormatType::ancillaryDataFormat_iterator, mapAncillaryData, dest, setancillaryData)
 
 	NEW_VECTOR_AND_ASSIGN(source, technicalAttributeString, ebucoreTechnicalAttributeString, 
@@ -1093,25 +1161,20 @@ void mapFormat(formatType& source, ebucoreFormat *dest, std::map<xml_schema::id,
 		SIMPLE_MAP_OPTIONAL_CONVERT(source, duration().get().normalPlayTime, dest, setoverallDurationTime, convert_rational)
 	}
 
-	if (source.start().present()) {
-		SIMPLE_MAP_OPTIONAL(source, start().get().editUnitNumber, dest, setoverallStartEditUnit)
-		SIMPLE_MAP_OPTIONAL(source, start().get().timecode, dest, setoverallStartTimecode)
-		SIMPLE_MAP_OPTIONAL_CONVERT(source, start().get().normalPlayTime, dest, setoverallStartTime, convert_rational)
+	if (source.containerFormat().size() > 0) {
+		MAP_NEW_FORMAT_GROUP_AND_ASSIGN(source.containerFormat()[0], dest, setcontainerFormat)
 	}
-	if (source.end().present()) {
-		SIMPLE_MAP_OPTIONAL(source, end().get().editUnitNumber, dest, setoverallEndEditUnit)
-		SIMPLE_MAP_OPTIONAL(source, end().get().timecode, dest, setoverallEndTimecode)
-		SIMPLE_MAP_OPTIONAL_CONVERT(source, end().get().normalPlayTime, dest, setoverallEndTime, convert_rational)
+	if (source.medium().size() > 0) {
+		NEW_OBJECT_AND_ASSIGN_DIRECT(source.medium()[0], ebucoreMedium, mapMedium, dest, setmedium)
 	}
-
-	NEW_VECTOR_AND_ASSIGN(source, containerFormat, ebucoreContainerFormat, formatType::containerFormat_iterator, mapContainerFormat, dest, setcontainerFormat)
-	NEW_VECTOR_AND_ASSIGN(source, medium, ebucoreMedium, formatType::medium_iterator, mapMedium, dest, setmedium)
 	
 	ebucorePackageInfo *obj = newAndModifyObject<ebucorePackageInfo>(dest->getHeaderMetadata(), mod);
 	mapPackageInfo(source, obj, mod);
 	dest->setpackageInfo(obj);
 
-	NEW_VECTOR_AND_ASSIGN(source, mimeType, ebucoreMimeType, formatType::mimeType_iterator, mapMIMEType, dest, setmimeType)
+	if (source.mimeType().size() > 0) {
+		MAP_NEW_TYPE_GROUP_AND_ASSIGN(source.mimeType()[0], dest, setmimeType)
+	}
 
 	NEW_VECTOR_AND_ASSIGN(source, audioFormat, ebucoreAudioFormat, formatType::audioFormat_iterator, mapAudioFormat, dest, setmaterialAudioFormat)
 	NEW_VECTOR_AND_ASSIGN(source, videoFormat, ebucoreVideoFormat, formatType::videoFormat_iterator, mapVideoFormat, dest, setmaterialVideoFormat)
@@ -1169,6 +1232,7 @@ void mapPart(partType& source, ebucorePartMetadata *dest, mxfRational overallFra
 void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, mxfRational overallFrameRate, std::vector<ebucorePartMetadata*>& timelineParts, ObjectModifier* mod) {
 
 	std::map<xml_schema::id, ebucoreFormat*> formatMap;
+	std::map<xml_schema::id, ebucoreRights*> rightsMap;
 
 	NEW_VECTOR_AND_ASSIGN(source, title, ebucoreTitle, coreMetadataType::title_iterator, mapTitle, dest, settitle)	
 	NEW_VECTOR_AND_ASSIGN(source, alternativeTitle, ebucoreAlternativeTitle, coreMetadataType::alternativeTitle_iterator, mapAlternativeTitle, dest, setalternativeTitle)
@@ -1196,7 +1260,7 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, mxfRat
 	std::vector<ebucoreRights*> vec_dest_rights;
 	for (coreMetadataType::rights_iterator it = source.rights().begin(); it != source.rights().end(); it++) {
 		ebucoreRights *obj = newAndModifyObject<ebucoreRights>(dest->getHeaderMetadata(), mod);
-		mapRights(*it, obj, formatMap, mod);
+		mapRights(*it, obj, formatMap, rightsMap, mod);
 		vec_dest_rights.push_back(obj);
 	}
 	dest->setrights(vec_dest_rights);
@@ -1205,15 +1269,13 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, mxfRat
 	NEW_VECTOR_AND_ASSIGN(source, rating, ebucoreRating, coreMetadataType::rating_iterator, mapRating, dest, setrating)
 
 	if (source.version().size() > 0) {
-		ebucoreVersion *obj = newAndModifyObject<ebucoreVersion>(dest->getHeaderMetadata(), mod);
-		mapVersion(source.version()[0], obj);
-		dest->setversion(obj);
+		NEW_OBJECT_AND_ASSIGN_DIRECT(source.version()[0], ebucoreVersion, mapVersion, dest, setversion)
 	}
 	
 	if (source.publicationHistory().present()) {
-		std::vector<ebucorePublicationHistoryEvent*> vec_publications;
-		mapPublicationHistory(source.publicationHistory().get(), vec_publications, dest->getHeaderMetadata(), formatMap, mod);
-		dest->setpublicationHistoryEvent(vec_publications);
+		ebucorePublicationHistory *obj = newAndModifyObject<ebucorePublicationHistory>(dest->getHeaderMetadata(), mod);
+		mapPublicationHistory(source.publicationHistory().get(), obj, dest->getHeaderMetadata(), formatMap, rightsMap, mod);
+		dest->setpublicationHistory(obj);
 	}
 
 	mapBasicRelations(source, dest, mod);

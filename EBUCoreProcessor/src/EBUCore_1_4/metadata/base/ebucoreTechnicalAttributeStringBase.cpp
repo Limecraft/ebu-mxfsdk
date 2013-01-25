@@ -48,13 +48,13 @@ const mxfKey ebucoreTechnicalAttributeStringBase::setKey = MXF_SET_K(ebucoreTech
 
 
 ebucoreTechnicalAttributeStringBase::ebucoreTechnicalAttributeStringBase(HeaderMetadata *headerMetadata)
-: ebucoreTypeGroup(headerMetadata, headerMetadata->createCSet(&setKey))
+: InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
 {
     headerMetadata->add(this);
 }
 
 ebucoreTechnicalAttributeStringBase::ebucoreTechnicalAttributeStringBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
-: ebucoreTypeGroup(headerMetadata, cMetadataSet)
+: InterchangeObject(headerMetadata, cMetadataSet)
 {}
 
 ebucoreTechnicalAttributeStringBase::~ebucoreTechnicalAttributeStringBase()
@@ -66,8 +66,37 @@ std::string ebucoreTechnicalAttributeStringBase::gettechnicalAttributeStringValu
     return getStringItem(&MXF_ITEM_K(ebucoreTechnicalAttributeString, technicalAttributeStringValue));
 }
 
+bool ebucoreTechnicalAttributeStringBase::havetechnicalAttributeTypeGroup() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreTechnicalAttributeString, technicalAttributeTypeGroup));
+}
+
+ebucoreTypeGroup* ebucoreTechnicalAttributeStringBase::gettechnicalAttributeTypeGroup() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreTechnicalAttributeString, technicalAttributeTypeGroup)));
+    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+}
+
+ebucoreFormatGroup* ebucoreTechnicalAttributeStringBase::gettechnicalAttributeStringFormatGroup() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreTechnicalAttributeString, technicalAttributeStringFormatGroup)));
+    MXFPP_CHECK(dynamic_cast<ebucoreFormatGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreFormatGroup*>(obj.release());
+}
+
 void ebucoreTechnicalAttributeStringBase::settechnicalAttributeStringValue(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreTechnicalAttributeString, technicalAttributeStringValue), value);
+}
+
+void ebucoreTechnicalAttributeStringBase::settechnicalAttributeTypeGroup(ebucoreTypeGroup* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreTechnicalAttributeString, technicalAttributeTypeGroup), value);
+}
+
+void ebucoreTechnicalAttributeStringBase::settechnicalAttributeStringFormatGroup(ebucoreFormatGroup* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucoreTechnicalAttributeString, technicalAttributeStringFormatGroup), value);
 }
 

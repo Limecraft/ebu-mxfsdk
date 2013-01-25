@@ -55,12 +55,16 @@ public:
 
    // getters
 
+   bool havesigningFormatID() const;
+   std::string getsigningFormatID() const;
+   bool havesigningFormatVersionID() const;
+   std::string getsigningFormatVersionID() const;
+   bool havesigningFormatName() const;
+   std::string getsigningFormatName() const;
    bool havesigningTrackID() const;
    std::string getsigningTrackID() const;
    bool havesigningTrackName() const;
    std::string getsigningTrackName() const;
-   bool havesigningTrackLanguageName() const;
-   std::string getsigningTrackLanguageName() const;
    bool havesigningTrackLanguageCode() const;
    std::string getsigningTrackLanguageCode() const;
    bool havesigningSourceUri() const;
@@ -73,9 +77,11 @@ public:
 
    // setters
 
+   void setsigningFormatID(std::string value);
+   void setsigningFormatVersionID(std::string value);
+   void setsigningFormatName(std::string value);
    void setsigningTrackID(std::string value);
    void setsigningTrackName(std::string value);
-   void setsigningTrackLanguageName(std::string value);
    void setsigningTrackLanguageCode(std::string value);
    void setsigningSourceUri(std::string value);
    void setsigningTypeGroup(ebucoreTypeGroup* value);

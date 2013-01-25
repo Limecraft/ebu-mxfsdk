@@ -59,27 +59,30 @@ public:
    std::string getcaptioningFormatID() const;
    bool havecaptioningFormatName() const;
    std::string getcaptioningFormatName() const;
-   bool havecaptioningFormatDefinition() const;
-   std::string getcaptioningFormatDefinition() const;
    bool havecaptioningSourceUri() const;
    std::string getcaptioningSourceUri() const;
-   bool havecaptioningLanguageName() const;
-   std::string getcaptioningLanguageName() const;
+   bool havecaptioningTrackID() const;
+   std::string getcaptioningTrackID() const;
+   bool havecaptioningTrackName() const;
+   std::string getcaptioningTrackName() const;
    bool havecaptioningLanguageCode() const;
    std::string getcaptioningLanguageCode() const;
    bool havecaptioningTypeGroup() const;
    ebucoreTypeGroup* getcaptioningTypeGroup() const;
+   bool havecaptioningFormatGroup() const;
+   ebucoreFormatGroup* getcaptioningFormatGroup() const;
 
 
    // setters
 
    void setcaptioningFormatID(std::string value);
    void setcaptioningFormatName(std::string value);
-   void setcaptioningFormatDefinition(std::string value);
    void setcaptioningSourceUri(std::string value);
-   void setcaptioningLanguageName(std::string value);
+   void setcaptioningTrackID(std::string value);
+   void setcaptioningTrackName(std::string value);
    void setcaptioningLanguageCode(std::string value);
    void setcaptioningTypeGroup(ebucoreTypeGroup* value);
+   void setcaptioningFormatGroup(ebucoreFormatGroup* value);
 
 
 protected:

@@ -69,32 +69,22 @@ public:
    mxfTimestamp getformatDateCreated() const;
    bool haveoverallDurationTimecode() const;
    std::string getoverallDurationTimecode() const;
+   bool haveoverallDurationTimecodeDropframe() const;
+   std::string getoverallDurationTimecodeDropframe() const;
    bool haveoverallDurationTime() const;
    mxfRational getoverallDurationTime() const;
    bool haveoverallDurationEditUnit() const;
    int64_t getoverallDurationEditUnit() const;
-   bool haveoverallEditRate() const;
-   mxfRational getoverallEditRate() const;
-   bool haveoverallStartTimecode() const;
-   std::string getoverallStartTimecode() const;
-   bool haveoverallStartTime() const;
-   mxfRational getoverallStartTime() const;
-   bool haveoverallStartEditUnit() const;
-   int64_t getoverallStartEditUnit() const;
-   bool haveoverallEndTimecode() const;
-   std::string getoverallEndTimecode() const;
-   bool haveoverallEndTime() const;
-   mxfRational getoverallEndTime() const;
-   bool haveoverallEndEditUnit() const;
-   int64_t getoverallEndEditUnit() const;
+   bool haveeditRate() const;
+   ebucoreRational* geteditRate() const;
    bool havecontainerFormat() const;
-   std::vector<ebucoreContainerFormat*> getcontainerFormat() const;
+   ebucoreFormatGroup* getcontainerFormat() const;
    bool havemedium() const;
-   std::vector<ebucoreMedium*> getmedium() const;
+   ebucoreMedium* getmedium() const;
    bool havepackageInfo() const;
    ebucorePackageInfo* getpackageInfo() const;
    bool havemimeType() const;
-   std::vector<ebucoreMimeType*> getmimeType() const;
+   ebucoreTypeGroup* getmimeType() const;
    bool havematerialAudioFormat() const;
    std::vector<ebucoreAudioFormat*> getmaterialAudioFormat() const;
    bool havematerialVideoFormat() const;
@@ -131,6 +121,8 @@ public:
    std::vector<ebucoreTechnicalAttributeAnyURI*> getmaterialTechnicalAttributeAnyURI() const;
    bool havematerialTechnicalAttributeBoolean() const;
    std::vector<ebucoreTechnicalAttributeBoolean*> getmaterialTechnicalAttributeBoolean() const;
+   bool haveformatModifiedDate() const;
+   ebucoreDate* getformatModifiedDate() const;
 
 
    // setters
@@ -142,22 +134,14 @@ public:
    void setformatYearCreated(mxfTimestamp value);
    void setformatDateCreated(mxfTimestamp value);
    void setoverallDurationTimecode(std::string value);
+   void setoverallDurationTimecodeDropframe(std::string value);
    void setoverallDurationTime(mxfRational value);
    void setoverallDurationEditUnit(int64_t value);
-   void setoverallEditRate(mxfRational value);
-   void setoverallStartTimecode(std::string value);
-   void setoverallStartTime(mxfRational value);
-   void setoverallStartEditUnit(int64_t value);
-   void setoverallEndTimecode(std::string value);
-   void setoverallEndTime(mxfRational value);
-   void setoverallEndEditUnit(int64_t value);
-   void setcontainerFormat(const std::vector<ebucoreContainerFormat*>& value);
-   void appendcontainerFormat(ebucoreContainerFormat* value);
-   void setmedium(const std::vector<ebucoreMedium*>& value);
-   void appendmedium(ebucoreMedium* value);
+   void seteditRate(ebucoreRational* value);
+   void setcontainerFormat(ebucoreFormatGroup* value);
+   void setmedium(ebucoreMedium* value);
    void setpackageInfo(ebucorePackageInfo* value);
-   void setmimeType(const std::vector<ebucoreMimeType*>& value);
-   void appendmimeType(ebucoreMimeType* value);
+   void setmimeType(ebucoreTypeGroup* value);
    void setmaterialAudioFormat(const std::vector<ebucoreAudioFormat*>& value);
    void appendmaterialAudioFormat(ebucoreAudioFormat* value);
    void setmaterialVideoFormat(const std::vector<ebucoreVideoFormat*>& value);
@@ -194,6 +178,7 @@ public:
    void appendmaterialTechnicalAttributeAnyURI(ebucoreTechnicalAttributeAnyURI* value);
    void setmaterialTechnicalAttributeBoolean(const std::vector<ebucoreTechnicalAttributeBoolean*>& value);
    void appendmaterialTechnicalAttributeBoolean(ebucoreTechnicalAttributeBoolean* value);
+   void setformatModifiedDate(ebucoreDate* value);
 
 
 protected:

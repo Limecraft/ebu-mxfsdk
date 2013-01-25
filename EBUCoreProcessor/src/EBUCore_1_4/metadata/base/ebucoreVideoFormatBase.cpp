@@ -101,6 +101,16 @@ uint64_t ebucoreVideoFormatBase::getvideoBitRate() const
     return getUInt64Item(&MXF_ITEM_K(ebucoreVideoFormat, videoBitRate));
 }
 
+bool ebucoreVideoFormatBase::havevideoMaxBitRate() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreVideoFormat, videoMaxBitRate));
+}
+
+uint64_t ebucoreVideoFormatBase::getvideoMaxBitRate() const
+{
+    return getUInt64Item(&MXF_ITEM_K(ebucoreVideoFormat, videoMaxBitRate));
+}
+
 bool ebucoreVideoFormatBase::havevideoBitRateMode() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreVideoFormat, videoBitRateMode));
@@ -151,16 +161,31 @@ bool ebucoreVideoFormatBase::getvideoNoiseFilterFlag() const
     return getBooleanItem(&MXF_ITEM_K(ebucoreVideoFormat, videoNoiseFilterFlag));
 }
 
+bool ebucoreVideoFormatBase::havevideo3DFlag() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreVideoFormat, video3DFlag));
+}
+
+bool ebucoreVideoFormatBase::getvideo3DFlag() const
+{
+    return getBooleanItem(&MXF_ITEM_K(ebucoreVideoFormat, video3DFlag));
+}
+
 bool ebucoreVideoFormatBase::havevideoAspectRatio() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreVideoFormat, videoAspectRatio));
 }
 
-ebucoreAspectRatio* ebucoreVideoFormatBase::getvideoAspectRatio() const
+std::vector<ebucoreAspectRatio*> ebucoreVideoFormatBase::getvideoAspectRatio() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreVideoFormat, videoAspectRatio)));
-    MXFPP_CHECK(dynamic_cast<ebucoreAspectRatio*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreAspectRatio*>(obj.release());
+    vector<ebucoreAspectRatio*> result;
+    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreVideoFormat, videoAspectRatio)));
+    while (iter->next())
+    {
+        MXFPP_CHECK(dynamic_cast<ebucoreAspectRatio*>(iter->get()) != 0);
+        result.push_back(dynamic_cast<ebucoreAspectRatio*>(iter->get()));
+    }
+    return result;
 }
 
 bool ebucoreVideoFormatBase::havevideoFrameRate() const
@@ -178,11 +203,11 @@ bool ebucoreVideoFormatBase::havevideoHeight() const
     return haveItem(&MXF_ITEM_K(ebucoreVideoFormat, videoHeight));
 }
 
-ebucoreDimension* ebucoreVideoFormatBase::getvideoHeight() const
+ebucoreHeight* ebucoreVideoFormatBase::getvideoHeight() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreVideoFormat, videoHeight)));
-    MXFPP_CHECK(dynamic_cast<ebucoreDimension*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreDimension*>(obj.release());
+    MXFPP_CHECK(dynamic_cast<ebucoreHeight*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreHeight*>(obj.release());
 }
 
 bool ebucoreVideoFormatBase::havevideoWidth() const
@@ -190,11 +215,11 @@ bool ebucoreVideoFormatBase::havevideoWidth() const
     return haveItem(&MXF_ITEM_K(ebucoreVideoFormat, videoWidth));
 }
 
-ebucoreDimension* ebucoreVideoFormatBase::getvideoWidth() const
+ebucoreWidth* ebucoreVideoFormatBase::getvideoWidth() const
 {
     auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreVideoFormat, videoWidth)));
-    MXFPP_CHECK(dynamic_cast<ebucoreDimension*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreDimension*>(obj.release());
+    MXFPP_CHECK(dynamic_cast<ebucoreWidth*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreWidth*>(obj.release());
 }
 
 bool ebucoreVideoFormatBase::havevideoEncoding() const
@@ -202,26 +227,21 @@ bool ebucoreVideoFormatBase::havevideoEncoding() const
     return haveItem(&MXF_ITEM_K(ebucoreVideoFormat, videoEncoding));
 }
 
-std::vector<ebucoreEncoding*> ebucoreVideoFormatBase::getvideoEncoding() const
+ebucoreTypeGroup* ebucoreVideoFormatBase::getvideoEncoding() const
 {
-    vector<ebucoreEncoding*> result;
-    auto_ptr<ObjectIterator> iter(getStrongRefArrayItem(&MXF_ITEM_K(ebucoreVideoFormat, videoEncoding)));
-    while (iter->next())
-    {
-        MXFPP_CHECK(dynamic_cast<ebucoreEncoding*>(iter->get()) != 0);
-        result.push_back(dynamic_cast<ebucoreEncoding*>(iter->get()));
-    }
-    return result;
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreVideoFormat, videoEncoding)));
+    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
-bool ebucoreVideoFormatBase::havevideoCodectype() const
+bool ebucoreVideoFormatBase::havevideoCodec() const
 {
-    return haveItem(&MXF_ITEM_K(ebucoreVideoFormat, videoCodectype));
+    return haveItem(&MXF_ITEM_K(ebucoreVideoFormat, videoCodec));
 }
 
-ebucoreCodec* ebucoreVideoFormatBase::getvideoCodectype() const
+ebucoreCodec* ebucoreVideoFormatBase::getvideoCodec() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreVideoFormat, videoCodectype)));
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucoreVideoFormat, videoCodec)));
     MXFPP_CHECK(dynamic_cast<ebucoreCodec*>(obj.get()) != 0);
     return dynamic_cast<ebucoreCodec*>(obj.release());
 }
@@ -484,6 +504,11 @@ void ebucoreVideoFormatBase::setvideoBitRate(uint64_t value)
     setUInt64Item(&MXF_ITEM_K(ebucoreVideoFormat, videoBitRate), value);
 }
 
+void ebucoreVideoFormatBase::setvideoMaxBitRate(uint64_t value)
+{
+    setUInt64Item(&MXF_ITEM_K(ebucoreVideoFormat, videoMaxBitRate), value);
+}
+
 void ebucoreVideoFormatBase::setvideoBitRateMode(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreVideoFormat, videoBitRateMode), value);
@@ -509,9 +534,20 @@ void ebucoreVideoFormatBase::setvideoNoiseFilterFlag(bool value)
     setBooleanItem(&MXF_ITEM_K(ebucoreVideoFormat, videoNoiseFilterFlag), value);
 }
 
-void ebucoreVideoFormatBase::setvideoAspectRatio(ebucoreAspectRatio* value)
+void ebucoreVideoFormatBase::setvideo3DFlag(bool value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucoreVideoFormat, videoAspectRatio), value);
+    setBooleanItem(&MXF_ITEM_K(ebucoreVideoFormat, video3DFlag), value);
+}
+
+void ebucoreVideoFormatBase::setvideoAspectRatio(const std::vector<ebucoreAspectRatio*>& value)
+{
+    WrapObjectVectorIterator<ebucoreAspectRatio> iter(value);
+    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreVideoFormat, videoAspectRatio), &iter);
+}
+
+void ebucoreVideoFormatBase::appendvideoAspectRatio(ebucoreAspectRatio* value)
+{
+    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreVideoFormat, videoAspectRatio), value);
 }
 
 void ebucoreVideoFormatBase::setvideoFrameRate(mxfRational value)
@@ -519,30 +555,24 @@ void ebucoreVideoFormatBase::setvideoFrameRate(mxfRational value)
     setRationalItem(&MXF_ITEM_K(ebucoreVideoFormat, videoFrameRate), value);
 }
 
-void ebucoreVideoFormatBase::setvideoHeight(ebucoreDimension* value)
+void ebucoreVideoFormatBase::setvideoHeight(ebucoreHeight* value)
 {
     setStrongRefItem(&MXF_ITEM_K(ebucoreVideoFormat, videoHeight), value);
 }
 
-void ebucoreVideoFormatBase::setvideoWidth(ebucoreDimension* value)
+void ebucoreVideoFormatBase::setvideoWidth(ebucoreWidth* value)
 {
     setStrongRefItem(&MXF_ITEM_K(ebucoreVideoFormat, videoWidth), value);
 }
 
-void ebucoreVideoFormatBase::setvideoEncoding(const std::vector<ebucoreEncoding*>& value)
+void ebucoreVideoFormatBase::setvideoEncoding(ebucoreTypeGroup* value)
 {
-    WrapObjectVectorIterator<ebucoreEncoding> iter(value);
-    setStrongRefArrayItem(&MXF_ITEM_K(ebucoreVideoFormat, videoEncoding), &iter);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreVideoFormat, videoEncoding), value);
 }
 
-void ebucoreVideoFormatBase::appendvideoEncoding(ebucoreEncoding* value)
+void ebucoreVideoFormatBase::setvideoCodec(ebucoreCodec* value)
 {
-    appendStrongRefArrayItem(&MXF_ITEM_K(ebucoreVideoFormat, videoEncoding), value);
-}
-
-void ebucoreVideoFormatBase::setvideoCodectype(ebucoreCodec* value)
-{
-    setStrongRefItem(&MXF_ITEM_K(ebucoreVideoFormat, videoCodectype), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucoreVideoFormat, videoCodec), value);
 }
 
 void ebucoreVideoFormatBase::setvideoTrack(const std::vector<ebucoreTrack*>& value)
