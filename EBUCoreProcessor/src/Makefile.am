@@ -57,6 +57,7 @@ libebucore_la_SOURCES = \
     EBUCore_1_4/metadata/base/ebucoreWidthBase.cpp \
     EBUCore_1_4/metadata/base/ebucoreHeightBase.cpp \
     EBUCore_1_4/metadata/base/ebucoreImageFormatBase.cpp \
+    EBUCore_1_4/metadata/base/ebucoreDataFormatBase.cpp \
     EBUCore_1_4/metadata/base/ebucoreMediumBase.cpp \
     EBUCore_1_4/metadata/base/ebucorePackageInfoBase.cpp \
     EBUCore_1_4/metadata/base/ebucorePartFrameworkBase.cpp \
@@ -157,7 +158,7 @@ libebucore_la_SOURCES = \
 	EBUCore_1_4/metadata/ebucorePublicationMedium.cpp \
 	EBUCore_1_4/metadata/ebucoreRegion.cpp \
 	EBUCore_1_4/metadata/ebucoreRole.cpp \
-	EBUCore_1_4/xsd/EBU_CORE_20120817.cxx \
+	EBUCore_1_4/xsd/EBU_CORE_20121219.cxx \
 	xsd/simpledc20021212.cxx \
 	xsd/xml.cxx \
 	EBUCore_1_4/EBUCoreMapping.cpp \
