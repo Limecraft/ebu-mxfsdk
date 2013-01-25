@@ -656,6 +656,7 @@ void mapPeriodOfTime(ebucorePeriodOfTime* source, periodOfTimeType& dest) {
 		dest.startTime( std::auto_ptr<xml_schema::time>( convert_timestamp_time(source->getperiodStartTime()) ) );
 	if (source->haveperiodEndYear())
 		dest.endYear( std::auto_ptr<xml_schema::gyear>( convert_timestamp_year(source->getperiodEndYear()) ) );
+
 	if (source->haveperiodEndDate())
 		dest.endDate( std::auto_ptr<xml_schema::date>( convert_timestamp_date(source->getperiodEndDate()) ) );
 	if (source->haveperiodEndTime())
@@ -817,7 +818,7 @@ void mapPublicationHistoryEvent(ebucorePublicationHistoryEvent* source, publicat
 	}
 
 	if (source->havepublicationRightsReference()) {
-		std::vector<ebucoreRights*>& vec_rights = source->getpublicationRightsReference();
+		const std::vector<ebucoreRights*>& vec_rights = source->getpublicationRightsReference();
 		if (vec_rights.size() > 0) {
 			std::vector<xml_schema::idref> refs;
 			for (std::vector<ebucoreRights*>::const_iterator it = vec_rights.begin(); it != vec_rights.end(); it++) {
