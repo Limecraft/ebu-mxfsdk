@@ -1409,15 +1409,15 @@ void mapFormat(ebucoreFormat *source, formatType& dest) {
 		dest.mimeType(seq);
 	}
 
-	NEW_VECTOR_AND_RASSIGN(source, getmaterialAudioFormat, audioFormatType, formatType::audioFormat_sequence, std::vector<ebucoreAudioFormat*>, 
+	NEW_VECTOR_AND_RASSIGN_OPTIONAL(source, havematerialAudioFormat, getmaterialAudioFormat, audioFormatType, formatType::audioFormat_sequence, std::vector<ebucoreAudioFormat*>, 
 		mapAudioFormat, dest, audioFormat)
-	NEW_VECTOR_AND_RASSIGN(source, getmaterialVideoFormat, videoFormatType, formatType::videoFormat_sequence, std::vector<ebucoreVideoFormat*>, 
+	NEW_VECTOR_AND_RASSIGN_OPTIONAL(source, havematerialVideoFormat, getmaterialVideoFormat, videoFormatType, formatType::videoFormat_sequence, std::vector<ebucoreVideoFormat*>, 
 		mapVideoFormat, dest, videoFormat)
-	NEW_VECTOR_AND_RASSIGN(source, getmaterialImageFormat, imageFormatType, formatType::imageFormat_sequence, std::vector<ebucoreImageFormat*>, 
+	NEW_VECTOR_AND_RASSIGN_OPTIONAL(source, havematerialImageFormat, getmaterialImageFormat, imageFormatType, formatType::imageFormat_sequence, std::vector<ebucoreImageFormat*>, 
 		mapImageFormat, dest, imageFormat)
-	NEW_VECTOR_AND_RASSIGN(source, getmaterialDataFormat, dataFormatType, formatType::dataFormat_sequence, std::vector<ebucoreDataFormat*>, 
+	NEW_VECTOR_AND_RASSIGN_OPTIONAL(source, havematerialDataFormat, getmaterialDataFormat, dataFormatType, formatType::dataFormat_sequence, std::vector<ebucoreDataFormat*>, 
 		mapDataFormat, dest, dataFormat)
-	NEW_VECTOR_AND_RASSIGN(source, getmaterialSigningFormat, signingFormat, formatType::signingFormat_sequence, std::vector<ebucoreSigningFormat*>, 
+	NEW_VECTOR_AND_RASSIGN_OPTIONAL(source, havematerialSigningFormat, getmaterialSigningFormat, signingFormat, formatType::signingFormat_sequence, std::vector<ebucoreSigningFormat*>, 
 		mapSigningFormat, dest, signingFormat)
 
 	NEW_VECTOR_AND_RASSIGN_OPTIONAL(source, havematerialTechnicalAttributeString, getmaterialTechnicalAttributeString, String, formatType::technicalAttributeString_sequence, 
