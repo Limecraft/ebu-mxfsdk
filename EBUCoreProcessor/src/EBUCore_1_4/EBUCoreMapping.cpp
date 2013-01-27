@@ -1308,66 +1308,47 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, mxfRat
 
 		// determine which of our parts belong on a timeline
 		partType& part = *it;
-		for (partType::format_iterator it2 = part.format().begin(); it2 != part.format().end(); it2++) {
-			formatType& format = *it2;
-			if (format.start().present() && (format.duration().present() || format.end().present())) {
-				formatType::start_type &start = format.start().get();
-				// sensible values are present!
-				mxfPosition formatStart;
-				mxfLength formatDuration;
-				if (start.editUnitNumber().present()) {
-					formatStart = start.editUnitNumber().get();
-				} else if (start.normalPlayTime().present()) {
-					// convert a duration
-					mxfRational d = convert_rational(start.normalPlayTime().get());
-					formatStart = (d.numerator * overallFrameRate.numerator) / (d.denominator * overallFrameRate.denominator);
-				} else {
-					// convert a time code
-					bmx::Timecode tc;
-					bmx::parse_timecode(start.timecode().get().c_str(), overallFrameRate, &tc);
-					formatStart = tc.GetOffset();
-				}
-				if (format.duration().present()) {
-					formatType::duration_type &dur = format.duration().get();
-					if (dur.editUnitNumber().present()) {
-						formatDuration = dur.editUnitNumber().get();
-					} else if (dur.normalPlayTime().present()) {
-						// convert a duration
-						mxfRational d = convert_rational(dur.normalPlayTime().get());
-						formatDuration = (d.numerator * overallFrameRate.numerator) / (d.denominator * overallFrameRate.denominator);
-					} else {
-						// convert a time code
-						bmx::Timecode tc;
-						bmx::parse_timecode(dur.timecode().get().c_str(), overallFrameRate, &tc);
-						formatDuration = tc.GetOffset();
-					}
-				} else {
-					formatType::end_type &end = format.end().get();
-					if (end.editUnitNumber().present()) {
-						formatDuration = end.editUnitNumber().get() - formatStart;
-					} else if (end.normalPlayTime().present()) {
-						// convert a duration
-						mxfRational d = convert_rational(end.normalPlayTime().get());
-						formatStart = (d.numerator * overallFrameRate.numerator) / (d.denominator * overallFrameRate.denominator) - formatStart;
-					} else {
-						// convert a time code
-						bmx::Timecode tc;
-						bmx::parse_timecode(end.timecode().get().c_str(), overallFrameRate, &tc);
-						formatDuration = tc.GetOffset() - formatStart;
-					}
-				}
-				if (formatStart < partStart) partStart = formatStart;
-				if (formatStart + formatDuration > partEnd) partEnd = formatStart + formatDuration;
+		if (part.partStartTime().present() && part.partDuration().present()) {
+			timeType &start = part.partStartTime().get();
+			// sensible values are present!
+			mxfPosition formatStart;
+			mxfLength formatDuration;
+			if (start.editUnitNumber().present()) {
+				formatStart = start.editUnitNumber().get();
+			} else if (start.normalPlayTime().present()) {
+				// convert a duration
+				mxfRational d = convert_rational(start.normalPlayTime().get());
+				formatStart = (d.numerator * overallFrameRate.numerator) / (d.denominator * overallFrameRate.denominator);
+			} else {
+				// convert a time code
+				bmx::Timecode tc;
+				bmx::parse_timecode(start.timecode().get().c_str(), overallFrameRate, &tc);
+				formatStart = tc.GetOffset();
+			}
+
+			formatType::duration_type &dur = format.duration().get();
+			if (dur.editUnitNumber().present()) {
+				formatDuration = dur.editUnitNumber().get();
+			} else if (dur.normalPlayTime().present()) {
+				// convert a duration
+				mxfRational d = convert_rational(dur.normalPlayTime().get());
+				formatDuration = (d.numerator * overallFrameRate.numerator) / (d.denominator * overallFrameRate.denominator);
+			} else {
+				// convert a time code
+				bmx::Timecode tc;
+				bmx::parse_timecode(dur.timecode().get().c_str(), overallFrameRate, &tc);
+				formatDuration = tc.GetOffset();
+			}
+
+			if (partStart != 0x7FFFFFFFFFFFFFFF && partEnd != 0) {
+				// this goes onto the timeline!
+				obj->setpartStartEditUnitNumber(partStart);
+				obj->setpartDurationEditUnitNumber(partEnd - partStart);
+				timelineParts.push_back(obj);
 			}
 		}
-
-		if (partStart != 0x7FFFFFFFFFFFFFFF && partEnd != 0) {
-			// this goes onto the timeline!
-			obj->setpartStartEditUnitNumber(partStart);
-			obj->setpartDurationEditUnitNumber(partEnd - partStart);
-			timelineParts.push_back(obj);
-		}
 	}
+
 	dest->setpart(vec_parts); 
 }
 
