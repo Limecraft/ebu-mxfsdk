@@ -208,6 +208,22 @@ const std::string serialize_key(mxfKey* key) {
 	return s.str();
 }
 
+const std::string serialize_key_as_hex(mxfKey* key) {
+#define KEY_STRING_LEN	48
+	char out[KEY_STRING_LEN];
+#if defined(_WIN32)
+	_snprintf(out, KEY_STRING_LEN,
+#else
+	snprintf(out, KEY_STRING_LEN,
+#endif
+                 "%02x.%02x.%02x.%02x.%02x.%02x.%02x.%02x.%02x.%02x.%02x.%02x.%02x.%02x.%02x.%02x",
+                 key->octet0, key->octet1, key->octet2, key->octet3,
+                 key->octet4, key->octet5, key->octet6, key->octet7,
+                 key->octet8, key->octet9, key->octet10, key->octet11,
+                 key->octet12, key->octet13, key->octet14, key->octet15);
+	return std::string(out);
+}
+
 const std::string serialize_umid(mxfUMID *umid) {
 	std::stringstream s;
 	s << "0x" << std::hex << std::uppercase;
@@ -433,16 +449,24 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 					if (itemDef->typeId == MXF_STRONGREF_TYPE) {
 
 						// item is a single strong reference, follow it
-						mxf_get_strongref_item(set, &item->key, &referencedSet);
+						if (mxf_get_strongref_item(set, &item->key, &referencedSet)) {
+							// do we follow strong references extensively?
+							if (recurseIntoReferences) {
+								AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkItems, recurseIntoReferences, st434dict, tc);
+							}
+							else {
+								AnalyzeShallowStrongReference(itemElem, referencedSet, root, header_metadata, st434dict, tc);
+							}
+						} else {
+							// reference target could not be located!
+							// put a dark reference instead
+							mxfUUID uuidValue;
+							mxf_get_uuid_item(set, &item->key, &uuidValue);
 
-						// do we follow strong references extensively?
-						if (recurseIntoReferences) {
-							AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkItems, recurseIntoReferences, st434dict, tc);
+							DOMElement *darkElem = PrepareElement(root, itemElem, s377mGroupsNS, _X("DarkGroup_REF", tc));
+							PrepareAttributeWithContent(root, darkElem, s377mTypesNS, _X("TargetInstance", tc).str(), 
+								_X(serialize_uuid(&uuidValue), tc).str()); 
 						}
-						else {
-							AnalyzeShallowStrongReference(itemElem, referencedSet, root, header_metadata, st434dict, tc);
-						}
-
 					} else if (itemDef->typeId == MXF_STRONGREFARRAY_TYPE || itemDef->typeId == MXF_STRONGREFBATCH_TYPE) {
 
 						// loop through the array or batch of elements and follow each
@@ -567,6 +591,9 @@ void AnalyzeDarkSets(DOMElement* parent, DOMDocument* root, MXFHeaderMetadata *h
 		for (std::vector<KLVPacketRef>::iterator it = darkSets.begin(); it != darkSets.end(); it++) {
 			DOMElement* darkElem = PrepareElementWithContent(root, floatingGroups, s377mGroupsNS, _X("UnparsedDarkGroup", tc), _X(serialize_dark_value(mxfFile, (*it).offset, (*it).len), tc));
 			PrepareAttributeWithContent(root, darkElem, s377mGroupsNS, _X("Key", tc).str(), _X(serialize_key(&(*it).key), tc).str());
+			/* DEBUG { */
+			//PrepareAttributeWithContent(root, darkElem, s377mGroupsNS, _X("HexKey", tc).str(), _X(serialize_key_as_hex(&(*it).key), tc).str());
+			/* } DEBUG */
 			PrepareAttributeWithContent(root, darkElem, s377mGroupsNS, _X("BEROctetCount", tc).str(), _X(serialize_simple_int8<uint8_t>((*it).llen), tc).str());
 		}
 	}
@@ -883,6 +910,9 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 
 	// cleanup
 	mxf_clear_rip(&rip);
+
+	// delete the EBUCoreProcessor
+	delete ebucoreProc;
 
 	// delete our transcoder (via delete operator from base XMemmory class)
 	delete tc;
