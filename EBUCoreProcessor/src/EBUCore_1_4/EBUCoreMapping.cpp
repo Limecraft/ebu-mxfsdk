@@ -1326,7 +1326,7 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, mxfRat
 				formatStart = tc.GetOffset();
 			}
 
-			formatType::duration_type &dur = format.duration().get();
+			formatType::duration_type &dur = part.partDuration().get();
 			if (dur.editUnitNumber().present()) {
 				formatDuration = dur.editUnitNumber().get();
 			} else if (dur.normalPlayTime().present()) {
