@@ -1456,6 +1456,37 @@ void mapPart(ebucorePartMetadata *source, partType& dest) {
 
 	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havepartTypeGroup, getpartTypeGroup, dest, partType)
 	
+	
+	if (source->havepartDurationEditUnitNumber() || source->havepartDurationTime() || source->havepartDurationTimecode()) {
+		std::auto_ptr<durationType> p( new durationType() );
+		if (source->havepartDurationEditUnitNumber()) {
+			p->editUnitNumber() = source->getpartDurationEditUnitNumber();
+		}
+		if (source->havepartDurationTimecode()) {
+			p->timecode() = source->getpartDurationTimecode();
+		}
+		if (source->havepartDurationTime()) {
+			std::auto_ptr<durationType::normalPlayTime_type> pp( convert_duration(source->getpartDurationTime()) );
+			p->normalPlayTime(pp);
+		}
+		dest.partDuration(p);
+	}
+
+	if (source->havepartStartEditUnitNumber() || source->havepartStartTime() || source->havepartStartTimecode()) {
+		std::auto_ptr<timeType> p( new timeType() );
+		if (source->havepartStartEditUnitNumber()) {
+			p->editUnitNumber() = source->getpartStartEditUnitNumber();
+		}
+		if (source->havepartStartTimecode()) {
+			p->timecode() = source->getpartStartTimecode();
+		}
+		if (source->havepartStartTime()) {
+			std::auto_ptr<timeType::normalPlayTime_type> pp( convert_time(source->getpartStartTime()) );
+			p->normalPlayTime(pp);
+		}
+		dest.partStartTime(p);
+	}
+
 	// map ourselves (we are an extension of the coreMetadataType) onto the ebucoreCoreMetadata object
 	if (source->havepartMeta()) {
 		mapCoreMetadata(source->getpartMeta(), dest);

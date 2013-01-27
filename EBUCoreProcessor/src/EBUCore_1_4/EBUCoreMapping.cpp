@@ -1223,6 +1223,21 @@ void mapPart(partType& source, ebucorePartMetadata *dest, mxfRational overallFra
 	SIMPLE_MAP_OPTIONAL(source, partDefinition, dest, setpartDefinition)
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setpartTypeGroup)
 
+	if (source.partStartTime().present()) {
+		timeType& start = source.partStartTime().get();
+		SIMPLE_MAP_OPTIONAL(start, editUnitNumber, dest, setpartStartEditUnitNumber)
+		SIMPLE_MAP_OPTIONAL(start, timecode, dest, setpartStartTimecode)
+		SIMPLE_MAP_OPTIONAL_CONVERT(start, normalPlayTime, dest, setpartStartTime, convert_rational)
+	}
+	if (source.partDuration().present()) {
+		durationType& dur = source.partDuration().get();
+		// [NOTE] Mapped playtime as duration because we need a numeric value (rational) # of seconds.
+		// [NOTE] We just map the timecode as a string to the KLV representation
+		SIMPLE_MAP_OPTIONAL(dur, editUnitNumber, dest, setpartDurationEditUnitNumber)
+		SIMPLE_MAP_OPTIONAL(dur, timecode, dest, setpartDurationTimecode)
+		SIMPLE_MAP_OPTIONAL_CONVERT(dur, normalPlayTime, dest, setpartDurationTime, convert_rational)
+	}
+
 	// map ourselves (we are an extension of the coreMetadataType) onto a new ebucoreCoreMetadata object
 	ebucoreCoreMetadata *obj = newAndModifyObject<ebucoreCoreMetadata>(dest->getHeaderMetadata(), mod);
 	mapCoreMetadata(source, obj, overallFrameRate, timelineParts, mod);
