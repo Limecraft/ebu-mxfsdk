@@ -246,7 +246,6 @@ AC_CONFIG_FILES([
 	EBUCoreProcessor/Makefile
 	EBUCoreProcessor/src/Makefile
 	EBUCoreProcessor/apps/Makefile
-	EBUCoreProcessor/apps/mxf2raw/Makefile
 	EBUCoreProcessor/apps/raw2bmx/Makefile
 	EBUCoreProcessor/apps/ebu2mxf/Makefile
 	EBUCoreProcessor/apps/mxf2ebu/Makefile
