@@ -2977,17 +2977,27 @@ int main(int argc, const char** argv)
         }
 
 
-		// add EBU Core descriptive metadata
-
 		// force prepared header metadata
 		clip->PrepareHeaderMetadata();
 
-		// Register EBU Core extensions in the metadata data model
 		if (ebucore_filename) {
-			// DISABLE EBUCore functionality for now
-			//EBUCore::RegisterMetadataExtensionsforEBUCore(clip->GetDataModel());
-			//DMFramework *framework = EBUCore::Process(ebucore_filename, clip->GetHeaderMetadata());
-			//EBUCore::InsertEBUCoreFramework(clip->GetHeaderMetadata(), framework);
+			// add EBU Core descriptive metadata
+			std::auto_ptr<EBUCore::EBUCoreProcessor> ebuProc(EBUCore::GetDefaultEBUCoreProcessor());
+
+			std::vector<EBUSDK::MXFCustomMetadata::EventInput> eventFrameworks;
+			Identification* id = EBUCore::GenerateEBUCoreIdentificationSet(clip->GetHeaderMetadata());
+
+			// Register EBU Core extensions in the metadata data model
+			ebuProc->RegisterMetadataExtensions(clip->GetDataModel());
+
+			DMFramework *framework = ebuProc->Process(NULL, ebucore_filename, clip->GetHeaderMetadata(), eventFrameworks, id);
+
+			// insert the static track DM framework
+			EBUCore::InsertEBUCoreFramework(clip->GetHeaderMetadata(), ebuProc->GetDescriptiveMetadataScheme(), framework, id);
+			// insert the event track DM frameworks on the timeline, if any
+			if (eventFrameworks.size() > 0) {
+				EBUCore::InsertEBUCoreEventFrameworks(clip->GetHeaderMetadata(), eventFrameworks, id);
+			}
 		}
 
         // add AS-11 descriptive metadata
