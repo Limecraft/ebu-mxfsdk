@@ -46,6 +46,8 @@ static const XMLCh s377mGroupsNS[] = {'h','t','t','p',':','/','/','w','w','w','.
 static const XMLCh s377mTypesNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','t','y','p','e','s','/','S','3','7','7','M','/','2','0','0','4','\0'};
 static const XMLCh s377mMuxNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','m','u','l','t','i','p','l','e','x','/','S','3','7','7','M','/','2','0','0','4','\0'};
 
+static const XMLCh ebucoreElementsNS[] = {'u','r','n',':','e','b','u',':','m','e','t','a','d','a','t','a','-','s','c','h','e','m','a',':','s','m','p','t','e','c','l','a','s','s','1','3','/','p','r','o','p','e','r','t','i','e','s','/','e','b','u','c','o','r','e','_','2','0','1','2','\0'};
+
 struct st434info {
 	XMLCh* namespaceURI;
 	XMLCh* elementName;
@@ -397,6 +399,8 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 		mxf_find_set_def(header_metadata->dataModel, &set->key, &setDef);
 
 		st434info* info = (*objIter).second;
+		if (info->elementName[0] == 'e')
+			printf("");
 
 		// create an element for this set
 		DOMElement *elem = root->createElementNS(info->namespaceURI, info->elementName);
@@ -718,6 +722,10 @@ void AddST434PrefixDeclarations(DOMDocument *doc, XMLTranscoder* tc) {
 		_X("xmlns:s377mTypes", tc).str(), s377mTypesNS);
 	doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
 		_X("xmlns:s377mGroups", tc).str(), s377mGroupsNS);
+
+	doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
+		_X("xmlns:ebucoreElements", tc).str(), ebucoreElementsNS);
+	
 }
 
 bool FindIndexTable(MXFFile *mxfFile, int64_t offset, int64_t *tableOffset, int64_t maxTableLength, int64_t *length) {
@@ -794,6 +802,11 @@ void AnalyzePartition(DOMElement *parent, DOMDocument *root, Partition *partitio
 
 void RegisterAnalyzerExtensions(DataModel *data_model) {
 
+#ifdef AS11_EXTENSIONS
+	// Register AS-11 Descriptive metadata extensions
+    AS11DMS::RegisterExtensions(data_model);
+#endif
+
 #define MXF_LABEL(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15) \
     {d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15}
 
@@ -823,6 +836,9 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 	std::map<mxfKey, st434info*> st434dict;
 
 #include "group_declarations.inc"
+#ifdef AS11_EXTENSIONS
+#include "group_declarations_as11.inc"
+#endif
 
 	std::auto_ptr<File> mFile( File::openRead(mxfLocation) );	// throws MXFException if open failed!
 
