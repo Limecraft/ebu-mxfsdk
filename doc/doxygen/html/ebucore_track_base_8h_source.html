@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>EBU MXF SDK: C:/code/BMX/ebu-mxfsdk/EBUCoreProcessor/include/EBUCore_1_5/metadata/base/ebucoreTrackBase.h Source File</title>
+<title>EBU MXF SDK: C:/code/BMX/ebu-mxfsdk/EBUCoreProcessor/include/EBUCore_1_4/metadata/base/ebucoreTrackBase.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -34,7 +34,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d1324ab2d370781e535d63201b05d671.html">EBUCoreProcessor</a></li><li class="navelem"><a class="el" href="dir_ad571ffb366777fc30ccb3a2cbb4aeb0.html">include</a></li><li class="navelem"><a class="el" href="dir_60ee00c4d34e94a23d789d565f51d8bf.html">EBUCore_1_5</a></li><li class="navelem"><a class="el" href="dir_98f6474d43bcb4baf4b63a24f98c06f3.html">metadata</a></li><li class="navelem"><a class="el" href="dir_c1f652c20edc894fa0a9c7a83f61c733.html">base</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d1324ab2d370781e535d63201b05d671.html">EBUCoreProcessor</a></li><li class="navelem"><a class="el" href="dir_ad571ffb366777fc30ccb3a2cbb4aeb0.html">include</a></li><li class="navelem"><a class="el" href="dir_732e40d67a771c9d4814b39e7cb67460.html">EBUCore_1_4</a></li><li class="navelem"><a class="el" href="dir_c5f8dd1e4f9a79630821691f21fc71c7.html">metadata</a></li><li class="navelem"><a class="el" href="dir_9a320cd2c47c20dda57ed2bbf6d1ef88.html">base</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -82,7 +82,7 @@
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">using namespace </span>mxfpp;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">namespace </span>EBUSDK { <span class="keyword">namespace </span>EBUCore { <span class="keyword">namespace </span>EBUCore_1_5 { <span class="keyword">namespace </span>KLV</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">namespace </span>EBUSDK { <span class="keyword">namespace </span>EBUCore { <span class="keyword">namespace </span>EBUCore_1_4 { <span class="keyword">namespace </span>KLV</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
@@ -103,36 +103,33 @@
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;   std::string gettrackID() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;   <span class="keywordtype">bool</span> havetrackName() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;   std::string gettrackName() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;   <span class="keywordtype">bool</span> havetrackLanguageName() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   std::string gettrackLanguageName() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;   <span class="keywordtype">bool</span> havetrackLanguageCode() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;   std::string gettrackLanguageCode() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;   <span class="keywordtype">bool</span> havetrackTypeGroup() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;   ebucoreTypeGroup* gettrackTypeGroup() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;   <span class="keywordtype">bool</span> havetrackLanguageCode() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;   std::string gettrackLanguageCode() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;   <span class="keywordtype">bool</span> havetrackTypeGroup() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;   ebucoreTypeGroup* gettrackTypeGroup() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;   <span class="comment">// setters</span></div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;   <span class="comment">// setters</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;   <span class="keywordtype">void</span> settrackID(std::string value);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;   <span class="keywordtype">void</span> settrackName(std::string value);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;   <span class="keywordtype">void</span> settrackLanguageName(std::string value);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;   <span class="keywordtype">void</span> settrackLanguageCode(std::string value);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;   <span class="keywordtype">void</span> settrackTypeGroup(ebucoreTypeGroup* value);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    ebucoreTrackBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;};</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;   <span class="keywordtype">void</span> settrackID(std::string value);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;   <span class="keywordtype">void</span> settrackName(std::string value);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;   <span class="keywordtype">void</span> settrackLanguageCode(std::string value);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;   <span class="keywordtype">void</span> settrackTypeGroup(ebucoreTypeGroup* value);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    ebucoreTrackBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;};</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}}}};</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;}}}};</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 3 2012 14:30:54 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Feb 13 2013 17:31:17 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>
