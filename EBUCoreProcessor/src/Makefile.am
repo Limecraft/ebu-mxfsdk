@@ -46,6 +46,7 @@ libebucore_la_SOURCES = \
 	EBUCore_1_4/metadata/base/ebucorePublicationChannelBase.cpp \
 	EBUCore_1_4/metadata/base/ebucorePublicationHistoryBase.cpp \
 	EBUCore_1_4/metadata/base/ebucorePublicationMediumBase.cpp \
+	EBUCore_1_4/metadata/base/ebucorePublicationServiceBase.cpp \
 	EBUCore_1_4/metadata/base/ebucoreRegionBase.cpp \
 	EBUCore_1_4/metadata/base/ebucoreRoleBase.cpp \
     EBUCore_1_4/metadata/base/ebucoreAncillaryDataBase.cpp \
@@ -156,9 +157,10 @@ libebucore_la_SOURCES = \
 	EBUCore_1_4/metadata/ebucorePublicationChannel.cpp \
 	EBUCore_1_4/metadata/ebucorePublicationHistory.cpp \
 	EBUCore_1_4/metadata/ebucorePublicationMedium.cpp \
+	EBUCore_1_4/metadata/ebucorePublicationService.cpp \
 	EBUCore_1_4/metadata/ebucoreRegion.cpp \
 	EBUCore_1_4/metadata/ebucoreRole.cpp \
-	EBUCore_1_4/xsd/EBU_CORE_20121219.cxx \
+	EBUCore_1_4/xsd/EBU_CORE_20130107.cxx \
 	xsd/simpledc20021212.cxx \
 	xsd/xml.cxx \
 	EBUCore_1_4/EBUCoreMapping.cpp \
