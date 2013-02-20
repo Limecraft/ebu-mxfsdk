@@ -2038,14 +2038,14 @@ int main(int argc, const char** argv)
 
 	CHECK(EBUSDK::EBUCore::EBUCoreDMS::RegisterCExtensions(dataModel));
 
-	mxfKey ebuCoreKey = { 0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x0D,0x02,0x01,0x01, 0x00, 0x00, 0x00, 0x00 };
+	mxfKey ebuCoreKey = { 0x06,0x0E,0x2B,0x34,0x02,0x7F,0x01,0x0B,0x0D,0x02,0x01,0x00, 0x00, 0x00, 0x00, 0x00 };
 
     mxf_initialise_list_iter(&iter, &dataModel->setDefs);
     while (mxf_next_list_iter_element(&iter))
     {
         MXFSetDef *setDef = (MXFSetDef*)mxf_get_iter_element(&iter);
 		
-        if (!mxf_equals_key_prefix(&setDef->key, &ebuCoreKey, 12) /* Compare first 12 elements of key to handle only EBUCore keys */ ) //(mxf_equals_key(&setDef->key, &g_Null_Key))
+        if (!mxf_equals_key_prefix(&setDef->key, &ebuCoreKey, 11) /* Compare first 12 elements of key to handle only EBUCore keys */ ) //(mxf_equals_key(&setDef->key, &g_Null_Key))
         {
             /* root set */
             continue;

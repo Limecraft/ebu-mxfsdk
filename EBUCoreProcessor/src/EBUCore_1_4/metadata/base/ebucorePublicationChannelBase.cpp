@@ -71,6 +71,26 @@ std::string ebucorePublicationChannelBase::getpublicationChannelName() const
     return getStringItem(&MXF_ITEM_K(ebucorePublicationChannel, publicationChannelName));
 }
 
+bool ebucorePublicationChannelBase::havepublicationChannelId() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePublicationChannel, publicationChannelId));
+}
+
+std::string ebucorePublicationChannelBase::getpublicationChannelId() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucorePublicationChannel, publicationChannelId));
+}
+
+bool ebucorePublicationChannelBase::havepublicationChannelLinkToLogo() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePublicationChannel, publicationChannelLinkToLogo));
+}
+
+std::string ebucorePublicationChannelBase::getpublicationChannelLinkToLogo() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucorePublicationChannel, publicationChannelLinkToLogo));
+}
+
 bool ebucorePublicationChannelBase::havepublicationChannelType() const
 {
     return haveItem(&MXF_ITEM_K(ebucorePublicationChannel, publicationChannelType));
@@ -86,6 +106,16 @@ ebucoreTypeGroup* ebucorePublicationChannelBase::getpublicationChannelType() con
 void ebucorePublicationChannelBase::setpublicationChannelName(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucorePublicationChannel, publicationChannelName), value);
+}
+
+void ebucorePublicationChannelBase::setpublicationChannelId(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucorePublicationChannel, publicationChannelId), value);
+}
+
+void ebucorePublicationChannelBase::setpublicationChannelLinkToLogo(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucorePublicationChannel, publicationChannelLinkToLogo), value);
 }
 
 void ebucorePublicationChannelBase::setpublicationChannelType(ebucoreTypeGroup* value)

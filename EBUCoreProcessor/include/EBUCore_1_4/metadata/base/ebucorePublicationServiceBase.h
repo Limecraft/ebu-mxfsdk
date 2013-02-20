@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCOREPUBLICATIONCHANNEL_BASE_H__
-#define __MXFPP_EBUCOREPUBLICATIONCHANNEL_BASE_H__
+#ifndef __MXFPP_EBUCOREPUBLICATIONSERVICE_BASE_H__
+#define __MXFPP_EBUCOREPUBLICATIONSERVICE_BASE_H__
 
 
 
@@ -42,39 +42,36 @@ namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_4 { namespace KLV
 {
 
 
-class ebucorePublicationChannelBase : public InterchangeObject
+class ebucorePublicationServiceBase : public InterchangeObject
 {
 public:
-    friend class MetadataSetFactory<ebucorePublicationChannelBase>;
+    friend class MetadataSetFactory<ebucorePublicationServiceBase>;
     static const mxfKey setKey;
 
 public:
-    ebucorePublicationChannelBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucorePublicationChannelBase();
+    ebucorePublicationServiceBase(HeaderMetadata *headerMetadata);
+    virtual ~ebucorePublicationServiceBase();
 
 
    // getters
 
-   bool havepublicationChannelName() const;
-   std::string getpublicationChannelName() const;
-   bool havepublicationChannelId() const;
-   std::string getpublicationChannelId() const;
-   bool havepublicationChannelLinkToLogo() const;
-   std::string getpublicationChannelLinkToLogo() const;
-   bool havepublicationChannelType() const;
-   ebucoreTypeGroup* getpublicationChannelType() const;
+   bool havepublicationServiceName() const;
+   std::string getpublicationServiceName() const;
+   bool havepublicationServiceLinkToLogo() const;
+   std::string getpublicationServiceLinkToLogo() const;
+   bool havepublicationServiceSource() const;
+   ebucoreOrganisation* getpublicationServiceSource() const;
 
 
    // setters
 
-   void setpublicationChannelName(std::string value);
-   void setpublicationChannelId(std::string value);
-   void setpublicationChannelLinkToLogo(std::string value);
-   void setpublicationChannelType(ebucoreTypeGroup* value);
+   void setpublicationServiceName(std::string value);
+   void setpublicationServiceLinkToLogo(std::string value);
+   void setpublicationServiceSource(ebucoreOrganisation* value);
 
 
 protected:
-    ebucorePublicationChannelBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucorePublicationServiceBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

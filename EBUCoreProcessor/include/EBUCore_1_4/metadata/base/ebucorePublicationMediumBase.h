@@ -57,6 +57,8 @@ public:
 
    bool havepublicationMediumName() const;
    std::string getpublicationMediumName() const;
+   bool havepublicationMediumId() const;
+   std::string getpublicationMediumId() const;
    bool havepublicationMediumType() const;
    ebucoreTypeGroup* getpublicationMediumType() const;
 
@@ -64,6 +66,7 @@ public:
    // setters
 
    void setpublicationMediumName(std::string value);
+   void setpublicationMediumId(std::string value);
    void setpublicationMediumType(ebucoreTypeGroup* value);
 
 

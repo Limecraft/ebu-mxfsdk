@@ -58,6 +58,7 @@ void RegisterFrameworkObjectFactory(HeaderMetadata *header_metadata)
 	header_metadata->registerObjectFactory(&ebucorePublicationChannel::setKey, new MetadataSetFactory<ebucorePublicationChannel>());
 	header_metadata->registerObjectFactory(&ebucorePublicationHistory::setKey, new MetadataSetFactory<ebucorePublicationHistory>());
 	header_metadata->registerObjectFactory(&ebucorePublicationMedium::setKey, new MetadataSetFactory<ebucorePublicationMedium>());
+	header_metadata->registerObjectFactory(&ebucorePublicationService::setKey, new MetadataSetFactory<ebucorePublicationService>());
 	header_metadata->registerObjectFactory(&ebucoreDateType::setKey, new MetadataSetFactory<ebucoreDate>());
 	header_metadata->registerObjectFactory(&ebucoreDate::setKey, new MetadataSetFactory<ebucoreDate>());
 	header_metadata->registerObjectFactory(&ebucoreLanguage::setKey, new MetadataSetFactory<ebucoreLanguage>());

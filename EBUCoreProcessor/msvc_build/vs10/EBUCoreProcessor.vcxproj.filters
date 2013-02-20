@@ -539,6 +539,12 @@
     <ClCompile Include="..\..\src\EBUCore_1_4\xsd\EBU_CORE_20130107.cxx">
       <Filter>Source Files\EBUCore_1_4\xsd</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucorePublicationService.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucorePublicationServiceBase.cpp">
+      <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\EBUCoreProcessor.h">

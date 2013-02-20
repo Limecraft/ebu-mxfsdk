@@ -29,56 +29,29 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCOREPUBLICATIONCHANNEL_BASE_H__
-#define __MXFPP_EBUCOREPUBLICATIONCHANNEL_BASE_H__
-
-
-
-#include <libMXF++/metadata/InterchangeObject.h>
-
-using namespace mxfpp;
-
-namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_4 { namespace KLV
-{
-
-
-class ebucorePublicationChannelBase : public InterchangeObject
-{
-public:
-    friend class MetadataSetFactory<ebucorePublicationChannelBase>;
-    static const mxfKey setKey;
-
-public:
-    ebucorePublicationChannelBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucorePublicationChannelBase();
-
-
-   // getters
-
-   bool havepublicationChannelName() const;
-   std::string getpublicationChannelName() const;
-   bool havepublicationChannelId() const;
-   std::string getpublicationChannelId() const;
-   bool havepublicationChannelLinkToLogo() const;
-   std::string getpublicationChannelLinkToLogo() const;
-   bool havepublicationChannelType() const;
-   ebucoreTypeGroup* getpublicationChannelType() const;
-
-
-   // setters
-
-   void setpublicationChannelName(std::string value);
-   void setpublicationChannelId(std::string value);
-   void setpublicationChannelLinkToLogo(std::string value);
-   void setpublicationChannelType(ebucoreTypeGroup* value);
-
-
-protected:
-    ebucorePublicationChannelBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
-};
-
-
-}}}};
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
+
+#include <libMXF++/MXF.h>
+#include <EBUCore_1_4/metadata/EBUCoreDMS++.h>
+
+
+using namespace std;
+using namespace mxfpp;
+using namespace EBUSDK::EBUCore::EBUCore_1_4::KLV;
+
+
+
+ebucorePublicationService::ebucorePublicationService(HeaderMetadata *headerMetadata)
+: ebucorePublicationServiceBase(headerMetadata)
+{}
+
+ebucorePublicationService::ebucorePublicationService(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+: ebucorePublicationServiceBase(headerMetadata, cMetadataSet)
+{}
+
+ebucorePublicationService::~ebucorePublicationService()
+{}
+
+

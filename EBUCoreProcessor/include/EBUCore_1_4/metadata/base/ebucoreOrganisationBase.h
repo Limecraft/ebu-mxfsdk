@@ -57,6 +57,8 @@ public:
 
    bool haveorganisationId() const;
    std::string getorganisationId() const;
+   bool haveorganisationLinkToLogo() const;
+   std::string getorganisationLinkToLogo() const;
    bool haveorganisationCode() const;
    std::vector<ebucoreIdentifier*> getorganisationCode() const;
    bool haveorganisationRelatedInformationLink() const;
@@ -76,6 +78,7 @@ public:
    // setters
 
    void setorganisationId(std::string value);
+   void setorganisationLinkToLogo(std::string value);
    void setorganisationCode(const std::vector<ebucoreIdentifier*>& value);
    void appendorganisationCode(ebucoreIdentifier* value);
    void setorganisationRelatedInformationLink(const std::vector<ebucoreBasicLink*>& value);

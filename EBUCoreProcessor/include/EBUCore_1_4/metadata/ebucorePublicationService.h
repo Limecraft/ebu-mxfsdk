@@ -29,12 +29,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MXFPP_EBUCOREPUBLICATIONCHANNEL_BASE_H__
-#define __MXFPP_EBUCOREPUBLICATIONCHANNEL_BASE_H__
+#ifndef __MXFPP_EBUCOREPUBLICATIONSERVICE_H__
+#define __MXFPP_EBUCOREPUBLICATIONSERVICE_H__
 
 
 
-#include <libMXF++/metadata/InterchangeObject.h>
+#include <EBUCore_1_4/metadata/base/ebucorePublicationServiceBase.h>
 
 using namespace mxfpp;
 
@@ -42,39 +42,20 @@ namespace EBUSDK { namespace EBUCore { namespace EBUCore_1_4 { namespace KLV
 {
 
 
-class ebucorePublicationChannelBase : public InterchangeObject
+class ebucorePublicationService : public ebucorePublicationServiceBase
 {
 public:
-    friend class MetadataSetFactory<ebucorePublicationChannelBase>;
-    static const mxfKey setKey;
+    friend class MetadataSetFactory<ebucorePublicationService>;
 
 public:
-    ebucorePublicationChannelBase(HeaderMetadata *headerMetadata);
-    virtual ~ebucorePublicationChannelBase();
+    ebucorePublicationService(HeaderMetadata *headerMetadata);
+    virtual ~ebucorePublicationService();
 
 
-   // getters
-
-   bool havepublicationChannelName() const;
-   std::string getpublicationChannelName() const;
-   bool havepublicationChannelId() const;
-   std::string getpublicationChannelId() const;
-   bool havepublicationChannelLinkToLogo() const;
-   std::string getpublicationChannelLinkToLogo() const;
-   bool havepublicationChannelType() const;
-   ebucoreTypeGroup* getpublicationChannelType() const;
-
-
-   // setters
-
-   void setpublicationChannelName(std::string value);
-   void setpublicationChannelId(std::string value);
-   void setpublicationChannelLinkToLogo(std::string value);
-   void setpublicationChannelType(ebucoreTypeGroup* value);
 
 
 protected:
-    ebucorePublicationChannelBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
+    ebucorePublicationService(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet);
 };
 
 

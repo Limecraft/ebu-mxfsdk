@@ -127,6 +127,7 @@
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucorePublicationHistoryBase.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucorePublicationHistoryEventBase.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucorePublicationMediumBase.cpp" />
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucorePublicationServiceBase.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreRatingBase.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreRationalBase.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucoreRegionBase.cpp" />
@@ -206,6 +207,7 @@
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucorePublicationHistory.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucorePublicationHistoryEvent.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucorePublicationMedium.cpp" />
+    <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucorePublicationService.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreRating.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreRational.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreRegion.cpp" />

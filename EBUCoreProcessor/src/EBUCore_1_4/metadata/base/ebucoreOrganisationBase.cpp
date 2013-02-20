@@ -71,6 +71,16 @@ std::string ebucoreOrganisationBase::getorganisationId() const
     return getStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationId));
 }
 
+bool ebucoreOrganisationBase::haveorganisationLinkToLogo() const
+{
+    return haveItem(&MXF_ITEM_K(ebucoreOrganisation, organisationLinkToLogo));
+}
+
+std::string ebucoreOrganisationBase::getorganisationLinkToLogo() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationLinkToLogo));
+}
+
 bool ebucoreOrganisationBase::haveorganisationCode() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreOrganisation, organisationCode));
@@ -183,6 +193,11 @@ std::vector<ebucoreEntity*> ebucoreOrganisationBase::getorganisationRelatedConta
 void ebucoreOrganisationBase::setorganisationId(std::string value)
 {
     setStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationId), value);
+}
+
+void ebucoreOrganisationBase::setorganisationLinkToLogo(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucoreOrganisation, organisationLinkToLogo), value);
 }
 
 void ebucoreOrganisationBase::setorganisationCode(const std::vector<ebucoreIdentifier*>& value)

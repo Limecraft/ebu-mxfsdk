@@ -134,6 +134,7 @@ namespace EBUCore
 #include <EBUCore_1_4/metadata/ebucoreRights.h>
 #include <EBUCore_1_4/metadata/ebucorePublicationChannel.h>
 #include <EBUCore_1_4/metadata/ebucorePublicationMedium.h>
+#include <EBUCore_1_4/metadata/ebucorePublicationService.h>
 #include <EBUCore_1_4/metadata/ebucorePublicationHistoryEvent.h>
 #include <EBUCore_1_4/metadata/ebucorePublicationHistory.h>
 

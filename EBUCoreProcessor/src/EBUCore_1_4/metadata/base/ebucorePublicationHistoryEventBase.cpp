@@ -61,6 +61,26 @@ ebucorePublicationHistoryEventBase::~ebucorePublicationHistoryEventBase()
 {}
 
 
+bool ebucorePublicationHistoryEventBase::havepublicationEventName() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationEventName));
+}
+
+std::string ebucorePublicationHistoryEventBase::getpublicationEventName() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationEventName));
+}
+
+bool ebucorePublicationHistoryEventBase::havepublicationEventId() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationEventId));
+}
+
+std::string ebucorePublicationHistoryEventBase::getpublicationEventId() const
+{
+    return getStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationEventId));
+}
+
 bool ebucorePublicationHistoryEventBase::havefirstPublicationFlag() const
 {
     return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, firstPublicationFlag));
@@ -89,16 +109,6 @@ bool ebucorePublicationHistoryEventBase::havepublicationTime() const
 mxfTimestamp ebucorePublicationHistoryEventBase::getpublicationTime() const
 {
     return getTimestampItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationTime));
-}
-
-bool ebucorePublicationHistoryEventBase::havepublicationService() const
-{
-    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationService));
-}
-
-std::string ebucorePublicationHistoryEventBase::getpublicationService() const
-{
-    return getStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationService));
 }
 
 bool ebucorePublicationHistoryEventBase::havefreePublicationFlag() const
@@ -201,6 +211,28 @@ ebucorePublicationChannel* ebucorePublicationHistoryEventBase::getpublicationCha
     return dynamic_cast<ebucorePublicationChannel*>(obj.release());
 }
 
+bool ebucorePublicationHistoryEventBase::havepublicationService() const
+{
+    return haveItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationService));
+}
+
+ebucorePublicationService* ebucorePublicationHistoryEventBase::getpublicationService() const
+{
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationService)));
+    MXFPP_CHECK(dynamic_cast<ebucorePublicationService*>(obj.get()) != 0);
+    return dynamic_cast<ebucorePublicationService*>(obj.release());
+}
+
+void ebucorePublicationHistoryEventBase::setpublicationEventName(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationEventName), value);
+}
+
+void ebucorePublicationHistoryEventBase::setpublicationEventId(std::string value)
+{
+    setStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationEventId), value);
+}
+
 void ebucorePublicationHistoryEventBase::setfirstPublicationFlag(bool value)
 {
     setBooleanItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, firstPublicationFlag), value);
@@ -214,11 +246,6 @@ void ebucorePublicationHistoryEventBase::setpublicationDate(mxfTimestamp value)
 void ebucorePublicationHistoryEventBase::setpublicationTime(mxfTimestamp value)
 {
     setTimestampItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationTime), value);
-}
-
-void ebucorePublicationHistoryEventBase::setpublicationService(std::string value)
-{
-    setStringItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationService), value);
 }
 
 void ebucorePublicationHistoryEventBase::setfreePublicationFlag(bool value)
@@ -271,5 +298,10 @@ void ebucorePublicationHistoryEventBase::setpublicationMedium(ebucorePublication
 void ebucorePublicationHistoryEventBase::setpublicationChannel(ebucorePublicationChannel* value)
 {
     setStrongRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationChannel), value);
+}
+
+void ebucorePublicationHistoryEventBase::setpublicationService(ebucorePublicationService* value)
+{
+    setStrongRefItem(&MXF_ITEM_K(ebucorePublicationHistoryEvent, publicationService), value);
 }
 

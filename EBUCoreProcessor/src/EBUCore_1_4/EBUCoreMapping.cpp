@@ -644,17 +644,28 @@ void mapRights(rightsType& source, ebucoreRights *dest, std::map<xml_schema::id,
 
 void mapPublicationChannel(publicationChannelType& source, ebucorePublicationChannel* dest, ObjectModifier* mod = NULL) {
 	dest->setpublicationChannelName(source);
+	SIMPLE_MAP_OPTIONAL(source, publicationChannelId, dest, setpublicationChannelId)
+	SIMPLE_MAP_OPTIONAL(source, linkToLogo, dest, setpublicationChannelLinkToLogo)
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setpublicationChannelType)
 }
 
 void mapPublicationMedium(publicationMediumType& source, ebucorePublicationMedium* dest, ObjectModifier* mod = NULL) {
 	dest->setpublicationMediumName(source);
+	SIMPLE_MAP_OPTIONAL(source, publicationMediumId, dest, setpublicationMediumName)
 	MAP_NEW_TYPE_GROUP_AND_ASSIGN(source, dest, setpublicationMediumType)
+}
+
+void mapPublicationService(publicationServiceType& source, ebucorePublicationService* dest, ObjectModifier* mod = NULL) {
+	SIMPLE_MAP_OPTIONAL(source, publicationServiceName, dest, setpublicationServiceName)
+	SIMPLE_MAP_OPTIONAL(source, linkToLogo, dest, setpublicationServiceLinkToLogo)
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, publicationSource, ebucoreOrganisation, mapOrganisation, dest, setpublicationServiceSource)
 }
 
 void mapPublicationHistoryEvent(publicationEventType& source, ebucorePublicationHistoryEvent* dest, 
 	std::map<xml_schema::id, ebucoreFormat*>& formatMap, std::map<xml_schema::id, ebucoreRights*>& rightsMap, ObjectModifier* mod = NULL) {
 
+	SIMPLE_MAP_OPTIONAL(source, publicationEventName, dest, setpublicationEventName)
+	SIMPLE_MAP_OPTIONAL(source, publicationEventId, dest, setpublicationEventId)
 	SIMPLE_MAP_OPTIONAL(source, firstShowing, dest, setfirstPublicationFlag)
 	SIMPLE_MAP_OPTIONAL(source, free, dest, setfreePublicationFlag)
 	SIMPLE_MAP_OPTIONAL(source, live, dest, setlivePublicationFlag)
@@ -664,11 +675,7 @@ void mapPublicationHistoryEvent(publicationEventType& source, ebucorePublication
 
 	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, publicationChannel, ebucorePublicationChannel, mapPublicationChannel, dest, setpublicationChannel)
 	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, publicationMedium, ebucorePublicationMedium, mapPublicationMedium, dest, setpublicationMedium)
-
-	if (source.publicationService().present()) {
-		publicationServiceType& svc = source.publicationService().get();
-		SIMPLE_MAP_OPTIONAL(svc, publicationServiceName, dest, setpublicationService)
-	}
+	NEW_OBJECT_AND_ASSIGN_OPTIONAL(source, publicationService, ebucorePublicationService, mapPublicationService, dest, setpublicationService)
 
 	NEW_VECTOR_AND_ASSIGN(source, publicationRegion, ebucoreRegion, publicationEventType::publicationRegion_iterator, mapRegion, dest, setpublicationRegion)
 

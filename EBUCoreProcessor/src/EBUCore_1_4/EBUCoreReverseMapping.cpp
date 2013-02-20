@@ -775,17 +775,28 @@ void mapRights(ebucoreRights *source, rightsType& dest) {
 void mapPublicationChannel(ebucorePublicationChannel* source, publicationChannelType& dest) {
 	if (source->havepublicationChannelName())
 		dest = source->getpublicationChannelName();
+	SIMPLE_RMAP_OPTIONAL(source, havepublicationChannelId, getpublicationChannelId, dest, publicationChannelId)
+	SIMPLE_RMAP_OPTIONAL(source, havepublicationChannelLinkToLogo, getpublicationChannelLinkToLogo, dest, linkToLogo)
 	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havepublicationChannelType, getpublicationChannelType, dest, publicationChannelType)
 }
 
 void mapPublicationMedium(ebucorePublicationMedium* source, publicationMediumType& dest) {
 	if (source->havepublicationMediumName())
 		dest = source->getpublicationMediumName();
+	SIMPLE_RMAP_OPTIONAL(source, havepublicationMediumName, getpublicationMediumName, dest, publicationMediumId)
 	RMAP_TYPE_GROUP_GET_OPTIONAL(source, havepublicationMediumType, getpublicationMediumType, dest, publicationMediumType)
+}
+
+void mapPublicationService(ebucorePublicationService* source, publicationServiceType& dest) {
+	SIMPLE_RMAP_OPTIONAL(source, havepublicationServiceName, getpublicationServiceName, dest, publicationServiceName)
+	SIMPLE_RMAP_OPTIONAL(source, havepublicationServiceLinkToLogo, getpublicationServiceLinkToLogo, dest, linkToLogo)
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, havepublicationServiceSource, getpublicationServiceSource, organisationDetailsType, mapOrganisation, dest, publicationSource)
 }
 
 void mapPublicationHistoryEvent(ebucorePublicationHistoryEvent* source, publicationEventType& dest) {
 
+	SIMPLE_RMAP_OPTIONAL(source, havepublicationEventName, getpublicationEventName, dest, publicationEventName)
+	SIMPLE_RMAP_OPTIONAL(source, havepublicationEventId, getpublicationEventId, dest, publicationEventId)
 	SIMPLE_RMAP_OPTIONAL(source, havefirstPublicationFlag, getfirstPublicationFlag, dest, firstShowing)
 	SIMPLE_RMAP_OPTIONAL(source, havefreePublicationFlag, getfreePublicationFlag, dest, free)
 	SIMPLE_RMAP_OPTIONAL(source, havelivePublicationFlag, getlivePublicationFlag, dest, live)
@@ -797,14 +808,9 @@ void mapPublicationHistoryEvent(ebucorePublicationHistoryEvent* source, publicat
 	if (source->havepublicationTime()) {
 		dest.publicationTime( std::auto_ptr<publicationEventType::publicationTime_type>( convert_timestamp_time(source->getpublicationTime())) );
 	}
-	if (source->havepublicationService()) {
-		std::auto_ptr<publicationEventType::publicationService_type> p( new publicationEventType::publicationService_type());
-		p->publicationServiceName(source->getpublicationService());
-		dest.publicationService(p);
-	}
-
 	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, havepublicationMedium, getpublicationMedium, publicationMediumType, mapPublicationMedium, dest, publicationMedium)
 	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, havepublicationChannel, getpublicationChannel, publicationChannelType, mapPublicationChannel, dest, publicationChannel)
+	NEW_OBJECT_AND_RASSIGN_OPTIONAL(source, havepublicationService, getpublicationService, publicationServiceType, mapPublicationService, dest, publicationService)
 	if (source->havepublicationRegion()) {
 		NEW_VECTOR_AND_RASSIGN(source, getpublicationRegion, regionType, publicationEventType::publicationRegion_sequence, std::vector<ebucoreRegion*>, mapRegion, dest, publicationRegion)
 	}

@@ -44,67 +44,67 @@ using namespace mxfpp;
 using namespace EBUSDK::EBUCore::EBUCore_1_4::KLV;
 
 
-const mxfKey ebucorePublicationMediumBase::setKey = MXF_SET_K(ebucorePublicationMedium);
+const mxfKey ebucorePublicationServiceBase::setKey = MXF_SET_K(ebucorePublicationService);
 
 
-ebucorePublicationMediumBase::ebucorePublicationMediumBase(HeaderMetadata *headerMetadata)
+ebucorePublicationServiceBase::ebucorePublicationServiceBase(HeaderMetadata *headerMetadata)
 : InterchangeObject(headerMetadata, headerMetadata->createCSet(&setKey))
 {
     headerMetadata->add(this);
 }
 
-ebucorePublicationMediumBase::ebucorePublicationMediumBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
+ebucorePublicationServiceBase::ebucorePublicationServiceBase(HeaderMetadata *headerMetadata, ::MXFMetadataSet *cMetadataSet)
 : InterchangeObject(headerMetadata, cMetadataSet)
 {}
 
-ebucorePublicationMediumBase::~ebucorePublicationMediumBase()
+ebucorePublicationServiceBase::~ebucorePublicationServiceBase()
 {}
 
 
-bool ebucorePublicationMediumBase::havepublicationMediumName() const
+bool ebucorePublicationServiceBase::havepublicationServiceName() const
 {
-    return haveItem(&MXF_ITEM_K(ebucorePublicationMedium, publicationMediumName));
+    return haveItem(&MXF_ITEM_K(ebucorePublicationService, publicationServiceName));
 }
 
-std::string ebucorePublicationMediumBase::getpublicationMediumName() const
+std::string ebucorePublicationServiceBase::getpublicationServiceName() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucorePublicationMedium, publicationMediumName));
+    return getStringItem(&MXF_ITEM_K(ebucorePublicationService, publicationServiceName));
 }
 
-bool ebucorePublicationMediumBase::havepublicationMediumId() const
+bool ebucorePublicationServiceBase::havepublicationServiceLinkToLogo() const
 {
-    return haveItem(&MXF_ITEM_K(ebucorePublicationMedium, publicationMediumId));
+    return haveItem(&MXF_ITEM_K(ebucorePublicationService, publicationServiceLinkToLogo));
 }
 
-std::string ebucorePublicationMediumBase::getpublicationMediumId() const
+std::string ebucorePublicationServiceBase::getpublicationServiceLinkToLogo() const
 {
-    return getStringItem(&MXF_ITEM_K(ebucorePublicationMedium, publicationMediumId));
+    return getStringItem(&MXF_ITEM_K(ebucorePublicationService, publicationServiceLinkToLogo));
 }
 
-bool ebucorePublicationMediumBase::havepublicationMediumType() const
+bool ebucorePublicationServiceBase::havepublicationServiceSource() const
 {
-    return haveItem(&MXF_ITEM_K(ebucorePublicationMedium, publicationMediumType));
+    return haveItem(&MXF_ITEM_K(ebucorePublicationService, publicationServiceSource));
 }
 
-ebucoreTypeGroup* ebucorePublicationMediumBase::getpublicationMediumType() const
+ebucoreOrganisation* ebucorePublicationServiceBase::getpublicationServiceSource() const
 {
-    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucorePublicationMedium, publicationMediumType)));
-    MXFPP_CHECK(dynamic_cast<ebucoreTypeGroup*>(obj.get()) != 0);
-    return dynamic_cast<ebucoreTypeGroup*>(obj.release());
+    auto_ptr<MetadataSet> obj(getStrongRefItem(&MXF_ITEM_K(ebucorePublicationService, publicationServiceSource)));
+    MXFPP_CHECK(dynamic_cast<ebucoreOrganisation*>(obj.get()) != 0);
+    return dynamic_cast<ebucoreOrganisation*>(obj.release());
 }
 
-void ebucorePublicationMediumBase::setpublicationMediumName(std::string value)
+void ebucorePublicationServiceBase::setpublicationServiceName(std::string value)
 {
-    setStringItem(&MXF_ITEM_K(ebucorePublicationMedium, publicationMediumName), value);
+    setStringItem(&MXF_ITEM_K(ebucorePublicationService, publicationServiceName), value);
 }
 
-void ebucorePublicationMediumBase::setpublicationMediumId(std::string value)
+void ebucorePublicationServiceBase::setpublicationServiceLinkToLogo(std::string value)
 {
-    setStringItem(&MXF_ITEM_K(ebucorePublicationMedium, publicationMediumId), value);
+    setStringItem(&MXF_ITEM_K(ebucorePublicationService, publicationServiceLinkToLogo), value);
 }
 
-void ebucorePublicationMediumBase::setpublicationMediumType(ebucoreTypeGroup* value)
+void ebucorePublicationServiceBase::setpublicationServiceSource(ebucoreOrganisation* value)
 {
-    setStrongRefItem(&MXF_ITEM_K(ebucorePublicationMedium, publicationMediumType), value);
+    setStrongRefItem(&MXF_ITEM_K(ebucorePublicationService, publicationServiceSource), value);
 }
 
