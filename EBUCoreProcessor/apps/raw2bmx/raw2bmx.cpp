@@ -391,6 +391,7 @@ static void usage(const char *cmd)
     fprintf(stderr, "\n");
     fprintf(stderr, "  EBU Core:\n");
     fprintf(stderr, "    --ebu-core <name>       Parse and set EBU Core metadata from EBU Core XML file <name>\n");
+    fprintf(stderr, "    --sidecar               Write EBU Core metadata as a side-car reference\n");
     fprintf(stderr, "\n");
     fprintf(stderr, "\n");
     fprintf(stderr, "Input Options (must precede the input to which it applies):\n");
@@ -531,6 +532,7 @@ int main(int argc, const char** argv)
     unsigned int uvalue;
     int cmdln_index;
 	const char *ebucore_filename = 0;
+	bool do_sidecar = false;
 
     if (argc == 1) {
         usage(argv[0]);
@@ -1058,6 +1060,10 @@ int main(int argc, const char** argv)
             }
             ebucore_filename = argv[cmdln_index + 1];
             cmdln_index++;
+        }
+		else if (strcmp(argv[cmdln_index], "--sidecar") == 0)
+        {
+            do_sidecar = true;
         }
         else
         {
@@ -2990,7 +2996,12 @@ int main(int argc, const char** argv)
 			// Register EBU Core extensions in the metadata data model
 			ebuProc->RegisterMetadataExtensions(clip->GetDataModel());
 
-			DMFramework *framework = ebuProc->Process(NULL, ebucore_filename, clip->GetHeaderMetadata(), eventFrameworks, id);
+			DMFramework *framework = NULL;
+			if (do_sidecar) {
+				framework = ebuProc->GenerateSideCarFramework(ebucore_filename, clip->GetHeaderMetadata(), id);
+			} else {
+				framework = ebuProc->Process(NULL, ebucore_filename, clip->GetHeaderMetadata(), eventFrameworks, id); 
+			}
 
 			// insert the static track DM framework
 			EBUCore::InsertEBUCoreFramework(clip->GetHeaderMetadata(), ebuProc->GetDescriptiveMetadataScheme(), framework, id);
