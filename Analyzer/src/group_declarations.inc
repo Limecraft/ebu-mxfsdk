@@ -6600,10 +6600,10 @@ st434dict.insert(std::pair<mxfKey, st434info*>(
 	new st434info(/* vendor */ key_060E2B340101010E0D020101C0060200_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
 ));
 mxfKey key_060E2B340101010E0D020101C0060300 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x0E,0x0D,0x02,0x01,0x01,0xC0,0x06,0x03,0x00};
-XMLCh key_060E2B340101010E0D020101C0060300_name[] = {'v','e','r','s','i','o','n',' ','\0'};
+XMLCh key_060E2B340101010E0D020101C0060300_name[] = {'v','e','r','s','i','o','n','\0'};
 st434dict.insert(std::pair<mxfKey, st434info*>(
 	key_060E2B340101010E0D020101C0060300,
-	new st434info(/* version  */ key_060E2B340101010E0D020101C0060300_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
+	new st434info(/* version */ key_060E2B340101010E0D020101C0060300_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
 ));
 mxfKey key_060E2B340101010E0D020101C0060400 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x0E,0x0D,0x02,0x01,0x01,0xC0,0x06,0x04,0x00};
 XMLCh key_060E2B340101010E0D020101C0060400_name[] = {'f','a','m','i','l','y','\0'};
@@ -6720,10 +6720,10 @@ st434dict.insert(std::pair<mxfKey, st434info*>(
 	new st434info(/* partStartTimecodeDropframe */ key_060E2B340101010E0D020101E0050000_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
 ));
 mxfKey key_060E2B340101010E0D020101E0060000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x0E,0x0D,0x02,0x01,0x01,0xE0,0x06,0x00,0x00};
-XMLCh key_060E2B340101010E0D020101E0060000_name[] = {'p','a','r','t','S','t','a','r','t','T','i','m','e',' ','\0'};
+XMLCh key_060E2B340101010E0D020101E0060000_name[] = {'p','a','r','t','S','t','a','r','t','T','i','m','e','\0'};
 st434dict.insert(std::pair<mxfKey, st434info*>(
 	key_060E2B340101010E0D020101E0060000,
-	new st434info(/* partStartTime  */ key_060E2B340101010E0D020101E0060000_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
+	new st434info(/* partStartTime */ key_060E2B340101010E0D020101E0060000_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
 ));
 mxfKey key_060E2B340101010E0D020101E0070000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x0E,0x0D,0x02,0x01,0x01,0xE0,0x07,0x00,0x00};
 XMLCh key_060E2B340101010E0D020101E0070000_name[] = {'p','a','r','t','S','t','a','r','t','E','d','i','t','U','n','i','t','N','u','m','b','e','r','\0'};
@@ -6744,10 +6744,10 @@ st434dict.insert(std::pair<mxfKey, st434info*>(
 	new st434info(/* partDurationTimecodeDropframe */ key_060E2B340101010E0D020101E0090000_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
 ));
 mxfKey key_060E2B340101010E0D020101E00A0000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x0E,0x0D,0x02,0x01,0x01,0xE0,0x0A,0x00,0x00};
-XMLCh key_060E2B340101010E0D020101E00A0000_name[] = {'p','a','r','t','D','u','r','a','t','i','o','n','T','i','m','e',' ','\0'};
+XMLCh key_060E2B340101010E0D020101E00A0000_name[] = {'p','a','r','t','D','u','r','a','t','i','o','n','T','i','m','e','\0'};
 st434dict.insert(std::pair<mxfKey, st434info*>(
 	key_060E2B340101010E0D020101E00A0000,
-	new st434info(/* partDurationTime  */ key_060E2B340101010E0D020101E00A0000_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
+	new st434info(/* partDurationTime */ key_060E2B340101010E0D020101E00A0000_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
 ));
 mxfKey key_060E2B340101010E0D020101E00B0000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x0E,0x0D,0x02,0x01,0x01,0xE0,0x0B,0x00,0x00};
 XMLCh key_060E2B340101010E0D020101E00B0000_name[] = {'p','a','r','t','D','u','r','a','t','i','o','n','E','d','i','t','U','n','i','t','N','u','m','b','e','r','\0'};
