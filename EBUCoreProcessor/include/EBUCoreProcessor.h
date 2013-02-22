@@ -206,6 +206,13 @@ namespace EBUSDK {
 		virtual const mxfUL* GetDescriptiveMetadataScheme() = 0;
 
 		/**
+		*	Returns the Dark Set serialization Universal Label associated with the version of EBUCore supported by this EBUCoreProcessor.
+
+			@returns A pointer to the Universal Label.
+		*/
+		virtual const mxfKey* GetDarkMetadataSetKey() = 0; 
+
+		/**
 		*	Registers the version-specific KLV EBUCore metadata extensions with a given MXF metadata data model. 
 			These extensions comprise the class structure and ULs associated with metadata sets.\n
 			<em>@b Note!</em> Only a single EBUCoreProcessor may register its extensions, unless no overlap in terms of ULs between versions exists.

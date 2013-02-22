@@ -47,6 +47,10 @@ const mxfUL* EBUCoreProcessor::GetDescriptiveMetadataScheme() {
 	return &DMScheme;
 }
 
+const mxfKey* EBUCoreProcessor::GetDarkMetadataSetKey() {
+	return &DMScheme;
+}
+
 void EBUCoreProcessor::RegisterMetadataExtensions(mxfpp::DataModel *data_model) {
 	RegisterExtensions(data_model);
 }

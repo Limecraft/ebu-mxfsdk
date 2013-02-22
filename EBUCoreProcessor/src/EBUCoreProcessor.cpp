@@ -264,7 +264,7 @@ void InnerEmbedEBUCoreMetadata(
 				EBUCore::InsertEBUCoreEventFrameworks(&*mHeaderMetadata, eventFrameworks, id);
 			}
 
-			ignoredDarkKeys.push_back(&keyEBUCoreDarkMetadata);
+			ignoredDarkKeys.push_back(processor->GetDarkMetadataSetKey());
 
 		} else {
 			// ///////////////////////////////////////
@@ -292,7 +292,7 @@ void InnerEmbedEBUCoreMetadata(
 			uint64_t headerMetadataSize = (optWaytoWrite == DARK) ?
 				WriteDarkMetadataToFile(	&*mFile, 
 											*ser, 
-											&keyEBUCoreDarkMetadata, 
+											processor->GetDarkMetadataSetKey(),
 											pos_start_metadata, pos_write_start_metadata, false, footerPartition, metadata_partition) :
 				WriteMetadataToFile(		&*mFile, 
 											&*mHeaderMetadata, 
@@ -358,7 +358,7 @@ void InnerEmbedEBUCoreMetadata(
 			uint64_t headerMetadataSize = (optWaytoWrite == DARK) ?
 				WriteDarkMetadataToFile(	&*mFile, 
 											*ser, 
-											&keyEBUCoreDarkMetadata, 
+											processor->GetDarkMetadataSetKey(), 
 											pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition) :
 				WriteMetadataToFile(		&*mFile, 
 											&*mHeaderMetadata, 
@@ -592,7 +592,7 @@ MetadataKind ExtractEBUCoreMetadata(
 		while (count < sourceHeaderByteCount)
 		{
 			mxfFile->readKL(&key, &llen, &len);
-			if (mxf_equals_key(&key, &keyEBUCoreDarkMetadata)) {
+			if (mxf_equals_key(&key, processor->GetDarkMetadataSetKey())) {
 				darkFound = true;
 				progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "Located EBUCore dark metadata set at offset %" PRId64 "...", partition->getThisPartition() + count);
 
