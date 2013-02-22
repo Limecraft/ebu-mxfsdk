@@ -4848,10 +4848,10 @@ st434dict.insert(std::pair<mxfKey, st434info*>(
 	new st434info(/* suffix */ key_060E2B340101010E0D02010121060000_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
 ));
 mxfKey key_060E2B340101010E0D02010121070000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x0E,0x0D,0x02,0x01,0x01,0x21,0x07,0x00,0x00};
-XMLCh key_060E2B340101010E0D02010121070000_name[] = {'o','c','c','u','p','a','t','i','o','n',' ','\0'};
+XMLCh key_060E2B340101010E0D02010121070000_name[] = {'o','c','c','u','p','a','t','i','o','n','\0'};
 st434dict.insert(std::pair<mxfKey, st434info*>(
 	key_060E2B340101010E0D02010121070000,
-	new st434info(/* occupation  */ key_060E2B340101010E0D02010121070000_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
+	new st434info(/* occupation */ key_060E2B340101010E0D02010121070000_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
 ));
 mxfKey key_060E2B340101010E0D02010121080000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x0E,0x0D,0x02,0x01,0x01,0x21,0x08,0x00,0x00};
 XMLCh key_060E2B340101010E0D02010121080000_name[] = {'u','s','e','r','n','a','m','e','\0'};
@@ -5334,10 +5334,10 @@ st434dict.insert(std::pair<mxfKey, st434info*>(
 	new st434info(/* statusGroupLanguageCode */ key_060E2B340101010E0D02010145030500_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
 ));
 mxfKey key_060E2B340101010E0D02010145040100 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x0E,0x0D,0x02,0x01,0x01,0x45,0x04,0x01,0x00};
-XMLCh key_060E2B340101010E0D02010145040100_name[] = {'t','e','x','t',' ','\0'};
+XMLCh key_060E2B340101010E0D02010145040100_name[] = {'t','e','x','t','\0'};
 st434dict.insert(std::pair<mxfKey, st434info*>(
 	key_060E2B340101010E0D02010145040100,
-	new st434info(/* text  */ key_060E2B340101010E0D02010145040100_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
+	new st434info(/* text */ key_060E2B340101010E0D02010145040100_name, /* urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2013 */ key_ns_ebucore_elements_1)
 ));
 mxfKey key_060E2B340101010E0D02010145040200 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x0E,0x0D,0x02,0x01,0x01,0x45,0x04,0x02,0x00};
 XMLCh key_060E2B340101010E0D02010145040200_name[] = {'t','e','x','t','L','a','n','g','u','a','g','e','C','o','d','e','\0'};
