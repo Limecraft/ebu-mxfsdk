@@ -140,6 +140,33 @@ Partition* FindPreferredMetadataPartition(const std::vector<Partition*>& partiti
 	return metadata_partition;
 }
 
+void RewritePartitionPack(mxfpp::File *mxfFile, mxfpp::Partition *partition, bool forceSimilar) {
+	mxfFile->seek(partition->getThisPartition(), SEEK_SET);
+	if (forceSimilar) {
+		mxfKey key;
+		uint8_t llen;
+		uint64_t len;
+		// try to get the original llen to make sure we duplicate the partition pack as much as possible
+		mxfFile->readKL(&key, &llen, &len);
+		
+		// write the partition pack with the llength value
+		uint8_t t_llen = mxfFile->getMinLLen();
+		if (t_llen != llen)
+			mxfFile->setMinLLen(llen);
+
+		// seek back to the partition pack
+		mxfFile->seek(partition->getThisPartition(), SEEK_SET);
+
+		partition->write(mxfFile);
+
+		// and reset
+		mxfFile->setMinLLen(t_llen);
+	} 
+	else {
+		partition->write(mxfFile);
+	}
+}
+
 uint64_t BufferIndex(File* mFile, Partition* partition, bmx::ByteArray& index_bytes, uint32_t* index_length) {
 	*index_length = partition->getIndexByteCount();
 	//std::cout << "Footer Partition index size: " << partition->getIndexByteCount() << std::endl;
@@ -254,7 +281,7 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 
 	uint64_t newHeaderMetadataSize = mxf_file_tell(mxfMemFile) - metadata_write_position;
 	// fill the appended metadata up at least the initial size of the metadata and the then following KAG position
-	KAGFillerWriter reserve_filler_writer(metadataDestinationPartition, MAX(0, (oriDestHeaderByteCount - newHeaderMetadataSize)));
+	KAGFillerWriter reserve_filler_writer(metadataDestinationPartition, MAX(0, ((int64_t)oriDestHeaderByteCount - (int64_t)newHeaderMetadataSize)));
 	reserve_filler_writer.write(&memFile);
 
 	// how many bytes have we written to the memoryfile? subtract the virtual metadata_write_position offset!
@@ -353,7 +380,7 @@ uint64_t WriteDarkMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile,
 	// fill the appended metadata up to the KAG
 	uint64_t newHeaderMetadataSize = mxf_file_tell(mxfMemFile) - metadata_write_position;
 	// fill the appended metadata up at least the initial size of the metadata and the then following KAG position
-	KAGFillerWriter reserve_filler_writer(metadataDestinationPartition, MAX(0, (oriDestHeaderByteCount - newHeaderMetadataSize)));
+	KAGFillerWriter reserve_filler_writer(metadataDestinationPartition, MAX(0, ((int64_t)oriDestHeaderByteCount - (int64_t)newHeaderMetadataSize)));
 	reserve_filler_writer.write(&memFile);
 
 	// how many bytes have we written to the memoryfile? subtract the virtual metadata_write_position offset!

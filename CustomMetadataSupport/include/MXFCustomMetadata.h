@@ -209,6 +209,21 @@ namespace EBUSDK {
 	*/
 	mxfpp::Partition* FindPreferredMetadataPartition(const std::vector<mxfpp::Partition*>& partitions, mxfpp::Partition** headerPartition, mxfpp::Partition** footerPartition);
 
+	/**
+	*	Rewrite the KLV partition pack for the given partition.
+
+		@param mxfFile The MXF file structure opened with read/write access.
+		@param partition The partition pack data structure to be rewritten to the file. The partition pack is written to the position indicated by the _thisPartition_ member.
+		@param forceSimilar When true, this function tries to mimic the original parition pack is closely as possible, incl. by rewriting the length value of identical length.
+	*/
+	void RewritePartitionPack(mxfpp::File *mxfFile, mxfpp::Partition *partition, bool forceSimilar = false);
+
+	/**
+	*	Retrieve all 'static' descriptive metadata frameworks contained int the given Material Package object.
+
+		@returns A vector of references to the located framework objects.
+		@param mp The material package structure in which the frameworks must be found, as the framework of a timeline track.
+	*/
 	std::vector<mxfpp::DMFramework*> GetStaticFrameworks(mxfpp::MaterialPackage *mp);
 
 	/**
