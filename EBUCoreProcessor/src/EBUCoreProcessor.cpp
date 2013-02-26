@@ -324,8 +324,7 @@ void InnerEmbedEBUCoreMetadata(
 
 			// seek backwards and update footer partition pack
 			footerPartition->setHeaderByteCount(/*footerPartition->getHeaderByteCount() + */ headerMetadataSize); // Add dark metadata elements to file
-			mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
-			footerPartition->write(&*mFile);
+			RewritePartitionPack(&*mFile, footerPartition, true);
 
 			// ///////////////////////////////////////
 			// / 3. In case of in-place updates: properly update partition packs...
@@ -349,9 +348,8 @@ void InnerEmbedEBUCoreMetadata(
 				}
 				else if (mxf_is_body_partition_pack(p->getKey())) {
 					p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Body) : &MXF_PP_K(OpenIncomplete, Body) );
-				} 
-				mFile->seek(p->getThisPartition(), SEEK_SET);
-				p->write(&*mFile);
+				}
+				RewritePartitionPack(&*mFile, p, true);
 			}
 
 		} else {
@@ -394,8 +392,7 @@ void InnerEmbedEBUCoreMetadata(
 					p->setHeaderByteCount(headerMetadataSize);
 				}
 				p->setFooterPartition(p->getFooterPartition() + fileOffset);
-				mFile->seek(p->getThisPartition(), SEEK_SET);
-				p->write(&*mFile);
+				RewritePartitionPack(&*mFile, p, true);
 				prevPartition = p->getThisPartition();
 			}
 
@@ -419,9 +416,7 @@ void InnerEmbedEBUCoreMetadata(
 				footerPartition->setHeaderByteCount(mFile->tell() - partitionSectionOffset);
 
 			mFile->writeRIP();
-
-			mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
-			footerPartition->write(&*mFile);
+			RewritePartitionPack(&*mFile, footerPartition, true);
 		}
 
         // clean-up through auto_ptr destruction
@@ -583,8 +578,7 @@ void RemoveEBUCoreMetadata(	const char* mxfLocation,
 
 			// seek backwards and update footer partition pack
 			footerPartition->setHeaderByteCount(/*footerPartition->getHeaderByteCount() + */ headerMetadataSize); // Add dark metadata elements to file
-			mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
-			footerPartition->write(&*mFile);
+			RewritePartitionPack(&*mFile, footerPartition, true);
 
 			// ///////////////////////////////////////
 			// / 3. In case of in-place updates: properly update partition packs...
@@ -609,8 +603,7 @@ void RemoveEBUCoreMetadata(	const char* mxfLocation,
 				else if (mxf_is_body_partition_pack(p->getKey())) {
 					p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Body) : &MXF_PP_K(OpenIncomplete, Body) );
 				} 
-				mFile->seek(p->getThisPartition(), SEEK_SET);
-				p->write(&*mFile);
+				RewritePartitionPack(&*mFile, p, true);
 			}
 
 		} else {
@@ -648,8 +641,7 @@ void RemoveEBUCoreMetadata(	const char* mxfLocation,
 					p->setHeaderByteCount(headerMetadataSize);
 				}
 				p->setFooterPartition(p->getFooterPartition() + fileOffset);
-				mFile->seek(p->getThisPartition(), SEEK_SET);
-				p->write(&*mFile);
+				RewritePartitionPack(&*mFile, p, true);
 				prevPartition = p->getThisPartition();
 			}
 
@@ -674,8 +666,7 @@ void RemoveEBUCoreMetadata(	const char* mxfLocation,
 
 			mFile->writeRIP();
 
-			mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
-			footerPartition->write(&*mFile);
+			RewritePartitionPack(&*mFile, footerPartition, true);
 		}
 
         // clean-up through auto_ptr destruction
