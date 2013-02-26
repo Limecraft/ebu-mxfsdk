@@ -193,6 +193,7 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 
 	// cache this in case we are writing to the source partition
 	uint64_t oriSourceHeaderByteCount = metadataSourcePartition->getHeaderByteCount();
+	uint64_t oriDestHeaderByteCount = metadataDestinationPartition->getHeaderByteCount();
 
 	// we write the metadata to a buffer memory file first, 
 	// write 1) the in-mem metadata structure, 2) then dark/unknown sets
@@ -206,7 +207,7 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 	uint64_t footerThisPartition = metadataDestinationPartition->getThisPartition();
 	metadataDestinationPartition->setThisPartition(0);	// temporarily override so that internals don't get confused 
 														// (need to put this back at the end anyway)
-	KAGFillerWriter reserve_filler_writer(metadataDestinationPartition);
+
 	mHeaderMetadata->write(&memFile, metadataDestinationPartition, NULL);
 	uint64_t mHeaderMetadataEndPos = memFile.tell();  // need this position when we re-write the header metadata */
 	metadataDestinationPartition->setThisPartition(footerThisPartition);
@@ -251,7 +252,9 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 	}
 	//std::cout << "Rogue KLVS: " << i << std::endl;
 
-	// fill the appended metadata up to the KAG
+	uint64_t newHeaderMetadataSize = mxf_file_tell(mxfMemFile) - metadata_write_position;
+	// fill the appended metadata up at least the initial size of the metadata and the then following KAG position
+	KAGFillerWriter reserve_filler_writer(metadataDestinationPartition, MAX(0, (oriDestHeaderByteCount - newHeaderMetadataSize)));
 	reserve_filler_writer.write(&memFile);
 
 	// how many bytes have we written to the memoryfile? subtract the virtual metadata_write_position offset!
@@ -290,6 +293,7 @@ uint64_t WriteDarkMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile,
 
 	// cache this in case we are writing to the source partition
 	uint64_t oriSourceHeaderByteCount = metadataSourcePartition->getHeaderByteCount();
+	uint64_t oriDestHeaderByteCount = metadataDestinationPartition->getHeaderByteCount();
 
 	// we write the metadata to a buffer memory file first, 
 	// write 1) the in-mem metadata structure, 2) then dark/unknown sets
@@ -303,7 +307,7 @@ uint64_t WriteDarkMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile,
 	uint64_t footerThisPartition = metadataDestinationPartition->getThisPartition();
 	metadataDestinationPartition->setThisPartition(0);	// temporarily override so that internals don't get confused 
 														// (need to put this back at the end anyway)
-	KAGFillerWriter reserve_filler_writer(metadataDestinationPartition);
+
 	mFile->seek(metadata_read_position, SEEK_SET);
 
 	// write each of the KLV packets in the original metadata, 
@@ -347,6 +351,9 @@ uint64_t WriteDarkMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile,
 	uint64_t darkMetadataSize = metadata.WriteToMXFFile(&memFile);
 
 	// fill the appended metadata up to the KAG
+	uint64_t newHeaderMetadataSize = mxf_file_tell(mxfMemFile) - metadata_write_position;
+	// fill the appended metadata up at least the initial size of the metadata and the then following KAG position
+	KAGFillerWriter reserve_filler_writer(metadataDestinationPartition, MAX(0, (oriDestHeaderByteCount - newHeaderMetadataSize)));
 	reserve_filler_writer.write(&memFile);
 
 	// how many bytes have we written to the memoryfile? subtract the virtual metadata_write_position offset!
