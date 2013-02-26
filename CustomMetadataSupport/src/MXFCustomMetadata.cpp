@@ -406,7 +406,7 @@ uint64_t WriteDarkMetadataToFile(File* mFile, MXFFileDarkSerializer& metadata, c
 	MXFMemoryFile *cMemFile;
 
 	// record the original metadata size
-	uint64_t oriMetadataSize = metadataSourcePartition->getHeaderByteCount();
+	uint64_t oriMetadataSize = metadataDestinationPartition->getHeaderByteCount();
 
 	// how many bytes have we written to the memoryfile?
 	uint64_t memFileSize = WriteDarkMetadataToMemoryFile(mFile, &cMemFile, metadata, darkMetadataSetKey, metadata_read_position, metadata_write_position, metadataDestinationPartition, metadataSourcePartition);
@@ -429,7 +429,7 @@ uint64_t WriteMetadataToFile(File* mFile, HeaderMetadata *mHeaderMetadata, uint6
 	MXFMemoryFile *cMemFile;
 
 	// record the original metadata size
-	uint64_t oriMetadataSize = metadataSourcePartition->getHeaderByteCount();
+	uint64_t oriMetadataSize = metadataDestinationPartition->getHeaderByteCount();
 
 	// how many bytes have we written to the memoryfile?
 	uint64_t memFileSize = WriteMetadataToMemoryFile(mFile, &cMemFile, mHeaderMetadata, metadata_read_position, metadata_write_position, metadataDestinationPartition, metadataSourcePartition, darkElementKeysToIgnore);
