@@ -76,14 +76,10 @@ namespace EBUSDK {
 	void InsertEBUCoreEventFrameworks(mxfpp::HeaderMetadata *header_metadata, std::vector<MXFCustomMetadata::EventInput>& eventFrameworks, mxfpp::Identification *identificationToAppend = NULL);
 
 	/**
-	*	Inserts a given list of descriptive metadata frameworks in the provided header metadata structure.\n
-		This function adds an Event DM track to the MXF timeline, from which the provided __eventFrameworks__ are weakly referenced.\n
-		Currently, the DM track added is assigned a Track ID _10002_ and is given a Track Name _EBU_Core_Parts_.
+	*	Removes EBUCore Descriptive Metadata frameworks from the given header metadata structure.\n
+		This removes EBUCore frameworks from ant static or event tracks DM tracks on the MXF timeline, identified by the names _EBU_Core_ or _EBU_Core_Parts.
 
-		@param header_metadata The HeaderMetadata structure to which the framework and timeline elements are added.
-		@param eventFrameworks The DM frameworks input set to be added to the MXF timeline. The EventInput structure's Start and 
-		Duration fields are used to properly place the DM Segment on the timeline.
-		@param identificationToAppend Optional Identification metadata set that will be referenced from each metadata set created by this function.
+		@param header_metadata The HeaderMetadata structure from which the frameworks are removed.
 	*/
 	void RemoveEBUCoreFrameworks(mxfpp::HeaderMetadata *header_metadata);
 
