@@ -45,34 +45,32 @@
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;libMXF++/MXF.h&gt;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//#include &quot;EBU_CORE_20110915.hxx&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">//#include &quot;EBU_CORE_20120403.hxx&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;EBUCore_1_4/xsd/EBU_CORE_20121219.hxx&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;MXFCustomMetadata.h&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;EBUCore_1_4/metadata/EBUCoreDMS++.h&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">using namespace </span>EBUSDK::MXFCustomMetadata;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">using namespace </span>EBUSDK::EBUCore::EBUCore_1_4::KLV;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>EBUSDK {</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">   15</a></span>&#160;<span class="keyword">namespace </span>EBUCore {</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__4.html">   16</a></span>&#160;<span class="keyword">namespace </span>EBUCore_1_4 {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">void</span> mapCoreMetadata(ebuCore_2012::coreMetadataType&amp; source, ebucoreCoreMetadata *dest, mxfRational overallFrameRate, std::vector&lt;ebucorePartMetadata*&gt;&amp; timelineParts, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a>* mod = NULL);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">void</span> mapCoreMetadata(ebucoreCoreMetadata *source, ebuCore_2012::coreMetadataType&amp; dest);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">void</span> mapMetadataSchemeInformation(ebuCore_2012::ebuCoreMainType&amp; source, ebucoreMetadataSchemeInformation *dest, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a>* mod = NULL);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">void</span> mapMetadataSchemeInformation(ebucoreMetadataSchemeInformation *source, ebuCore_2012::ebuCoreMainType&amp; dest);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">void</span> mapEntity(ebuCore_2012::entityType&amp; source, ebucoreEntity *dest, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a>* mod = NULL);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span> mapEntity(ebucoreEntity *source, ebuCore_2012::entityType&amp; dest);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;EBUCore_1_4/xsd/EBU_CORE_20130107.hxx&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;MXFCustomMetadata.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;EBUCore_1_4/metadata/EBUCoreDMS++.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">using namespace </span>EBUSDK::MXFCustomMetadata;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">using namespace </span>EBUSDK::EBUCore::EBUCore_1_4::KLV;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span>EBUSDK {</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">   13</a></span>&#160;<span class="keyword">namespace </span>EBUCore {</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__4.html">   14</a></span>&#160;<span class="keyword">namespace </span>EBUCore_1_4 {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keywordtype">void</span> mapCoreMetadata(ebuCore_2012::coreMetadataType&amp; source, ebucoreCoreMetadata *dest, mxfRational overallFrameRate, std::vector&lt;ebucorePartMetadata*&gt;&amp; timelineParts, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a>* mod = NULL);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">void</span> mapCoreMetadata(ebucoreCoreMetadata *source, ebuCore_2012::coreMetadataType&amp; dest);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">void</span> mapMetadataSchemeInformation(ebuCore_2012::ebuCoreMainType&amp; source, ebucoreMetadataSchemeInformation *dest, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a>* mod = NULL);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">void</span> mapMetadataSchemeInformation(ebucoreMetadataSchemeInformation *source, ebuCore_2012::ebuCoreMainType&amp; dest);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">void</span> mapEntity(ebuCore_2012::entityType&amp; source, ebucoreEntity *dest, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a>* mod = NULL);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">void</span> mapEntity(ebucoreEntity *source, ebuCore_2012::entityType&amp; dest);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;}</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;}</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Feb 13 2013 17:31:16 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 26 2013 22:32:09 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

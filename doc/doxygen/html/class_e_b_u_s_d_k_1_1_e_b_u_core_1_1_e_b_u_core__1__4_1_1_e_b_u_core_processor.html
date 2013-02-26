@@ -68,6 +68,7 @@ Inheritance diagram for EBUSDK::EBUCore::EBUCore_1_4::EBUCoreProcessor:</div>
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acd78d8b1dc92d99645386cd4275f0814"><td class="memItemLeft" align="right" valign="top">const mxfUL *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__4_1_1_e_b_u_core_processor.html#acd78d8b1dc92d99645386cd4275f0814">GetDescriptiveMetadataScheme</a> ()</td></tr>
+<tr class="memitem:a12bbc86ad66e33c25c084e761fb052f7"><td class="memItemLeft" align="right" valign="top">const mxfKey *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__4_1_1_e_b_u_core_processor.html#a12bbc86ad66e33c25c084e761fb052f7">GetDarkMetadataSetKey</a> ()</td></tr>
 <tr class="memitem:a15c264bab36ed5f0053ad8c0c1ab07ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__4_1_1_e_b_u_core_processor.html#a15c264bab36ed5f0053ad8c0c1ab07ca">RegisterMetadataExtensions</a> (mxfpp::DataModel *data_model)</td></tr>
 <tr class="memitem:a56f3b709a4115bbe3d09c99d243d94ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__4_1_1_e_b_u_core_processor.html#a56f3b709a4115bbe3d09c99d243d94ae">RegisterFrameworkObjectFactories</a> (mxfpp::HeaderMetadata *metadata)</td></tr>
 <tr class="memitem:a85669327fa756c15a63fde120431707a"><td class="memItemLeft" align="right" valign="top">mxfpp::DMFramework *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__4_1_1_e_b_u_core_processor.html#a85669327fa756c15a63fde120431707a">GenerateSideCarFramework</a> (const char *metadataLocation, mxfpp::HeaderMetadata *destination, mxfpp::Identification *identificationToAppend)</td></tr>
@@ -232,6 +233,33 @@ Public Member Functions</h2></td></tr>
 </dl>
 
 <p>Implements <a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core_processor.html#a6813ce73d97d6bdad4be9723e7934b35">EBUSDK::EBUCore::EBUCoreProcessor</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a12bbc86ad66e33c25c084e761fb052f7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const mxfKey * EBUSDK::EBUCore::EBUCore_1_4::EBUCoreProcessor::GetDarkMetadataSetKey </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the Dark Set serialization Universal Label associated with the version of <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> supported by this <a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__4_1_1_e_b_u_core_processor.html">EBUCoreProcessor</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the Universal Label. </dd></dl>
+
+<p>Implements <a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core_processor.html#a004d6bd9b96348c3ec82fcc590389234">EBUSDK::EBUCore::EBUCoreProcessor</a>.</p>
 
 </div>
 </div>
@@ -503,7 +531,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Feb 13 2013 17:31:19 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 26 2013 22:32:12 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

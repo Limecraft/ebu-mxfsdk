@@ -71,6 +71,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a8b42118c3a2523aafbc81d23e7555208"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a8b42118c3a2523aafbc81d23e7555208">FindLastPartitionFill</a> (mxfpp::File *mFile, mxfpp::Partition *partition, int64_t *partitionSectionOffset, int64_t *extractedFileSize=NULL)</td></tr>
 <tr class="memitem:ae473eadee856c02447c962257113aac8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ae473eadee856c02447c962257113aac8">ShiftBytesInFile</a> (mxfpp::File *mFile, int64_t shiftPosition, int64_t shiftOffset)</td></tr>
 <tr class="memitem:ae343e7315da96a00914e05cd0cb35bfa"><td class="memItemLeft" align="right" valign="top">mxfpp::Partition *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ae343e7315da96a00914e05cd0cb35bfa">FindPreferredMetadataPartition</a> (const std::vector&lt; mxfpp::Partition * &gt; &amp;partitions, mxfpp::Partition **headerPartition, mxfpp::Partition **footerPartition)</td></tr>
+<tr class="memitem:a44f2e2d05e35082e0fbec1c5b6d507dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a44f2e2d05e35082e0fbec1c5b6d507dc">RewritePartitionPack</a> (mxfpp::File *mxfFile, mxfpp::Partition *partition, bool forceSimilar=false)</td></tr>
+<tr class="memitem:afada17c51051eee99a83d66e0d8f064c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; mxfpp::DMFramework * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#afada17c51051eee99a83d66e0d8f064c">GetStaticFrameworks</a> (mxfpp::MaterialPackage *mp)</td></tr>
 <tr class="memitem:a01cb6284c0c0d4570d8e816831181cc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a01cb6284c0c0d4570d8e816831181cc0">AppendDMSLabel</a> (mxfpp::HeaderMetadata *header_metadata, mxfUL scheme_label)</td></tr>
 <tr class="memitem:ae68760612386ffdd03db488b898af59d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ae68760612386ffdd03db488b898af59d">InsertFramework</a> (mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, mxfpp::DMFramework *framework, <a class="el" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a> *mod=NULL)</td></tr>
 <tr class="memitem:a46f886a4d53dc6f8322709071bc7364c"><td class="memItemLeft" align="right" valign="top">mxfRational&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a46f886a4d53dc6f8322709071bc7364c">FindMaterialPackageEditRate</a> (mxfpp::HeaderMetadata *header_metadata)</td></tr>
@@ -284,6 +286,30 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="afada17c51051eee99a83d66e0d8f064c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;mxfpp::DMFramework*&gt; EBUSDK::MXFCustomMetadata::GetStaticFrameworks </td>
+          <td>(</td>
+          <td class="paramtype">mxfpp::MaterialPackage *&#160;</td>
+          <td class="paramname"><em>mp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Retrieve all 'static' descriptive metadata frameworks contained int the given Material Package object.</p>
+<dl class="section return"><dt>Returns</dt><dd>A vector of references to the located framework objects. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mp</td><td>The material package structure in which the frameworks must be found, as the framework of a timeline track. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ad07dd777e3400cc0c719303bbad0b97c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -421,6 +447,47 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Removes a 'tree' of metadata sets from the given header metadata.<br/>
  The tree removed from the header metadata comprises all metadata sets reachable recursively from the initial set through strong references. Weak references are not followed as they do not imply ownership. </p>
+
+</div>
+</div>
+<a class="anchor" id="a44f2e2d05e35082e0fbec1c5b6d507dc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EBUSDK::MXFCustomMetadata::RewritePartitionPack </td>
+          <td>(</td>
+          <td class="paramtype">mxfpp::File *&#160;</td>
+          <td class="paramname"><em>mxfFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">mxfpp::Partition *&#160;</td>
+          <td class="paramname"><em>partition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>forceSimilar</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Rewrite the KLV partition pack for the given partition.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mxfFile</td><td>The MXF file structure opened with read/write access. </td></tr>
+    <tr><td class="paramname">partition</td><td>The partition pack data structure to be rewritten to the file. The partition pack is written to the position indicated by the <em>thisPartition</em> member. </td></tr>
+    <tr><td class="paramname">forceSimilar</td><td>When true, this function tries to mimic the original parition pack is closely as possible, incl. by rewriting the length value of identical length. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -777,7 +844,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Feb 13 2013 17:31:19 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 26 2013 22:32:12 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

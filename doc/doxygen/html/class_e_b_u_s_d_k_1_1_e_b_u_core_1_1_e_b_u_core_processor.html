@@ -68,6 +68,7 @@ Inheritance diagram for EBUSDK::EBUCore::EBUCoreProcessor:</div>
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2e0076d06e578fd79854b63c760ad670"><td class="memItemLeft" align="right" valign="top">virtual const mxfUL *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core_processor.html#a2e0076d06e578fd79854b63c760ad670">GetDescriptiveMetadataScheme</a> ()=0</td></tr>
+<tr class="memitem:a004d6bd9b96348c3ec82fcc590389234"><td class="memItemLeft" align="right" valign="top">virtual const mxfKey *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core_processor.html#a004d6bd9b96348c3ec82fcc590389234">GetDarkMetadataSetKey</a> ()=0</td></tr>
 <tr class="memitem:af7ca9e736fb6fcaafe34097553b978b6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core_processor.html#af7ca9e736fb6fcaafe34097553b978b6">RegisterMetadataExtensions</a> (mxfpp::DataModel *data_model)=0</td></tr>
 <tr class="memitem:a60af39d03af9b5c87d856c7808df7eb0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core_processor.html#a60af39d03af9b5c87d856c7808df7eb0">RegisterFrameworkObjectFactories</a> (mxfpp::HeaderMetadata *metadata)=0</td></tr>
 <tr class="memitem:a6813ce73d97d6bdad4be9723e7934b35"><td class="memItemLeft" align="right" valign="top">virtual mxfpp::DMFramework *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core_processor.html#a6813ce73d97d6bdad4be9723e7934b35">GenerateSideCarFramework</a> (const char *metadataLocation, mxfpp::HeaderMetadata *destination, mxfpp::Identification *identificationToAppend)=0</td></tr>
@@ -232,6 +233,33 @@ Public Member Functions</h2></td></tr>
 </dl>
 
 <p>Implemented in <a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__4_1_1_e_b_u_core_processor.html#a85669327fa756c15a63fde120431707a">EBUSDK::EBUCore::EBUCore_1_4::EBUCoreProcessor</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a004d6bd9b96348c3ec82fcc590389234"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const mxfKey* EBUSDK::EBUCore::EBUCoreProcessor::GetDarkMetadataSetKey </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the Dark Set serialization Universal Label associated with the version of <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> supported by this <a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core_processor.html">EBUCoreProcessor</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the Universal Label. </dd></dl>
+
+<p>Implemented in <a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core__1__4_1_1_e_b_u_core_processor.html#a12bbc86ad66e33c25c084e761fb052f7">EBUSDK::EBUCore::EBUCore_1_4::EBUCoreProcessor</a>.</p>
 
 </div>
 </div>
@@ -502,7 +530,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Feb 13 2013 17:31:19 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 26 2013 22:32:12 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

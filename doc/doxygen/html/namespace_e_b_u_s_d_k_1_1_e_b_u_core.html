@@ -80,12 +80,16 @@ Functions</h2></td></tr>
 <tr class="memitem:a8be4e2bfbe0833f2f3d46a48ba20fcc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a8be4e2bfbe0833f2f3d46a48ba20fcc4">FindAndSerializeEBUCore</a> (mxfpp::HeaderMetadata *metadata, const char *outputfilename)</td></tr>
 <tr class="memitem:a8e8b814251c88db753405820a1897df2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a8e8b814251c88db753405820a1897df2">InsertEBUCoreFramework</a> (mxfpp::HeaderMetadata *header_metadata, const mxfUL *dmSchemeLabel, mxfpp::DMFramework *framework, mxfpp::Identification *identificationToAppend=NULL)</td></tr>
 <tr class="memitem:aaec9796cf63043765e6a7e6260c026ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#aaec9796cf63043765e6a7e6260c026ca">InsertEBUCoreEventFrameworks</a> (mxfpp::HeaderMetadata *header_metadata, std::vector&lt; <a class="el" href="struct_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_event_input.html">MXFCustomMetadata::EventInput</a> &gt; &amp;eventFrameworks, mxfpp::Identification *identificationToAppend=NULL)</td></tr>
+<tr class="memitem:a2a9ad2f99fd9d4daeb6bb24d74225477"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a2a9ad2f99fd9d4daeb6bb24d74225477">RemoveEBUCoreFrameworks</a> (mxfpp::HeaderMetadata *header_metadata)</td></tr>
 <tr class="memitem:a79638580d9298bbbee16e486c2c4fab1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a79638580d9298bbbee16e486c2c4fab1">EmbedEBUCoreMetadata</a> (const char *metadataLocation, const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...), <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dd">MetadataKind</a> optWaytoWrite=<a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda09c0b3d73333f14708a225f5d47626b8">KLV_ENCODED</a>, bool optNoIdentification=false, bool optForceHeader=false)</td></tr>
 <tr class="memitem:a61c5515c9f7c3395e7e2b2acb30b903b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a61c5515c9f7c3395e7e2b2acb30b903b">EmbedEBUCoreMetadata</a> (xercesc::DOMDocument &amp;metadataDocument, const char *metadataLocation, const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...), <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dd">MetadataKind</a> optWaytoWrite=<a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#af896075fd1d0f08778fdd14fd0b0b8dda09c0b3d73333f14708a225f5d47626b8">KLV_ENCODED</a>, bool optNoIdentification=false, bool optForceHeader=false)</td></tr>
+<tr class="memitem:afc4716b152cb23f8e69a96d6d753200d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#afc4716b152cb23f8e69a96d6d753200d">RemoveEBUCoreMetadata</a> (const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...), bool optNoIdentification=false, bool optForceHeader=false)</td></tr>
 <tr class="memitem:a61cbbad8a24382405688c7f921f02916"><td class="memItemLeft" align="right" valign="top">xercesc::DOMDocument &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a61cbbad8a24382405688c7f921f02916">ExtractEBUCoreMetadata</a> (const char *mxfLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...))</td></tr>
 <tr class="memitem:ac4c42dcf884a28a61463f516aed6b0ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#ac4c42dcf884a28a61463f516aed6b0ec">ExtractEBUCoreMetadata</a> (const char *mxfLocation, const char *metadataLocation, void(*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...))</td></tr>
 <tr class="memitem:a482682a6cd9b8c61745f0736b1510d0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core_processor.html">EBUCoreProcessor</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a482682a6cd9b8c61745f0736b1510d0f">GetDefaultEBUCoreProcessor</a> ()</td></tr>
 <tr class="memitem:a3b9da3f374a3cfa73ed112b3077fd7d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_e_b_u_s_d_k_1_1_e_b_u_core_1_1_e_b_u_core_processor.html">EBUCoreProcessor</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a3b9da3f374a3cfa73ed112b3077fd7d1">GetEBUCoreProcessor</a> (const std::vector&lt; mxfUL &gt; &amp;descriptiveMetadataSchemes)</td></tr>
+<tr class="memitem:aa80e9e8e2fbb2e91e53ea7759b7abe11"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#aa80e9e8e2fbb2e91e53ea7759b7abe11">IsSupportedEBUCoreMetadataScheme</a> (const mxfUL *label)</td></tr>
+<tr class="memitem:a73d62df66b462a0d72a42e86ef565424"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html#a73d62df66b462a0d72a42e86ef565424">EnumerateSupportedEBUCoreDarkSetKeys</a> (std::vector&lt; const mxfKey * &gt; &amp;darkSetKeys)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>EBU MXF SDK namespace for EBUCore-specific functionality. </p>
@@ -271,6 +275,29 @@ Functions</h2></td></tr>
     <tr><td class="paramname">optWaytoWrite</td><td>Specifies the way in which the provided metadata will be serialized into the MXF file. </td></tr>
     <tr><td class="paramname">optNoIdentification</td><td>When true, forces the SDK not to write an additional MXF metadata Identification set to identify the SDK as source of metadata updates. </td></tr>
     <tr><td class="paramname">optForceHeader</td><td>When true, forces the SDK to write the <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> metadata into the header partition, potentially forcing a rewrite of the entire MXF file. In normal operation, the SDK attempts to write the <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> metadata into the footer partition, marking the header (and potential body) partitions that contain metadata as open and incomplete. This way only the footer paritition and the (small) partition packs must be updated. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a73d62df66b462a0d72a42e86ef565424"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EBUSDK::EBUCore::EnumerateSupportedEBUCoreDarkSetKeys </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; const mxfKey * &gt; &amp;&#160;</td>
+          <td class="paramname"><em>darkSetKeys</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enumerates and adds to the given vector each of the KLV set keys supported by the SDK as keys for <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> dark metadata.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">darkSetKeys</td><td>A references to the vector to which the supported keys will be added. </td></tr>
   </table>
   </dd>
 </dl>
@@ -556,6 +583,30 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aa80e9e8e2fbb2e91e53ea7759b7abe11"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool EBUSDK::EBUCore::IsSupportedEBUCoreMetadataScheme </td>
+          <td>(</td>
+          <td class="paramtype">const mxfUL *&#160;</td>
+          <td class="paramname"><em>label</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Determines whether the provided KLV label is supported by the SDK as a Descriptive Metadata Scheme label for <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> metadata.</p>
+<dl class="section return"><dt>Returns</dt><dd>Whether the label is supported by the SDK. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">label</td><td>The label to be investigaged. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a9637fb0e0421d07a3ec52d687b3409ad"></a>
 <div class="memitem">
 <div class="memproto">
@@ -599,10 +650,84 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a2a9ad2f99fd9d4daeb6bb24d74225477"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EBUSDK::EBUCore::RemoveEBUCoreFrameworks </td>
+          <td>(</td>
+          <td class="paramtype">mxfpp::HeaderMetadata *&#160;</td>
+          <td class="paramname"><em>header_metadata</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Removes <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> Descriptive Metadata frameworks from the given header metadata structure.<br/>
+ This removes <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> frameworks from ant static or event tracks DM tracks on the MXF timeline, identified by the names <em>EBU_Core</em> or _EBU_Core_Parts.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">header_metadata</td><td>The HeaderMetadata structure from which the frameworks are removed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="afc4716b152cb23f8e69a96d6d753200d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EBUSDK::EBUCore::RemoveEBUCoreMetadata </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>mxfLocation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format,...)&#160;</td>
+          <td class="paramname"><em>progress_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>optNoIdentification</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>optForceHeader</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Removes <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> metadata from an MXF file.<br/>
+</p>
+<dl class="section return"><dt>Returns</dt><dd>Has no return value, but throws an exception when irregularities occur. The caller is informed of any progress by means of the <b>progress_callback</b> argument. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mxfLocation</td><td>The location of the MXF file from which to remove the <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> metadata. </td></tr>
+    <tr><td class="paramname">progress_callback</td><td>A function that is called with updated progress concerning the embedding process. The function is called with the overall progress of the operation in <b>progress</b>, a <b>message</b> that describes the updated status, and the name of the internal <b>function</b> to which the progress update relates (which can be used for debugging purposes). </td></tr>
+    <tr><td class="paramname">optNoIdentification</td><td>When true, forces the SDK not to write an additional MXF metadata Identification set to identify the SDK as source of metadata updates. </td></tr>
+    <tr><td class="paramname">optForceHeader</td><td>When true, forces the SDK to remove the <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> metadata from the header partition, potentially forcing a rewrite of the entire MXF file. In normal operation, the SDK attempts to remove the <a class="el" href="namespace_e_b_u_s_d_k_1_1_e_b_u_core.html">EBUCore</a> metadata from the footer partition, marking the header (and potential body) partitions that contain metadata as open and incomplete. This way only the footer paritition and the (small) partition packs must be updated. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Feb 13 2013 17:31:19 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 26 2013 22:32:12 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>
