@@ -393,6 +393,7 @@ static void usage(const char *cmd)
     fprintf(stderr, " --force-header        Force metadata to be appended into the header partition\n");
     fprintf(stderr, " --dark                Write EBU Core metadata into a dark metadata set\n");
     fprintf(stderr, " --sidecar             Write EBU Core metadata as a side-car reference\n");
+    fprintf(stderr, " --remove              Remove EBU Core metadata from the MXF file header metadata\n");
 }
 
 void progress_cb(float progress, EBUCore::ProgressCallbackLevel level, const char *function, const char *msg_format, ...) {
@@ -427,11 +428,11 @@ int main(int argc, const char** argv)
 	bool do_force_header = false;
 	bool do_sidecar = false;
 	bool do_dark = false;
+	bool do_remove = false;
     bool do_print_info = false;
     bool do_print_version = false;
     const char *ebucore_filename = 0;
     int cmdln_index;
-
 
     if (argc == 1) {
         usage(argv[0]);
@@ -481,6 +482,10 @@ int main(int argc, const char** argv)
 		else if (strcmp(argv[cmdln_index], "--sidecar") == 0)
         {
             do_sidecar = true;
+        }
+		else if (strcmp(argv[cmdln_index], "--remove") == 0)
+        {
+            do_remove = true;
         }
 		else if (strcmp(argv[cmdln_index], "--ebu-core") == 0)
         {
@@ -537,10 +542,15 @@ int main(int argc, const char** argv)
 
     try
     {
-		if (ebucore_filename) {
-			// select correct serialization mode
-			EBUCore::MetadataKind kind = do_sidecar ? EBUCore::SIDECAR : (do_dark ? EBUCore::DARK : EBUCore::KLV_ENCODED);
-			EBUCore::EmbedEBUCoreMetadata(ebucore_filename, filenames[0], &progress_cb, kind, false, do_force_header);
+		if (do_remove) {
+			EBUCore::RemoveEBUCoreMetadata(filenames[0], &progress_cb, false, do_force_header);
+		}
+		else {
+			if (ebucore_filename) {
+				// select correct serialization mode
+				EBUCore::MetadataKind kind = do_sidecar ? EBUCore::SIDECAR : (do_dark ? EBUCore::DARK : EBUCore::KLV_ENCODED);
+				EBUCore::EmbedEBUCoreMetadata(ebucore_filename, filenames[0], &progress_cb, kind, false, do_force_header);
+			}
 		}
     }
     catch (const MXFException &ex)
