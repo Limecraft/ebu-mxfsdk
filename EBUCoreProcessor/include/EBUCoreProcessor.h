@@ -75,6 +75,16 @@ namespace EBUSDK {
 	*/
 	void InsertEBUCoreEventFrameworks(mxfpp::HeaderMetadata *header_metadata, std::vector<MXFCustomMetadata::EventInput>& eventFrameworks, mxfpp::Identification *identificationToAppend = NULL);
 
+	/**
+	*	Inserts a given list of descriptive metadata frameworks in the provided header metadata structure.\n
+		This function adds an Event DM track to the MXF timeline, from which the provided __eventFrameworks__ are weakly referenced.\n
+		Currently, the DM track added is assigned a Track ID _10002_ and is given a Track Name _EBU_Core_Parts_.
+
+		@param header_metadata The HeaderMetadata structure to which the framework and timeline elements are added.
+		@param eventFrameworks The DM frameworks input set to be added to the MXF timeline. The EventInput structure's Start and 
+		Duration fields are used to properly place the DM Segment on the timeline.
+		@param identificationToAppend Optional Identification metadata set that will be referenced from each metadata set created by this function.
+	*/
 	void RemoveEBUCoreFrameworks(mxfpp::HeaderMetadata *header_metadata);
 
 	enum ProgressCallbackLevel {
@@ -148,6 +158,25 @@ namespace EBUSDK {
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
 							MetadataKind optWaytoWrite = KLV_ENCODED,
 							bool optNoIdentification = false, bool optForceHeader = false);
+
+	/**
+	*	Removes EBUCore metadata from an MXF file.\n
+
+		@return Has no return value, but throws an exception when irregularities occur. The caller is informed of any progress by means of the __progress_callback__ argument.
+		@param mxfLocation The location of the MXF file from which to remove the EBUCore metadata.
+		@param progress_callback A function that is called with updated progress concerning the embedding process. 
+		The function is called with the overall progress of the operation in __progress__,  a __message__ that describes the updated status, 
+		and the name of the internal __function__ to which the progress update relates (which can be used for debugging purposes).
+		@param optNoIdentification When true, forces the SDK not to write an additional MXF metadata Identification set to identify the SDK as source of metadata updates.
+		@param optForceHeader When true, forces the SDK to remove the EBUCore metadata from the header partition, potentially forcing a rewrite of the entire MXF file. 
+		In normal operation, the SDK attempts to remove the EBUCore metadata from the footer partition, marking the header (and potential body) partitions that contain metadata as
+		open and incomplete. This way only the footer paritition and the (small) partition packs must be updated.
+	*/
+
+	void RemoveEBUCoreMetadata(	const char* mxfLocation,
+							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
+							bool optNoIdentification = false, bool optForceHeader = false);
+
 
 	/**
 	*	Extract EBUCore metadata from an MXF file.\n
@@ -325,6 +354,21 @@ namespace EBUSDK {
 		@param descriptiveMetadataSchemes A vector with DM Scheme Universal Labals as declared in the header metadata of the MXF file.
 	*/
 	EBUCoreProcessor* GetEBUCoreProcessor(const std::vector<mxfUL>& descriptiveMetadataSchemes);
+
+	/**
+	*	Determines whether the provided KLV label is supported by the SDK as a Descriptive Metadata Scheme label for EBUCore metadata.
+
+		@returns Whether the label is supported by the SDK.
+		@param label The label to be investigaged.
+	*/
+	bool IsSupportedEBUCoreMetadataScheme(const mxfUL* label);
+
+	/**
+	*	Enumerates and adds to the given vector each of the KLV set keys supported by the SDK as keys for EBUCore dark metadata.
+
+		@param darkSetKeys A references to the vector to which the supported keys will be added.
+	*/
+	void EnumerateSupportedEBUCoreDarkSetKeys(std::vector<const mxfKey*>& darkSetKeys);
 
 	} // namespace EBUCore
 
