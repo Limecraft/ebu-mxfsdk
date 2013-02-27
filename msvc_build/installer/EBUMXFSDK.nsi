@@ -1,6 +1,6 @@
 
 !define PRODUCT_NAME "EBU MXF SDK"
-!define VERSION "0.9.2" ;@VERSION@
+!define VERSION "1.0.0a" ;@VERSION@
 !define PRODUCT_VERSION "1.0" ;@VERSION@
 !define PRODUCT_GROUP "EBU"
 !define PRODUCT_PUBLISHER "EBU Technical"
@@ -79,12 +79,12 @@ SetShellVarContext all
 ;Pages
 
   !define MUI_HEADERIMAGE
-  !define MUI_HEADERIMAGE_BITMAP "resources\EBU_logo.bmp"
-  !define MUI_HEADERIMAGE_UNBITMAP "resources\EBU_logo.bmp"
-  !define MUI_WELCOMEFINISHPAGE_BITMAP "resources\EBU_logo_large.bmp"
+  !define MUI_HEADERIMAGE_BITMAP "resources\EBU_logo_2013.bmp"
+  !define MUI_HEADERIMAGE_UNBITMAP "resources\EBU_logo_2013.bmp"
+  !define MUI_WELCOMEFINISHPAGE_BITMAP "resources\EBU_logo_large_2013.bmp"
 
   !insertmacro MUI_PAGE_WELCOME
-  !insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
+  !insertmacro MUI_PAGE_LICENSE "..\..\LICENSE.txt"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
