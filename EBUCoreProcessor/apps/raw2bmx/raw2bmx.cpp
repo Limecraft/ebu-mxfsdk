@@ -4,6 +4,10 @@
  *
  * Author: Philip de Nier
  *
+ * Modifications Copyright (C) 2012-2013, European Broadcasting Union and Limecraft, NV.
+ *
+ * Author: Dieter Van Rijsselbergen
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
