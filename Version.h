@@ -4,6 +4,11 @@
  *
  * Author: Philip de Nier
  *
+ * Modifications Copyright (C) 2012-2013, European Broadcasting Union and Limecraft, NV.
+ *
+ * Author: Dieter Van Rijsselbergen
+ *
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
@@ -38,11 +43,11 @@
 #include <bmx/BMXTypes.h>
 
 
-#define EBUSDK_VERSION_MAJOR    0
-#define EBUSDK_VERSION_MINOR    1
-#define EBUSDK_VERSION_MICRO    2
+#define EBUSDK_VERSION_MAJOR    1
+#define EBUSDK_VERSION_MINOR    0
+#define EBUSDK_VERSION_MICRO    0
 
-#define EBUSDK_MXF_VERSION_RELEASE  2   /* 0 = Unknown version
+#define EBUSDK_MXF_VERSION_RELEASE  4   /* 0 = Unknown version
                                         1 = Released version
                                         2 = Development version
                                         3 = Released version with patches
