@@ -1320,8 +1320,8 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, mxfRat
 		vec_parts.push_back(obj);
 
 		// set extremes to start with
-		mxfPosition partStart = 0x7FFFFFFFFFFFFFFF;
-		mxfLength partEnd = 0;
+		mxfPosition partStart = -1;
+		mxfLength partDuration = -1;
 
 		// determine which of our parts belong on a timeline
 		partType& part = *it;
@@ -1331,36 +1331,36 @@ void mapCoreMetadata(coreMetadataType& source, ebucoreCoreMetadata *dest, mxfRat
 			mxfPosition formatStart;
 			mxfLength formatDuration;
 			if (start.editUnitNumber().present()) {
-				formatStart = start.editUnitNumber().get();
+				partStart = start.editUnitNumber().get();
 			} else if (start.normalPlayTime().present()) {
 				// convert a duration
 				mxfRational d = convert_rational(start.normalPlayTime().get());
-				formatStart = (d.numerator * overallFrameRate.numerator) / (d.denominator * overallFrameRate.denominator);
+				partStart = (d.numerator * overallFrameRate.numerator) / (d.denominator * overallFrameRate.denominator);
 			} else {
 				// convert a time code
 				bmx::Timecode tc;
 				bmx::parse_timecode(start.timecode().get().c_str(), overallFrameRate, &tc);
-				formatStart = tc.GetOffset();
+				partStart = tc.GetOffset();
 			}
 
 			formatType::duration_type &dur = part.partDuration().get();
 			if (dur.editUnitNumber().present()) {
-				formatDuration = dur.editUnitNumber().get();
+				partDuration = dur.editUnitNumber().get();
 			} else if (dur.normalPlayTime().present()) {
 				// convert a duration
 				mxfRational d = convert_rational(dur.normalPlayTime().get());
-				formatDuration = (d.numerator * overallFrameRate.numerator) / (d.denominator * overallFrameRate.denominator);
+				partDuration = (d.numerator * overallFrameRate.numerator) / (d.denominator * overallFrameRate.denominator);
 			} else {
 				// convert a time code
 				bmx::Timecode tc;
 				bmx::parse_timecode(dur.timecode().get().c_str(), overallFrameRate, &tc);
-				formatDuration = tc.GetOffset();
+				partDuration = tc.GetOffset();
 			}
 
-			if (partStart != 0x7FFFFFFFFFFFFFFF && partEnd != 0) {
+			if (partStart != -1 && partDuration != -1) {
 				// this goes onto the timeline!
 				obj->setpartStartEditUnitNumber(partStart);
-				obj->setpartDurationEditUnitNumber(partEnd - partStart);
+				obj->setpartDurationEditUnitNumber(partDuration);
 				timelineParts.push_back(obj);
 			}
 		}
