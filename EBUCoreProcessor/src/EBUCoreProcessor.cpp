@@ -407,7 +407,10 @@ void InnerEmbedEBUCoreMetadata(
 					// make sure this is updated also
 					p->setHeaderByteCount(headerMetadataSize);
 				}
-				p->setFooterPartition(p->getFooterPartition() + fileOffset);
+				if (p->getFooterPartition() > 0) {
+					// only set if there was a valid value for the footer partition in the first place
+					p->setFooterPartition(p->getFooterPartition() + fileOffset);
+				}
 				RewritePartitionPack(&*mFile, p, true);
 				prevPartition = p->getThisPartition();
 			}
@@ -656,7 +659,10 @@ void RemoveEBUCoreMetadata(	const char* mxfLocation,
 					// make sure this is updated also
 					p->setHeaderByteCount(headerMetadataSize);
 				}
-				p->setFooterPartition(p->getFooterPartition() + fileOffset);
+				if (p->getFooterPartition() > 0) {
+					// only set if there was a valid value for the footer partition in the first place
+					p->setFooterPartition(p->getFooterPartition() + fileOffset);
+				}
 				RewritePartitionPack(&*mFile, p, true);
 				prevPartition = p->getThisPartition();
 			}
