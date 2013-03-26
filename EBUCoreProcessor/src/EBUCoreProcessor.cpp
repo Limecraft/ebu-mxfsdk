@@ -830,13 +830,27 @@ MetadataKind ExtractEBUCoreMetadata(
 		bool darkFound = false;
 		progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "No ebucoreMainFramework found on the MXF timeline, looking for dark metadata...");
 
+		std::vector<const mxfKey*> darkSetKeys;
+		if (processor != NULL)
+			darkSetKeys.push_back(processor->GetDarkMetadataSetKey());
+		else
+			EBUCore::EnumerateSupportedEBUCoreDarkSetKeys(darkSetKeys);
+
 		mxfFile->seek(partition->getThisPartition(), SEEK_SET);
 		uint64_t count = 0, sourceHeaderByteCount = partition->getHeaderByteCount();
 		while (count < sourceHeaderByteCount)
 		{
 			mxfFile->readKL(&key, &llen, &len);
-			if (mxf_equals_key(&key, processor->GetDarkMetadataSetKey())) {
-				darkFound = true;
+			
+			for (std::vector<const mxfKey*>::const_iterator it = darkSetKeys.begin(); it != darkSetKeys.end(); it++) {
+				if (mxf_equals_key(&key, *it)) {
+					darkFound = true;
+					break;
+				}
+			}
+
+			if (darkFound) {
+				
 				progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "Located EBUCore dark metadata set at offset %" PRId64 "...", partition->getThisPartition() + count);
 
 				// there is dark metadata, get it out
