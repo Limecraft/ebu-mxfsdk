@@ -1,6 +1,6 @@
 
 !define PRODUCT_NAME "EBU MXF SDK"
-!define VERSION "1.0.0a-2" ;@VERSION@
+!define VERSION "1.0.0a-4" ;@VERSION@
 !define PRODUCT_VERSION "1.0" ;@VERSION@
 !define PRODUCT_GROUP "EBU"
 !define PRODUCT_PUBLISHER "EBU Technical"
@@ -26,6 +26,7 @@ SetCompressor /SOLID lzma
 !addplugindir NSIS\UAC\Ansi
 !addplugindir NSIS\nsisunz\Release
 !include UAC.nsh
+!include EnvVarUpdate.nsh
 
 !macro UACInit thing
 uac_tryagain:
@@ -140,6 +141,13 @@ Section "MXFSDK" SecMXFSDK
   CreateShortCut "$INSTDIR\MXFSDK Visual Studio Solution.lnk" "$INSTDIR\msvc_build\vs10\EBU MXF SDK.sln"
   CreateShortCut "$INSTDIR\MXFSDK API Documentation.lnk" "$INSTDIR\doc\doxygen\html\index.html"
   
+  CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
+  CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\MXFSDK Visual Studio Solution.lnk" "$INSTDIR\msvc_build\vs10\EBU MXF SDK.sln"
+  CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\MXFSDK API Documentation.lnk" "$INSTDIR\doc\doxygen\html\index.html"
+  
+  ; Write bin directory to path
+  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin" 
+  
   ;Store installation folder
   WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" $INSTDIR
 
@@ -199,6 +207,8 @@ Section "Uninstall"
 
   Delete "$INSTDIR\Uninstall.exe"
 
+  RMDir /r "$SMPROGRAMS\${PRODUCT_NAME}"
+  
   Delete "$INSTDIR\MXFSDK Visual Studio Solution.lnk"
   Delete "$INSTDIR\MXFSDK API Documentation.lnk"
   
@@ -206,10 +216,18 @@ Section "Uninstall"
   RMDir /r "$INSTDIR\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0"
   RMDir /r "$INSTDIR\msvc_build\dependencies\xsd-3.3.0-i686-windows"
   
+  Delete "$INSTDIR\Analyzer\msvc_build\vs10\apps\mxfanalyzer\xerces-c_3_1D.dll"
+  Delete "$INSTDIR\EBUCoreProcessor\msvc_build\vs10\apps\ebu2mxf\xerces-c_3_1D.dll"
+  Delete "$INSTDIR\EBUCoreProcessor\msvc_build\vs10\apps\mxf2ebu\xerces-c_3_1D.dll"
+  Delete "$INSTDIR\EBUCoreProcessor\msvc_build\vs10\apps\raw2bmx\xerces-c_3_1D.dll"
+
   !include "files_uninstaller.inc"
   RMDir "$INSTDIR\doc"
   RMDir "$INSTDIR"
 
+  ; Remove bin directory from path
+  ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin" 
+  
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
 
