@@ -311,3 +311,9 @@ st434dict.insert(std::pair<mxfKey, st434info*>(
 	key_060e2b34010101010d0c010101012500,
 	new st434info(/* ContactTelephoneNo */ key_060e2b34010101010d0c010101012500_name, /* urn:dpp:metadata:as11 */ key_ns_as11_1)
 ));
+mxfKey key_060e2b34025301010d01010101010900 = {0x06,0x0e,0x2b,0x34,0x02,0x53,0x01,0x01,0x0d,0x01,0x01,0x01,0x01,0x01,0x09,0x00};
+XMLCh key_060e2b34025301010d01010101010900_name[] = {'F','i','l','l','e','r','\0'};
+st434dict.insert(std::pair<mxfKey, st434info*>(
+	key_060e2b34025301010d01010101010900,
+	new st434info(/* Filler */ key_060e2b34025301010d01010101010900_name, /* urn:dpp:metadata:as11 */ key_ns_as11_1)
+));

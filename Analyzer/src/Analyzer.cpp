@@ -64,9 +64,9 @@ static const XMLCh ebucoreElementsNS[] = {'u','r','n',':','e','b','u',':','m','e
 
 struct st434info {
 	XMLCh* namespaceURI;
-	XMLCh* elementName;
+	const XMLCh* elementName;
 
-	st434info(XMLCh* _elementName, XMLCh* _namespaceURI) : 	namespaceURI(_namespaceURI), elementName(_elementName) {}
+	st434info(const XMLCh* _elementName, XMLCh* _namespaceURI) : 	namespaceURI(_namespaceURI), elementName(_elementName) {}
 };
 
 struct KLVPacketRef {
