@@ -96,7 +96,10 @@ namespaces.each { k, v ->
 	println 'XMLCh ' + v + '[] = {' + k.getChars().collect{ c -> '\'' + c + '\''}.join(',') + ',\'\\0\'};';
 }
 
+def localKeys = [:]
+
 xmlDictionary.findAll{ it.'@type' == 'localSet' }.each {
+	
 	localSet ->
 
 		def name = nameMap[localSet.name()]
@@ -104,11 +107,13 @@ xmlDictionary.findAll{ it.'@type' == 'localSet' }.each {
 		println 'const mxfKey ' + keyName + ' = {' + localSet.'@key'.split().collect { it -> '0x' + it }.join(',') + '};'
 		println 'const XMLCh ' + keyName + '_name[] = {' + name.getChars().collect{ c -> '\'' + c + '\''}.join(',') 	+ ',\'\\0\'};';
 		
-		println 'st434dict.insert(std::pair<const mxfKey, st434info*>('
-			println '\t' + keyName + ','
+		localKeys[keyName] = keyName + '_name'
+		
+		//println 'st434dict.insert(std::pair<const mxfKey, st434info*>('
+		//	println '\t' + keyName + ','
 			//println '\tnew st434info(L"' + localSet.name() + '", L"http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012")'
-			println '\tnew st434info(/* ' + localSet.name() + ' */ ' + keyName + '_name, /* ' + key_ns_ebucore_1 + ' */ ' + namespaces[(key_ns_ebucore_1)] + ')'
-		println '));'
+		//	println '\tnew st434info(/* ' + localSet.name() + ' */ ' + keyName + '_name, /* ' + key_ns_ebucore_1 + ' */ ' + namespaces[(key_ns_ebucore_1)] + ')'
+		//println '));'
 		
 		// localSet.each { localSetElem ->
 			// def elemKeyName = 'key_' + localSetElem.'@globalKey'.split().join('')
@@ -121,6 +126,24 @@ xmlDictionary.findAll{ it.'@type' == 'localSet' }.each {
 				// println '\tnew st434info(/* ' + localSetElem.name() + ' */ ' + elemKeyName + '_name, /* ' + "http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012" + ' */ ' + namespaces["http:://www.smpte-ra.org/schemas/434/2006/groups/class13/ebucore/2012"] + ')'
 			// println '));'		
 		
-		// }
+		// }		
 }
+
+if (localKeys.size() > 0) {
+	def arrayName = 'arr_ebucore_elems'
+
+	println 'const void* ' + arrayName + '[][2] = {'
+	println localKeys.collect { k, v ->
+		'{ &' + k + ', ' + v + ' }'
+	}.join(', \n')
+	println '};'
+			
+	println "for (int i=0; i<${localKeys.size()};i++) {"
+		println '\tst434dict.insert(std::pair<const mxfKey, st434info*>('
+		println '\t*(const mxfKey*)' + arrayName + '[i][0], '
+		println '\tnew st434info((const XMLCh*)' + arrayName + '[i][1], key_ns_ebucore_1)'
+		println '));'
+	println '}'
+}
+
 
