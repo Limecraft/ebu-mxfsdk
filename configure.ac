@@ -1,4 +1,4 @@
-dnl-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 dnl -- Extract package info
 dnl-----------------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ dnl AC_CONFIG_SRCDIR([src/common/BMXException.cpp])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
-AM_INIT_AUTOMAKE([-Wall -Werror])
+AM_INIT_AUTOMAKE([-Wall -Werror –Wno-extra-portability])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 
@@ -252,7 +252,7 @@ AC_CONFIG_FILES([
 	EBUCoreProcessor/tools/Makefile
 	EBUCoreProcessor/tools/gen_ebucore_classes/Makefile
 	EBUCoreProcessor/msvc_build/Makefile
-	EBUCoreProcessor/msvc_build/vs8/Makefile
+	EBUCoreProcessor/msvc_build/vs10/Makefile
 	Analyzer/Makefile
 	Analyzer/src/Makefile
 	Analyzer/apps/Makefile

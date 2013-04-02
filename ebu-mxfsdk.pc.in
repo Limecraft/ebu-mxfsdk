@@ -7,6 +7,6 @@ Name: ebu-mxfsdk-@EBUSDK_MAJORMINOR@
 Description: EBU Library and utilities to read and write broadcasting media files and their metadata
 Version: @VERSION@
 Requires: libMXF-@LIBMXF_MAJORMINOR@ libMXF++-@LIBMXFPP_MAJORMINOR@ bmx-@BMX_MAJORMINOR@
-Libs: -L${libdir} -lebucustommetadatasupport-@EBUSDK_MAJORMINOR@ -lebucore-@EBUSDK_MAJORMINOR@ @PC_ADD_LIBS@
+Libs: -L${libdir} -lebucustommetadatasupport -lebucore @PC_ADD_LIBS@
 Libs.private: @PC_ADD_PRIVATE_LIBS@
 Cflags: -I${includedir}/ebu-mxfsdk-@EBUSDK_MAJORMINOR@
