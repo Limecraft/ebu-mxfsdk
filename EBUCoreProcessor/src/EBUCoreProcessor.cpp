@@ -376,6 +376,14 @@ void InnerEmbedEBUCoreMetadata(
 			// ///////////
 			progress_callback(0.5, INFO, "EmbedEBUCoreMetadata", "Forcing new metadata into header partition, shifting bytes where necessary");
 
+			// where to write the metadata? find the proper position in the header partition
+			mFile->seek(headerPartition->getThisPartition(), SEEK_SET);
+			mFile->readKL(&key, &llen, &len);
+			mFile->skip(len);
+			mFile->readNextNonFillerKL(&key, &llen, &len);
+			BMX_CHECK(mxf_is_header_metadata(&key));
+			uint64_t pos_write_start_metadata =  mFile->tell() - mxfKey_extlen - llen;
+
 			uint64_t oriMetadataSize = headerPartition->getHeaderByteCount();
 
 			// Write metadata to the header partition, forcing a file bytes shift if required (likely)
@@ -383,10 +391,10 @@ void InnerEmbedEBUCoreMetadata(
 				WriteDarkMetadataToFile(	&*mFile, 
 											*ser, 
 											processor->GetDarkMetadataSetKey(), 
-											pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition) :
+											pos_start_metadata, pos_write_start_metadata, true, headerPartition, metadata_partition) :
 				WriteMetadataToFile(		&*mFile, 
 											&*mHeaderMetadata, 
-											pos_start_metadata, pos_start_metadata, true, headerPartition, metadata_partition, 
+											pos_start_metadata, pos_write_start_metadata, true, headerPartition, metadata_partition, 
 											ignoredDarkKeys);
 
 			uint64_t fileOffset = headerMetadataSize - oriMetadataSize;
@@ -406,6 +414,8 @@ void InnerEmbedEBUCoreMetadata(
 				} else if (mxf_is_header_partition_pack(p->getKey())) {
 					// make sure this is updated also
 					p->setHeaderByteCount(headerMetadataSize);
+					// make sure we mark the header partition as closed and complete
+					p->setKey(&MXF_PP_K(ClosedComplete, Header) );
 				}
 				if (p->getFooterPartition() > 0) {
 					// only set if there was a valid value for the footer partition in the first place
