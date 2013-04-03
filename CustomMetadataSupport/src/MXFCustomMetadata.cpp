@@ -110,14 +110,14 @@ Partition* FindPreferredMetadataPartition(const std::vector<Partition*>& partiti
 		else if (mxf_is_footer_partition_pack(p->getKey()))
 			footer = p;
 	}
-	if (		footer!=NULL && 
+	 if (	header != NULL && 
+			mxf_partition_is_closed(header->getKey()) &&
+			header->getHeaderByteCount() > 0)
+		metadata_partition = header;
+	else if (	footer!=NULL && 
 				mxf_partition_is_closed(footer->getKey()) && 
 				footer->getHeaderByteCount() > 0)
 		metadata_partition = footer;
-	else if (	header != NULL && 
-				mxf_partition_is_closed(header->getKey()) &&
-				header->getHeaderByteCount() > 0)
-		metadata_partition = header;
 	else {
 		log_warn("No metadata found in any of the closed header and footer partitions.");
 
