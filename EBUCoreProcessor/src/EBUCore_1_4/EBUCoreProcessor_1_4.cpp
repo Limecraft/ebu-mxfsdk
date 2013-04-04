@@ -45,7 +45,13 @@
 #include <MXFCustomMetadata.h>
 #include <XercesUtils.h>
 
+#include <xsd/cxx/xml/string.hxx>
+namespace xml = xsd::cxx::xml;
+
+#include <xercesc/framework/LocalFileFormatTarget.hpp>
 #include <xercesc/util/TransService.hpp>
+#include <xercesc/dom/DOMElement.hpp>
+#include <xercesc/dom/DOMAttr.hpp>
 
 using namespace ebuCore_2012;
 using namespace mxfpp;
@@ -184,11 +190,14 @@ void EBUCoreProcessor::ParseAndSerializeMetadata(	DMFramework *framework,
 	// map the EBU Core KLV framework to the XSD-derived counterpart
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElement( new ebuCoreMainType(main) );
 
+	// Set global/top-level attributes of the ebuCoreMain element
 	time_t now;
 	::time(&now);
 	tm* gmt_now = gmtime(&now);
 	ebuCoreMainElement->dateLastModified( std::auto_ptr<ebuCoreMainType::dateLastModified_type>( 
 		new ebuCoreMainType::dateLastModified_type( gmt_now->tm_year + 1900, gmt_now->tm_mon + 1, gmt_now->tm_mday, 0, 0) ) );
+	if (fw->havedocumentId())
+		ebuCoreMainElement->documentId(fw->getdocumentId());
 
 	if (fw->havemetadataSchemeInformation()) {
 		ebucoreMetadataSchemeInformation *info = fw->getmetadataSchemeInformation();
@@ -205,18 +214,31 @@ void EBUCoreProcessor::ParseAndSerializeMetadata(	DMFramework *framework,
 	map[""].name = "urn:ebu:metadata-schema:ebuCore_2012";
 	map["dc"].name = "http://purl.org/dc/elements/1.1/";
 
+	// In any case, generate a DOMDocument which we'll return or use for serialization
+	::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > xml = ebuCoreMain(*ebuCoreMainElement, map);
+
+	// Do preparations to the DOM document directly that the schema prohibits
+	DOMElement *e = xml->getDocumentElement();
+	// Set version to fixed 1.4 for this processor
+	e->setAttribute(xml::string("version").c_str(), xml::string("1.4").c_str());
+	// Set schema if present in schemainformation
+	if (fw->havemetadataSchemeInformation()) {
+		ebucoreMetadataSchemeInformation *info = fw->getmetadataSchemeInformation();
+		if (info->haveebucoreMetadataScheme()) {
+			e->setAttribute(xml::string("schema").c_str(), xml::string(info->getebucoreMetadataScheme()).c_str());
+		}
+	}
+
 	if (outputFashion == SERIALIZE_TO_FILE) {
 		progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to XML file at %s\n", metadataLocation);
 
 		// open a file output stream
-		std::ofstream out(metadataLocation);
-		ebuCoreMain (out, *ebuCoreMainElement, map);
-		out.close();
+		LocalFileFormatTarget f(metadataLocation);
+		SerializeXercesDocument(*xml, f);
 	} 
 	else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
 		progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing EBUCore metadata to output Xerces-C DOM Document");
 		
-		::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > xml = ebuCoreMain(*ebuCoreMainElement, map);
 		// pass the DOM document to output
 		*outputDocument = xml.get();
 		xml.release();
