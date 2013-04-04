@@ -23,6 +23,7 @@
 #include <iostream>
 #include <fstream>
 #include <memory>
+#include <time.h>
 
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>
@@ -182,6 +183,12 @@ void EBUCoreProcessor::ParseAndSerializeMetadata(	DMFramework *framework,
 
 	// map the EBU Core KLV framework to the XSD-derived counterpart
 	std::auto_ptr<ebuCoreMainType> ebuCoreMainElement( new ebuCoreMainType(main) );
+
+	time_t now;
+	::time(&now);
+	tm* gmt_now = gmtime(&now);
+	ebuCoreMainElement->dateLastModified( std::auto_ptr<ebuCoreMainType::dateLastModified_type>( 
+		new ebuCoreMainType::dateLastModified_type( gmt_now->tm_year + 1900, gmt_now->tm_mon + 1, gmt_now->tm_mday, 0, 0) ) );
 
 	if (fw->havemetadataSchemeInformation()) {
 		ebucoreMetadataSchemeInformation *info = fw->getmetadataSchemeInformation();
