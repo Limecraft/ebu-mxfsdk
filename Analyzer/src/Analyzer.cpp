@@ -515,6 +515,17 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 							mxf_get_fixed_item_length_utf16string(item->value, item->length, (uint16_t*)utf16Result);
 							itemElem->setTextContent(utf16Result);
 							delete utf16Result; // release, no longer needed
+						}
+						else if (itemDef->typeId == MXF_RGBALAYOUT_TYPE) {
+							mxfRGBALayout v;
+							mxf_get_rgba_layout(item->value, &v);
+
+							for (int c=0;c<8;c++) {
+								DOMElement *arrDomElem = PrepareElement(root, itemElem, s377mTypesNS, _X("RGBAComponent", tc));
+								PrepareElementWithContent(root, arrDomElem, s377mTypesNS, _X("Code", tc), _X(serialize_simple_int8<uint8_t>(v.components[c].code), tc));
+								PrepareElementWithContent(root, arrDomElem, s377mTypesNS, _X("Depth", tc), _X(serialize_simple_int8<uint8_t>(v.components[c].depth), tc));
+							}
+
 						} else if (itemType->category == MXF_ARRAY_TYPE_CAT) {
 							// this is any array type, loop through the entries
 							MXFArrayItemIterator arrIter;
