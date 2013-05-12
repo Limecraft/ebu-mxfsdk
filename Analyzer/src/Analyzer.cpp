@@ -685,7 +685,7 @@ void AnalyzeIndexTable(DOMElement* parent, DOMDocument* root, MXFFile *mxfFile, 
 	mxf_free_index_table_segment(&idx);
 }
 
-std::auto_ptr<HeaderMetadata> ReadHeaderMetadata(File* mxfFile, Partition* partition, DataModel* metadataModel, std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef> >& darkItems) {
+std::auto_ptr<HeaderMetadata> ReadHeaderMetadata(File* mxfFile, Partition* partition, DataModel* metadataModel, std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef> >& darkItems, uint64_t* metadata_start_position) {
 
 	mxfKey key;
 	uint8_t llen;
@@ -699,6 +699,8 @@ std::auto_ptr<HeaderMetadata> ReadHeaderMetadata(File* mxfFile, Partition* parti
 	mxfFile->readNextNonFillerKL(&key, &llen, &len);
 
 	uint64_t pos_start_metadata = mxfFile->tell() - mxfKey_extlen - llen;
+	// export metadata start position in this partition to whoever needs to now (e.g., for index offsets)
+	*metadata_start_position = pos_start_metadata;
 
 	Filter filter(mxfFile->getCFile(), darkSets, darkItems);
 	MXFReadFilter cfilter;
@@ -799,10 +801,11 @@ void AnalyzePartition(DOMElement *parent, DOMDocument *root, Partition *partitio
 
 	AnalyzePartitionPack(partElem, root, partition->getCPartition(), tc);
 
+	uint64_t partition_metadata_start_position = 0;
 	if (partition->getHeaderByteCount() > 0) {
 		DOMElement *metadataElem = PrepareElement(root, partElem, s377mMuxNS, _X("HeaderMetadata", tc));
 
-		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(mxfFile, partition, dataModel, darkSets, darkItems);
+		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(mxfFile, partition, dataModel, darkSets, darkItems, &partition_metadata_start_position);
 
 		AnalyzePrimerPack(metadataElem, root, headerMetadata->getCHeaderMetadata()->primerPack, tc);
 
@@ -817,7 +820,7 @@ void AnalyzePartition(DOMElement *parent, DOMDocument *root, Partition *partitio
 		DOMElement *indexElem = PrepareElement(root, partElem, s377mGroupsNS, _X("IndexTable", tc));
 
 		int64_t indexTableOffset=0, indexTableLength=0;
-		while (FindIndexTable(mxfFile->getCFile(), indexTableOffset + partition->getThisPartition() + partition->getHeaderByteCount(), &indexTableOffset, partition->getIndexByteCount() - indexTableOffset, &indexTableLength)) {
+		while (FindIndexTable(mxfFile->getCFile(), partition_metadata_start_position + partition->getHeaderByteCount(), &indexTableOffset, partition->getIndexByteCount() - indexTableOffset, &indexTableLength)) {
 			indexTableOffset += indexTableLength;
 			AnalyzeIndexTable(indexElem, root, mxfFile->getCFile(), indexTableLength, configuration.DeepIndexTableAnalysis, tc);
 		}
@@ -912,10 +915,11 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 		if (!metadata_partition)
 			throw BMXException("No MXF suitable MXF metadata found");
 
+		uint64_t metadata_start_position = 0;
 		std::vector<KLVPacketRef> darkSets;
 		std::map< mxfUUID, std::vector<KLVPacketRef> > darkItems;
 
-		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(&*mFile, metadata_partition, &*mDataModel, darkSets, darkItems);
+		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(&*mFile, metadata_partition, &*mDataModel, darkSets, darkItems, &metadata_start_position);
 
 		AnalyzeHeaderMetadata(doc->getDocumentElement(), doc, &*headerMetadata, 
 			mFile->getCFile(), darkSets, darkItems, configuration, st434dict, tc);
