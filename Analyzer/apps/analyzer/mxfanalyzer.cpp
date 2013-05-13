@@ -16,6 +16,7 @@
  */
  
 #include <Analyzer.h>
+#include <bmx/BMXException.h>
 
 #include <MXFCustomMetadata.h>
 #include <XercesUtils.h>
@@ -160,7 +161,17 @@ int main(int argc, char* argv[])
         filenames.push_back(argv[cmdln_index]);
     }
 
-	AnalyzeMXFFile(filenames[0], report_filename, cfg);
+	try {
+
+		AnalyzeMXFFile(filenames[0], report_filename, cfg);
+		
+	} catch (bmx::BMXException& bmx_ex) {
+		fprintf(stderr, "Error analyzing the given MXF file: %s\n", bmx_ex.what());
+	} catch (mxfpp::MXFException& mxf_ex) {
+		fprintf(stderr, "Error analyzing the given MXF file: %s\n", mxf_ex.getMessage().c_str());
+	} catch (...) {
+		fprintf(stderr, "Error analyzing the given MXF file! See errors above for more info.\n");
+	}
 	
 	return 0;
 }
