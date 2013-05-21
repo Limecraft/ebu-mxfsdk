@@ -164,6 +164,8 @@ Section -Post
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
+  
+  CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" \
     "DisplayName" "$(^Name)"

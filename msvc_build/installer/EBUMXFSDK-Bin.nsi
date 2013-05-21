@@ -135,7 +135,7 @@ Section "MXFSDK" SecMXFSDK
   CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\ebu2mxf.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\ebu2mxf.exe$\""
   CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\raw2bmx.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\raw2bmx.exe$\""
   CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\mxfanalyzer.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\mxfanalyzer.exe$\""
-  
+    
   ; Write bin directory to path
   ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin" 
   
@@ -148,6 +148,7 @@ Section -Post
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
+  CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" \
     "DisplayName" "$(^Name)"
