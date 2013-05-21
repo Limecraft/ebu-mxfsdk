@@ -1,6 +1,6 @@
 
 !define PRODUCT_NAME "EBU MXF SDK Binaries"
-!define VERSION "1.0.0a-6" ;@VERSION@
+!define VERSION "1.0.0a-7" ;@VERSION@
 !define PRODUCT_VERSION "1.0" ;@VERSION@
 !define PRODUCT_GROUP "EBU"
 !define PRODUCT_PUBLISHER "EBU Technical"
@@ -130,6 +130,11 @@ Section "MXFSDK" SecMXFSDK
   
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MXFSDK Documentation.lnk" "$INSTDIR\doc\EBU MXF SDK.pdf"
+
+  CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\mxf2ebu.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\mxf2ebu.exe$\""
+  CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\ebu2mxf.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\ebu2mxf.exe$\""
+  CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\raw2bmx.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\raw2bmx.exe$\""
+  CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\mxfanalyzer.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\mxfanalyzer.exe$\""
   
   ; Write bin directory to path
   ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin" 
