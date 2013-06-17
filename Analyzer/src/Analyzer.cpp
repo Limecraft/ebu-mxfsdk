@@ -207,7 +207,9 @@ const std::string serialize_uuid(mxfUUID* uuid) {
 const std::string serialize_ul(mxfUL* ul) {
 	std::stringstream s;
 	s << "urn:oid:1.3.52";
-	for (int b=4; b < 16 && ((uint8_t*)ul)[b] != 0; b++) {
+	int non0len = mxfKey_extlen -1;
+	for (; ((uint8_t*)ul)[non0len] == 0 && non0len >= 0; non0len--);
+	for (int b=4; b <= non0len; b++) {
 		s << "." << (int)((uint8_t*)ul)[b];
 	}
 
@@ -217,7 +219,9 @@ const std::string serialize_ul(mxfUL* ul) {
 const std::string serialize_key(mxfKey* key) {
 	std::stringstream s;
 	s << "urn:oid:1.3.52.2";
-	for (int b=4; b < 16 && ((uint8_t*)key)[b] != 0; b++) {
+	int non0len = mxfKey_extlen -1;
+	for (; ((uint8_t*)key)[non0len] == 0 && non0len >= 0; non0len--);
+	for (int b=4; b <= non0len; b++) {
 		s << "." << (int)((uint8_t*)key)[b];
 	}
 
