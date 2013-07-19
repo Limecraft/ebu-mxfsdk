@@ -38,7 +38,7 @@ dnl - library source changed -> increment REVISION
 dnl - interfaces added/removed/changed -> increment CURRENT, REVISION = 0
 dnl - interfaces added -> increment AGE
 dnl - interfaces removed -> AGE = 0
-EBUSDK_LIBVERSION="3:0:0"
+EBUSDK_LIBVERSION="4:0:0"
 AC_SUBST(EBUSDK_LIBVERSION)
 
 
@@ -126,7 +126,7 @@ LIBMXFPP_MAJORMINOR=${LIBMXF_MAJORMINOR}
 BMX_MAJORMINOR=0.1
 AC_SUBST(LIBMXF_MAJORMINOR)
 AC_SUBST(LIBMXFPP_MAJORMINOR)
-AC_SUBST(LIBBMX_MAJORMINOR)
+AC_SUBST(BMX_MAJORMINOR)
 
 PKG_CHECK_MODULES(LIBMXF, libMXF-${LIBMXF_MAJORMINOR} >= 1.0.3)
 AC_SUBST(LIBMXF_CFLAGS)
@@ -225,7 +225,7 @@ AC_SUBST(pkgconfigdir)
 
 dnl add libraries to pkg config "Libs:" for static-only builds
 if test x"$enable_shared" = xyes; then
-	PC_ADD_LIBS=
+	PC_ADD_LIBS="-lebumxfanalyzer"
 	PC_ADD_PRIVATE_LIBS="${UUIDLIB} ${LIBURIPARSER_LIBS}"
 else
 	PC_ADD_LIBS="${UUIDLIB} ${LIBURIPARSER_LIBS}"
