@@ -242,8 +242,15 @@ dnl-----------------------------------------------------------------------------
 AC_CONFIG_FILES([
 	Makefile
 	CustomMetadataSupport/Makefile
+	CustomMetadataSupport/include/Makefile
 	CustomMetadataSupport/src/Makefile
 	EBUCoreProcessor/Makefile
+	EBUCoreProcessor/include/Makefile
+	EBUCoreProcessor/include/EBUCore_1_4/Makefile
+	EBUCoreProcessor/include/EBUCore_1_4/metadata/Makefile
+	EBUCoreProcessor/include/EBUCore_1_4/metadata/base/Makefile
+	EBUCoreProcessor/include/EBUCore_1_4/xsd/Makefile
+	EBUCoreProcessor/include/xsd/Makefile
 	EBUCoreProcessor/src/Makefile
 	EBUCoreProcessor/apps/Makefile
 	EBUCoreProcessor/apps/raw2bmx/Makefile
@@ -254,6 +261,7 @@ AC_CONFIG_FILES([
 	EBUCoreProcessor/msvc_build/Makefile
 	EBUCoreProcessor/msvc_build/vs10/Makefile
 	Analyzer/Makefile
+	Analyzer/include/Makefile
 	Analyzer/src/Makefile
 	Analyzer/apps/Makefile
 	Analyzer/apps/analyzer/Makefile
