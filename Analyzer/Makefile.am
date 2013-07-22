@@ -1,1 +1,1 @@
-SUBDIRS = src apps
+SUBDIRS = include src apps

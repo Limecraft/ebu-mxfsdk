@@ -76,7 +76,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>AS11_EXTENSIONS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.;..\..\include;..\..\..\..\apps;..\..\..\ebu-libMXF;..\..\..\ebu-libMXFpp;..\..\..\ebu-bmx\include;..\..\..\CustomMetadataSupport\include;..\..\..\EBUCoreProcessor\include;..\..\..\uriparser\include;..\..\..\include;..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>

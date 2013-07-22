@@ -1,3 +1,3 @@
-SUBDIRS = src apps tools
+SUBDIRS = include src apps tools
 
 
