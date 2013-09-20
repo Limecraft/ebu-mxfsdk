@@ -275,7 +275,7 @@ const std::string serialize_dark_value(MXFFile *file, int64_t offset, int64_t le
 #if defined(_WIN32)
 		_snprintf(t, 2, "%02X", buf[i]);
 #else
-		snprintf(t, 2, "%02X", buf[i]);
+		snprintf(t, 3, "%02X", buf[i]);
 #endif
 		s << t;
 	}
