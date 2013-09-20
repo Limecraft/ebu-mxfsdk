@@ -245,13 +245,23 @@ const std::string serialize_key_as_hex(mxfKey* key) {
 }
 
 const std::string serialize_umid(mxfUMID *umid) {
-	std::stringstream s;
-	s << "0x" << std::hex << std::uppercase;
-	for (int b=0; b < 32; b++) {
-		s << (int)((uint8_t*)umid)[b];
-	}
-
-	return s.str();
+#define UMID_STRING_LEN	67
+	char out[UMID_STRING_LEN];
+#if defined(_WIN32)
+	_snprintf(out, UMID_STRING_LEN,
+#else
+	snprintf(out, UMID_STRING_LEN,
+#endif
+                 "0x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+                 umid->octet0, umid->octet1, umid->octet2, umid->octet3,
+                 umid->octet4, umid->octet5, umid->octet6, umid->octet7,
+                 umid->octet8, umid->octet9, umid->octet10, umid->octet11,
+                 umid->octet12, umid->octet13, umid->octet14, umid->octet15,
+				 umid->octet16, umid->octet17, umid->octet18, umid->octet19,
+				 umid->octet20, umid->octet21, umid->octet22, umid->octet23, 
+				 umid->octet24, umid->octet25, umid->octet26, umid->octet27,
+				 umid->octet28, umid->octet29, umid->octet30, umid->octet31);
+	return std::string(out);
 }
 
 const std::string serialize_dark_value(MXFFile *file, int64_t offset, int64_t length) {
