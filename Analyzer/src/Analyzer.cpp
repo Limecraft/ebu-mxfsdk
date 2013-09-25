@@ -365,6 +365,8 @@ void serializeMXFValue(unsigned int type, uint8_t *value, DOMElement* elem, DOMD
 		GET_AND_SERIALIZE(int64_t, value, mxf_get_int64, serialize_simple<int64_t>, elem, tc);
 	} else if (type == MXF_BOOLEAN_TYPE) {
 		GET_AND_SERIALIZE(mxfBoolean, value, mxf_get_boolean, serialize_boolean, elem, tc);
+	} else if (type == MXF_CODED_CONTENT_TYPE_TYPE) {
+		GET_AND_SERIALIZE(uint8_t, value, mxf_get_uint8, serialize_simple_int8<uint8_t>, elem, tc);
 	} else if (type == MXF_RATIONAL_TYPE) {
 		mxfRational v;
 		mxf_get_rational(value, &v); 
