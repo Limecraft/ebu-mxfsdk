@@ -1,187 +1,42 @@
-XMLCh key_ns_st434_6[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','3','7','7','M','/','2','0','0','4','\0'};
-XMLCh key_ns_st434_2[] = {'h','t','t','p',':',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','c','l','a','s','s','1','3','/','e','b','u','c','o','r','e','/','2','0','1','2','\0'};
-XMLCh key_ns_st434_3[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','2','0','3','7','/','2','0','0','9','\0'};
-XMLCh key_ns_st434_7[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','3','8','0','M','/','2','0','0','4','\0'};
-XMLCh key_ns_st434_8[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','3','8','1','M','/','2','0','0','5','\0'};
-XMLCh key_ns_st434_9[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','3','8','2','M','/','2','0','0','7','\0'};
-XMLCh key_ns_st434_10[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','3','8','5','M','/','2','0','0','4','\0'};
-XMLCh key_ns_st434_11[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','4','2','2','M','/','2','0','0','6','\0'};
-XMLCh key_ns_st434_12[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','4','2','9','-','6','/','2','0','0','6','\0'};
-XMLCh key_ns_st434_13[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','4','3','6','M','/','2','0','0','6','\0'};
-XMLCh key_ns_st434_14[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','T','0','3','8','1','-','2','/','2','0','1','1','\0'};
-XMLCh key_ns_st434_15[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','T','2','0','5','5','/','2','0','1','2','\0'};
-XMLCh key_ns_st434_16[] = {'h','t','t','p',':',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','4','/','p','r','o','p','e','r','t','i','e','s','/','c','l','a','s','s','1','3','/','e','b','u','c','o','r','e','/','2','0','1','2','\0'};
-XMLCh key_ns_st434_17[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','p','r','o','p','e','r','t','i','e','s','/','S','3','3','5','M','\0'};
+XMLCh key_ns_st434_5[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','3','7','7','M','/','2','0','0','4','\0'};
+XMLCh key_ns_st434_2[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','2','0','3','7','/','2','0','0','9','\0'};
+XMLCh key_ns_st434_6[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','3','8','0','M','/','2','0','0','4','\0'};
+XMLCh key_ns_st434_7[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','3','8','1','M','/','2','0','0','5','\0'};
+XMLCh key_ns_st434_8[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','3','8','2','M','/','2','0','0','7','\0'};
+XMLCh key_ns_st434_9[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','3','8','5','M','/','2','0','0','4','\0'};
+XMLCh key_ns_st434_10[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','4','2','2','M','/','2','0','0','6','\0'};
+XMLCh key_ns_st434_11[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','4','2','9','-','6','/','2','0','0','6','\0'};
+XMLCh key_ns_st434_12[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','4','3','6','M','/','2','0','0','6','\0'};
+XMLCh key_ns_st434_13[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','T','0','3','8','1','-','2','/','2','0','1','1','\0'};
+XMLCh key_ns_st434_14[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','T','2','0','5','5','/','2','0','1','2','\0'};
+XMLCh key_ns_st434_15[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','p','r','o','p','e','r','t','i','e','s','/','S','3','3','5','M','\0'};
 // No UL found for element: ExtensionProperties
 // No UL found for element: DarkProperty
 // No UL found for element: DarkGroup_REF
 // No UL found for element: UnparsedDarkGroup
 // No UL found for element: ParsedDarkSet
-// No UL found for element: ebucoreMainFramework
-// No UL found for element: ebucoreMainFramework_REF
-// No UL found for element: ebucoreMetadataSchemeInformation
-// No UL found for element: ebucoreMetadataSchemeInformation_REF
-// No UL found for element: coreMetadata
-// No UL found for element: coreMetadata_REF
-// No UL found for element: identifier
-// No UL found for element: identifier_REF
-// No UL found for element: title
-// No UL found for element: title_REF
-// No UL found for element: alternativeTitle
-// No UL found for element: alternativeTitle_REF
-// No UL found for element: subject
-// No UL found for element: subject_REF
-// No UL found for element: description
-// No UL found for element: description_REF
-// No UL found for element: date
-// No UL found for element: date_REF
-// No UL found for element: dateType
-// No UL found for element: dateType_REF
-// No UL found for element: type
-// No UL found for element: type_REF
-// No UL found for element: objectType
-// No UL found for element: objectType_REF
-// No UL found for element: genre
-// No UL found for element: genre_REF
-// No UL found for element: targetAudience
-// No UL found for element: targetAudience_REF
-// No UL found for element: language
-// No UL found for element: language_REF
-// No UL found for element: coverage
-// No UL found for element: coverage_REF
-// No UL found for element: spatial
-// No UL found for element: spatial_REF
-// No UL found for element: location
-// No UL found for element: location_REF
-// No UL found for element: coordinates
-// No UL found for element: coordinates_REF
-// No UL found for element: temporal
-// No UL found for element: temporal_REF
-// No UL found for element: periodOfTime
-// No UL found for element: periodOfTime_REF
-// No UL found for element: rights
-// No UL found for element: rights_REF
-// No UL found for element: version
-// No UL found for element: version_REF
-// No UL found for element: rating
-// No UL found for element: rating_REF
-// No UL found for element: publicationHistoryEvent
-// No UL found for element: publicationHistoryEvent_REF
-// No UL found for element: entity
-// No UL found for element: entity_REF
-// No UL found for element: contact
-// No UL found for element: contact_REF
-// No UL found for element: organization
-// No UL found for element: organization_REF
-// No UL found for element: department
-// No UL found for element: department_REF
-// No UL found for element: details
-// No UL found for element: details_REF
-// No UL found for element: address
-// No UL found for element: address_REF
-// No UL found for element: customRelation
-// No UL found for element: customRelation_REF
-// No UL found for element: basicRelation
-// No UL found for element: basicRelation_REF
-// No UL found for element: typeGroup
-// No UL found for element: typeGroup_REF
-// No UL found for element: formatGroup
-// No UL found for element: formatGroup_REF
-// No UL found for element: statusGroup
-// No UL found for element: statusGroup_REF
-// No UL found for element: languagePurpose
-// No UL found for element: languagePurpose_REF
-// No UL found for element: role
-// No UL found for element: role_REF
-// No UL found for element: textualAnnotation
-// No UL found for element: textualAnnotation_REF
-// No UL found for element: format
-// No UL found for element: format_REF
-// No UL found for element: mimeType
-// No UL found for element: mimeType_REF
-// No UL found for element: videoFormat
-// No UL found for element: videoFormat_REF
-// No UL found for element: imageFormat
-// No UL found for element: imageFormat_REF
-// No UL found for element: audioFormat
-// No UL found for element: audioFormat_REF
-// No UL found for element: track
-// No UL found for element: track_REF
-// No UL found for element: dataFormat
-// No UL found for element: dataFormat_REF
-// No UL found for element: captioning
-// No UL found for element: captioning_REF
-// No UL found for element: ancillaryData
-// No UL found for element: ancillaryData_REF
-// No UL found for element: signingFormat
-// No UL found for element: signingFormat_REF
-// No UL found for element: technicalAttributeString
-// No UL found for element: technicalAttributeString_REF
-// No UL found for element: technicalAttributeInt8
-// No UL found for element: technicalAttributeInt8_REF
-// No UL found for element: technicalAttributeInt16
-// No UL found for element: technicalAttributeInt16_REF
-// No UL found for element: technicalAttributeInt32
-// No UL found for element: technicalAttributeInt32_REF
-// No UL found for element: technicalAttributeInt64
-// No UL found for element: technicalAttributeInt64_REF
-// No UL found for element: technicalAttributeUInt8
-// No UL found for element: technicalAttributeUInt8_REF
-// No UL found for element: technicalAttributeUInt16
-// No UL found for element: technicalAttributeUInt16_REF
-// No UL found for element: technicalAttributeUInt32
-// No UL found for element: technicalAttributeUInt32_REF
-// No UL found for element: technicalAttributeUInt64
-// No UL found for element: technicalAttributeUInt64_REF
-// No UL found for element: technicalAttributeFloat
-// No UL found for element: technicalAttributeFloat_REF
-// No UL found for element: technicalAttributeRational
-// No UL found for element: technicalAttributeRational_REF
-// No UL found for element: technicalAttributeAnyURI
-// No UL found for element: technicalAttributeAnyURI_REF
-// No UL found for element: technicalAttributeBoolean
-// No UL found for element: technicalAttributeBoolean_REF
-// No UL found for element: dimension
-// No UL found for element: dimension_REF
-// No UL found for element: encoding
-// No UL found for element: encoding_REF
-// No UL found for element: packageInfo
-// No UL found for element: packageInfo_REF
-// No UL found for element: containerFormat
-// No UL found for element: containerFormat_REF
-// No UL found for element: medium
-// No UL found for element: medium_REF
-// No UL found for element: codec
-// No UL found for element: codec_REF
-// No UL found for element: part
-// No UL found for element: part_REF
-// No UL found for element: ebucorePartFramework
-// No UL found for element: ebucorePartFramework_REF
-// No UL found for element: partMetadata
-// No UL found for element: partMetadata_REF
-// No UL found for element: ebucoreObject
 // No UL found for element: VC1PictureEssenceDescriptor_REF
 const mxfKey key_060E2B34025301010D01010101015F00 = {0x06,0x0E,0x2B,0x34,0x02,0x53,0x01,0x01,0x0D,0x01,0x01,0x01,0x01,0x01,0x5F,0x00};
 const XMLCh key_060E2B34025301010D01010101015F00_name[] = {'V','C','1','P','i','c','t','u','r','e','E','s','s','e','n','c','e','D','e','s','c','r','i','p','t','o','r','\0'};
-const void* arr_st434_elems_key_ns_st434_3_0[][2] = {
+const void* arr_st434_elems_key_ns_st434_2_0[][2] = {
 { &key_060E2B34025301010D01010101015F00, key_060E2B34025301010D01010101015F00_name }
 };
 for (int i=0; i<1;i++) {
 	st434dict.insert(std::pair<const mxfKey, st434info*>(
-	*(const mxfKey*)arr_st434_elems_key_ns_st434_3_0[i][0], 
-	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_3_0[i][1], key_ns_st434_3)
+	*(const mxfKey*)arr_st434_elems_key_ns_st434_2_0[i][0], 
+	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_2_0[i][1], key_ns_st434_2)
 ));
 }
 const mxfKey key_060E2B34025301010D01020101100100 = {0x06,0x0E,0x2B,0x34,0x02,0x53,0x01,0x01,0x0D,0x01,0x02,0x01,0x01,0x10,0x01,0x00};
 const XMLCh key_060E2B34025301010D01020101100100_name[] = {'I','n','d','e','x','T','a','b','l','e','S','e','g','m','e','n','t','\0'};
 // No UL found for element: IndexTable
-const void* arr_st434_elems_key_ns_st434_6_1[][2] = {
+const void* arr_st434_elems_key_ns_st434_5_1[][2] = {
 { &key_060E2B34025301010D01020101100100, key_060E2B34025301010D01020101100100_name }
 };
 for (int i=0; i<1;i++) {
 	st434dict.insert(std::pair<const mxfKey, st434info*>(
-	*(const mxfKey*)arr_st434_elems_key_ns_st434_6_1[i][0], 
-	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_6_1[i][1], key_ns_st434_6)
+	*(const mxfKey*)arr_st434_elems_key_ns_st434_5_1[i][0], 
+	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_5_1[i][1], key_ns_st434_5)
 ));
 }
 // No UL found for element: AbstractSet
@@ -281,7 +136,7 @@ const XMLCh key_060E2B34025301010D01010101016100_name[] = {'A','p','p','l','i','
 // No UL found for element: ApplicationReferencedObject_REF
 const mxfKey key_060E2B34025301010D01010101016200 = {0x06,0x0E,0x2B,0x34,0x02,0x53,0x01,0x01,0x0D,0x01,0x01,0x01,0x01,0x01,0x62,0x00};
 const XMLCh key_060E2B34025301010D01010101016200_name[] = {'A','p','p','l','i','c','a','t','i','o','n','R','e','f','e','r','e','n','c','e','d','O','b','j','e','c','t','\0'};
-const void* arr_st434_elems_key_ns_st434_6_2[][2] = {
+const void* arr_st434_elems_key_ns_st434_5_2[][2] = {
 { &key_060E2B34027F01010D01010101016600, key_060E2B34027F01010D01010101016600_name }, 
 { &key_060E2B34027F01010D01010101012500, key_060E2B34027F01010D01010101012500_name }, 
 { &key_060E2B34025301010D01010101012F00, key_060E2B34025301010D01010101012F00_name }, 
@@ -313,8 +168,8 @@ const void* arr_st434_elems_key_ns_st434_6_2[][2] = {
 };
 for (int i=0; i<28;i++) {
 	st434dict.insert(std::pair<const mxfKey, st434info*>(
-	*(const mxfKey*)arr_st434_elems_key_ns_st434_6_2[i][0], 
-	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_6_2[i][1], key_ns_st434_6)
+	*(const mxfKey*)arr_st434_elems_key_ns_st434_5_2[i][0], 
+	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_5_2[i][1], key_ns_st434_5)
 ));
 }
 // No UL found for element: PartitionPack
@@ -422,7 +277,7 @@ const XMLCh key_060E2B34025301010D01040101190100_name[] = {'C','o','n','t','a','
 // No UL found for element: CueWords_REF
 const mxfKey key_060E2B34025301010D01040101170800 = {0x06,0x0E,0x2B,0x34,0x02,0x53,0x01,0x01,0x0D,0x01,0x04,0x01,0x01,0x17,0x08,0x00};
 const XMLCh key_060E2B34025301010D01040101170800_name[] = {'C','u','e','W','o','r','d','s','\0'};
-const void* arr_st434_elems_key_ns_st434_7_3[][2] = {
+const void* arr_st434_elems_key_ns_st434_6_3[][2] = {
 { &key_060E2B34025301010D01040101010100, key_060E2B34025301010D01040101010100_name }, 
 { &key_060E2B34025301010D01040101010200, key_060E2B34025301010D01040101010200_name }, 
 { &key_060E2B34025301010D01040101010300, key_060E2B34025301010D01040101010300_name }, 
@@ -458,20 +313,20 @@ const void* arr_st434_elems_key_ns_st434_7_3[][2] = {
 };
 for (int i=0; i<32;i++) {
 	st434dict.insert(std::pair<const mxfKey, st434info*>(
-	*(const mxfKey*)arr_st434_elems_key_ns_st434_7_3[i][0], 
-	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_7_3[i][1], key_ns_st434_7)
+	*(const mxfKey*)arr_st434_elems_key_ns_st434_6_3[i][0], 
+	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_6_3[i][1], key_ns_st434_6)
 ));
 }
 // No UL found for element: MPEGVideoDescriptor_REF
 const mxfKey key_060E2B34025301010D01010101015100 = {0x06,0x0E,0x2B,0x34,0x02,0x53,0x01,0x01,0x0D,0x01,0x01,0x01,0x01,0x01,0x51,0x00};
 const XMLCh key_060E2B34025301010D01010101015100_name[] = {'M','P','E','G','V','i','d','e','o','D','e','s','c','r','i','p','t','o','r','\0'};
-const void* arr_st434_elems_key_ns_st434_8_4[][2] = {
+const void* arr_st434_elems_key_ns_st434_7_4[][2] = {
 { &key_060E2B34025301010D01010101015100, key_060E2B34025301010D01010101015100_name }
 };
 for (int i=0; i<1;i++) {
 	st434dict.insert(std::pair<const mxfKey, st434info*>(
-	*(const mxfKey*)arr_st434_elems_key_ns_st434_8_4[i][0], 
-	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_8_4[i][1], key_ns_st434_8)
+	*(const mxfKey*)arr_st434_elems_key_ns_st434_7_4[i][0], 
+	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_7_4[i][1], key_ns_st434_7)
 ));
 }
 // No UL found for element: WAVEPCMDescriptor_REF
@@ -486,7 +341,7 @@ const XMLCh key_060E2B34025301010D01010101014F00_name[] = {'R','I','F','F','C','
 // No UL found for element: AES3PCMDescriptor_REF
 const mxfKey key_060E2B34025301010D01010101014700 = {0x06,0x0E,0x2B,0x34,0x02,0x53,0x01,0x01,0x0D,0x01,0x01,0x01,0x01,0x01,0x47,0x00};
 const XMLCh key_060E2B34025301010D01010101014700_name[] = {'A','E','S','3','P','C','M','D','e','s','c','r','i','p','t','o','r','\0'};
-const void* arr_st434_elems_key_ns_st434_9_5[][2] = {
+const void* arr_st434_elems_key_ns_st434_8_5[][2] = {
 { &key_060E2B34025301010D01010101014800, key_060E2B34025301010D01010101014800_name }, 
 { &key_060E2B34025301010D01010101015000, key_060E2B34025301010D01010101015000_name }, 
 { &key_060E2B34025301010D01010101014F00, key_060E2B34025301010D01010101014F00_name }, 
@@ -494,32 +349,32 @@ const void* arr_st434_elems_key_ns_st434_9_5[][2] = {
 };
 for (int i=0; i<4;i++) {
 	st434dict.insert(std::pair<const mxfKey, st434info*>(
-	*(const mxfKey*)arr_st434_elems_key_ns_st434_9_5[i][0], 
-	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_9_5[i][1], key_ns_st434_9)
+	*(const mxfKey*)arr_st434_elems_key_ns_st434_8_5[i][0], 
+	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_8_5[i][1], key_ns_st434_8)
 ));
 }
 // No UL found for element: DateTimeDescriptor_REF
 const mxfKey key_060E2B34025301010D01010101014600 = {0x06,0x0E,0x2B,0x34,0x02,0x53,0x01,0x01,0x0D,0x01,0x01,0x01,0x01,0x01,0x46,0x00};
 const XMLCh key_060E2B34025301010D01010101014600_name[] = {'D','a','t','e','T','i','m','e','D','e','s','c','r','i','p','t','o','r','\0'};
-const void* arr_st434_elems_key_ns_st434_10_6[][2] = {
+const void* arr_st434_elems_key_ns_st434_9_6[][2] = {
 { &key_060E2B34025301010D01010101014600, key_060E2B34025301010D01010101014600_name }
 };
 for (int i=0; i<1;i++) {
 	st434dict.insert(std::pair<const mxfKey, st434info*>(
-	*(const mxfKey*)arr_st434_elems_key_ns_st434_10_6[i][0], 
-	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_10_6[i][1], key_ns_st434_10)
+	*(const mxfKey*)arr_st434_elems_key_ns_st434_9_6[i][0], 
+	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_9_6[i][1], key_ns_st434_9)
 ));
 }
 // No UL found for element: JPEG2000SubDescriptor_REF
 const mxfKey key_060E2B34025301010D01010101015A00 = {0x06,0x0E,0x2B,0x34,0x02,0x53,0x01,0x01,0x0D,0x01,0x01,0x01,0x01,0x01,0x5A,0x00};
 const XMLCh key_060E2B34025301010D01010101015A00_name[] = {'J','P','E','G','2','0','0','0','S','u','b','D','e','s','c','r','i','p','t','o','r','\0'};
-const void* arr_st434_elems_key_ns_st434_11_7[][2] = {
+const void* arr_st434_elems_key_ns_st434_10_7[][2] = {
 { &key_060E2B34025301010D01010101015A00, key_060E2B34025301010D01010101015A00_name }
 };
 for (int i=0; i<1;i++) {
 	st434dict.insert(std::pair<const mxfKey, st434info*>(
-	*(const mxfKey*)arr_st434_elems_key_ns_st434_11_7[i][0], 
-	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_11_7[i][1], key_ns_st434_11)
+	*(const mxfKey*)arr_st434_elems_key_ns_st434_10_7[i][0], 
+	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_10_7[i][1], key_ns_st434_10)
 ));
 }
 // No UL found for element: CryptographicFramework_REF
@@ -528,14 +383,14 @@ const XMLCh key_060E2B34025301010D01040102010000_name[] = {'C','r','y','p','t','
 // No UL found for element: CryptographicContext_REF
 const mxfKey key_060E2B34025301010D01040102020000 = {0x06,0x0E,0x2B,0x34,0x02,0x53,0x01,0x01,0x0D,0x01,0x04,0x01,0x02,0x02,0x00,0x00};
 const XMLCh key_060E2B34025301010D01040102020000_name[] = {'C','r','y','p','t','o','g','r','a','p','h','i','c','C','o','n','t','e','x','t','\0'};
-const void* arr_st434_elems_key_ns_st434_12_8[][2] = {
+const void* arr_st434_elems_key_ns_st434_11_8[][2] = {
 { &key_060E2B34025301010D01040102010000, key_060E2B34025301010D01040102010000_name }, 
 { &key_060E2B34025301010D01040102020000, key_060E2B34025301010D01040102020000_name }
 };
 for (int i=0; i<2;i++) {
 	st434dict.insert(std::pair<const mxfKey, st434info*>(
-	*(const mxfKey*)arr_st434_elems_key_ns_st434_12_8[i][0], 
-	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_12_8[i][1], key_ns_st434_12)
+	*(const mxfKey*)arr_st434_elems_key_ns_st434_11_8[i][0], 
+	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_11_8[i][1], key_ns_st434_11)
 ));
 }
 // No UL found for element: ANCPacketsDescriptor_REF
@@ -544,502 +399,18 @@ const XMLCh key_060E2B34025301010D01010101015C00_name[] = {'A','N','C','P','a','
 // No UL found for element: VBIDataDescriptor_REF
 const mxfKey key_060E2B34025301010D01010101015B00 = {0x06,0x0E,0x2B,0x34,0x02,0x53,0x01,0x01,0x0D,0x01,0x01,0x01,0x01,0x01,0x5B,0x00};
 const XMLCh key_060E2B34025301010D01010101015B00_name[] = {'V','B','I','D','a','t','a','D','e','s','c','r','i','p','t','o','r','\0'};
-const void* arr_st434_elems_key_ns_st434_13_9[][2] = {
+const void* arr_st434_elems_key_ns_st434_12_9[][2] = {
 { &key_060E2B34025301010D01010101015C00, key_060E2B34025301010D01010101015C00_name }, 
 { &key_060E2B34025301010D01010101015B00, key_060E2B34025301010D01010101015B00_name }
 };
 for (int i=0; i<2;i++) {
 	st434dict.insert(std::pair<const mxfKey, st434info*>(
-	*(const mxfKey*)arr_st434_elems_key_ns_st434_13_9[i][0], 
-	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_13_9[i][1], key_ns_st434_13)
+	*(const mxfKey*)arr_st434_elems_key_ns_st434_12_9[i][0], 
+	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_12_9[i][1], key_ns_st434_12)
 ));
 }
 // No UL found for element: MPEGVideoDescriptor_REF
 // Skipped duplicate: MPEGVideoDescriptor
-// No UL found for element: documentLocator
-// No UL found for element: documentId
-// No UL found for element: coreMetadataObject
-// No UL found for element: metadataSchemaInformationObject
-// No UL found for element: ebucoreMetadataScheme
-// No UL found for element: ebucoreMetadataSchemeVersion
-// No UL found for element: ebucoreFrameworktextLanguage
-// No UL found for element: ebucoreMetadataServerLocator
-// No UL found for element: ebucoreMetadataProviderEntityObject
-// No UL found for element: identifierObjects
-// No UL found for element: titleObjects
-// No UL found for element: alternativeTitleObjects
-// No UL found for element: creatorEntityObjects
-// No UL found for element: subjectObjects
-// No UL found for element: descriptionObjects
-// No UL found for element: publisherEntityObjects
-// No UL found for element: contributorEntityObjects
-// No UL found for element: dateObjects
-// No UL found for element: typeObjects
-// No UL found for element: languageObjects
-// No UL found for element: coverageObjects
-// No UL found for element: rightObjects
-// No UL found for element: ratingObjects
-// No UL found for element: versionObject
-// No UL found for element: publicationHistoryEventObjects
-// No UL found for element: customRelationObjects
-// No UL found for element: basicRelationObjects
-// No UL found for element: formatObjects
-// No UL found for element: partObjects
-// No UL found for element: identifierValue
-// No UL found for element: identifierNote
-// No UL found for element: identifierTypeGroupObject
-// No UL found for element: identifierFormatGroupObject
-// No UL found for element: identifierAttributorEntityObject
-// No UL found for element: titleValue
-// No UL found for element: titleLanguage
-// No UL found for element: titleAttributionDate
-// No UL found for element: titleNote
-// No UL found for element: alternativeTitleValue
-// No UL found for element: alternativeTitleLanguage
-// No UL found for element: alternativeTitleAttributionDate
-// No UL found for element: alternativeTitleNote
-// No UL found for element: alternativeTitleTypeGroupObject
-// No UL found for element: alternativeTitleStatusGroupObject
-// No UL found for element: subjectValue
-// No UL found for element: subjectLanguage
-// No UL found for element: subjectCode
-// No UL found for element: subjectDefinition
-// No UL found for element: subjectNote
-// No UL found for element: subjectTypeGroupObject
-// No UL found for element: subjectAttributorEntityObject
-// No UL found for element: descriptionValue
-// No UL found for element: descriptionLanguage
-// No UL found for element: descriptionNote
-// No UL found for element: descriptionTypeGroupObject
-// No UL found for element: dateCreated
-// No UL found for element: yearCreated
-// No UL found for element: dateIssued
-// No UL found for element: yearIssued
-// No UL found for element: dateModified
-// No UL found for element: yearModified
-// No UL found for element: dateDigitized
-// No UL found for element: yearDigitized
-// No UL found for element: dateNote
-// No UL found for element: alternativeDate
-// No UL found for element: dateValue
-// No UL found for element: textualDate
-// No UL found for element: dateTypeGroupObject
-// No UL found for element: typeNote
-// No UL found for element: typeValueObjects
-// No UL found for element: objectTypeObjects
-// No UL found for element: genreObjects
-// No UL found for element: targetAudienceObjects
-// No UL found for element: objectTypeGroupObject
-// No UL found for element: genreTypeGroupObject
-// No UL found for element: targetAudienceTypeGroupObject
-// No UL found for element: languageCode
-// No UL found for element: languageLanguage
-// No UL found for element: languageNote
-// No UL found for element: languagePurposeObject
-// No UL found for element: coverageValueObject
-// No UL found for element: spatialObject
-// No UL found for element: temporalObject
-// No UL found for element: spatialDefinitionNote
-// No UL found for element: locationObjects
-// No UL found for element: coordinateReferenceObject
-// No UL found for element: locationID
-// No UL found for element: locationName
-// No UL found for element: locationCode
-// No UL found for element: locationTypeGroupObject
-// No UL found for element: coordinateObjectReference
-// No UL found for element: posX
-// No UL found for element: posY
-// No UL found for element: coordinatesTypeGroupObject
-// No UL found for element: temporalDefinitionNote
-// No UL found for element: periodOfTimeObjects
-// No UL found for element: temporalTypeGroupObject
-// No UL found for element: periodID
-// No UL found for element: periodName
-// No UL found for element: periodStartYear
-// No UL found for element: periodStartDate
-// No UL found for element: periodStartTime
-// No UL found for element: periodEndYear
-// No UL found for element: periodEndDate
-// No UL found for element: periodEndTime
-// No UL found for element: rightsID
-// No UL found for element: rightsValue
-// No UL found for element: rightsLanguage
-// No UL found for element: rightsLink
-// No UL found for element: rightsClearanceFlag
-// No UL found for element: exploitationIssuesObject
-// No UL found for element: rightsCoverageObjects
-// No UL found for element: rightsHolderEntityObjects
-// No UL found for element: rightsContactObjects
-// No UL found for element: rightsTypeGroupObject
-// No UL found for element: rightsAttributedIDObjects
-// No UL found for element: rightsFormatReferenceObjects
-// No UL found for element: versionValue
-// No UL found for element: versionLanguage
-// No UL found for element: ratingValue
-// No UL found for element: ratingScaleMinValue
-// No UL found for element: ratingScaleMaxValue
-// No UL found for element: ratingLanguage
-// No UL found for element: ratingTypeGroupObject
-// No UL found for element: ratingFormatGroupObject
-// No UL found for element: ratingProviderEntityObject
-// No UL found for element: firstPublicationFlag
-// No UL found for element: publicationDate
-// No UL found for element: publicationTime
-// No UL found for element: publicationService
-// No UL found for element: publicationMedium
-// No UL found for element: publicationChannel
-// No UL found for element: publicationFormatReferenceObject
-// No UL found for element: entityID
-// No UL found for element: entityContactObject
-// No UL found for element: entityOrganizationObject
-// No UL found for element: entityRoleObject
-// No UL found for element: contactID
-// No UL found for element: contactName
-// No UL found for element: familiyName
-// No UL found for element: givenName
-// No UL found for element: otherGivenName
-// No UL found for element: salutation
-// No UL found for element: suffix
-// No UL found for element: occupation
-// No UL found for element: username
-// No UL found for element: contactTypeGroupObject
-// No UL found for element: contactDetailsObjects
-// No UL found for element: contactRelatedContactObjects
-// No UL found for element: stageNameObjects
-// No UL found for element: organizationID
-// No UL found for element: organizationName
-// No UL found for element: organizationCode
-// No UL found for element: organizationDepartmentObject
-// No UL found for element: organizationTypeGroupObject
-// No UL found for element: organizationDetailsObjects
-// No UL found for element: organizationRelatedContactObjects
-// No UL found for element: departmentID
-// No UL found for element: departmentName
-// No UL found for element: webAddress
-// No UL found for element: telephoneNumber
-// No UL found for element: mobiltelephoneNumber
-// No UL found for element: detailsTypeGroupObject
-// No UL found for element: addressObjects
-// No UL found for element: emailAddressObjects
-// No UL found for element: townCity
-// No UL found for element: countyState
-// No UL found for element: deliveryCode
-// No UL found for element: countryName
-// No UL found for element: countryCode
-// No UL found for element: addressLineObjects
-// No UL found for element: relationByName
-// No UL found for element: relationLink
-// No UL found for element: runningOrderNumber
-// No UL found for element: totalNumberOfGroupMembers
-// No UL found for element: orderedGroupFlag
-// No UL found for element: customRelationTypeGroupObject
-// No UL found for element: customRelationIdentifierObject
-// No UL found for element: isVersionOf
-// No UL found for element: hasVersion
-// No UL found for element: isReplacedBy
-// No UL found for element: replaces
-// No UL found for element: isRequiredBy
-// No UL found for element: requires
-// No UL found for element: isPartOf
-// No UL found for element: hasPart
-// No UL found for element: isReferencedBy
-// No UL found for element: references
-// No UL found for element: isFormatOf
-// No UL found for element: hasFormat
-// No UL found for element: isEpisodeOf
-// No UL found for element: isMemberOf
-// No UL found for element: typeGroupThesaurus
-// No UL found for element: typeGroupLabel
-// No UL found for element: typeGroupLink
-// No UL found for element: typeGroupUL
-// No UL found for element: typeGroupDefinition
-// No UL found for element: typeGroupLanguage
-// No UL found for element: formatGroupThesaurus
-// No UL found for element: formatGroupLabel
-// No UL found for element: formatGroupLink
-// No UL found for element: formatGroupUL
-// No UL found for element: formatGroupDefinition
-// No UL found for element: formatGroupLanguage
-// No UL found for element: statusGroupThesaurus
-// No UL found for element: statusGroupLabel
-// No UL found for element: statusGroupLink
-// No UL found for element: statusGroupUL
-// No UL found for element: statusGroupDefinition
-// No UL found for element: statusGroupLanguage
-// No UL found for element: languagePurposeTypeGroupObject
-// No UL found for element: roleTypeGroupObject
-// No UL found for element: text
-// No UL found for element: textLanguage
-// No UL found for element: formatID
-// No UL found for element: formatVersionID
-// No UL found for element: formatName
-// No UL found for element: formatDefinition
-// No UL found for element: formatYearCreated
-// No UL found for element: formatDateCreated
-// No UL found for element: overallDurationTimecode
-// No UL found for element: overallDurationTime
-// No UL found for element: overallDurationEditUnit
-// No UL found for element: overallEditRate
-// No UL found for element: containerFormatObject
-// No UL found for element: mediumObject
-// No UL found for element: packageInfoObject
-// No UL found for element: mimeTypeObject
-// No UL found for element: materialAudioFormatObjects
-// No UL found for element: materialVideoFormatObjects
-// No UL found for element: materialImageFormatObjects
-// No UL found for element: materialDataFormatObjects
-// No UL found for element: materialSigningFormatObjects
-// No UL found for element: materialTechnicalAttributeStringObjects
-// No UL found for element: materialTechnicalAttributeInt8Objects
-// No UL found for element: materialTechnicalAttributeInt16Objects
-// No UL found for element: materialTechnicalAttributeInt32Objects
-// No UL found for element: materialTechnicalAttributeInt64Objects
-// No UL found for element: materialTechnicalAttributeUInt8Objects
-// No UL found for element: materialTechnicalAttributeUInt16Objects
-// No UL found for element: materialTechnicalAttributeUInt32Objects
-// No UL found for element: materialTechnicalAttributeUInt64Objects
-// No UL found for element: materialTechnicalAttributeFloatObjects
-// No UL found for element: materialTechnicalAttributeRationalObjects
-// No UL found for element: materialTechnicalAttributeAnyURIObjects
-// No UL found for element: materialTechnicalAttributeBooleanObjects
-// No UL found for element: mimeTypeGroupObject
-// No UL found for element: videoFormatID
-// No UL found for element: videoFormatName
-// No UL found for element: videoFormatDefinition
-// No UL found for element: videoBitRate
-// No UL found for element: videoBitRateMode
-// No UL found for element: videoSamplingFormat
-// No UL found for element: videoScanningOrder
-// No UL found for element: videoActiveLines
-// No UL found for element: videoNoiseFilterFlag
-// No UL found for element: videoAspectRatio
-// No UL found for element: videoFrameRate
-// No UL found for element: videoHeightObject
-// No UL found for element: videoWidthObject
-// No UL found for element: videoEncodingObject
-// No UL found for element: videoCodecObject
-// No UL found for element: videoTrackObjects
-// No UL found for element: videoTechnicalAttributeStringObjects
-// No UL found for element: videoTechnicalAttributeInt8Objects
-// No UL found for element: videoTechnicalAttributeInt16Objects
-// No UL found for element: videoTechnicalAttributeInt32Objects
-// No UL found for element: videoTechnicalAttributeInt64Objects
-// No UL found for element: videoTechnicalAttributeUInt8Objects
-// No UL found for element: videoTechnicalAttributeUInt16Objects
-// No UL found for element: videoTechnicalAttributeUInt32Objects
-// No UL found for element: videoTechnicalAttributeUInt64Objects
-// No UL found for element: videoTechnicalAttributeFloatObjects
-// No UL found for element: videoTechnicalAttributeRationalObjects
-// No UL found for element: videoTechnicalAttributeAnyURIObjects
-// No UL found for element: videoTechnicalAttributeBooleanObjects
-// No UL found for element: imageFormatID
-// No UL found for element: imageFormatName
-// No UL found for element: imageFormatDefinition
-// No UL found for element: imageOrientation
-// No UL found for element: imageAspectRatio
-// No UL found for element: imageEncodingObject
-// No UL found for element: imageCodecObject
-// No UL found for element: imageHeightObject
-// No UL found for element: imageWidthObject
-// No UL found for element: imageTechnicalAttributeStringObjects
-// No UL found for element: imageTechnicalAttributeInt8Objects
-// No UL found for element: imageTechnicalAttributeInt16Objects
-// No UL found for element: imageTechnicalAttributeInt32Objects
-// No UL found for element: imageTechnicalAttributeInt64Objects
-// No UL found for element: imageTechnicalAttributeUInt8Objects
-// No UL found for element: imageTechnicalAttributeUInt16Objects
-// No UL found for element: imageTechnicalAttributeUInt32Objects
-// No UL found for element: imageTechnicalAttributeUInt64Objects
-// No UL found for element: imageTechnicalAttributeFloatObjects
-// No UL found for element: imageTechnicalAttributeRationalObjects
-// No UL found for element: imageTechnicalAttributeAnyURIObjects
-// No UL found for element: imageTechnicalAttributeBooleanObjects
-// No UL found for element: audioFormatID
-// No UL found for element: audioFormatName
-// No UL found for element: audioFormatDefinition
-// No UL found for element: audioTrackConfiguration
-// No UL found for element: audioSamplingRate
-// No UL found for element: audioSamplingSize
-// No UL found for element: audioSamplingType
-// No UL found for element: audioTotalNumberOfChannels
-// No UL found for element: audioBitRate
-// No UL found for element: audioBitRateMode
-// No UL found for element: audioEncodingObject
-// No UL found for element: audioCodecObject
-// No UL found for element: audioTrackObjects
-// No UL found for element: audioTechnicalAttributeStringObjects
-// No UL found for element: audioTechnicalAttributeInt8Objects
-// No UL found for element: audioTechnicalAttributeInt16Objects
-// No UL found for element: audioTechnicalAttributeInt32Objects
-// No UL found for element: audioTechnicalAttributeInt64Objects
-// No UL found for element: audioTechnicalAttributeUInt8Objects
-// No UL found for element: audioTechnicalAttributeUInt16Objects
-// No UL found for element: audioTechnicalAttributeUInt32Objects
-// No UL found for element: audioTechnicalAttributeUInt64Objects
-// No UL found for element: audioTechnicalAttributeFloatObjects
-// No UL found for element: audioTechnicalAttributeRationalObjects
-// No UL found for element: audioTechnicalAttributeAnyURIObjects
-// No UL found for element: audioTechnicalAttributeBooleanObjects
-// No UL found for element: trackID
-// No UL found for element: trackName
-// No UL found for element: trackLanguageName
-// No UL found for element: trackLanguageCode
-// No UL found for element: trackTypeGroupObject
-// No UL found for element: dataFormatID
-// No UL found for element: dataFormatName
-// No UL found for element: dataFormatDefinition
-// No UL found for element: captioningObjects
-// No UL found for element: ancillaryDataObjects
-// No UL found for element: dataTechnicalAttributeStringObjects
-// No UL found for element: dataTechnicalAttributeInt8Objects
-// No UL found for element: dataTechnicalAttributeInt16Objects
-// No UL found for element: dataTechnicalAttributeInt32Objects
-// No UL found for element: dataTechnicalAttributeInt64Objects
-// No UL found for element: dataTechnicalAttributeUInt8Objects
-// No UL found for element: dataTechnicalAttributeUInt16Objects
-// No UL found for element: dataTechnicalAttributeUInt32Objects
-// No UL found for element: dataTechnicalAttributeUInt64Objects
-// No UL found for element: dataTechnicalAttributeFloatObjects
-// No UL found for element: dataTechnicalAttributeRationalObjects
-// No UL found for element: dataTechnicalAttributeAnyURIObjects
-// No UL found for element: dataTechnicalAttributeBooleanObjects
-// No UL found for element: captioningFormatID
-// No UL found for element: captioningFormatName
-// No UL found for element: captioningFormatDefinition
-// No UL found for element: captioningSourceUri
-// No UL found for element: captioningLanguageName
-// No UL found for element: captioningLanguageCode
-// No UL found for element: captioningTypeGroupObject
-// No UL found for element: DID
-// No UL found for element: SDID
-// No UL found for element: lineNumber
-// No UL found for element: ANCWrappingTypeObject
-// No UL found for element: signingTrackID
-// No UL found for element: signingTrackName
-// No UL found for element: signingTrackLanguageName
-// No UL found for element: signingTrackLanguageCode
-// No UL found for element: signingSourceUri
-// No UL found for element: signingTypeGroupObject
-// No UL found for element: signingFormatGroupObject
-// No UL found for element: technicalAttributeStringValue
-// No UL found for element: technicalAttributeStringTypeThesaurus
-// No UL found for element: technicalAttributeStringTypeLabel
-// No UL found for element: technicalAttributeStringTypeLink
-// No UL found for element: technicalAttributeStringTypeUL
-// No UL found for element: technicalAttributeStringTypeDefinition
-// No UL found for element: technicalAttributeStringTypeLanguage
-// No UL found for element: technicalAttributeInt8Value
-// No UL found for element: technicalAttributeInt8TypeThesaurus
-// No UL found for element: technicalAttributeInt8TypeLabel
-// No UL found for element: technicalAttributeInt8TypeLink
-// No UL found for element: technicalAttributeInt8TypeUL
-// No UL found for element: technicalAttributeInt8TypeDefinition
-// No UL found for element: technicalAttributeInt8TypeLanguage
-// No UL found for element: technicalAttributeInt16Value
-// No UL found for element: technicalAttributeInt16TypeThesaurus
-// No UL found for element: technicalAttributeInt16TypeLabel
-// No UL found for element: technicalAttributeInt16TypeLink
-// No UL found for element: technicalAttributeInt16TypeUL
-// No UL found for element: technicalAttributeInt16TypeDefinition
-// No UL found for element: technicalAttributeInt16TypeLanguage
-// No UL found for element: technicalAttributeInt32Value
-// No UL found for element: technicalAttributeInt32TypeThesaurus
-// No UL found for element: technicalAttributeInt32TypeLabel
-// No UL found for element: technicalAttributeInt32TypeLink
-// No UL found for element: technicalAttributeInt32TypeUL
-// No UL found for element: technicalAttributeInt32TypeDefinition
-// No UL found for element: technicalAttributeInt32TypeLanguage
-// No UL found for element: technicalAttributeInt64Value
-// No UL found for element: technicalAttributeInt64TypeThesaurus
-// No UL found for element: technicalAttributeInt64TypeLabel
-// No UL found for element: technicalAttributeInt64TypeLink
-// No UL found for element: technicalAttributeInt64TypeUL
-// No UL found for element: technicalAttributeInt64TypeDefinition
-// No UL found for element: technicalAttributeInt64TypeLanguage
-// No UL found for element: technicalAttributeUInt8Value
-// No UL found for element: technicalAttributeUInt8TypeThesaurus
-// No UL found for element: technicalAttributeUInt8TypeLabel
-// No UL found for element: technicalAttributeUInt8TypeLink
-// No UL found for element: technicalAttributeUInt8TypeUL
-// No UL found for element: technicalAttributeUInt8TypeDefinition
-// No UL found for element: technicalAttributeUInt8TypeLanguage
-// No UL found for element: technicalAttributeUInt16Value
-// No UL found for element: technicalAttributeUInt16TypeThesaurus
-// No UL found for element: technicalAttributeUInt16TypeLabel
-// No UL found for element: technicalAttributeUInt16TypeLink
-// No UL found for element: technicalAttributeUInt16TypeUL
-// No UL found for element: technicalAttributeUInt16TypeDefinition
-// No UL found for element: technicalAttributeUInt16TypeLanguage
-// No UL found for element: technicalAttributeUInt32Value
-// No UL found for element: technicalAttributeUInt32TypeThesaurus
-// No UL found for element: technicalAttributeUInt32TypeLabel
-// No UL found for element: technicalAttributeUInt32TypeLink
-// No UL found for element: technicalAttributeUInt32TypeUL
-// No UL found for element: technicalAttributeUInt32TypeDefinition
-// No UL found for element: technicalAttributeUInt32TypeLanguage
-// No UL found for element: technicalAttributeUInt64Value
-// No UL found for element: technicalAttributeUInt64TypeThesaurus
-// No UL found for element: technicalAttributeUInt64TypeLabel
-// No UL found for element: technicalAttributeUInt64TypeLink
-// No UL found for element: technicalAttributeUInt64TypeUL
-// No UL found for element: technicalAttributeUInt64TypeDefinition
-// No UL found for element: technicalAttributeUInt64TypeLanguage
-// No UL found for element: technicalAttributeFloatValue
-// No UL found for element: technicalAttributeFloatTypeThesaurus
-// No UL found for element: technicalAttributeFloatTypeLabel
-// No UL found for element: technicalAttributeFloatTypeLink
-// No UL found for element: technicalAttributeFloatTypeUL
-// No UL found for element: technicalAttributeFloatTypeDefinition
-// No UL found for element: technicalAttributeFloatTypeLanguage
-// No UL found for element: technicalAttributeRationalValue
-// No UL found for element: technicalAttributeRationalTypeThesaurus
-// No UL found for element: technicalAttributeRationalTypeLabel
-// No UL found for element: technicalAttributeRationalTypeLink
-// No UL found for element: technicalAttributeRationalTypeUL
-// No UL found for element: technicalAttributeRationalTypeDefinition
-// No UL found for element: technicalAttributeRationalTypeLanguage
-// No UL found for element: technicalAttributeAnyURIValue
-// No UL found for element: technicalAttributeAnyURITypeThesaurus
-// No UL found for element: technicalAttributeAnyURITypeLabel
-// No UL found for element: technicalAttributeAnyURITypeLink
-// No UL found for element: technicalAttributeAnyURITypeUL
-// No UL found for element: technicalAttributeAnyURITypeDefinition
-// No UL found for element: technicalAttributeAnyURITypeLanguage
-// No UL found for element: technicalAttributeBooleanValue
-// No UL found for element: technicalAttributeBooleanTypeThesaurus
-// No UL found for element: technicalAttributeBooleanTypeLabel
-// No UL found for element: technicalAttributeBooleanTypeLink
-// No UL found for element: technicalAttributeBooleanTypeUL
-// No UL found for element: technicalAttributeBooleanTypeDefinition
-// No UL found for element: technicalAttributeBooleanTypeLanguage
-// No UL found for element: dimensionValue
-// No UL found for element: dimensionUnit
-// No UL found for element: encodingTypeGroupObject
-// No UL found for element: packageSize
-// No UL found for element: packageName
-// No UL found for element: packageLocator
-// No UL found for element: containerFormatGroupObject
-// No UL found for element: mediumID
-// No UL found for element: mediumTypeGroupObject
-// No UL found for element: name
-// No UL found for element: vendor
-// No UL found for element: version
-// No UL found for element: family
-// No UL found for element: partMetadataObject
-// No UL found for element: partID
-// No UL found for element: partName
-// No UL found for element: partDefinition
-// No UL found for element: partStartTimecode
-// No UL found for element: partStartTime 
-// No UL found for element: partStartEditUnitNumber
-// No UL found for element: partEndTimecode
-// No UL found for element: partEndTime 
-// No UL found for element: partEndEditUnitNumber
-// No UL found for element: partDurationTimecode
-// No UL found for element: partDurationTime 
-// No UL found for element: partDurationEditUnitNumber
-// No UL found for element: partTypeGroupObject
-// No UL found for element: partMetaObject
 const mxfKey key_060E2B34010101010201020000000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x01,0x02,0x01,0x02,0x00,0x00,0x00,0x00,0x00};
 const XMLCh key_060E2B34010101010201020000000000_name[] = {'S','u','p','p','l','y','C','o','n','t','r','a','c','t','N','u','m','b','e','r','\0'};
 const mxfKey key_060E2B34010101050202030100000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x05,0x02,0x02,0x03,0x01,0x00,0x00,0x00,0x00};
@@ -1923,7 +1294,7 @@ const mxfKey key_060E2B34010101100401060409000000 = {0x06,0x0E,0x2B,0x34,0x01,0x
 const XMLCh key_060E2B34010101100401060409000000_name[] = {'V','C','1','P','r','o','f','i','l','e','\0'};
 const mxfKey key_060E2B3401010110040106040A000000 = {0x06,0x0E,0x2B,0x34,0x01,0x01,0x01,0x10,0x04,0x01,0x06,0x04,0x0A,0x00,0x00,0x00};
 const XMLCh key_060E2B3401010110040106040A000000_name[] = {'V','C','1','L','e','v','e','l','\0'};
-const void* arr_st434_elems_key_ns_st434_17_10[][2] = {
+const void* arr_st434_elems_key_ns_st434_15_10[][2] = {
 { &key_060E2B34010101010201020000000000, key_060E2B34010101010201020000000000_name }, 
 { &key_060E2B34010101050202030100000000, key_060E2B34010101050202030100000000_name }, 
 { &key_060E2B34010101050202060100000000, key_060E2B34010101050202060100000000_name }, 
@@ -2368,8 +1739,8 @@ const void* arr_st434_elems_key_ns_st434_17_10[][2] = {
 };
 for (int i=0; i<441;i++) {
 	st434dict.insert(std::pair<const mxfKey, st434info*>(
-	*(const mxfKey*)arr_st434_elems_key_ns_st434_17_10[i][0], 
-	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_17_10[i][1], key_ns_st434_17)
+	*(const mxfKey*)arr_st434_elems_key_ns_st434_15_10[i][0], 
+	new st434info((const XMLCh*)arr_st434_elems_key_ns_st434_15_10[i][1], key_ns_st434_15)
 ));
 }
 XMLCh key_ns_ebucore_elements_1[] = {'u','r','n',':','e','b','u',':','m','e','t','a','d','a','t','a','-','s','c','h','e','m','a',':','s','m','p','t','e','c','l','a','s','s','1','3','/','p','r','o','p','e','r','t','i','e','s','/','e','b','u','c','o','r','e','_','2','0','1','3','\0'};
