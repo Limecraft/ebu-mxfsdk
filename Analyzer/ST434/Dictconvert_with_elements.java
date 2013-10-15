@@ -74,6 +74,8 @@ public class Dictconvert_with_elements {
             })) + ",\'\\0\'};");
         }
 
+        Map<String, String> localKeys = new HashMap<String, String>();
+
         for (Element e: Iterables.filter(getElements(xmlDictionary.getDocumentElement()), new Predicate<Element>() {
             public boolean apply(Element element) {
                 return element.getAttribute("type").equals("localSet");
@@ -81,6 +83,7 @@ public class Dictconvert_with_elements {
         {
             String name = e.getLocalName();
             String keyName = "key_" +  Joiner.on("").join(e.getAttribute("key").split("\\s"));
+            localKeys.put(keyName, keyName + "_name");
 
             System.out.println("mxfKey " + keyName + " = {" +
                     Joiner.on(",").join(Iterables.transform(Arrays.asList(e.getAttribute("key").split("\\s")), new Function<String, String>() {
@@ -91,15 +94,16 @@ public class Dictconvert_with_elements {
                         public String apply(Character o) {   return "\'" + o + "\'";  }
                     })) + ",\'\\0\'};");
 
-            System.out.println("st434dict.insert(std::pair<mxfKey, st434info*>(");
-            System.out.println('\t' + keyName + ',');
-            System.out.println("\tnew st434info(/* " + name + " */ " + keyName + "_name, /* " + targetNameSpace + " */ " + namespaces.get(targetNameSpace) + ")");
-            System.out.println("));");
-
+            //System.out.println("st434dict.insert(std::pair<mxfKey, st434info*>(");
+            //System.out.println('\t' + keyName + ',');
+            //System.out.println("\tnew st434info(/* " + name + " */ " + keyName + "_name, /* " + targetNameSpace + " */ " + namespaces.get(targetNameSpace) + ")");
+            //System.out.println("));");
 
             for (Element ee : getElements(e)) {
 
                 String elemKeyName = "key_" + Joiner.on("").join(ee.getAttribute("globalKey").split("\\s"));
+                localKeys.put(elemKeyName, elemKeyName + "_name");
+
                 System.out.println("mxfKey " + elemKeyName + " = {" +
                         Joiner.on(",").join(Iterables.transform(Arrays.asList(ee.getAttribute("globalKey").split("\\s")), new Function<String, String>() {
                             public String apply(String o) {   return "0x" + o;  }
@@ -109,12 +113,32 @@ public class Dictconvert_with_elements {
                             public String apply(Character o) {   return "\'" + o + "\'";  }
                         })) + ",\'\\0\'};");
 
-                System.out.println("st434dict.insert(std::pair<mxfKey, st434info*>(");
-                System.out.println('\t' + elemKeyName + ',');
-                System.out.println("\tnew st434info(/* " + ee.getLocalName() + " */ " + elemKeyName + "_name, /* " + targetNameSpace + " */ " + namespaces.get(targetNameSpace) + ")");
-                System.out.println("));");
+                //System.out.println("st434dict.insert(std::pair<mxfKey, st434info*>(");
+                //System.out.println('\t' + elemKeyName + ',');
+                //System.out.println("\tnew st434info(/* " + ee.getLocalName() + " */ " + elemKeyName + "_name, /* " + targetNameSpace + " */ " + namespaces.get(targetNameSpace) + ")");
+                //System.out.println("));");
             }
 
+        }
+
+        if (localKeys.size() > 0) {
+            String arrayName = "arr_" + targetNameSpaceVar;
+            System.out.println("const void* " + arrayName + "[][2] = {");
+
+            System.out.println(Joiner.on(", \n").join(Iterables.transform(localKeys.entrySet(), new Function<Map.Entry<String, String>, String>() {
+                @Override
+                public String apply(java.util.Map.Entry<String, String> e) {
+                    return "{ &" + e.getKey() + ", " + e.getValue() + " }";
+                }
+            })));
+            System.out.println("};");
+
+            System.out.println("for (int i=0; i<" + localKeys.size() + ";i++) {");
+            System.out.println("\tst434dict.insert(std::pair<const mxfKey, st434info*>(");
+            System.out.println("\t*(const mxfKey*)" + arrayName + "[i][0], ");
+            System.out.println("\tnew st434info((const XMLCh*)" + arrayName + "[i][1], " + targetNameSpaceVar + ")");
+            System.out.println("));");
+            System.out.println("}");
         }
 
     }

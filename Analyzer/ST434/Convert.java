@@ -70,6 +70,8 @@ public class Convert {
             DocumentBuilder builder = builderF.newDocumentBuilder();
             Document xmlSchema = builder.parse(arg);
 
+            Map<String, String> localKeys = new HashMap<String, String>();
+
             for (Element e : getElements(xmlSchema.getDocumentElement(), "http://www.w3.org/2001/XMLSchema", "element")) {
 
                 Element keyElem = null;
@@ -94,6 +96,7 @@ public class Convert {
                     String keyName = "key_" + key.replace(".", "");
                     if (!keys.containsKey(keyName)) {
                         keys.put(keyName, keyName);
+                        localKeys.put(keyName, keyName + "_name");
                         key = "{0x" + key.replace(".", ",0x") + "}";
                         System.out.println("const mxfKey " + keyName + " = " + key + ";");
                         System.out.println("const XMLCh " + keyName + "_name[] = {" +
@@ -102,10 +105,10 @@ public class Convert {
                                 })) +
                                 ",\'\\0\'};");
 
-                        System.out.println("st434dict.insert(std::pair<const mxfKey, st434info*>(");
-                        System.out.println('\t' + keyName + ',');
-                        System.out.println("\tnew st434info(/* " + e.getAttribute("name") + " */ " + keyName + "_name, /* " + xmlSchema.getDocumentElement().getAttribute("targetNamespace") + " */ " + namespaces.get(xmlSchema.getDocumentElement().getAttribute("targetNamespace")) + ")");
-                        System.out.println("));");
+                        //System.out.println("st434dict.insert(std::pair<const mxfKey, st434info*>(");
+                        //System.out.println('\t' + keyName + ',');
+                        //System.out.println("\tnew st434info(/* " + e.getAttribute("name") + " */ " + keyName + "_name, /* " + xmlSchema.getDocumentElement().getAttribute("targetNamespace") + " */ " + namespaces.get(xmlSchema.getDocumentElement().getAttribute("targetNamespace")) + ")");
+                        //System.out.println("));");
 
                     } else {
                         System.out.println("// Skipped duplicate: " + e.getAttribute("name"));
@@ -115,6 +118,29 @@ public class Convert {
                 {
                     System.out.println("// No UL found for element: " + e.getAttribute("name"));
                 }
+
+            }
+
+            String targetNamespace = xmlSchema.getDocumentElement().getAttributes().getNamedItem("targetNamespace").getNodeValue();
+            if (localKeys.size() > 0) {
+                String arrayName = "arr_st434_elems_" + namespaces.get(targetNamespace) + "_" + (i++);
+                System.out.println("const void* " + arrayName + "[][2] = {");
+
+                System.out.println(Joiner.on(", \n").join(Iterables.transform(localKeys.entrySet(), new Function<Map.Entry<String, String>, String>() {
+                    @Override
+                    public String apply(java.util.Map.Entry<String, String> e) {
+                        return "{ &" + e.getKey() + ", " + e.getValue() + " }";
+                    }
+                })));
+                System.out.println("};");
+
+                System.out.println("for (int i=0; i<" + localKeys.size() + ";i++) {");
+                System.out.println("\tst434dict.insert(std::pair<const mxfKey, st434info*>(");
+                System.out.println("\t*(const mxfKey*)" + arrayName + "[i][0], ");
+                System.out.println("\tnew st434info((const XMLCh*)" + arrayName + "[i][1], " + namespaces.get(targetNamespace) + ")");
+                System.out.println("));");
+                System.out.println("}");
+
 
             }
 
