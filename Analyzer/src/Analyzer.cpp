@@ -207,7 +207,9 @@ const std::string serialize_uuid(mxfUUID* uuid) {
 const std::string serialize_ul(mxfUL* ul) {
 	std::stringstream s;
 	s << "urn:oid:1.3.52";
-	for (int b=4; b < 16 && ((uint8_t*)ul)[b] != 0; b++) {
+	int non0len = mxfKey_extlen -1;
+	for (; ((uint8_t*)ul)[non0len] == 0 && non0len >= 0; non0len--);
+	for (int b=4; b <= non0len; b++) {
 		s << "." << (int)((uint8_t*)ul)[b];
 	}
 
@@ -217,7 +219,9 @@ const std::string serialize_ul(mxfUL* ul) {
 const std::string serialize_key(mxfKey* key) {
 	std::stringstream s;
 	s << "urn:oid:1.3.52.2";
-	for (int b=4; b < 16 && ((uint8_t*)key)[b] != 0; b++) {
+	int non0len = mxfKey_extlen -1;
+	for (; ((uint8_t*)key)[non0len] == 0 && non0len >= 0; non0len--);
+	for (int b=4; b <= non0len; b++) {
 		s << "." << (int)((uint8_t*)key)[b];
 	}
 
@@ -241,13 +245,23 @@ const std::string serialize_key_as_hex(mxfKey* key) {
 }
 
 const std::string serialize_umid(mxfUMID *umid) {
-	std::stringstream s;
-	s << "0x" << std::hex << std::uppercase;
-	for (int b=0; b < 32; b++) {
-		s << (int)((uint8_t*)umid)[b];
-	}
-
-	return s.str();
+#define UMID_STRING_LEN	67
+	char out[UMID_STRING_LEN];
+#if defined(_WIN32)
+	_snprintf(out, UMID_STRING_LEN,
+#else
+	snprintf(out, UMID_STRING_LEN,
+#endif
+                 "0x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+                 umid->octet0, umid->octet1, umid->octet2, umid->octet3,
+                 umid->octet4, umid->octet5, umid->octet6, umid->octet7,
+                 umid->octet8, umid->octet9, umid->octet10, umid->octet11,
+                 umid->octet12, umid->octet13, umid->octet14, umid->octet15,
+				 umid->octet16, umid->octet17, umid->octet18, umid->octet19,
+				 umid->octet20, umid->octet21, umid->octet22, umid->octet23, 
+				 umid->octet24, umid->octet25, umid->octet26, umid->octet27,
+				 umid->octet28, umid->octet29, umid->octet30, umid->octet31);
+	return std::string(out);
 }
 
 const std::string serialize_dark_value(MXFFile *file, int64_t offset, int64_t length) {
@@ -261,7 +275,7 @@ const std::string serialize_dark_value(MXFFile *file, int64_t offset, int64_t le
 #if defined(_WIN32)
 		_snprintf(t, 2, "%02X", buf[i]);
 #else
-		snprintf(t, 2, "%02X", buf[i]);
+		snprintf(t, 3, "%02X", buf[i]);
 #endif
 		s << t;
 	}
@@ -351,6 +365,10 @@ void serializeMXFValue(unsigned int type, uint8_t *value, DOMElement* elem, DOMD
 		GET_AND_SERIALIZE(int64_t, value, mxf_get_int64, serialize_simple<int64_t>, elem, tc);
 	} else if (type == MXF_BOOLEAN_TYPE) {
 		GET_AND_SERIALIZE(mxfBoolean, value, mxf_get_boolean, serialize_boolean, elem, tc);
+	} else if (type == MXF_CODED_CONTENT_TYPE_TYPE) {
+		GET_AND_SERIALIZE(uint8_t, value, mxf_get_uint8, serialize_simple_int8<uint8_t>, elem, tc);
+	} else if (type == MXF_VERSIONTYPE_TYPE) {
+		GET_AND_SERIALIZE(uint16_t, value, mxf_get_uint16, serialize_simple<uint16_t>, elem, tc);
 	} else if (type == MXF_RATIONAL_TYPE) {
 		mxfRational v;
 		mxf_get_rational(value, &v); 
@@ -515,6 +533,17 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 							mxf_get_fixed_item_length_utf16string(item->value, item->length, (uint16_t*)utf16Result);
 							itemElem->setTextContent(utf16Result);
 							delete utf16Result; // release, no longer needed
+						}
+						else if (itemDef->typeId == MXF_RGBALAYOUT_TYPE) {
+							mxfRGBALayout v;
+							mxf_get_rgba_layout(item->value, &v);
+
+							for (int c=0;c<8;c++) {
+								DOMElement *arrDomElem = PrepareElement(root, itemElem, s377mTypesNS, _X("RGBAComponent", tc));
+								PrepareElementWithContent(root, arrDomElem, s377mTypesNS, _X("Code", tc), _X(serialize_simple_int8<uint8_t>(v.components[c].code), tc));
+								PrepareElementWithContent(root, arrDomElem, s377mTypesNS, _X("Depth", tc), _X(serialize_simple_int8<uint8_t>(v.components[c].depth), tc));
+							}
+
 						} else if (itemType->category == MXF_ARRAY_TYPE_CAT) {
 							// this is any array type, loop through the entries
 							MXFArrayItemIterator arrIter;
@@ -674,7 +703,7 @@ void AnalyzeIndexTable(DOMElement* parent, DOMDocument* root, MXFFile *mxfFile, 
 	mxf_free_index_table_segment(&idx);
 }
 
-std::auto_ptr<HeaderMetadata> ReadHeaderMetadata(File* mxfFile, Partition* partition, DataModel* metadataModel, std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef> >& darkItems) {
+std::auto_ptr<HeaderMetadata> ReadHeaderMetadata(File* mxfFile, Partition* partition, DataModel* metadataModel, std::vector<KLVPacketRef>& darkSets, std::map<mxfUUID, std::vector<KLVPacketRef> >& darkItems, uint64_t* metadata_start_position) {
 
 	mxfKey key;
 	uint8_t llen;
@@ -688,6 +717,8 @@ std::auto_ptr<HeaderMetadata> ReadHeaderMetadata(File* mxfFile, Partition* parti
 	mxfFile->readNextNonFillerKL(&key, &llen, &len);
 
 	uint64_t pos_start_metadata = mxfFile->tell() - mxfKey_extlen - llen;
+	// export metadata start position in this partition to whoever needs to now (e.g., for index offsets)
+	*metadata_start_position = pos_start_metadata;
 
 	Filter filter(mxfFile->getCFile(), darkSets, darkItems);
 	MXFReadFilter cfilter;
@@ -788,10 +819,11 @@ void AnalyzePartition(DOMElement *parent, DOMDocument *root, Partition *partitio
 
 	AnalyzePartitionPack(partElem, root, partition->getCPartition(), tc);
 
+	uint64_t partition_metadata_start_position = 0;
 	if (partition->getHeaderByteCount() > 0) {
 		DOMElement *metadataElem = PrepareElement(root, partElem, s377mMuxNS, _X("HeaderMetadata", tc));
 
-		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(mxfFile, partition, dataModel, darkSets, darkItems);
+		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(mxfFile, partition, dataModel, darkSets, darkItems, &partition_metadata_start_position);
 
 		AnalyzePrimerPack(metadataElem, root, headerMetadata->getCHeaderMetadata()->primerPack, tc);
 
@@ -806,7 +838,7 @@ void AnalyzePartition(DOMElement *parent, DOMDocument *root, Partition *partitio
 		DOMElement *indexElem = PrepareElement(root, partElem, s377mGroupsNS, _X("IndexTable", tc));
 
 		int64_t indexTableOffset=0, indexTableLength=0;
-		while (FindIndexTable(mxfFile->getCFile(), indexTableOffset + partition->getThisPartition() + partition->getHeaderByteCount(), &indexTableOffset, partition->getIndexByteCount() - indexTableOffset, &indexTableLength)) {
+		while (FindIndexTable(mxfFile->getCFile(), partition_metadata_start_position + partition->getHeaderByteCount(), &indexTableOffset, partition->getIndexByteCount() - indexTableOffset, &indexTableLength)) {
 			indexTableOffset += indexTableLength;
 			AnalyzeIndexTable(indexElem, root, mxfFile->getCFile(), indexTableLength, configuration.DeepIndexTableAnalysis, tc);
 		}
@@ -901,10 +933,11 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 		if (!metadata_partition)
 			throw BMXException("No MXF suitable MXF metadata found");
 
+		uint64_t metadata_start_position = 0;
 		std::vector<KLVPacketRef> darkSets;
 		std::map< mxfUUID, std::vector<KLVPacketRef> > darkItems;
 
-		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(&*mFile, metadata_partition, &*mDataModel, darkSets, darkItems);
+		std::auto_ptr<HeaderMetadata> headerMetadata = ReadHeaderMetadata(&*mFile, metadata_partition, &*mDataModel, darkSets, darkItems, &metadata_start_position);
 
 		AnalyzeHeaderMetadata(doc->getDocumentElement(), doc, &*headerMetadata, 
 			mFile->getCFile(), darkSets, darkItems, configuration, st434dict, tc);

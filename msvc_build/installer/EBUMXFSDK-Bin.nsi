@@ -1,5 +1,5 @@
 
-!define PRODUCT_NAME "EBU MXF SDK"
+!define PRODUCT_NAME "EBU MXF SDK Binaries"
 !define VERSION "1.0.0a-7" ;@VERSION@
 !define PRODUCT_VERSION "1.0" ;@VERSION@
 !define PRODUCT_GROUP "EBU"
@@ -8,7 +8,7 @@
 !define PRODUCT_DIR_REGKEY "Software\EBU\MXFSDK"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
-!define PRODUCT_ID "{9A97D0FE-CF7E-4B70-A0DD-43AF162F18D8}"
+!define PRODUCT_ID "{337C8AF5-71C6-4BEB-BBDD-873498892431}"
 
 !ifdef NSIS_LZMA_COMPRESS_WHOLE
 SetCompressor lzma
@@ -59,11 +59,11 @@ SetShellVarContext all
 
   ;Name and file
 	Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-	OutFile ebu-mxfsdk-${VERSION}.exe
+	OutFile ebu-mxfsdk-bin-${VERSION}.exe
 
   ;Default installation folder
   ;InstallDir "$PROGRAMFILES\EBU\MXFSDK"
-  InstallDir "$DOCUMENTS\EBU-MXFSDK"
+  InstallDir "$DOCUMENTS\EBU-MXFSDK-Binaries"
  
   ;Get installation folder from registry if available
   InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
@@ -107,51 +107,35 @@ SetShellVarContext all
 Section "MXFSDK" SecMXFSDK
 
   SetOutPath "$INSTDIR"
-
-  ;ADD YOUR OWN FILES HERE...
-  ;File /r /x .git /x Debug /x Release /x ipch /x *.suo /x *.sdf /x *.opensdf ..\..\ebu-libmxf 
-  ;File /r /x .git /x Debug /x Release /x ipch /x *.suo /x *.sdf /x *.opensdf ..\..\ebu-libmxfpp 
-  ;File /r /x .git /x Debug /x Release /x ipch /x *.suo /x *.sdf /x *.opensdf ..\..\ebu-bmx
-  ;File /r /x .git /x Debug /x Release /x ipch /x *.suo /x *.sdf /x *.opensdf ..\..\Analyzer
-  ;File /r /x .git /x Debug /x Release /x ipch /x *.suo /x *.sdf /x *.opensdf ..\..\CustomMetadataSupport
-  ;File /r /x .git /x Debug /x Release /x ipch /x *.suo /x *.sdf /x *.opensdf ..\..\EBUCoreProcessor
-  ;File /r /x .git /x Debug /x Release /x ipch /x *.suo /x *.sdf /x *.opensdf /x ebu-mxfsdk*.exe /x xerces-c-3.1.1-x86-windows-vc-10.0 /x xsd-3.3.0-i686-windows ..\..\msvc_build
-  ;File /r ..\..\bin
   
-  CreateDirectory "$INSTDIR\doc"
-  !include "files_installer.inc"
+  CreateDirectory "$INSTDIR\bin"
+  File "/oname=bin\ebu2mxf.exe" "..\..\bin\ebu2mxf.exe"
+  File "/oname=bin\mxf2ebu.exe" "..\..\bin\mxf2ebu.exe"
+  File "/oname=bin\raw2bmx.exe" "..\..\bin\raw2bmx.exe"
+  File "/oname=bin\mxfanalyzer.exe" "..\..\bin\mxfanalyzer.exe"
+  File "/oname=bin\xerces-c_3_1.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1.dll"
 
-  File "/oname=Analyzer\msvc_build\vs10\apps\mxfanalyzer\xerces-c_3_1D.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1D.dll"
-  File "/oname=EBUCoreProcessor\msvc_build\vs10\apps\ebu2mxf\xerces-c_3_1D.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1D.dll"
-  File "/oname=EBUCoreProcessor\msvc_build\vs10\apps\mxf2ebu\xerces-c_3_1D.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1D.dll"
-  File "/oname=EBUCoreProcessor\msvc_build\vs10\apps\raw2bmx\xerces-c_3_1D.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1D.dll"
+  CreateDirectory "$INSTDIR\doc"
+  File "/oname=doc\EBU MXF SDK.pdf" "..\..\doc\EBU MXF SDK.pdf"
 
   File "/oname=vcredist_x86.exe" "..\..\msvc_build\installer\resources\vcredist_x86.exe"
-  
-  ; Extract dependency zip files
-  nsisunz::UnzipToLog /text "Extracting: %f [%p]..." "$INSTDIR\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0.zip" "$INSTDIR\msvc_build\dependencies"
-  nsisunz::UnzipToLog /text "Extracting: %f [%p]..." "$INSTDIR\msvc_build\dependencies\xsd-3.3.0-i686-windows.zip" "$INSTDIR\msvc_build\dependencies"
-  
+    
   ; Install Visual C++ redist
   DetailPrint "Installing Microsoft Visual C++ Runtime dependencies..."
   ExecWait '"$INSTDIR\vcredist_x86.exe" /q'
   Delete "$INSTDIR\vcredist_x86.exe"
   
   ; Create some shortcuts
-  CreateShortCut "$INSTDIR\MXFSDK Visual Studio Solution.lnk" "$INSTDIR\msvc_build\vs10\EBU MXF SDK.sln"
-  CreateShortCut "$INSTDIR\MXFSDK API Documentation.lnk" "$INSTDIR\doc\doxygen\html\index.html"
+  CreateShortCut "$INSTDIR\MXFSDK Documentation.lnk" "$INSTDIR\doc\EBU MXF SDK.pdf"
   
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
-  CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\MXFSDK API Documentation.lnk" "$INSTDIR\doc\EBU MXF SDK.pdf"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MXFSDK Documentation.lnk" "$INSTDIR\doc\EBU MXF SDK.pdf"
 
   CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\mxf2ebu.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\mxf2ebu.exe$\""
   CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\ebu2mxf.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\ebu2mxf.exe$\""
   CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\raw2bmx.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\raw2bmx.exe$\""
   CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\mxfanalyzer.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\mxfanalyzer.exe$\""
-
-  CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\MXFSDK API Developer Documentation.lnk" "$INSTDIR\doc\doxygen\html\index.html"
-  CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\MXFSDK Visual Studio Solution.lnk" "$INSTDIR\msvc_build\vs10\EBU MXF SDK.sln"
-  
+    
   ; Write bin directory to path
   ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin" 
   
@@ -164,7 +148,6 @@ Section -Post
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
-  
   CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" \
@@ -218,19 +201,17 @@ Section "Uninstall"
 
   RMDir /r "$SMPROGRAMS\${PRODUCT_NAME}"
   
-  Delete "$INSTDIR\MXFSDK Visual Studio Solution.lnk"
-  Delete "$INSTDIR\MXFSDK API Documentation.lnk"
+  Delete "$INSTDIR\MXFSDK Documentation.lnk"
   
-  ; Removed extracted dependencies, don't really care if anything goes lost, not supposed to modify these dirs...
-  RMDir /r "$INSTDIR\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0"
-  RMDir /r "$INSTDIR\msvc_build\dependencies\xsd-3.3.0-i686-windows"
-  
-  Delete "$INSTDIR\Analyzer\msvc_build\vs10\apps\mxfanalyzer\xerces-c_3_1D.dll"
-  Delete "$INSTDIR\EBUCoreProcessor\msvc_build\vs10\apps\ebu2mxf\xerces-c_3_1D.dll"
-  Delete "$INSTDIR\EBUCoreProcessor\msvc_build\vs10\apps\mxf2ebu\xerces-c_3_1D.dll"
-  Delete "$INSTDIR\EBUCoreProcessor\msvc_build\vs10\apps\raw2bmx\xerces-c_3_1D.dll"
+  Delete "$INSTDIR\bin\ebu2mxf.exe"
+  Delete "$INSTDIR\bin\mxf2ebu.exe"
+  Delete "$INSTDIR\bin\raw2bmx.exe"
+  Delete "$INSTDIR\bin\mxfanalyzer.exe"
+  Delete "$INSTDIR\bin\xerces-c_3_1.dll"
 
-  !include "files_uninstaller.inc"
+  Delete "$INSTDIR\doc\EBU MXF SDK.pdf"
+  
+  RMDir "$INSTDIR\bin"
   RMDir "$INSTDIR\doc"
   RMDir "$INSTDIR"
 

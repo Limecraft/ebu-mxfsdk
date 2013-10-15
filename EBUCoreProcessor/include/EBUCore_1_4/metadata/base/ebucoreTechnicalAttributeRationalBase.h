@@ -41,15 +41,15 @@ public:
 
    // getters
 
-   mxfRational gettechnicalAttributeRationalValue() const;
    bool havetechnicalAttributeTypeGroup() const;
    ebucoreTypeGroup* gettechnicalAttributeTypeGroup() const;
+   mxfRational gettechnicalAttributeRationalValue() const;
 
 
    // setters
 
-   void settechnicalAttributeRationalValue(mxfRational value);
    void settechnicalAttributeTypeGroup(ebucoreTypeGroup* value);
+   void settechnicalAttributeRationalValue(mxfRational value);
 
 
 protected:

@@ -47,11 +47,6 @@ ebucoreTechnicalAttributeRationalBase::~ebucoreTechnicalAttributeRationalBase()
 {}
 
 
-mxfRational ebucoreTechnicalAttributeRationalBase::gettechnicalAttributeRationalValue() const
-{
-    return getRationalItem(&MXF_ITEM_K(ebucoreTechnicalAttributeRational, technicalAttributeRationalValue));
-}
-
 bool ebucoreTechnicalAttributeRationalBase::havetechnicalAttributeTypeGroup() const
 {
     return haveItem(&MXF_ITEM_K(ebucoreTechnicalAttributeRational, technicalAttributeTypeGroup));
@@ -64,13 +59,18 @@ ebucoreTypeGroup* ebucoreTechnicalAttributeRationalBase::gettechnicalAttributeTy
     return dynamic_cast<ebucoreTypeGroup*>(obj.release());
 }
 
-void ebucoreTechnicalAttributeRationalBase::settechnicalAttributeRationalValue(mxfRational value)
+mxfRational ebucoreTechnicalAttributeRationalBase::gettechnicalAttributeRationalValue() const
 {
-    setRationalItem(&MXF_ITEM_K(ebucoreTechnicalAttributeRational, technicalAttributeRationalValue), value);
+    return getRationalItem(&MXF_ITEM_K(ebucoreTechnicalAttributeRational, technicalAttributeRationalValue));
 }
 
 void ebucoreTechnicalAttributeRationalBase::settechnicalAttributeTypeGroup(ebucoreTypeGroup* value)
 {
     setStrongRefItem(&MXF_ITEM_K(ebucoreTechnicalAttributeRational, technicalAttributeTypeGroup), value);
+}
+
+void ebucoreTechnicalAttributeRationalBase::settechnicalAttributeRationalValue(mxfRational value)
+{
+    setRationalItem(&MXF_ITEM_K(ebucoreTechnicalAttributeRational, technicalAttributeRationalValue), value);
 }
 
