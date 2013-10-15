@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -->
+<!-- This XML Schema document is an integral part of the Revision of SMPTE 434-2006: Material Exchange Format - XML Encoding for Metadata and File Structure Information". -->
+<!-- Copyright SMPTE 2006, 2011. -->
+<!-- -->
+<!-- - -->
+<!-- - -->
+<xs:schema xmlns="http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004" xmlns:s377mMux="http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004" xmlns:s335mElements="http://www.smpte-ra.org/schemas/434/2006/properties/S335M" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004" elementFormDefault="qualified" attributeFormDefault="qualified">
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/properties/S335M" schemaLocation="../dictionary/rp210.xsd"/>
+	<!-- - -->
+	<xs:include schemaLocation="s377m_indexTables.xsd"/>
+	<!-- - -->
+	<xs:element name="PartitionPack" type="s377mMux:PartitionPackType"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="PartitionPackType">
+		<xs:sequence>
+			<xs:element ref="s335mElements:MajorVersion"/>
+			<xs:element ref="s335mElements:MinorVersion"/>
+			<xs:element ref="s335mElements:KAGSize"/>
+			<xs:element ref="s335mElements:ThisPartition"/>
+			<xs:element ref="s335mElements:PreviousPartition"/>
+			<xs:element ref="s335mElements:FooterPartition"/>
+			<xs:element ref="s335mElements:HeaderByteCount"/>
+			<xs:element ref="s335mElements:IndexByteCount"/>
+			<xs:element ref="s335mElements:IndexStreamID"/>
+			<xs:element ref="s335mElements:BodyOffset"/>
+			<xs:element ref="s335mElements:EssenceStreamID"/>
+			<xs:element ref="s335mElements:OperationalPattern"/>
+			<xs:element ref="s335mElements:EssenceContainers"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="PrimerPack" type="s377mMux:PrimerPackType"/>
+	<!-- - -->
+	<xs:complexType name="PrimerPackType">
+		<xs:sequence>
+			<xs:element name="LocalTagEntryBatch">
+				<xs:complexType>
+					<xs:sequence maxOccurs="unbounded">
+						<xs:element name="LocalTagEntry">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="s335mElements:LocalTag"/>
+									<xs:element ref="s335mElements:LocalTagUniqueID"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="RandomIndexPack" type="s377mMux:RandomIndexPackType"/>
+	<!-- - -->
+	<xs:complexType name="RandomIndexPackType">
+		<xs:sequence>
+			<xs:element name="PartitionOffsetPairArray">
+				<xs:complexType>
+					<xs:sequence maxOccurs="unbounded">
+						<xs:element name="PartitionOffsetPair">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="s335mElements:EssenceStreamID"/>
+									<xs:element ref="s335mElements:ByteOffset"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="s335mElements:PackLength"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+</xs:schema>

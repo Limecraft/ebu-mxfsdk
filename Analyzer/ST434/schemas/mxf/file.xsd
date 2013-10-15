@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -->
+<!-- This XML Schema document is an integral part of the Revision of SMPTE 434-2006: Material Exchange Format - XML Encoding for Metadata and File Structure Information". -->
+<!-- Copyright SMPTE 2006, 2011. -->
+<!-- -->
+<xs:schema xmlns="http://www.smpte-ra.org/schemas/434/2006/multiplex/S377M/2004"
+	xmlns:s377mMux="http://www.smpte-ra.org/schemas/434/2006/multiplex/S377M/2004"
+	xmlns:s377mGroups="http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004"
+	xmlns:s377mTypes="http://www.smpte-ra.org/schemas/434/2006/types/S377M/2004"
+	xmlns:st0410Mux="http://www.smpte-ra.org/schemas/434/2006/multiplex/ST0410/2006"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.smpte-ra.org/schemas/434/2006/multiplex/S377M/2004"
+	elementFormDefault="qualified" attributeFormDefault="qualified">
+	<!-- - -->
+	<!-- - -->
+	<xs:include schemaLocation="partitions.xsd"/>
+	<xs:include schemaLocation="metadata.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/multiplex/ST0410/2006"
+		schemaLocation="st0410.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/types/S377M/2004"
+		schemaLocation="../dataTypes/s377m_types.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004"
+		schemaLocation="../groups/s377m_packs.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="MXFFile">
+		<xs:annotation>
+			<xs:documentation>The root element for the XML representation of a MXF
+				File</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RunIn" type="s377mTypes:DataStream" minOccurs="0"/>
+				<xs:element ref="s377mMux:HeaderPartition"/>
+				<xs:choice maxOccurs="unbounded">
+					<xs:element ref="s377mMux:BodyPartition" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="st0410Mux:GenericStreamPartition" minOccurs="0"
+						maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:element ref="s377mMux:FooterPartition"/>
+				<xs:element ref="s377mGroups:RandomIndexPack" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+</xs:schema>
