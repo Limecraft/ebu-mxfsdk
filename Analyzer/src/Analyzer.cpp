@@ -773,16 +773,41 @@ void AddST434PrefixDeclarations(DOMDocument *doc, XMLTranscoder* tc) {
 	
 }
 
+bool FindFirstIndexTable(MXFFile *mxfFile, int64_t offset, int64_t *tableOffset) {
+	mxfKey key;
+    uint8_t llen;
+    uint64_t len;
+
+	// start seeking from the given offset
+	mxf_file_seek(mxfFile, offset, SEEK_SET);
+
+	// from the offset, we can encounter Fill elements that don't count
+	// so seek a non-filler element that is an index segment
+	while (true) {
+		CHK_ORET(mxf_read_next_nonfiller_kl(mxfFile, &key, &llen, &len));
+		if (mxf_is_index_table_segment(&key)) {
+			// here is the first index table segment
+			*tableOffset = mxf_file_tell(mxfFile) - mxfKey_extlen - llen;
+			mxf_file_seek(mxfFile, - mxfKey_extlen - llen, SEEK_CUR);	// seek backward to beginning of the KLV element
+			return true;
+		}
+	}
+	return false;
+}
+
 bool FindIndexTable(MXFFile *mxfFile, int64_t offset, int64_t *tableOffset, int64_t maxTableLength, int64_t *length) {
 	mxfKey key;
     uint8_t llen;
     uint64_t len;
 	int64_t skippedBytes = 0;
 
-	mxf_file_seek(mxfFile, offset, SEEK_SET);
+	if (maxTableLength == 0)
+		// entire table has been read
+		return false;
+
 	while (skippedBytes <= maxTableLength)
     {
-        CHK_ORET(mxf_read_next_nonfiller_kl(mxfFile, &key, &llen, &len));
+        CHK_ORET(mxf_read_kl(mxfFile, &key, &llen, &len));
         if (mxf_is_index_table_segment(&key))
         {
 			*length = len;
@@ -831,16 +856,27 @@ void AnalyzePartition(DOMElement *parent, DOMDocument *root, Partition *partitio
 
 		AnalyzeHeaderMetadata(setsElem, root, &*headerMetadata,
 			mxfFile->getCFile(), darkSets, darkItems, configuration, st434dict, tc);
+	} else {
+		// there is no header metadata, but there might be an index table for which we have to setup the start position offset properly
+		// (i.e., behind any filler elements that might follow the partition pack)
+		mxfKey key; uint8_t llen; uint64_t len;
+		mxfFile->seek(partition->getThisPartition(), SEEK_SET);
+		mxfFile->readKL(&key, &llen, &len);		
+		partition_metadata_start_position = partition->getThisPartition() + mxfKey_extlen + llen + len;
 	}
 
 	if (partition->getIndexByteCount() > 0) {
 
 		DOMElement *indexElem = PrepareElement(root, partElem, s377mGroupsNS, _X("IndexTable", tc));
 
-		int64_t indexTableOffset=0, indexTableLength=0;
-		while (FindIndexTable(mxfFile->getCFile(), partition_metadata_start_position + partition->getHeaderByteCount(), &indexTableOffset, partition->getIndexByteCount() - indexTableOffset, &indexTableLength)) {
-			indexTableOffset += indexTableLength;
-			AnalyzeIndexTable(indexElem, root, mxfFile->getCFile(), indexTableLength, configuration.DeepIndexTableAnalysis, tc);
+		int64_t partition_index_start_position=0, indexTableOffset=0, indexTableLength=0;		
+		if (FindFirstIndexTable(mxfFile->getCFile(), partition_metadata_start_position + partition->getHeaderByteCount(), &partition_index_start_position)) {
+			indexTableOffset = partition_index_start_position;
+			while (FindIndexTable(mxfFile->getCFile(), partition_index_start_position + indexTableOffset, &indexTableOffset, 
+					partition_index_start_position + partition->getIndexByteCount() - indexTableOffset, &indexTableLength)) {
+				AnalyzeIndexTable(indexElem, root, mxfFile->getCFile(), indexTableLength, configuration.DeepIndexTableAnalysis, tc);
+				indexTableOffset += indexTableLength;
+			}
 		}
 	}
 
