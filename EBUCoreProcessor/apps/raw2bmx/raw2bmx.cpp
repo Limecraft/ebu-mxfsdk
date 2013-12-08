@@ -2988,7 +2988,7 @@ int main(int argc, const char** argv)
 
 
 		// force prepared header metadata
-		if (clip_type == CW_AS11_OP1A_CLIP_TYPE || clip_type == CW_AS11_D10_CLIP_TYPE || clip_type == CW_OP1A_CLIP_TYPE || CW_D10_CLIP_TYPE)
+		if (clip_type == CW_AS11_OP1A_CLIP_TYPE || clip_type == CW_AS11_D10_CLIP_TYPE || clip_type == CW_OP1A_CLIP_TYPE || clip_type == CW_D10_CLIP_TYPE)
 			clip->PrepareHeaderMetadata();
 
 		if (ebucore_filename) {
