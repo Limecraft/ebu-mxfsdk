@@ -44,7 +44,7 @@
 
 
 #define EBUSDK_VERSION_MAJOR    1
-#define EBUSDK_VERSION_MINOR    0
+#define EBUSDK_VERSION_MINOR    1
 #define EBUSDK_VERSION_MICRO    0
 
 #define EBUSDK_MXF_VERSION_RELEASE  4   /* 0 = Unknown version
