@@ -18,6 +18,14 @@
 #ifndef __EBUSDK_EBUCOREPROCESSOR_H__
 #define __EBUSDK_EBUCOREPROCESSOR_H__
 
+#ifdef EXPORTING
+#define DLLEXPORT __declspec(dllexport)
+#elif IMPORTING
+#define DLLEXPORT __declspec(dllimport)
+#else
+#define DLLEXPORT
+#endif
+
 #include <libMXF++/MXF.h>
 #include <MXFCustomMetadata.h>
 
@@ -43,7 +51,7 @@ namespace EBUSDK {
 		@return Returns the generated Identification set.
 		@param destination The HeaderMetadata structure to which the Identification set will be added.
 	*/
-	mxfpp::Identification* GenerateEBUCoreIdentificationSet(mxfpp::HeaderMetadata *destination);
+	DLLEXPORT mxfpp::Identification* GenerateEBUCoreIdentificationSet(mxfpp::HeaderMetadata *destination);
 
 	/**
 	*	Parses EBUCore metadata in a file at __location__ and returns the resulting EBUCore MXF descriptive metadata framework of the type EBUCoreMainFramework.\n
@@ -56,7 +64,7 @@ namespace EBUSDK {
 		@param destination The HeaderMetadata structure to which the EBUCoreMainFramework and its descending metadata sets will be added.
 		@param identificationToAppend Optional Identification metadata set that will be referenced from each parsed metadata set.
 	*/
-	mxfpp::DMFramework* Process(const char* location, mxfpp::HeaderMetadata *destination, mxfpp::Identification *identificationToAppend = NULL);
+	DLLEXPORT mxfpp::DMFramework* Process(const char* location, mxfpp::HeaderMetadata *destination, mxfpp::Identification *identificationToAppend = NULL);
 
 	/**
 	*	Convenience function for locating KLV-encoded EBUCore metadata in the provided header metadata and serializing this metadata to file.
@@ -64,7 +72,7 @@ namespace EBUSDK {
 		@param metadata Parsed header metadata structure of the MXF file.
 		@param outputfilename Location of the file to write the serialized metadata to.
 	*/
-	void FindAndSerializeEBUCore(mxfpp::HeaderMetadata *metadata, const char* outputfilename);
+	DLLEXPORT void FindAndSerializeEBUCore(mxfpp::HeaderMetadata *metadata, const char* outputfilename);
 
 	/**
 	*	Inserts a given descriptive metadata framework set in the provided header metadata structure.\n
@@ -76,7 +84,7 @@ namespace EBUSDK {
 		@param framework The DM framework set to be added to the MXF timeline.
 		@param identificationToAppend Optional Identification metadata set that will be referenced from each metadata set created by this function.
 	*/
-	void InsertEBUCoreFramework(mxfpp::HeaderMetadata *header_metadata, const mxfUL *dmSchemeLabel, 
+	DLLEXPORT void InsertEBUCoreFramework(mxfpp::HeaderMetadata *header_metadata, const mxfUL *dmSchemeLabel, 
 								mxfpp::DMFramework *framework, mxfpp::Identification *identificationToAppend = NULL);
 
 	/**
@@ -89,7 +97,7 @@ namespace EBUSDK {
 		Duration fields are used to properly place the DM Segment on the timeline.
 		@param identificationToAppend Optional Identification metadata set that will be referenced from each metadata set created by this function.
 	*/
-	void InsertEBUCoreEventFrameworks(mxfpp::HeaderMetadata *header_metadata, std::vector<MXFCustomMetadata::EventInput>& eventFrameworks, mxfpp::Identification *identificationToAppend = NULL);
+	DLLEXPORT void InsertEBUCoreEventFrameworks(mxfpp::HeaderMetadata *header_metadata, std::vector<MXFCustomMetadata::EventInput>& eventFrameworks, mxfpp::Identification *identificationToAppend = NULL);
 
 	/**
 	*	Removes EBUCore Descriptive Metadata frameworks from the given header metadata structure.\n
@@ -97,7 +105,7 @@ namespace EBUSDK {
 
 		@param header_metadata The HeaderMetadata structure from which the frameworks are removed.
 	*/
-	void RemoveEBUCoreFrameworks(mxfpp::HeaderMetadata *header_metadata);
+	DLLEXPORT void RemoveEBUCoreFrameworks(mxfpp::HeaderMetadata *header_metadata);
 
 	enum ProgressCallbackLevel {
 		FATAL,
@@ -137,7 +145,7 @@ namespace EBUSDK {
 		In normal operation, the SDK attempts to write the EBUCore metadata into the footer partition, marking the header (and potential body) partitions that contain metadata as
 		open and incomplete. This way only the footer paritition and the (small) partition packs must be updated.
 	*/
-	void EmbedEBUCoreMetadata(	const char* metadataLocation, 
+	DLLEXPORT void EmbedEBUCoreMetadata(	const char* metadataLocation, 
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
 							MetadataKind optWaytoWrite = KLV_ENCODED,
@@ -164,7 +172,7 @@ namespace EBUSDK {
 		In normal operation, the SDK attempts to write the EBUCore metadata into the footer partition, marking the header (and potential body) partitions that contain metadata as
 		open and incomplete. This way only the footer paritition and the (small) partition packs must be updated.
 	*/
-	void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument, 
+	DLLEXPORT void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument, 
 							const char* metadataLocation,
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
@@ -185,7 +193,7 @@ namespace EBUSDK {
 		open and incomplete. This way only the footer paritition and the (small) partition packs must be updated.
 	*/
 
-	void RemoveEBUCoreMetadata(	const char* mxfLocation,
+	DLLEXPORT void RemoveEBUCoreMetadata(	const char* mxfLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
 							bool optNoIdentification = false, bool optForceHeader = false);
 
@@ -202,7 +210,7 @@ namespace EBUSDK {
 		The function is called with the overall progress of the operation in __progress__,  a __message__ that describes the updated status, 
 		and the name of the internal __function__ to which the progress update relates (which can be used for debugging purposes).
 	*/
-	xercesc::DOMDocument& ExtractEBUCoreMetadata(
+	DLLEXPORT xercesc::DOMDocument& ExtractEBUCoreMetadata(
 							const char* mxfLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...));
 	
@@ -217,7 +225,7 @@ namespace EBUSDK {
 		The function is called with the overall progress of the operation in __progress__,  a __message__ that describes the updated status, 
 		and the name of the internal __function__ to which the progress update relates (which can be used for debugging purposes).
 	*/
-	void ExtractEBUCoreMetadata(
+	DLLEXPORT void ExtractEBUCoreMetadata(
 							const char* mxfLocation,
 							const char* metadataLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...));
@@ -357,7 +365,7 @@ namespace EBUSDK {
 			
 		@returns An instance of the default EBUCoreProcessor.
 	*/	
-	EBUCoreProcessor* GetDefaultEBUCoreProcessor();
+	DLLEXPORT EBUCoreProcessor* GetDefaultEBUCoreProcessor();
 
 	/**
 	*	Returns a newly created instance of the EBUCoreProcessor object for processing capabilities for EBUCore metadata declared in the given vector of DM Schemes.
@@ -365,7 +373,7 @@ namespace EBUSDK {
 		@returns The EBUCoreProcessor that matches the declared DM Schemes, if any. The first matching EBUCoreProcessor is returned, or NULL if no supported EBUCore DM Scheme is found in the _descriptiveMetadataSchemes_ vector.
 		@param descriptiveMetadataSchemes A vector with DM Scheme Universal Labals as declared in the header metadata of the MXF file.
 	*/
-	EBUCoreProcessor* GetEBUCoreProcessor(const std::vector<mxfUL>& descriptiveMetadataSchemes);
+	DLLEXPORT EBUCoreProcessor* GetEBUCoreProcessor(const std::vector<mxfUL>& descriptiveMetadataSchemes);
 
 	/**
 	*	Determines whether the provided KLV label is supported by the SDK as a Descriptive Metadata Scheme label for EBUCore metadata.
@@ -373,14 +381,14 @@ namespace EBUSDK {
 		@returns Whether the label is supported by the SDK.
 		@param label The label to be investigaged.
 	*/
-	bool IsSupportedEBUCoreMetadataScheme(const mxfUL* label);
+	DLLEXPORT bool IsSupportedEBUCoreMetadataScheme(const mxfUL* label);
 
 	/**
 	*	Enumerates and adds to the given vector each of the KLV set keys supported by the SDK as keys for EBUCore dark metadata.
 
 		@param darkSetKeys A references to the vector to which the supported keys will be added.
 	*/
-	void EnumerateSupportedEBUCoreDarkSetKeys(std::vector<const mxfKey*>& darkSetKeys);
+	DLLEXPORT void EnumerateSupportedEBUCoreDarkSetKeys(std::vector<const mxfKey*>& darkSetKeys);
 
 	} // namespace EBUCore
 
