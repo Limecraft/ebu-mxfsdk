@@ -376,6 +376,24 @@ namespace EBUSDK {
 	DLLEXPORT EBUCoreProcessor* GetEBUCoreProcessor(const std::vector<mxfUL>& descriptiveMetadataSchemes);
 
 	/**
+	*	Defines the ways of serializing metadata in MXF files.
+	*/
+	enum EBUCoreProcessors {
+		/**	EBUCore v1.4 */
+		EBUCORE_1_4,
+		/**	EBUCore v1.5 */
+		EBUCORE_1_5
+	};
+
+	/**
+	*	Returns a newly created instance of the EBUCoreProcessor object for processing capabilities for the given EBUCore metadata version.
+			
+		@returns The EBUCoreProcessor that matches the given enumeration value.
+		@param version The version of EBUCoreProcessor to be returned.
+	*/
+	DLLEXPORT EBUCoreProcessor* GetEBUCoreProcessor(const EBUCoreProcessors version);
+
+	/**
 	*	Determines whether the provided KLV label is supported by the SDK as a Descriptive Metadata Scheme label for EBUCore metadata.
 
 		@returns Whether the label is supported by the SDK.
@@ -389,6 +407,26 @@ namespace EBUSDK {
 		@param darkSetKeys A references to the vector to which the supported keys will be added.
 	*/
 	DLLEXPORT void EnumerateSupportedEBUCoreDarkSetKeys(std::vector<const mxfKey*>& darkSetKeys);
+
+
+	class ExEBUCoreProcessor : public EBUCoreProcessor {
+	public:
+		/**
+		*	Returns the DM Scheme Universal Label associated with the version of EBUCore supported by this EBUCoreProcessor.
+
+			@returns A pointer to the DM Scheme Universal Label.
+		*/
+		virtual void GetDescriptiveMetadataSchemes(std::vector<const mxfUL*>& metadataSchemesSet) = 0;
+
+		/**
+		*	Returns the Dark Set serialization Universal Label associated with the version of EBUCore supported by this EBUCoreProcessor.
+
+			@returns A pointer to the Universal Label.
+		*/
+		virtual void GetDarkMetadataSetKeys(std::vector<const mxfKey*>& darkKeysSet) = 0;
+		
+	};
+
 
 	} // namespace EBUCore
 

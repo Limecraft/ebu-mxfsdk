@@ -123,6 +123,14 @@ EBUCoreProcessor* GetEBUCoreProcessor(const std::vector<mxfUL>& descriptiveMetad
 	return processor;
 }
 
+EBUCoreProcessor* GetEBUCoreProcessor(const EBUCoreProcessors version) {
+	switch (version) {
+	case EBUCORE_1_4:
+		return new EBUCore_1_4::EBUCoreProcessor();
+	}
+	return NULL;
+}
+
 bool IsSupportedEBUCoreMetadataScheme(const mxfUL* label) {
 	if (mxf_equals_ul(label,  &EBUCore_1_4::EBUCoreProcessor::DMScheme))
 		return true;
