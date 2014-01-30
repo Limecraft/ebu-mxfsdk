@@ -59,21 +59,26 @@
 #define EBUSDK_LIBRARY_NAME     "ebu-mxfsdk"
 
 
+#ifdef EXPORTING
+#define DLLEXPORT __declspec(dllexport)
+#elif IMPORTING
+#define DLLEXPORT __declspec(dllimport)
+#else
+#define DLLEXPORT
+#endif
 
 namespace EBUSDK
 {
 
+DLLEXPORT std::string get_library_name();
+DLLEXPORT std::string get_version_string();
+DLLEXPORT std::string get_scm_version_string();
+DLLEXPORT std::string get_build_string();
 
-std::string get_library_name();
-std::string get_version_string();
-std::string get_scm_version_string();
-std::string get_build_string();
-
-std::string get_company_name();
-bmx::UUID get_product_uid();
-mxfProductVersion get_mxf_product_version();
-std::string get_mxf_version_string();
-
+DLLEXPORT std::string get_company_name();
+DLLEXPORT bmx::UUID get_product_uid();
+DLLEXPORT mxfProductVersion get_mxf_product_version();
+DLLEXPORT std::string get_mxf_version_string();
 
 };
 
