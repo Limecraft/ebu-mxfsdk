@@ -48,7 +48,7 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..\;..\..\..\..\apps;..\..\..\..\apps\mxf2raw;..\..\..\..\..\ebu-libMXF;..\..\..\..\..\ebu-libMXFpp;..\..\..\..\..\ebu-bmx\include;..\..\..\..\..\CustomMetadataSupport\include;..\..\..\..\..\uriparser\include;..\..\..\..\include;..\..\..\..\EBUCoreProcessor\include;..\..\..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\;..\..\..\..\..;..\..\..\..\apps;..\..\..\..\apps\mxf2raw;..\..\..\..\..\ebu-libMXF;..\..\..\..\..\ebu-libMXFpp;..\..\..\..\..\ebu-bmx\include;..\..\..\..\..\CustomMetadataSupport\include;..\..\..\..\..\uriparser\include;..\..\..\..\include;..\..\..\..\EBUCoreProcessor\include;..\..\..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -67,7 +67,7 @@
       </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <AdditionalIncludeDirectories>..\..\;..\..\..\..\apps;..\..\..\..\apps\mxf2raw;..\..\..\..\..\ebu-libMXF;..\..\..\..\..\ebu-libMXFpp;..\..\..\..\..\ebu-bmx\include;..\..\..\..\..\CustomMetadataSupport\include;..\..\..\..\..\uriparser\include;..\..\..\..\include;..\..\..\..\EBUCoreProcessor\include;..\..\..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\;..\..\..\..\..;..\..\..\..\apps;..\..\..\..\apps\mxf2raw;..\..\..\..\..\ebu-libMXF;..\..\..\..\..\ebu-libMXFpp;..\..\..\..\..\ebu-bmx\include;..\..\..\..\..\CustomMetadataSupport\include;..\..\..\..\..\uriparser\include;..\..\..\..\include;..\..\..\..\EBUCoreProcessor\include;..\..\..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>

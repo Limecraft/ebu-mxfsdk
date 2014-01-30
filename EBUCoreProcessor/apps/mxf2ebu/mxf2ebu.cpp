@@ -36,7 +36,6 @@
 #include <bmx/CRC32.h>
 #include <bmx/MXFUtils.h>
 #include <bmx/Utils.h>
-#include <bmx/Version.h>
 #include <bmx/as11/AS11Info.h>
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>
@@ -46,6 +45,7 @@
 #endif
 
 #include <EBUCoreProcessor.h>
+#include <Version.h>
 
 using namespace std;
 using namespace bmx;
@@ -56,11 +56,11 @@ using namespace EBUSDK;
 static string get_version_info()
 {
     char buffer[256];
-    sprintf(buffer, "mxf2raw, %s v%s, %s %s (scm %s)",
-            get_bmx_library_name().c_str(),
-            get_bmx_version_string().c_str(),
+    sprintf(buffer, "ebuaudio2mxf, %s v%s, %s %s (scm %s)",
+            EBUSDK::get_library_name().c_str(),
+            EBUSDK::get_version_string().c_str(),
             __DATE__, __TIME__,
-            get_bmx_scm_version_string().c_str());
+            EBUSDK::get_scm_version_string().c_str());
     return buffer;
 }
 
@@ -72,7 +72,6 @@ static void usage(const char *cmd)
     fprintf(stderr, " -h | --help           Show usage and exit\n");
     fprintf(stderr, " -v | --version        Print version info\n");
     fprintf(stderr, " -l <file>             Log filename. Default log to stderr/stdout\n");
-    fprintf(stderr, " -i                    Print file information to stdout\n");
     fprintf(stderr, " --ebu-core <file>     Write embedded EBU Core metadata to file\n");
 }
 
@@ -105,7 +104,6 @@ int main(int argc, const char** argv)
 {
     const char *log_filename = 0;
     std::vector<const char *> filenames;
-    bool do_print_info = false;
     bool do_print_version = false;
     const char *ebucore_filename = 0;
     int cmdln_index;
@@ -143,10 +141,6 @@ int main(int argc, const char** argv)
             }
             log_filename = argv[cmdln_index + 1];
             cmdln_index++;
-        }
-        else if (strcmp(argv[cmdln_index], "-i") == 0)
-        {
-            do_print_info = true;
         }
 		else if (strcmp(argv[cmdln_index], "--ebu-core") == 0)
         {
