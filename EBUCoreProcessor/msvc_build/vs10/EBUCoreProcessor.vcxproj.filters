@@ -545,6 +545,9 @@
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\base\ebucorePublicationServiceBase.cpp">
       <Filter>Source Files\EBUCore_1_4\metadata\base</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Version.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\EBUCoreProcessor.h">

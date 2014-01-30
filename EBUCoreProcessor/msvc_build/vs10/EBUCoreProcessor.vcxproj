@@ -78,7 +78,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\include;..\..\include\xsd;..\..\..\ebu-libmxf;..\..\..\ebu-libMXFpp;..\..\..\ebu-bmx\include;..\..\..\ebu-libMXFpp\msvc_build\vs10;..\..\..\CustomMetadataSupport\include;..\..\..\uriparser\include;..\..\..\msvc_build\dependencies\xsd-3.3.0-i686-windows\libxsd;..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\..;..\..\include\xsd;..\..\..\ebu-libmxf;..\..\..\ebu-libMXFpp;..\..\..\ebu-bmx\include;..\..\..\ebu-libMXFpp\msvc_build\vs10;..\..\..\CustomMetadataSupport\include;..\..\..\uriparser\include;..\..\..\msvc_build\dependencies\xsd-3.3.0-i686-windows\libxsd;..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
@@ -131,7 +131,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>..\..\include;..\..\include\xsd;..\..\..\ebu-libmxf;..\..\..\ebu-libMXFpp;..\..\..\ebu-bmx\include;..\..\..\ebu-libMXFpp\msvc_build\vs10;..\..\..\CustomMetadataSupport\include;..\..\..\uriparser\include;..\..\..\msvc_build\dependencies\xsd-3.3.0-i686-windows\libxsd;..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;EXPORTING;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>	
+    </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -307,6 +307,7 @@
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreVideoFormat.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_4\metadata\ebucoreWidth.cpp" />
     <ClCompile Include="..\..\src\EBUCore_1_4\xsd\EBU_CORE_20130107.cxx" />
+    <ClCompile Include="..\..\src\Version.cpp" />
     <ClCompile Include="..\..\src\xsd\simpledc20021212.cxx" />
     <ClCompile Include="..\..\src\xsd\xml.cxx" />
   </ItemGroup>

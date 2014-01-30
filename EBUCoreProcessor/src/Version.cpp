@@ -4,11 +4,6 @@
  *
  * Author: Philip de Nier
  *
- * Modifications Copyright (C) 2012-2013, European Broadcasting Union and Limecraft, NV.
- *
- * Author: Dieter Van Rijsselbergen
- *
- *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
@@ -34,50 +29,74 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __BMX_VERSION_H__
-#define __BMX_VERSION_H__
-
-
-#include <string>
-
-#include <bmx/BMXTypes.h>
-
-
-#define EBUSDK_VERSION_MAJOR    1
-#define EBUSDK_VERSION_MINOR    2
-#define EBUSDK_VERSION_MICRO    0
-
-#define EBUSDK_MXF_VERSION_RELEASE  4   /* 0 = Unknown version
-                                        1 = Released version
-                                        2 = Development version
-                                        3 = Released version with patches
-                                        4 = Pre-release beta version
-                                        5 = Private version not intended for general release */
-
-#define EBUSDK_VERSION          (EBUSDK_VERSION_MAJOR << 16 | EBUSDK_VERSION_MINOR << 8 | EBUSDK_VERSION_MICRO)
-
-#define EBUSDK_LIBRARY_NAME     "ebu-mxfsdk"
-
-
-
-namespace EBUSDK
-{
-
-
-std::string get_library_name();
-std::string get_version_string();
-std::string get_scm_version_string();
-std::string get_build_string();
-
-std::string get_company_name();
-bmx::UUID get_product_uid();
-mxfProductVersion get_mxf_product_version();
-std::string get_mxf_version_string();
-
-
-};
-
-
-
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
 
+#include <bmx_scm_version.h>
+
+#include <cstdio>
+
+#include <Version.h>
+
+using namespace std;
+
+
+static const char* EBUSDK_COMPANY_NAME = "EBU";
+
+// {7EF13EC5-7DBD-4FC0-8AA5-A9FEB1B70870}
+static const bmx::UUID EBUSDK_PRODUCT_UID =
+	{ 0x7e, 0xf1, 0x3e, 0xc5, 0x7d, 0xbd, 0x4f, 0xc0, 0x8a, 0xa5, 0xa9, 0xfe, 0xb1, 0xb7, 0x8, 0x70};
+static const mxfProductVersion EBUSDK_MXF_PRODUCT_VERSION = {	EBUSDK_VERSION_MAJOR,
+																EBUSDK_VERSION_MINOR,
+																EBUSDK_VERSION_MICRO,
+																0,
+																EBUSDK_MXF_VERSION_RELEASE};
+
+
+
+string EBUSDK::get_library_name()
+{
+	return EBUSDK_LIBRARY_NAME;
+}
+
+string EBUSDK::get_version_string()
+{
+    char buffer[32];
+    sprintf(buffer, "%d.%d.%d", EBUSDK_VERSION_MAJOR, EBUSDK_VERSION_MINOR, EBUSDK_VERSION_MICRO);
+    return buffer;
+}
+
+string EBUSDK::get_scm_version_string()
+{
+    return BMX_SCM_VERSION;
+}
+
+string EBUSDK::get_build_string()
+{
+    return __DATE__ " " __TIME__;
+}
+
+string EBUSDK::get_company_name()
+{
+	return EBUSDK_COMPANY_NAME;
+}
+
+bmx::UUID EBUSDK::get_product_uid()
+{
+    return EBUSDK_PRODUCT_UID;
+}
+
+mxfProductVersion EBUSDK::get_mxf_product_version()
+{
+    return EBUSDK_MXF_PRODUCT_VERSION;
+}
+
+string EBUSDK::get_mxf_version_string()
+{
+    char buffer[64];
+    sprintf(buffer, "%d.%d.%d (scm %s)",
+            EBUSDK_VERSION_MAJOR, EBUSDK_VERSION_MINOR, EBUSDK_VERSION_MICRO,
+            BMX_SCM_VERSION);
+    return buffer;
+}
