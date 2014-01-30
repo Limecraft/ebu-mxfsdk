@@ -93,7 +93,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;EXPORTING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\include;..\..\include\xsd;..\..\..\ebu-libmxf;..\..\..\ebu-libMXFpp;..\..\..\ebu-bmx\include;..\..\..\ebu-libMXFpp\msvc_build\vs10;..\..\..\CustomMetadataSupport\include;..\..\..\uriparser\include;..\..\..\msvc_build\dependencies\xsd-3.3.0-i686-windows\libxsd;..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\..;..\..\include\xsd;..\..\..\ebu-libmxf;..\..\..\ebu-libMXFpp;..\..\..\ebu-bmx\include;..\..\..\ebu-libMXFpp\msvc_build\vs10;..\..\..\CustomMetadataSupport\include;..\..\..\uriparser\include;..\..\..\msvc_build\dependencies\xsd-3.3.0-i686-windows\libxsd;..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
@@ -111,7 +111,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\include;..\..\include\xsd;..\..\..\ebu-libmxf;..\..\..\ebu-libMXFpp;..\..\..\ebu-bmx\include;..\..\..\ebu-libMXFpp\msvc_build\vs10;..\..\..\CustomMetadataSupport\include;..\..\..\uriparser\include;..\..\..\msvc_build\dependencies\xsd-3.3.0-i686-windows\libxsd;..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\..;..\..\include\xsd;..\..\..\ebu-libmxf;..\..\..\ebu-libMXFpp;..\..\..\ebu-bmx\include;..\..\..\ebu-libMXFpp\msvc_build\vs10;..\..\..\CustomMetadataSupport\include;..\..\..\uriparser\include;..\..\..\msvc_build\dependencies\xsd-3.3.0-i686-windows\libxsd;..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -129,7 +129,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\include;..\..\include\xsd;..\..\..\ebu-libmxf;..\..\..\ebu-libMXFpp;..\..\..\ebu-bmx\include;..\..\..\ebu-libMXFpp\msvc_build\vs10;..\..\..\CustomMetadataSupport\include;..\..\..\uriparser\include;..\..\..\msvc_build\dependencies\xsd-3.3.0-i686-windows\libxsd;..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\..;..\..\include\xsd;..\..\..\ebu-libmxf;..\..\..\ebu-libMXFpp;..\..\..\ebu-bmx\include;..\..\..\ebu-libMXFpp\msvc_build\vs10;..\..\..\CustomMetadataSupport\include;..\..\..\uriparser\include;..\..\..\msvc_build\dependencies\xsd-3.3.0-i686-windows\libxsd;..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;EXPORTING;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
