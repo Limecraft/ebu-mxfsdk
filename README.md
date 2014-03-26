@@ -255,6 +255,19 @@ The raw2bmx example program in ebu-mxfsdk/apps/raw2bmx constructs a new MXF file
 	 - <umid> format is [0-9a-fA-F]{64}, a sequence of 32 hexadecimal bytes
 	 - <tstamp> format is YYYY-MM-DDThh:mm:ss:qm where qm is in units of 1/250th second
 
+### ebuaudio2mxf
+
+The ebuaudio2mxf example program in ebu-bmx/apps/ebuaudio2mxf opens an existing MXF file, and the EBUCore audio metadata is appended to its most appropriated (closed and complete metadata where available) set of metadata, while attempting to modify only the file metadata without rewriting its essence. This is an optimized version of the ebu2mxf program, with a number of optimizations for embedded of audio metadata, incl. only serialization of metadata in a dark way.
+
+Usage: ebuaudio2mxf <<options>> <filename>
+Options:
+ -h | --help           Show usage and exit
+ -v | --version        Print version info
+ -l <file>             Log filename. Default log to stderr/stdout
+ --ebu-core <file>     Write embedded EBU Core metadata to file
+ --force-header        Force metadata to be appended into the header partition
+ --remove              Remove EBU Core metadata from the MXF file header metadata	 
+	 
 ### mxfanalyzer
 
 The mxfanalyzer example program in ebu-mxfsdk/Analyzer/apps/analyzer demonstrates the use of the SDK's analyzer functions. An existing MXF file is opened, analyzed, and the report is written in the format selected by a number of command line options.
