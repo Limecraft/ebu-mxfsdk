@@ -1,7 +1,7 @@
 
 !define PRODUCT_NAME "EBU MXF SDK"
-!define VERSION "1.0.0a-7" ;@VERSION@
-!define PRODUCT_VERSION "1.0" ;@VERSION@
+!define VERSION "1.1.0" ;@VERSION@
+!define PRODUCT_VERSION "1.1" ;@VERSION@
 !define PRODUCT_GROUP "EBU"
 !define PRODUCT_PUBLISHER "EBU Technical"
 !define PRODUCT_WEB_SITE "http://tech.ebu.ch/"
@@ -123,6 +123,7 @@ Section "MXFSDK" SecMXFSDK
 
   File "/oname=Analyzer\msvc_build\vs10\apps\mxfanalyzer\xerces-c_3_1D.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1D.dll"
   File "/oname=EBUCoreProcessor\msvc_build\vs10\apps\ebu2mxf\xerces-c_3_1D.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1D.dll"
+  File "/oname=EBUCoreProcessor\msvc_build\vs10\apps\ebuaudio2mxf\xerces-c_3_1D.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1D.dll"
   File "/oname=EBUCoreProcessor\msvc_build\vs10\apps\mxf2ebu\xerces-c_3_1D.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1D.dll"
   File "/oname=EBUCoreProcessor\msvc_build\vs10\apps\raw2bmx\xerces-c_3_1D.dll" "..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\bin\xerces-c_3_1D.dll"
 
@@ -146,6 +147,7 @@ Section "MXFSDK" SecMXFSDK
 
   CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\mxf2ebu.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\mxf2ebu.exe$\""
   CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\ebu2mxf.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\ebu2mxf.exe$\""
+  CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\ebuaudio2mxf.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\ebuaudio2mxf.exe$\""
   CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\raw2bmx.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\raw2bmx.exe$\""
   CreateShortCut  "$SMPROGRAMS\${PRODUCT_NAME}\mxfanalyzer.lnk" "cmd.exe" "/K $\"cd $INSTDIR\bin && $INSTDIR\bin\mxfanalyzer.exe$\""
 
@@ -227,6 +229,7 @@ Section "Uninstall"
   
   Delete "$INSTDIR\Analyzer\msvc_build\vs10\apps\mxfanalyzer\xerces-c_3_1D.dll"
   Delete "$INSTDIR\EBUCoreProcessor\msvc_build\vs10\apps\ebu2mxf\xerces-c_3_1D.dll"
+  Delete "$INSTDIR\EBUCoreProcessor\msvc_build\vs10\apps\ebuaudio2mxf\xerces-c_3_1D.dll"
   Delete "$INSTDIR\EBUCoreProcessor\msvc_build\vs10\apps\mxf2ebu\xerces-c_3_1D.dll"
   Delete "$INSTDIR\EBUCoreProcessor\msvc_build\vs10\apps\raw2bmx\xerces-c_3_1D.dll"
 
