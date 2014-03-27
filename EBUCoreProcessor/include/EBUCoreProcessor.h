@@ -408,26 +408,6 @@ namespace EBUSDK {
 	*/
 	DLLEXPORT void EnumerateSupportedEBUCoreDarkSetKeys(std::vector<const mxfKey*>& darkSetKeys);
 
-
-	class ExEBUCoreProcessor : public EBUCoreProcessor {
-	public:
-		/**
-		*	Returns the DM Scheme Universal Label associated with the version of EBUCore supported by this EBUCoreProcessor.
-
-			@returns A pointer to the DM Scheme Universal Label.
-		*/
-		virtual void GetDescriptiveMetadataSchemes(std::vector<const mxfUL*>& metadataSchemesSet) = 0;
-
-		/**
-		*	Returns the Dark Set serialization Universal Label associated with the version of EBUCore supported by this EBUCoreProcessor.
-
-			@returns A pointer to the Universal Label.
-		*/
-		virtual void GetDarkMetadataSetKeys(std::vector<const mxfKey*>& darkKeysSet) = 0;
-		
-	};
-
-
 	} // namespace EBUCore
 
 } // namespace EBUSDK
