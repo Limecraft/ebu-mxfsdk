@@ -85,13 +85,10 @@
 
 #include <mxf/mxf_avid.h>
 
-#include <EBUCoreProcessor.h>
-
 using namespace std;
 using namespace bmx;
 using namespace mxfpp;
 
-using namespace EBUSDK;
 
 
 typedef enum

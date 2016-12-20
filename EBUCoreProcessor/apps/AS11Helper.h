@@ -29,15 +29,15 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __AS11_HELPER_H__
-#define __AS11_HELPER_H__
+#ifndef AS11_HELPER_H_
+#define AS11_HELPER_H_
 
-#include <string>
 #include <vector>
 
-#include <libMXF++/MXF.h>
-
-#include <bmx/as11/AS11Clip.h>
+#include <bmx/apps/FrameworkHelper.h>
+#include <bmx/as11/AS11Info.h>
+#include <bmx/as11/AS11WriterHelper.h>
+#include <bmx/mxf_reader/MXFFileReader.h>
 
 
 
@@ -45,70 +45,34 @@ namespace bmx
 {
 
 
-typedef enum
-{
-    AS11_CORE_FRAMEWORK_TYPE,
-    DPP_FRAMEWORK_TYPE,
-} FrameworkType;
-
-
-typedef struct
-{
-    const char *name;
-    mxfKey item_key;
-} PropertyInfo;
-
-typedef struct
-{
-    const char *name;
-    mxfKey set_key;
-    const PropertyInfo *property_info;
-} FrameworkInfo;
-
-typedef struct
-{
-    FrameworkType type;
-    std::string name;
-    std::string value;
-} FrameworkProperty;
-
-
-
-class FrameworkHelper
-{
-public:
-    FrameworkHelper(mxfpp::DataModel *data_model, mxfpp::DMFramework *framework, Timecode start_timecode,
-                    Rational frame_rate);
-    ~FrameworkHelper();
-
-    bool SetProperty(std::string name, std::string value);
-
-    mxfpp::DMFramework* GetFramework() const { return mFramework; }
-
-private:
-    mxfpp::DMFramework *mFramework;
-    Timecode mStartTimecode;
-    Rational mFrameRate;
-    mxfpp::SetDef *mSetDef;
-    const FrameworkInfo *mFrameworkInfo;
-};
-
-
 class AS11Helper
 {
+public:
+    static bool IndexAS11MCALabels(AppMCALabelHelper *labels_helper);
+
+    static bool ParseXMLSchemeId(const std::string &scheme_id_str, UL *label);
+    static bool ParseAudioLayoutMode(const std::string &audio_mode_str, UL *label);
+
 public:
     AS11Helper();
     ~AS11Helper();
 
+    void ReadSourceInfo(MXFFileReader *source_file);
+
+    bool SupportFrameworkType(const char *type_str);
     bool ParseFrameworkFile(const char *type_str, const char *filename);
     bool ParseSegmentationFile(const char *filename, Rational frame_rate);
     bool SetFrameworkProperty(const char *type_str, const char *name, const char *value);
 
+    bool ParseSpecificationId(const std::string &spec_id_str);
+
     bool HaveProgrammeTitle() const;
     std::string GetProgrammeTitle() const;
 
+    bool HaveAS11CoreFramework() const;
+
 public:
-    void InsertFrameworks(AS11Clip *clip);
+    void AddMetadata(ClipWriter *clip);
     void Complete();
 
 private:
@@ -120,11 +84,17 @@ private:
     std::vector<AS11TCSegment> mSegments;
     bool mFillerCompleteSegments;
 
-    AS11Clip *mClip;
+    AS11Info *mSourceInfo;
+    Timecode mSourceStartTimecode;
+    std::string mSourceProgrammeTitle;
+
+    AS11WriterHelper *mWriterHelper;
     FrameworkHelper *mAS11FrameworkHelper;
     FrameworkHelper *mUKDPPFrameworkHelper;
     bool mHaveUKDPPTotalNumberOfParts;
     bool mHaveUKDPPTotalProgrammeDuration;
+
+    AS11SpecificationId mAS11SpecId;
 };
 
 
