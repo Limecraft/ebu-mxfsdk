@@ -66,6 +66,13 @@
         exit(1); \
     }
 
+typedef struct
+{
+    FILE *baseHeaderFile;
+    const char *directory;
+    MXFDataModel *dataModel;
+} SetDefsData;
+
 static const char* get_sw_ref_name(MXFDataModel *dataModel, MXFItemDef *itemDef, char refName[256])
 {
     (void)dataModel;
@@ -1958,6 +1965,29 @@ static void gen_class(const char *directory, MXFDataModel *dataModel, MXFSetDef 
     fclose(headerFile);
 }
 
+
+static int process_set_defs(void *setDefIn, void *dataIn)
+{
+    MXFSetDef *setDef = (MXFSetDef*)setDefIn;
+    SetDefsData *data = (SetDefsData*)dataIn;
+    char className[256];
+
+    mxfKey ebuCoreKey = { 0x06,0x0E,0x2B,0x34,0x02,0x7F,0x01,0x0B,0x0D,0x02,0x01,0x00, 0x00, 0x00, 0x00, 0x00 };
+		
+    if (!mxf_equals_key_prefix(&setDef->key, &ebuCoreKey, 11) /* Compare first 12 elements of key to handle only EBUCore keys */ ) //(mxf_equals_key(&setDef->key, &g_Null_Key))
+    {
+        /* root set */
+        return 1;
+    }
+
+    strcpy(className, setDef->name);
+    className[0] = toupper(className[0]);
+
+    gen_class(data->directory, data->dataModel, setDef);
+
+    return 1;
+}
+
 static void usage(const char *cmd)
 {
     fprintf(stderr, "Usage: %s <directory>\n", cmd);
@@ -1966,12 +1996,11 @@ static void usage(const char *cmd)
 int main(int argc, const char** argv)
 {
     MXFDataModel *dataModel;
-    MXFListIterator iter;
     char mkdirCmd[FILENAME_MAX];
     FILE *baseHeaderFile;
     char filename[FILENAME_MAX];
     const char *directory;
-    char className[256];
+    SetDefsData setDefsData;
 
     if (argc != 2)
     {
@@ -1986,27 +2015,10 @@ int main(int argc, const char** argv)
 
 	CHECK(EBUSDK::EBUCore::EBUCoreDMS::RegisterCExtensions(dataModel));
 
-	mxfKey ebuCoreKey = { 0x06,0x0E,0x2B,0x34,0x02,0x7F,0x01,0x0B,0x0D,0x02,0x01,0x00, 0x00, 0x00, 0x00, 0x00 };
-
-    mxf_initialise_list_iter(&iter, &dataModel->setDefs);
-    while (mxf_next_list_iter_element(&iter))
-    {
-        MXFSetDef *setDef = (MXFSetDef*)mxf_get_iter_element(&iter);
-		
-        if (!mxf_equals_key_prefix(&setDef->key, &ebuCoreKey, 11) /* Compare first 12 elements of key to handle only EBUCore keys */ ) //(mxf_equals_key(&setDef->key, &g_Null_Key))
-        {
-            /* root set */
-            continue;
-        }
-
-        strcpy(className, setDef->name);
-        className[0] = toupper(className[0]);
-
-        gen_class(directory, dataModel, setDef);
-
-        printf("    REGISTER_CLASS(%s);\n", className);
-    }
-
+    setDefsData.baseHeaderFile = baseHeaderFile;
+    setDefsData.directory = directory;
+    setDefsData.dataModel = dataModel;
+    mxf_tree_traverse(&dataModel->setDefs, process_set_defs, &setDefsData);
 
     mxf_free_data_model(&dataModel);
 
