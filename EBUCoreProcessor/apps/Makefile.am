@@ -1,4 +1,4 @@
-SUBDIRS = . raw2bmx ebu2mxf mxf2ebu ebuaudio2mxf
+SUBDIRS = . raw2bmx writers ebu2mxf mxf2ebu ebuaudio2mxf
 
 
 noinst_LTLIBRARIES = libapp.la
