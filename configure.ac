@@ -253,6 +253,7 @@ AC_CONFIG_FILES([
 	EBUCoreProcessor/include/xsd/Makefile
 	EBUCoreProcessor/src/Makefile
 	EBUCoreProcessor/apps/Makefile
+	EBUCoreProcessor/apps/writers/Makefile
 	EBUCoreProcessor/apps/raw2bmx/Makefile
 	EBUCoreProcessor/apps/ebu2mxf/Makefile
 	EBUCoreProcessor/apps/mxf2ebu/Makefile
