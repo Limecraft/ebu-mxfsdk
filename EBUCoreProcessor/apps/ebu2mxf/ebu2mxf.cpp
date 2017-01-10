@@ -60,6 +60,7 @@
 #include <bmx/as11/AS11Info.h>
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>
+#include <AppUtils.h>
 
 #if defined(_WIN32)
 #include <mxf/mxf_win32_file.h>
@@ -397,6 +398,8 @@ static void usage(const char *cmd)
     fprintf(stderr, " --force-header        Force metadata to be appended into the header partition\n");
     fprintf(stderr, " --dark                Write EBU Core metadata into a dark metadata set\n");
     fprintf(stderr, " --sidecar             Write EBU Core metadata as a side-car reference\n");
+    fprintf(stderr, " --dark-key            Use this custom dark metadata key for metadata embedding.\n");
+    fprintf(stderr, "                       The provided key should a SMPTE UL, in the format .\n");
     fprintf(stderr, " --remove              Remove EBU Core metadata from the MXF file header metadata\n");
 }
 
@@ -436,6 +439,8 @@ int main(int argc, const char** argv)
     bool do_print_info = false;
     bool do_print_version = false;
     const char *ebucore_filename = 0;
+    bool do_use_dark_metadata_key = false;
+    mxfKey darkMetadataKey;
     int cmdln_index;
 
     if (argc == 1) {
@@ -502,6 +507,24 @@ int main(int argc, const char** argv)
 			ebucore_filename = argv[cmdln_index + 1];
             cmdln_index++;
         }
+        else if (strcmp(argv[cmdln_index], "--dark-key") == 0)
+        {
+            if (cmdln_index + 1 >= argc)
+            {
+                usage(argv[0]);
+                fprintf(stderr, "Missing argument for option '%s'\n", argv[cmdln_index]);
+                return 1;
+            }
+            // parse the argument into an MXF UL
+            if (bmx::parse_hex_string(argv[cmdln_index + 1], (unsigned char*)&darkMetadataKey, 16)) {
+                do_use_dark_metadata_key = true;
+            } else {
+                usage(argv[0]);
+                fprintf(stderr, "Invalid argument for option '%s'\n", argv[cmdln_index]);
+                return 1;
+            }
+            cmdln_index++;
+        }
         else
         {
             break;
@@ -547,13 +570,14 @@ int main(int argc, const char** argv)
     try
     {
 		if (do_remove) {
-			EBUCore::RemoveEBUCoreMetadata(filenames[0], &progress_cb, false, do_force_header);
+            EBUCore::RemoveEBUCoreMetadata(filenames[0], &progress_cb, false, do_force_header, do_use_dark_metadata_key, do_use_dark_metadata_key ? &darkMetadataKey : NULL);
 		}
 		else {
 			if (ebucore_filename) {
 				// select correct serialization mode
 				EBUCore::MetadataKind kind = do_sidecar ? EBUCore::SIDECAR : (do_dark ? EBUCore::DARK : EBUCore::KLV_ENCODED);
-				EBUCore::EmbedEBUCoreMetadata(ebucore_filename, filenames[0], &progress_cb, kind, false, do_force_header);
+                EBUCore::EmbedEBUCoreMetadata(ebucore_filename, filenames[0], &progress_cb, kind, false, do_force_header, 
+                    do_use_dark_metadata_key, do_use_dark_metadata_key ? &darkMetadataKey : NULL);
 			}
 		}
     }

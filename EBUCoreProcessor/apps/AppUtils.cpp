@@ -48,7 +48,7 @@
 #include <sys/time.h>
 #endif
 
-#include <bmx/apps/AppUtils.h>
+#include <AppUtils.h>
 #include <bmx/clip_writer/ClipWriter.h>
 #include <bmx/writer_helper/VC2WriterHelper.h>
 #include "ps_avci_header_data.h"
@@ -158,7 +158,7 @@ static const ClipWriterTypeStringMap CLIP_WRITER_TYPE_STRING_MAP[] =
 
 
 
-static bool parse_hex_string(const char *hex_str, unsigned char *octets, size_t octets_size)
+bool bmx::parse_hex_string(const char *hex_str, unsigned char *octets, size_t octets_size)
 {
     size_t i = 0, s = 0;
 

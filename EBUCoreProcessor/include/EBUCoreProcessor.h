@@ -149,7 +149,7 @@ namespace EBUSDK {
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
 							MetadataKind optWaytoWrite = KLV_ENCODED,
-							bool optNoIdentification = false, bool optForceHeader = false);
+							bool optNoIdentification = false, bool optForceHeader = false, bool optUseCustomDarkMetadataKey = false, const mxfKey *customDarkMetadataKey = NULL);
 
 	/**
 	*	Embed EBUCore metadata into an MXF file.\n
@@ -177,7 +177,7 @@ namespace EBUSDK {
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
 							MetadataKind optWaytoWrite = KLV_ENCODED,
-							bool optNoIdentification = false, bool optForceHeader = false);
+							bool optNoIdentification = false, bool optForceHeader = false, bool optUseCustomDarkMetadataKey = false, const mxfKey *customDarkMetadataKey = NULL);
 
 	/**
 	*	Removes EBUCore metadata from an MXF file.\n
@@ -195,7 +195,7 @@ namespace EBUSDK {
 
 	DLLEXPORT void RemoveEBUCoreMetadata(	const char* mxfLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-							bool optNoIdentification = false, bool optForceHeader = false);
+							bool optNoIdentification = false, bool optForceHeader = false, bool optUseCustomDarkMetadataKey = false, const mxfKey *customDarkMetadataKey = NULL);
 
 
 	/**

@@ -81,6 +81,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\apps\AppUtils.cpp" />
     <ClCompile Include="..\..\..\..\apps\ebu2mxf\ebu2mxf.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

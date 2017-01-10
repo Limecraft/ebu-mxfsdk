@@ -167,7 +167,7 @@ void InnerEmbedEBUCoreMetadata(
 							const char* mxfLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
 							MetadataKind optWaytoWrite,
-							bool optNoIdentification, bool optForceHeader) {
+							bool optNoIdentification, bool optForceHeader, bool optUseCustomDarkMetadataKey, const mxfKey *customDarkMetadatKey) {
 
 		progress_callback(0.2f, INFO, "EmbedEBUCoreMetadata", "Opening MXF file %s", mxfLocation);
 
@@ -326,7 +326,7 @@ void InnerEmbedEBUCoreMetadata(
 			uint64_t headerMetadataSize = (optWaytoWrite == DARK) ?
 				WriteDarkMetadataToFile(	&*mFile, 
 											*ser, 
-											processor->GetDarkMetadataSetKey(),
+                                            optUseCustomDarkMetadataKey ? customDarkMetadatKey : processor->GetDarkMetadataSetKey(),
 											pos_start_metadata, pos_write_start_metadata, false, footerPartition, metadata_partition) :
 				WriteMetadataToFile(		&*mFile, 
 											&*mHeaderMetadata, 
@@ -398,7 +398,7 @@ void InnerEmbedEBUCoreMetadata(
 			uint64_t headerMetadataSize = (optWaytoWrite == DARK) ?
 				WriteDarkMetadataToFile(	&*mFile, 
 											*ser, 
-											processor->GetDarkMetadataSetKey(), 
+											optUseCustomDarkMetadataKey ? customDarkMetadatKey : processor->GetDarkMetadataSetKey(), 
 											pos_start_metadata, pos_write_start_metadata, true, headerPartition, metadata_partition) :
 				WriteMetadataToFile(		&*mFile, 
 											&*mHeaderMetadata, 
@@ -463,13 +463,14 @@ void EmbedEBUCoreMetadata(	const char* metadataLocation,
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
 							MetadataKind optWaytoWrite,
-							bool optNoIdentification, bool optForceHeader) {
+							bool optNoIdentification, bool optForceHeader, bool optUseCustomDarkMetadataKey, const mxfKey *customDarkMetadataKey) {
 
 	progress_callback(0.0f, INFO, "EmbedEBUCoreMetadata", "Writing EBUCore metadata to MXF file %s, in %s mode...", mxfLocation, 
 		optWaytoWrite == KLV_ENCODED ? "KLV-encoded" : (optWaytoWrite == SIDECAR ? "side-car" : "dark metadata" ) );
 	progress_callback(0.1f, INFO, "EmbedEBUCoreMetadata", "Reading EBUCore XML document from file %s", metadataLocation);
 
-	InnerEmbedEBUCoreMetadata(NULL, metadataLocation, mxfLocation, progress_callback, optWaytoWrite, optNoIdentification, optForceHeader);	
+	InnerEmbedEBUCoreMetadata(NULL, metadataLocation, mxfLocation, progress_callback, optWaytoWrite, optNoIdentification, optForceHeader, 
+        optUseCustomDarkMetadataKey, customDarkMetadataKey);	
 
 }
 
@@ -478,19 +479,20 @@ void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument,
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
 							MetadataKind optWaytoWrite,
-							bool optNoIdentification, bool optForceHeader) {
+							bool optNoIdentification, bool optForceHeader, bool optUseCustomDarkMetadataKey, const mxfKey *customDarkMetadataKey) {
 
 	progress_callback(0.0f, INFO, "EmbedEBUCoreMetadata", "Writing EBUCore metadata to MXF file %s, in %s mode...", mxfLocation, 
 		optWaytoWrite == KLV_ENCODED ? "KLV-encoded" : (optWaytoWrite == SIDECAR ? "side-car" : "dark metadata" ) );
 	progress_callback(0.1f, INFO, "EmbedEBUCoreMetadata", "Reading EBUCore XML document from DOMDocument input");
 
-	InnerEmbedEBUCoreMetadata(&metadataDocument, metadataLocation, mxfLocation, progress_callback, optWaytoWrite, optNoIdentification, optForceHeader);
+	InnerEmbedEBUCoreMetadata(&metadataDocument, metadataLocation, mxfLocation, progress_callback, optWaytoWrite, optNoIdentification, optForceHeader, 
+        optUseCustomDarkMetadataKey, customDarkMetadataKey);
 
 }
 
 void RemoveEBUCoreMetadata(	const char* mxfLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-							bool optNoIdentification, bool optForceHeader) {
+							bool optNoIdentification, bool optForceHeader, bool optUseCustomDarkMetadataKey, const mxfKey *customDarkMetadatKey) {
 
 		progress_callback(0.2f, INFO, "EmbedEBUCoreMetadata", "Opening MXF file %s", mxfLocation);
 
@@ -563,11 +565,15 @@ void RemoveEBUCoreMetadata(	const char* mxfLocation,
 		// / 2. Remove the EBU Core metadata from the header metadata
 		// ///////////
 		progress_callback(0.4f, INFO, "RemoveEBUCoreMetadata", "Removing EBUCore metadata from MXF metadata");
-
 		// prepare a vector of dark metadata keys that is to be ignored (i.e., discarded) 
 		// when metadata is (re)written to the file
 		std::vector<const mxfKey*> ignoredDarkKeys;
-		EnumerateSupportedEBUCoreDarkSetKeys(ignoredDarkKeys);
+        if (optUseCustomDarkMetadataKey) {
+            // Remove a specific key of dark metadata, leave all regular EBUCore keys intact
+            ignoredDarkKeys.push_back(customDarkMetadatKey);
+        } else {
+		    EnumerateSupportedEBUCoreDarkSetKeys(ignoredDarkKeys);
+        }
 
 		// if there is a supported processor, assume that the extensions are loaded and we can remove the metadata
 		if (processor != NULL) {
