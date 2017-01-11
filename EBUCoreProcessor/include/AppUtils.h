@@ -104,6 +104,7 @@ bool parse_d10_sound_flags(const char *flags_str, uint8_t *flags);
 bool parse_timestamp(const char *timestamp_str, Timestamp *timestamp);
 bool parse_umid(const char *umid_str, UMID *umid);
 bool parse_uuid(const char *uuid_str, UUID *uuid);
+bool parse_hex_string(const char *hex_str, unsigned char *octets, size_t octets_size);
 bool parse_product_version(const char *version_str, mxfProductVersion *uuid);
 bool parse_product_info(const char **info_strings, size_t num_info_strings,
                         std::string *company_name, std::string *product_name, mxfProductVersion *product_version,
