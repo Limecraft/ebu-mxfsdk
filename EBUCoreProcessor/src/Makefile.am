@@ -167,7 +167,8 @@ libebucore_la_SOURCES = \
 	EBUCore_1_4/EBUCoreReverseMapping.cpp \
 	EBUCore_1_4/EBUCoreProcessor_1_4.cpp \
 	EBUCoreProcessor.cpp \
-	AppUtils.cpp
+	AppUtils.cpp \
+	Version.cpp
 
 libebucore_la_CXXFLAGS = $(EBUSDK_CFLAGS)
 libebucore_la_LDFLAGS = $(EBUSDK_LIBADDLIBS)
