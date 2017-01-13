@@ -39,6 +39,7 @@
 #include <bmx/as11/AS11Info.h>
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>
+#include <AppUtils.h>
 
 #if defined(_WIN32)
 #include <mxf/mxf_win32_file.h>
@@ -56,7 +57,7 @@ using namespace EBUSDK;
 static string get_version_info()
 {
     char buffer[256];
-    sprintf(buffer, "ebuaudio2mxf, %s v%s, %s %s (scm %s)",
+    sprintf(buffer, "mxf2ebu, %s v%s, %s %s (scm %s)",
             EBUSDK::get_library_name().c_str(),
             EBUSDK::get_version_string().c_str(),
             __DATE__, __TIME__,
@@ -73,6 +74,8 @@ static void usage(const char *cmd)
     fprintf(stderr, " -v | --version        Print version info\n");
     fprintf(stderr, " -l <file>             Log filename. Default log to stderr/stdout\n");
     fprintf(stderr, " --ebu-core <file>     Write embedded EBU Core metadata to file\n");
+    fprintf(stderr, " --dark-key            Use this custom dark metadata key when searching for dark embedded metadata.\n");
+    fprintf(stderr, "                       The provided key should a SMPTE UL, in the format ....\n");
 }
 
 void progress_cb(float progress, EBUCore::ProgressCallbackLevel level, const char *function, const char *msg_format, ...) {
@@ -106,8 +109,9 @@ int main(int argc, const char** argv)
     std::vector<const char *> filenames;
     bool do_print_version = false;
     const char *ebucore_filename = 0;
+    bool do_use_dark_metadata_key = false;
+    mxfKey darkMetadataKey;
     int cmdln_index;
-
 
     if (argc == 1) {
         usage(argv[0]);
@@ -151,6 +155,24 @@ int main(int argc, const char** argv)
                 return 1;
             }
 			ebucore_filename = argv[cmdln_index + 1];
+            cmdln_index++;
+        }
+        else if (strcmp(argv[cmdln_index], "--dark-key") == 0)
+        {
+            if (cmdln_index + 1 >= argc)
+            {
+                usage(argv[0]);
+                fprintf(stderr, "Missing argument for option '%s'\n", argv[cmdln_index]);
+                return 1;
+            }
+            // parse the argument into an MXF UL
+            if (bmx::parse_hex_string(argv[cmdln_index + 1], (unsigned char*)&darkMetadataKey, 16)) {
+                do_use_dark_metadata_key = true;
+            } else {
+                usage(argv[0]);
+                fprintf(stderr, "Invalid argument for option '%s'\n", argv[cmdln_index]);
+                return 1;
+            }
             cmdln_index++;
         }
         else
@@ -198,7 +220,7 @@ int main(int argc, const char** argv)
     try
     {
 		if (ebucore_filename) {
-			EBUCore::ExtractEBUCoreMetadata(filenames[0], ebucore_filename, &progress_cb);
+			EBUCore::ExtractEBUCoreMetadata(filenames[0], ebucore_filename, &progress_cb, do_use_dark_metadata_key, do_use_dark_metadata_key ? &darkMetadataKey : NULL);
 		}
     }
     catch (const MXFException &ex)

@@ -159,7 +159,8 @@ MetadataKind ExtractEBUCoreMetadata(
 							const char* metadataLocation,
 							xercesc::DOMDocument** outputDocument,
 							MetadataOutput outputFashion,
-							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...));
+							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
+                            bool optUseCustomDarkMetadataKey, const mxfKey *customDarkMetadataKey);
 
 void InnerEmbedEBUCoreMetadata(	
 							xercesc::DOMDocument* metadataDocument, 
@@ -241,7 +242,8 @@ void InnerEmbedEBUCoreMetadata(
 		/*		 If existing metadata is found, the new metadata is serialized 
 				in the same fashion, overwriting what was present before */
 		// ///////////
-		MetadataKind existingKind = ExtractEBUCoreMetadata(processor, &*mHeaderMetadata, metadata_partition, &*mFile, NULL, NULL, DONT_SERIALIZE, progress_callback);
+		MetadataKind existingKind = ExtractEBUCoreMetadata(processor, &*mHeaderMetadata, metadata_partition, &*mFile, NULL, NULL, DONT_SERIALIZE, 
+            progress_callback, optUseCustomDarkMetadataKey, customDarkMetadatKey);
 		if (existingKind != NONE) {
 			// there is metadata, override the way in which we are writing metadata!
 			if (optWaytoWrite != existingKind) {
@@ -789,7 +791,8 @@ MetadataKind ExtractEBUCoreMetadata(
 							const char* metadataLocation,
 							xercesc::DOMDocument** outputDocument,
 							MetadataOutput outputFashion,
-							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...)) {
+							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
+                            bool optUseCustomDarkMetadataKey, const mxfKey *customDarkMetadataKey) {
 
 
 	// ///////////////////////////////////////
@@ -861,10 +864,15 @@ MetadataKind ExtractEBUCoreMetadata(
 		progress_callback(0.61f, INFO, "ExtractEBUCoreMetadata", "No ebucoreMainFramework found on the MXF timeline, looking for dark metadata...");
 
 		std::vector<const mxfKey*> darkSetKeys;
-		if (processor != NULL)
-			darkSetKeys.push_back(processor->GetDarkMetadataSetKey());
-		else
-			EBUCore::EnumerateSupportedEBUCoreDarkSetKeys(darkSetKeys);
+        if (optUseCustomDarkMetadataKey) {
+            darkSetKeys.push_back(customDarkMetadataKey);
+        }
+        else {
+		    if (processor != NULL)
+			    darkSetKeys.push_back(processor->GetDarkMetadataSetKey());
+		    else
+			    EBUCore::EnumerateSupportedEBUCoreDarkSetKeys(darkSetKeys);
+        }
 
 		mxfFile->seek(partition->getThisPartition(), SEEK_SET);
 		uint64_t count = 0, sourceHeaderByteCount = partition->getHeaderByteCount();
@@ -916,7 +924,8 @@ void ExtractEBUCoreMetadata(
 							const char* metadataLocation,
 							xercesc::DOMDocument** outputDocument,
 							MetadataOutput outputFashion,
-							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...)) {
+							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
+                            bool optUseCustomDarkMetadataKey, const mxfKey *customDarkMetadataKey) {
 	
 	XMLPlatformUtils::Initialize();
 
@@ -982,7 +991,8 @@ void ExtractEBUCoreMetadata(
 		mHeaderMetadata->read(&*mFile, metadata_partition, &key, llen, len);
 	}
 
-	ExtractEBUCoreMetadata(processor, &*mHeaderMetadata, metadata_partition, &*mFile, metadataLocation, outputDocument, outputFashion, progress_callback);
+	ExtractEBUCoreMetadata(processor, &*mHeaderMetadata, metadata_partition, &*mFile, metadataLocation, outputDocument, outputFashion, 
+        progress_callback, optUseCustomDarkMetadataKey, customDarkMetadataKey);
 
 	// ///////////////////////////////////////
 	// / 3. We're done, close the MXF file.
@@ -992,19 +1002,21 @@ void ExtractEBUCoreMetadata(
 
 xercesc::DOMDocument& ExtractEBUCoreMetadata(
 							const char* mxfLocation,
-							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...)) {
+							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
+                            bool optUseCustomDarkMetadataKey, const mxfKey *customDarkMetadataKey) {
 
 	xercesc::DOMDocument *doc;
-	ExtractEBUCoreMetadata(mxfLocation, NULL, &doc, OUTPUT_AS_DOM_DOCUMENT, progress_callback);
+	ExtractEBUCoreMetadata(mxfLocation, NULL, &doc, OUTPUT_AS_DOM_DOCUMENT, progress_callback, optUseCustomDarkMetadataKey, customDarkMetadataKey);
 	return *doc;
 
 }
 	
 void ExtractEBUCoreMetadata(const char* mxfLocation,
 							const char* metadataLocation,
-							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...)) {
+							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
+                            bool optUseCustomDarkMetadataKey, const mxfKey *customDarkMetadataKey) {
 
-	ExtractEBUCoreMetadata(mxfLocation, metadataLocation, NULL, SERIALIZE_TO_FILE, progress_callback);
+	ExtractEBUCoreMetadata(mxfLocation, metadataLocation, NULL, SERIALIZE_TO_FILE, progress_callback, optUseCustomDarkMetadataKey, customDarkMetadataKey);
 
 }
 
