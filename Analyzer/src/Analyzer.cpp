@@ -439,7 +439,7 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
     } 
     else {
         tmpSetNS = new _X("ns:ext", tc); tmpSetName = new _X(setDef->name, tc);
-        tmpSet = new st434info(tmpSetName->str(), tmpSetNS->str());
+        tmpSet = new st434info(tmpSetName->str(), ebuNonStrictElementsNS);
         info = tmpSet;
     }
     
@@ -495,7 +495,7 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 					// provide some alternative
 					if (tmpItem!=NULL) { delete tmpItem; delete tmpItemNS; delete tmpItemName; }
 					tmpItemNS = new _X("ns:ext", tc); tmpItemName = new _X(itemDef->name, tc);
-					tmpItem = new st434info(tmpItemName->str(), tmpItemNS->str());
+                    tmpItem = new st434info(tmpItemName->str(), ebuNonStrictElementsNS);
 					itemInfo = tmpItem;
                 }
 
