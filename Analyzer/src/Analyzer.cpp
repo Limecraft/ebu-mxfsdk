@@ -61,12 +61,13 @@ static const XMLCh s377mTypesNS[] = {'h','t','t','p',':','/','/','w','w','w','.'
 static const XMLCh s377mMuxNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','m','u','l','t','i','p','l','e','x','/','S','3','7','7','M','/','2','0','0','4','\0'};
 
 static const XMLCh ebucoreElementsNS[] = {'u','r','n',':','e','b','u',':','m','e','t','a','d','a','t','a','-','s','c','h','e','m','a',':','s','m','p','t','e','c','l','a','s','s','1','3','/','p','r','o','p','e','r','t','i','e','s','/','e','b','u','c','o','r','e','_','2','0','1','3','\0'};
+static const XMLCh ebuNonStrictElementsNS[] = { 'h','t','t','p',':','/','/','w','w','w','.','l','i','m','e','c','r','a','f','t','.','c','o','m','/','x','m','l','/','n','a','m','e','s','p','a','c','e','s','/','S','T','4','3','4','/','e','x','t','e','n','s','i','o','n','s', '\0' };
 
 struct st434info {
-	XMLCh* namespaceURI;
+    const XMLCh* namespaceURI;
 	const XMLCh* elementName;
 
-	st434info(const XMLCh* _elementName, XMLCh* _namespaceURI) : 	namespaceURI(_namespaceURI), elementName(_elementName) {}
+	st434info(const XMLCh* _elementName, const XMLCh* _namespaceURI) : 	namespaceURI(_namespaceURI), elementName(_elementName) {}
 };
 
 struct KLVPacketRef {
@@ -288,6 +289,7 @@ class XMLStr {
 	TranscodeFromStr _s;
 public:
 	XMLStr(const char* source, XMLTranscoder *tc) : _s((const XMLByte*)source, strlen(source), tc) {}
+	XMLStr(const char* source, XMLSize_t length, XMLTranscoder *tc) : _s((const XMLByte*)source, length, tc) {}
 	XMLStr(const std::string& source, XMLTranscoder *tc) : _s((const XMLByte*)(source.c_str()), source.length(), tc) {}
 	~XMLStr() {}
 	const XMLCh* str() const {
@@ -422,17 +424,26 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 	std::map< mxfUUID, std::vector<KLVPacketRef> >& darkItems, bool recurseIntoReferences, std::map<mxfKey, st434info*>& st434dict, XMLTranscoder *tc) {
 	
 	std::map<mxfKey, st434info*>::const_iterator objIter;
-	objIter = st434dict.find(set->key);
-	if (objIter != st434dict.end())
-    {
-		//xercesc::TranscodeFromStr location(L"http://www.smpte-ra.org/schemas/434/2006/properties/S335M", loc.size(), "UTF-8");
-		//*outputDocument = ParseXercesDocument(location.str());
-		MXFSetDef *setDef;
-		mxf_find_set_def(header_metadata->dataModel, &set->key, &setDef);
+    
+    st434info *tmpSet = NULL; _X* tmpSetNS = NULL; _X* tmpSetName = NULL;
+	st434info* tmpItem = NULL; _X* tmpItemNS = NULL; _X* tmpItemName = NULL;
 
-		st434info* info = (*objIter).second;
-		if (info->elementName[0] == 'e')
-			printf("");
+	st434info* info = NULL;
+
+	MXFSetDef *setDef;
+	mxf_find_set_def(header_metadata->dataModel, &set->key, &setDef);
+
+	objIter = st434dict.find(set->key);
+	if (objIter != st434dict.end()) {
+		info = (*objIter).second;
+    } 
+    else {
+        tmpSetNS = new _X("ns:ext", tc); tmpSetName = new _X(setDef->name, tc);
+        tmpSet = new st434info(tmpSetName->str(), tmpSetNS->str());
+        info = tmpSet;
+    }
+    
+    if (info != NULL) {
 
 		// create an element for this set
 		DOMElement *elem = root->createElementNS(info->namespaceURI, info->elementName);
@@ -469,13 +480,26 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 			if (mxf_find_item_def_in_set_def(&item->key, setDef, &itemDef)) {
 				MXFItemType *itemType = mxf_get_item_def_type(header_metadata->dataModel, itemDef->typeId);
 
+                if (mxf_equals_key(&itemDef->key, &MXF_ITEM_K(InterchangeObject, InstanceUID)))
+                    continue;
+
 				std::map<mxfKey, st434info*>::const_iterator objIter;
 				objIter = st434dict.find(itemDef->key);
 				// only if we know the definition
-				if (objIter != st434dict.end())
-				{
-					st434info* itemInfo = (*objIter).second;
+                st434info* itemInfo = NULL;
 
+				if (objIter != st434dict.end()) {
+					itemInfo = (*objIter).second;
+                } else {
+                    // not found!
+					// provide some alternative
+					if (tmpItem!=NULL) { delete tmpItem; delete tmpItemNS; delete tmpItemName; }
+					tmpItemNS = new _X("ns:ext", tc); tmpItemName = new _X(itemDef->name, tc);
+					tmpItem = new st434info(tmpItemName->str(), tmpItemNS->str());
+					itemInfo = tmpItem;
+                }
+
+                {
 					// create an element for this item
 					DOMElement *itemElem = PrepareElement(root, elem, itemInfo->namespaceURI, itemInfo->elementName);
 					
@@ -526,7 +550,7 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 						}
 					} else {
 
-						if (itemDef->typeId == MXF_UTF16STRING_TYPE || itemDef->typeId == MXF_ISO7STRING_TYPE) {
+						if (itemDef->typeId == MXF_UTF16STRING_TYPE) {
 							uint16_t utf16Size;
 							mxf_get_utf16string_item_size(set, &item->key, &utf16Size);
 							XMLCh *utf16Result = new XMLCh[utf16Size];
@@ -534,6 +558,31 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 							itemElem->setTextContent(utf16Result);
 							delete utf16Result; // release, no longer needed
 						}
+                        else if (itemDef->typeId == MXF_ISO7STRING_TYPE) {
+                            // translate the ISO 7-bity string value to Xerces string using the transcoder we already have
+                            // we can use this trancoder as the expected values are backwards compatible with UTF-8.
+                            itemElem->setTextContent(_X((const char*)item->value, item->length, tc).str());
+                        }
+  						else if (itemDef->typeId == MXF_RAW_TYPE) {
+
+                            // try to get some info to check whether it makes sense to print out the content of this 'RAW' element
+
+                            if (mxf_equals_key(&itemDef->key, &MXF_ITEM_K(UTF8TextBasedSet, UTF8TextData))) {
+
+                                // translate the UTF-8 string value to Xerces string using the transcoder we already have
+                                itemElem->setTextContent(_X((const char*)item->value, item->length, tc).str());
+
+                            } else if (mxf_equals_key(&itemDef->key, &MXF_ITEM_K(UTF16TextBasedSet, UTF16TextData))) {
+                                // we can reuse the UTF-16 string directly in the Xerces DOM
+							    uint16_t utf16Size;
+							    mxf_get_utf16string_item_size(set, &item->key, &utf16Size);
+							    XMLCh *utf16Result = new XMLCh[utf16Size];
+							    mxf_get_fixed_item_length_utf16string(item->value, item->length, (uint16_t*)utf16Result);
+							    itemElem->setTextContent(utf16Result);
+							    delete utf16Result; // release, no longer needed
+                            }
+                        }
+
 						else if (itemDef->typeId == MXF_RGBALAYOUT_TYPE) {
 							mxfRGBALayout v;
 							mxf_get_rgba_layout(item->value, &v);
@@ -572,6 +621,10 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 	else {
 		// don't know this!!!
 	}
+
+    if (tmpItem!=NULL) { delete tmpItem; delete tmpItemNS; delete tmpItemName; }
+    if (tmpSet!=NULL) { delete tmpSet; delete tmpSetNS; delete tmpSetName; }
+
 }
 
 void AnalyzeList(DOMElement* parent, MXFList *list, int elementType, DOMDocument* root, XMLTranscoder *tc) {
@@ -770,7 +823,10 @@ void AddST434PrefixDeclarations(DOMDocument *doc, XMLTranscoder* tc) {
 
 	doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
 		_X("xmlns:ebucoreElements", tc).str(), ebucoreElementsNS);
-	
+
+    doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
+        _X("xmlns:ext", tc).str(), ebuNonStrictElementsNS);
+
 }
 
 bool FindFirstIndexTable(MXFFile *mxfFile, int64_t offset, int64_t *tableOffset) {
