@@ -1,78 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- -->
-<!-- This XML Schema document is an integral part of the Revision of SMPTE 434-2006: Material Exchange Format - XML Encoding for Metadata and File Structure Information". -->
-<!-- Copyright SMPTE 2006, 2011. -->
-<!-- -->
-<!-- -->
-<!-- -->
+<!-- This XML Schema document is an integral part of the of the SMPTE Standard ST 434:2014: "Material Exchange Format - XML Encoding for Metadata and File Structure Information". -->
+<!-- Copyright SMPTE 2006, 2014. -->
+<!-- - -->
+<!-- - -->	
+<xs:schema xmlns="http://www.smpte-ra.org/schemas/434/2014/multiplex/377-1/2012" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.smpte-ra.org/schemas/434/2014/multiplex/377-1/2012" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:rp2057Groups="http://www.smpte-ra.org/schemas/434/2014/groups/2057/2013" xmlns:st2037Groups="http://www.smpte-ra.org/schemas/434/2014/groups/2037/2009" xmlns:st2075Groups="http://www.smpte-ra.org/schemas/434/2014/groups/2075/2012" xmlns:st335Elements="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" xmlns:st377-1Groups="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" xmlns:st377-4Groups="http://www.smpte-ra.org/schemas/434/2014/groups/377-4/2012" xmlns:st377Mux="http://www.smpte-ra.org/schemas/434/2014/multiplex/377-1/2012" xmlns:st377Types="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" xmlns:st380Groups="http://www.smpte-ra.org/schemas/434/2014/groups/380/2004" xmlns:st381-2Groups="http://www.smpte-ra.org/schemas/434/2014/groups/381-2/2011" xmlns:st381-3Groups="http://www.smpte-ra.org/schemas/434/2014/groups/381-3/2013" xmlns:st381Groups="http://www.smpte-ra.org/schemas/434/2014/groups/381-1/2005" xmlns:st382Groups="http://www.smpte-ra.org/schemas/434/2014/groups/382/2012" xmlns:st385Groups="http://www.smpte-ra.org/schemas/434/2014/groups/385/2012" xmlns:st422Groups="http://www.smpte-ra.org/schemas/434/2014/groups/422/2006" xmlns:st429-10Groups="http://www.smpte-ra.org/schemas/434/2014/groups/429-10/2008" xmlns:st429-5Groups="http://www.smpte-ra.org/schemas/434/2014/groups/429-5/2009" xmlns:st429-6Groups="http://www.smpte-ra.org/schemas/434/2014/groups/429-5/2006" xmlns:st436Groups="http://www.smpte-ra.org/schemas/434/2014/groups/436/2006" xmlns:ebucoregroups="urn:ebu:metadata-schema:smpteclass13/groups/ebucore_2012">
 	<!-- - -->
 	<!-- - -->
-<xs:schema xmlns="http://www.smpte-ra.org/schemas/434/2006/multiplex/S377M/2004"
-	xmlns:s377mMux="http://www.smpte-ra.org/schemas/434/2006/multiplex/S377M/2004"
-	xmlns:s335mElements="http://www.smpte-ra.org/schemas/434/2006/properties/S335M"
-	xmlns:s377mTypes="http://www.smpte-ra.org/schemas/434/2006/types/S377M/2004"
-	xmlns:s377mGroups="http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004"
-	xmlns:s381mGroups="http://www.smpte-ra.org/schemas/434/2006/groups/S381M/2005"
-	xmlns:s382mGroups="http://www.smpte-ra.org/schemas/434/2006/groups/S382M/2007"
-	xmlns:s385mGroups="http://www.smpte-ra.org/schemas/434/2006/groups/S385M/2004"
-	xmlns:s422mGroups="http://www.smpte-ra.org/schemas/434/2006/groups/S422M/2006"
-	xmlns:s429-6Groups="http://www.smpte-ra.org/schemas/434/2006/groups/S429-6/2006"
-	xmlns:s436mGroups="http://www.smpte-ra.org/schemas/434/2006/groups/S436M/2006"
-	xmlns:s2037Groups="http://www.smpte-ra.org/schemas/434/2006/groups/S2037/2009"
-	xmlns:s380mGroups="http://www.smpte-ra.org/schemas/434/2006/groups/S380M/2004"
-	xmlns:ebucoregroups="urn:ebu:metadata-schema:smpteclass13/groups/ebucore_2012"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.smpte-ra.org/schemas/434/2006/multiplex/S377M/2004"
-	elementFormDefault="qualified" attributeFormDefault="qualified">
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/2057/2013" schemaLocation="../groups/rp2057_metadata.xsd"/>
 	<!-- - -->
 	<!-- - -->
-	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004"
-		schemaLocation="../groups/s377m_metadata.xsd"/>
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/2037/2009" schemaLocation="../groups/st2037_metadata.xsd"/>
 	<!-- - -->
 	<!-- - -->
-	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S381M/2005"
-		schemaLocation="../groups/s381m_metadata.xsd"/>
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/2075/2012" schemaLocation="../groups/st2075_metadata.xsd"/>
 	<!-- - -->
 	<!-- - -->
-	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S382M/2007"
-		schemaLocation="../groups/s382m_metadata.xsd"/>
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-4/2012" schemaLocation="../groups/st377-4_metadata.xsd"/>
 	<!-- - -->
 	<!-- - -->
-	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S385M/2004"
-		schemaLocation="../groups/s385m_metadata.xsd"/>
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" schemaLocation="../groups/st377_metadata.xsd"/>
 	<!-- - -->
 	<!-- - -->
-	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S380M/2004"
-		schemaLocation="../groups/s380m_metadata.xsd"/>
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/380/2004" schemaLocation="../groups/st380_metadata.xsd"/>
 	<!-- - -->
 	<!-- - -->
-	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S422M/2006"
-		schemaLocation="../groups/s422m_metadata.xsd"/>
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/381-2/2011" schemaLocation="../groups/st381-2_metadata.xsd"/>
 	<!-- - -->
 	<!-- - -->
-	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S429-6/2006"
-		schemaLocation="../groups/s429-6_metadata.xsd"/>
-	<!-- -->
-	<!-- -->
-	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S436M/2006"
-		schemaLocation="../groups/s436m_metadata.xsd"/>
-	<!-- -->
-	<!-- -->
-	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S2037/2009"
-		schemaLocation="../groups/s2037_metadata.xsd"/>
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/381-3/2013" schemaLocation="../groups/st381-3_metadata.xsd"/>
 	<!-- - -->
 	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/381-1/2005" schemaLocation="../groups/st381_metadata.xsd"/>
 	<!-- - -->
 	<!-- - -->
-	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/properties/S335M"
-		schemaLocation="../dictionary/rp210.xsd"/>
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/382/2012" schemaLocation="../groups/st382_metadata.xsd"/>
 	<!-- - -->
 	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/385/2012" schemaLocation="../groups/st385_metadata.xsd"/>
 	<!-- - -->
 	<!-- - -->
-	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/types/S377M/2004"
-		schemaLocation="../dataTypes/s377m_types.xsd"/>
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/422/2006" schemaLocation="../groups/st422_metadata.xsd"/>
 	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/429-10/2008" schemaLocation="../groups/st429-10_metadata.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/429-5/2009" schemaLocation="../groups/st429-5_metadata.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/429-5/2006" schemaLocation="../groups/st429-6_metadata.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/436/2006" schemaLocation="../groups/st436_metadata.xsd"/>
 	<!-- - -->
 	<!-- - -->
 	<!-- - -->
@@ -84,762 +64,942 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:choice>
-					<xs:element ref="s377mGroups:Preface"/>
-					<xs:element ref="s377mGroups:Preface_REF"/>
-				</xs:choice>
-				<xs:choice minOccurs="0" maxOccurs="unbounded">
-					<xs:any namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004"
-						processContents="strict"/>
-					<xs:any namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S380M/2004"
-						processContents="strict"/>
-					<xs:any namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S381M/2005"
-						processContents="strict"/>
-					<xs:any namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S382M/2007"
-						processContents="strict"/>
-					<xs:any namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S385M/2004"
-						processContents="strict"/>
-					<xs:any namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S422M/2004"
-						processContents="strict"/>
-					<xs:any namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S429-6/2004"
-						processContents="strict"/>
-					<xs:any namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S436M/2006"
-						processContents="strict"/>
-					<xs:any namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S2037/2009"
-						processContents="strict"/>
-					<xs:any
-						namespace="urn:ebu:metadata-schema:smpteclass13/groups/ebucore_2012"
-						processContents="strict"/>
-				</xs:choice>
-				<xs:element name="FloatingMetadataGroups" minOccurs="0">
-					<xs:annotation>
-						<xs:documentation>This is a container of all Dark Metadata Sets that could
-							not be reached following strng references from the Preface. This doesn't
-							mean that these are not directly or indirectly referenced by the Preface
-							(which would be a violation of the specification). It will usually mean
-							that the references to these sets themselves are dark metadata and
-							therefore, could not be decoded as references by the
-							decoder</xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:choice minOccurs="0" maxOccurs="unbounded">
-							<xs:any
-								namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004"
-								processContents="strict"/>
-							<xs:any
-								namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S380M/2004"
-								processContents="strict"/>
-							<xs:any
-								namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S381M/2005"
-								processContents="strict"/>
-							<xs:any
-								namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S382M/2007"
-								processContents="strict"/>
-							<xs:any
-								namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S385M/2004"
-								processContents="strict"/>
-							<xs:any
-								namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S422M/2004"
-								processContents="strict"/>
-							<xs:any
-								namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S429-6/2004"
-								processContents="strict"/>
-							<xs:any
-								namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S436M/2006"
-								processContents="strict"/>
-							<xs:any
-								namespace="http://www.smpte-ra.org/schemas/434/2006/groups/S2037/2009"
-								processContents="strict"/>
-							<xs:any
-								namespace="urn:ebu:metadata-schema:smpteclass13/groups/ebucore_2012"
-								processContents="strict"/>
+					<xs:sequence>
+						<xs:choice>
+							<xs:element ref="st377-1Groups:Preface"/>
+							<xs:element ref="st377-1Groups:Preface_REF"/>
 						</xs:choice>
-					</xs:complexType>
-				</xs:element>
+						<xs:choice minOccurs="0" maxOccurs="unbounded">
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/2057/2013" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/2037/2009" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/2075/2012" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-4/2012" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/380/2004" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/381-2/2011" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/381-3/2013" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/381-1/2005" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/382/2012" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/385/2012" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/422/2006" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/429-10/2008" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/429-5/2009" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/429-5/2006" processContents="strict"/>
+							<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/436/2006" processContents="strict"/>
+							<xs:any namespace="urn:ebu:metadata-schema:smpteclass13/groups/ebucore_2013" processContents="strict"/>
+						</xs:choice>
+						<xs:element name="FloatingMetadataGroups" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>This is a container of all Dark Metadata Sets that could not be reached following strng references from the Preface. This doesn't mean that these are not directly or indirectly referenced by the Preface (which would be a violation of the specification). It will usually mean that the references to these sets themselves are dark metadata and therefore, could not be decoded as references by the decoder</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:choice minOccurs="0" maxOccurs="unbounded">
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/2057/2013" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/2037/2009" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/2075/2012" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-4/2012" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/380/2004" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/381-2/2011" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/381-3/2013" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/381-1/2005" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/382/2012" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/385/2012" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/422/2006" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/429-10/2008" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/429-5/2009" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/429-5/2006" processContents="strict"/>
+									<xs:any namespace="http://www.smpte-ra.org/schemas/434/2014/groups/436/2006" processContents="strict"/>
+									<xs:any namespace="urn:ebu:metadata-schema:smpteclass13/groups/ebucore_2013" processContents="strict"/>
+								</xs:choice>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:choice>
 			</xs:sequence>
 		</xs:complexType>
-		<!-- -->
-		<!-- -->
-		<!-- -->
-		<xs:unique name="UniqueInstanceUID">
-			<xs:selector xpath=".//*"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:unique>
-		<!-- -->
-		<!-- -->
-		<!-- -->
-		<xs:unique name="UniqueThisGenerationUID">
-			<xs:selector xpath=".//*"/>
-			<xs:field xpath="@s335mElements:GenerationID"/>
-		</xs:unique>
-		<!-- -->
-		<!-- -->
-		<!-- -->
-		<xs:unique name="UniqueDescriptiveMetadataPlugInID">
-			<xs:selector xpath=".//*"/>
-			<xs:field xpath="@s335mElements:DescriptiveMetadataPlugInID"/>
-		</xs:unique>
-		<!-- -->
-		<!-- -->
-		<!-- -->
-		<xs:unique name="UniqueApplicationPlugInInstanceID">
-			<xs:selector xpath=".//*"/>
-			<xs:field xpath="@s335mElements:ApplicationPlugInInstanceID"/>
-		</xs:unique>
+		<!-- - -->
 		<!-- - -->
 		<!-- ########################################### -->
-		<!-- ################ SMPTE 377M ############### -->
+		<!-- ################ Unique Provisions ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<xs:unique name="UniqueInstanceUID">
+			<xs:selector xpath=".//*"/>
+			<xs:field xpath="@st335Elements:InstanceUID"/>
+		</xs:unique>
+		<!-- - -->
+		<!-- - -->
+		<xs:unique name="UniqueThisGenerationUID">
+			<xs:selector xpath=".//*"/>
+			<xs:field xpath="@st335Elements:ThisGenerationUID"/>
+		</xs:unique>
+		<!-- - -->
+		<!-- - -->
+		<xs:unique name="UniqueDescriptiveMetadataPlugInID">
+			<xs:selector xpath=".//*"/>
+			<xs:field xpath="@st335Elements:DescriptiveMetadataPlugInID"/>
+		</xs:unique>
+		<!-- - -->
+		<!-- - -->
+		<xs:unique name="UniqueApplicationPlugInInstanceID">
+			<xs:selector xpath=".//*"/>
+			<xs:field xpath="@st335Elements:ApplicationPlugInInstanceID"/>
+		</xs:unique>
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ RP2057 ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<xs:key name="mxf_TextBasedDMFramework_PK">
+			<xs:selector xpath=".//rp2057Groups:TextBasedDMFramework"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_TextBasedDMFramework_FK" refer="st377Mux:mxf_TextBasedDMFramework_PK">
+			<xs:selector xpath=".//rp2057Groups:TextBasedDMFramework_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_GenericStreamTextBasedSet_PK">
+			<xs:selector xpath=".//rp2057Groups:GenericStreamTextBasedSet"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_GenericStreamTextBasedSet_FK" refer="st377Mux:mxf_GenericStreamTextBasedSet_PK">
+			<xs:selector xpath=".//rp2057Groups:GenericStreamTextBasedSet_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_UTF8TextBasedSet_PK">
+			<xs:selector xpath=".//rp2057Groups:UTF8TextBasedSet"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_UTF8TextBasedSet_FK" refer="st377Mux:mxf_UTF8TextBasedSet_PK">
+			<xs:selector xpath=".//rp2057Groups:UTF8TextBasedSet_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_UTF16TextBasedSet_PK">
+			<xs:selector xpath=".//rp2057Groups:UTF16TextBasedSet"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_UTF16TextBasedSet_FK" refer="st377Mux:mxf_UTF16TextBasedSet_PK">
+			<xs:selector xpath=".//rp2057Groups:UTF16TextBasedSet_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ S2037 ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<xs:key name="mxf_VC1PictureEssenceDescriptor_PK">
+			<xs:selector xpath=".//st2037Groups:VC1PictureEssenceDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_VC1PictureEssenceDescriptor_FK" refer="st377Mux:mxf_VC1PictureEssenceDescriptor_PK">
+			<xs:selector xpath=".//st2037Groups:VC1PictureEssenceDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ S2075 ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<xs:key name="mxf_STLDescriptor_PK">
+			<xs:selector xpath=".//st2075Groups:STLDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_STLDescriptor_FK" refer="st377Mux:mxf_STLDescriptor_PK">
+			<xs:selector xpath=".//st2075Groups:STLDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_STLSubDescriptor_PK">
+			<xs:selector xpath=".//st2075Groups:STLSubDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_STLSubDescriptor_FK" refer="st377Mux:mxf_STLSubDescriptor_PK">
+			<xs:selector xpath=".//st2075Groups:STLSubDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ S377-4 ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<xs:key name="mxf_AudioChannelLabelSubDescriptorSet_PK">
+			<xs:selector xpath=".//st377-4Groups:AudioChannelLabelSubDescriptorSet"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_AudioChannelLabelSubDescriptorSet_FK" refer="st377Mux:mxf_AudioChannelLabelSubDescriptorSet_PK">
+			<xs:selector xpath=".//st377-4Groups:AudioChannelLabelSubDescriptorSet_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_SoundfieldGroupLabelSubDescriptorSet_PK">
+			<xs:selector xpath=".//st377-4Groups:SoundfieldGroupLabelSubDescriptorSet"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_SoundfieldGroupLabelSubDescriptorSet_FK" refer="st377Mux:mxf_SoundfieldGroupLabelSubDescriptorSet_PK">
+			<xs:selector xpath=".//st377-4Groups:SoundfieldGroupLabelSubDescriptorSet_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_GroupOfSoundfieldGroupsSubDescriptorSet_PK">
+			<xs:selector xpath=".//st377-4Groups:GroupOfSoundfieldGroupsSubDescriptorSet"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_GroupOfSoundfieldGroupsSubDescriptorSet_FK" refer="st377Mux:mxf_GroupOfSoundfieldGroupsSubDescriptorSet_PK">
+			<xs:selector xpath=".//st377-4Groups:GroupOfSoundfieldGroupsSubDescriptorSet_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ S377M ################ -->
 		<!-- ########################################### -->
 		<!-- - -->
 		<!-- - -->
 		<xs:key name="mxf_Preface_PK">
-			<xs:selector xpath=".//s377mGroups:Preface"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+			<xs:selector xpath=".//st377-1Groups:Preface"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_Preface_FK" refer="s377mMux:mxf_Preface_PK">
-			<xs:selector xpath=".//s377mGroups:Preface_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="mxf_ApplicationPlugInObject_PK">
-			<xs:selector xpath=".//s377mGroups:ApplicationPlugInObject"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="mxf_ApplicationPlugInObject_FK"
-			refer="s377mMux:mxf_ApplicationPlugInObject_PK">
-			<xs:selector xpath=".//s377mGroups:ApplicationPlugInObject_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="mxf_ApplicationReferencedObject_PK">
-			<xs:selector xpath=".//s377mGroups:ApplicationReferencedObject"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="mxf_ApplicationReferencedObject_FK"
-			refer="s377mMux:mxf_ApplicationReferencedObject_PK">
-			<xs:selector xpath=".//s377mGroups:ApplicationReferencedObject_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_Preface_FK" refer="st377Mux:mxf_Preface_PK">
+			<xs:selector xpath=".//st377-1Groups:Preface_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
 		<xs:key name="mxf_Identification_PK">
-			<xs:selector xpath=".//s377mGroups:Identification"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+			<xs:selector xpath=".//st377-1Groups:Identification"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_Identification_FK" refer="s377mMux:mxf_Identification_PK">
-			<xs:selector xpath=".//s377mGroups:Identification_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_Identification_FK" refer="st377Mux:mxf_Identification_PK">
+			<xs:selector xpath=".//st377-1Groups:Identification_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
 		<xs:key name="mxf_ContentStorage_PK">
-			<xs:selector xpath=".//s377mGroups:ContentStorage"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+			<xs:selector xpath=".//st377-1Groups:ContentStorage"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_ContentStorage_FK" refer="s377mMux:mxf_ContentStorage_PK">
-			<xs:selector xpath=".//s377mGroups:ContentStorage_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_ContentStorage_FK" refer="st377Mux:mxf_ContentStorage_PK">
+			<xs:selector xpath=".//st377-1Groups:ContentStorage_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<xs:key name="mxf_EssenceData_PK">
-			<xs:selector xpath=".//s377mGroups:EssenceData"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_EssenceContainerData_PK">
+			<xs:selector xpath=".//st377-1Groups:EssenceContainerData"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_EssenceData_FK" refer="s377mMux:mxf_EssenceData_PK">
-			<xs:selector xpath=".//s377mGroups:EssenceData_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_EssenceContainerData_FK" refer="st377Mux:mxf_EssenceContainerData_PK">
+			<xs:selector xpath=".//st377-1Groups:EssenceContainerData_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
 		<xs:key name="mxf_NetworkLocator_PK">
-			<xs:selector xpath=".//s377mGroups:NetworkLocator"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+			<xs:selector xpath=".//st377-1Groups:NetworkLocator"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_NetworkLocator_FK" refer="s377mMux:mxf_NetworkLocator_PK">
-			<xs:selector xpath=".//s377mGroups:NetworkLocator_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_NetworkLocator_FK" refer="st377Mux:mxf_NetworkLocator_PK">
+			<xs:selector xpath=".//st377-1Groups:NetworkLocator_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
 		<xs:key name="mxf_TextLocator_PK">
-			<xs:selector xpath=".//s377mGroups:TextLocator"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+			<xs:selector xpath=".//st377-1Groups:TextLocator"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_TextLocator_FK" refer="s377mMux:mxf_TextLocator_PK">
-			<xs:selector xpath=".//s377mGroups:TextLocator_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="mxf_Sequence_PK">
-			<xs:selector xpath=".//s377mGroups:Sequence"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="mxf_Sequence_FK" refer="s377mMux:mxf_Sequence_PK">
-			<xs:selector xpath=".//s377mGroups:Sequence_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="mxf_Timecode_PK">
-			<xs:selector xpath=".//s377mGroups:Timecode"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="mxf_Timecode_FK" refer="s377mMux:mxf_Timecode_PK">
-			<xs:selector xpath=".//s377mGroups:Timecode_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_TextLocator_FK" refer="st377Mux:mxf_TextLocator_PK">
+			<xs:selector xpath=".//st377-1Groups:TextLocator_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
 		<xs:key name="mxf_TimelineTrack_PK">
-			<xs:selector xpath=".//s377mGroups:TimelineTrack"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+			<xs:selector xpath=".//st377-1Groups:TimelineTrack"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_TimelineTrack_FK" refer="s377mMux:mxf_TimelineTrack_PK">
-			<xs:selector xpath=".//s377mGroups:TimelineTrack_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="mxf_StaticTrack_PK">
-			<xs:selector xpath=".//s377mGroups:StaticTrack"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="mxf_StaticTrack_FK" refer="s377mMux:mxf_StaticTrack_PK">
-			<xs:selector xpath=".//s377mGroups:StaticTrack_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_TimelineTrack_FK" refer="st377Mux:mxf_TimelineTrack_PK">
+			<xs:selector xpath=".//st377-1Groups:TimelineTrack_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
 		<xs:key name="mxf_EventTrack_PK">
-			<xs:selector xpath=".//s377mGroups:EventTrack"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+			<xs:selector xpath=".//st377-1Groups:EventTrack"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_EventTrack_FK" refer="s377mMux:mxf_EventTrack_PK">
-			<xs:selector xpath=".//s377mGroups:EventTrack_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_EventTrack_FK" refer="st377Mux:mxf_EventTrack_PK">
+			<xs:selector xpath=".//st377-1Groups:EventTrack_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<xs:key name="mxf_DescriptiveMarker_PK">
-			<xs:selector xpath=".//s377mGroups:DescriptiveMarker"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_StaticTrack_PK">
+			<xs:selector xpath=".//st377-1Groups:StaticTrack"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_DescriptiveMarker_FK" refer="s377mMux:mxf_DescriptiveMarker_PK">
-			<xs:selector xpath=".//s377mGroups:DescriptiveMarker_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_StaticTrack_FK" refer="st377Mux:mxf_StaticTrack_PK">
+			<xs:selector xpath=".//st377-1Groups:StaticTrack_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<xs:key name="mxf_DescriptiveClip_PK">
-			<xs:selector xpath=".//s377mGroups:DescriptiveClip"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_Sequence_PK">
+			<xs:selector xpath=".//st377-1Groups:Sequence"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_DescriptiveClip_FK" refer="s377mMux:mxf_DescriptiveClip_PK">
-			<xs:selector xpath=".//s377mGroups:DescriptiveClip_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_Sequence_FK" refer="st377Mux:mxf_Sequence_PK">
+			<xs:selector xpath=".//st377-1Groups:Sequence_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_TimecodeComponent_PK">
+			<xs:selector xpath=".//st377-1Groups:TimecodeComponent"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_TimecodeComponent_FK" refer="st377Mux:mxf_TimecodeComponent_PK">
+			<xs:selector xpath=".//st377-1Groups:TimecodeComponent_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_DMSegment_PK">
+			<xs:selector xpath=".//st377-1Groups:DMSegment"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_DMSegment_FK" refer="st377Mux:mxf_DMSegment_PK">
+			<xs:selector xpath=".//st377-1Groups:DMSegment_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_SourceClip_PK">
+			<xs:selector xpath=".//st377-1Groups:SourceClip"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_SourceClip_FK" refer="st377Mux:mxf_SourceClip_PK">
+			<xs:selector xpath=".//st377-1Groups:SourceClip_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_DMSourceClip_PK">
+			<xs:selector xpath=".//st377-1Groups:DMSourceClip"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_DMSourceClip_FK" refer="st377Mux:mxf_DMSourceClip_PK">
+			<xs:selector xpath=".//st377-1Groups:DMSourceClip_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
 		<xs:key name="mxf_MaterialPackage_PK">
-			<xs:selector xpath=".//s377mGroups:MaterialPackage"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+			<xs:selector xpath=".//st377-1Groups:MaterialPackage"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_MaterialPackage_FK" refer="s377mMux:mxf_MaterialPackage_PK">
-			<xs:selector xpath=".//s377mGroups:MaterialPackage_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="mxf_PackageMarkerObject_PK">
-			<xs:selector xpath=".//s377mGroups:PackageMarkerObject"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="mxf_PackageMarkerObject_FK" refer="s377mMux:mxf_PackageMarkerObject_PK">
-			<xs:selector xpath=".//s377mGroups:PackageMarkerObject_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_MaterialPackage_FK" refer="st377Mux:mxf_MaterialPackage_PK">
+			<xs:selector xpath=".//st377-1Groups:MaterialPackage_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
 		<xs:key name="mxf_SourcePackage_PK">
-			<xs:selector xpath=".//s377mGroups:SourcePackage"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+			<xs:selector xpath=".//st377-1Groups:SourcePackage"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_SourcePackage_FK" refer="s377mMux:mxf_SourcePackage_PK">
-			<xs:selector xpath=".//s377mGroups:SourcePackage_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_SourcePackage_FK" refer="st377Mux:mxf_SourcePackage_PK">
+			<xs:selector xpath=".//st377-1Groups:SourcePackage_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<xs:key name="mxf_PictureDescriptor_PK">
-			<xs:selector xpath=".//s377mGroups:PictureDescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_PictureEssenceDescriptor_PK">
+			<xs:selector xpath=".//st377-1Groups:PictureEssenceDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_PictureDescriptor_FK" refer="s377mMux:mxf_PictureDescriptor_PK">
-			<xs:selector xpath=".//s377mGroups:PictureDescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_PictureEssenceDescriptor_FK" refer="st377Mux:mxf_PictureEssenceDescriptor_PK">
+			<xs:selector xpath=".//st377-1Groups:PictureEssenceDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<xs:key name="mxf_CDCIDescriptor_PK">
-			<xs:selector xpath=".//s377mGroups:CDCIDescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_CDCIEssenceDescriptor_PK">
+			<xs:selector xpath=".//st377-1Groups:CDCIEssenceDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_CDCIDescriptor_FK" refer="s377mMux:mxf_CDCIDescriptor_PK">
-			<xs:selector xpath=".//s377mGroups:CDCIDescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_CDCIEssenceDescriptor_FK" refer="st377Mux:mxf_CDCIEssenceDescriptor_PK">
+			<xs:selector xpath=".//st377-1Groups:CDCIEssenceDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<xs:key name="mxf_RGBADescriptor_PK">
-			<xs:selector xpath=".//s377mGroups:RGBADescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_RGBAEssenceDescriptor_PK">
+			<xs:selector xpath=".//st377-1Groups:RGBAEssenceDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_RGBADescriptor_FK" refer="s377mMux:mxf_RGBADescriptor_PK">
-			<xs:selector xpath=".//s377mGroups:RGBADescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_RGBAEssenceDescriptor_FK" refer="st377Mux:mxf_RGBAEssenceDescriptor_PK">
+			<xs:selector xpath=".//st377-1Groups:RGBAEssenceDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<xs:key name="mxf_SoundDescriptor_PK">
-			<xs:selector xpath=".//s377mGroups:SoundDescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_SoundEssenceDescriptor_PK">
+			<xs:selector xpath=".//st377-1Groups:SoundEssenceDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_SoundDescriptor_FK" refer="s377mMux:mxf_SoundDescriptor_PK">
-			<xs:selector xpath=".//s377mGroups:SoundDescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_SoundEssenceDescriptor_FK" refer="st377Mux:mxf_SoundEssenceDescriptor_PK">
+			<xs:selector xpath=".//st377-1Groups:SoundEssenceDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
 		<xs:key name="mxf_DataEssenceDescriptor_PK">
-			<xs:selector xpath=".//s377mGroups:DataEssenceDescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+			<xs:selector xpath=".//st377-1Groups:DataEssenceDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_DataEssenceDescriptor_FK" refer="s377mMux:mxf_DataEssenceDescriptor_PK">
-			<xs:selector xpath=".//s377mGroups:DataEssenceDescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_DataEssenceDescriptor_FK" refer="st377Mux:mxf_DataEssenceDescriptor_PK">
+			<xs:selector xpath=".//st377-1Groups:DataEssenceDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
 		<xs:key name="mxf_MultipleDescriptor_PK">
-			<xs:selector xpath=".//s377mGroups:MultipleDescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+			<xs:selector xpath=".//st377-1Groups:MultipleDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="mxf_MultipleDescriptor_FK" refer="s377mMux:mxf_MultipleDescriptor_PK">
-			<xs:selector xpath=".//s377mGroups:MultipleDescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_MultipleDescriptor_FK" refer="st377Mux:mxf_MultipleDescriptor_PK">
+			<xs:selector xpath=".//st377-1Groups:MultipleDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_Filler_PK">
+			<xs:selector xpath=".//st377-1Groups:Filler"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_Filler_FK" refer="st377Mux:mxf_Filler_PK">
+			<xs:selector xpath=".//st377-1Groups:Filler_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_PackageMarkerObject_PK">
+			<xs:selector xpath=".//st377-1Groups:PackageMarkerObject"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_PackageMarkerObject_FK" refer="st377Mux:mxf_PackageMarkerObject_PK">
+			<xs:selector xpath=".//st377-1Groups:PackageMarkerObject_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_ApplicationPlugInObject_PK">
+			<xs:selector xpath=".//st377-1Groups:ApplicationPlugInObject"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_ApplicationPlugInObject_FK" refer="st377Mux:mxf_ApplicationPlugInObject_PK">
+			<xs:selector xpath=".//st377-1Groups:ApplicationPlugInObject_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_ApplicationReferencedObject_PK">
+			<xs:selector xpath=".//st377-1Groups:ApplicationReferencedObject"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_ApplicationReferencedObject_FK" refer="st377Mux:mxf_ApplicationReferencedObject_PK">
+			<xs:selector xpath=".//st377-1Groups:ApplicationReferencedObject_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
 		<!-- - -->
 		<!-- ########################################### -->
-		<!-- ################ SMPTE 380M ############### -->
-		<!-- ########################################### -->
-		<!-- - -->
-		<!-- - -->
-		<xs:key name="s380m_ProductionFramework_PK">
-			<xs:selector xpath=".//s380mGroups:ProductionFramework"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_ProductionFramework_FK" refer="s377mMux:s380m_ProductionFramework_PK">
-			<xs:selector xpath=".//s380mGroups:ProductionFramework_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_ClipFramework_PK">
-			<xs:selector xpath=".//s380mGroups:ClipFramework"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_ClipFramework_FK" refer="s377mMux:s380m_ClipFramework_PK">
-			<xs:selector xpath=".//s380mGroups:ClipFramework_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_SceneFramework_PK">
-			<xs:selector xpath=".//s380mGroups:SceneFramework"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_SceneFramework_FK" refer="s377mMux:s380m_SceneFramework_PK">
-			<xs:selector xpath=".//s380mGroups:SceneFramework_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Titles_PK">
-			<xs:selector xpath=".//s380mGroups:Titles"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Titles_FK" refer="s377mMux:s380m_Titles_PK">
-			<xs:selector xpath=".//s380mGroups:Titles_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_DMS1Identification_PK">
-			<xs:selector xpath=".//s380mGroups:DMS1Identification"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_DMS1Identification_FK" refer="s377mMux:s380m_DMS1Identification_PK">
-			<xs:selector xpath=".//s380mGroups:DMS1Identification_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_GroupRelationship_PK">
-			<xs:selector xpath=".//s380mGroups:GroupRelationship"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_GroupRelationship_FK" refer="s377mMux:s380m_GroupRelationship_PK">
-			<xs:selector xpath=".//s380mGroups:GroupRelationship_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Branding_PK">
-			<xs:selector xpath=".//s380mGroups:Branding"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Branding_FK" refer="s377mMux:s380m_Branding_PK">
-			<xs:selector xpath=".//s380mGroups:Branding_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_DMS1Event_PK">
-			<xs:selector xpath=".//s380mGroups:DMS1Event"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_DMS1Event_FK" refer="s377mMux:s380m_DMS1Event_PK">
-			<xs:selector xpath=".//s380mGroups:DMS1Event_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Publication_PK">
-			<xs:selector xpath=".//s380mGroups:Publication"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Publication_FK" refer="s377mMux:s380m_Publication_PK">
-			<xs:selector xpath=".//s380mGroups:Publication_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Award_PK">
-			<xs:selector xpath=".//s380mGroups:Award"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Award_FK" refer="s377mMux:s380m_Award_PK">
-			<xs:selector xpath=".//s380mGroups:Award_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_CaptionsDescription_PK">
-			<xs:selector xpath=".//s380mGroups:CaptionsDescription"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_CaptionsDescription_FK" refer="s377mMux:s380m_CaptionsDescription_PK">
-			<xs:selector xpath=".//s380mGroups:CaptionsDescription_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_DMS1Annotation_PK">
-			<xs:selector xpath=".//s380mGroups:DMS1Annotation"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_DMS1Annotation_FK" refer="s377mMux:s380m_DMS1Annotation_PK">
-			<xs:selector xpath=".//s380mGroups:DMS1Annotation_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_SettingPeriod_PK">
-			<xs:selector xpath=".//s380mGroups:SettingPeriod"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_SettingPeriod_FK" refer="s377mMux:s380m_SettingPeriod_PK">
-			<xs:selector xpath=".//s380mGroups:SettingPeriod_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Scripting_PK">
-			<xs:selector xpath=".//s380mGroups:Scripting"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Scripting_FK" refer="s377mMux:s380m_Scripting_PK">
-			<xs:selector xpath=".//s380mGroups:Scripting_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Classification_PK">
-			<xs:selector xpath=".//s380mGroups:Classification"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Classification_FK" refer="s377mMux:s380m_Classification_PK">
-			<xs:selector xpath=".//s380mGroups:Classification_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Shot_PK">
-			<xs:selector xpath=".//s380mGroups:Shot"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Shot_FK" refer="s377mMux:s380m_Shot_PK">
-			<xs:selector xpath=".//s380mGroups:Shot_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Keypoint_PK">
-			<xs:selector xpath=".//s380mGroups:Keypoint"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Keypoint_FK" refer="s377mMux:s380m_Keypoint_PK">
-			<xs:selector xpath=".//s380mGroups:Keypoint_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Participant_PK">
-			<xs:selector xpath=".//s380mGroups:Participant"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Participant_FK" refer="s377mMux:s380m_Participant_PK">
-			<xs:selector xpath=".//s380mGroups:Participant_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Person_PK">
-			<xs:selector xpath=".//s380mGroups:Person"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Person_FK" refer="s377mMux:s380m_Person_PK">
-			<xs:selector xpath=".//s380mGroups:Person_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Organization_PK">
-			<xs:selector xpath=".//s380mGroups:Organization"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Organization_FK" refer="s377mMux:s380m_Organization_PK">
-			<xs:selector xpath=".//s380mGroups:Organization_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Location_PK">
-			<xs:selector xpath=".//s380mGroups:Location"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Location_FK" refer="s377mMux:s380m_Location_PK">
-			<xs:selector xpath=".//s380mGroups:Location_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Address_PK">
-			<xs:selector xpath=".//s380mGroups:Address"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Address_FK" refer="s377mMux:s380m_Address_PK">
-			<xs:selector xpath=".//s380mGroups:Address_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Communications_PK">
-			<xs:selector xpath=".//s380mGroups:Communications"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Communications_FK" refer="s377mMux:s380m_Communications_PK">
-			<xs:selector xpath=".//s380mGroups:Communications_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Contract_PK">
-			<xs:selector xpath=".//s380mGroups:Contract"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Contract_FK" refer="s377mMux:s380m_Contract_PK">
-			<xs:selector xpath=".//s380mGroups:Contract_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Rights_PK">
-			<xs:selector xpath=".//s380mGroups:Rights"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Rights_FK" refer="s377mMux:s380m_Rights_PK">
-			<xs:selector xpath=".//s380mGroups:Rights_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_PictureFormat_PK">
-			<xs:selector xpath=".//s380mGroups:PictureFormat"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_PictureFormat_FK" refer="s377mMux:s380m_PictureFormat_PK">
-			<xs:selector xpath=".//s380mGroups:PictureFormat_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_DeviceParameters_PK">
-			<xs:selector xpath=".//s380mGroups:DeviceParameters"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_DeviceParameters_FK" refer="s377mMux:s380m_DeviceParameters_PK">
-			<xs:selector xpath=".//s380mGroups:DeviceParameters_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_NameValue_PK">
-			<xs:selector xpath=".//s380mGroups:NameValue"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_NameValue_FK" refer="s377mMux:s380m_NameValue_PK">
-			<xs:selector xpath=".//s380mGroups:NameValue_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Processing_PK">
-			<xs:selector xpath=".//s380mGroups:Processing"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Processing_FK" refer="s377mMux:s380m_Processing_PK">
-			<xs:selector xpath=".//s380mGroups:Processing_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_Project_PK">
-			<xs:selector xpath=".//s380mGroups:Project"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_Project_FK" refer="s377mMux:s380m_Project_PK">
-			<xs:selector xpath=".//s380mGroups:Project_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_ContactsList_PK">
-			<xs:selector xpath=".//s380mGroups:ContactsList"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_ContactsList_FK" refer="s377mMux:s380m_ContactsList_PK">
-			<xs:selector xpath=".//s380mGroups:ContactsList_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<xs:key name="s380m_CueWords_PK">
-			<xs:selector xpath=".//s380mGroups:CueWords"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
-		</xs:key>
-		<xs:keyref name="s380m_CueWords_FK" refer="s377mMux:s380m_CueWords_PK">
-			<xs:selector xpath=".//s380mGroups:CueWords_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
-		</xs:keyref>
-		<!-- - -->
-		<!-- ########################################### -->
-		<!-- ################ SMPTE 381M ############### -->
+		<!-- ################ S380M ################ -->
 		<!-- ########################################### -->
 		<!-- - -->
 		<!-- - -->
-		<xs:key name="s381m_MPEGVideoDescriptor_PK">
-			<xs:selector xpath=".//s381mGroups:MPEGVideoDescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_ProductionFramework_PK">
+			<xs:selector xpath=".//st380Groups:ProductionFramework"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="s381m_MPEGVideoDescriptor_FK" refer="s377mMux:s381m_MPEGVideoDescriptor_PK">
-			<xs:selector xpath=".//s381mGroups:MPEGVideoDescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_ProductionFramework_FK" refer="st377Mux:mxf_ProductionFramework_PK">
+			<xs:selector xpath=".//st380Groups:ProductionFramework_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<!-- ########################################### -->
-		<!-- ################ SMPTE 382M ############### -->
-		<!-- ########################################### -->
-		<!-- - -->
-		<!-- - -->
-		<xs:key name="s382m_WAVEPCMDescriptor_PK">
-			<xs:selector xpath=".//s382mGroups:WAVEPCMDescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_ClipFramework_PK">
+			<xs:selector xpath=".//st380Groups:ClipFramework"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="s382m_WAVEPCMDescriptor_FK" refer="s377mMux:s382m_WAVEPCMDescriptor_PK">
-			<xs:selector xpath=".//s382mGroups:WAVEPCMDescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_ClipFramework_FK" refer="st377Mux:mxf_ClipFramework_PK">
+			<xs:selector xpath=".//st380Groups:ClipFramework_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<xs:key name="s382m_BWFImportDescriptor_PK">
-			<xs:selector xpath=".//s382mGroups:BWFImportDescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_SceneFramework_PK">
+			<xs:selector xpath=".//st380Groups:SceneFramework"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="s382m_BWFImportDescriptor_FK" refer="s377mMux:s382m_BWFImportDescriptor_PK">
-			<xs:selector xpath=".//s382mGroups:BWFImportDescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_SceneFramework_FK" refer="st377Mux:mxf_SceneFramework_PK">
+			<xs:selector xpath=".//st380Groups:SceneFramework_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<xs:key name="s382m_AES3PCMDescriptor_PK">
-			<xs:selector xpath=".//s382mGroups:AES3PCMDescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_Titles_PK">
+			<xs:selector xpath=".//st380Groups:Titles"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="s382m_AES3PCMDescriptor_FK" refer="s377mMux:s382m_AES3PCMDescriptor_PK">
-			<xs:selector xpath=".//s382mGroups:AES3PCMDescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_Titles_FK" refer="st377Mux:mxf_Titles_PK">
+			<xs:selector xpath=".//st380Groups:Titles_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<!-- ########################################### -->
-		<!-- ################ SMPTE 385M ############### -->
-		<!-- ########################################### -->
-		<!-- - -->
-		<!-- - -->
-		<xs:key name="s385m_DateTimeDescriptor_PK">
-			<xs:selector xpath=".//s385mGroups:DateTimeDescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_GroupRelationship_PK">
+			<xs:selector xpath=".//st380Groups:GroupRelationship"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="s385m_DateTimeDescriptor_FK" refer="s377mMux:s385m_DateTimeDescriptor_PK">
-			<xs:selector xpath=".//s385mGroups:DateTimeDescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_GroupRelationship_FK" refer="st377Mux:mxf_GroupRelationship_PK">
+			<xs:selector xpath=".//st380Groups:GroupRelationship_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<!-- ########################################### -->
-		<!-- ################ SMPTE 422M ############### -->
-		<!-- ########################################### -->
-		<!-- - -->
-		<!-- - -->
-		<xs:key name="s422m_JPEG2000SubDescriptor_PK">
-			<xs:selector xpath=".//s422mGroups:JPEG2000SubDescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_Branding_PK">
+			<xs:selector xpath=".//st380Groups:Branding"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="s422m_JPEG2000SubDescriptor_FK"
-			refer="s377mMux:s422m_JPEG2000SubDescriptor_PK">
-			<xs:selector xpath=".//s422mGroups:JPEG2000SubDescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_Branding_FK" refer="st377Mux:mxf_Branding_PK">
+			<xs:selector xpath=".//st380Groups:Branding_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<!-- ########################################### -->
-		<!-- ################ SMPTE 423M ############### -->
-		<!-- ########################################### -->
-		<!-- - -->
-		<!-- - -->
-		<xs:key name="s429-6_CryptographicFramework_PK">
-			<xs:selector xpath=".//s429-6Groups:CryptographicFramework"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_Event_PK">
+			<xs:selector xpath=".//st380Groups:Event"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="s429-6_CryptographicFramework_FK"
-			refer="s377mMux:s429-6_CryptographicFramework_PK">
-			<xs:selector xpath=".//s429-6Groups:CryptographicFramework_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_Event_FK" refer="st377Mux:mxf_Event_PK">
+			<xs:selector xpath=".//st380Groups:Event_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<xs:key name="s429-6_CryptographicContext_PK">
-			<xs:selector xpath=".//s429-6Groups:CryptographicContext"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_Publication_PK">
+			<xs:selector xpath=".//st380Groups:Publication"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="s429-6_CryptographicContext_FK"
-			refer="s377mMux:s429-6_CryptographicContext_PK">
-			<xs:selector xpath=".//s429-6Groups:CryptographicContext_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_Publication_FK" refer="st377Mux:mxf_Publication_PK">
+			<xs:selector xpath=".//st380Groups:Publication_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<!-- ########################################### -->
-		<!-- ################ SMPTE 436M ############### -->
-		<!-- ########################################### -->
-		<!-- - -->
-		<!-- - -->
-		<xs:key name="s436m_ANCPacketsDescriptor_PK">
-			<xs:selector xpath=".//s436mGroups:ANCPacketsDescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_Award_PK">
+			<xs:selector xpath=".//st380Groups:Award"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="s436m_ANCPacketsDescriptor_FK"
-			refer="s377mMux:s436m_ANCPacketsDescriptor_PK">
-			<xs:selector xpath=".//s436mGroups:ANCPacketsDescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_Award_FK" refer="st377Mux:mxf_Award_PK">
+			<xs:selector xpath=".//st380Groups:Award_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<xs:key name="s436m_VBIDataDescriptor_PK">
-			<xs:selector xpath=".//s436mGroups:VBIDataDescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_CaptionsDescription_PK">
+			<xs:selector xpath=".//st380Groups:CaptionsDescription"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="s436m_VBIDataDescriptor_FK" refer="s377mMux:s436m_VBIDataDescriptor_PK">
-			<xs:selector xpath=".//s436mGroups:VBIDataDescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_CaptionsDescription_FK" refer="st377Mux:mxf_CaptionsDescription_PK">
+			<xs:selector xpath=".//st380Groups:CaptionsDescription_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
 		<!-- - -->
-		<!-- ########################################### -->
-		<!-- ################ SMPTE 2037 ############### -->
-		<!-- ########################################### -->
-		<!-- - -->
-		<!-- - -->
-		<xs:key name="s2037_VC1PictureDescriptor_PK">
-			<xs:selector xpath=".//s2037Groups:VC1PictureDescriptor"/>
-			<xs:field xpath="@s335mElements:InstanceID"/>
+		<xs:key name="mxf_Annotation_PK">
+			<xs:selector xpath=".//st380Groups:Annotation"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
 		</xs:key>
-		<xs:keyref name="s2037_VC1PictureDescriptor_FK"
-			refer="s377mMux:s2037_VC1PictureDescriptor_PK">
-			<xs:selector xpath=".//s2037Groups:VC1PictureDescriptor_REF"/>
-			<xs:field xpath="@s377mTypes:TargetInstance"/>
+		<xs:keyref name="mxf_Annotation_FK" refer="st377Mux:mxf_Annotation_PK">
+			<xs:selector xpath=".//st380Groups:Annotation_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
 		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_SettingPeriod_PK">
+			<xs:selector xpath=".//st380Groups:SettingPeriod"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_SettingPeriod_FK" refer="st377Mux:mxf_SettingPeriod_PK">
+			<xs:selector xpath=".//st380Groups:SettingPeriod_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_Scripting_PK">
+			<xs:selector xpath=".//st380Groups:Scripting"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_Scripting_FK" refer="st377Mux:mxf_Scripting_PK">
+			<xs:selector xpath=".//st380Groups:Scripting_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_Classification_PK">
+			<xs:selector xpath=".//st380Groups:Classification"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_Classification_FK" refer="st377Mux:mxf_Classification_PK">
+			<xs:selector xpath=".//st380Groups:Classification_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_Shot_PK">
+			<xs:selector xpath=".//st380Groups:Shot"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_Shot_FK" refer="st377Mux:mxf_Shot_PK">
+			<xs:selector xpath=".//st380Groups:Shot_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_KeyPoint_PK">
+			<xs:selector xpath=".//st380Groups:KeyPoint"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_KeyPoint_FK" refer="st377Mux:mxf_KeyPoint_PK">
+			<xs:selector xpath=".//st380Groups:KeyPoint_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_Participant_PK">
+			<xs:selector xpath=".//st380Groups:Participant"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_Participant_FK" refer="st377Mux:mxf_Participant_PK">
+			<xs:selector xpath=".//st380Groups:Participant_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_Person_PK">
+			<xs:selector xpath=".//st380Groups:Person"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_Person_FK" refer="st377Mux:mxf_Person_PK">
+			<xs:selector xpath=".//st380Groups:Person_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_Organization_PK">
+			<xs:selector xpath=".//st380Groups:Organization"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_Organization_FK" refer="st377Mux:mxf_Organization_PK">
+			<xs:selector xpath=".//st380Groups:Organization_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_Location_PK">
+			<xs:selector xpath=".//st380Groups:Location"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_Location_FK" refer="st377Mux:mxf_Location_PK">
+			<xs:selector xpath=".//st380Groups:Location_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_Address_PK">
+			<xs:selector xpath=".//st380Groups:Address"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_Address_FK" refer="st377Mux:mxf_Address_PK">
+			<xs:selector xpath=".//st380Groups:Address_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_Communications_PK">
+			<xs:selector xpath=".//st380Groups:Communications"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_Communications_FK" refer="st377Mux:mxf_Communications_PK">
+			<xs:selector xpath=".//st380Groups:Communications_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_Contract_PK">
+			<xs:selector xpath=".//st380Groups:Contract"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_Contract_FK" refer="st377Mux:mxf_Contract_PK">
+			<xs:selector xpath=".//st380Groups:Contract_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_Rights_PK">
+			<xs:selector xpath=".//st380Groups:Rights"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_Rights_FK" refer="st377Mux:mxf_Rights_PK">
+			<xs:selector xpath=".//st380Groups:Rights_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_PictureFormat_PK">
+			<xs:selector xpath=".//st380Groups:PictureFormat"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_PictureFormat_FK" refer="st377Mux:mxf_PictureFormat_PK">
+			<xs:selector xpath=".//st380Groups:PictureFormat_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_DeviceParameters_PK">
+			<xs:selector xpath=".//st380Groups:DeviceParameters"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_DeviceParameters_FK" refer="st377Mux:mxf_DeviceParameters_PK">
+			<xs:selector xpath=".//st380Groups:DeviceParameters_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_NameValue_PK">
+			<xs:selector xpath=".//st380Groups:NameValue"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_NameValue_FK" refer="st377Mux:mxf_NameValue_PK">
+			<xs:selector xpath=".//st380Groups:NameValue_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_Processing_PK">
+			<xs:selector xpath=".//st380Groups:Processing"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_Processing_FK" refer="st377Mux:mxf_Processing_PK">
+			<xs:selector xpath=".//st380Groups:Processing_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_Project_PK">
+			<xs:selector xpath=".//st380Groups:Project"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_Project_FK" refer="st377Mux:mxf_Project_PK">
+			<xs:selector xpath=".//st380Groups:Project_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_ContactsList_PK">
+			<xs:selector xpath=".//st380Groups:ContactsList"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_ContactsList_FK" refer="st377Mux:mxf_ContactsList_PK">
+			<xs:selector xpath=".//st380Groups:ContactsList_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_CueWords_PK">
+			<xs:selector xpath=".//st380Groups:CueWords"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_CueWords_FK" refer="st377Mux:mxf_CueWords_PK">
+			<xs:selector xpath=".//st380Groups:CueWords_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ S381-2 ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<xs:key name="mxf_MPEGVideoDescriptor_PK">
+			<xs:selector xpath=".//st381-2Groups:MPEGVideoDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_MPEGVideoDescriptor_FK" refer="st377Mux:mxf_MPEGVideoDescriptor_PK">
+			<xs:selector xpath=".//st381-2Groups:MPEGVideoDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_MPEG4VisualSubDescriptor_PK">
+			<xs:selector xpath=".//st381-2Groups:MPEG4VisualSubDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_MPEG4VisualSubDescriptor_FK" refer="st377Mux:mxf_MPEG4VisualSubDescriptor_PK">
+			<xs:selector xpath=".//st381-2Groups:MPEG4VisualSubDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_MPEGAudioDescriptor_PK">
+			<xs:selector xpath=".//st381-2Groups:MPEGAudioDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_MPEGAudioDescriptor_FK" refer="st377Mux:mxf_MPEGAudioDescriptor_PK">
+			<xs:selector xpath=".//st381-2Groups:MPEGAudioDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ S381-3 ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<xs:key name="mxf_AVCSubDescriptor_PK">
+			<xs:selector xpath=".//st381-3Groups:AVCSubDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_AVCSubDescriptor_FK" refer="st377Mux:mxf_AVCSubDescriptor_PK">
+			<xs:selector xpath=".//st381-3Groups:AVCSubDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ S381M ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ S382M ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<xs:key name="mxf_WaveAudioEssenceDescriptor_PK">
+			<xs:selector xpath=".//st382Groups:WaveAudioEssenceDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_WaveAudioEssenceDescriptor_FK" refer="st377Mux:mxf_WaveAudioEssenceDescriptor_PK">
+			<xs:selector xpath=".//st382Groups:WaveAudioEssenceDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_WaveAudioPhysicalDescriptor_PK">
+			<xs:selector xpath=".//st382Groups:WaveAudioPhysicalDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_WaveAudioPhysicalDescriptor_FK" refer="st377Mux:mxf_WaveAudioPhysicalDescriptor_PK">
+			<xs:selector xpath=".//st382Groups:WaveAudioPhysicalDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_UnknownChunkSet_PK">
+			<xs:selector xpath=".//st382Groups:UnknownChunkSet"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_UnknownChunkSet_FK" refer="st377Mux:mxf_UnknownChunkSet_PK">
+			<xs:selector xpath=".//st382Groups:UnknownChunkSet_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_AES3AudioEssenceDescriptor_PK">
+			<xs:selector xpath=".//st382Groups:AES3AudioEssenceDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_AES3AudioEssenceDescriptor_FK" refer="st377Mux:mxf_AES3AudioEssenceDescriptor_PK">
+			<xs:selector xpath=".//st382Groups:AES3AudioEssenceDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ S385M ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<xs:key name="mxf_DateTimeDescriptor_PK">
+			<xs:selector xpath=".//st385Groups:DateTimeDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_DateTimeDescriptor_FK" refer="st377Mux:mxf_DateTimeDescriptor_PK">
+			<xs:selector xpath=".//st385Groups:DateTimeDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ S422M ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<xs:key name="mxf_JPEG2000PictureSubDescriptor_PK">
+			<xs:selector xpath=".//st422Groups:JPEG2000PictureSubDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_JPEG2000PictureSubDescriptor_FK" refer="st377Mux:mxf_JPEG2000PictureSubDescriptor_PK">
+			<xs:selector xpath=".//st422Groups:JPEG2000PictureSubDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ S429-10 ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<xs:key name="mxf_StereoscopicPictureSubDescriptor_PK">
+			<xs:selector xpath=".//st429-10Groups:StereoscopicPictureSubDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_StereoscopicPictureSubDescriptor_FK" refer="st377Mux:mxf_StereoscopicPictureSubDescriptor_PK">
+			<xs:selector xpath=".//st429-10Groups:StereoscopicPictureSubDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ S429-5 ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<xs:key name="mxf_TimedTextDescriptor_PK">
+			<xs:selector xpath=".//st429-5Groups:TimedTextDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_TimedTextDescriptor_FK" refer="st377Mux:mxf_TimedTextDescriptor_PK">
+			<xs:selector xpath=".//st429-5Groups:TimedTextDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_TimedTextResourceSubDescriptor_PK">
+			<xs:selector xpath=".//st429-5Groups:TimedTextResourceSubDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_TimedTextResourceSubDescriptor_FK" refer="st377Mux:mxf_TimedTextResourceSubDescriptor_PK">
+			<xs:selector xpath=".//st429-5Groups:TimedTextResourceSubDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ S429-6 ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<xs:key name="mxf_CryptographicFramework_PK">
+			<xs:selector xpath=".//st429-6Groups:CryptographicFramework"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_CryptographicFramework_FK" refer="st377Mux:mxf_CryptographicFramework_PK">
+			<xs:selector xpath=".//st429-6Groups:CryptographicFramework_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_CryptographicContext_PK">
+			<xs:selector xpath=".//st429-6Groups:CryptographicContext"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_CryptographicContext_FK" refer="st377Mux:mxf_CryptographicContext_PK">
+			<xs:selector xpath=".//st429-6Groups:CryptographicContext_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<!-- - -->
+		<!-- ########################################### -->
+		<!-- ################ S436M ################ -->
+		<!-- ########################################### -->
+		<!-- - -->
+		<!-- - -->
+		<xs:key name="mxf_ANCPacketsDescriptor_PK">
+			<xs:selector xpath=".//st436Groups:ANCPacketsDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_ANCPacketsDescriptor_FK" refer="st377Mux:mxf_ANCPacketsDescriptor_PK">
+			<xs:selector xpath=".//st436Groups:ANCPacketsDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
+		<xs:key name="mxf_VBIDataDescriptor_PK">
+			<xs:selector xpath=".//st436Groups:VBIDataDescriptor"/>
+			<xs:field xpath="@st335Elements:InstanceID"/>
+		</xs:key>
+		<xs:keyref name="mxf_VBIDataDescriptor_FK" refer="st377Mux:mxf_VBIDataDescriptor_PK">
+			<xs:selector xpath=".//st436Groups:VBIDataDescriptor_REF"/>
+			<xs:field xpath="@st377Types:TargetInstance"/>
+		</xs:keyref>
+		<!-- - -->
 		<!-- - -->
 		<!-- ########################################### -->
 		<!-- ################ EBUCORE ############### -->
@@ -1495,7 +1655,4 @@
          <xs:field xpath="@s377mTypes:TargetInstance"/>
       </xs:keyref>
    </xs:element>
-	<!-- - -->
-	<!-- - -->
-	<!-- - -->
 </xs:schema>

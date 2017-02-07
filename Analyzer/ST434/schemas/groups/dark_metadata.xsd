@@ -1,1 +1,117 @@
-<?xml version="1.0" encoding="UTF-8"?><!-- --><!-- This XML Schema document is an integral part of the Revision of SMPTE 434-2006: Material Exchange Format - XML Encoding for Metadata and File Structure Information". --><!-- Copyright SMPTE 2006, 2011. --><!-- --><xs:schema xmlns="http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004" xmlns:s377mGroups="http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004" xmlns:s335mElements="http://www.smpte-ra.org/schemas/434/2006/properties/S335M" xmlns:s377mTypes="http://www.smpte-ra.org/schemas/434/2006/types/S377M/2004" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.smpte-ra.org/schemas/434/2006/groups/S377M/2004" elementFormDefault="qualified" attributeFormDefault="qualified">	<!-- - -->	<!-- - -->	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/properties/S335M" schemaLocation="../dictionary/rp210.xsd"/>	<!-- - -->	<!-- - -->	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2006/types/S377M/2004" schemaLocation="../dataTypes/s377m_types.xsd"/>	<!-- - -->	<!-- - -->	<!-- Extension Elements -->	<!-- - -->	<xs:element name="ExtensionProperties">		<xs:annotation>			<xs:documentation>Metadata properties included in the Metadata Set being decoded but which are not in the schema specification of that Metadata. These could be unknown metadata properties or metadata properties that have a known Universal Label but were not expected inside that specific Metadata set</xs:documentation>		</xs:annotation>		<xs:complexType>			<xs:sequence>				<xs:element ref="DarkProperty" maxOccurs="unbounded"/>			</xs:sequence>		</xs:complexType>	</xs:element>	<!-- - -->	<!-- - -->	<!-- - -->	<!-- - -->	<!-- Dark Element -->	<!-- - -->	<!-- - -->	<!-- - -->	<xs:element name="DarkProperty">		<xs:annotation>			<xs:documentation>The data in a Metadata property with an unknown Universal Label. The xsi:type attribute specifies the encoding as one of xs:hexBinary or xs:base64Binary</xs:documentation>		</xs:annotation>		<xs:complexType>			<xs:simpleContent>				<xs:extension base="xs:hexBinary">					<xs:attribute name="UniversalLabel" type="s377mTypes:UL" use="optional">						<xs:annotation>							<xs:documentation>This attribute shall hold the UniversalLabel if a Label exists in the Primer Pack that is associated to the Local Tag with which this property has been encoded.</xs:documentation>						</xs:annotation>					</xs:attribute>					<xs:attribute name="LocalTag" type="s377mTypes:LocalTag" use="optional">						<xs:annotation>							<xs:documentation>This attribute shall hold the local tag value if it cannot be determined that the local tag is a dynamic local tag that has been registred in the Primer Pack.</xs:documentation>						</xs:annotation>					</xs:attribute>				</xs:extension>			</xs:simpleContent>		</xs:complexType>	</xs:element>	<!-- - -->	<!-- - -->	<!-- Dark Metadata Set reference-->	<!-- - -->	<!-- - -->	<xs:element name="DarkGroup_REF" type="s377mTypes:Ref"/>	<!-- - -->	<!-- - -->	<!-- - -->	<!-- - -->	<!-- Dark Metadata Sets -->	<!-- - -->	<!-- - -->	<!-- - -->	<xs:attributeGroup name="DarkGroupAttributes">		<xs:attribute name="Key" type="s377mTypes:KLVKey">			<xs:annotation>				<xs:documentation>The key of the KLV wrapping the dark Metadata</xs:documentation>			</xs:annotation>		</xs:attribute>		<xs:attribute name="BEROctetCount" type="xs:positiveInteger">			<xs:annotation>				<xs:documentation>The number of octets used for BER coding (1 for short form, 2 or more for long form)</xs:documentation>			</xs:annotation>		</xs:attribute>	</xs:attributeGroup>	<!-- - -->	<!-- - -->	<!-- - -->	<!-- - -->	<xs:element name="UnparsedDarkGroup">		<xs:annotation>			<xs:documentation>Set or Pack with an unknown key NOT encoded with 2-byte local tags.</xs:documentation>		</xs:annotation>		<xs:complexType>			<xs:simpleContent>				<xs:extension base="xs:hexBinary">					<xs:attributeGroup ref="s377mGroups:DarkGroupAttributes"/>				</xs:extension>			</xs:simpleContent>		</xs:complexType>	</xs:element>	<!-- - -->	<!-- - -->	<!-- - -->	<!-- - -->	<xs:element name="ParsedDarkSet">		<xs:annotation>			<xs:documentation>Set with an unknown key encoded with 2-byte local tags.</xs:documentation>		</xs:annotation>		<xs:complexType>			<xs:sequence>				<xs:element ref="DarkProperty" minOccurs="0" maxOccurs="unbounded"/>			</xs:sequence>			<xs:attributeGroup ref="s377mGroups:DarkGroupAttributes"/>		</xs:complexType>	</xs:element>	<!-- - -->	<!-- - -->	<!-- - --></xs:schema>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -->
+<!-- This XML Schema document is an integral part of the of the SMPTE Standard ST 434:2014: "Material Exchange Format - XML Encoding for Metadata and File Structure Information". -->
+<!-- Copyright SMPTE 2006, 2014. -->
+<!-- - -->
+<!-- - -->	
+<xs:schema xmlns="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:st335Elements="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" xmlns:st377-1Groups="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" xmlns:st377Types="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012">
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" schemaLocation="../dictionary/rp210.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" schemaLocation="../dataTypes/st377_types.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- Extension Elements -->
+	<!-- - -->
+	<xs:element name="ExtensionProperties">
+		<xs:annotation>
+			<xs:documentation>Metadata properties included in the Metadata Set being decoded but which are not in the schema specification of that Metadata. These could be unknown metadata properties or metadata properties that have a known Universal Label but were not expected inside that specific Metadata set</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="DarkProperty" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Dark Element -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="DarkProperty">
+		<xs:annotation>
+			<xs:documentation>The data in a Metadata property with an unknown Universal Label. The xsi:type attribute specifies the encoding as one of xs:hexBinary or xs:base64Binary</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:hexBinary">
+					<xs:attribute name="UniversalLabel" use="optional" type="st377Types:UL">
+						<xs:annotation>
+							<xs:documentation>This attribute shall hold the UniversalLabel if a Label exists in the Primer Pack that is associated to the Local Tag with which this property has been encoded.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="LocalTag" use="optional" type="st377Types:LocalTag">
+						<xs:annotation>
+							<xs:documentation>This attribute shall hold the local tag value if it cannot be determined that the local tag is a dynamic local tag that has been registred in the Primer Pack.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<!-- Dark Metadata Set reference-->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="DarkGroup_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Dark Metadata Sets -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:attributeGroup name="DarkGroupAttributes">
+		<xs:attribute name="Key" type="st377Types:KLVKey">
+			<xs:annotation>
+				<xs:documentation>The key of the KLV wrapping the dark Metadata</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="BEROctetCount" type="xs:positiveInteger">
+			<xs:annotation>
+				<xs:documentation>The number of octets used for BER coding (1 for short form, 2 or more for long form)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="UnparsedDarkGroup">
+		<xs:annotation>
+			<xs:documentation>Set or Pack with an unknown key NOT encoded with 2-byte local tags.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:hexBinary">
+					<xs:attributeGroup ref="st377-1Groups:DarkGroupAttributes"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="ParsedDarkSet">
+		<xs:annotation>
+			<xs:documentation>Set with an unknown key encoded with 2-byte local tags.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="DarkProperty" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="st377-1Groups:DarkGroupAttributes"/>
+		</xs:complexType>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+</xs:schema>

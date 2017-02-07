@@ -74,49 +74,58 @@ public class Convert {
 
             for (Element e : getElements(xmlSchema.getDocumentElement(), "http://www.w3.org/2001/XMLSchema", "element")) {
 
-                Element keyElem = null;
+                Iterable<Element> keyElems = null;
 
                 List<Element> annotations = getElements(e, "http://www.w3.org/2001/XMLSchema", "annotation");
                 if (annotations.size() > 0) {
                     List<Element> appinfo = getElements(annotations.iterator().next(),"http://www.w3.org/2001/XMLSchema", "appinfo");
                     if (appinfo.size() > 0) {
-                        keyElem = Iterables.find(appinfo, new Predicate<Element>() {
+                        keyElems = Iterables.filter(appinfo, new Predicate<Element>() {
                                 public boolean apply(Element element) {
                                     if (element.hasAttribute("source")) {
                                         String source = element.getAttribute("source");
                                         return source.equals("http://www.smpte-ra.org/schemas/434/Dictionary/ElementUL") || source.equals("http://www.smpte-ra.org/schemas/434/Groups/Key") || source.equals("urn:ebu:metadata-schema:smpteclass13/properties/ebucore_2012/ElementUL");
                                     } else return false;
                                 }
-                            }, null);
+                            });
                     }
                 }
 
-                if (keyElem != null) {
-                    String key = keyElem.getTextContent().trim();
-                    String keyName = "key_" + key.replace(".", "");
-                    if (!keys.containsKey(keyName)) {
-                        keys.put(keyName, keyName);
-                        localKeys.put(keyName, keyName + "_name");
-                        key = "{0x" + key.replace(".", ",0x") + "}";
-                        System.out.println("const mxfKey " + keyName + " = " + key + ";");
-                        System.out.println("const XMLCh " + keyName + "_name[] = {" +
-                                Joiner.on(",").join(Iterables.transform(Lists.charactersOf(e.getAttribute("name")), new Function<Character, String>() {
-                                    public String apply(Character o) {   return "\'" + o + "\'";  }
-                                })) +
-                                ",\'\\0\'};");
+                if (keyElems != null) {
+                    Iterator<Element> it = keyElems.iterator();
+                    if (it.hasNext()) {
 
-                        //System.out.println("st434dict.insert(std::pair<const mxfKey, st434info*>(");
-                        //System.out.println('\t' + keyName + ',');
-                        //System.out.println("\tnew st434info(/* " + e.getAttribute("name") + " */ " + keyName + "_name, /* " + xmlSchema.getDocumentElement().getAttribute("targetNamespace") + " */ " + namespaces.get(xmlSchema.getDocumentElement().getAttribute("targetNamespace")) + ")");
-                        //System.out.println("));");
+                        for (Element keyElem : keyElems) {
+
+                            String key = keyElem.getTextContent().trim();
+                            String keyName = "key_" + key.replace(".", "");
+                            if (!keys.containsKey(keyName)) {
+                                keys.put(keyName, keyName);
+                                localKeys.put(keyName, keyName + "_name");
+                                key = "{0x" + key.replace(".", ",0x") + "}";
+                                System.out.println("const mxfKey " + keyName + " = " + key + ";");
+                                System.out.println("const XMLCh " + keyName + "_name[] = {" +
+                                        Joiner.on(",").join(Iterables.transform(Lists.charactersOf(e.getAttribute("name")), new Function<Character, String>() {
+                                            public String apply(Character o) {
+                                                return "\'" + o + "\'";
+                                            }
+                                        })) +
+                                        ",\'\\0\'};");
+
+                                //System.out.println("st434dict.insert(std::pair<const mxfKey, st434info*>(");
+                                //System.out.println('\t' + keyName + ',');
+                                //System.out.println("\tnew st434info(/* " + e.getAttribute("name") + " */ " + keyName + "_name, /* " + xmlSchema.getDocumentElement().getAttribute("targetNamespace") + " */ " + namespaces.get(xmlSchema.getDocumentElement().getAttribute("targetNamespace")) + ")");
+                                //System.out.println("));");
+
+                            } else {
+                                System.out.println("// Skipped duplicate: " + e.getAttribute("name"));
+                                System.err.println("WARN: Skipped duplicate: " + e.getAttribute("name"));
+                            }
+                        }
 
                     } else {
-                        System.out.println("// Skipped duplicate: " + e.getAttribute("name"));
+                        System.out.println("// No UL found for element: " + e.getAttribute("name"));
                     }
-                }
-                else
-                {
-                    System.out.println("// No UL found for element: " + e.getAttribute("name"));
                 }
 
             }
