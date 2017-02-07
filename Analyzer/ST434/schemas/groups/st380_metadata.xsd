@@ -1,0 +1,1932 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -->
+<!-- This XML Schema document is an integral part of the of the SMPTE Standard ST 434:2014: "Material Exchange Format - XML Encoding for Metadata and File Structure Information". -->
+<!-- Copyright SMPTE 2006, 2014. -->
+<!-- - -->
+<!-- - -->	
+<xs:schema xmlns="http://www.smpte-ra.org/schemas/434/2014/groups/380/2004" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.smpte-ra.org/schemas/434/2014/groups/380/2004" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:st335Elements="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" xmlns:st377-1Groups="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" xmlns:st377Types="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" xmlns:st380Groups="http://www.smpte-ra.org/schemas/434/2014/groups/380/2004">
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" schemaLocation="../dataTypes/st377_types.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" schemaLocation="../dictionary/rp210.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" schemaLocation="./st377_metadata.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- ############################################ -->
+	<!-- ############### Abstract Sets ################# -->
+	<!-- ############################################ -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- DMS1SetType -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="DMS1Set" abstract="true" type="st380Groups:DMS1SetType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all DMS-1 sets</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">DMS1 Set</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.04.01.01.00.00.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="DMS1SetType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:DescriptiveObjectType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- DMS1FrameworkType -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="DMS1Framework" abstract="true" type="st380Groups:DMS1FrameworkType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all DMS-1 Frameworks</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">DMS-1 Framework</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.04.01.01.01.00.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="DMS1FrameworkType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:DescriptiveFrameworkType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:FrameworkExtendedTextLanguageCode">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">E/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:FrameworkThesaurusName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:FrameworkTitle">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PrimaryExtendedSpokenLanguageCode">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SecondaryExtendedSpokenLanguageCode">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:OriginalExtendedSpokenLanguageCode">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:MetadataServerLocators">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:TitlesObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AnnotationObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ParticipantObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:Locations">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ContactsListObject">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- TextLanguageSetType -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="TextLanguage" abstract="true" type="st380Groups:TextLanguageType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all DMS-1 Text Language sets</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">TextLanguage</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.04.01.01.7F.11.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="TextLanguageType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:DMS1SetType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:ExtendedTextLanguageCode">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- ThesaurusSetType -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="Thesaurus" abstract="true" type="st380Groups:ThesaurusType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all DMS-1 Thesaurus sets</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Thesaurus</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.04.01.01.7F.12.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="ThesaurusType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:TextLanguageType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:ThesaurusName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- ContactType -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="Contact" abstract="true" type="st380Groups:ContactType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all DMS-1 Contact sets</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Contact</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.04.01.01.7F.1A.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="ContactType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:ContactID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ContactNameValueObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AddressObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- ProductionClipFrameworkType -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="ProductionClipFramework" abstract="true" type="st380Groups:ProductionClipFrameworkType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all DMS-1 Production and Clip Frameworks</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">ProductionClipFramework</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.04.01.01.7F.02.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="ProductionClipFrameworkType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:DMS1FrameworkType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:CaptionsDescriptionObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ContractObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PictureFormatObject">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ProjectObject">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- ######################################## -->
+	<!-- ###############Framework Sets ########### -->
+	<!-- ######################################## -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.1 Production Framework-->
+	<!-- - -->
+	<xs:element name="ProductionFramework_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="ProductionFramework" type="st380Groups:ProductionFrameworkType">
+		<xs:annotation>
+			<xs:documentation>Root set of the Production Framework</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Production Framework</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.01.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="ProductionFrameworkType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ProductionClipFrameworkType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:IntegrationIndication">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:IdentificationObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:GroupRelationshipObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:BrandingObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:EventObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AwardObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ProductionSettingPeriodObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.2 Clip Framework -->
+	<!-- - -->
+	<xs:element name="ClipFramework_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="ClipFramework" type="st380Groups:ClipFrameworkType">
+		<xs:annotation>
+			<xs:documentation>Root set of the Clip Framework</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Clip Framework</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.01.02.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="ClipFrameworkType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ProductionClipFrameworkType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:ClipKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ClipNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ExtendedClipID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ClipCreationDateTime">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:TakeNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SlateInformation">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ScriptingObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ClipShotObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DeviceParametersObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ProcessingObject">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.3 Scene Framework -->
+	<!-- - -->
+	<xs:element name="SceneFramework_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="SceneFramework" type="st380Groups:SceneFrameworkType">
+		<xs:annotation>
+			<xs:documentation>Root set of the Scene Framework</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Scene Framework</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.01.03.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="SceneFrameworkType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:DMS1FrameworkType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:SceneNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SceneSettingPeriodObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SceneShotObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- ######################################## -->
+	<!-- ############### Metadata Sets ############# -->
+	<!-- ######################################## -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.4 Titles -->
+	<!-- - -->
+	<xs:element name="Titles_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Titles" type="st380Groups:TitlesType">
+		<xs:annotation>
+			<xs:documentation>Defines the Titles set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Titles</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.10.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="TitlesType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:TextLanguageType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:MainTitle">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SecondaryTitle">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:WorkingTitle">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:OriginalTitle">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:VersionTitle">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.5 Identification -->
+	<!-- - -->
+	<xs:element name="Identification_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Identification" type="st380Groups:IdentificationType">
+		<xs:annotation>
+			<xs:documentation>Defines the Identification set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Identification</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.11.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="IdentificationType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:IdentifierKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:IdentifierValue">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:IdentificationLocator">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:IdentificationIssuingAuthority">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.6 Group Relationship -->
+	<!-- - -->
+	<xs:element name="GroupRelationship_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="GroupRelationship" type="st380Groups:GroupRelationshipType">
+		<xs:annotation>
+			<xs:documentation>Defines the Group Relationship set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Group Relationship</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.12.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="GroupRelationshipType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:ProgrammingGroupKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ProgrammingGroupTitle">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:GroupSynopsis">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PositionInSequence">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:TotalNumberInSequence">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:EpisodicStartNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:EpisodicEndNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.7 Branding -->
+	<!-- - -->
+	<xs:element name="Branding_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Branding" type="st380Groups:BrandingType">
+		<xs:annotation>
+			<xs:documentation>Defines the Branding set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Branding</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.13.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="BrandingType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:TextLanguageType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:BrandMainTitle">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:BrandOriginalTitle">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.8 Event  -->
+	<!-- - -->
+	<xs:element name="Event_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Event" type="st380Groups:EventType">
+		<xs:annotation>
+			<xs:documentation>Defines the Event set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Event</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.14.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="EventType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:EventIndication">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:EventStartDateTime">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:EventEndDateTime">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PublicationObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:EventAnnotationObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.9 Publication -->
+	<!-- - -->
+	<xs:element name="Publication_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Publication" type="st380Groups:PublicationType">
+		<xs:annotation>
+			<xs:documentation>Defines the Publication set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Publication</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.14.02.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="PublicationType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:DMS1SetType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:PublishingOrganizationName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PublishingServiceName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PublishingMediumName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PublishingRegionName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.10 Award -->
+	<!-- - -->
+	<xs:element name="Award_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Award" type="st380Groups:AwardType">
+		<xs:annotation>
+			<xs:documentation>Defines the Award set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Award</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.15.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="AwardType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:FestivalName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:FestivalDateTime">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AwardName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AwardCategory">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:NominationCategory">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AwardParticipants">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.11 Captions Description -->
+	<!-- - -->
+	<xs:element name="CaptionsDescription_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="CaptionsDescription" type="st380Groups:CaptionsDescriptionType">
+		<xs:annotation>
+			<xs:documentation>Defines the Sub-titles Description set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Captions Description</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.16.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="CaptionsDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:ExtendedCaptionsLanguageCode">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:CaptionKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.12 Annotation -->
+	<!-- - -->
+	<xs:element name="Annotation_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Annotation" type="st380Groups:AnnotationType">
+		<xs:annotation>
+			<xs:documentation>Defines the Annotation set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Annotation</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.17.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="AnnotationType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:AnnotationKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AnnotationSynopsis">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AnnotationDescription">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:RelatedMaterialDescription">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ClassificationObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AnnotationCueWordsObject">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:RelatedMaterialLocators">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AnnotationParticipants">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.13 Setting Period -->
+	<!-- - -->
+	<xs:element name="SettingPeriod_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="SettingPeriod" type="st380Groups:SettingPeriodType">
+		<xs:annotation>
+			<xs:documentation>Defines the Setting Period set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Setting Period</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.17.02.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="SettingPeriodType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:SettingDateTime">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:TimePeriodKeyword">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SettingPeriodDescription">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.14 Scripting -->
+	<!-- - -->
+	<xs:element name="Scripting_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Scripting" type="st380Groups:ScriptingType">
+		<xs:annotation>
+			<xs:documentation>Defines the Scripting set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Scripting</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.17.03.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="ScriptingType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:ScriptingKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ScriptingText">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ScriptingLocators">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.15 Classification -->
+	<!-- - -->
+	<xs:element name="Classification_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Classification" type="st380Groups:ClassificationType">
+		<xs:annotation>
+			<xs:documentation>Defines the Classification set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Classification</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.17.04.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="ClassificationType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:ContentClassification">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ClassificationNameValueObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.16 Shot -->
+	<!-- - -->
+	<xs:element name="Shot_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Shot" type="st380Groups:ShotType">
+		<xs:annotation>
+			<xs:documentation>Defines the Shot set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Shot</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.17.05.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="ShotType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:TextLanguageType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:ShotStartPosition">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ShotDuration">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ShotTrackIDs">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ShotDescription">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ShotCommentKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ShotComment">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ShotCueWordsObject">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:KeyPointObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.17 Key Point -->
+	<!-- - -->
+	<xs:element name="KeyPoint_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="KeyPoint" type="st380Groups:KeyPointType">
+		<xs:annotation>
+			<xs:documentation>Defines the Key Point set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Key Point</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.17.06.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="KeyPointType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:KeyPointKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:KeyPointPosition">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:KeyPointValue">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.18 Participant-->
+	<!-- - -->
+	<xs:element name="Participant_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Participant" type="st380Groups:ParticipantType">
+		<xs:annotation>
+			<xs:documentation>Defines the Participant set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Participant</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.18.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="ParticipantType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:ParticipantID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ContributionStatus">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:JobFunction">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:JobFunctionCode">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:RoleName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:Persons">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ParticipantOrganizations">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.19 Person -->
+	<!-- - -->
+	<xs:element name="Person_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Person" type="st380Groups:PersonType">
+		<xs:annotation>
+			<xs:documentation>Defines the Person set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Person</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.1A.02.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="PersonType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ContactType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:FamilyName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:FirstGivenName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:OtherGivenNames">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:Salutation">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:HonorsQualifications">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PersonDescription">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AlternateName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:LinkingName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:NameSuffix">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:FormerFamilyName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:Nationality">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:Citizenship">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PersonOrganizations">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.20 Organization -->
+	<!-- - -->
+	<xs:element name="Organization_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Organization" type="st380Groups:OrganizationType">
+		<xs:annotation>
+			<xs:documentation>Defines the Organisation set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Organization</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.1A.03.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="OrganizationType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ContactType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:OrganizationKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:OrganizationMainName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:OrganizationCode">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ContactDepartment">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.21 Location -->
+	<!-- - -->
+	<xs:element name="Location_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Location" type="st380Groups:LocationType">
+		<xs:annotation>
+			<xs:documentation>Defines the Location set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Location</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.1A.04.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="LocationType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ContactType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:LocationKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:LocationDescription">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.22 Address -->
+	<!-- - -->
+	<xs:element name="Address_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Address" type="st380Groups:AddressType">
+		<xs:annotation>
+			<xs:documentation>Defines the Address set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Address</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.1B.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="AddressType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:DMS1SetType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:RoomSuiteNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:RoomSuiteName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:BuildingName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PlaceName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:StreetNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:StreetName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PostalTown">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:City">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:StateProvinceCounty">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PostalCode">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:Country">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:GeographicalCoordinates">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AstronomicalBodyName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:CommunicationsObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AddressNameValueObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.23 Communications -->
+	<!-- - -->
+	<xs:element name="Communications_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Communications" type="st380Groups:CommunicationsType">
+		<xs:annotation>
+			<xs:documentation>Defines the Communications set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Communications</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.1B.02.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="CommunicationsType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:DMS1SetType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:CentralTelephoneNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:TelephoneNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:MobileTelephoneNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:FaxNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:EmailAddress">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ContactWebPage">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.24 Contract -->
+	<!-- - -->
+	<xs:element name="Contract_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Contract" type="st380Groups:ContractType">
+		<xs:annotation>
+			<xs:documentation>Defines the Contract set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Contract</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.1C.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="ContractType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:SupplyContractNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:RightsObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ContractParticipants">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.25 Rights -->
+	<!-- - -->
+	<xs:element name="Rights_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Rights" type="st380Groups:RightsType">
+		<xs:annotation>
+			<xs:documentation>Defines the Rights set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Rights</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.1C.02.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="RightsType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:CopyrightOwner">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:Rightsholder">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:RightsManagementAuthority">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:RegionAreaOfIPLicense">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:IntellectualPropertyDescription">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:RightsCondition">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:RightsComment">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:IntellectualPropertyRight">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:RightsStartDateTime">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:RightsStopDateTime">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:MaxNumberOfUsages">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.26 Picture Format -->
+	<!-- - -->
+	<xs:element name="PictureFormat_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="PictureFormat" type="st380Groups:PictureFormatType">
+		<xs:annotation>
+			<xs:documentation>Defines the Picture Format set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Picture Format</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.1D.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="PictureFormatType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:DMS1SetType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:ViewportAspectRatio">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PerceivedDisplayFormat">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ColorDescriptor">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.27 Device Parameters -->
+	<!-- - -->
+	<xs:element name="DeviceParameters_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="DeviceParameters" type="st380Groups:DeviceParametersType">
+		<xs:annotation>
+			<xs:documentation>Defines the Device Parameters set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Device Parameters</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.1E.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="DeviceParametersType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:ThesaurusType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:DeviceKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DeviceDesignation">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DeviceAssetNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:IEEEDeviceIdentifier">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DeviceManufacturerName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DeviceModel">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DeviceSerialNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DeviceUsageDescription">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DeviceParametersNameValueObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.28 Name Value -->
+	<!-- - -->
+	<xs:element name="NameValue_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="NameValue" type="st380Groups:NameValueType">
+		<xs:annotation>
+			<xs:documentation>Defines the Name Value set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Name Value</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.1F.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="NameValueType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:DMS1SetType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:ItemName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ItemValue">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SMPTEUniversalLabelLocator">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.29 Processing -->
+	<!-- - -->
+	<xs:element name="Processing_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Processing" type="st380Groups:ProcessingType">
+		<xs:annotation>
+			<xs:documentation>Defines the Processing set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Processing</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.20.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="ProcessingType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:DMS1SetType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:QualityFlag">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DescriptiveComment">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:GraphicUsage">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:LogoFlag">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SimpleFlagging">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:GenerationCopyNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:GenerationCloneNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.30 Project -->
+	<!-- - -->
+	<xs:element name="Project_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Project" type="st380Groups:ProjectType">
+		<xs:annotation>
+			<xs:documentation>Defines the Project set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Project</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.20.02.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="ProjectType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:DMS1SetType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:ProjectNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ProjectName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.31 Contacts List -->
+	<!-- - -->
+	<xs:element name="ContactsList_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="ContactsList" type="st380Groups:ContactsListType">
+		<xs:annotation>
+			<xs:documentation>Defines the Contacts List set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Contacts List</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.19.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="ContactsListType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:DMS1SetType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:PersonObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:OrganizationObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:LocationObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- A.32 Cue Words -->
+	<!-- - -->
+	<xs:element name="CueWords_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="CueWords" type="st380Groups:CueWordsType">
+		<xs:annotation>
+			<xs:documentation>Defines the Cue Words set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Cue Words</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.01.17.08.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<xs:complexType name="CueWordsType">
+		<xs:complexContent>
+			<xs:extension base="st380Groups:TextLanguageType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:InCueWords">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:OutCueWords">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+</xs:schema>

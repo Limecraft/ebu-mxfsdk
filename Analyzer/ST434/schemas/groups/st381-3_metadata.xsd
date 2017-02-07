@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -->
+<!-- This XML Schema document is an integral part of the of the SMPTE Standard ST 434:2014: "Material Exchange Format - XML Encoding for Metadata and File Structure Information". -->
+<!-- Copyright SMPTE 2006, 2014. -->
+<!-- - -->
+<!-- - -->	
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" targetNamespace="http://www.smpte-ra.org/schemas/434/2014/groups/381-3/2013" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:st335Elements="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" xmlns:st377-1Groups="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" xmlns:st377Types="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" xmlns:st381-3Groups="http://www.smpte-ra.org/schemas/434/2014/groups/381-3/2013">
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" schemaLocation="../dataTypes/st377_types.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" schemaLocation="../dictionary/rp210.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" schemaLocation="./st377_metadata.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- AVC Sub Descriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="AVCSubDescriptor_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="AVCSubDescriptor" type="st381-3Groups:AVCSubDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Defines the AVC Sub Descriptor Set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">AVC Sub Descriptor</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.6E.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AVCSubDescriptorType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:SubDescriptorType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:AVCDecodingDelay">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AVCConstantBPictureFlag">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AVCCodedContentKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AVCClosedGOPIndicator">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AVCIdenticalGOPIndicator">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AVCMaximumGOPSize">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AVCMaximumBPictureCount">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AVCMaximumBitrate">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AVCAverageBitrate">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AVCProfile">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AVCProfileConstraint">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AVCLevel">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AVCMaximumRefFrames">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AVCSequenceParameterSetFlag">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AVCPictureParameterSetFlag">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+</xs:schema>

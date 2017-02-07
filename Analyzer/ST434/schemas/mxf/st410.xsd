@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -->
+<!-- This XML Schema document is an integral part of the of the SMPTE Standard ST 434:2014: "Material Exchange Format - XML Encoding for Metadata and File Structure Information". -->
+<!-- Copyright SMPTE 2006, 2014. -->
+<!-- - -->
+<!-- - -->	
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.smpte-ra.org/schemas/434/2014/multiplex/410/2006" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:st335Elements="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" xmlns:st377-1Groups="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" xmlns:st377Mux="http://www.smpte-ra.org/schemas/434/2014/multiplex/377-1/2012" xmlns:st377Types="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" xmlns:st410Mux="http://www.smpte-ra.org/schemas/434/2014/multiplex/410/2006">
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" schemaLocation="../dataTypes/st377_types.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" schemaLocation="../groups/st377_packs.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="GenericStreamPartition">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" ref="st377-1Groups:PartitionPack"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+</xs:schema>

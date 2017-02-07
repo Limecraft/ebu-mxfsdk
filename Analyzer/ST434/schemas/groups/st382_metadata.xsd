@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -->
+<!-- This XML Schema document is an integral part of the of the SMPTE Standard ST 434:2014: "Material Exchange Format - XML Encoding for Metadata and File Structure Information". -->
+<!-- Copyright SMPTE 2006, 2014. -->
+<!-- - -->
+<!-- - -->	
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" targetNamespace="http://www.smpte-ra.org/schemas/434/2014/groups/382/2012" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:st335Elements="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" xmlns:st377-1Groups="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" xmlns:st377Types="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" xmlns:st382Groups="http://www.smpte-ra.org/schemas/434/2014/groups/382/2012">
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" schemaLocation="./st377_metadata.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" schemaLocation="../dictionary/rp210.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" schemaLocation="../dataTypes/st377_types.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Wave Audio Essence Descriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="WaveAudioEssenceDescriptor_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="WaveAudioEssenceDescriptor" type="st382Groups:WaveAudioEssenceDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Defines the Wave Audio Essence Descriptor Set (a collection of Parametric metadata)</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Wave Audio Essence Descriptor</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.48.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments"/>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="WaveAudioEssenceDescriptorType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:SoundEssenceDescriptorType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:BlockAlign">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.0A</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SequenceOffset">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.0B</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:AverageBytesPerSecond">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.09</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ChannelAssignment">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.32</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PeakEnvelopeVersion">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.29</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PeakEnvelopeFormat">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.2A</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PointsPerPeakValue">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.2B</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PeakEnvelopeBlockSize">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.2C</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PeakChannels">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.2D</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PeakFrames">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.2E</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PeakOfPeaksPosition">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.2F</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PeakEnvelopeTimestamp">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.30</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PeakEnvelopeData">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.31</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Wave Audio Physical Descriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="WaveAudioPhysicalDescriptor_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="WaveAudioPhysicalDescriptor" type="st382Groups:WaveAudioPhysicalDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Defines the Wave Audio Physical Descriptor Set (a collection of Parametric metadata copied from the BWF &lt;BEXT&gt; and &lt;QLTY&gt; chunks)</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Wave Audio Physical Descriptor</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.50.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments"/>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="WaveAudioPhysicalDescriptorType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:GenericDescriptorType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:BextCodingHistory">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.21</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:FileSecurityReport">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.15</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:FileSecurityWave">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.16</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:QltyBasicData">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.22</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:QltyStartOfModulation">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.23</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:QltyQualityEvent">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.24</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:QltyEndOfModulation">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.25</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:QltyQualityParameter">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.26</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:QltyOperatorComment">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.27</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:QltyCueSheet">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.28</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:UnknownBWFChunks">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.33</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Unknown Chunk Set -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="UnknownChunkSet_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="UnknownChunkSet" type="st382Groups:UnknownChunkSetType">
+		<xs:annotation>
+			<xs:documentation>Defines the Unknown Set. This set is for the carriage of RIFF chunks which were unknown to the MXF encoding device at the time of encoding. Its purpose is to allow transparent, lossless carriage of BWF metadata in MXF systems.</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Unknown Chunk Set</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.4F.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments"/>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="UnknownChunkSetType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:GenericDescriptorType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:ChunkID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">4F.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:ChunkLength">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">4F.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:ChunkData">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">4F.03</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- AES3 Audio Essence Descriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="AES3AudioEssenceDescriptor_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="AES3AudioEssenceDescriptor" type="st382Groups:AES3AudioEssenceDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Defines the AES3 Audio Essence Descriptor Set (a collection of Parametric metadata)</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">AES3 Audio Essence Descriptor</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.47.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments"/>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AES3AudioEssenceDescriptorType">
+		<xs:complexContent>
+			<xs:extension base="st382Groups:WaveAudioEssenceDescriptorType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:Emphasis">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.0D</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:BlockStartOffset">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.0F</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AuxBitsMode">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.08</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ChannelStatusMode">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.10</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:FixedChannelStatusData">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.11</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:UserDataMode">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.12</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:FixedUserData">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.13</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:LinkedTimecodeTrackID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SMPTE377MDataStreamNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+</xs:schema>

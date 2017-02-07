@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -->
+<!-- This XML Schema document is an integral part of the of the SMPTE Standard ST 434:2014: "Material Exchange Format - XML Encoding for Metadata and File Structure Information". -->
+<!-- Copyright SMPTE 2006, 2014. -->
+<!-- - -->
+<!-- - -->	
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" targetNamespace="http://www.smpte-ra.org/schemas/434/2014/groups/2037/2009" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:st2037Groups="http://www.smpte-ra.org/schemas/434/2014/groups/2037/2009" xmlns:st335Elements="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" xmlns:st377-1Groups="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" xmlns:st377Types="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012">
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" schemaLocation="../dataTypes/st377_types.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" schemaLocation="../dictionary/rp210.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" schemaLocation="./st377_metadata.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- VC-1 Picture Essence Descriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="VC1PictureEssenceDescriptor_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="VC1PictureEssenceDescriptor" type="st2037Groups:VC1PictureEssenceDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Defines the VC-1 Picture Essence Descriptor Set.</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">VC-1 Picture Essence Descriptor</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.5F.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">Defines the VC-1 Picture Essence Descriptor Set.</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="VC1PictureEssenceDescriptorType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:CDCIEssenceDescriptorType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:VC1InitializationMetadata">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:VC1SingleSequence">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:VC1CodedContentType">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:VC1IdenticalGOP">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:VC1MaxGOP">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:VC1BPictureCount">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:VC1AverageBitRate">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:VC1MaximumBitRate">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:VC1Profile">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:VC1Level">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+</xs:schema>

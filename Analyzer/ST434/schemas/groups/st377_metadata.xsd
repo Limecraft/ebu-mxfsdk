@@ -1,0 +1,1935 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -->
+<!-- This XML Schema document is an integral part of the of the SMPTE Standard ST 434:2014: "Material Exchange Format - XML Encoding for Metadata and File Structure Information". -->
+<!-- Copyright SMPTE 2006, 2014. -->
+<!-- - -->
+<!-- - -->	
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" targetNamespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:st335Elements="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" xmlns:st377-1Groups="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" xmlns:st377Types="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012">
+	<!-- - -->
+	<!-- - -->
+	<xs:include schemaLocation="./dark_metadata.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" schemaLocation="../dataTypes/st377_types.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" schemaLocation="../dictionary/rp210.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- ############################################ -->
+	<!-- ############### Abstract Sets ################# -->
+	<!-- ############################################ -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Abstract Set -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="AbstractSet" abstract="true" type="st377-1Groups:AbstractSetType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all MXF header metadata sets</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Abstract Set</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.00.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="AbstractSetType" abstract="true">
+		<xs:sequence>
+			<xs:element minOccurs="0" ref="st377-1Groups:ExtensionProperties"/>
+			<xs:element minOccurs="0" ref="st335Elements:ObjectClass">
+				<xs:annotation>
+					<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+					<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">01.01</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" ref="st335Elements:ApplicationPlugInBatch">
+				<xs:annotation>
+					<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute use="required" ref="st335Elements:InstanceID">
+			<xs:annotation>
+				<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+				<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3C.0A</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Interchange Object -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="InterchangeObject" abstract="true" type="st377-1Groups:InterchangeObjectType">
+		<xs:annotation>
+			<xs:documentation>Abstract Superclass of all MXF header metadata sets except Identification</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Interchange Object</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.01.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="InterchangeObjectType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:AbstractSetType">
+				<xs:attribute use="optional" ref="st335Elements:LinkedGenerationID">
+					<xs:annotation>
+						<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">01.02</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Application Object -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="ApplicationObject" abstract="true" type="st377-1Groups:ApplicationObjectType">
+		<xs:annotation>
+			<xs:documentation>Abstract Superclass of the concrete Application Metadata Plug-In sets</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Application Object</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.66.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments"/>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="ApplicationObjectType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:InterchangeObjectType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:BaseClass">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- SubDescriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="SubDescriptor" abstract="true" type="st377-1Groups:SubDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all SubDescriptors</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Sub Descriptor</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.59.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="SubDescriptorType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:InterchangeObjectType">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- DM Framework -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="DescriptiveFramework" abstract="true" type="st377-1Groups:DescriptiveFrameworkType">
+		<xs:annotation>
+			<xs:documentation>MXF Abstract superclass defining no items but inherited by every Descriptive Framework of any MXF Descriptive Metadata scheme</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Descriptive Framework</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.04.01.00.00.00.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="DescriptiveFrameworkType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:InterchangeObjectType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:LinkedDescriptiveFrameworkPlugInID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Descriptive Object -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="DescriptiveObject" abstract="true" type="st377-1Groups:DescriptiveObjectType">
+		<xs:annotation>
+			<xs:documentation>MXF Abstract superclass defining no items but inherited by every Descriptive Set of any MXF Descriptive Metadata scheme</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Descriptive Object</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.04.00.00.00.00.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="DescriptiveObjectType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:InterchangeObjectType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:LinkedDescriptiveObjectPlugInID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Track -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="Track" abstract="true" type="st377-1Groups:TrackType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all Tracks</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Track</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.38.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="TrackType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:InterchangeObjectType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:TrackID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">48.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:EssenceTrackNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">48.04</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:TrackName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">48.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:TrackSegment">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">48.03</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Generic Package -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="GenericPackage" abstract="true" type="st377-1Groups:GenericPackageType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all Packages</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Generic Package</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.34.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="GenericPackageType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:InterchangeObjectType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:PackageID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">44.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PackageName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">44.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:CreationTime">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">44.05</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:PackageLastModified">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">44.04</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:PackageTracks">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">44.03</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Structural Component -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="StructuralComponent" abstract="true" type="st377-1Groups:StructuralComponentType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all MXF Structural Components</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Structural Component</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.02.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="StructuralComponentType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:InterchangeObjectType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:ComponentDataDefinition">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">02.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ComponentLength">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">B.Effort</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/DistinguishedValue">-1</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/RequiresSemanticValidation">Duration is Best Effort if the Component is in a standard (Timeline) Track, is optional in an Event Track and shall be omitted in a Static Track.</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">02.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Segment -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="Segment" abstract="true" type="st377-1Groups:SegmentType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all MXF Segments</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Segment</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.03.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="SegmentType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:StructuralComponentType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Source Reference -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="SourceReference" abstract="true" type="st377-1Groups:SourceReferenceType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all MXF Source References</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Source Reference</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.10.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="SourceReferenceType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:SegmentType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:SourcePackageID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">11.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:SourceTrackID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">11.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ChannelIDs">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">11.03</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:MonoSourceTrackIDs">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">11.04</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Event -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="Event" abstract="true" type="st377-1Groups:EventType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all MXF Events</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Event</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.06.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="EventType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:SegmentType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:EventPosition">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/RequiresSemanticValidation">Event Start Position is Required if the DM Segment is on an Event Track, but shall be omitted if the DM Segment is on a standard (timeline) Track or a Static Track.</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">06.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:EventComment">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">06.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="CommentMarker" abstract="true" type="st377-1Groups:CommentMarkerType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all MXF Comment Markers</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Comment Marker</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.08.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="CommentMarkerType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:EventType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Generic Descriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="GenericDescriptor" abstract="true" type="st377-1Groups:GenericDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all MXF Descriptors</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Generic Descriptor</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.24.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="GenericDescriptorType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:InterchangeObjectType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:Locators">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">2F.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SubDescriptors">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- File Descriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="FileDescriptor" abstract="true" type="st377-1Groups:FileDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Defines the File Descriptor set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">File Descriptor</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.25.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="FileDescriptorType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:GenericDescriptorType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:LinkedTrackID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">30.06</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:SampleRate">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">30.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ContainerDuration">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">30.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:EssenceContainer">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">30.04</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:Codec">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">30.05</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">Codec UL is intended to identify the codec tool (as hardware/software) whereas the Essence Container identifies the essence container itself. Note that the codec tool might be multi-format (e.g. MPEG/JPEG/DV)</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Physical Descriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="PhysicalDescriptor" abstract="true" type="st377-1Groups:PhysicalDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all MXF Physical Descriptors</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Physical Descriptor</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.49.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="PhysicalDescriptorType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:GenericDescriptorType">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Locator -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="Locator" abstract="true" type="st377-1Groups:LocatorType">
+		<xs:annotation>
+			<xs:documentation>Abstract superclass of all Loctors</xs:documentation>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Name">Locator</xs:appinfo>
+			<xs:appinfo source="urn:SMPTE:MXF:XMLInterface:Groups:Key">06.0E.2B.34.02.7F.01.01.0D.01.01.01.01.01.31.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<!-- - -->
+	<!-- - -->
+	<xs:complexType name="LocatorType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:InterchangeObjectType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- ############################################ -->
+	<!-- ############### Metadata Sets ################# -->
+	<!-- ############################################ -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Preface -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="Preface_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Preface" type="st377-1Groups:PrefaceType">
+		<xs:annotation>
+			<xs:documentation>Defines the Preface set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Preface</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.2F.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PrefaceType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:InterchangeObjectType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:FileLastModified">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3B.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:FormatVersion">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3B.05</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ObjectModelVersion">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3B.07</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PrimaryPackage">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3B.08</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:IdentificationList">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">E/req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3B.06</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:ContentStorageObject">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3B.03</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:OperationalPattern">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3B.09</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:EssenceContainers">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3B.0A</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:DescriptiveSchemes">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3B.0B</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:GenericPayloads">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ApplicationSchemesBatch">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:IsRIPPresent">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Identification -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="Identification_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Identification" type="st377-1Groups:IdentificationType">
+		<xs:annotation>
+			<xs:documentation>Defines the Identification set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Identification</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.30.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">the first Identification set is generated when the file is created and a new set is generated and added whenever the file is modified. Each Identification set has a 'This Generation UID' property value to which any other set may refer via its own 'Generation UID' property. This is used to indicate at what stage the set and its associated sets were created or modified. The Identification Set with the matching Generation UID shall contain the details corresponding to the moment when those sets were created or modified.</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="IdentificationType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:AbstractSetType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:GenerationID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3C.09</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:ApplicationSupplierName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3C.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:ApplicationName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3C.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ApplicationVersion">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3C.03</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:ApplicationVersionString">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3C.04</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:ApplicationProductID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3C.05</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:FileModificationDate">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3C.06</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ToolkitVersion">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3C.07</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ApplicationPlatform">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3C.08</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Content Storage -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="ContentStorage_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="ContentStorage" type="st377-1Groups:ContentStorageType">
+		<xs:annotation>
+			<xs:documentation>Defines the Content Storage set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Content Storage</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.18.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ContentStorageType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:InterchangeObjectType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:Packages">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">19.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:EssenceDataObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">19.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Essence Container Data -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="EssenceContainerData_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="EssenceContainerData" type="st377-1Groups:EssenceContainerDataType">
+		<xs:annotation>
+			<xs:documentation>Defines the Essence Container Data set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Essence Container Data</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.23.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="EssenceContainerDataType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:InterchangeObjectType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:LinkedPackageID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">27.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:IndexStreamID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3F.06</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:EssenceStreamID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3F.07</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PrecedingIndexTable">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SingularPartitionUsage">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:FollowingIndexTable">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:IsSparse">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Network Locator -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="NetworkLocator_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="NetworkLocator" type="st377-1Groups:NetworkLocatorType">
+		<xs:annotation>
+			<xs:documentation>Defines the Network Locator set for location with a URL</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Network Locator</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.32.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="NetworkLocatorType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:LocatorType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:URL">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">40.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Text Locator -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="TextLocator_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="TextLocator" type="st377-1Groups:TextLocatorType">
+		<xs:annotation>
+			<xs:documentation>Defines the Text Locator set for location with a human-readable text string</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Text Locator</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.33.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TextLocatorType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:LocatorType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:LocationName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">41.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Timeline Track -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="TimelineTrack_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="TimelineTrack" type="st377-1Groups:TimelineTrackType">
+		<xs:annotation>
+			<xs:documentation>Defines the Track set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Timeline Track</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.3B.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TimelineTrackType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:TrackType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:EditRate">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">4B.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:Origin">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">4B.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Event Track -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="EventTrack_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="EventTrack" type="st377-1Groups:EventTrackType">
+		<xs:annotation>
+			<xs:documentation>Defines the Track set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Event Track</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.39.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">Only present when there is Descriptive Metadata in the file</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="EventTrackType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:TrackType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:EventTrackEditRate">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">49.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:EventTrackOrigin">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">49.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Static Track -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="StaticTrack_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="StaticTrack" type="st377-1Groups:StaticTrackType">
+		<xs:annotation>
+			<xs:documentation>Defines the Track set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Static Track</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.3A.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">Only present when there is Descriptive Metadata in the file</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="StaticTrackType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:TrackType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Sequence -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="Sequence_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Sequence" type="st377-1Groups:SequenceType">
+		<xs:annotation>
+			<xs:documentation>Defines the Sequence set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Sequence</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.0F.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SequenceType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:SegmentType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:ComponentObjects">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">10.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Timecode Component -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="TimecodeComponent_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="TimecodeComponent" type="st377-1Groups:TimecodeComponentType">
+		<xs:annotation>
+			<xs:documentation>Defines the Timecode Component set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Timecode Component</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.14.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">this set is used to define continuous timecode over the duration of this component. This set may be used in any package.</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TimecodeComponentType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:SegmentType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:StartTimecode">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">15.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:FramesPerSecond">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">15.02</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">An algorithm for determining the Rounded Timecode Base= integer_part_of( frame rate + 0.5 )</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:DropFrame">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">15.03</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- DM Segment -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="DMSegment_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="DMSegment" type="st377-1Groups:DMSegmentType">
+		<xs:annotation>
+			<xs:documentation>Defines the Descriptive Metadata Segment set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">DM Segment</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.41.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">The Descriptive Metadata Segment is also a subclass of the AAF Comment Marker Class. It has incorporated within it a DM Track IDs item which specifies the target tracks of the Descriptive Metadata. It includes a Strong Reference to a DMFramework item to contain the Descriptive Metadata for this segment</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="DMSegmentType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:CommentMarkerType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:DescribedTrackIDs">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">61.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DescriptiveFrameworkObject">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">61.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DescriptiveMetadataScheme">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DescriptiveMetadataApplicationEnvironmentID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute use="optional" ref="st335Elements:DescriptiveMetadataPlugInID">
+					<xs:annotation>
+						<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Source Clip -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="SourceClip_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="SourceClip" type="st377-1Groups:SourceClipType">
+		<xs:annotation>
+			<xs:documentation>Defines the SourceClip set (Picture, Sound, Data)</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Source Clip</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.11.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SourceClipType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:SourceReferenceType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:StartPosition">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">12.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- DM Source Clip -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="DMSourceClip_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="DMSourceClip" type="st377-1Groups:DMSourceClipType">
+		<xs:annotation>
+			<xs:documentation>Defines the Descriptive Metadata SourceClip set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">DM Source Clip</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.45.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">This is a SourceClip which can be Strong Referenced by Sequence (Descriptive Metadata) in order to provide a linking / derivation mechanism between Descriptive Metadata in Material Package, File Package and Source Packages.Informative Note: The DM SourceClip is used in the same way as an SourceClip (see Figure 11). The Start Position and Duration specify the portion of the Source Metadata which is relevant for this SourceClip.</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="DMSourceClipType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:SegmentType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:SourcePackageID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">11.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SourceTrackID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">11.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:StartPosition">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/RequiresSemanticValidation">Start Position is Required if the DM SourceClip references a standard (timeline) Track or an Event Track, but shall be omitted if it references a Static Track.</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">12.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DescriptiveClipDescribedTrackIDs">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">61.03</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Material Package -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="MaterialPackage_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="MaterialPackage" type="st377-1Groups:MaterialPackageType">
+		<xs:annotation>
+			<xs:documentation>Defines the Material Package set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Material Package</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.36.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">In the Timecode Track within this package, there may be no Timecode Sequence set. In this case, the Sequence property of the Track (Timecode) shall directly reference the appropriate Timecode Structural Component . The timecode of the Material Package is by definition continuous (unsegmented). This is unlike the other Tracks, all of which may be segmented.The EssenceTrackNumber should be omitted or set to 0 in a Material Package track.</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MaterialPackageType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:GenericPackageType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:PackageMarkerHolder">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Source Package -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="SourcePackage_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="SourcePackage" type="st377-1Groups:SourcePackageType">
+		<xs:annotation>
+			<xs:documentation>Defines the Source Package set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Source Package</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.37.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">The term &quot;Source Package&quot; is used in this specification to mean &quot;File Package or Physical Package&quot;</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SourcePackageType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:GenericPackageType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:EssenceDescription">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">47.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Picture Essence Descriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="PictureEssenceDescriptor_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="PictureEssenceDescriptor" type="st377-1Groups:PictureEssenceDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Defines the Picture Essence Descriptor set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Picture Essence Descriptor</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.27.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">The Generic Picture Essence Descriptor is designed to provide generic parametric information which describes the picture.</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PictureEssenceDescriptorType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:FileDescriptorType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:SignalStandard">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.15</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:FrameLayout">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">B.Effort</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/DistinguishedValue">255</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.0C</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:StoredWidth">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">B.Effort</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/DistinguishedValue">0</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.03</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:StoredHeight">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">B.Effort</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/DistinguishedValue">0</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:StoredF2Offset">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.16</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SampledWidth">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.05</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SampledHeight">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.04</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SampledXOffset">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.06</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SampledYOffset">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.07</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DisplayHeight">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.08</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DisplayWidth">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.09</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DisplayXOffset">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.0A</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DisplayYOffset">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.0B</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DisplayF2Offset">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.17</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ImageAspectRatio">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">B.Effort</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/DistinguishedValue">{0,0}</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.0E</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ActiveFormatDescriptor">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.18</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:VideoLineMap">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">B.Effort</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/DistinguishedValue">{0,0}</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.0D</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AlphaTransparency">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.0F</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:TransferCharacteristic">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.10</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ImageAlignmentFactor">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.11</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ImageStartOffset">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.13</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ImageEndOffset">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.14</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:FieldDominance">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.12</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PictureCompression">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:CodingEquations">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.1A</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ColorPrimaries">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">32.19</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- CDCI Essence Descriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="CDCIEssenceDescriptor_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="CDCIEssenceDescriptor" type="st377-1Groups:CDCIEssenceDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Defines the CDCI Picture Essence Descriptor set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">CDCI Essence Descriptor</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.28.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">Informative note: This is a subclass of the Generic Picture Essence Descriptor above. It has all the above items with the same required / optional status with the addition of the new items below. It is intended to describe imagery comprising interleaved luminance and chrominance samples.</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="CDCIEssenceDescriptorType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:PictureEssenceDescriptorType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:ComponentDepth">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">B.Effort</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/DistinguishedValue">0</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">33.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:HorizontalSubsampling">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">B.Effort</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/DistinguishedValue">0</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">33.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:VerticalSubsampling">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">33.08</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ColorSiting">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">33.03</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ReversedByteOrder">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">33.0B</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PaddingBits">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">33.07</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AlphaSampleDepth">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">33.09</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:BlackRefLevel">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">33.04</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:WhiteRefLevel">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">33.05</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ColorRange">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">33.06</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- RGBA Essence Descriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="RGBAEssenceDescriptor_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="RGBAEssenceDescriptor" type="st377-1Groups:RGBAEssenceDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Defines the RGBA Essence Descriptor set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">RGBA Essence Descriptor</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.29.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">Informative Note: This is a subclass of the Generic Picture Essence Descriptor above. It has all the above items with the same required / optional status with the addition of the new items below. It is intended to describe color component imagery with transparency</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RGBAEssenceDescriptorType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:PictureEssenceDescriptorType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:ComponentMaxRef">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">34.06</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ComponentMinRef">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">34.07</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AlphaMaxRef">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">34.08</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AlphaMinRef">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">34.09</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ScanningDirection">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">34.05</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PixelLayout">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">B.Effort</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/DistinguishedValue">{{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}}</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">34.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:Palette">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">34.03</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:PaletteLayout">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">34.04</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Sound Essence Descriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="SoundEssenceDescriptor_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="SoundEssenceDescriptor" type="st377-1Groups:SoundEssenceDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Defines the Sound Essence Descriptor set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Sound Essence Descriptor</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.42.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SoundEssenceDescriptorType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:FileDescriptorType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:AudioSampleRate">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">B.Effort</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/DistinguishedValue">{0,1}</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.03</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:Locked">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.02</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:AudioReferenceLevel">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.04</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ElectrospatialFormulation">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.05</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:ChannelCount">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">B.Effort</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/DistinguishedValue">0</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.07</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:QuantizationBits">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">B.Effort</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/DistinguishedValue">0</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:DialNorm">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.0C</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" ref="st335Elements:SoundCompression">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3D.06</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Data Essence Descriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="DataEssenceDescriptor_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="DataEssenceDescriptor" type="st377-1Groups:DataEssenceDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Defines the Data Essence Descriptor set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Data Essence Descriptor</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.43.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">Informative Note: It is anticipated that many Data Descriptors will need to be created for MXF. These are likely to be used to describe data buried within other essence types (e.g. timecode, teletext, subtitles, captioning) as well as new data types that MXF will carry in the future. A document which defines the Container Specification for the data essence will define or reference Data Descriptors and the appropriate Data Definition term to be used in the Sequence and Segment.</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="DataEssenceDescriptorType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:FileDescriptorType">
+				<xs:sequence>
+					<xs:element minOccurs="0" ref="st335Elements:DataEssenceCoding">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">D/req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3E.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Multiple Descriptor -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="MultipleDescriptor_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="MultipleDescriptor" type="st377-1Groups:MultipleDescriptorType">
+		<xs:annotation>
+			<xs:documentation>Defines the Multiple Descriptor set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Multiple Descriptor</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.44.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">Note: The Multiple descriptor defines a list of descriptors which describe an Interleaved Essence Container. For example, an essence container which has video data interleaved with Teletext data may use a multiple descriptor to describe each essence type and the Linked Track ID of the referenced File Descriptor shall indicate the track to which each File Descriptor applies. The Linked Track ID property should not be present on a Multiple Descriptor because a Multiple Descriptor describes multiple tracks. If the Essence Codec Item is present, then it shall be a codec appropriate for the Interleaved Container.</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MultipleDescriptorType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:FileDescriptorType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:FileDescriptors">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/LocalTag">3F.01</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- ######################################### -->
+	<!-- ######## ST 377-1: 2009,2011 Additions ######## -->
+	<!-- ######################################### -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Filler -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="Filler_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="Filler" type="st377-1Groups:FillerType">
+		<xs:annotation>
+			<xs:documentation>Defines the Filler set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Filler</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.09.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments"/>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="FillerType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:StructuralComponentType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Package Marker Object -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="PackageMarkerObject_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="PackageMarkerObject" type="st377-1Groups:PackageMarkerObjectType">
+		<xs:annotation>
+			<xs:documentation>Defines the Package Marker Object set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Package Marker Object</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.60.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments"/>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PackageMarkerObjectType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:InterchangeObjectType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:TimebaseReferenceTrackID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:PackageMarkInPosition">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:PackageMarkOutPosition">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Application Plug-In Object -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="ApplicationPlugInObject_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="ApplicationPlugInObject" type="st377-1Groups:ApplicationPlugInObjectType">
+		<xs:annotation>
+			<xs:documentation>Defines the Application Plug-In Object set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Application Plug-In Object</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.61.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments"/>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ApplicationPlugInObjectType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:ApplicationObjectType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:ApplicationScheme">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:ApplicationEnvironmentID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:AnyExtensionProperty">
+						<xs:annotation>
+							<xs:appinfo/>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute use="required" ref="st335Elements:ApplicationPlugInInstanceID">
+					<xs:annotation>
+						<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Application Referenced Object -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="ApplicationReferencedObject_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<xs:element name="ApplicationReferencedObject" type="st377-1Groups:ApplicationReferencedObjectType">
+		<xs:annotation>
+			<xs:documentation>Defines the Application Referenced Object set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Application Referenced Object</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.62.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments"/>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ApplicationReferencedObjectType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:ApplicationObjectType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:LinkedApplicationPlugInInstanceID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:AnyExtensionProperty">
+						<xs:annotation>
+							<xs:appinfo/>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+</xs:schema>

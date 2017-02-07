@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -->
+<!-- This XML Schema document is an integral part of the of the SMPTE Standard ST 434:2014: "Material Exchange Format - XML Encoding for Metadata and File Structure Information". -->
+<!-- Copyright SMPTE 2006, 2014. -->
+<!-- - -->
+<!-- - -->	
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" targetNamespace="http://www.smpte-ra.org/schemas/434/2014/groups/429-5/2006" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:st335Elements="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" xmlns:st377-1Groups="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" xmlns:st377Types="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" xmlns:st429-6Groups="http://www.smpte-ra.org/schemas/434/2014/groups/429-5/2006">
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" schemaLocation="./st377_metadata.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" schemaLocation="../dictionary/rp210.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" schemaLocation="../dataTypes/st377_types.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Cryptographic Framework -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="CryptographicFramework_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="CryptographicFramework" type="st429-6Groups:CryptographicFrameworkType">
+		<xs:annotation>
+			<xs:documentation>Cryptographic Framework</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Cryptographic Framework</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.02.01.00.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">Defines the Cryptographic Framework</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="CryptographicFrameworkType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:DescriptiveFrameworkType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:CryptographicContextObject">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Cryptographic Context -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="CryptographicContext_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="CryptographicContext" type="st429-6Groups:CryptographicContextType">
+		<xs:annotation>
+			<xs:documentation>Cryptographic Context</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Cryptographic Context</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.04.01.02.02.00.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Comments">Defines the Cryptographic Context</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="CryptographicContextType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:DescriptiveObjectType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:CryptographicContextID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:SourceContainerFormat">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:CipherAlgorithm">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:MICAlgorithm">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:CryptographicKeyID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+</xs:schema>

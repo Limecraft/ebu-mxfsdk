@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -->
+<!-- This XML Schema document is an integral part of the of the SMPTE Standard ST 434:2014: "Material Exchange Format - XML Encoding for Metadata and File Structure Information". -->
+<!-- Copyright SMPTE 2006, 2014. -->
+<!-- - -->
+<!-- - -->	
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" targetNamespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-4/2012" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:st335Elements="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" xmlns:st377-1Groups="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" xmlns:st377-4Groups="http://www.smpte-ra.org/schemas/434/2014/groups/377-4/2012" xmlns:st377Types="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012">
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/types/377-1/2012" schemaLocation="../dataTypes/st377_types.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/elements/335/2012" schemaLocation="../dictionary/rp210.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<xs:import namespace="http://www.smpte-ra.org/schemas/434/2014/groups/377-1/2012" schemaLocation="./st377_metadata.xsd"/>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- MCA Label Sub-Descriptor Set  -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="MCALabelSubDescriptorSet" abstract="true" type="st377-4Groups:MCALabelSubDescriptorSetType">
+		<xs:annotation>
+			<xs:documentation>Defines the MCA Label Sub-Descriptor Set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">MCA Label Sub-Descriptor Set</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.7F.01.01.0D.01.04.01.04.01.6A.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.6A.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MCALabelSubDescriptorSetType">
+		<xs:complexContent>
+			<xs:extension base="st377-1Groups:SubDescriptorType">
+				<xs:sequence>
+					<xs:element minOccurs="1" ref="st335Elements:MCALabelDictionaryID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" ref="st335Elements:MCALinkID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" ref="st335Elements:MCATagSymbol">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Req</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:MCATagName">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:MCAChannelID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:RFC5646SpokenLanguage">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:MCATitle">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:MCATitleVersion">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:MCATitleSubVersion">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:MCAEpisode">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:MCAPartitionKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:MCAPartitionNumber">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:MCAAudioContentKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="st335Elements:MCAAudioElementKind">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Audio Channel Label Sub-Descriptor Set -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="AudioChannelLabelSubDescriptorSet_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="AudioChannelLabelSubDescriptorSet" type="st377-4Groups:AudioChannelLabelSubDescriptorSetType">
+		<xs:annotation>
+			<xs:documentation>Defines the Audio Channel Label Sub-Descriptor Set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Audio Channel Label Sub-Descriptor Set</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.7F.01.01.0D.01.04.01.04.01.6B.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.6B.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AudioChannelLabelSubDescriptorSetType">
+		<xs:complexContent>
+			<xs:extension base="st377-4Groups:MCALabelSubDescriptorSetType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:SoundfieldGroupLinkID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Soundfield Group Label Sub-Descriptor Set -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="SoundfieldGroupLabelSubDescriptorSet_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="SoundfieldGroupLabelSubDescriptorSet" type="st377-4Groups:SoundfieldGroupLabelSubDescriptorSetType">
+		<xs:annotation>
+			<xs:documentation>Defines the Soundfield Group Label Sub-Descriptor Set </xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Soundfield Group Label Sub-Descriptor Set</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.7F.01.01.0D.01.04.01.04.01.6C.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.6C.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SoundfieldGroupLabelSubDescriptorSetType">
+		<xs:complexContent>
+			<xs:extension base="st377-4Groups:MCALabelSubDescriptorSetType">
+				<xs:sequence>
+					<xs:element ref="st335Elements:GroupOfSoundfieldGroupsLinkID">
+						<xs:annotation>
+							<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/PropertyRequiredStatus">Opt</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- Group Of Soundfield Groups Sub-Descriptor Set -->
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="GroupOfSoundfieldGroupsSubDescriptorSet_REF" type="st377Types:Ref"/>
+	<!-- - -->
+	<!-- - -->
+	<xs:element name="GroupOfSoundfieldGroupsSubDescriptorSet" type="st377-4Groups:GroupOfSoundfieldGroupsSubDescriptorSetType">
+		<xs:annotation>
+			<xs:documentation>Defines the Group Of Soundfield Groups Sub-Descriptor Set</xs:documentation>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Name">Group Of Soundfield Groups Sub-Descriptor Set</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.7F.01.01.0D.01.04.01.04.01.6D.00</xs:appinfo>
+			<xs:appinfo source="http://www.smpte-ra.org/schemas/434/Groups/Key">06.0E.2B.34.02.53.01.01.0D.01.01.01.01.01.6D.00</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="GroupOfSoundfieldGroupsSubDescriptorSetType">
+		<xs:complexContent>
+			<xs:extension base="st377-4Groups:MCALabelSubDescriptorSetType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+	<!-- - -->
+</xs:schema>
