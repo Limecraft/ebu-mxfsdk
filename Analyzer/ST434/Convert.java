@@ -103,6 +103,7 @@ public class Convert {
                                 keys.put(keyName, keyName);
                                 localKeys.put(keyName, keyName + "_name");
                                 key = "{0x" + key.replace(".", ",0x") + "}";
+                                System.out.println("// " + e.getAttribute("name"));
                                 System.out.println("const mxfKey " + keyName + " = " + key + ";");
                                 System.out.println("const XMLCh " + keyName + "_name[] = {" +
                                         Joiner.on(",").join(Iterables.transform(Lists.charactersOf(e.getAttribute("name")), new Function<Character, String>() {
