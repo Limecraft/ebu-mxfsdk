@@ -55,11 +55,10 @@ using namespace EBUSDK::Utils;
 namespace EBUSDK {
 namespace Analyzer {
 
-static const XMLCh s335mElementsNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','p','r','o','p','e','r','t','i','e','s','/','S','3','3','5','M','\0'};
-static const XMLCh s377mGroupsNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','g','r','o','u','p','s','/','S','3','7','7','M','/','2','0','0','4','\0'};
-static const XMLCh s377mTypesNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','t','y','p','e','s','/','S','3','7','7','M','/','2','0','0','4','\0'};
-static const XMLCh s377mMuxNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','m','u','l','t','i','p','l','e','x','/','S','3','7','7','M','/','2','0','0','4','\0'};
-
+static const XMLCh s335mElementsNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','1','4','/','e','l','e','m','e','n','t','s','/','3','3','5','/','2','0','1','2','\0'};
+static const XMLCh s377mGroupsNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','1','4','/','g','r','o','u','p','s','/','3','7','7','-','1','/','2','0','1','2','\0'};
+static const XMLCh s377mTypesNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','t','y','p','e','s','/','S','3','7','7','-','1','/','2','0','1','2','\0'};
+static const XMLCh s377mMuxNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','m','u','l','t','i','p','l','e','x','/','S','3','7','7','-','1','/','2','0','1','2','\0'};
 static const XMLCh ebucoreElementsNS[] = {'u','r','n',':','e','b','u',':','m','e','t','a','d','a','t','a','-','s','c','h','e','m','a',':','s','m','p','t','e','c','l','a','s','s','1','3','/','p','r','o','p','e','r','t','i','e','s','/','e','b','u','c','o','r','e','_','2','0','1','3','\0'};
 static const XMLCh ebuNonStrictElementsNS[] = { 'h','t','t','p',':','/','/','w','w','w','.','l','i','m','e','c','r','a','f','t','.','c','o','m','/','x','m','l','/','n','a','m','e','s','p','a','c','e','s','/','S','T','4','3','4','/','e','x','t','e','n','s','i','o','n','s', '\0' };
 
@@ -421,12 +420,12 @@ void AnalyzeShallowStrongReference(DOMElement* parent, MXFMetadataSet *set, DOMD
 }
 
 void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* root, MXFHeaderMetadata *header_metadata, MXFFile *mxfFile,
-	std::map< mxfUUID, std::vector<KLVPacketRef> >& darkItems, bool recurseIntoReferences, std::map<mxfKey, st434info*>& st434dict, XMLTranscoder *tc) {
+	std::map< mxfUUID, std::vector<KLVPacketRef> >& darkItems, bool recurseIntoReferences, std::map<mxfKey, st434info*>& st434dict, XMLTranscoder *tc, AnalyzerConfig& configuration) {
 	
 	std::map<mxfKey, st434info*>::const_iterator objIter;
     
-    st434info *tmpSet = NULL; _X* tmpSetNS = NULL; _X* tmpSetName = NULL;
-	st434info* tmpItem = NULL; _X* tmpItemNS = NULL; _X* tmpItemName = NULL;
+    st434info *tmpSet = NULL; _X* tmpSetName = NULL;
+	st434info* tmpItem = NULL; _X* tmpItemName = NULL;
 
 	st434info* info = NULL;
 
@@ -437,8 +436,8 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 	if (objIter != st434dict.end()) {
 		info = (*objIter).second;
     } 
-    else {
-        tmpSetNS = new _X("ns:ext", tc); tmpSetName = new _X(setDef->name, tc);
+    else if (!configuration.StrictAnalysis) { // non-strict analysis allows us to print out an alternative based on our own data model
+        tmpSetName = new _X(setDef->name, tc);
         tmpSet = new st434info(tmpSetName->str(), ebuNonStrictElementsNS);
         info = tmpSet;
     }
@@ -483,18 +482,26 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
                 if (mxf_equals_key(&itemDef->key, &MXF_ITEM_K(InterchangeObject, InstanceUID)))
                     continue;
 
-				std::map<mxfKey, st434info*>::const_iterator objIter;
+                if (mxf_equals_key(&itemDef->key, &MXF_ITEM_K(InterchangeObject, GenerationUID))) {
+                    mxfUUID uuidValue;
+                    mxf_get_uuid(item->value, &uuidValue);
+                    // special case for the ThisGenerationUID element, which needs to become an attribute on the set
+                    PrepareAttributeWithContent(root, elem, s335mElementsNS, _X("LinkedGenerationID", tc).str(), _X(serialize_uuid(&uuidValue), tc).str());
+                    continue;
+                }
+                
+                std::map<mxfKey, st434info*>::const_iterator objIter;
 				objIter = st434dict.find(itemDef->key);
 				// only if we know the definition
                 st434info* itemInfo = NULL;
 
 				if (objIter != st434dict.end()) {
 					itemInfo = (*objIter).second;
-                } else {
+                } else if (!configuration.StrictAnalysis) { // non-strict analysis allows us to print out an alternative based on our own data model
                     // not found!
 					// provide some alternative
-					if (tmpItem!=NULL) { delete tmpItem; delete tmpItemNS; delete tmpItemName; }
-					tmpItemNS = new _X("ns:ext", tc); tmpItemName = new _X(itemDef->name, tc);
+					if (tmpItem!=NULL) { delete tmpItem; delete tmpItemName; }
+					tmpItemName = new _X(itemDef->name, tc);
                     tmpItem = new st434info(tmpItemName->str(), ebuNonStrictElementsNS);
 					itemInfo = tmpItem;
                 }
@@ -512,7 +519,7 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 						if (mxf_get_strongref_item(set, &item->key, &referencedSet)) {
 							// do we follow strong references extensively?
 							if (recurseIntoReferences) {
-								AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkItems, recurseIntoReferences, st434dict, tc);
+								AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkItems, recurseIntoReferences, st434dict, tc, configuration);
 							}
 							else {
 								AnalyzeShallowStrongReference(itemElem, referencedSet, root, header_metadata, st434dict, tc);
@@ -541,7 +548,7 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 
 								// do we follow strong references extensively?
 								if (recurseIntoReferences) {
-									AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkItems, recurseIntoReferences, st434dict, tc);
+									AnalyzeMetadataSet(itemElem, referencedSet, root, header_metadata, mxfFile, darkItems, recurseIntoReferences, st434dict, tc, configuration);
 								}
 								else {
 									AnalyzeShallowStrongReference(itemElem, referencedSet, root, header_metadata, st434dict, tc);
@@ -622,8 +629,8 @@ void AnalyzeMetadataSet(DOMElement* parent, MXFMetadataSet *set, DOMDocument* ro
 		// don't know this!!!
 	}
 
-    if (tmpItem!=NULL) { delete tmpItem; delete tmpItemNS; delete tmpItemName; }
-    if (tmpSet!=NULL) { delete tmpSet; delete tmpSetNS; delete tmpSetName; }
+    if (tmpItem!=NULL) { delete tmpItem; delete tmpItemName; }
+    if (tmpSet!=NULL) { delete tmpSet; delete tmpSetName; }
 
 }
 
@@ -792,7 +799,7 @@ void AnalyzeHeaderMetadata(	DOMElement *parent, DOMDocument* root, HeaderMetadat
 
 	if (configuration.MetadataAnalysisType == AnalyzerConfig::LOGICAL) {
 		// analyze the metadata set
-		AnalyzeMetadataSet(parent, headerMetadata->getPreface()->getCMetadataSet(), root, headerMetadata->getCHeaderMetadata(), file, darkItems, true, st434dictionary, tc);
+        AnalyzeMetadataSet(parent, headerMetadata->getPreface()->getCMetadataSet(), root, headerMetadata->getCHeaderMetadata(), file, darkItems, true, st434dictionary, tc, configuration);
 		// the dump dark sets
 		AnalyzeDarkSets(parent, root, headerMetadata->getCHeaderMetadata(), file, darkSets, tc);
 	} else {
@@ -804,7 +811,7 @@ void AnalyzeHeaderMetadata(	DOMElement *parent, DOMDocument* root, HeaderMetadat
 			MXFMetadataSet *set = (MXFMetadataSet*)mxf_get_iter_element(&setIter);
 
 			// analyze the metadata set
-			AnalyzeMetadataSet(parent, set, root, headerMetadata->getCHeaderMetadata(), file, darkItems, false, st434dictionary, tc);
+            AnalyzeMetadataSet(parent, set, root, headerMetadata->getCHeaderMetadata(), file, darkItems, false, st434dictionary, tc, configuration);
 		}
 		// the dump dark sets
 		AnalyzeDarkSets(parent, root, headerMetadata->getCHeaderMetadata(), file, darkSets, tc);
@@ -815,11 +822,11 @@ void AnalyzeHeaderMetadata(	DOMElement *parent, DOMDocument* root, HeaderMetadat
 void AddST434PrefixDeclarations(DOMDocument *doc, XMLTranscoder* tc) {
 	// add global namespace/prefix declarations
 	doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
-		_X("xmlns:s335mElements", tc).str(), s335mElementsNS);
+		_X("xmlns:st335Elements", tc).str(), s335mElementsNS);
 	doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
-		_X("xmlns:s377mTypes", tc).str(), s377mTypesNS);
+		_X("xmlns:st377Types", tc).str(), s377mTypesNS);
 	doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
-		_X("xmlns:s377mGroups", tc).str(), s377mGroupsNS);
+		_X("xmlns:st377-1Groups", tc).str(), s377mGroupsNS);
 
 	doc->getDocumentElement()->setAttributeNS(xercesc::XMLUni::fgXMLNSURIName,
 		_X("xmlns:ebucoreElements", tc).str(), ebucoreElementsNS);
@@ -975,7 +982,9 @@ std::auto_ptr<DOMDocument> AnalyzeMXFFile(const char* mxfLocation, AnalyzerConfi
 
 #include "group_declarations.inc"
 #ifdef AS11_EXTENSIONS
+    if (!configuration.StrictAnalysis) {
 #include "group_declarations_as11.inc"
+    }
 #endif
 
 	std::auto_ptr<File> mFile( File::openRead(mxfLocation) );	// throws MXFException if open failed!

@@ -55,6 +55,7 @@ static void usage(const char *cmd)
     fprintf(stderr, " --metadata            Perform only a metadata analysis (default)\n");
     fprintf(stderr, " --mux                 Perform an analysis on the entire MXF file mux\n");
     fprintf(stderr, " --deepindex           Perform a deep index table analysis\n");
+    fprintf(stderr, " --strict              Perform a strict, fully ST-434-compliant analysis.\n");
 }
 
 int main(int argc, char* argv[])
@@ -67,6 +68,7 @@ int main(int argc, char* argv[])
 	cfg.AnalysisType = AnalyzerConfig::METADATA;
 	cfg.MetadataAnalysisType = AnalyzerConfig::LOGICAL;
 	cfg.DeepIndexTableAnalysis = false;
+    cfg.StrictAnalysis = false;
 
     if (argc == 1) {
         usage(argv[0]);
@@ -120,6 +122,10 @@ int main(int argc, char* argv[])
 		else if (strcmp(argv[cmdln_index], "--deepindex") == 0)
         {
 			cfg.DeepIndexTableAnalysis = true;
+        }
+        else if (strcmp(argv[cmdln_index], "--strict") == 0)
+        {
+            cfg.StrictAnalysis = true;
         }
 		else if (strcmp(argv[cmdln_index], "--report") == 0)
         {

@@ -80,6 +80,14 @@ namespace EBUSDK {
 				When false, only information about index table segments is returned.
 			*/
 			bool DeepIndexTableAnalysis;
+
+            /**
+				When true, the analyzer outputs only elements defined in the ST-434 schemas. A non-strict analysis will also output elements
+                known in the analyzer data model, but not in the ST-434 standard. In that case, these elements are written under a custom namespace 
+                (i.e., http://www.limecraft.com/xml/namespaces/ST434/extensions). This option can be useful for outputing information about non-standard
+                or new MXF extensions and applications that are not yet available in the ST-434 standard.
+			*/
+            bool StrictAnalysis;
 		};
 
 		/**
