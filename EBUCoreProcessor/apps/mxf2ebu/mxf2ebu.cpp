@@ -220,7 +220,7 @@ int main(int argc, const char** argv)
     try
     {
 		if (ebucore_filename) {
-			EBUCore::ExtractEBUCoreMetadata(filenames[0], ebucore_filename, &progress_cb, do_use_dark_metadata_key, do_use_dark_metadata_key ? &darkMetadataKey : NULL);
+			EBUCore::ExtractEBUCoreMetadata(filenames[0], ebucore_filename, &progress_cb, do_use_dark_metadata_key ? &darkMetadataKey : NULL);
 		}
     }
     catch (const MXFException &ex)
