@@ -126,9 +126,16 @@ namespace EBUSDK {
 		DARK,
 		/** A KLV-encoded metadata set is added to the the header metadata with a reference to an external file that contains the actual metadata. */
 		SIDECAR,
+        /** */
+        RP2057,
 
 		NONE
 	};
+
+    struct RP2057EmbeddingOptions {
+        mxfUL scheme_id;
+        const char *lang;
+    };
 
 	/**
 	*	Embed EBUCore metadata into an MXF file.
@@ -149,7 +156,8 @@ namespace EBUSDK {
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
 							MetadataKind optWaytoWrite = KLV_ENCODED,
-							bool optNoIdentification = false, bool optForceHeader = false, bool optUseCustomDarkMetadataKey = false, const mxfKey *customDarkMetadataKey = NULL);
+							bool optNoIdentification = false, bool optForceHeader = false, const mxfKey *customDarkMetadataKey = NULL,
+                            const RP2057EmbeddingOptions *optRP2057 = NULL);
 
 	/**
 	*	Embed EBUCore metadata into an MXF file.\n
@@ -177,7 +185,8 @@ namespace EBUSDK {
 							const char* mxfLocation, 
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
 							MetadataKind optWaytoWrite = KLV_ENCODED,
-							bool optNoIdentification = false, bool optForceHeader = false, bool optUseCustomDarkMetadataKey = false, const mxfKey *customDarkMetadataKey = NULL);
+							bool optNoIdentification = false, bool optForceHeader = false, const mxfKey *customDarkMetadataKey = NULL,
+                            const RP2057EmbeddingOptions *optRP2057 = NULL);
 
 	/**
 	*	Removes EBUCore metadata from an MXF file.\n
@@ -195,7 +204,7 @@ namespace EBUSDK {
 
 	DLLEXPORT void RemoveEBUCoreMetadata(	const char* mxfLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-							bool optNoIdentification = false, bool optForceHeader = false, bool optUseCustomDarkMetadataKey = false, const mxfKey *customDarkMetadataKey = NULL);
+							bool optNoIdentification = false, bool optForceHeader = false, const mxfKey *customDarkMetadataKey = NULL);
 
 
 	/**
@@ -213,7 +222,7 @@ namespace EBUSDK {
 	DLLEXPORT xercesc::DOMDocument& ExtractEBUCoreMetadata(
 							const char* mxfLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-                            bool optUseCustomDarkMetadataKey = false, const mxfKey *customDarkMetadataKey = NULL);
+                            const mxfKey *customDarkMetadataKey = NULL);
 	
 	/**
 	*	Extract EBUCore metadata from an MXF file.\n
@@ -230,7 +239,7 @@ namespace EBUSDK {
 							const char* mxfLocation,
 							const char* metadataLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...), 
-                            bool optUseCustomDarkMetadataKey = false, const mxfKey *customDarkMetadataKey = NULL);
+                            const mxfKey *customDarkMetadataKey = NULL);
 
 	/**
 	*	The way in which metadata should be serialized.
