@@ -124,6 +124,11 @@ namespace EBUSDK {
 		*/
 		virtual uint64_t WriteToMXFFile(mxfpp::File *f) = 0;
 		virtual ~MXFFileDarkSerializer() {};
+        /** Tries to get the (file) size of the dark metadata. No data is actually written out at this stage. 
+        
+            @returns The number of dark bytes contained in the metadata.
+        */
+        virtual uint64_t ProbeSize();
 	};
 
 	/**
@@ -131,6 +136,7 @@ namespace EBUSDK {
 	*/
 	class DarkFileSerializer : public MXFFileDarkSerializer {
 		std::ifstream in;
+        uint64_t probe_size;
 	public:
 		/**
 			Constructor. Opens the file at given location.
@@ -140,6 +146,8 @@ namespace EBUSDK {
 		DarkFileSerializer(const char* metadataLocation);
 		uint64_t WriteToMXFFile(mxfpp::File *f);
 		virtual ~DarkFileSerializer();
+
+        uint64_t ProbeSize() { return probe_size; }
 	};
 
 	/**
@@ -295,6 +303,23 @@ namespace EBUSDK {
 		@param mod An optional object modifier which updates all metadata objects created by this function, e.g., for unique identification purposes.
 	*/
 	void InsertEventFrameworks(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, std::vector<EventInput> &frameworks, ObjectModifier *mod = NULL);
+
+
+    namespace RP2057 {
+
+        /**
+	    *	Abstract utility class which defines an interface for writing dark metadata (i.e., blobs of bytes) to an MXF file.
+	    */
+	    class MXFFileDarkXMLSerializer : public MXFFileDarkSerializer {
+	    public:
+		    virtual bmx::TextEncoding GetTextEncoding();
+            virtual bmx::ByteOrder GetByteOrder();
+            virtual std::string GetLanguageCode();
+            virtual std::string GetNamespace();
+            virtual std::string GetData();
+	    };
+
+    }
 
 
 	} // namespace MXFCustomMetadata

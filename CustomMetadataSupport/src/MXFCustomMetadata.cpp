@@ -25,6 +25,7 @@
 #include <memory>
 #include <algorithm>
 
+#include <bmx/BMXTypes.h>
 #include <bmx/BMXException.h>
 #include <bmx/Logging.h>
 #include <bmx/ByteArray.h>
@@ -49,7 +50,10 @@ namespace EBUSDK {
 namespace MXFCustomMetadata {
 
 DarkFileSerializer::DarkFileSerializer(const char* metadataLocation) {
-	in.open(metadataLocation, std::ifstream::in | std::ifstream::binary);
+	in.open(metadataLocation, std::ifstream::in | std::ifstream::binary | std::ifstream::ate);
+    probe_size = in.tellg();
+    // seek back to the front of the file!
+    in.seekg(0);
 }
 
 uint64_t DarkFileSerializer::WriteToMXFFile(File *f) {
@@ -796,6 +800,124 @@ void AppendDMSLabel(HeaderMetadata *header_metadata, mxfUL scheme_label)
 			preface->appendDMSchemes(scheme_label);
 		}
 	}
+}
+
+namespace RP2057 {
+
+    bool AddHeaderMetadata(HeaderMetadata *header_metadata, MaterialPackage *material_package, uint32_t track_id, uint32_t generic_stream_id,
+        const char *mime_type, MXFFileDarkXMLSerializer& xml_serializer, mxfUL metadata_scheme_id)
+    {
+        bool mRequireStreamPartition = false;
+
+        int64_t data_size = xml_serializer.ProbeSize();
+
+        std::string language_code = xml_serializer.GetLanguageCode();
+        if (language_code.empty()) language_code = "en";
+
+        //if (!BMX_OPT_PROP_IS_SET(mLanguageCode))
+        //    mLanguageCode = mXMLWriterHelper.GetLanguageCode();
+        //if (!BMX_OPT_PROP_IS_SET(mNamespace))
+        //    mNamespace = mXMLWriterHelper.GetNamespace();
+        //if (!BMX_OPT_PROP_IS_SET(mTextEncoding))
+        //    mTextEncoding = mXMLWriterHelper.GetTextEncoding();
+        //if (text_encoding == UTF8)
+        //    byte_order = BMX_BYTE_ORIENTED;
+        //else if (!BMX_OPT_PROP_IS_SET(mByteOrder))
+        //    mByteOrder = mXMLWriterHelper.GetByteOrder();
+        //std::string text_data_description_str(text_data_description);
+
+        if (xml_serializer.GetTextEncoding() == UTF16)
+            data_size = (data_size >> 1) << 1;
+
+        // Preface - ContentStorage - Package - DM Static Track
+        StaticTrack *dm_track = new StaticTrack(header_metadata);
+        material_package->appendTracks(dm_track);
+        dm_track->setTrackID(track_id);
+        dm_track->setTrackNumber(0);
+
+        // Preface - ContentStorage - Package - DM Static Track - Sequence
+        Sequence *dm_sequence = new Sequence(header_metadata);
+        dm_track->setSequence(dm_sequence);
+        dm_sequence->setDataDefinition(MXF_DDEF_L(DescriptiveMetadata));
+
+        // Preface - ContentStorage - Package - DM Static Track - Sequence - DMSegment
+        DMSegment *dm_segment = new DMSegment(header_metadata);
+        dm_sequence->appendStructuralComponents(dm_segment);
+        dm_segment->setDataDefinition(MXF_DDEF_L(DescriptiveMetadata));
+
+        // Preface - ContentStorage - Package - DM Static Track - Sequence - DMSegment - TextBasedDMFramework
+        TextBasedDMFramework *dm_framework = new TextBasedDMFramework(header_metadata);
+        dm_segment->setDMFramework(dm_framework);
+
+        // Preface - ContentStorage - Package - DM Static Track - Sequence - DMSegment - TextBasedDMFramework - TextBasedObject
+        TextBasedObject *xml_obj;
+        if (data_size < UINT16_MAX && xml_serializer.GetTextEncoding() == UTF8) {
+            UTF8TextBasedSet *utf8_xml = new UTF8TextBasedSet(header_metadata);
+            xml_obj = utf8_xml;
+        } else if (data_size < UINT16_MAX && xml_serializer.GetTextEncoding() == UTF16) {
+            UTF16TextBasedSet *utf16_xml = new UTF16TextBasedSet(header_metadata);
+            xml_obj = utf16_xml;
+        } else {
+            GenericStreamTextBasedSet *stream_xml = new GenericStreamTextBasedSet(header_metadata);
+            xml_obj = stream_xml;
+        }
+        dm_framework->setTextBasedObject(xml_obj);
+        xml_obj->setTextBasedMetadataPayloadSchemaID(metadata_scheme_id);
+        xml_obj->setTextMIMEMediaType(mime_type);
+        xml_obj->setRFC5646TextLanguageCode(language_code);
+        if (!xml_serializer.GetNamespace().empty())
+            xml_obj->setTextDataDescription(xml_serializer.GetNamespace());
+
+        if (dynamic_cast<UTF8TextBasedSet*>(xml_obj)) {
+            UTF8TextBasedSet *utf8_xml = dynamic_cast<UTF8TextBasedSet*>(xml_obj);
+            std::string data = xml_serializer.GetData();
+            mxfpp::ByteArray utf8_bytes;
+            utf8_bytes.data   = (uint8_t*)data.data();
+            utf8_bytes.length = (uint16_t)data.length();
+            utf8_xml->setUTF8TextData(utf8_bytes);
+            mRequireStreamPartition = false;
+        } else if (dynamic_cast<UTF16TextBasedSet*>(xml_obj)) {
+            UTF16TextBasedSet *utf16_xml = dynamic_cast<UTF16TextBasedSet*>(xml_obj);
+            std::string data = xml_serializer.GetData();
+            mxfpp::ByteArray utf16_bytes;
+            utf16_bytes.data   = (uint8_t*)data.data();
+            utf16_bytes.length = (uint16_t)data.length();
+            utf16_xml->setUTF16TextData(utf16_bytes);
+            mRequireStreamPartition = false;
+        } else {
+            GenericStreamTextBasedSet *stream_xml = dynamic_cast<GenericStreamTextBasedSet*>(xml_obj);
+            stream_xml->setGenericStreamSID(generic_stream_id);
+            mRequireStreamPartition = true;
+        }
+
+        return mRequireStreamPartition;
+    }
+
+    void WriteStreamXMLData(MXFFileDarkXMLSerializer& xml_serializer, File *mxf_file)
+    {
+        uint8_t llen = mxf_get_llen(mxf_file->getCFile(), xml_serializer.ProbeSize());
+        if (llen < 4)
+            llen = 4;
+
+        switch (xml_serializer.GetByteOrder())
+        {
+            case UNKNOWN_BYTE_ORDER:
+                mxf_file->writeFixedKL(&MXF_EE_K(RP2057_ENDIAN_UNK), llen, xml_serializer.ProbeSize());
+                break;
+            case BMX_BYTE_ORIENTED:
+                mxf_file->writeFixedKL(&MXF_EE_K(RP2057_BYTES), llen, xml_serializer.ProbeSize());
+                break;
+            case BMX_BIG_ENDIAN:
+                mxf_file->writeFixedKL(&MXF_EE_K(RP2057_BE), llen, xml_serializer.ProbeSize());
+                break;
+            case BMX_LITTLE_ENDIAN:
+                mxf_file->writeFixedKL(&MXF_EE_K(RP2057_LE), llen, xml_serializer.ProbeSize());
+                break;
+        }
+
+        xml_serializer.WriteToMXFFile(mxf_file);
+    }
+
 }
 
 } // namespace MXFCustomMetadata

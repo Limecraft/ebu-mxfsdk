@@ -29,6 +29,7 @@
 #include <bmx/Logging.h>
 #include <bmx/ByteArray.h>
 #include <bmx/mxf_reader/MXFFileReader.h>
+#include <bmx/writer_helper/XMLWriterHelper.h>
 
 #if defined(_WIN32)
 #include <mxf/mxf_win32_file.h>
@@ -65,6 +66,7 @@ using namespace mxfpp;
 using namespace bmx;
 
 using namespace EBUSDK::MXFCustomMetadata;
+using namespace EBUSDK::MXFCustomMetadata::RP2057;
 using namespace EBUSDK::Utils;
 
 namespace EBUSDK {
@@ -89,6 +91,48 @@ void WriteKLVContentsToFile(const char* file, File* mxfFile, uint64_t length) {
 	}
 	out.close();
 }
+
+class DarkFileXMLSerializer : public DarkFileSerializer, public MXFFileDarkXMLSerializer {
+    XMLWriterHelper mXMLWriterHelper;
+    const char* filename;
+    bool extractedInfo;
+public:
+	
+    DarkFileXMLSerializer(const char* metadataLocation) : DarkFileSerializer(metadataLocation), extractedInfo(false), filename(metadataLocation) {}
+	virtual ~DarkFileXMLSerializer();
+
+    bmx::TextEncoding GetTextEncoding() {
+        if (!extractedInfo) {
+            mXMLWriterHelper.ExtractInfo(this->filename);
+            extractedInfo = true;
+        }
+        return mXMLWriterHelper.GetTextEncoding();
+    }
+
+    bmx::ByteOrder GetByteOrder() {
+        if (!extractedInfo) {
+            mXMLWriterHelper.ExtractInfo(this->filename);
+            extractedInfo = true;
+        }
+        return mXMLWriterHelper.GetByteOrder();
+    }
+
+    std::string GetLanguageCode() {
+        if (!extractedInfo) {
+            mXMLWriterHelper.ExtractInfo(this->filename);
+            extractedInfo = true;
+        }
+        return mXMLWriterHelper.GetLanguageCode();
+    }
+
+    std::string GetNamespace() {
+        if (!extractedInfo) {
+            mXMLWriterHelper.ExtractInfo(this->filename);
+            extractedInfo = true;
+        }
+        return mXMLWriterHelper.GetNamespace();    
+    }
+};
 
 // {DAE59218-AF8D-47D4-A216-B6C648EA548C}
 static const mxfUUID ProductUID = 
@@ -305,12 +349,30 @@ void InnerEmbedEBUCoreMetadata(
 
 		} else {
 			// ///////////////////////////////////////
-			// / 3. Create a Serializer for our dark metadata
+			// / 3. Decide on the way to serialize this 'dark' metadata, 
+            // /     plain dark or using RP2057. In the case of RP2057, we need to 
+            // /     add elements to the header metadata too.
+            // /     In both cases, we create Serializers for our dark metadata.
 			// ///////////
-			ser.reset( (metadataDocument != NULL) ? 
-				static_cast<MXFFileDarkSerializer*>(new DarkDOMDocumentSerializer(*metadataDocument)) : 
-				static_cast<MXFFileDarkSerializer*>(new DarkFileSerializer(metadataLocation)) 
-			);
+            if (optWaytoWrite == RP2057) {
+
+                // Create XML-aware serializers because we will need XML-related info to put into the
+                // RP2057 header metadata
+			    ser.reset( (metadataDocument != NULL) ? 
+				    static_cast<MXFFileDarkSerializer*>(new DarkDOMDocumentSerializer(*metadataDocument)) : 
+				    static_cast<MXFFileDarkSerializer*>(new DarkFileXMLSerializer(metadataLocation)) 
+			    );
+
+                EBUSDK::MXFCustomMetadata::RP2057
+
+            } else {
+
+			    ser.reset( (metadataDocument != NULL) ? 
+				    static_cast<MXFFileDarkSerializer*>(new DarkDOMDocumentSerializer(*metadataDocument)) : 
+				    static_cast<MXFFileDarkSerializer*>(new DarkFileSerializer(metadataLocation)) 
+			    );
+
+            }
 		}
 
 		// ///////////////////////////////////////
