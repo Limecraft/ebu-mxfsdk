@@ -804,10 +804,15 @@ void AppendDMSLabel(HeaderMetadata *header_metadata, mxfUL scheme_label)
 
 namespace RP2057 {
 
-    bool AddHeaderMetadata(HeaderMetadata *header_metadata, MaterialPackage *material_package, uint32_t track_id, uint32_t generic_stream_id,
+    bool AddHeaderMetadata(HeaderMetadata *header_metadata, uint32_t track_id, uint32_t generic_stream_id,
         const char *mime_type, MXFFileDarkXMLSerializer& xml_serializer, mxfUL metadata_scheme_id)
-    {
+    {   
         bool mRequireStreamPartition = false;
+
+        BMX_ASSERT(header_metadata);
+
+        MaterialPackage *material_package = header_metadata->getPreface()->findMaterialPackage();
+        BMX_ASSERT(material_package);
 
         int64_t data_size = xml_serializer.ProbeSize();
 

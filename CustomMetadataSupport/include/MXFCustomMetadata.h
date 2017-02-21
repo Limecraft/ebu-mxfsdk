@@ -134,7 +134,8 @@ namespace EBUSDK {
 	/**
 		Utility class for writing dark metadata to MXF files, using dark metadata read from a file. 
 	*/
-	class DarkFileSerializer : public MXFFileDarkSerializer {
+    class DarkFileSerializer : public virtual MXFFileDarkSerializer {
+    protected:
 		std::ifstream in;
         uint64_t probe_size;
 	public:
@@ -310,7 +311,7 @@ namespace EBUSDK {
         /**
 	    *	Abstract utility class which defines an interface for writing dark metadata (i.e., blobs of bytes) to an MXF file.
 	    */
-	    class MXFFileDarkXMLSerializer : public MXFFileDarkSerializer {
+	    class MXFFileDarkXMLSerializer : public virtual MXFFileDarkSerializer {
 	    public:
 		    virtual bmx::TextEncoding GetTextEncoding();
             virtual bmx::ByteOrder GetByteOrder();
@@ -318,6 +319,11 @@ namespace EBUSDK {
             virtual std::string GetNamespace();
             virtual std::string GetData();
 	    };
+
+        bool AddHeaderMetadata(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, uint32_t generic_stream_id,
+            const char *mime_type, MXFFileDarkXMLSerializer& xml_serializer, mxfUL metadata_scheme_id);
+
+        void WriteStreamXMLData(MXFFileDarkXMLSerializer& xml_serializer, mxfpp::File *mxf_file);
 
     }
 

@@ -92,7 +92,7 @@ void WriteKLVContentsToFile(const char* file, File* mxfFile, uint64_t length) {
 	out.close();
 }
 
-class DarkFileXMLSerializer : public DarkFileSerializer, public MXFFileDarkXMLSerializer {
+class DarkFileXMLSerializer : public DarkFileSerializer, public virtual MXFFileDarkXMLSerializer {
     XMLWriterHelper mXMLWriterHelper;
     const char* filename;
     bool extractedInfo;
@@ -132,6 +132,31 @@ public:
         }
         return mXMLWriterHelper.GetNamespace();    
     }
+
+    std::string GetData() {
+        std::stringstream ss;
+
+        uint64_t size = 0;
+	    std::streamsize read=0;
+	    char buffer[4096];
+	    while (in) {
+		    in.read(buffer, 4096); read = in.gcount();
+		    if (read > 0) {
+			    ss.write((const char*)buffer, read);
+			    size += read;
+		    }
+	    }
+        return ss.str();
+    }
+
+    uint64_t WriteToMXFFile(File *f) {
+        return DarkFileSerializer::WriteToMXFFile(f);
+    }
+
+    uint64_t ProbeSize() { 
+        return DarkFileSerializer::ProbeSize();
+    }
+
 };
 
 // {DAE59218-AF8D-47D4-A216-B6C648EA548C}
@@ -363,13 +388,15 @@ void InnerEmbedEBUCoreMetadata(
 				    static_cast<MXFFileDarkSerializer*>(new DarkFileXMLSerializer(metadataLocation)) 
 			    );
 
-                EBUSDK::MXFCustomMetadata::RP2057
+                // And write the header metadata for this RP2057 metadata
+                MXFFileDarkXMLSerializer *xml_serializer = dynamic_cast<MXFFileDarkXMLSerializer*>(&*ser);
+                RP2057::AddHeaderMetadata(&*mHeaderMetadata, 8000, 1, "application/xml", *xml_serializer, optRP2057->scheme_id);
 
             } else {
 
 			    ser.reset( (metadataDocument != NULL) ? 
 				    static_cast<MXFFileDarkSerializer*>(new DarkDOMDocumentSerializer(*metadataDocument)) : 
-				    static_cast<MXFFileDarkSerializer*>(new DarkFileSerializer(metadataLocation)) 
+				    static_cast<MXFFileDarkSerializer*>(new DarkFileSerializer(metadataLocation))
 			    );
 
             }
