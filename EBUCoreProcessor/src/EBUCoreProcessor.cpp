@@ -344,6 +344,7 @@ void InnerEmbedEBUCoreMetadata(
         
         // in case we do RP2057 metadata writing, it might have to be written to the a separate generic stream partition
         bool requireMetadataStreamPartition = false;
+        uint32_t metadataStreamPartitionStreamID = 0;
 
 		if (optWaytoWrite != DARK && optWaytoWrite != NONE) {
 			// ///////////////////////////////////////
@@ -383,6 +384,16 @@ void InnerEmbedEBUCoreMetadata(
 			// ///////////
             if (optWaytoWrite == RP2057) {
 
+                // Loop through the MXF partition a optain a free stream ID to use in case
+                // we need to write a new partition
+                uint32_t newStreamId = 0;
+                for (int i = partitions.size(); i > 0 ; i--) {
+                    Partition *p = partitions[i];
+                    if (newStreamId <= p->getBodySID()) 
+                        newStreamId = p->getBodySID() + 1;
+                }
+                metadataStreamPartitionStreamID = newStreamId;
+
                 // Create XML-aware serializers because we will need XML-related info to put into the
                 // RP2057 header metadata
 			    ser.reset( (metadataDocument != NULL) ? 
@@ -393,7 +404,7 @@ void InnerEmbedEBUCoreMetadata(
                 // And write the header metadata for this RP2057 metadata
                 MXFFileDarkXMLSerializer *xml_serializer = dynamic_cast<MXFFileDarkXMLSerializer*>(&*ser);
                 requireMetadataStreamPartition = 
-                    RP2057::AddHeaderMetadata(&*mHeaderMetadata, 8000, 1, "application/xml", *xml_serializer, optRP2057->scheme_id);
+                    RP2057::AddHeaderMetadata(&*mHeaderMetadata, 8000, metadataStreamPartitionStreamID, "application/xml", *xml_serializer, optRP2057->scheme_id);
 
             } else {
 
@@ -428,7 +439,7 @@ void InnerEmbedEBUCoreMetadata(
                 // write out a newly (inserted) generic stream partition
                 Partition &stream_partition = mFile->createPartition(); // [TODO] this must become an insert instead of append!
                 stream_partition.setKey(&MXF_GS_PP_K(GenericStream));
-                stream_partition.setBodySID(0 /* [TODO] Generate a proper stream ID */);
+                stream_partition.setBodySID(metadataStreamPartitionStreamID);
                 stream_partition.write(&*mFile);
 
                 MXFFileDarkXMLSerializer *xml_serializer = dynamic_cast<MXFFileDarkXMLSerializer*>(&*ser);
