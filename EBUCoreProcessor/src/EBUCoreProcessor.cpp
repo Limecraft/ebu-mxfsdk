@@ -341,7 +341,9 @@ void InnerEmbedEBUCoreMetadata(
 
 		// prepare a pointer to the serializer of dark metadata
 		std::auto_ptr<MXFFileDarkSerializer> ser(NULL);
-
+        
+        // in case we do RP2057 metadata writing, it might have to be written to the a separate generic stream partition
+        bool requireMetadataStreamPartition = false;
 
 		if (optWaytoWrite != DARK && optWaytoWrite != NONE) {
 			// ///////////////////////////////////////
@@ -390,7 +392,8 @@ void InnerEmbedEBUCoreMetadata(
 
                 // And write the header metadata for this RP2057 metadata
                 MXFFileDarkXMLSerializer *xml_serializer = dynamic_cast<MXFFileDarkXMLSerializer*>(&*ser);
-                RP2057::AddHeaderMetadata(&*mHeaderMetadata, 8000, 1, "application/xml", *xml_serializer, optRP2057->scheme_id);
+                requireMetadataStreamPartition = 
+                    RP2057::AddHeaderMetadata(&*mHeaderMetadata, 8000, 1, "application/xml", *xml_serializer, optRP2057->scheme_id);
 
             } else {
 
@@ -408,12 +411,34 @@ void InnerEmbedEBUCoreMetadata(
 		// ///////////
 		if (!optForceHeader) {
 
-			progress_callback(0.5, INFO, "EmbedEBUCoreMetadata", "Writing new metadata into footer partition");
-
 			// What does the footer partition look like? Are there index entries to move around?
 			uint32_t index_length = 0;
 			bmx::ByteArray index_bytes(index_length);
 			uint64_t pos_write_start_metadata = BufferIndex(&*mFile, footerPartition, index_bytes, &index_length);
+
+            // before we rewriting the footer partition with updated metadata, 
+            // we need to put in a generic stream partition with metadata
+            if (optWaytoWrite == RP2057 && requireMetadataStreamPartition) {
+    			progress_callback(0.5, INFO, "EmbedEBUCoreMetadata", "Writing RP2057 metadata into generic stream partition");
+                
+                // seek to the current footer partition, we'll put the generic partition there and then rewrite
+                // the footer at a higher position
+                mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
+
+                // write out a newly (inserted) generic stream partition
+                Partition &stream_partition = mFile->createPartition(); // [TODO] this must become an insert instead of append!
+                stream_partition.setKey(&MXF_GS_PP_K(GenericStream));
+                stream_partition.setBodySID(0 /* [TODO] Generate a proper stream ID */);
+                stream_partition.write(&*mFile);
+
+                MXFFileDarkXMLSerializer *xml_serializer = dynamic_cast<MXFFileDarkXMLSerializer*>(&*ser);
+                RP2057::WriteStreamXMLData(*xml_serializer, &*mFile);
+
+                // the new file offset is the new offset for the footer partition
+                footerPartition->setThisPartition(mFile->tell());
+            }   
+
+            progress_callback(0.5, INFO, "EmbedEBUCoreMetadata", "Writing new metadata into footer partition");
 
 			uint64_t headerMetadataSize = (optWaytoWrite == DARK) ?
 				WriteDarkMetadataToFile(	&*mFile, 
