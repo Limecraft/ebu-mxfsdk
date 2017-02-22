@@ -99,7 +99,7 @@ class DarkFileXMLSerializer : public DarkFileSerializer, public virtual MXFFileD
 public:
 	
     DarkFileXMLSerializer(const char* metadataLocation) : DarkFileSerializer(metadataLocation), extractedInfo(false), filename(metadataLocation) {}
-	virtual ~DarkFileXMLSerializer();
+    virtual ~DarkFileXMLSerializer() {}
 
     bmx::TextEncoding GetTextEncoding() {
         if (!extractedInfo) {
@@ -153,7 +153,7 @@ public:
         return DarkFileSerializer::WriteToMXFFile(f);
     }
 
-    uint64_t ProbeSize() { 
+    virtual uint64_t ProbeSize() { 
         return DarkFileSerializer::ProbeSize();
     }
 

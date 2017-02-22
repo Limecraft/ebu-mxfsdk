@@ -128,7 +128,7 @@ namespace EBUSDK {
         
             @returns The number of dark bytes contained in the metadata.
         */
-        virtual uint64_t ProbeSize();
+        virtual uint64_t ProbeSize() = 0;
 	};
 
 	/**
@@ -313,11 +313,11 @@ namespace EBUSDK {
 	    */
 	    class MXFFileDarkXMLSerializer : public virtual MXFFileDarkSerializer {
 	    public:
-		    virtual bmx::TextEncoding GetTextEncoding();
-            virtual bmx::ByteOrder GetByteOrder();
-            virtual std::string GetLanguageCode();
-            virtual std::string GetNamespace();
-            virtual std::string GetData();
+		    virtual bmx::TextEncoding GetTextEncoding() = 0;
+            virtual bmx::ByteOrder GetByteOrder() = 0;
+            virtual std::string GetLanguageCode() = 0;
+            virtual std::string GetNamespace() = 0;
+            virtual std::string GetData() = 0;
 	    };
 
         bool AddHeaderMetadata(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, uint32_t generic_stream_id,

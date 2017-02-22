@@ -94,7 +94,8 @@ class DarkDOMDocumentSerializer : public xercesc::XMLFormatTarget, public EBUSDK
 public:
 	DarkDOMDocumentSerializer(xercesc::DOMDocument& document) : 
       doc(document), size(0), mxfFile(NULL), writeToStringStream(false) {}
-
+	virtual ~DarkDOMDocumentSerializer() {}
+    
 	uint64_t WriteToMXFFile(mxfpp::File *f) {
 		mxfFile = f;
         size = 0;
@@ -112,10 +113,6 @@ public:
         else if (writeToStringStream)
             sstream.write((const char*)toWrite, count);
 		size += count;
-	}
-
-	virtual ~DarkDOMDocumentSerializer() {
-		size = 0;
 	}
 
     uint64_t ProbeSize() {
