@@ -152,8 +152,13 @@ public:
     }
 
     std::string GetLanguageCode() {
+        XMLCh* xml_ns = XMLString::transcode("http://www.w3.org/XML/1998/namespace");
+        XMLCh* xml_lang = XMLString::transcode("lang");
+
         xercesc::DOMElement* e = doc.getDocumentElement();
-        const XMLCh* lang = e->getAttributeNS(L"http://www.w3.org/XML/1998/namespace", L"lang");
+        const XMLCh* lang = e->getAttributeNS(xml_ns, xml_lang);
+
+        XMLString::release(&xml_ns); XMLString::release(&xml_lang);
         if (lang != NULL) {
             xercesc::TranscodeToStr trans_lang(lang, "UTF-8");
             return std::string((char*)trans_lang.str());
