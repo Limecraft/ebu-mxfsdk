@@ -437,7 +437,7 @@ void InnerEmbedEBUCoreMetadata(
                 mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
 
                 // write out a newly (inserted) generic stream partition
-                Partition &stream_partition = mFile->createPartition(); // [TODO] this must become an insert instead of append!
+                Partition &stream_partition = mFile->insertPartition(partitions.size()-1); // Insert before the footer partition.
                 stream_partition.setKey(&MXF_GS_PP_K(GenericStream));
                 stream_partition.setBodySID(metadataStreamPartitionStreamID);
                 stream_partition.write(&*mFile);
