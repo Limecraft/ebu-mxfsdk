@@ -460,7 +460,7 @@ int main(int argc, const char** argv)
     const char *ebucore_filename = 0;
     bool do_use_dark_metadata_key = false;
     mxfKey darkMetadataKey;
-    EmbedXMLInfo embed_xml;
+    EmbedXMLInfo embed_xml = {0};
 
     int cmdln_index;
 
@@ -637,7 +637,15 @@ int main(int argc, const char** argv)
 				EBUCore::MetadataKind kind = do_sidecar ? EBUCore::SIDECAR : (do_dark ? EBUCore::DARK : EBUCore::KLV_ENCODED);
                 EBUCore::EmbedEBUCoreMetadata(ebucore_filename, filenames[0], &progress_cb, kind, false, do_force_header, 
                     do_use_dark_metadata_key ? &darkMetadataKey : NULL);
-			}
+            } else if (embed_xml.filename != NULL) {
+                EBUCore::RP2057EmbeddingOptions rp2057opts;
+                if (embed_xml.lang != NULL)
+                    rp2057opts.lang = embed_xml.lang;
+                // [TODO]: validation of given scheme
+                rp2057opts.scheme_id = embed_xml.scheme_id;
+                EBUCore::EmbedEBUCoreMetadata(embed_xml.filename, filenames[0], &progress_cb, EBUCore::RP2057, false, do_force_header, 
+                    NULL, &rp2057opts);
+            }
 		}
     }
     catch (const MXFException &ex)
