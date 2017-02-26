@@ -346,7 +346,7 @@ void InnerEmbedEBUCoreMetadata(
         bool requireMetadataStreamPartition = false;
         uint32_t metadataStreamPartitionStreamID = 0;
 
-		if (optWaytoWrite != DARK && optWaytoWrite != NONE) {
+        if (optWaytoWrite != DARK && optWaytoWrite != RP2057 && optWaytoWrite != NONE) {
 			// ///////////////////////////////////////
 			// / 3. Do a KLV-encoded serialization of (part of) the metadata.
 			// ///////////
@@ -387,7 +387,7 @@ void InnerEmbedEBUCoreMetadata(
                 // Loop through the MXF partition a optain a free stream ID to use in case
                 // we need to write a new partition
                 uint32_t newStreamId = 0;
-                for (int i = partitions.size(); i > 0 ; i--) {
+                for (int i = 0; i < partitions.size(); i++) {
                     Partition *p = partitions[i];
                     if (newStreamId <= p->getBodySID()) 
                         newStreamId = p->getBodySID() + 1;
@@ -404,7 +404,7 @@ void InnerEmbedEBUCoreMetadata(
                 // And write the header metadata for this RP2057 metadata
                 MXFFileDarkXMLSerializer *xml_serializer = dynamic_cast<MXFFileDarkXMLSerializer*>(&*ser);
                 requireMetadataStreamPartition = 
-                    RP2057::AddHeaderMetadata(&*mHeaderMetadata, 8000, metadataStreamPartitionStreamID, "application/xml", *xml_serializer, optRP2057->scheme_id);
+                    RP2057::AddHeaderMetadata(&*mHeaderMetadata, 8001, metadataStreamPartitionStreamID, "application/xml", *xml_serializer, optRP2057->scheme_id);
 
             } else {
 
@@ -445,8 +445,15 @@ void InnerEmbedEBUCoreMetadata(
                 MXFFileDarkXMLSerializer *xml_serializer = dynamic_cast<MXFFileDarkXMLSerializer*>(&*ser);
                 RP2057::WriteStreamXMLData(*xml_serializer, &*mFile);
 
+                // after the MXF metadata, write filler to align the next partition to the grid
+                stream_partition.fillToKag(&*mFile);
+
+                uint64_t streamPartitionLength = mFile->tell() - footerPartition->getThisPartition();
+
                 // the new file offset is the new offset for the footer partition
-                footerPartition->setThisPartition(mFile->tell());
+                footerPartition->setThisPartition(footerPartition->getThisPartition() + streamPartitionLength);
+
+                pos_write_start_metadata += streamPartitionLength;
             }   
 
             progress_callback(0.5, INFO, "EmbedEBUCoreMetadata", "Writing new metadata into footer partition");
