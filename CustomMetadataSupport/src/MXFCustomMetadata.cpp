@@ -224,6 +224,44 @@ uint64_t BufferIndex(File* mFile, Partition* partition, bmx::ByteArray& index_by
 	return pos_write_start_metadata;
 }
 
+uint64_t BufferPartition(mxfpp::File* mFile, mxfpp::Partition* partition, bmx::ByteArray& partition_bytes, uint32_t* partition_length) {
+
+    uint64_t index_length = partition->getIndexByteCount();
+    uint64_t header_length = partition->getHeaderByteCount();
+
+	// skip to the end of the header metadata: Partition Pack + Header Byte Count
+	mxfKey foot_key;
+	uint8_t foot_llen;
+	uint64_t foot_len;
+	mFile->seek(partition->getThisPartition(), SEEK_SET);
+	mFile->readKL(&foot_key, &foot_llen, &foot_len);
+	mFile->skip(foot_len);
+
+	// there can be a filler after the partition pack, skip it
+	mFile->readNextNonFillerKL(&foot_key, &foot_llen, &foot_len); // check for EOF now in case no more KLVs found??
+	// record the current (- keylength and lenlength) as begin position for metadata to write
+	uint64_t pos_write_start_metadata = mFile->tell() - mxfKey_extlen - foot_llen;
+
+    uint64_t partition_lead_in = pos_write_start_metadata - partition->getThisPartition();
+
+    // what's the total size of what we need to copy?
+    uint64_t bytes_to_copy = partition_lead_in + header_length + index_length;
+
+	// read the partition elements into a byte buffer for later relocation
+    if (partition_bytes.GetSize() < bytes_to_copy)
+        partition_bytes.Grow(bytes_to_copy);
+
+    // seek back to the beginning of the partition
+    mFile->seek(partition->getThisPartition(), SEEK_SET);
+    uint32_t br = mFile->read(partition_bytes.GetBytes(), bytes_to_copy);
+    partition_bytes.SetSize(bytes_to_copy);
+	//std::cout << "bytes read: " << br << std::endl;
+
+    *partition_length = bytes_to_copy;
+	
+	return pos_write_start_metadata;
+}
+
 class FixedKeyComparer {
 	const mxfKey *k;
 public:

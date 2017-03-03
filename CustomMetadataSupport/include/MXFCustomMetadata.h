@@ -71,6 +71,19 @@ namespace EBUSDK {
 	uint64_t BufferIndex(mxfpp::File* mFile, mxfpp::Partition* partition, bmx::ByteArray& index_bytes, uint32_t* index_length);
 
 	/**
+	*	Buffers the contents of a __partition__ (excluding essence data) in a ByteArray and returns the size of the data 
+		buffered and the first byte of the header metadata in the given __partition__.
+
+		@returns Returns the location of the first byte of the header metadata in the given __partition__. 
+		This position is location behind the partition pack set and any KLV filler elements that follow it.
+		@param mFile An MXF file structure opened with (at least) read access.
+		@param partition The partition for which the index entries must be buffered.
+		@param partition_bytes A reference to a pre-allocated ByteArray structure to hold the buffered partition bytes.
+		@param partition_length A pointer to an integer that will receive the length of the partition bytes buffered when the function returns.
+	*/
+	uint64_t BufferPartition(mxfpp::File* mFile, mxfpp::Partition* partition, bmx::ByteArray& partition_bytes, uint32_t* partition_length);
+
+	/**
 	*	Serializes KLV-encoded header metadata to a memory-backed file. Its purpose is to write obtain 
 		a linear buffer of serialized metadata of which the size is known, 
 		before committing this buffer (i.e., the memory-backed file) to a disk-backed file.

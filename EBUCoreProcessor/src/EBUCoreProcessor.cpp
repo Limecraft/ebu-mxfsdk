@@ -432,6 +432,16 @@ void InnerEmbedEBUCoreMetadata(
             if (optWaytoWrite == RP2057 && requireMetadataStreamPartition) {
     			progress_callback(0.5, INFO, "EmbedEBUCoreMetadata", "Writing RP2057 metadata into generic stream partition");
                 
+                // Buffer the entire footer partition so that we can rewrite it at the end
+                // Why? In case the source metadata partition is the footer partition, we need to
+                // read dark metadata (which is not in memory but only in the file) in order
+                // to copy it when updated metadata is rewritten.
+                // If we would not do this, the generic stream partition would overwrite the 
+                // footer partition metadata and there would be no way to recover this dark metadata...
+    			uint32_t partition_length = 0;
+	    		bmx::ByteArray partition_bytes(partition_length);
+                BufferPartition(&*mFile, footerPartition, partition_bytes, &partition_length);
+
                 // seek to the current footer partition, we'll put the generic partition there and then rewrite
                 // the footer at a higher position
                 mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
@@ -454,6 +464,10 @@ void InnerEmbedEBUCoreMetadata(
                 footerPartition->setThisPartition(footerPartition->getThisPartition() + streamPartitionLength);
 
                 pos_write_start_metadata += streamPartitionLength;
+
+                // and finish by writing the buffered partition back into its place
+                mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
+                mFile->write(partition_bytes.GetBytes(), partition_bytes.GetSize());
             }   
 
             progress_callback(0.5, INFO, "EmbedEBUCoreMetadata", "Writing new metadata into footer partition");
@@ -469,7 +483,7 @@ void InnerEmbedEBUCoreMetadata(
 											ignoredDarkKeys);
 
 			if (index_length > 0) {
-				progress_callback(0.75, DEBUG, "EmbedEBUCoreMetadata", "Rewritng footer partition index entries");
+				progress_callback(0.75, DEBUG, "EmbedEBUCoreMetadata", "Rewriting footer partition index entries");
 
 				// write the index tables back to the footer partition
 				mFile->write(index_bytes.GetBytes(), index_bytes.GetSize());
