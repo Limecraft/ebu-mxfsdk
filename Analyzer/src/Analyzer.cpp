@@ -59,6 +59,7 @@ static const XMLCh s335mElementsNS[] = {'h','t','t','p',':','/','/','w','w','w',
 static const XMLCh s377mGroupsNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','1','4','/','g','r','o','u','p','s','/','3','7','7','-','1','/','2','0','1','2','\0'};
 static const XMLCh s377mTypesNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','t','y','p','e','s','/','S','3','7','7','-','1','/','2','0','1','2','\0'};
 static const XMLCh s377mMuxNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','0','6','/','m','u','l','t','i','p','l','e','x','/','S','3','7','7','-','1','/','2','0','1','2','\0'};
+static const XMLCh s410mMuxNS[] = {'h','t','t','p',':','/','/','w','w','w','.','s','m','p','t','e','-','r','a','.','o','r','g','/','s','c','h','e','m','a','s','/','4','3','4','/','2','0','1','4','/','m','u','l','t','i','p','l','e','x','/','4','1','0','/','2','0','0','6','\0'};
 static const XMLCh ebucoreElementsNS[] = {'u','r','n',':','e','b','u',':','m','e','t','a','d','a','t','a','-','s','c','h','e','m','a',':','s','m','p','t','e','c','l','a','s','s','1','3','/','p','r','o','p','e','r','t','i','e','s','/','e','b','u','c','o','r','e','_','2','0','1','3','\0'};
 static const XMLCh ebuNonStrictElementsNS[] = { 'h','t','t','p',':','/','/','w','w','w','.','l','i','m','e','c','r','a','f','t','.','c','o','m','/','x','m','l','/','n','a','m','e','s','p','a','c','e','s','/','S','T','4','3','4','/','e','x','t','e','n','s','i','o','n','s', '\0' };
 
@@ -892,18 +893,22 @@ void AnalyzePartition(DOMElement *parent, DOMDocument *root, Partition *partitio
 	std::map< mxfUUID, std::vector<KLVPacketRef> > darkItems;
 
 	// what type of partition is this?
-	DOMElement *partElem = 
-		mxf_is_header_partition_pack(partition->getKey()) ? 
-			PrepareElement(root, parent, s377mMuxNS, _X("HeaderPartition", tc)) : 
-			(mxf_is_footer_partition_pack(partition->getKey()) ? 
-				PrepareElement(root, parent, s377mMuxNS, _X("FooterPartition", tc)) :
-				PrepareElement(root, parent, s377mMuxNS, _X("BodyPartition", tc)));
+    DOMElement *partElem = NULL; 
+    if (mxf_is_generic_stream_partition_pack(partition->getKey())) {
+        partElem = PrepareElement(root, parent, s410mMuxNS, _X("GenericStreamPartition", tc));
+    } else {
+        partElem = mxf_is_header_partition_pack(partition->getKey()) ? 
+		        PrepareElement(root, parent, s377mMuxNS, _X("HeaderPartition", tc)) : 
+		        (mxf_is_footer_partition_pack(partition->getKey()) ? 
+			        PrepareElement(root, parent, s377mMuxNS, _X("FooterPartition", tc)) :
+			        PrepareElement(root, parent, s377mMuxNS, _X("BodyPartition", tc)));
 
-	// Open/Closed/Complete/Incomplete?
-	PrepareAttributeWithContent(root, partElem, s377mMuxNS, _X("Closed", tc).str(), 
-		(mxf_partition_is_closed(partition->getKey()) ? _X("1", tc).str() : _X("0", tc).str()) );
-	PrepareAttributeWithContent(root, partElem, s377mMuxNS, _X("Complete", tc).str(), 
-		(mxf_partition_is_complete(partition->getKey()) ? _X("1", tc).str() : _X("0", tc).str()) );
+        // Open/Closed/Complete/Incomplete?
+        PrepareAttributeWithContent(root, partElem, s377mMuxNS, _X("Closed", tc).str(), 
+	        (mxf_partition_is_closed(partition->getKey()) ? _X("1", tc).str() : _X("0", tc).str()) );
+        PrepareAttributeWithContent(root, partElem, s377mMuxNS, _X("Complete", tc).str(), 
+	        (mxf_partition_is_complete(partition->getKey()) ? _X("1", tc).str() : _X("0", tc).str()) );
+    }
 
 	AnalyzePartitionPack(partElem, root, partition->getCPartition(), tc);
 
