@@ -334,7 +334,7 @@ namespace EBUSDK {
 	    };
 
         bool AddHeaderMetadata(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, uint32_t generic_stream_id,
-            const char *mime_type, MXFFileDarkXMLSerializer& xml_serializer, mxfUL metadata_scheme_id);
+            const char *mime_type, const char *xml_lang, MXFFileDarkXMLSerializer& xml_serializer, mxfUL metadata_scheme_id);
 
         void WriteStreamXMLData(MXFFileDarkXMLSerializer& xml_serializer, mxfpp::File *mxf_file);
 

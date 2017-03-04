@@ -404,7 +404,8 @@ void InnerEmbedEBUCoreMetadata(
                 // And write the header metadata for this RP2057 metadata
                 MXFFileDarkXMLSerializer *xml_serializer = dynamic_cast<MXFFileDarkXMLSerializer*>(&*ser);
                 requireMetadataStreamPartition = 
-                    RP2057::AddHeaderMetadata(&*mHeaderMetadata, 8001, metadataStreamPartitionStreamID, "application/xml", *xml_serializer, optRP2057->scheme_id);
+                    RP2057::AddHeaderMetadata(&*mHeaderMetadata, 8001, metadataStreamPartitionStreamID, 
+                        "application/xml", optRP2057->lang, *xml_serializer, optRP2057->scheme_id);
 
             } else {
 

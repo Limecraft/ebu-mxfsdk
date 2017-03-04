@@ -843,7 +843,7 @@ void AppendDMSLabel(HeaderMetadata *header_metadata, mxfUL scheme_label)
 namespace RP2057 {
 
     bool AddHeaderMetadata(HeaderMetadata *header_metadata, uint32_t track_id, uint32_t generic_stream_id,
-        const char *mime_type, MXFFileDarkXMLSerializer& xml_serializer, mxfUL metadata_scheme_id)
+        const char *mime_type, const char *xml_lang, MXFFileDarkXMLSerializer& xml_serializer, mxfUL metadata_scheme_id)
     {   
         bool mRequireStreamPartition = false;
 
@@ -854,7 +854,7 @@ namespace RP2057 {
 
         int64_t data_size = xml_serializer.ProbeSize();
 
-        std::string language_code = xml_serializer.GetLanguageCode();
+        std::string language_code = (xml_lang != NULL && strlen(xml_lang) != 0) ? xml_lang : xml_serializer.GetLanguageCode();
         if (language_code.empty()) language_code = "en";
 
         //if (!BMX_OPT_PROP_IS_SET(mLanguageCode))
@@ -894,7 +894,7 @@ namespace RP2057 {
 
         // Preface - ContentStorage - Package - DM Static Track - Sequence - DMSegment - TextBasedDMFramework - TextBasedObject
         TextBasedObject *xml_obj;
-        if (data_size < UINT16_MAX && xml_serializer.GetTextEncoding() == UTF8) {
+        if (data_size < 1000 /*UINT16_MAX*/ && xml_serializer.GetTextEncoding() == UTF8) {
             UTF8TextBasedSet *utf8_xml = new UTF8TextBasedSet(header_metadata);
             xml_obj = utf8_xml;
         } else if (data_size < UINT16_MAX && xml_serializer.GetTextEncoding() == UTF16) {
