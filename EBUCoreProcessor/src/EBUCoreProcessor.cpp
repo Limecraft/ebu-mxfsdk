@@ -582,6 +582,49 @@ void InnerEmbedEBUCoreMetadata(
 				prevPartition = p->getThisPartition();
 			}
 
+            // after rewriting the header metadata and shifting file bytes down,
+            // we need to put in a generic stream partition with metadata.
+            // We'll place this one right before the footer partition, so that will be the only partition to rewrite
+            if (optWaytoWrite == RP2057 && requireMetadataStreamPartition) {
+    			progress_callback(0.5, INFO, "EmbedEBUCoreMetadata", "Writing RP2057 metadata into generic stream partition");
+                
+                // Buffer the entire footer partition so that we can rewrite it at the end
+    			uint32_t partition_length = 0;
+	    		bmx::ByteArray partition_bytes(partition_length);
+                BufferPartition(&*mFile, footerPartition, partition_bytes, &partition_length);
+
+                // seek to the current footer partition, we'll put the generic partition there and then rewrite
+                // the footer at a higher position
+                mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
+
+                // write out a newly (inserted) generic stream partition
+                Partition &stream_partition = mFile->insertPartition(partitions.size()-1); // Insert before the footer partition.
+                stream_partition.setKey(&MXF_GS_PP_K(GenericStream));
+                stream_partition.setBodySID(metadataStreamPartitionStreamID);
+                stream_partition.write(&*mFile);
+
+                MXFFileDarkXMLSerializer *xml_serializer = dynamic_cast<MXFFileDarkXMLSerializer*>(&*ser);
+                RP2057::WriteStreamXMLData(*xml_serializer, &*mFile);
+
+                // after the MXF metadata, write filler to align the next partition to the grid
+                stream_partition.fillToKag(&*mFile);
+
+                uint64_t streamPartitionLength = mFile->tell() - footerPartition->getThisPartition();
+
+                // the new file offset is the new offset for the footer partition
+                footerPartition->setThisPartition(footerPartition->getThisPartition() + streamPartitionLength);
+
+                pos_write_start_metadata += streamPartitionLength;
+
+                // and finish by writing the buffered partition back into its place
+                mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
+                mFile->write(partition_bytes.GetBytes(), partition_bytes.GetSize());
+
+                // and rewrite the footer partition pack with an updated offset (is done later!)
+                //mFile->seek(footerPartition->getThisPartition(), SEEK_SET);
+                //RewritePartitionPack(&*mFile, footerPartition, true);
+            }
+
 			// Finish by re-writing the rip.
 			// To be safe, we will overwrite the entire RIP of the previous file, 
 			// by extending the filler if present, or by adding a new filler up until the next KAG.
