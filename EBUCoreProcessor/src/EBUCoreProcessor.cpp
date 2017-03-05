@@ -61,6 +61,7 @@
 #include <XercesUtils.h>
 
 #include <xercesc/util/TransService.hpp>
+#include <xercesc/framework/MemBufInputSource.hpp>
 
 using namespace mxfpp;
 using namespace bmx;
@@ -88,6 +89,14 @@ void WriteKLVContentsToFile(const char* file, File* mxfFile, uint64_t length) {
 				size += read;
 			}
 		}
+	}
+	out.close();
+}
+
+void WriteByteArrayContentsToFile(const char* file, mxfpp::ByteArray& buf) {
+	std::ofstream out(file, std::ofstream::out | std::ifstream::binary);
+	if (!out.fail()) {
+        out.write((const char*)buf.data, buf.length);
 	}
 	out.close();
 }
@@ -224,12 +233,14 @@ MetadataKind ExtractEBUCoreMetadata(
 							EBUCoreProcessor *processor,
 							HeaderMetadata *headerMetadata,
 							Partition *partition,
+                            const std::vector<Partition*> &partitions,
 							File *mxfFile,
 							const char* metadataLocation,
 							xercesc::DOMDocument** outputDocument,
 							MetadataOutput outputFashion,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-                            const mxfKey *customDarkMetadataKey);
+                            const mxfKey *customDarkMetadataKey,
+                            const mxfUL *rp2057XMLSchemeId);
 
 void InnerEmbedEBUCoreMetadata(	
 							xercesc::DOMDocument* metadataDocument, 
@@ -312,8 +323,9 @@ void InnerEmbedEBUCoreMetadata(
 		/*		 If existing metadata is found, the new metadata is serialized 
 				in the same fashion, overwriting what was present before */
 		// ///////////
-		MetadataKind existingKind = ExtractEBUCoreMetadata(processor, &*mHeaderMetadata, metadata_partition, &*mFile, NULL, NULL, DONT_SERIALIZE, 
-            progress_callback, customDarkMetadataKey);
+		MetadataKind existingKind = ExtractEBUCoreMetadata(processor, &*mHeaderMetadata, metadata_partition, partitions, 
+            &*mFile, NULL, NULL, DONT_SERIALIZE, 
+            progress_callback, customDarkMetadataKey, &optRP2057->scheme_id);
 		if (existingKind != NONE) {
 			// there is metadata, override the way in which we are writing metadata!
 			if (optWaytoWrite != existingKind) {
@@ -980,12 +992,14 @@ MetadataKind ExtractEBUCoreMetadata(
 							EBUCoreProcessor *processor,
 							HeaderMetadata *headerMetadata,
 							Partition *partition,
+                            const std::vector<Partition*> &partitions,
 							File *mxfFile,
 							const char* metadataLocation,
 							xercesc::DOMDocument** outputDocument,
 							MetadataOutput outputFashion,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-                            const mxfKey *customDarkMetadataKey) {
+                            const mxfKey *customDarkMetadataKey,
+                            const mxfUL *rp2057XMLSchemeId) {
 
 
 	// ///////////////////////////////////////
@@ -1046,9 +1060,87 @@ MetadataKind ExtractEBUCoreMetadata(
 
 		
 	}
+    else if (rp2057XMLSchemeId != NULL) {
+        // ///////////////////////////////////////
+		// / 2c. If there is no KLV-codec metadata, but there is a provided RP2057 Scheme ID,
+		// /     we can try find our metadata there...
+		// ///////////
+        TextBasedObject *text_object = NULL;
+
+        MaterialPackage *mp = headerMetadata->getPreface()->findMaterialPackage();
+	    if (mp) {
+            std::vector<DMFramework*> static_frameworks = GetStaticFrameworks(mp);
+	        size_t i;
+            for (i = 0; i < static_frameworks.size(); i++) {
+		        TextBasedDMFramework *p = dynamic_cast<TextBasedDMFramework*>(static_frameworks[i]);
+                if (!p)
+                    continue;
+                TextBasedObject *t = dynamic_cast<TextBasedObject*>(p->getTextBasedObject());
+                if (!t)
+                    continue;
+
+                if (mxf_equals_ul(&t->getTextBasedMetadataPayloadSchemaID(), rp2057XMLSchemeId)) {
+                    // this is a match!
+                    text_object = t;
+                    break;
+                }
+            }
+        }
+
+        if (text_object) {
+            UTF8TextBasedSet *utf8_text        = dynamic_cast<UTF8TextBasedSet*>(text_object);
+            UTF16TextBasedSet *utf16_text      = dynamic_cast<UTF16TextBasedSet*>(text_object);
+            GenericStreamTextBasedSet *gs_text = dynamic_cast<GenericStreamTextBasedSet*>(text_object);
+
+            if (utf8_text || utf16_text) {
+                mxfpp::ByteArray byte_array;
+                if (utf8_text)
+                    byte_array = utf8_text->getUTF8TextData();
+                else
+                    byte_array = utf16_text->getUTF16TextData();
+                if (byte_array.length > 0) {
+
+                    if (outputFashion == SERIALIZE_TO_FILE) {
+    					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to XML file at %s", metadataLocation);
+                       
+					    WriteByteArrayContentsToFile(metadataLocation, byte_array);
+				    } 
+				    else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
+					    progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to output Xerces-C DOM Document");
+					
+                        MemBufInputSource inp((const XMLByte*)byte_array.data, byte_array.length, "ByteArray buffer");
+					    *outputDocument = ParseXercesDocument(inp);
+                    }
+                }
+            } 
+            else if (gs_text) {
+                int64_t len;
+                bmx::ByteOrder byte_order;
+                // figure out where the relevant data is
+                int64_t stream_offset = GetGenericStreamDataOffset(mxfFile, partitions, gs_text->getGenericStreamSID(), &len, &byte_order);
+
+                // [TODO] Add error handling in case returned offset == -1.
+                if (outputFashion == SERIALIZE_TO_FILE) {
+					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to XML file at %s", metadataLocation);
+
+                    mxfFile->seek(stream_offset, SEEK_SET);
+					WriteKLVContentsToFile(metadataLocation, mxfFile, len);
+				} 
+				else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
+					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to output Xerces-C DOM Document");
+					
+                    mxfFile->seek(stream_offset, SEEK_SET);
+					KLVInputSource inp(mxfFile, len);
+					*outputDocument = ParseXercesDocument(inp);
+				}
+
+            }
+            return RP2057;
+        }
+    }
 	else {
 		// ///////////////////////////////////////
-		// / 2c. If there is no KLV-codec metadata, there could be embedded dark metadata,
+		// / 2d. If there is no KLV-codec metadata, there could be embedded dark metadata,
 		// /     find its key in the metadata
 		// ///////////
 		mxfKey key; uint8_t llen; uint64_t len;
@@ -1118,7 +1210,8 @@ void ExtractEBUCoreMetadata(
 							xercesc::DOMDocument** outputDocument,
 							MetadataOutput outputFashion,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-                            const mxfKey *customDarkMetadataKey) {
+                            const mxfKey *customDarkMetadataKey,
+                            const mxfUL *rp2057XMLSchemeId) {
 	
 	XMLPlatformUtils::Initialize();
 
@@ -1184,8 +1277,9 @@ void ExtractEBUCoreMetadata(
 		mHeaderMetadata->read(&*mFile, metadata_partition, &key, llen, len);
 	}
 
-	ExtractEBUCoreMetadata(processor, &*mHeaderMetadata, metadata_partition, &*mFile, metadataLocation, outputDocument, outputFashion, 
-        progress_callback, customDarkMetadataKey);
+	ExtractEBUCoreMetadata(processor, &*mHeaderMetadata, metadata_partition, partitions, 
+        &*mFile, metadataLocation, outputDocument, outputFashion, 
+        progress_callback, customDarkMetadataKey, rp2057XMLSchemeId);
 
 	// ///////////////////////////////////////
 	// / 3. We're done, close the MXF file.
@@ -1196,10 +1290,10 @@ void ExtractEBUCoreMetadata(
 xercesc::DOMDocument& ExtractEBUCoreMetadata(
 							const char* mxfLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-                            const mxfKey *customDarkMetadataKey) {
+                            const mxfKey *customDarkMetadataKey, const mxfUL *rp2057SchemeId) {
 
 	xercesc::DOMDocument *doc;
-	ExtractEBUCoreMetadata(mxfLocation, NULL, &doc, OUTPUT_AS_DOM_DOCUMENT, progress_callback, customDarkMetadataKey);
+	ExtractEBUCoreMetadata(mxfLocation, NULL, &doc, OUTPUT_AS_DOM_DOCUMENT, progress_callback, customDarkMetadataKey, rp2057SchemeId);
 	return *doc;
 
 }
@@ -1207,9 +1301,9 @@ xercesc::DOMDocument& ExtractEBUCoreMetadata(
 void ExtractEBUCoreMetadata(const char* mxfLocation,
 							const char* metadataLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-                            const mxfKey *customDarkMetadataKey) {
+                            const mxfKey *customDarkMetadataKey, const mxfUL *rp2057SchemeId) {
 
-	ExtractEBUCoreMetadata(mxfLocation, metadataLocation, NULL, SERIALIZE_TO_FILE, progress_callback, customDarkMetadataKey);
+    ExtractEBUCoreMetadata(mxfLocation, metadataLocation, NULL, SERIALIZE_TO_FILE, progress_callback, customDarkMetadataKey, rp2057SchemeId);
 
 }
 

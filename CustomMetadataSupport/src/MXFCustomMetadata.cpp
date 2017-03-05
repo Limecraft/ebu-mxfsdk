@@ -894,7 +894,7 @@ namespace RP2057 {
 
         // Preface - ContentStorage - Package - DM Static Track - Sequence - DMSegment - TextBasedDMFramework - TextBasedObject
         TextBasedObject *xml_obj;
-        if (data_size < 1000 /*UINT16_MAX*/ && xml_serializer.GetTextEncoding() == UTF8) {
+        if (data_size < UINT16_MAX && xml_serializer.GetTextEncoding() == UTF8) {
             UTF8TextBasedSet *utf8_xml = new UTF8TextBasedSet(header_metadata);
             xml_obj = utf8_xml;
         } else if (data_size < UINT16_MAX && xml_serializer.GetTextEncoding() == UTF16) {
@@ -961,6 +961,63 @@ namespace RP2057 {
         xml_serializer.WriteToMXFFile(mxf_file);
     }
 
+    int64_t GetGenericStreamDataOffset(mxfpp::File* mFile, const std::vector<mxfpp::Partition*> &partitions, uint32_t generic_stream_id, int64_t *len, bmx::ByteOrder *byte_order) {
+
+        mxfKey key;
+        uint8_t llen;
+        uint64_t klvlen;
+
+        for (int i = 0; i < partitions.size(); i++) {
+            if (partitions[i]->getBodySID() != generic_stream_id)
+                continue;
+
+            mFile->seek(partitions[i]->getThisPartition(), SEEK_SET);
+            mFile->readKL(&key, &llen, &klvlen);
+            mFile->skip(klvlen);
+
+            bool have_gs_key = false;
+            while (!mFile->eof())
+            {
+                mFile->readNextNonFillerKL(&key, &llen, &klvlen);
+
+                if (mxf_is_partition_pack(&key)) {
+                    break;
+                } else if (mxf_is_header_metadata(&key)) {
+                    if (partitions[i]->getHeaderByteCount() > mxfKey_extlen + llen + klvlen)
+                        mFile->skip(partitions[i]->getHeaderByteCount() - (mxfKey_extlen + llen));
+                    else
+                        mFile->skip(klvlen);
+                } else if (mxf_is_index_table_segment(&key)) {
+                    if (partitions[i]->getIndexByteCount() > mxfKey_extlen + llen + klvlen)
+                        mFile->skip(partitions[i]->getIndexByteCount() - (mxfKey_extlen + llen));
+                    else
+                        mFile->skip(klvlen);
+                } else if (mxf_is_gs_data_element(&key)) {
+                    if (key != MXF_EE_K(RP2057_LE) &&
+                        key != MXF_EE_K(RP2057_BE) && // == MXF_EE_K(RP2057_BYTES)
+                        key != MXF_EE_K(RP2057_ENDIAN_UNK))
+                    {
+                        BMX_EXCEPTION(("Generic stream essence element key is not a RP 2057 key"));
+                    }
+                    
+                    // we found our data, return relevant info
+                    ByteOrder _byte_order = UNKNOWN_BYTE_ORDER;
+                    if (key == MXF_EE_K(RP2057_LE))
+                        _byte_order = BMX_LITTLE_ENDIAN;
+                    else if (key == MXF_EE_K(RP2057_BE)) // == MXF_EE_K(RP2057_BYTES)
+                        _byte_order = BMX_BIG_ENDIAN;
+                    
+                    *byte_order = _byte_order;
+                    *len = klvlen;
+                    return mFile->tell();
+                }
+            }
+        }
+
+        *byte_order = UNKNOWN_BYTE_ORDER;
+        *len = 0;
+        return -1;
+    }
 }
 
 } // namespace MXFCustomMetadata

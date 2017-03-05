@@ -76,6 +76,7 @@ static void usage(const char *cmd)
     fprintf(stderr, " --ebu-core <file>     Write embedded EBU Core metadata to file\n");
     fprintf(stderr, " --dark-key            Use this custom dark metadata key when searching for dark embedded metadata.\n");
     fprintf(stderr, "                       The provided key should a SMPTE UL, in the format ....\n");
+    fprintf(stderr, " --xml-scheme-id       Use this XML scheme when searching for relevant RP2057-embedded metadata.\n");
 }
 
 void progress_cb(float progress, EBUCore::ProgressCallbackLevel level, const char *function, const char *msg_format, ...) {
@@ -111,6 +112,8 @@ int main(int argc, const char** argv)
     const char *ebucore_filename = 0;
     bool do_use_dark_metadata_key = false;
     mxfKey darkMetadataKey;
+    bool do_use_xml_scheme_id = false;
+    UL xml_scheme_id;
     int cmdln_index;
 
     if (argc == 1) {
@@ -175,6 +178,23 @@ int main(int argc, const char** argv)
             }
             cmdln_index++;
         }
+        else if (strcmp(argv[cmdln_index], "--xml-scheme-id") == 0)
+        {
+            if (cmdln_index + 1 >= argc)
+            {
+                usage(argv[0]);
+                fprintf(stderr, "Missing argument for option '%s'\n", argv[cmdln_index]);
+                return 1;
+            }
+            if (!parse_mxf_auid(argv[cmdln_index + 1], &xml_scheme_id))
+            {
+                usage(argv[0]);
+                fprintf(stderr, "Invalid value '%s' for option '%s'\n", argv[cmdln_index + 1], argv[cmdln_index]);
+                return 1;
+            }
+            do_use_xml_scheme_id = true;
+            cmdln_index++;
+        }
         else
         {
             break;
@@ -220,7 +240,7 @@ int main(int argc, const char** argv)
     try
     {
 		if (ebucore_filename) {
-			EBUCore::ExtractEBUCoreMetadata(filenames[0], ebucore_filename, &progress_cb, do_use_dark_metadata_key ? &darkMetadataKey : NULL);
+            EBUCore::ExtractEBUCoreMetadata(filenames[0], ebucore_filename, &progress_cb, do_use_dark_metadata_key ? &darkMetadataKey : NULL, do_use_xml_scheme_id ? &xml_scheme_id : NULL);
 		}
     }
     catch (const MXFException &ex)

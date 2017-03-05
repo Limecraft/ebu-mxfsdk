@@ -222,7 +222,7 @@ namespace EBUSDK {
 	DLLEXPORT xercesc::DOMDocument& ExtractEBUCoreMetadata(
 							const char* mxfLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-                            const mxfKey *customDarkMetadataKey = NULL);
+                            const mxfKey *customDarkMetadataKey = NULL, const mxfUL *rp2057SchemeId = NULL);
 	
 	/**
 	*	Extract EBUCore metadata from an MXF file.\n
@@ -239,7 +239,7 @@ namespace EBUSDK {
 							const char* mxfLocation,
 							const char* metadataLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...), 
-                            const mxfKey *customDarkMetadataKey = NULL);
+                            const mxfKey *customDarkMetadataKey = NULL, const mxfUL *rp2057SchemeId = NULL);
 
 	/**
 	*	The way in which metadata should be serialized.

@@ -338,6 +338,7 @@ namespace EBUSDK {
 
         void WriteStreamXMLData(MXFFileDarkXMLSerializer& xml_serializer, mxfpp::File *mxf_file);
 
+        int64_t GetGenericStreamDataOffset(mxfpp::File* mFile, const std::vector<mxfpp::Partition*> &partitions, uint32_t generic_stream_id, int64_t *len, bmx::ByteOrder *byte_order);
     }
 
 
