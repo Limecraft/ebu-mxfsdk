@@ -1079,7 +1079,8 @@ MetadataKind ExtractEBUCoreMetadata(
                 if (!t)
                     continue;
 
-                if (mxf_equals_ul(&t->getTextBasedMetadataPayloadSchemaID(), rp2057XMLSchemeId)) {
+                mxfUL ul = t->getTextBasedMetadataPayloadSchemaID();
+                if (mxf_equals_ul(&ul, rp2057XMLSchemeId)) {
                     // this is a match!
                     text_object = t;
                     break;
