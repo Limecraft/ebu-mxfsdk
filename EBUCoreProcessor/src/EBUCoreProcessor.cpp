@@ -1138,6 +1138,8 @@ MetadataKind ExtractEBUCoreMetadata(
             }
             return RP2057;
         }
+        
+        return NONE;
     }
 	else {
 		// ///////////////////////////////////////
