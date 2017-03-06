@@ -1102,12 +1102,12 @@ MetadataKind ExtractEBUCoreMetadata(
                 if (byte_array.length > 0) {
 
                     if (outputFashion == SERIALIZE_TO_FILE) {
-    					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to XML file at %s", metadataLocation);
+    					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing RP-2057-embedded metadata from header metadata to XML file at %s", metadataLocation);
                        
 					    WriteByteArrayContentsToFile(metadataLocation, byte_array);
 				    } 
 				    else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
-					    progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to output Xerces-C DOM Document");
+					    progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing RP-2057-embedded metadata from header metadata to output Xerces-C DOM Document");
 					
                         MemBufInputSource inp((const XMLByte*)byte_array.data, byte_array.length, "ByteArray buffer");
 					    *outputDocument = ParseXercesDocument(inp);
@@ -1122,13 +1122,13 @@ MetadataKind ExtractEBUCoreMetadata(
 
                 // [TODO] Add error handling in case returned offset == -1.
                 if (outputFashion == SERIALIZE_TO_FILE) {
-					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to XML file at %s", metadataLocation);
+					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing RP-2057-embedded metadata from generic stream partition to XML file at %s", metadataLocation);
 
                     mxfFile->seek(stream_offset, SEEK_SET);
 					WriteKLVContentsToFile(metadataLocation, mxfFile, len);
 				} 
 				else if (outputFashion == OUTPUT_AS_DOM_DOCUMENT) {
-					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing dark EBUCore metadata to output Xerces-C DOM Document");
+					progress_callback(0.9f, INFO, "ExtractEBUCoreMetadata", "Writing RP-2057-embedded metadata from generic stream partition to output Xerces-C DOM Document");
 					
                     mxfFile->seek(stream_offset, SEEK_SET);
 					KLVInputSource inp(mxfFile, len);
