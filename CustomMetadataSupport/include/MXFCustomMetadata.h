@@ -336,6 +336,8 @@ namespace EBUSDK {
         bool AddHeaderMetadata(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, uint32_t generic_stream_id,
             const char *mime_type, const char *xml_lang, MXFFileDarkXMLSerializer& xml_serializer, mxfUL metadata_scheme_id);
 
+        mxfpp::TextBasedDMFramework *FindTextBasedDMFramework(mxfpp::HeaderMetadata *header_metadata, mxfUL xml_metadata_scheme_id, mxfpp::StaticTrack **static_track);
+
         void WriteStreamXMLData(MXFFileDarkXMLSerializer& xml_serializer, mxfpp::File *mxf_file);
 
         int64_t GetGenericStreamDataOffset(mxfpp::File* mFile, const std::vector<mxfpp::Partition*> &partitions, uint32_t generic_stream_id, int64_t *len, bmx::ByteOrder *byte_order);

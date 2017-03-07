@@ -629,7 +629,8 @@ int main(int argc, const char** argv)
     try
     {
 		if (do_remove) {
-            EBUCore::RemoveEBUCoreMetadata(filenames[0], &progress_cb, false, do_force_header, do_use_dark_metadata_key ? &darkMetadataKey : NULL);
+            EBUCore::RemoveEBUCoreMetadata(filenames[0], &progress_cb, false, do_force_header, do_use_dark_metadata_key ? &darkMetadataKey : NULL, 
+                !mxf_equals_ul(&embed_xml.scheme_id, &g_Null_UL) ? &embed_xml.scheme_id : NULL);
 		}
 		else {
 			if (ebucore_filename) {

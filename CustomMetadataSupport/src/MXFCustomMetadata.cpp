@@ -936,6 +936,66 @@ namespace RP2057 {
         return mRequireStreamPartition;
     }
 
+    TextBasedDMFramework *FindTextBasedDMFramework(mxfpp::HeaderMetadata *header_metadata, mxfUL xml_metadata_scheme_id, mxfpp::StaticTrack **static_track) {
+
+        MaterialPackage *mp = header_metadata->getPreface()->findMaterialPackage();
+
+        if (!mp)
+            return NULL;
+
+        // expect to find Static DM Track -> Sequence -> DM Segment -> DM Framework (a TextBasedDMFramework)
+        std::vector<GenericTrack*> tracks = mp->getTracks();
+        size_t i;
+        for (i = 0; i < tracks.size(); i++) {
+            StaticTrack *st = dynamic_cast<StaticTrack*>(tracks[i]);
+            if (!st)
+                continue;
+
+            StructuralComponent *sc = st->getSequence();
+            if (!sc || sc->getDataDefinition() != MXF_DDEF_L(DescriptiveMetadata))
+                continue;
+
+            Sequence *seq = dynamic_cast<Sequence*>(sc);
+            DMSegment *seg = dynamic_cast<DMSegment*>(sc);
+            if (!seq && !seg)
+                continue;
+
+            if (seq) {
+                std::vector<StructuralComponent*> scs = seq->getStructuralComponents();
+                if (scs.size() != 1)
+                    continue;
+
+                seg = dynamic_cast<DMSegment*>(scs[0]);
+                if (!seg)
+                    continue;
+            }
+
+            if (!seg->haveDMFramework())
+                continue;
+
+            DMFramework *framework = seg->getDMFrameworkLight();
+            if (framework) {
+
+		        TextBasedDMFramework *fw = dynamic_cast<TextBasedDMFramework*>(framework);
+                if (!fw)
+                    continue;
+                TextBasedObject *t = dynamic_cast<TextBasedObject*>(fw->getTextBasedObject());
+                if (!t)
+                    continue;
+
+                mxfUL ul = t->getTextBasedMetadataPayloadSchemaID();
+                if (mxf_equals_ul(&ul, &xml_metadata_scheme_id)) {
+                    // this is a match!
+                    if (static_track != NULL)
+                        *static_track = st;
+                    return fw;
+                }
+            }
+        }
+
+        return NULL;
+    }
+
     void WriteStreamXMLData(MXFFileDarkXMLSerializer& xml_serializer, File *mxf_file)
     {
         uint8_t llen = mxf_get_llen(mxf_file->getCFile(), xml_serializer.ProbeSize());

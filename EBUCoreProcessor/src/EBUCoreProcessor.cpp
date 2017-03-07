@@ -699,7 +699,7 @@ void EmbedEBUCoreMetadata(	xercesc::DOMDocument& metadataDocument,
 
 void RemoveEBUCoreMetadata(	const char* mxfLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-							bool optNoIdentification, bool optForceHeader, const mxfKey *customDarkMetadataKey) {
+							bool optNoIdentification, bool optForceHeader, const mxfKey *customDarkMetadataKey, const mxfUL *rp2057SchemeId) {
 
 		progress_callback(0.2f, INFO, "EmbedEBUCoreMetadata", "Opening MXF file %s", mxfLocation);
 
@@ -793,6 +793,25 @@ void RemoveEBUCoreMetadata(	const char* mxfLocation,
 			// remove any previously present EBUCore metadata
 			RemoveEBUCoreFrameworks(&*mHeaderMetadata);
 		}
+
+        // ///////////////////////////////////////
+		// / 3a. In case an RP2057 XML Scheme ID is given, we will try to locate it
+		// / in a Text Framework and remove that too
+		// ///////////
+        if (rp2057SchemeId != NULL) {
+
+            MaterialPackage *material_package = mHeaderMetadata->getPreface()->findMaterialPackage();
+            BMX_ASSERT(material_package);
+
+            StaticTrack *track = NULL;
+            TextBasedDMFramework *fw = RP2057::FindTextBasedDMFramework(&*mHeaderMetadata, *rp2057SchemeId, &track);
+            if (fw) {
+
+                // There is a framework with a text object that has this metadata scheme,
+                // we need to strip it from the header metadata
+                RemoveMetadataSetTree(&*mHeaderMetadata, track);
+            }
+        }
 
 		// ///////////////////////////////////////
 		// / 4. In order to avoid rewriting large portions of the file, we append our metadata

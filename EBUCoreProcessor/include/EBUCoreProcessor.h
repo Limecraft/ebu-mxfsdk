@@ -204,7 +204,8 @@ namespace EBUSDK {
 
 	DLLEXPORT void RemoveEBUCoreMetadata(	const char* mxfLocation,
 							void (*progress_callback)(float progress, ProgressCallbackLevel level, const char *function, const char *msg_format, ...),
-							bool optNoIdentification = false, bool optForceHeader = false, const mxfKey *customDarkMetadataKey = NULL);
+							bool optNoIdentification = false, bool optForceHeader = false, 
+                            const mxfKey *customDarkMetadataKey = NULL, const mxfUL *rp2057SchemeId = NULL);
 
 
 	/**
