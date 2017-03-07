@@ -532,7 +532,9 @@ void InnerEmbedEBUCoreMetadata(
 				if (mxf_is_header_partition_pack(p->getKey())) {
 					p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Header) : &MXF_PP_K(OpenIncomplete, Header) );
 				}
-				else if (mxf_is_body_partition_pack(p->getKey())) {
+                // Only rewrite regular body partition pack open/complete data, doing this to Generic Stream partitions changes
+                // the KLV key of the partition pack which turn it into a regular body partition pack!
+				else if (mxf_is_body_partition_pack(p->getKey()) && !mxf_is_generic_stream_partition_pack(p->getKey())) {
 					p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Body) : &MXF_PP_K(OpenIncomplete, Body) );
 				}
 				RewritePartitionPack(&*mFile, p, true);
@@ -869,7 +871,9 @@ void RemoveEBUCoreMetadata(	const char* mxfLocation,
 				if (mxf_is_header_partition_pack(p->getKey())) {
 					p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Header) : &MXF_PP_K(OpenIncomplete, Header) );
 				}
-				else if (mxf_is_body_partition_pack(p->getKey())) {
+                // Only rewrite regular body partition pack open/complete data, doing this to Generic Stream partitions changes
+                // the KLV key of the partition pack which turn it into a regular body partition pack!
+				else if (mxf_is_body_partition_pack(p->getKey()) && !mxf_is_generic_stream_partition_pack(p->getKey())) {
 					p->setKey( mxf_partition_is_complete(p->getKey()) ? &MXF_PP_K(OpenComplete, Body) : &MXF_PP_K(OpenIncomplete, Body) );
 				} 
 				RewritePartitionPack(&*mFile, p, true);
