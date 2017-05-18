@@ -116,6 +116,8 @@ int main(int argc, const char** argv)
     UL xml_scheme_id;
     int cmdln_index;
 
+    const mxfUL default_rp2057_DMScheme = { 0x06, 0x0E, 0x2B, 0x34, 0x02, 0x7F, 0x01, 0x0B, 0x0D, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
     if (argc == 1) {
         usage(argv[0]);
         return 0;
@@ -192,7 +194,6 @@ int main(int argc, const char** argv)
                 fprintf(stderr, "Invalid value '%s' for option '%s'\n", argv[cmdln_index + 1], argv[cmdln_index]);
                 return 1;
             }
-            do_use_xml_scheme_id = true;
             cmdln_index++;
         }
         else
@@ -240,7 +241,11 @@ int main(int argc, const char** argv)
     try
     {
 		if (ebucore_filename) {
-            EBUCore::ExtractEBUCoreMetadata(filenames[0], ebucore_filename, &progress_cb, do_use_dark_metadata_key ? &darkMetadataKey : NULL, do_use_xml_scheme_id ? &xml_scheme_id : NULL);
+            // Use the default DM scheme when none was provided
+            if (mxf_equals_ul(&xml_scheme_id, &g_Null_UL))
+                    xml_scheme_id = default_rp2057_DMScheme;
+
+            EBUCore::ExtractEBUCoreMetadata(filenames[0], ebucore_filename, &progress_cb, do_use_dark_metadata_key ? &darkMetadataKey : NULL, &xml_scheme_id);
 		}
     }
     catch (const MXFException &ex)
