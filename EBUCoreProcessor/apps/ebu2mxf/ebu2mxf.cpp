@@ -407,6 +407,10 @@ static void usage(const char *cmd)
     fprintf(stderr, " --sidecar             Write EBU Core metadata as a side-car reference\n");
     fprintf(stderr, " --dark-key            Use this custom dark metadata key for metadata embedding.\n");
     fprintf(stderr, "                       The provided key should a SMPTE UL, in the format .\n");
+    fprintf(stderr, " --rp2057              Embed EBU Core metadata according to SMPTE RP 2057 XML embedding.\n");
+    fprintf(stderr, "                       If the XML size is less than 64KB and uses UTF-8 or UTF-16 encoding (declared in\n");
+    fprintf(stderr, "                       the XML prolog) then the XML data is included in the header metadata. Otherwise\n");
+    fprintf(stderr, "                       a Generic Stream partition is used to hold the XML data.\n");
     fprintf(stderr, " --remove              Remove EBU Core metadata from the MXF file header metadata\n");
     fprintf(stderr, "SMPTE RP2057-based XML embedding options:\n");
     fprintf(stderr, " --xml-scheme-id <id>  Set the XML payload scheme identifier associated with the following --embed-xml option.\n");
@@ -416,10 +420,6 @@ static void usage(const char *cmd)
     fprintf(stderr, "                       A default BMX scheme identifier is used if this option is not provided\n");
     fprintf(stderr, " --xml-lang <tag>      Set the RFC 5646 language tag associated with the the following --embed-xml option.\n");
     fprintf(stderr, "                       Defaults to the xml:lang attribute in the root element or empty string if not present\n");
-    fprintf(stderr, " --embed-xml <filename>  Embed the XML from <filename> using the approach specified in SMPTE RP 2057\n");
-    fprintf(stderr, "                       If the XML size is less than 64KB and uses UTF-8 or UTF-16 encoding (declared in\n");
-    fprintf(stderr, "                       the XML prolog) then the XML data is included in the header metadata. Otherwise\n");
-    fprintf(stderr, "                       a Generic Stream partition is used to hold the XML data.\n");
 }
 
 void progress_cb(float progress, EBUCore::ProgressCallbackLevel level, const char *function, const char *msg_format, ...) {
@@ -454,6 +454,7 @@ int main(int argc, const char** argv)
 	bool do_force_header = false;
 	bool do_sidecar = false;
 	bool do_dark = false;
+    bool do_rp2057 = false;
 	bool do_remove = false;
     bool do_print_info = false;
     bool do_print_version = false;
@@ -512,6 +513,10 @@ int main(int argc, const char** argv)
 		else if (strcmp(argv[cmdln_index], "--sidecar") == 0)
         {
             do_sidecar = true;
+        }
+		else if (strcmp(argv[cmdln_index], "--rp2057") == 0)
+        {
+            do_rp2057 = true;
         }
 		else if (strcmp(argv[cmdln_index], "--remove") == 0)
         {
@@ -635,17 +640,17 @@ int main(int argc, const char** argv)
 		else {
 			if (ebucore_filename) {
 				// select correct serialization mode
-				EBUCore::MetadataKind kind = do_sidecar ? EBUCore::SIDECAR : (do_dark ? EBUCore::DARK : EBUCore::KLV_ENCODED);
-                EBUCore::EmbedEBUCoreMetadata(ebucore_filename, filenames[0], &progress_cb, kind, false, do_force_header, 
-                    do_use_dark_metadata_key ? &darkMetadataKey : NULL);
-            } else if (embed_xml.filename != NULL) {
+                EBUCore::MetadataKind kind = do_rp2057 ? EBUCore::RP2057 : ( do_sidecar ? EBUCore::SIDECAR : (do_dark ? EBUCore::DARK : EBUCore::KLV_ENCODED));
+
                 EBUCore::RP2057EmbeddingOptions rp2057opts;
                 if (embed_xml.lang != NULL)
                     rp2057opts.lang = embed_xml.lang;
                 // [TODO]: validation of given scheme
                 rp2057opts.scheme_id = embed_xml.scheme_id;
-                EBUCore::EmbedEBUCoreMetadata(embed_xml.filename, filenames[0], &progress_cb, EBUCore::RP2057, false, do_force_header, 
-                    NULL, &rp2057opts);
+
+                EBUCore::EmbedEBUCoreMetadata(ebucore_filename, filenames[0], &progress_cb, kind, false, do_force_header, 
+                    do_use_dark_metadata_key ? &darkMetadataKey : NULL,
+                    kind == EBUCore::RP2057 ? &rp2057opts: NULL);
             }
 		}
     }
