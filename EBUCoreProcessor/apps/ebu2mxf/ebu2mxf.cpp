@@ -463,6 +463,8 @@ int main(int argc, const char** argv)
     mxfKey darkMetadataKey;
     EmbedXMLInfo embed_xml = {0};
 
+    const mxfUL default_rp2057_DMScheme = { 0x06, 0x0E, 0x2B, 0x34, 0x02, 0x7F, 0x01, 0x0B, 0x0D, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
     int cmdln_index;
 
     if (argc == 1) {
@@ -645,8 +647,11 @@ int main(int argc, const char** argv)
                 EBUCore::RP2057EmbeddingOptions rp2057opts;
                 if (embed_xml.lang != NULL)
                     rp2057opts.lang = embed_xml.lang;
-                // [TODO]: validation of given scheme
-                rp2057opts.scheme_id = embed_xml.scheme_id;
+                // validation of given scheme, or else default
+                if (mxf_equals_ul(&embed_xml.scheme_id, &g_Null_UL))
+                    rp2057opts.scheme_id = default_rp2057_DMScheme;
+                else
+                    rp2057opts.scheme_id = embed_xml.scheme_id;
 
                 EBUCore::EmbedEBUCoreMetadata(ebucore_filename, filenames[0], &progress_cb, kind, false, do_force_header, 
                     do_use_dark_metadata_key ? &darkMetadataKey : NULL,
