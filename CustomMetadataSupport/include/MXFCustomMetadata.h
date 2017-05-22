@@ -318,11 +318,13 @@ namespace EBUSDK {
 	*/
 	void InsertEventFrameworks(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, std::vector<EventInput> &frameworks, ObjectModifier *mod = NULL);
 
-
+  	/**
+	 *	EBU MXF SDK Namespace for RP-2057-based metadata serialization.
+	 */
     namespace RP2057 {
 
         /**
-	    *	Abstract utility class which defines an interface for writing dark metadata (i.e., blobs of bytes) to an MXF file.
+	    *	Abstract utility class which defines an interface for writing opaque XML metadata documents to an MXF file.
 	    */
 	    class MXFFileDarkXMLSerializer : public virtual MXFFileDarkSerializer {
 	    public:
@@ -333,14 +335,56 @@ namespace EBUSDK {
             virtual std::string GetData() = 0;
 	    };
 
+        /**
+        *   Add an XML document, represented by the __xml_serializer__, to the __header_metadata__ object, according to SMPTE RP-2057.
+        *   Depending on the size of the XML input, the metadata is added entirely as a metadata object, or a placeholder is created
+        *   which refers to a generic stream ID in which the metadata will be serialized.
+        *
+        *   @returns True if a generic stream partition is required for actual storage of the XML metadata, and false if 
+        *   the metadata fits entirely in the header metadata.
+        *   @param header_metadata The header metadata to which to append the XML metadata.
+        *   @param track_id The track id to use for the Static Track that is added to the metadata.
+        *   @param generic_stream_id The generic stream ID that will be used to refer to the serialized metadata in case a generic stream is required.
+        *   @param mime_type The MIME type to be declared as part of the RP-2057 metadata.
+        *   @param xml_lang The XML language to be declared as part of the RP-2057 metadata.
+        *   @param xml_serializer The serializer which will provided the XML document content to the SDK for serialization.
+        *   @param metadata_scheme_id The metadata scheme ID to be declared as part of the RP-2057 metadata.
+        */
         bool AddHeaderMetadata(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, uint32_t generic_stream_id,
             const char *mime_type, const char *xml_lang, MXFFileDarkXMLSerializer& xml_serializer, mxfUL metadata_scheme_id);
 
-        mxfpp::TextBasedDMFramework *FindTextBasedDMFramework(mxfpp::HeaderMetadata *header_metadata, mxfUL xml_metadata_scheme_id, mxfpp::StaticTrack **static_track);
+        /**
+        *   Locate the TextBasedDMFramework in the given __header_metadata__ that matches the __xml_metadata_scheme_id__.
+        *   Also returns a reference to the Static Track which refers to this TextBasedDMFramework.
+        *
+        *   @returns The matching TextBasedDMFramework.
+        *   @param header_metadata The header metadata in  which to locate the relevant TextBasedDMFramework.
+        *   @param xml_metadata_scheme_id The XML metadata scheme ID to be located.
+        *   @param static_track [out] The Static Track to which the returned framework belongs.
+        */
+        mxfpp::TextBasedDMFramework *FindTextBasedDMFramework(mxfpp::HeaderMetadata *header_metadata, 
+            mxfUL xml_metadata_scheme_id, mxfpp::StaticTrack **static_track);
 
+        /**
+        *   Write the XML metadata document to the __mxf_file__, at the current file position.
+        *
+        *   @param xml_serializer The serializer which will provided the XML document content to the SDK for serialization.
+        *   @param mxf_file The MXF file to which the metadata will be written to.
+        */
         void WriteStreamXMLData(MXFFileDarkXMLSerializer& xml_serializer, mxfpp::File *mxf_file);
 
-        int64_t GetGenericStreamDataOffset(mxfpp::File* mFile, const std::vector<mxfpp::Partition*> &partitions, uint32_t generic_stream_id, int64_t *len, bmx::ByteOrder *byte_order);
+        /**
+        *   Get the offset and length of a generic stream's data in an MXF file.
+        *
+        *   @returns The offset of the generic stream data.
+        *   @param mFile The MXF file from which to read the offset.
+        *   @param partitions An array of partitions that make up the MXF file.
+        *   @param generic_stream_id The ID of the generic stream for which to return the data offset.
+        *   @param len [out] The length of the data in the generic stream.
+        *   @param byte_order [out] The byte order of the embedded metadata.
+        */
+        int64_t GetGenericStreamDataOffset(mxfpp::File* mFile, const std::vector<mxfpp::Partition*> &partitions, 
+            uint32_t generic_stream_id, int64_t *len, bmx::ByteOrder *byte_order);
     }
 
 
