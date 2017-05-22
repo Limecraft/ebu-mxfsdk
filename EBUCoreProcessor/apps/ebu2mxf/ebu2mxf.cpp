@@ -411,15 +411,15 @@ static void usage(const char *cmd)
     fprintf(stderr, "                       If the XML size is less than 64KB and uses UTF-8 or UTF-16 encoding (declared in\n");
     fprintf(stderr, "                       the XML prolog) then the XML data is included in the header metadata. Otherwise\n");
     fprintf(stderr, "                       a Generic Stream partition is used to hold the XML data.\n");
-    fprintf(stderr, " --remove              Remove EBU Core metadata from the MXF file header metadata\n");
+    fprintf(stderr, " --remove              Remove EBU Core metadata from the MXF file header metadata.\n");
     fprintf(stderr, "SMPTE RP2057-based XML embedding options:\n");
-    fprintf(stderr, " --xml-scheme-id <id>  Set the XML payload scheme identifier associated with the following --embed-xml option.\n");
+    fprintf(stderr, " --xml-scheme-id <id>  Set the XML payload scheme identifier associated with the RP-2057-embedded metadata.\n");
     fprintf(stderr, "                       The <id> is one of the following:\n");
     fprintf(stderr, "                           * a SMPTE UL, formatted as a 'urn:smpte:ul:...',\n");
-    fprintf(stderr, "                           * a UUID, formatted as a 'urn:uuid:...'or as 32 hexadecimal characters using a '.' or '-' seperator,\n");
-    fprintf(stderr, "                       A default BMX scheme identifier is used if this option is not provided\n");
+    fprintf(stderr, "                           * a UUID, formatted as a 'urn:uuid:...'or as 32 hexadecimal characters using a '.' or '-' separator,\n");
+    fprintf(stderr, "                       A default EBU Core scheme identifier is used if this option is not provided\n");
     fprintf(stderr, " --xml-lang <tag>      Set the RFC 5646 language tag associated with the the following --embed-xml option.\n");
-    fprintf(stderr, "                       Defaults to the xml:lang attribute in the root element or empty string if not present\n");
+    fprintf(stderr, "                       Defaults to the xml:lang attribute in the root element or empty string if not present.\n");
 }
 
 void progress_cb(float progress, EBUCore::ProgressCallbackLevel level, const char *function, const char *msg_format, ...) {

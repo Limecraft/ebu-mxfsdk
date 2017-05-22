@@ -77,6 +77,10 @@ static void usage(const char *cmd)
     fprintf(stderr, " --dark-key            Use this custom dark metadata key when searching for dark embedded metadata.\n");
     fprintf(stderr, "                       The provided key should a SMPTE UL, in the format ....\n");
     fprintf(stderr, " --xml-scheme-id       Use this XML scheme when searching for relevant RP2057-embedded metadata.\n");
+    fprintf(stderr, "                       The <id> is one of the following:\n");
+    fprintf(stderr, "                           * a SMPTE UL, formatted as a 'urn:smpte:ul:...',\n");
+    fprintf(stderr, "                           * a UUID, formatted as a 'urn:uuid:...'or as 32 hexadecimal characters using a '.' or '-' separator,\n");
+    fprintf(stderr, "                       A default EBU Core scheme identifier is used if this option is not provided.\n");
 }
 
 void progress_cb(float progress, EBUCore::ProgressCallbackLevel level, const char *function, const char *msg_format, ...) {
