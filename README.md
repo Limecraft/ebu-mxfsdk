@@ -484,6 +484,23 @@ The mxfanalyzer example program in ebu-mxfsdk/Analyzer/apps/analyzer demonstrate
      --deepindex           Perform a deep index table analysis
      --strict              Perform a strict, fully ST-434-compliant analysis.
 
+## Examples
+
+### Embedding EBU Core metadata using SMPTE RP-2057.
+
+Embed the XML file 20120817.xml into the clip.mxf file, writing the new header metadata at the footer of the file, using the default XML metadata scheme ID.
+
+    ebu2mxf.exe --rp2057 --ebucore 20120817.xml clip.mxf
+
+Embed the XML file 20120817.xml into the clip.mxf file, forcing the new header metadata to replace the existing header metadata in the header partition.
+    
+    ebu2mxf.exe --force-header --rp2057 --ebucore 20120817.xml clip.mxf
+    
+Embed the XML file 20120817.xml into the clip.mxf file, using the provided XML metadata scheme ID and XML language identifier 
+(e.g., in case this cannot be retrieved from the XML document and an empty string is not wanted).
+        
+    ebu2mxf.exe --rp2057 --xml-scheme-id urn:smpte:ul:060E2B34027F010B0D02010000000000 --xml-lang fr --ebucore 20120817.xml clip.mxf
+     
 ## Documentation
 
 Further documentation about the workings of the SDK, its use and developer documentation is available in the following resources:
