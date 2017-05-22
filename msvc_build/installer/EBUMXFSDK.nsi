@@ -1,7 +1,7 @@
 
 !define PRODUCT_NAME "EBU MXF SDK"
-!define VERSION "1.1.0" ;@VERSION@
-!define PRODUCT_VERSION "1.1" ;@VERSION@
+!define VERSION "2.0.0" ;@VERSION@
+!define PRODUCT_VERSION "2.0" ;@VERSION@
 !define PRODUCT_GROUP "EBU"
 !define PRODUCT_PUBLISHER "EBU Technical"
 !define PRODUCT_WEB_SITE "http://tech.ebu.ch/"
@@ -132,6 +132,7 @@ Section "MXFSDK" SecMXFSDK
   ; Extract dependency zip files
   nsisunz::UnzipToLog /text "Extracting: %f [%p]..." "$INSTDIR\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0.zip" "$INSTDIR\msvc_build\dependencies"
   nsisunz::UnzipToLog /text "Extracting: %f [%p]..." "$INSTDIR\msvc_build\dependencies\xsd-3.3.0-i686-windows.zip" "$INSTDIR\msvc_build\dependencies"
+  nsisunz::UnzipToLog /text "Extracting: %f [%p]..." "$INSTDIR\msvc_build\dependencies\expat-2.2.0.zip" "$INSTDIR\expat"
   
   ; Install Visual C++ redist
   DetailPrint "Installing Microsoft Visual C++ Runtime dependencies..."
@@ -226,6 +227,7 @@ Section "Uninstall"
   ; Removed extracted dependencies, don't really care if anything goes lost, not supposed to modify these dirs...
   RMDir /r "$INSTDIR\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0"
   RMDir /r "$INSTDIR\msvc_build\dependencies\xsd-3.3.0-i686-windows"
+  RMDir /r "$INSTDIR\expat"
   
   Delete "$INSTDIR\Analyzer\msvc_build\vs10\apps\mxfanalyzer\xerces-c_3_1D.dll"
   Delete "$INSTDIR\EBUCoreProcessor\msvc_build\vs10\apps\ebu2mxf\xerces-c_3_1D.dll"

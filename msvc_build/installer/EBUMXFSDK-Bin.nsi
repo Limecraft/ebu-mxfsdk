@@ -1,7 +1,7 @@
 
 !define PRODUCT_NAME "EBU MXF SDK Binaries"
-!define VERSION "1.0.0a-7" ;@VERSION@
-!define PRODUCT_VERSION "1.0" ;@VERSION@
+!define VERSION "2.0.0" ;@VERSION@
+!define PRODUCT_VERSION "2.0" ;@VERSION@
 !define PRODUCT_GROUP "EBU"
 !define PRODUCT_PUBLISHER "EBU Technical"
 !define PRODUCT_WEB_SITE "http://tech.ebu.ch/"
