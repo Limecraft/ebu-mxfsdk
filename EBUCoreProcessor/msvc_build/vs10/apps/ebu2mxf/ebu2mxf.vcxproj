@@ -75,8 +75,8 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalDependencies>libMXF.lib;libMXF++.lib;uriparser.lib;bmx.lib;CustomMetatadataSupport.lib;EBUCoreProcessor.lib;xerces-c_3.lib;ole32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\..\bin;..\..\..\..\..\ebu-libMXF\msvc_build\vs10\mxf\Release\;..\..\..\..\..\ebu-libMXFpp\msvc_build\vs10\libMXF++\Release\;..\..\..\..\..\ebu-bmx\msvc_build\vs10\bmx\Release\;..\..\..\..\..\uriparser\win32;..\..\..\..\msvc_build\vs10\Release;..\..\..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libMXF.lib;libMXF++.lib;uriparser.lib;bmx.lib;CustomMetatadataSupport.lib;EBUCoreProcessor.lib;expat.lib;xerces-c_3.lib;ole32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\..\bin;..\..\..\..\..\ebu-libMXF\msvc_build\vs10\mxf\Release\;..\..\..\..\..\ebu-libMXFpp\msvc_build\vs10\libMXF++\Release\;..\..\..\..\..\ebu-bmx\msvc_build\vs10\bmx\Release\;..\..\..\..\..\uriparser\win32;..\..\..\..\..\ebu-bmx\msvc_build\vs10\expat\Release;..\..\..\..\msvc_build\vs10\Release;..\..\..\..\..\msvc_build\dependencies\xerces-c-3.1.1-x86-windows-vc-10.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
