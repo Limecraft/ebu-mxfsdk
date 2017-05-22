@@ -35,7 +35,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_04f3e2d9ae9c0532339395c7a3bc1691.html">CustomMetadataSupport</a></li><li class="navelem"><a class="el" href="dir_b7dfbe203efd88817f4b7f5f62930c4a.html">include</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_f15d3f944d017ed0d14f917aca1c37dd.html">CustomMetadataSupport</a></li><li class="navelem"><a class="el" href="dir_f4aee6ac06686ca2ae8ce9344a750ee2.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -91,64 +91,94 @@
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    uint64_t <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#afb4a23bb781bba2e2a7b78492f6e3e27">BufferIndex</a>(mxfpp::File* mFile, mxfpp::Partition* partition, bmx::ByteArray&amp; index_bytes, uint32_t* index_length);</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    uint64_t <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a80ed4df73609691c24249ddf53ea8a10">WriteMetadataToMemoryFile</a>(mxfpp::File* mFile, MXFMemoryFile **destMemFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, mxfpp::Partition* metadataDestinationPartition, mxfpp::Partition* metadataSourcePartition, std::vector&lt;const mxfKey*&gt;&amp; darkElementKeysToIgnore);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    uint64_t <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#affd9c817d1f4355a0cbc8c72cef5f92d">WriteMetadataToFile</a>(mxfpp::File* mFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, <span class="keywordtype">bool</span> shiftFileBytesIfNeeded, mxfpp::Partition* metadataDestinationPartition, mxfpp::Partition* metadataSourcePartition, std::vector&lt;const mxfKey*&gt;&amp; darkElementKeysToIgnore);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno"><a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html">  116</a></span>&#160;    <span class="keyword">class </span><a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html">MXFFileDarkSerializer</a> {</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <span class="keyword">virtual</span> uint64_t <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html#a312a131fd67d37eb19e2f5bb01ec1d3f">WriteToMXFFile</a>(mxfpp::File *f) = 0;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html">MXFFileDarkSerializer</a>() {};</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    };</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
-<div class="line"><a name="l00132"></a><span class="lineno"><a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html">  132</a></span>&#160;    <span class="keyword">class </span><a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html">DarkFileSerializer</a> : <span class="keyword">public</span> <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html">MXFFileDarkSerializer</a> {</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        std::ifstream in;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html#a6e9947c2d82b33017eafa9c6334d736a">DarkFileSerializer</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* metadataLocation);</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        uint64_t <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html#a59df33241c8f5537d0d9e4f49ca4b87e">WriteToMXFFile</a>(mxfpp::File *f);</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html">DarkFileSerializer</a>();</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    };</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    uint64_t <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a72fb6c3ec3b347cb799d772ae539be7a">WriteDarkMetadataToMemoryFile</a>(mxfpp::File* mFile, MXFMemoryFile **destMemFile, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html">MXFFileDarkSerializer</a>&amp; metadata, <span class="keyword">const</span> mxfKey *darkMetadataSetKey, uint64_t metadata_read_position, uint64_t metadata_write_position, mxfpp::Partition* metadataDestinationPartition, mxfpp::Partition* metadataSourcePartition);</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    </div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    uint64_t <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a3f1449ea2e7ad5d49395972384d2a308">WriteDarkMetadataToFile</a>(mxfpp::File* mFile, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html">MXFFileDarkSerializer</a>&amp; metadata, <span class="keyword">const</span> mxfKey *darkMetadataSetKey, uint64_t metadata_read_position, uint64_t metadata_write_position, <span class="keywordtype">bool</span> shiftFileBytesIfNeeded, mxfpp::Partition* metadataDestinationPartition, mxfpp::Partition* metadataSourcePartition);</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a0ffc2a04126404c5733cd57f8a1aded4">RemoveMetadataSetTree</a>(mxfpp::HeaderMetadata *header_metadata, mxfpp::MetadataSet *startSet);</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    int64_t <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a8b42118c3a2523aafbc81d23e7555208">FindLastPartitionFill</a>(mxfpp::File* mFile, mxfpp::Partition* partition, int64_t* partitionSectionOffset, int64_t *extractedFileSize = NULL);</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    </div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ae473eadee856c02447c962257113aac8">ShiftBytesInFile</a>(mxfpp::File* mFile, int64_t shiftPosition, int64_t shiftOffset);</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    mxfpp::Partition* <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ae343e7315da96a00914e05cd0cb35bfa">FindPreferredMetadataPartition</a>(<span class="keyword">const</span> std::vector&lt;mxfpp::Partition*&gt;&amp; partitions, mxfpp::Partition** headerPartition, mxfpp::Partition** footerPartition);</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a44f2e2d05e35082e0fbec1c5b6d507dc">RewritePartitionPack</a>(mxfpp::File *mxfFile, mxfpp::Partition *partition, <span class="keywordtype">bool</span> forceSimilar = <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    std::vector&lt;mxfpp::DMFramework*&gt; <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#afada17c51051eee99a83d66e0d8f064c">GetStaticFrameworks</a>(mxfpp::MaterialPackage *mp);</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a01cb6284c0c0d4570d8e816831181cc0">AppendDMSLabel</a>(mxfpp::HeaderMetadata *header_metadata, mxfUL scheme_label);</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ae68760612386ffdd03db488b898af59d">InsertFramework</a>(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, mxfpp::DMFramework *framework, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a> *mod = NULL);</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    mxfRational <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a46f886a4d53dc6f8322709071bc7364c">FindMaterialPackageEditRate</a>(mxfpp::HeaderMetadata *header_metadata);</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;</div>
-<div class="line"><a name="l00279"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_event_input.html">  279</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="struct_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_event_input.html">EventInput</a> {</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;        mxfPosition start;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        mxfLength duration;</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        mxfpp::DMFramework *framework;</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    };</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ad07dd777e3400cc0c719303bbad0b97c">InsertEventFrameworks</a>(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, std::vector&lt;EventInput&gt; &amp;frameworks, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a> *mod = NULL);</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    } <span class="comment">// namespace MXFCustomMetadata</span></div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;} <span class="comment">// namespace EBUSDK</span></div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    uint64_t <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a863a146c7e519ca00d6e90e6d6ce04a2">BufferPartition</a>(mxfpp::File* mFile, mxfpp::Partition* partition, bmx::ByteArray&amp; partition_bytes, uint32_t* partition_length);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    uint64_t <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a80ed4df73609691c24249ddf53ea8a10">WriteMetadataToMemoryFile</a>(mxfpp::File* mFile, MXFMemoryFile **destMemFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, mxfpp::Partition* metadataDestinationPartition, mxfpp::Partition* metadataSourcePartition, std::vector&lt;const mxfKey*&gt;&amp; darkElementKeysToIgnore);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    uint64_t <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#affd9c817d1f4355a0cbc8c72cef5f92d">WriteMetadataToFile</a>(mxfpp::File* mFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, <span class="keywordtype">bool</span> shiftFileBytesIfNeeded, mxfpp::Partition* metadataDestinationPartition, mxfpp::Partition* metadataSourcePartition, std::vector&lt;const mxfKey*&gt;&amp; darkElementKeysToIgnore);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno"><a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html">  129</a></span>&#160;    <span class="keyword">class </span><a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html">MXFFileDarkSerializer</a> {</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        <span class="keyword">virtual</span> uint64_t <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html#a312a131fd67d37eb19e2f5bb01ec1d3f">WriteToMXFFile</a>(mxfpp::File *f) = 0;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html">MXFFileDarkSerializer</a>() {};</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="keyword">virtual</span> uint64_t <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html#a95ddbc8c623288d553ab47277c797ede">ProbeSize</a>() = 0;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    };</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
+<div class="line"><a name="l00150"></a><span class="lineno"><a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html">  150</a></span>&#160;    <span class="keyword">class </span><a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html">DarkFileSerializer</a> : <span class="keyword">public</span> <span class="keyword">virtual</span> <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html">MXFFileDarkSerializer</a> {</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        std::ifstream in;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        uint64_t probe_size;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html#a6e9947c2d82b33017eafa9c6334d736a">DarkFileSerializer</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* metadataLocation);</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        uint64_t <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html#a59df33241c8f5537d0d9e4f49ca4b87e">WriteToMXFFile</a>(mxfpp::File *f);</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html">DarkFileSerializer</a>();</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
+<div class="line"><a name="l00164"></a><span class="lineno"><a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html#ada238db5fa90ef55234fee4d8d758f73">  164</a></span>&#160;        uint64_t <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html#ada238db5fa90ef55234fee4d8d758f73">ProbeSize</a>() { <span class="keywordflow">return</span> probe_size; }</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    };</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    uint64_t <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a72fb6c3ec3b347cb799d772ae539be7a">WriteDarkMetadataToMemoryFile</a>(mxfpp::File* mFile, MXFMemoryFile **destMemFile, MXFFileDarkSerializer&amp; metadata, <span class="keyword">const</span> mxfKey *darkMetadataSetKey, uint64_t metadata_read_position, uint64_t metadata_write_position, mxfpp::Partition* metadataDestinationPartition, mxfpp::Partition* metadataSourcePartition);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    </div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    uint64_t <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a3f1449ea2e7ad5d49395972384d2a308">WriteDarkMetadataToFile</a>(mxfpp::File* mFile, MXFFileDarkSerializer&amp; metadata, <span class="keyword">const</span> mxfKey *darkMetadataSetKey, uint64_t metadata_read_position, uint64_t metadata_write_position, <span class="keywordtype">bool</span> shiftFileBytesIfNeeded, mxfpp::Partition* metadataDestinationPartition, mxfpp::Partition* metadataSourcePartition);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a0ffc2a04126404c5733cd57f8a1aded4">RemoveMetadataSetTree</a>(mxfpp::HeaderMetadata *header_metadata, mxfpp::MetadataSet *startSet);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    int64_t <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a8b42118c3a2523aafbc81d23e7555208">FindLastPartitionFill</a>(mxfpp::File* mFile, mxfpp::Partition* partition, int64_t* partitionSectionOffset, int64_t *extractedFileSize = NULL);</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    </div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ae473eadee856c02447c962257113aac8">ShiftBytesInFile</a>(mxfpp::File* mFile, int64_t shiftPosition, int64_t shiftOffset);</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    mxfpp::Partition* <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ae343e7315da96a00914e05cd0cb35bfa">FindPreferredMetadataPartition</a>(<span class="keyword">const</span> std::vector&lt;mxfpp::Partition*&gt;&amp; partitions, mxfpp::Partition** headerPartition, mxfpp::Partition** footerPartition);</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a44f2e2d05e35082e0fbec1c5b6d507dc">RewritePartitionPack</a>(mxfpp::File *mxfFile, mxfpp::Partition *partition, <span class="keywordtype">bool</span> forceSimilar = <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    std::vector&lt;mxfpp::DMFramework*&gt; <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#afada17c51051eee99a83d66e0d8f064c">GetStaticFrameworks</a>(mxfpp::MaterialPackage *mp);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a01cb6284c0c0d4570d8e816831181cc0">AppendDMSLabel</a>(mxfpp::HeaderMetadata *header_metadata, mxfUL scheme_label);</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ae68760612386ffdd03db488b898af59d">InsertFramework</a>(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, mxfpp::DMFramework *framework, ObjectModifier *mod = NULL);</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    mxfRational <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a46f886a4d53dc6f8322709071bc7364c">FindMaterialPackageEditRate</a>(mxfpp::HeaderMetadata *header_metadata);</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;</div>
+<div class="line"><a name="l00301"></a><span class="lineno"><a class="code" href="struct_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_event_input.html">  301</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="struct_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_event_input.html">EventInput</a> {</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        mxfPosition start;</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        mxfLength duration;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        mxfpp::DMFramework *framework;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    };</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#ad07dd777e3400cc0c719303bbad0b97c">InsertEventFrameworks</a>(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, std::string track_name, std::vector&lt;EventInput&gt; &amp;frameworks, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a> *mod = NULL);</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;</div>
+<div class="line"><a name="l00324"></a><span class="lineno"><a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_r_p2057.html">  324</a></span>&#160;    <span class="keyword">namespace </span>RP2057 {</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;</div>
+<div class="line"><a name="l00329"></a><span class="lineno"><a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_r_p2057_1_1_m_x_f_file_dark_x_m_l_serializer.html">  329</a></span>&#160;        <span class="keyword">class </span><a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_r_p2057_1_1_m_x_f_file_dark_x_m_l_serializer.html">MXFFileDarkXMLSerializer</a> : <span class="keyword">public</span> <span class="keyword">virtual</span> <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html">MXFFileDarkSerializer</a> {</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;            <span class="keyword">virtual</span> bmx::TextEncoding GetTextEncoding() = 0;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;            <span class="keyword">virtual</span> bmx::ByteOrder GetByteOrder() = 0;</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;            <span class="keyword">virtual</span> std::string GetLanguageCode() = 0;</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;            <span class="keyword">virtual</span> std::string GetNamespace() = 0;</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;            <span class="keyword">virtual</span> std::string GetData() = 0;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        };</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_r_p2057.html#a2c03d8f61c2c684e6a19ac4c2a9aa309">AddHeaderMetadata</a>(mxfpp::HeaderMetadata *header_metadata, uint32_t track_id, uint32_t generic_stream_id,</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;            <span class="keyword">const</span> <span class="keywordtype">char</span> *mime_type, <span class="keyword">const</span> <span class="keywordtype">char</span> *xml_lang, <a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_r_p2057_1_1_m_x_f_file_dark_x_m_l_serializer.html">MXFFileDarkXMLSerializer</a>&amp; xml_serializer, mxfUL metadata_scheme_id);</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        mxfpp::TextBasedDMFramework *<a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_r_p2057.html#a864f474a7cab0312ed92175cacc291f3">FindTextBasedDMFramework</a>(mxfpp::HeaderMetadata *header_metadata, </div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;            mxfUL xml_metadata_scheme_id, mxfpp::StaticTrack **static_track);</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_r_p2057.html#a7fe23175a24d6a8675d4c818ca3e41ed">WriteStreamXMLData</a>(<a class="code" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_r_p2057_1_1_m_x_f_file_dark_x_m_l_serializer.html">MXFFileDarkXMLSerializer</a>&amp; xml_serializer, mxfpp::File *mxf_file);</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;        int64_t <a class="code" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_r_p2057.html#a7cfc491645fb81a32971160cfcfc4cee">GetGenericStreamDataOffset</a>(mxfpp::File* mFile, <span class="keyword">const</span> std::vector&lt;mxfpp::Partition*&gt; &amp;partitions, </div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;            uint32_t generic_stream_id, int64_t *len, bmx::ByteOrder *byte_order);</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    }</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    } <span class="comment">// namespace MXFCustomMetadata</span></div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;} <span class="comment">// namespace EBUSDK</span></div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 27 2014 12:21:50 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon May 22 2017 16:37:01 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

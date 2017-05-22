@@ -62,17 +62,46 @@ Inheritance diagram for EBUSDK::MXFCustomMetadata::MXFFileDarkSerializer:</div>
  <div class="center">
   <img src="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.png" usemap="#EBUSDK::MXFCustomMetadata::MXFFileDarkSerializer_map" alt=""/>
   <map id="EBUSDK::MXFCustomMetadata::MXFFileDarkSerializer_map" name="EBUSDK::MXFCustomMetadata::MXFFileDarkSerializer_map">
-<area href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html" alt="EBUSDK::MXFCustomMetadata::DarkFileSerializer" shape="rect" coords="0,56,324,80"/>
+<area href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html" alt="EBUSDK::MXFCustomMetadata::DarkFileSerializer" shape="rect" coords="0,56,401,80"/>
+<area href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_r_p2057_1_1_m_x_f_file_dark_x_m_l_serializer.html" alt="EBUSDK::MXFCustomMetadata::RP2057::MXFFileDarkXMLSerializer" shape="rect" coords="411,56,812,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a312a131fd67d37eb19e2f5bb01ec1d3f"><td class="memItemLeft" align="right" valign="top">virtual uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html#a312a131fd67d37eb19e2f5bb01ec1d3f">WriteToMXFFile</a> (mxfpp::File *f)=0</td></tr>
+<tr class="memitem:a95ddbc8c623288d553ab47277c797ede"><td class="memItemLeft" align="right" valign="top">virtual uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html#a95ddbc8c623288d553ab47277c797ede">ProbeSize</a> ()=0</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Abstract utility class which defines an interface for writing dark metadata (i.e., blobs of bytes) to an MXF file. </p>
 </div><h2>Member Function Documentation</h2>
+<a class="anchor" id="a95ddbc8c623288d553ab47277c797ede"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint64_t EBUSDK::MXFCustomMetadata::MXFFileDarkSerializer::ProbeSize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Tries to get the (file) size of the dark metadata. No data is actually written out at this stage.</p>
+<dl class="section return"><dt>Returns</dt><dd>The number of dark bytes contained in the metadata. </dd></dl>
+
+<p>Implemented in <a class="el" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_dark_file_serializer.html#ada238db5fa90ef55234fee4d8d758f73">EBUSDK::MXFCustomMetadata::DarkFileSerializer</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a312a131fd67d37eb19e2f5bb01ec1d3f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -113,7 +142,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 27 2014 12:21:52 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon May 22 2017 16:37:03 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

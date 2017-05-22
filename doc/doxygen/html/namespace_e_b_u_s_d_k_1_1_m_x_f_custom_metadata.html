@@ -46,6 +46,7 @@
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -53,6 +54,10 @@
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_r_p2057"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_r_p2057.html">RP2057</a></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_object_modifier.html">ObjectModifier</a></td></tr>
@@ -64,6 +69,7 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:afb4a23bb781bba2e2a7b78492f6e3e27"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#afb4a23bb781bba2e2a7b78492f6e3e27">BufferIndex</a> (mxfpp::File *mFile, mxfpp::Partition *partition, bmx::ByteArray &amp;index_bytes, uint32_t *index_length)</td></tr>
+<tr class="memitem:a863a146c7e519ca00d6e90e6d6ce04a2"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a863a146c7e519ca00d6e90e6d6ce04a2">BufferPartition</a> (mxfpp::File *mFile, mxfpp::Partition *partition, bmx::ByteArray &amp;partition_bytes, uint32_t *partition_length)</td></tr>
 <tr class="memitem:a80ed4df73609691c24249ddf53ea8a10"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a80ed4df73609691c24249ddf53ea8a10">WriteMetadataToMemoryFile</a> (mxfpp::File *mFile, MXFMemoryFile **destMemFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, mxfpp::Partition *metadataDestinationPartition, mxfpp::Partition *metadataSourcePartition, std::vector&lt; const mxfKey * &gt; &amp;darkElementKeysToIgnore)</td></tr>
 <tr class="memitem:affd9c817d1f4355a0cbc8c72cef5f92d"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#affd9c817d1f4355a0cbc8c72cef5f92d">WriteMetadataToFile</a> (mxfpp::File *mFile, mxfpp::HeaderMetadata *mHeaderMetadata, uint64_t metadata_read_position, uint64_t metadata_write_position, bool shiftFileBytesIfNeeded, mxfpp::Partition *metadataDestinationPartition, mxfpp::Partition *metadataSourcePartition, std::vector&lt; const mxfKey * &gt; &amp;darkElementKeysToIgnore)</td></tr>
 <tr class="memitem:a72fb6c3ec3b347cb799d772ae539be7a"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_e_b_u_s_d_k_1_1_m_x_f_custom_metadata.html#a72fb6c3ec3b347cb799d772ae539be7a">WriteDarkMetadataToMemoryFile</a> (mxfpp::File *mFile, MXFMemoryFile **destMemFile, <a class="el" href="class_e_b_u_s_d_k_1_1_m_x_f_custom_metadata_1_1_m_x_f_file_dark_serializer.html">MXFFileDarkSerializer</a> &amp;metadata, const mxfKey *darkMetadataSetKey, uint64_t metadata_read_position, uint64_t metadata_write_position, mxfpp::Partition *metadataDestinationPartition, mxfpp::Partition *metadataSourcePartition)</td></tr>
@@ -159,6 +165,55 @@ Functions</h2></td></tr>
     <tr><td class="paramname">partition</td><td>The partition for which the index entries must be buffered. </td></tr>
     <tr><td class="paramname">index_bytes</td><td>A reference to a pre-allocated ByteArray structure to hold the buffered index bytes. </td></tr>
     <tr><td class="paramname">index_length</td><td>A pointer to an integer that will receive the length of the index bytes buffered when the function returns. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a863a146c7e519ca00d6e90e6d6ce04a2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t EBUSDK::MXFCustomMetadata::BufferPartition </td>
+          <td>(</td>
+          <td class="paramtype">mxfpp::File *&#160;</td>
+          <td class="paramname"><em>mFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">mxfpp::Partition *&#160;</td>
+          <td class="paramname"><em>partition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bmx::ByteArray &amp;&#160;</td>
+          <td class="paramname"><em>partition_bytes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>partition_length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Buffers the contents of a <b>partition</b> (excluding essence data) in a ByteArray and returns the size of the data buffered and the first byte of the header metadata in the given <b>partition</b>.</p>
+<dl class="section return"><dt>Returns</dt><dd>Returns the location of the first byte of the header metadata in the given <b>partition</b>. This position is location behind the partition pack set and any KLV filler elements that follow it. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mFile</td><td>An MXF file structure opened with (at least) read access. </td></tr>
+    <tr><td class="paramname">partition</td><td>The partition for which the index entries must be buffered. </td></tr>
+    <tr><td class="paramname">partition_bytes</td><td>A reference to a pre-allocated ByteArray structure to hold the buffered partition bytes. </td></tr>
+    <tr><td class="paramname">partition_length</td><td>A pointer to an integer that will receive the length of the partition bytes buffered when the function returns. </td></tr>
   </table>
   </dd>
 </dl>
@@ -845,7 +900,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 27 2014 12:21:52 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon May 22 2017 16:37:03 for EBU MXF SDK by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>
