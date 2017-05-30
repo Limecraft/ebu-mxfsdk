@@ -644,7 +644,7 @@ int main(int argc, const char** argv)
 				// select correct serialization mode
                 EBUCore::MetadataKind kind = do_rp2057 ? EBUCore::RP2057 : ( do_sidecar ? EBUCore::SIDECAR : (do_dark ? EBUCore::DARK : EBUCore::KLV_ENCODED));
 
-                EBUCore::RP2057EmbeddingOptions rp2057opts;
+                EBUCore::RP2057EmbeddingOptions rp2057opts = {0};
                 if (embed_xml.lang != NULL)
                     rp2057opts.lang = embed_xml.lang;
                 // validation of given scheme, or else default
