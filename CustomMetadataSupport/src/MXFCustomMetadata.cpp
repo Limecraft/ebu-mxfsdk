@@ -262,6 +262,23 @@ uint64_t BufferPartition(mxfpp::File* mFile, mxfpp::Partition* partition, bmx::B
 	return pos_write_start_metadata;
 }
 
+uint64_t CopyValueBetweenFiles(File& destFile, File& sourceFile, uint64_t size, uint8_t *buffer, int bufSize) {
+	uint64_t totalRead=0, read=0, written=0;
+	while (totalRead < size) {
+		read = sourceFile.read(buffer, MIN(size-totalRead, bufSize) );
+		if (read != MIN(size-totalRead, bufSize)) {
+			// if these don't match, something went wrong, except!
+			throw bmx::BMXException("Error reading %" PRId64 " bytes from MXF file", MIN(size-totalRead, bufSize));
+		}
+		written = destFile.write(buffer, read);
+		if (written != read)
+			// if these don't match, something went wrong, except!
+			throw bmx::BMXException("Error writing %" PRId64 " bytes to MXF file", read);
+		totalRead += read;
+	}
+	return size;
+}
+
 class FixedKeyComparer {
 	const mxfKey *k;
 public:
@@ -299,18 +316,17 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 
 	// loop back to the beginning of the metadata and find elements that were skipped,
 	// because, they were dark, append these to the end of the header metadata
-	uint8_t *KLVBuffer = new uint8_t[64*1024];
+#define COPY_BUFFER_SIZE 64*1024
+	std::vector<uint8_t> KLVBuffer(COPY_BUFFER_SIZE);	// will auto-delete when going out of scope (even when exceptions are thrown)
 
 	mFile->seek(metadata_read_position, SEEK_SET);
 	uint64_t count = 0;
-	int i = 0;
 	while (count < oriSourceHeaderByteCount)
 	{
 		mFile->readKL(&key, &llen, &len);
 		//printf("Count: %lx ", count + 512);
 
 		count += mxfKey_extlen + llen;
-		count += mFile->read(KLVBuffer, len);
 
 		// is this a set we know about in our data model? no, then append it
 		// all others that we know a definition of, we leave out of this as they should have been added
@@ -318,9 +334,8 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 		MXFList *setList = NULL;
 		MXFSetDef *setDef = NULL;
 		
+        bool copied = false;
 		if (!mxf_find_set_def(mHeaderMetadata->getCHeaderMetadata()->dataModel, &key, &setDef)) {
-		//if (mxf_find_set_by_key(mHeaderMetadata->getCHeaderMetadata(), &key, &setList)) {
-		//	if (mxf_get_list_length(setList) == 0 && 
 			if (!mxf_is_primer_pack(&key) && /* don't include any primer pack or fillers */
 				!mxf_is_filler(&key)) {
 				FixedKeyComparer f(&key);
@@ -328,14 +343,20 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 					mxf_print_key(&key);
 					// no errors and the list is empty, append the KLV to the memory file
 					mxf_write_kl(mxfMemFile, &key, len);
-					mxf_file_write(mxfMemFile, KLVBuffer, len);
-					i++;
+                    count += CopyValueBetweenFiles(memFile, *mFile, len, &KLVBuffer[0] /* provide address of first element */, COPY_BUFFER_SIZE);
+                    //count += mFile->read(KLVBuffer, len);
+					//mxf_file_write(mxfMemFile, KLVBuffer, len);
+                    copied = true;
 				}
-			} //else printf("\n");
-		//	mxf_free_list(&setList);
+			}
 		}
+        if (!copied) {
+            // this KLV was not copied, skip that many bytes in the file    
+            count += len;
+			mFile->skip(len);
+        }
+
 	}
-	//std::cout << "Rogue KLVS: " << i << std::endl;
 
 	uint64_t newHeaderMetadataSize = mxf_file_tell(mxfMemFile) - metadata_write_position;
 	// fill the appended metadata up at least the initial size of the metadata and the then following KAG position
@@ -352,23 +373,6 @@ uint64_t WriteMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, Hea
 	memFile.swapCFile(NULL);
 
 	return memFileSize;
-}
-
-uint64_t CopyValueBetweenFiles(File& destFile, File& sourceFile, uint64_t size, uint8_t *buffer, int bufSize) {
-	uint64_t totalRead=0, read=0, written=0;
-	while (totalRead < size) {
-		read = sourceFile.read(buffer, MIN(size-totalRead, bufSize) );
-		if (read != MIN(size-totalRead, bufSize)) {
-			// if these don't match, something went wrong, except!
-			throw bmx::BMXException("Error reading %" PRId64 " bytes from MXF file", MIN(size-totalRead, bufSize));
-		}
-		written = destFile.write(buffer, read);
-		if (written != read)
-			// if these don't match, something went wrong, except!
-			throw bmx::BMXException("Error writing %" PRId64 " bytes to MXF file", read);
-		totalRead += read;
-	}
-	return size;
 }
 
 uint64_t WriteDarkMetadataToMemoryFile(File* mFile, MXFMemoryFile **destMemFile, MXFFileDarkSerializer& metadata, const mxfKey *darkMetadataSetKey, uint64_t metadata_read_position, uint64_t metadata_write_position, Partition* metadataDestinationPartition, Partition* metadataSourcePartition) {
