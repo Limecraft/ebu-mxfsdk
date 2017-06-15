@@ -1,4 +1,4 @@
-# EBU MXF SDK
+# EBU MXF SDK v2.0
 
 The EBU MXF SDK is a software development kit for the manipulation of MXF files with the aim of adding embedded descriptive metadata, in the form of [EBUCore](http://tech.ebu.ch/lang/en/MetadataEbuCore) metadata. Additionally, the SDK can be used to analyze the structure of MXF files and generate [ST-434](http://standards.smpte.org/content/978-1-61482-595-1/st-434-2006/SEC1.abstract)-compliant reports that describe their properties and header information.
 

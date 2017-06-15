@@ -43,11 +43,11 @@
 #include <bmx/BMXTypes.h>
 
 
-#define EBUSDK_VERSION_MAJOR    1
-#define EBUSDK_VERSION_MINOR    2
+#define EBUSDK_VERSION_MAJOR    2
+#define EBUSDK_VERSION_MINOR    0
 #define EBUSDK_VERSION_MICRO    0
 
-#define EBUSDK_MXF_VERSION_RELEASE  4   /* 0 = Unknown version
+#define EBUSDK_MXF_VERSION_RELEASE  1   /* 0 = Unknown version
                                         1 = Released version
                                         2 = Development version
                                         3 = Released version with patches
