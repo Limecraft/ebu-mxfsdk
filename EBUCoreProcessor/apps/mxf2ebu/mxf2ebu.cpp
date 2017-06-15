@@ -75,7 +75,7 @@ static void usage(const char *cmd)
     fprintf(stderr, " -l <file>             Log filename. Default log to stderr/stdout\n");
     fprintf(stderr, " --ebu-core <file>     Write embedded EBU Core metadata to file\n");
     fprintf(stderr, " --dark-key            Use this custom dark metadata key when searching for dark embedded metadata.\n");
-    fprintf(stderr, "                       The provided key should a SMPTE UL, in the format ....\n");
+    fprintf(stderr, "                       The provided key should a SMPTE UL, formatted as a 'urn:smpte:ul:...'\n");
     fprintf(stderr, " --xml-scheme-id       Use this XML scheme when searching for relevant RP2057-embedded metadata.\n");
     fprintf(stderr, "                       The <id> is one of the following:\n");
     fprintf(stderr, "                           * a SMPTE UL, formatted as a 'urn:smpte:ul:...',\n");

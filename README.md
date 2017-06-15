@@ -53,7 +53,7 @@ The ebu2mxf example program in ebu-bmx/apps/ebu2mxf opens an existing MXF file, 
      --dark                Write EBU Core metadata into a dark metadata set
      --sidecar             Write EBU Core metadata as a side-car reference
      --dark-key            Use this custom dark metadata key for metadata embedding.
-                           The provided key should a SMPTE UL, in the format .
+                           The provided key should a SMPTE UL, formatted as a 'urn:smpte:ul:...'.
      --rp2057              Embed EBU Core metadata according to SMPTE RP 2057 XML embedding.
                            If the XML size is less than 64KB and uses UTF-8 or UTF-16 encoding (declared in
                            the XML prolog) then the XML data is included in the header metadata. Otherwise
@@ -66,7 +66,7 @@ The ebu2mxf example program in ebu-bmx/apps/ebu2mxf opens an existing MXF file, 
                                * a UUID, formatted as a 'urn:uuid:...'or as 32 hexadecimal characters using a '.' or '-' separator,
                            A default EBU Core scheme identifier is used if this option is not provided.
      --xml-lang <tag>      Set the RFC 5646 language tag associated with the the following --embed-xml option.
-                           Defaults to the xml:lang attribute in the root element or empty string if not present     
+                           Defaults to the xml:lang attribute in the root element or empty string if not present.     
          
 
 ### mxf2ebu
@@ -81,7 +81,7 @@ The mxf2ebu example program in ebu-bmx/apps/mxf2ebu extracts EBUCore metadata. A
 	 -i                    Print file information to stdout
 	 --ebu-core <file>     Write embedded EBU Core metadata to file
      --dark-key            Use this custom dark metadata key when searching for dark embedded metadata.
-                           The provided key should a SMPTE UL, in the format ...
+                           The provided key should a SMPTE UL, formatted as a 'urn:smpte:ul:...'.
      --xml-scheme-id <id>  Use this XML scheme when searching for relevant RP2057-embedded metadata.
                            The <id> is one of the following:
                                * a SMPTE UL, formatted as a 'urn:smpte:ul:...',
@@ -511,7 +511,7 @@ Further documentation about the workings of the SDK, its use and developer docum
 
 ## License
 
-Copyright 2012-2013 European Broadcasting Union and Limecraft, NV.
+Copyright 2012-2017 European Broadcasting Union and Limecraft, NV.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

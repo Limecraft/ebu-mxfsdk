@@ -406,7 +406,7 @@ static void usage(const char *cmd)
     fprintf(stderr, " --dark                Write EBU Core metadata into a dark metadata set\n");
     fprintf(stderr, " --sidecar             Write EBU Core metadata as a side-car reference\n");
     fprintf(stderr, " --dark-key            Use this custom dark metadata key for metadata embedding.\n");
-    fprintf(stderr, "                       The provided key should a SMPTE UL, in the format .\n");
+    fprintf(stderr, "                       The provided key should a SMPTE UL, formatted as a 'urn:smpte:ul:...'.\n");
     fprintf(stderr, " --rp2057              Embed EBU Core metadata according to SMPTE RP 2057 XML embedding.\n");
     fprintf(stderr, "                       If the XML size is less than 64KB and uses UTF-8 or UTF-16 encoding (declared in\n");
     fprintf(stderr, "                       the XML prolog) then the XML data is included in the header metadata. Otherwise\n");
@@ -418,7 +418,7 @@ static void usage(const char *cmd)
     fprintf(stderr, "                           * a SMPTE UL, formatted as a 'urn:smpte:ul:...',\n");
     fprintf(stderr, "                           * a UUID, formatted as a 'urn:uuid:...'or as 32 hexadecimal characters using a '.' or '-' separator,\n");
     fprintf(stderr, "                       A default EBU Core scheme identifier is used if this option is not provided\n");
-    fprintf(stderr, " --xml-lang <tag>      Set the RFC 5646 language tag associated with the the following --embed-xml option.\n");
+    fprintf(stderr, " --xml-lang <tag>      Set the RFC 5646 language tag associated with the RP-2057-embedded metadata.\n");
     fprintf(stderr, "                       Defaults to the xml:lang attribute in the root element or empty string if not present.\n");
 }
 
