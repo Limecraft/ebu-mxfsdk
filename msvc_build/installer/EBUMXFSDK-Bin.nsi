@@ -122,7 +122,7 @@ Section "MXFSDK" SecMXFSDK
     
   ; Install Visual C++ redist
   DetailPrint "Installing Microsoft Visual C++ Runtime dependencies..."
-  ExecWait '"$INSTDIR\vcredist_x86.exe" /q'
+  ExecWait '"$INSTDIR\vcredist_x86.exe" /q /norestart'
   Delete "$INSTDIR\vcredist_x86.exe"
   
   ; Create some shortcuts
